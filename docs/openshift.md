@@ -43,7 +43,7 @@ Click the `Install Operator` button.
 1. Clone the percona-xtradb-cluster-operator repository:
 
 ```bash
-$ git clone -b v1.11.0 https://github.com/percona/percona-xtradb-cluster-operator
+$ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
 $ cd percona-xtradb-cluster-operator
 ```
 

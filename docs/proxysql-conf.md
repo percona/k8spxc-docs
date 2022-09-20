@@ -14,7 +14,7 @@ $ kubectl patch pxc cluster1 --type=merge --patch '{
      "proxysql": {
         "enabled": true,
         "size": 3,
-        "image": "percona/percona-xtradb-cluster-operator:1.11.0-proxysql" },
+        "image": "percona/percona-xtradb-cluster-operator:{{ release }}-proxysql" },
      "haproxy": { "enabled": false }
   }}'
 ```
@@ -62,7 +62,7 @@ Here is an example:
 proxysql:
   enabled: false
   size: 3
-  image: percona/percona-xtradb-cluster-operator:1.11.0-proxysql
+  image: percona/percona-xtradb-cluster-operator:{{ release }}-proxysql
   configuration: |
     datadir="/var/lib/proxysql"
 

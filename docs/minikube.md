@@ -37,14 +37,14 @@ default web browser.
 2. Deploy the operator with the following command:
 
 ```default
-$ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v1.11.0/deploy/bundle.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/bundle.yaml
 ```
 
 
 3. Deploy Percona XtraDB Cluster:
 
 ```default
-$ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v1.11.0/deploy/cr-minimal.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cr-minimal.yaml
 ```
 
 This deploys one Percona XtraDB Cluster node and one HAProxy node.
@@ -64,7 +64,7 @@ minimal-cluster-haproxy-0                       2/2     Running   0          47m
 You can clone the repository with all manifests and source code by executing the following command:
 
 ```default
-$ git clone -b v1.11.0 https://github.com/percona/percona-xtradb-cluster-operator
+$ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
 ```
 
 

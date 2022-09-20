@@ -14,8 +14,8 @@ the official repository on Github, and do the same for the Role-based access
 control:
 
 ```bash
-$ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v1.11.0/deploy/crd.yaml
-$ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v1.11.0/deploy/rbac.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/crd.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/rbac.yaml
 ```
 
 
@@ -23,12 +23,12 @@ $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-clus
 deployment, supplying necessary image name with a newer version tag. This
 is done with the `kubectl patch deployment` command. You can found proper
 image name [in the list of certified images](images.md#custom-registry-images).
-For example, updating to the `1.11.0` version should look as
+For example, updating to the `{{ release }}` version should look as
 follows.
 
 ```bash
 $ kubectl patch deployment percona-xtradb-cluster-operator \
-  -p'{"spec":{"template":{"spec":{"containers":[{"name":"percona-xtradb-cluster-operator","image":"percona/percona-xtradb-cluster-operator:1.11.0"}]}}}}'
+  -p'{"spec":{"template":{"spec":{"containers":[{"name":"percona-xtradb-cluster-operator","image":"percona/percona-xtradb-cluster-operator:{{ release }}"}]}}}}'
 ```
 
 
@@ -91,8 +91,8 @@ clusters (ex. 8.0 will not be automatically used instead of 5.7),
 
 
     * *version number* - specify the desired version explicitly
-(version numbers are specified as `8.0.27-18.1`,
-`5.7.36-31.55`, etc.),
+(version numbers are specified as `{{ pxc80recommended }}`,
+`{{ pxc57recommended }}`, etc.),
 
 
     * `Never` or `Disabled` - disable automatic upgrades
@@ -162,7 +162,7 @@ than one, make several incremental updates sequentially.
 
 Patching Custom Resource is done with the `kubectl patch pxc` command.
 Actual image names can be found [in the list of certified images](images.md#custom-registry-images).
-For example, updating to the `1.11.0` version should look as
+For example, updating to the `{{ release }}` version should look as
 follows, depending on whether you are using Percona XtraDB Cluster 5.7 or 8.0.
 
 
@@ -171,13 +171,13 @@ follows, depending on whether you are using Percona XtraDB Cluster 5.7 or 8.0.
 ```bash
 $ kubectl patch pxc cluster1 --type=merge --patch '{
    "spec": {
-       "crVersion":"1.11.0",
-       "pxc":{ "image": "percona/percona-xtradb-cluster:5.7.36-31.55" },
-       "proxysql": { "image": "percona/percona-xtradb-cluster-operator:1.11.0-proxysql" },
-       "haproxy":  { "image": "percona/percona-xtradb-cluster-operator:1.11.0-haproxy" },
-       "backup":   { "image": "percona/percona-xtradb-cluster-operator:1.11.0-pxc5.7-backup" },
-       "logcollector": { "image": "percona/percona-xtradb-cluster-operator:1.11.0-logcollector" },
-       "pmm":      { "image": "percona/pmm-client:2.28.0" }
+       "crVersion":"{{ release }}",
+       "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc57recommended }}" },
+       "proxysql": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-proxysql" },
+       "haproxy":  { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-haproxy" },
+       "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc5.7-backup" },
+       "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector" },
+       "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
    }}'
 ```
 
@@ -187,13 +187,13 @@ $ kubectl patch pxc cluster1 --type=merge --patch '{
 ```bash
 $ kubectl patch pxc cluster1 --type=merge --patch '{
    "spec": {
-       "crVersion":"1.11.0",
-       "pxc":{ "image": "percona/percona-xtradb-cluster:8.0.27-18.1" },
-       "proxysql": { "image": "percona/percona-xtradb-cluster-operator:1.11.0-proxysql" },
-       "haproxy":  { "image": "percona/percona-xtradb-cluster-operator:1.11.0-haproxy" },
-       "backup":   { "image": "percona/percona-xtradb-cluster-operator:1.11.0-pxc8.0-backup" },
-       "logcollector": { "image": "percona/percona-xtradb-cluster-operator:1.11.0-logcollector" },
-       "pmm":      { "image": "percona/pmm-client:2.28.0" }
+       "crVersion":"{{ release }}",
+       "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
+       "proxysql": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-proxysql" },
+       "haproxy":  { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-haproxy" },
+       "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc8.0-backup" },
+       "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector" },
+       "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
    }}'
 ```
 
@@ -230,7 +230,7 @@ than one, make several incremental updates sequentially.
 
 Patching Custom Resource is done with the `kubectl patch pxc` command.
 Actual image names can be found [in the list of certified images](images.md#custom-registry-images).
-For example, updating to the `1.11.0` version should look as
+For example, updating to the `{{ release }}` version should look as
 follows, depending on whether you are using Percona XtraDB Cluster 5.7 or 8.0.
 
 
@@ -239,13 +239,13 @@ follows, depending on whether you are using Percona XtraDB Cluster 5.7 or 8.0.
 ```bash
 $ kubectl patch pxc cluster1 --type=merge --patch '{
     "spec": {
-       "crVersion":"1.11.0",
-       "pxc":{ "image": "percona/percona-xtradb-cluster:5.7.36-31.55" },
-       "proxysql": { "image": "percona/percona-xtradb-cluster-operator:1.11.0-proxysql" },
-       "haproxy":  { "image": "percona/percona-xtradb-cluster-operator:1.11.0-haproxy" },
-       "backup":   { "image": "percona/percona-xtradb-cluster-operator:1.11.0-pxc5.7-backup" },
-       "logcollector": { "image": "percona/percona-xtradb-cluster-operator:1.11.0-logcollector" },
-       "pmm":      { "image": "percona/pmm-client:2.28.0" }
+       "crVersion":"{{ release }}",
+       "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc57recommended }}" },
+       "proxysql": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-proxysql" },
+       "haproxy":  { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-haproxy" },
+       "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc5.7-backup" },
+       "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector" },
+       "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
     }}'
 ```
 
@@ -255,13 +255,13 @@ $ kubectl patch pxc cluster1 --type=merge --patch '{
 ```bash
 $ kubectl patch pxc cluster1 --type=merge --patch '{
     "spec": {
-       "crVersion":"1.11.0",
-       "pxc":{ "image": "percona/percona-xtradb-cluster:8.0.27-18.1" },
-       "proxysql": { "image": "percona/percona-xtradb-cluster-operator:1.11.0-proxysql" },
-       "haproxy":  { "image": "percona/percona-xtradb-cluster-operator:1.11.0-haproxy" },
-       "backup":   { "image": "percona/percona-xtradb-cluster-operator:1.11.0-pxc8.0-backup" },
-       "logcollector": { "image": "percona/percona-xtradb-cluster-operator:1.11.0-logcollector" },
-       "pmm":      { "image": "percona/pmm-client:2.28.0" }
+       "crVersion":"{{ release }}",
+       "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
+       "proxysql": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-proxysql" },
+       "haproxy":  { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-haproxy" },
+       "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc8.0-backup" },
+       "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector" },
+       "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
     }}'
 ```
 

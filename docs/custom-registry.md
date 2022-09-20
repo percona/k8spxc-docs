@@ -75,8 +75,8 @@ You can find correct names and SHA digests in the
 ```bash
 $ docker tag \
     docker.io/perconalab/percona-xtradb-cluster-operator@sha256:841c07eef30605080bfe80e549f9332ab6b9755fcbc42aacbf86e4ac9ef0e444 \
-    172.30.162.173:5000/pxc/percona-xtradb-cluster-operator:1.2.0
-$ docker push 172.30.162.173:5000/pxc/percona-xtradb-cluster-operator:1.2.0
+    172.30.162.173:5000/pxc/percona-xtradb-cluster-operator:{{ release }}
+$ docker push 172.30.162.173:5000/pxc/percona-xtradb-cluster-operator:{{ release }}
 ```
 
 
@@ -85,13 +85,13 @@ $ docker push 172.30.162.173:5000/pxc/percona-xtradb-cluster-operator:1.2.0
 ```bash
 $ oc get is
 NAME                              DOCKER REPO                                                            TAGS      UPDATED
-percona-xtradb-cluster-operator   docker-registry.default.svc:5000/pxc/percona-xtradb-cluster-operator   1.11.0     2 hours ago
+percona-xtradb-cluster-operator   docker-registry.default.svc:5000/pxc/percona-xtradb-cluster-operator   {{ release }}     2 hours ago
 ```
 
 
 7. When the custom registry image is Ok, put a Docker Repo + Tag string
 (it should look like
-`docker-registry.default.svc:5000/pxc/percona-xtradb-cluster-operator:1.11.0`)
+`docker-registry.default.svc:5000/pxc/percona-xtradb-cluster-operator:{{ release }}`)
 into the `initImage` option in `deploy/operator.yaml` configuration file.
 
 

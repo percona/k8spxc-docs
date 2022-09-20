@@ -1,4 +1,4 @@
-# [Custom Resource options](operator.html#operator-custom-resource-options)
+# <a name="operator-custom-resource-options"></a>Custom Resource options
 
 Percona XtraDB Cluster managed by the Operator configured via the spec section
 of the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
@@ -32,16 +32,16 @@ The spec part of the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-
 | enableCRValidationWebhook | boolean | `true`  | Enables or disables schema validation before applying `cr.yaml` file (works only in [cluster-wide mode](cluster-wide.md#install-clusterwide) due to [access restrictions](faq.md#faq-validation)) |
 | pause           | boolean           | `false`                    | Pause/resume: setting it to `true` gracefully stops the cluster, and setting it to `false` after shut down starts the cluster back  |
 | secretsName     | string            | `my-cluster-secrets`       | A name for [users secrets](users.md#users)                             |
-| crVersion       | string            | `1.11.0`                   | Version of the Operator the Custom Resource belongs to                 |
+| crVersion       | string            | `{{ release }}`                   | Version of the Operator the Custom Resource belongs to                 |
 | vaultSecretName | string            | `keyring-secret-vault`     | A secret for the [HashiCorp Vault](https://www.vaultproject.io/) to carry on [Data at Rest Encryption](encryption.md#encryption)    |
 | sslSecretName   | string            | `my-cluster-ssl`           | A secret with TLS certificate generated for *external* communications, see [Transport Layer Security (TLS)](TLS.md#tls) for details |
 | sslInternalSecretName  | string     | `my-cluster-ssl-internal`  | A secret with TLS certificate generated for *internal* communications, see [Transport Layer Security (TLS)](TLS.md#tls) for details |
 | logCollectorSecretName | string     | `my-log-collector-secrets` | A secret for the [Fluent Bit Log Collector](https://fluentbit.io)      |
-| initImage       | string            | `percona/percona-xtradb-cluster-operator:1.11.0` | An alternative image for the initial Operator installation |
+| initImage       | string            | `percona/percona-xtradb-cluster-operator:{{ release }}` | An alternative image for the initial Operator installation |
 | tls             | subdoc            |                            | Extended cert-manager configuration section                            |
 | updateStrategy  | string            | `SmartUpdate`              | A strategy the Operator uses for [upgrades](update.md#operator-update) |
 
-## [Extended cert-manager Configuration Section](operator.html#operator-issuerconf-section)
+## <a name="operator-issuerconf-section"></a>Extended cert-manager configuration section
 
 The `tls` section in the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains various configuration options for additional customization of the [TLS cert-manager](tls.certs.certmanager).
 
@@ -67,7 +67,7 @@ The `tls` section in the [deploy/cr.yaml](https://github.com/percona/percona-xtr
 | **Example**     | `cert-manager.io` |
 | **Description** | A [cert-manager issuer group](https://cert-manager.io/docs/configuration/). Should be `cert-manager.io` for built-in cert-manager certificate issuers |
 
-## [Upgrade Options Section](operator.html#operator-upgradeoptions-section)
+## <a name="operator-upgradeoptions-section"></a>Upgrade options section
 
 The `upgradeOptions` section in the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains various configuration options to control Percona XtraDB Cluster upgrades.
 
@@ -88,7 +88,7 @@ The `upgradeOptions` section in the [deploy/cr.yaml](https://github.com/percona/
 | **Example**     | `0 2 \* \* \*` |
 | **Description** | Scheduled time to check for updates, specified in the [crontab format](https://en.wikipedia.org/wiki/Cron) |
 
-## [PXC Section](operator.html#operator-pxc-section)
+## <a name="operator-pxc-section"></a>PXC section
 
 The `pxc` section in the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains general
 configuration options for the Percona XtraDB Cluster.
@@ -102,7 +102,7 @@ configuration options for the Percona XtraDB Cluster.
 |                 | |
 | **Key**         | {{ optionlink('pxc.image') }} |
 | **Value**       | string |
-| **Example**     | `percona/percona-xtradb-cluster:8.0.27-18.1` |
+| **Example**     | `percona/percona-xtradb-cluster:{{ pxc80recommended }}` |
 | **Description** | The Docker image of the Percona cluster used (actual image names for Percona XtraDB Cluster 8.0 and Percona XtraDB Cluster 5.7 can be found [in the list of certified images](images.md#custom-registry-images)) |
 |                 | |
 | **Key**         | {{ optionlink('pxc.autoRecovery') }} |
@@ -425,7 +425,7 @@ in [cross-site replication](replication.md#operator-replication) |
 | **Example**     | `600m` |
 | **Description** | [Kubernetes CPU limits](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Percona XtraDB Cluster sidecar container |
 
-## [HAProxy Section](operator.html#operator-haproxy-section)
+## <a name="operator-haproxy-section"></a>HAProxy section
 
 The `haproxy` section in the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains
 configuration options for the HAProxy service.
@@ -444,7 +444,7 @@ configuration options for the HAProxy service.
 |                 | |
 | **Key**         | {{ optionlink('haproxy.image') }} |
 | **Value**       | string |
-| **Example**     | `percona/percona-xtradb-cluster-operator:1.11.0-haproxy` |
+| **Example**     | `percona/percona-xtradb-cluster-operator:{{ release }}-haproxy` |
 | **Description** | HAProxy Docker image to use |
 |                 | |
 | **Key**         | {{ optionlink('haproxy.replicasServiceEnabled') }} |
@@ -677,7 +677,7 @@ configuration options for the HAProxy service.
 | **Example**     | `600m` |
 | **Description** | [Kubernetes CPU limits](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the sidecar HAProxy containers |
 
-## [ProxySQL Section](operator.html#operator-proxysql-section)
+## <a name="operator-proxysql-section"></a>ProxySQL section
 
 The `proxysql` section in the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains
 configuration options for the ProxySQL daemon.
@@ -696,7 +696,7 @@ configuration options for the ProxySQL daemon.
 |                 | |
 | **Key**         | {{ optionlink('proxysql.image') }} |
 | **Value**       | string |
-| **Example**     | `percona/percona-xtradb-cluster-operator:1.11.0-proxysql` |
+| **Example**     | `percona/percona-xtradb-cluster-operator:{{ release }}-proxysql` |
 | **Description** | ProxySQL Docker image to use |
 |                 | |
 | **Key**         | {{ optionlink('proxysql.imagePullPolicy') }} |
@@ -919,7 +919,7 @@ configuration options for the ProxySQL daemon.
 | **Example**     | `600m` |
 | **Description** | [Kubernetes CPU limits](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the sidecar ProxySQL containers |
 
-## [Log Collector Section](operator.html#operator-logcollector-section)
+## <a name="operator-logcollector-section"></a>Log Collector section
 
 The `logcollector` section in the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
 file contains configuration options for [Fluent Bit Log Collector](https://fluentbit.io).
@@ -949,7 +949,7 @@ file contains configuration options for [Fluent Bit Log Collector](https://fluen
 | **Example**     | `200m` |
 | **Description** | [Kubernetes CPU requests](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Log collector container |
 
-## [PMM Section](operator.html#operator-pmm-section)
+## <a name="operator-pmm-section"></a>PMM section
 
 The `pmm` section in the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains configuration
 options for Percona Monitoring and Management.
@@ -963,7 +963,7 @@ options for Percona Monitoring and Management.
 |                 | |
 | **Key**         | {{ optionlink('pmm.image') }} |
 | **Value**       | string |
-| **Example**     | `percona/pmm-client:2.28.0` |
+| **Example**     | `percona/pmm-client:{{ pmm2recommended }}` |
 | **Description** | PMM client Docker image to use |
 |                 | |
 | **Key**         | {{ optionlink('pmm.serverHost') }} |
@@ -996,7 +996,7 @@ options for Percona Monitoring and Management.
 | **Example**     | `--custom-labels=CUSTOM-LABELS` |
 | **Description** | Additional parameters which will be passed to the [pmm-admin add mysql](https://www.percona.com/doc/percona-monitoring-and-management/2.x/setting-up/client/mysql.html#adding-mysql-service-monitoring) command for `proxysql` Pods |
 
-## [Backup Section](operator.html#operator-backup-section)
+## <a name="operator-backup-section"></a>Backup section
 
 The `backup` section in the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
 file contains the following configuration options for the regular Percona XtraDB Cluster backups.
@@ -1005,7 +1005,7 @@ file contains the following configuration options for the regular Percona XtraDB
 |-----------------|-|
 | **Key**         | {{ optionlink('backup.image') }} |
 | **Value**       | string |
-| **Example**     | `percona/percona-xtradb-cluster-operator:1.11.0-backup` |
+| **Example**     | `percona/percona-xtradb-cluster-operator:{{ release }}-backup` |
 | **Description** | The Percona XtraDB cluster Docker image to use for the backup |
 |                 | |
 | **Key**         | {{ optionlink('backup.backoffLimit') }} |

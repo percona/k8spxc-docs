@@ -27,12 +27,9 @@ To create your cluster, you will need the following data:
 
 * name of your EKS cluster,
 
-
 * AWS region in which you wish to deploy your cluster,
 
-
 * the amount of nodes you would like tho have,
-
 
 * the amount of [on-demand](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-on-demand-instances.html) and [spot](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-spot-instances.html) instances to use.
 
@@ -99,7 +96,7 @@ At success, you will see the message that namespace/<namespace name> was created
 2. Use the following `git clone` command to download the correct branch of the percona-xtradb-cluster-operator repository:
 
 ```bash
-$ git clone -b v1.11.0 https://github.com/percona/percona-xtradb-cluster-operator
+$ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
 ```
 
 After the repository is downloaded, change the directory to run the rest of the commands in this document:

@@ -73,7 +73,7 @@ kubectl apply -f percona-xtradb-cluster-operator/deploy/cr.yaml
 **URL:**
 
 ```bash
-https://$API_SERVER/apis/pxc.percona.com/v1-11-0/namespaces/default/perconaxtradbclusters
+https://$API_SERVER/apis/pxc.percona.com/v{{ apiversion }}/namespaces/default/perconaxtradbclusters
 ```
 
 **Authentication:**
@@ -85,7 +85,7 @@ Authorization: Bearer $KUBE_TOKEN
 **cURL Request:**
 
 ```bash
-curl -k -v -XPOST "https://$API_SERVER/apis/pxc.percona.com/v1-11-0/namespaces/default/perconaxtradbclusters" \
+curl -k -v -XPOST "https://$API_SERVER/apis/pxc.percona.com/v{{ apiversion }}/namespaces/default/perconaxtradbclusters" \
             -H "Content-Type: application/json" \
             -H "Accept: application/json" \
             -H "Authorization: Bearer $KUBE_TOKEN" \

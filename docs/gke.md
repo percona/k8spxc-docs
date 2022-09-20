@@ -26,7 +26,7 @@ $ gcloud components install kubectl
 You can configure the settings using the `gcloud` tool. You can run it either in the [Cloud Shell](https://cloud.google.com/shell/docs/quickstart) or in your local shell (if you have installed Google Cloud SDK locally on the previous step). The following command will create a cluster named `my-cluster-1`:
 
 ```bash
-$ gcloud container clusters create my-cluster-1 --project <project name> --zone us-central1-a --cluster-version 1.23 --machine-type n1-standard-4 --num-nodes=3
+$ gcloud container clusters create my-cluster-1 --project <project name> --zone us-central1-a --cluster-version {{ gkerecommended }} --machine-type n1-standard-4 --num-nodes=3
 ```
 
 **NOTE**: You must edit the following command and other command-line statements to replace the `<project name>` placeholder with your project name. You may also be required to edit the *zone location*, which is set to `us-central1` in the above example. Other parameters specify that we are creating a cluster with 3 nodes and with machine type of 4 vCPUs and 45 GB memory.
@@ -76,7 +76,7 @@ At success, you will see the message that namespace/<namespace name> was created
 3. Use the following `git clone` command to download the correct branch of the percona-xtradb-cluster-operator repository:
 
 ```bash
-$ git clone -b v1.11.0 https://github.com/percona/percona-xtradb-cluster-operator
+$ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
 ```
 
 After the repository is downloaded, change the directory to run the rest of the commands in this document:

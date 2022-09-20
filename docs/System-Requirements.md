@@ -10,13 +10,13 @@ XtraDB Cluster 5.7 and 8.0 are configured with
 ## Officially supported platforms
 
 The following platforms were tested and are officially supported by the Operator
-1.11.0:
+{{ release }}:
 
 
 * [OpenShift](https://www.redhat.com/en/technologies/cloud-computing/openshift) 4.7 - 4.10
 
 
-* [Google Kubernetes Engine (GKE)](https://cloud.google.com/kubernetes-engine) 1.20 - 1.23
+* [Google Kubernetes Engine (GKE)](https://cloud.google.com/kubernetes-engine) 1.20 - {{ gkerecommended }}
 
 
 * [Amazon Elastic Container Service for Kubernetes (EKS)](https://aws.amazon.com) 1.20 - 1.22

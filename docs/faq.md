@@ -50,8 +50,8 @@ Docker image in use.
 
 Percona-certified Docker images used by the Operator are listed [here](https://www.percona.com/doc/kubernetes-operator-for-pxc/images.html).
 As you can see, both Percona XtraDB Cluster 8.0 and 5.7 are supported with the
-following recommended versions: 8.0.27-18.1 and
-5.7.36-31.55. Three major numbers in the XtraDB Cluster version refer
+following recommended versions: {{ pxc80recommended }} and
+{{ pxc57recommended }}. Three major numbers in the XtraDB Cluster version refer
 to the version of Percona Server in use. More details on the exact Percona
 Server version can be found in the release notes ([8.0](https://www.percona.com/doc/percona-server/8.0/release-notes/release-notes_index.html), [5.7](https://www.percona.com/doc/percona-server/5.7/release-notes/release-notes_index.html)).
 

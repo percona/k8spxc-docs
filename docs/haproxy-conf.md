@@ -14,7 +14,7 @@ $ kubectl patch pxc cluster1 --type=merge --patch '{
      "haproxy": {
         "enabled": true,
         "size": 3,
-        "image": "percona/percona-xtradb-cluster-operator:1.11.0-haproxy" },
+        "image": "percona/percona-xtradb-cluster-operator:{{ release }}-haproxy" },
      "proxysql": { "enabled": false }
   }}'
 ```
@@ -66,7 +66,7 @@ configuration file by editing  `haproxy.configuration` key in the
 haproxy:
     enabled: true
     size: 3
-    image: percona/percona-xtradb-cluster-operator:1.5.0-haproxy
+    image: percona/percona-xtradb-cluster-operator:{{ release }}-haproxy
     configuration: |
       global
         maxconn 2048

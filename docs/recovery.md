@@ -113,13 +113,13 @@ $ kubectl get pxc cluster1 -o jsonpath='{.spec.pxc.image}'
 ```
 
 ```bash
-$ kubectl patch pxc cluster1 --type="merge" -p '{"spec":{"pxc":{"image":"percona/percona-xtradb-cluster:8.0.27-18.1-debug"}}}'
+$ kubectl patch pxc cluster1 --type="merge" -p '{"spec":{"pxc":{"image":"percona/percona-xtradb-cluster:{{ pxc80recommended }}-debug"}}}'
 ```
 
 **NOTE**: For Percona XtraDB Cluster 5.7 this command should be as follows:
 
 ```bash
-$ kubectl patch pxc cluster1 --type="merge" -p '{"spec":{"pxc":{"image":"percona/percona-xtradb-cluster:5.7.36-31.55-debug"}}}'
+$ kubectl patch pxc cluster1 --type="merge" -p '{"spec":{"pxc":{"image":"percona/percona-xtradb-cluster:{{ pxc57recommended }}-debug"}}}'
 ```
 
 
@@ -201,13 +201,13 @@ Cluster image because the debug image is no longer needed:
 **NOTE**: Please make sure the Percona XtraDB Cluster version for the debug image matches the version currently in use in the cluster.
 
 ```bash
-$ kubectl patch pxc cluster1 --type="merge" -p '{"spec":{"pxc":{"image":"percona/percona-xtradb-cluster:8.0.27-18.1"}}}'
+$ kubectl patch pxc cluster1 --type="merge" -p '{"spec":{"pxc":{"image":"percona/percona-xtradb-cluster:{{ pxc80recommended }}"}}}'
 ```
 
 **NOTE**: For Percona XtraDB Cluster 5.7 this command should be as follows:
 
 ```bash
-$ kubectl patch pxc cluster1 --type="merge" -p '{"spec":{"pxc":{"image":"percona/percona-xtradb-cluster:5.7.36-31.55"}}}'
+$ kubectl patch pxc cluster1 --type="merge" -p '{"spec":{"pxc":{"image":"percona/percona-xtradb-cluster:{{ pxc57recommended }}"}}}'
 ```
 
 
