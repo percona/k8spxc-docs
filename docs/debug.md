@@ -25,11 +25,15 @@ Collected logs can be examined using the following command:
 $ kubectl logs cluster1-pxc-1 -c logs
 ```
 
-**NOTE**: Technically, logs are stored on the same Persistent Volume, which is
-used with the corresponding Percona XtraDB Cluster Pod. Therefore collected
-logs can be found in `DATADIR` (`var/lib/mysql/`).
+!!! note
 
-**NOTE**: You can parse output of the logs with [jq JSON processor](https://stedolan.github.io/jq/) as follows:  `kubectl logs cluster1-pxc-1 -c logs -f | jq -R 'fromjson?'`.
+    Technically, logs are stored on the same Persistent Volume, which is
+    used with the corresponding Percona XtraDB Cluster Pod. Therefore collected
+    logs can be found in `DATADIR` (`var/lib/mysql/`).
+
+!!! note
+
+    You can parse output of the logs with [jq JSON processor](https://stedolan.github.io/jq/) as follows:  `kubectl logs cluster1-pxc-1 -c logs -f | jq -R 'fromjson?'`.
 
 ## Avoid the restart-on-fail loop for Percona XtraDB Cluster containers
 
@@ -66,12 +70,9 @@ For the cases when Pods are failing for some reason or just show abnormal
 behavior, the Operator can be used with a special *debug images*. Percona XtraDB
 Cluster debug image has the following specifics:
 
-
 * it avoids restarting on fail,
 
-
 * it contains additional tools useful for debugging (sudo, telnet, gdb, etc.),
-
 
 * it has debug mode enabled for the logs.
 
@@ -86,10 +87,11 @@ Cluster debug image:
 
 * `percona/percona-xtradb-cluster:{{ pxc80recommended }}-debug` for Percona XtraDB Cluster 8.0,
 
-
 * `percona/percona-xtradb-cluster:{{ pxc57recommended }}-debug` for Percona XtraDB Cluster 5.7.
 
 The Pod should be restarted to get the new image.
 
-**NOTE**: When the Pod is continuously restarting, you may have to delete it
-to apply image changes.
+!!! note
+
+    When the Pod is continuously restarting, you may have to delete it
+    to apply image changes.

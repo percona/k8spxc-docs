@@ -30,7 +30,6 @@ documentation](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#e
 
 The following are the steps to increase the size:
 
-
 1. Extract and backup the yaml file for the cluster
 
 ```bash
@@ -40,52 +39,50 @@ $ kubectl get pxc cluster1 -o yaml --export > CR_backup.yaml
 
 2. Now you should delete the cluster.
 
-**WARNING**: Make sure that [delete-pxc-pvc](operator.md#finalizers-pxc) finalizer
-is not set in your custom resource, **otherwise
-all cluster data will be lost!**
+    !!! warning
 
-You can use the following command to delete the cluster:
+        Make sure that [delete-pxc-pvc](operator.md#finalizers-pxc) finalizer
+        is not set in your custom resource, **otherwise all cluster data will be lost!**
 
-```bash
-$ kubectl delete -f CR_backup.yaml
-```
+    You can use the following command to delete the cluster:
 
+    ```bash
+    $ kubectl delete -f CR_backup.yaml
+    ```
 
 3. For each node, edit the yaml to resize the PVC object.
 
-```bash
-$ kubectl edit pvc datadir-cluster1-pxc-0
-```
+    ```bash
+    $ kubectl edit pvc datadir-cluster1-pxc-0
+    ```
 
-In the yaml, edit the spec.resources.requests.storage value.
+    In the yaml, edit the spec.resources.requests.storage value.
 
-```yaml
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 6Gi
-```
+    ```yaml
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 6Gi
+    ```
 
-Perform the same operation on the other nodes.
+    Perform the same operation on the other nodes.
 
-```bash
-$ kubectl edit pvc datadir-cluster1-pxc-1
-$ kubectl edit pvc datadir-cluster1-pxc-2
-```
-
+    ```bash
+    $ kubectl edit pvc datadir-cluster1-pxc-1
+    $ kubectl edit pvc datadir-cluster1-pxc-2
+    ```
 
 4. In the CR configuration file, use vim or another text editor to edit
-the PVC size.
+    the PVC size.
 
-```bash
-$ vim CR_backup.yaml
-```
-
+    ```bash
+    $ vim CR_backup.yaml
+    ```
 
 5. Apply the updated configuration to the cluster.
 
-```bash
-$ kubectl apply -f CR_backup.yaml
-```
+    ```bash
+    $ kubectl apply -f CR_backup.yaml
+    ```

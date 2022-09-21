@@ -7,104 +7,93 @@ Operator based on Percona XtraDB Cluster allows to use a custom registry, and th
 illustrates how this can be done by the example of the Operator deployed
 in the OpenShift environment.
 
-
 1. First of all login to the OpenShift and create project.
 
-```bash
-$ oc login
-Authentication required for https://192.168.1.100:8443 (openshift)
-Username: admin
-Password:
-Login successful.
-$ oc new-project pxc
-Now using project "pxc" on server "https://192.168.1.100:8443".
-```
+    ```bash
+    $ oc login
+    Authentication required for https://192.168.1.100:8443 (openshift)
+    Username: admin
+    Password:
+    Login successful.
+    $ oc new-project pxc
+    Now using project "pxc" on server "https://192.168.1.100:8443".
+    ```
 
-
-2. There are two things you will need to configure your custom registry
-access:
-
+2. There are two things you will need to configure your custom registry access:
 
     * the token for your user
 
-
     * your registry IP address.
 
-The token can be find out with the following command:
+    The token can be find out with the following command:
 
-```bash
-$ oc whoami -t
-ADO8CqCDappWR4hxjfDqwijEHei31yXAvWg61Jg210s
-```
+    ```bash
+    $ oc whoami -t
+    ADO8CqCDappWR4hxjfDqwijEHei31yXAvWg61Jg210s
+    ```
 
-And the following one tells you the registry IP address:
+    And the following one tells you the registry IP address:
 
-```bash
-$ kubectl get services/docker-registry -n default
-NAME              TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
-docker-registry   ClusterIP   172.30.162.173   <none>        5000/TCP   1d
-```
+    ```bash
+    $ kubectl get services/docker-registry -n default
+    NAME              TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+    docker-registry   ClusterIP   172.30.162.173   <none>        5000/TCP   1d
+    ```
 
+3. Now you can use the obtained token and address to login to the registry:
 
-3. Now you can use the obtained token and address to login to the
-registry:
-
-```bash
-$ docker login -u admin -p ADO8CqCDappWR4hxjfDqwijEHei31yXAvWg61Jg210s 172.30.162.173:5000
-Login Succeeded
-```
-
+    ```bash
+    $ docker login -u admin -p ADO8CqCDappWR4hxjfDqwijEHei31yXAvWg61Jg210s 172.30.162.173:5000
+    Login Succeeded
+    ```
 
 4. Pull the needed image by its SHA digest:
 
-```bash
-$ docker pull docker.io/perconalab/percona-xtradb-cluster-operator@sha256:841c07eef30605080bfe80e549f9332ab6b9755fcbc42aacbf86e4ac9ef0e444
-Trying to pull repository docker.io/perconalab/percona-xtradb-cluster-operator ...
-sha256:841c07eef30605080bfe80e549f9332ab6b9755fcbc42aacbf86e4ac9ef0e444: Pulling from docker.io/perconalab/percona-xtradb-cluster-operator
-Digest: sha256:841c07eef30605080bfe80e549f9332ab6b9755fcbc42aacbf86e4ac9ef0e444
-Status: Image is up to date for docker.io/perconalab/percona-xtradb-cluster-operator@sha256:841c07eef30605080bfe80e549f9332ab6b9755fcbc42aacbf86e4ac9ef0e444
-```
+    ```bash
+    $ docker pull docker.io/perconalab/percona-xtradb-cluster-operator@sha256:841c07eef30605080bfe80e549f9332ab6b9755fcbc42aacbf86e4ac9ef0e444
+    Trying to pull repository docker.io/perconalab/percona-xtradb-cluster-operator ...
+    sha256:841c07eef30605080bfe80e549f9332ab6b9755fcbc42aacbf86e4ac9ef0e444: Pulling from docker.io/perconalab/percona-xtradb-cluster-operator
+    Digest: sha256:841c07eef30605080bfe80e549f9332ab6b9755fcbc42aacbf86e4ac9ef0e444
+    Status: Image is up to date for docker.io/perconalab/percona-xtradb-cluster-operator@sha256:841c07eef30605080bfe80e549f9332ab6b9755fcbc42aacbf86e4ac9ef0e444
+    ```
 
-You can find correct names and SHA digests in the
-[current list of the Operator-related images officially certified by Percona](images.md#custom-registry-images).
-
+    You can find correct names and SHA digests in the
+    [current list of the Operator-related images officially certified by Percona](images.md#custom-registry-images).
 
 5. The following way is used to push an image to the custom registry
-(into the OpenShift pxc project):
+    (into the OpenShift pxc project):
 
-```bash
-$ docker tag \
-    docker.io/perconalab/percona-xtradb-cluster-operator@sha256:841c07eef30605080bfe80e549f9332ab6b9755fcbc42aacbf86e4ac9ef0e444 \
-    172.30.162.173:5000/pxc/percona-xtradb-cluster-operator:{{ release }}
-$ docker push 172.30.162.173:5000/pxc/percona-xtradb-cluster-operator:{{ release }}
-```
-
+    ```bash
+    $ docker tag \
+        docker.io/perconalab/percona-xtradb-cluster-operator@sha256:841c07eef30605080bfe80e549f9332ab6b9755fcbc42aacbf86e4ac9ef0e444 \
+        172.30.162.173:5000/pxc/percona-xtradb-cluster-operator:{{ release }}
+    $ docker push 172.30.162.173:5000/pxc/percona-xtradb-cluster-operator:{{ release }}
+    ```
 
 6. Check the image in the OpenShift registry with the following command:
 
-```bash
-$ oc get is
-NAME                              DOCKER REPO                                                            TAGS      UPDATED
-percona-xtradb-cluster-operator   docker-registry.default.svc:5000/pxc/percona-xtradb-cluster-operator   {{ release }}     2 hours ago
-```
-
+    ```bash
+    $ oc get is
+    NAME                              DOCKER REPO                                                            TAGS      UPDATED
+    percona-xtradb-cluster-operator   docker-registry.default.svc:5000/pxc/percona-xtradb-cluster-operator   {{ release }}     2 hours ago
+    ```
 
 7. When the custom registry image is Ok, put a Docker Repo + Tag string
-(it should look like
-`docker-registry.default.svc:5000/pxc/percona-xtradb-cluster-operator:{{ release }}`)
-into the `initImage` option in `deploy/operator.yaml` configuration file.
-
+    (it should look like
+    `docker-registry.default.svc:5000/pxc/percona-xtradb-cluster-operator:{{ release }}`)
+    into the `initImage` option in `deploy/operator.yaml` configuration file.
 
 8. Repeat steps 3-5 for other images, updating the `image\`\`options in the
-corresponding sections of the the \`\`deploy/cr.yaml` file.
+    corresponding sections of the the \`\`deploy/cr.yaml` file.
 
-**NOTE**: Don’t forget to set [upgradeoptions.apply](operator.md#upgradeoptions-apply)
-option to `Disabled`. Otherwise [Smart Upgrade functionality](update.md#operator-update-smartupdates)
-will try using the image recommended by the Version Service instead of the
-custom one.
+    !!! note
 
-Please note it is possible to specify `imagePullSecrets` option for
-the images, if the registry requires authentication.
+        Don’t forget to set [upgradeoptions.apply](operator.md#upgradeoptions-apply)
+        option to `Disabled`. Otherwise [Smart Upgrade functionality](update.md#operator-update-smartupdates)
+        will try using the image recommended by the Version Service instead of the
+        custom one.
 
+    Please note it is possible to specify `imagePullSecrets` option for
+    the images, if the registry requires authentication.
 
 9. Now follow the standard [Percona Operator for MySQL installation instruction](./openshift).

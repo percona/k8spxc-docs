@@ -1,14 +1,12 @@
 # Design overview
 
 *Percona XtraDB Cluster* integrates *Percona Server for MySQL* running
-with the XtraDB storage engine, and *Percona XtraBackup* with the
+    with the XtraDB storage engine, and *Percona XtraBackup* with the
 *Galera library* to enable synchronous multi-primary replication.
 
 The design of the Operator is highly bound to the
 Percona XtraDB Cluster high availability implementation, which in its turn can
 be briefly described with the following diagram.
-
-
 
 ![image](assets/images/replication.png)
 
@@ -20,16 +18,16 @@ function if you take any of the nodes down. Additionally load balancing
 can be achieved with the ProxySQL daemon, which accepts incoming traffic
 from MySQL clients and forwards it to backend MySQL servers.
 
-**NOTE**: Using ProxySQL results in [more efficient database workload
-management](https://proxysql.com/compare) in comparison with other
-load balancers which are not SQL-aware, including built-in ones of the
-cloud providers, or the Kubernetes NGINX Ingress Controller.
+!!! note
+
+    Using ProxySQL results in [more efficient database workload
+    management](https://proxysql.com/compare) in comparison with other
+    load balancers which are not SQL-aware, including built-in ones of the
+    cloud providers, or the Kubernetes NGINX Ingress Controller.
 
 To provide high availability operator uses [node affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity)
 to run Percona XtraDB Cluster instances on separate worker nodes if possible. If
 some node fails, the pod with it is automatically re-created on another node.
-
-
 
 ![image](assets/images/operator.png)
 

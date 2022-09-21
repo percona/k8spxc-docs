@@ -25,119 +25,80 @@ or in the cloud.
 
 # Requirements
 
-
 * [System Requirements](System-Requirements.md)
-
 
 * [Design and architecture](architecture.md)
 
-
 # Quickstart guides
-
 
 * [Install with Helm](helm.md)
 
-
 * [Install on Minikube](minikube.md)
-
 
 * [Install on Google Kubernetes Engine (GKE)](gke.md)
 
-
 * [Install on Amazon Elastic Kubernetes Service (AWS EKS)](eks.md)
-
 
 # Advanced Installation Guides
 
-
 * [Generic Kubernetes installation](kubernetes.md)
-
 
 * [Install on OpenShift](openshift.md)
 
-
 * [Use private registry](custom-registry.md)
-
 
 # Configuration
 
-
 * [Local Storage support](storage.md)
-
 
 * [Anti-affinity and tolerations](constraints.md)
 
-
 * [Changing MySQL Options](options.md)
-
 
 * [Defining environment variables](containers-conf.md)
 
-
 * [Load Balancing with HAProxy](haproxy-conf.md)
-
 
 * [Load Balancing with ProxySQL](proxysql-conf.md)
 
-
 * [Transport Encryption (TLS/SSL)](TLS.md)
-
 
 * [Data at rest encryption](encryption.md)
 
-
 * [Application and system users](users.md)
-
 
 # Management
 
-
 * [Backup and restore](backups.md)
-
 
 * [Upgrade Percona XtraDB Cluster and the Operator](update.md)
 
-
 * [Horizontal and vertical scaling](scaling.md)
-
 
 * [Multi-cluster and multi-region deployment](replication.md)
 
-
 * [Monitor with Percona Monitoring and Management (PMM)](monitoring.md)
-
 
 * [Add sidecar containers](sidecar.md)
 
-
 * [Restart or pause the cluster](pause.md)
-
 
 * [Crash recovery](recovery.md)
 
-
 * [Debug and troubleshoot](debug.md)
-
 
 # HOWTOs
 
-
 * [Install Percona XtraDB Cluster in multi-namespace (cluster-wide) mode](cluster-wide.md)
-
 
 # Reference
 
-
 * [Custom Resource options](operator.md)
-
 
 * [Percona certified images](images.md)
 
-
 * [Operator API](api.md)
 
-
 * [Frequently Asked Questions](faq.md)
-
 
 * [Release Notes](ReleaseNotes/index.md)

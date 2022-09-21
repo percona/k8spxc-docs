@@ -24,8 +24,7 @@ name.
 
 ## hostPath
 
-A [hostPath
-volume](https://kubernetes.io/docs/concepts/storage/volumes/#hostpath)
+A [hostPath volume](https://kubernetes.io/docs/concepts/storage/volumes/#hostpath)
 mounts some existing file or directory from the node’s filesystem into
 the Pod.
 
@@ -69,37 +68,35 @@ and [PersistentVolumeClaim](https://kubernetes.io/docs/concepts/storage/persiste
 
 Using it involves the following steps.
 
-
 1. Install OpenEBS on your system along with the official [installation guide](https://openebs.io/docs/user-guides/installation).
 
-
 2. Define a new [Kubernetes Storage Class](https://kubernetes.io/docs/concepts/storage/storage-classes/)
-with OpenEBS with the YAML file (e. g. `local-hostpath.yaml`) as follows:
+    with OpenEBS with the YAML file (e. g. `local-hostpath.yaml`) as follows:
 
-```yaml
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: localpv
-  annotations:
-    openebs.io/cas-type: local
-    cas.openebs.io/config: |
-      - name: StorageType
-        value: hostpath
-      - name: BasePath
-        value: /var/local-hostpath
-provisioner: openebs.io/local
-reclaimPolicy: Delete
-volumeBindingMode: WaitForFirstConsumer
-```
+    ```yaml
+    apiVersion: storage.k8s.io/v1
+    kind: StorageClass
+    metadata:
+      name: localpv
+      annotations:
+        openebs.io/cas-type: local
+        cas.openebs.io/config: |
+          - name: StorageType
+            value: hostpath
+          - name: BasePath
+            value: /var/local-hostpath
+    provisioner: openebs.io/local
+    reclaimPolicy: Delete
+    volumeBindingMode: WaitForFirstConsumer
+    ```
 
-Two things to edit in this example are the `metadata.name` key (you will
-use it as a storage class name) and  the `value` option under the
-`cas.openebs.io/config` (it should point to an already existing directory
-on the local filesystem of your node).
+    Two things to edit in this example are the `metadata.name` key (you will
+    use it as a storage class name) and  the `value` option under the
+    `cas.openebs.io/config` (it should point to an already existing directory
+    on the local filesystem of your node).
 
-When ready, apply the file with the `kubectl apply -f local-hostpath.yaml`
-command.
+    When ready, apply the file with the `kubectl apply -f local-hostpath.yaml`
+    command.
 
 #. Now you can deploy the Operator and Percona XtraDB Cluster using this
 StorageClass in `deploy/cr.yaml`:
@@ -115,6 +112,8 @@ volumeSpec:
          storage: 200Gi
 ```
 
-**NOTE**: There are other storage options provided by the OpenEBS, which may
-be helpful within your cluster setup. Look at the [OpenEBS for the Management of Kubernetes Storage Volumes](https://www.percona.com/blog/2020/11/09/openebs-for-the-management-of-kubernetes-storage-volumes/) blog post for more examples. Also, consider
-looking at the [Measuring OpenEBS Local Volume Performance Overhead in Kubernetes](https://www.percona.com/blog/2020/11/12/measuring-openebs-local-volume-performance-overhead-in-kubernetes/) post.
+!!! note
+
+    There are other storage options provided by the OpenEBS, which may
+    be helpful within your cluster setup. Look at the [OpenEBS for the Management of Kubernetes Storage Volumes](https://www.percona.com/blog/2020/11/09/openebs-for-the-management-of-kubernetes-storage-volumes/) blog post for more examples. Also, consider
+    looking at the [Measuring OpenEBS Local Volume Performance Overhead in Kubernetes](https://www.percona.com/blog/2020/11/12/measuring-openebs-local-volume-performance-overhead-in-kubernetes/) post.

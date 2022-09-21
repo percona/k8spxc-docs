@@ -1,5 +1,5 @@
-.. code-block:: json
-
-	{
-	"spec": {"pxc":{ "size": "5" }
-	}}
+```json
+{
+"spec": {"pxc":{ "size": "5" }
+}}
+```
