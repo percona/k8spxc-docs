@@ -4,7 +4,9 @@ Percona Monitoring and Management (PMM) [provides an excellent
 solution](https://www.percona.com/doc/percona-xtradb-cluster/LATEST/manual/monitoring.html#using-pmm)
 to monitor Percona XtraDB Cluster.
 
-**NOTE**: Only PMM 2.x versions are supported by the Operator.
+!!! note
+
+    Only PMM 2.x versions are supported by the Operator.
 
 PMM is a client/server application. *PMM Client* runs on each node with the
 database you wish to monitor: it collects needed metrics and sends gathered data
@@ -24,85 +26,78 @@ for the installation instructions.
 The following steps are needed for the PMM client installation in your
 Kubernetes-based environment:
 
-
-1. The PMM client installation is initiated by updating the `pmm`
-section in the
-[deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
-file.
-
+1. The PMM client installation is initiated by updating the `pmm` section in the
+    [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
+    file.
 
     * set `pmm.enabled=true`
 
-
     * set the `pmm.serverHost` key to your PMM Server hostname,
-
 
     * authorize PMM Client within PMM Server in one of two ways:
 
-
         1. Use **token-based authorization (recommended)**. [Acquire the API Key from your PMM Server](https://docs.percona.com/percona-monitoring-and-management/details/api.html#api-keys-and-authentication)
-and set `pmmserverkey` in the
-[deploy/secrets.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/secrets.yaml)
-secrets file to this obtained API Key value.
-
+            and set `pmmserverkey` in the
+            [deploy/secrets.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/secrets.yaml)
+            secrets file to this obtained API Key value.
 
         2. Use **password-based authorization**. Check that  the `serverUser`
-key in the
-[deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
-file contains your PMM Server user name (`admin` by default), and
-make sure the `pmmserver` key in the
-[deploy/secrets.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/secrets.yaml)
-secrets file contains the password specified for the PMM Server during
-its installation.
+            key in the
+            [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
+            file contains your PMM Server user name (`admin` by default), and
+            make sure the `pmmserver` key in the
+            [deploy/secrets.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/secrets.yaml)
+            secrets file contains the password specified for the PMM Server during
+            its installation.
 
-*Password-based authorization method is deprecated since the Operator
-1.11.0.*
+    *Password-based authorization method is deprecated since the Operator 1.11.0.*
 
-**NOTE**: You use `deploy/secrets.yaml` file to *create* Secrets Object.
-The file contains all values for each key/value pair in a convenient
-plain text format. But the resulting Secrets contain passwords stored
-as base64-encoded strings. If you want to *update* password field,
-you’ll need to encode the value into base64 format. To do this, you can
-run `echo -n "password" | base64` in your local shell to get valid
-values. For example, setting the PMM Server user’s password to
-new_password\` in the `my-cluster-name-secrets` object can be done
-with the following command:
+    !!! note
 
-```bash
-$ kubectl patch secret/my-cluster-name-secrets -p '{"data":{"pmmserver": "'$(echo -n new_password | base64 --wrap=0)'"}}'
-```
+        You use `deploy/secrets.yaml` file to *create* Secrets Object.
+        The file contains all values for each key/value pair in a convenient
+        plain text format. But the resulting Secrets contain passwords stored
+        as base64-encoded strings. If you want to *update* password field,
+        you’ll need to encode the value into base64 format. To do this, you can
+        run `echo -n "password" | base64` in your local shell to get valid
+        values. For example, setting the PMM Server user’s password to
+        new_password\` in the `my-cluster-name-secrets` object can be done
+        with the following command:
 
+        ```bash
+        $ kubectl patch secret/my-cluster-name-secrets -p '{"data":{"pmmserver": "'$(echo -n new_password | base64 --wrap=0)'"}}'
+        ```
 
     * you can also use `pmm.pxcParams` and `pmm.proxysqlParams` keys to
-specify additional parameters for [pmm-admin add mysql](https://www.percona.com/doc/percona-monitoring-and-management/2.x/setting-up/client/mysql.html#adding-mysql-service-monitoring) and
-[pmm-admin add mysql](https://www.percona.com/doc/percona-monitoring-and-management/2.x/setting-up/client/proxysql.html)
-commands respectively, if needed.
+        specify additional parameters for [pmm-admin add mysql](https://www.percona.com/doc/percona-monitoring-and-management/2.x/setting-up/client/mysql.html#adding-mysql-service-monitoring) and
+        [pmm-admin add mysql](https://www.percona.com/doc/percona-monitoring-and-management/2.x/setting-up/client/proxysql.html)
+        commands respectively, if needed.
 
-**NOTE**: Please take into account that Operator automatically manages
-common Percona XtraDB Cluster Service Monitoring parameters mentioned
-in the officiall PMM documentation, such like username, password,
-service-name, host, etc. Assigning values to these parameters is not
-recommended and can negatively affect the functionality of the PMM
-setup carried out by the Operator.
+    !!! note
 
-Apply changes with the `kubectl apply -f deploy/secrets.yaml` command.
+        Please take into account that Operator automatically manages
+        common Percona XtraDB Cluster Service Monitoring parameters mentioned
+        in the officiall PMM documentation, such like username, password,
+        service-name, host, etc. Assigning values to these parameters is not
+        recommended and can negatively affect the functionality of the PMM
+        setup carried out by the Operator.
 
-When done, apply the edited `deploy/cr.yaml` file:
+    Apply changes with the `kubectl apply -f deploy/secrets.yaml` command.
 
-```bash
-$ kubectl apply -f deploy/cr.yaml
-```
+    When done, apply the edited `deploy/cr.yaml` file:
 
+    ```bash
+    $ kubectl apply -f deploy/cr.yaml
+    ```
 
 2. Check that corresponding Pods are not in a cycle of stopping and restarting.
-This cycle occurs if there are errors on the previous steps:
+    This cycle occurs if there are errors on the previous steps:
 
-```bash
-$ kubectl get pods
-$ kubectl logs cluster1-pxc-node-0 -c pmm-client
-```
-
+    ```bash
+    $ kubectl get pods
+    $ kubectl logs cluster1-pxc-node-0 -c pmm-client
+    ```
 
 3. Now you can access PMM via *https* in a web browser, with the
-login/password authentication, and the browser is configured to show
-Percona XtraDB Cluster metrics.
+    login/password authentication, and the browser is configured to show
+    Percona XtraDB Cluster metrics.

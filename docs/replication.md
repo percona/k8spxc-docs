@@ -2,18 +2,16 @@
 
 The cross-site replication involves configuring one Percona XtraDB Cluster as *Source*, and another Percona XtraDB Cluster as *Replica* to allow an asynchronous replication between them:
 
-
-
 ![image](assets/images/pxc-replication.svg)
 
 The Operator automates configuration of *Source* and *Replica* Percona XtraDB Clusters, but the feature itself is not bound to Kubernetes. Either *Source* or *Replica* can run outside of Kubernetes, be regular MySQL and be out of the Operators’ control.
 
 This feature can be useful in several cases: for example, it can simplify migration from on-premises to the cloud with replication, and it can be really helpful in case of the disaster recovery too.
 
-**NOTE**: Cross-site replication is based on [Automatic Asynchronous Replication Connection Failover](https://dev.mysql.com/doc/refman/8.0/en/replication-asynchronous-connection-failover.html). Therefore it requires  MySQL 8.0.22+ (Percona XtraDB Cluster 8.0.22+) to work.
+!!! note
 
-<!-- Describe how to stop/start replication
-Describe how to perform a failover -->
+    Cross-site replication is based on [Automatic Asynchronous Replication Connection Failover](https://dev.mysql.com/doc/refman/8.0/en/replication-asynchronous-connection-failover.html). Therefore it requires  MySQL 8.0.22+ (Percona XtraDB Cluster 8.0.22+) to work.
+
 Setting up MySQL for asynchronous replication without the Operator is described [here](https://www.percona.com/blog/2021/04/14/what-you-can-do-with-auto-failover-and-percona-distribution-for-mysql-8-0-x/) and is out of the scope for this document.
 
 Configuring the cross-site replication for the cluster controlled by the Operator is explained in the following subsections.
@@ -22,10 +20,7 @@ Configuring the cross-site replication for the cluster controlled by the Operato
 
 You can configure *Source* instances for cross-site replication with `spec.pxc.replicationChannels` subsection in the `deploy/cr.yaml` configuration file. It is an array of channels, and you should provide the following keys for the channel in your *Source* Percona XtraDB Cluster:
 
-
 * `pxc.replicationChannels.[].name` key is the name of the channel,
-
-
 * `pxc.replicationChannels.[].isSource` key should be set to `true`.
 
 Here is an example:
@@ -58,9 +53,11 @@ spec:
       type: LoadBalancer
 ```
 
-**NOTE**: This will create a LoadBalancer per each Percona XtraDB Cluster Pod.
-In most cases, for cross-region replication to work this Load Balancer should
-be internet-facing.
+!!! note
+
+    This will create a LoadBalancer per each Percona XtraDB Cluster Pod.
+    In most cases, for cross-region replication to work this Load Balancer should
+    be internet-facing.
 
 To list the endpoints assigned to PXC Pods list the Kubernetes Service objects by
 executing `kubectl get services -l "app.kubernetes.io/instance=CLUSTER_NAME"` command.
@@ -69,22 +66,11 @@ executing `kubectl get services -l "app.kubernetes.io/instance=CLUSTER_NAME"` co
 
 You can configure *Replica* instances for cross-site replication with `spec.pxc.replicationChannels` subsection in the `deploy/cr.yaml` configuration file. It is an array of channels, and you should provide the following keys for the channel in your *Replica* Percona XtraDB Cluster:
 
-
 * `pxc.replicationChannels.[].name` key is the name of the channel,
-
-
 * `pxc.replicationChannels.[].isSource` key should be set to `false`,
-
-
 * `pxc.replicationChannels.[].sourcesList` is the list of *Source* cluster names from which Replica should get the data,
-
-
 * `pxc.replicationChannels.[].sourcesList.[].host` is the host name or IP address of the Source,
-
-
 * `pxc.replicationChannels.[].sourcesList.[].port` is the port of the source (`3306` port will be used if nothing specified),
-
-
 * `pxc.replicationChannels.[].sourcesList.[].weight` is the *weight* of the source (in the event of a connection failure, a new source is selected from the list based on a weighted priority).
 
 Here is the example:
@@ -128,7 +114,9 @@ Replication channel demands a special [system user](users.md#users-system-users)
 The Operator creates a system-level Percona XtraDB Cluster user named `replication` for this purpose, with
 credentials stored in a Secret object [along with other system users](users.md#users-system-users).
 
-**NOTE**: If the cluster is outside of Kubernetes and is not under the Operator’s control, [the appropriate user with necessary permissions](https://dev.mysql.com/doc/refman/8.0/en/replication-asynchronous-connection-failover.html) should be created manually.
+!!! note
+
+    If the cluster is outside of Kubernetes and is not under the Operator’s control, [the appropriate user with necessary permissions](https://dev.mysql.com/doc/refman/8.0/en/replication-asynchronous-connection-failover.html) should be created manually.
 
 You can change a password for this user as follows:
 
@@ -144,26 +132,23 @@ If you have changed the `replication` user’s password on the Source cluster, a
 
 Fixing this involves the following steps.
 
-
 1. Find the Replica Pod which was chosen by the Operator for replication, using the following command:
 
-```bash
-$ kubectl get pods --selector percona.com/replicationPod=true
-```
-
+    ```bash
+    $ kubectl get pods --selector percona.com/replicationPod=true
+    ```
 
 2. Get the shell access to this Pod and login to the MySQL monitor as a [root user](users.md#users-system-users):
 
-```bash
-$ kubectl exec -c pxc --stdin --tty <pod_name> -- /bin/bash
-bash-4.4$ mysql -uroot -proot_password
-```
-
+    ```bash
+    $ kubectl exec -c pxc --stdin --tty <pod_name> -- /bin/bash
+    bash-4.4$ mysql -uroot -proot_password
+    ```
 
 3. Execute the following three SQL commands to propagate the `replication` user password from the Source cluster to Replica:
 
-```sql
-STOP REPLICA IO_THREAD FOR CHANNEL '$REPLICATION_CHANNEL_NAME';
-CHANGE MASTER TO MASTER_PASSWORD='$NEW_REPLICATION_PASSWORD' FOR CHANNEL '$REPLICATION_CHANNEL_NAME';
-START REPLICA IO_THREAD FOR CHANNEL '$REPLICATION_CHANNEL_NAME';
-```
+    ```sql
+    STOP REPLICA IO_THREAD FOR CHANNEL '$REPLICATION_CHANNEL_NAME';
+    CHANGE MASTER TO MASTER_PASSWORD='$NEW_REPLICATION_PASSWORD' FOR CHANNEL '$REPLICATION_CHANNEL_NAME';
+    START REPLICA IO_THREAD FOR CHANNEL '$REPLICATION_CHANNEL_NAME';
+    ```

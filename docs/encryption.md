@@ -40,7 +40,6 @@ The following steps will deploy Vault on Kubernetes with the [Helm 3 package man
 
 ## Configuring Vault
 
-
 1. First, you should enable secrets within Vault. For this you will need a [Vault token](https://www.vaultproject.io/docs/concepts/tokens).
     Percona XtraDB Cluster can use any regular token which allows all operations
     inside the secrets mount point. In the following example we are using the
@@ -101,12 +100,10 @@ The following steps will deploy Vault on Kubernetes with the [Helm 3 package man
 
     2. To turn on TLS and access the Vault server via HTTPS, you should do two more things:
 
-        
-            * add one more item to the secret: the contents of the `ca.cert` file
-        with your certificate,
+        * add one more item to the secret: the contents of the `ca.cert` file
+            with your certificate,
 
-
-            * store the path to this file in the `vault_ca` key.
+        * store the path to this file in the `vault_ca` key.
 
         ```yaml
         apiVersion: v1

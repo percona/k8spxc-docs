@@ -4,7 +4,9 @@ The Operator allows you to deploy additional (so-called *sidecar*) containers to
 the Pod. You can use this feature to run debugging tools, some specific
 monitoring solutions, etc.
 
-**NOTE**: Custom sidecar containers [can easily access other components of your cluster](https://kubernetes.io/docs/concepts/workloads/pods/#resource-sharing-and-communication).
+!!! note
+
+    Custom sidecar containers [can easily access other components of your cluster](https://kubernetes.io/docs/concepts/workloads/pods/#resource-sharing-and-communication).
 Therefore they should be used carefully and by experienced users only.
 
 ## Adding a sidecar container
@@ -141,7 +143,9 @@ The above example creates a `sidecar-secret` volume (based on already existing
 and mounts it to the `my-sidecar-1` container’s filesystem under the
 `/secret` directory.
 
-**NOTE**: Don’t forget you need to [create a Secret Object](https://kubernetes.io/docs/concepts/configuration/secret/) before you can use it.
+!!! note
+
+    Don’t forget you need to [create a Secret Object](https://kubernetes.io/docs/concepts/configuration/secret/) before you can use it.
 
 ### configMap
 
@@ -171,4 +175,6 @@ The above example creates a `sidecar-config` volume (based on already existing
 and mounts it to the `my-sidecar-1` container’s filesystem under the
 `/config` directory.
 
-**NOTE**: Don’t forget you need to [create a configMap Object](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-a-configmap) before you can use it.
+!!! note
+
+    Don’t forget you need to [create a configMap Object](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-a-configmap) before you can use it.

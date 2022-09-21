@@ -24,12 +24,13 @@ base64-encoded strings, so you’ll need to encode the value of each variable.
 For example, To have `HA_CONNECTION_TIMEOUT` variable equal to `1000`, you
 can run `echo -n "1000" | base64 --wrap=0` in your local shell and get `MTAwMA==`.
 
-**NOTE**: Similarly, you can read the list of options from a Base64-encoded
-string:
+!!! note
 
-```bash
-$ echo "MTAwMA==" | base64 --decode
-```
+    Similarly, you can read the list of options from a Base64-encoded string:
+
+    ```bash
+    $ echo "MTAwMA==" | base64 --decode
+    ```
 
 When ready, apply the YAML file with the following command:
 

@@ -157,8 +157,10 @@ spec:
 You can add `sidecars` subsection to `pxc`, `haproxy`, and `proxysql`
 sections.
 
-**NOTE**: Custom sidecar containers [can easily access other components of your cluster](https://kubernetes.io/docs/concepts/workloads/pods/#resource-sharing-and-communication).
-Therefore they should be used carefully and by experienced users only.
+!!! note
+
+    Custom sidecar containers [can easily access other components of your cluster](https://kubernetes.io/docs/concepts/workloads/pods/#resource-sharing-and-communication).
+    Therefore they should be used carefully and by experienced users only.
 
 Find more information on sidecar containers in the appropriate
 [documentation page](sidecar.md#operator-sidecar).
@@ -185,18 +187,20 @@ When identified, the appropriate core dump can be downloaded as follows:
 $ kubectl cp some-name-pxc-1:/var/lib/mysql/core.20210015093005  /tmp/core.20210015093005
 ```
 
-**NOTE**: It is useful to provide Build ID and Server Version in addition to core
-dump when Creating a support ticket. Both can be found from logs:
+!!! note
 
-```bash
-$ kubectl logs some-name-pxc-1 -c logs
+    It is useful to provide Build ID and Server Version in addition to core
+    dump when Creating a support ticket. Both can be found from logs:
 
-[1] init-deploy-949.some-name-pxc-1.mysqld-error.log: [1610702394.259356066, {"log"=>"09:19:54 UTC - mysqld got signal 11 ;"}]
-[2] init-deploy-949.some-name-pxc-1.mysqld-error.log: [1610702394.259356829, {"log"=>"Most likely, you have hit a bug, but this error can also be caused by malfunctioning hardware."}]
-[3] init-deploy-949.some-name-pxc-1.mysqld-error.log: [1610702394.259457282, {"log"=>"Build ID: 5a2199b1784b967a713a3bde8d996dc517c41adb"}]
-[4] init-deploy-949.some-name-pxc-1.mysqld-error.log: [1610702394.259465692, {"log"=>"Server Version: 8.0.21-12.1 Percona XtraDB Cluster (GPL), Release rel12, Revision 4d973e2, WSREP version 26.4.3, wsrep_26.4.3"}]
-.....
-```
+    ```bash
+    $ kubectl logs some-name-pxc-1 -c logs
+
+    [1] init-deploy-949.some-name-pxc-1.mysqld-error.log: [1610702394.259356066, {"log"=>"09:19:54 UTC - mysqld got signal 11 ;"}]
+    [2] init-deploy-949.some-name-pxc-1.mysqld-error.log: [1610702394.259356829, {"log"=>"Most likely, you have hit a bug, but this error can also be caused by malfunctioning hardware."}]
+    [3] init-deploy-949.some-name-pxc-1.mysqld-error.log: [1610702394.259457282, {"log"=>"Build ID: 5a2199b1784b967a713a3bde8d996dc517c41adb"}]
+    [4] init-deploy-949.some-name-pxc-1.mysqld-error.log: [1610702394.259465692, {"log"=>"Server Version: 8.0.21-12.1 Percona XtraDB Cluster (GPL), Release rel12, Revision 4d973e2, WSREP version 26.4.3, wsrep_26.4.3"}]
+    .....
+    ```
 
 ## How to choose between HAProxy and ProxySQL when configuring the cluster?
 

@@ -7,12 +7,9 @@ You can pass options from the
 configuration file to be included in the MySQL configuration in one of the
 following ways:
 
-
 * edit the `deploy/cr.yaml` file,
 
-
 * use a ConfigMap,
-
 
 * use a Secret object.
 
@@ -97,11 +94,13 @@ This can be useful if you need additional protection for some sensitive data.
 You should create a Secret object with a specific name, composed of your cluster
 name and the `pxc` suffix.
 
-**NOTE**: To find the cluster name, you can use the following command:
+!!! note
 
-```bash
-$ kubectl get pxc
-```
+    To find the cluster name, you can use the following command:
+
+    ```bash
+    $ kubectl get pxc
+    ```
 
 Configuration options should be put inside a specific key inside of the `data`
 section. The name of this key is `my.cnf` for Percona XtraDB Cluster Pods.
@@ -125,12 +124,13 @@ follows:
 $ cat my.cnf | base64 --wrap=0
 ```
 
-**NOTE**: Similarly, you can read the list of options from a Base64 encoded
-string:
+!!! note
 
-```bash
-$ echo "W215c3FsZF0Kd3NyZXBfZGVidWc9T04KW3NzdF0Kd3NyZXBfZGVidWc9T04K" | base64 --decode
-```
+    Similarly, you can read the list of options from a Base64 encoded string:
+
+    ```bash
+    $ echo "W215c3FsZF0Kd3NyZXBfZGVidWc9T04KW3NzdF0Kd3NyZXBfZGVidWc9T04K" | base64 --decode
+    ```
 
 Finally, use a yaml file to create the Secret object. For example, you can
 create a `deploy/my-pxc-secret.yaml` file with the following contents:
@@ -150,8 +150,10 @@ When ready, apply it with the following command:
 $ kubectl create -f deploy/my-pxc-secret.yaml
 ```
 
-**NOTE**: Do not forget to restart Percona XtraDB Cluster to ensure the
-cluster has updated the configuration.
+!!! note
+
+    Do not forget to restart Percona XtraDB Cluster to ensure the
+    cluster has updated the configuration.
 
 ## Make changed options visible to Percona XtraDB Cluster
 
@@ -167,9 +169,7 @@ these options are not specified by user** (either in CR.yaml or in ConfigMap).
 
 Options which can be set automatically are the following ones:
 
-
 * `innodb_buffer_pool_size`
-
 
 * `max_connections`
 

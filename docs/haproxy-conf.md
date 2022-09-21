@@ -19,24 +19,24 @@ $ kubectl patch pxc cluster1 --type=merge --patch '{
   }}'
 ```
 
-**NOTE**: For obvious reasons the Operator will not allow the simultaneous
-enabling of both HAProxy and ProxySQL.
+!!! note
+
+    For obvious reasons the Operator will not allow the simultaneous
+    enabling of both HAProxy and ProxySQL.
 
 The resulting HAPproxy setup will contain two services:
 
-
 * `cluster1-haproxy` service listening on ports 3306 (MySQL) and 3309 (the [proxy protocol](https://www.haproxy.com/blog/haproxy/proxy-protocol/)).
-This service is pointing to the number zero Percona XtraDB Cluster member
-(`cluster1-pxc-0`) by default when this member is available. If a zero
-member is not available, members are selected in descending order of their
-numbers (e.g. `cluster1-pxc-2`, then `cluster1-pxc-1`, etc.). This service
-can be used for both read and write load, or it can also be used just for
-write load (single writer mode) in setups with split write and read loads.
-
+    This service is pointing to the number zero Percona XtraDB Cluster member
+    (`cluster1-pxc-0`) by default when this member is available. If a zero
+    member is not available, members are selected in descending order of their
+    numbers (e.g. `cluster1-pxc-2`, then `cluster1-pxc-1`, etc.). This service
+    can be used for both read and write load, or it can also be used just for
+    write load (single writer mode) in setups with split write and read loads.
 
 * `cluster1-haproxy-replicas` listening on port 3306 (MySQL).
-This service selects Percona XtraDB Cluster members to serve queries following
-the Round Robin load balancing algorithm.
+    This service selects Percona XtraDB Cluster members to serve queries following
+    the Round Robin load balancing algorithm.
 
 When the cluster with HAProxy is upgraded, the following steps
 take place. First, reader members are upgraded one by one: the Operator waits
@@ -47,13 +47,16 @@ the readers, then the writer Percona XtraDB Cluster member is finally upgraded.
 ## Passing custom configuration options to HAProxy
 
 You can pass custom configuration to HAProxy in one of the following ways:
-\* edit the `deploy/cr.yaml` file,
-\* use a ConfigMap,
-\* use a Secret object.
 
-**NOTE**: If you specify a custom HAProxy configuration in this way, the
-Operator doesn’t provide its own HAProxy configuration file. That’s why you
-should specify either a full set of configuration options or nothing.
+* edit the `deploy/cr.yaml` file,
+* use a ConfigMap,
+* use a Secret object.
+
+!!! note
+
+    If you specify a custom HAProxy configuration in this way, the
+    Operator doesn’t provide its own HAProxy configuration file. That’s why you
+    should specify either a full set of configuration options or nothing.
 
 ### Edit the `deploy/cr.yaml` file
 
@@ -170,11 +173,13 @@ This can be useful if you need additional protection for some sensitive data.
 You should create a Secret object with a specific name, composed of your cluster
 name and the `haproxy` suffix.
 
-**NOTE**: To find the cluster name, you can use the following command:
+!!! note
 
-```bash
-$ kubectl get pxc
-```
+    To find the cluster name, you can use the following command:
+
+    ```bash
+    $ kubectl get pxc
+    ```
 
 Configuration options should be put inside a specific key inside of the `data`
 section. The name of this key is `haproxy.cfg` for ProxySQL Pods.
@@ -217,20 +222,21 @@ follows:
 $ cat haproxy.cfg | base64 --wrap=0
 ```
 
-**NOTE**: Similarly, you can read the list of options from a Base64 encoded
-string:
+!!! note
 
-```bash
-$ echo "IGdsb2JhbAogICBtYXhjb25uIDIwNDgKICAgZXh0ZXJuYWwtY2hlY2sKICAgc3RhdHMgc29ja2V0\
-  IC92YXIvcnVuL2hhcHJveHkuc29jayBtb2RlIDYwMCBleHBvc2UtZmQgbGlzdGVuZXJzIGxldmVs\
-  IHVzZXIKIGRlZmF1bHRzCiAgIGxvZyBnbG9iYWwKICAgbW9kZSB0Y3AKICAgcmV0cmllcyAxMAog\
-  ICB0aW1lb3V0IGNsaWVudCAxMDAwMAogICB0aW1lb3V0IGNvbm5lY3QgMTAwNTAwCiAgIHRpbWVv\
-  dXQgc2VydmVyIDEwMDAwCiBmcm9udGVuZCBnYWxlcmEtaW4KICAgYmluZCAqOjMzMDkgYWNjZXB0\
-  LXByb3h5CiAgIGJpbmQgKjozMzA2CiAgIG1vZGUgdGNwCiAgIG9wdGlvbiBjbGl0Y3BrYQogICBk\
-  ZWZhdWx0X2JhY2tlbmQgZ2FsZXJhLW5vZGVzCiBmcm9udGVuZCBnYWxlcmEtcmVwbGljYS1pbgog\
-  ICBiaW5kICo6MzMwOSBhY2NlcHQtcHJveHkKICAgYmluZCAqOjMzMDcKICAgbW9kZSB0Y3AKICAg\
-  b3B0aW9uIGNsaXRjcGthCiAgIGRlZmF1bHRfYmFja2VuZCBnYWxlcmEtcmVwbGljYS1ub2Rlcwo=" | base64 --decode
-```
+    Similarly, you can read the list of options from a Base64 encoded string:
+
+    ```bash
+    $ echo "IGdsb2JhbAogICBtYXhjb25uIDIwNDgKICAgZXh0ZXJuYWwtY2hlY2sKICAgc3RhdHMgc29ja2V0\
+      IC92YXIvcnVuL2hhcHJveHkuc29jayBtb2RlIDYwMCBleHBvc2UtZmQgbGlzdGVuZXJzIGxldmVs\
+      IHVzZXIKIGRlZmF1bHRzCiAgIGxvZyBnbG9iYWwKICAgbW9kZSB0Y3AKICAgcmV0cmllcyAxMAog\
+      ICB0aW1lb3V0IGNsaWVudCAxMDAwMAogICB0aW1lb3V0IGNvbm5lY3QgMTAwNTAwCiAgIHRpbWVv\
+      dXQgc2VydmVyIDEwMDAwCiBmcm9udGVuZCBnYWxlcmEtaW4KICAgYmluZCAqOjMzMDkgYWNjZXB0\
+      LXByb3h5CiAgIGJpbmQgKjozMzA2CiAgIG1vZGUgdGNwCiAgIG9wdGlvbiBjbGl0Y3BrYQogICBk\
+      ZWZhdWx0X2JhY2tlbmQgZ2FsZXJhLW5vZGVzCiBmcm9udGVuZCBnYWxlcmEtcmVwbGljYS1pbgog\
+      ICBiaW5kICo6MzMwOSBhY2NlcHQtcHJveHkKICAgYmluZCAqOjMzMDcKICAgbW9kZSB0Y3AKICAg\
+      b3B0aW9uIGNsaXRjcGthCiAgIGRlZmF1bHRfYmFja2VuZCBnYWxlcmEtcmVwbGljYS1ub2Rlcwo=" | base64 --decode
+    ```
 
 Finally, use a yaml file to create the Secret object. For example, you can
 create a `deploy/my-haproxy-secret.yaml` file with the following contents:
@@ -258,16 +264,20 @@ When ready, apply it with the following command:
 $ kubectl create -f deploy/my-haproxy-secret.yaml
 ```
 
-**NOTE**: Do not forget to restart Percona XtraDB Cluster to ensure the
-cluster has updated the configuration.
+!!! note
+
+    Do not forget to restart Percona XtraDB Cluster to ensure the
+    cluster has updated the configuration.
 
 ## Enabling the Proxy protocol
 
 The Proxy protocol [allows](https://www.percona.com/doc/percona-server/LATEST/flexibility/proxy_protocol_support.html)
 HAProxy to provide a real client address to Percona XtraDB Cluster.
 
-**NOTE**: To use this feature, you should have a Percona XtraDB Cluster image
-version `8.0.21` or newer.
+!!! note
+
+    To use this feature, you should have a Percona XtraDB Cluster image
+    version `8.0.21` or newer.
 
 Normally Proxy protocol is disabled, and Percona XtraDB Cluster sees the IP
 address of the proxying server (HAProxy) instead of the real client address.
@@ -280,7 +290,9 @@ You can enable Proxy protocol on Percona XtraDB Cluster by adding
 option to [pxc.configuration](operator.md#pxc-configuration) key in the `deploy/cr.yaml` configuration
 file.
 
-**NOTE**: Depending on the load balancer of your cloud provider, you may also
-need setting [haproxy.externaltrafficpolicy](operator.md#haproxy-externaltrafficpolicy) option in `deploy/cr.yaml`.
+!!! note
+
+    Depending on the load balancer of your cloud provider, you may also
+    need setting [haproxy.externaltrafficpolicy](operator.md#haproxy-externaltrafficpolicy) option in `deploy/cr.yaml`.
 
 More information about Proxy protocol can be found in the [official HAProxy documentation](https://www.haproxy.com/blog/using-haproxy-with-the-proxy-protocol-to-better-secure-your-database/).
