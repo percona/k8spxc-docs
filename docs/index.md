@@ -49,11 +49,13 @@ or in the cloud.
 
 # Configuration
 
-* [Local Storage support](storage.md)
+* [Application and system users](users.md)
+
+* [Changing MySQL Options](options.md)
 
 * [Anti-affinity and tolerations](constraints.md)
 
-* [Changing MySQL Options](options.md)
+* [Local Storage support](storage.md)
 
 * [Defining environment variables](containers-conf.md)
 
@@ -65,7 +67,7 @@ or in the cloud.
 
 * [Data at rest encryption](encryption.md)
 
-* [Application and system users](users.md)
+
 
 # Management
 

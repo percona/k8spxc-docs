@@ -103,7 +103,6 @@ nav:
     - Requirements:
           - "System Requirements": System-Requirements.md
           - "Design and architecture": architecture.md
-          - "Comparison with other solutions": compare.md
           
     - Quickstart guides:
           - "Install with Helm": helm.md
@@ -118,29 +117,29 @@ nav:
           
     - Configuration:
           - "Application and system users": users.md
-          - "Changing MongoDB Options": options.md
+          - "Changing MySQL Options": options.md
           - "Anti-affinity and tolerations": constraints.md
           - "Exposing the cluster": expose.md
           - "Local Storage support": storage.md
-          - "Arbiter and non-voting nodes": arbiter.md
-          - "MongoDB Sharding": sharding.md
+          - "Defining environment variables": containers-conf.md
+          - "Load Balancing with HAProxy": haproxy-conf.md
+          - "Load Balancing with ProxySQL": proxysql-conf.md
           - "Transport Encryption (TLS/SSL)": TLS.md
           - "Data at rest encryption": encryption.md
-          - "Telemetry": telemetry.md
           
     - Management:
           - "Backup and restore": backups.md
-          - "Upgrade MongoDB and the Operator": update.md
+          - "Upgrade Percona XtraDB Cluster and the Operator": update.md
           - "Horizontal and vertical scaling": scaling.md
           - "Multi-cluster and multi-region deployment": replication.md
           - "Monitor with Percona Monitoring and Management (PMM)": monitoring.md
           - "Add sidecar containers": sidecar.md
           - "Restart or pause the cluster": pause.md
+          - "Crash recovery": recovery.md
           - "Debug and troubleshoot": debug.md
           
     - HOWTOs:
-          - "OpenLDAP integration": ldap.md
-          - "Creating a private S3-compatible cloud for backups": private.md
+          - "Install Percona XtraDB Cluster in multi-namespace (cluster-wide) mode": cluster-wide.md
           
     - Reference:
           - "Custom Resource options": operator.md
