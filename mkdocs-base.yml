@@ -1,6 +1,6 @@
 # MkDocs configuration
 # Used as base - look for .yml files with INHERIT
-site_name: PPercona Operator for MySQL based on Percona XtraDB Cluster
+site_name: Percona Operator for MySQL based on Percona XtraDB Cluster
 site_description: Documentation
 site_author: Percona LLC
 site_url: ""
@@ -30,7 +30,7 @@ extra_css:
   - https://unicons.iconscout.com/release/v3.0.3/css/line.css
   - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css
   - css/percona.css
-  - css/lightgallery.min.css
+  - css/version-select.css
 
 extra_javascript:
   - js/version-select.js
