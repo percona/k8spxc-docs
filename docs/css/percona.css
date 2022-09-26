@@ -44,3 +44,11 @@ dd {
  .ellipsis#ellipsis-three {
     animation-delay: 0.3s;
  }
+
+  .operator-selector
+{
+font-size: .8rem;
+color: #FFF;
+background: transparent;
+border: 0;
+}
