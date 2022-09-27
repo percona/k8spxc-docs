@@ -130,7 +130,7 @@ type=kubernetes.io/tls
 
 If a cert-manager is used, it should take care of
 updating the certificates. If you generate certificates manually,
-you are should take care of updating them in proper time.
+you should take care of updating them in proper time.
 
 TLS certificates issued by cert-manager are short-term ones. Starting from the
 Operator version 1.9.0 cert-manager issues TLS certificates for 3 months, while
