@@ -39,7 +39,7 @@ Install Helm following its [official installation instructions](https://docs.hel
 3. Install Percona XtraDB Cluster:
 
     ```bash
-    $ helm install my-db percona/pxc-db --version {{ release }} --namespace my-namespace
+    $ helm install my-db percona/pxc-db --version {{ release }}
     ```
 
     The `my-db` parameter in the above example is the name of [a new release object](https://helm.sh/docs/intro/using_helm/#three-big-concepts)
@@ -57,7 +57,7 @@ The following example will deploy a Percona XtraDB Cluster Cluster in the
 `pxc` namespace, with disabled backups and 20 Gi storage:
 
 ```bash
-$ helm install my-db percona/pxc-db --version {{ release }} --namespace pxc \
+$ helm install my-db percona/pxc-db --version {{ release }} \
   --set pxc.volumeSpec.resources.requests.storage=20Gi \
   --set backup.enabled=false
 ```
