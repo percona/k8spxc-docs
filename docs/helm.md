@@ -23,7 +23,7 @@ Install Helm following its [official installation instructions](https://docs.hel
 2. Install the Percona Operator for MySQL based on Percona XtraDB Cluster:
 
     ```bash
-    $ helm install my-op percona/pxc-operator --version {{ release }}
+    $ helm install my-op percona/pxc-operator
     ```
 
     The `my-op` parameter in the above example is the name of [a new release object](https://helm.sh/docs/intro/using_helm/#three-big-concepts)
@@ -39,7 +39,7 @@ Install Helm following its [official installation instructions](https://docs.hel
 3. Install Percona XtraDB Cluster:
 
     ```bash
-    $ helm install my-db percona/pxc-db --version {{ release }}
+    $ helm install my-db percona/pxc-db
     ```
 
     The `my-db` parameter in the above example is the name of [a new release object](https://helm.sh/docs/intro/using_helm/#three-big-concepts)
@@ -57,7 +57,7 @@ The following example will deploy a Percona XtraDB Cluster Cluster in the
 `pxc` namespace, with disabled backups and 20 Gi storage:
 
 ```bash
-$ helm install my-db percona/pxc-db --version {{ release }} \
+$ helm install my-db percona/pxc-db \
   --set pxc.volumeSpec.resources.requests.storage=20Gi \
   --set backup.enabled=false
 ```
