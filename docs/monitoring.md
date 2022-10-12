@@ -36,13 +36,15 @@ Kubernetes-based environment:
 
     * authorize PMM Client within PMM Server in one of two ways:
 
-        1. Use **token-based authorization (recommended)**. [Acquire the API Key from your PMM Server](https://docs.percona.com/percona-monitoring-and-management/details/api.html#api-keys-and-authentication)
+        === "with token-based authorization (recommended)"
+            <a name="operator-monitoring-client-token"></a>
+            [Acquire the API Key from your PMM Server](https://docs.percona.com/percona-monitoring-and-management/details/api.html#api-keys-and-authentication)
             and set `pmmserverkey` in the
             [deploy/secrets.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/secrets.yaml)
             secrets file to this obtained API Key value.
 
-        2. Use **password-based authorization**. Check that  the `serverUser`
-            key in the
+        === "with password-based authorization"
+            Check that  the `serverUser` key in the
             [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
             file contains your PMM Server user name (`admin` by default), and
             make sure the `pmmserver` key in the
