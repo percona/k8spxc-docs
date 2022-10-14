@@ -142,7 +142,10 @@ You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marke
     percona-xtradb-cluster-operator-79966668bd-rswbk   1/1     Running   0          9m54s
     ```
 
-4. Check connectivity to newly created cluster
+4. Check connectivity to newly created cluster. Run a container with MySQL 
+    monitor and connect its console output to your
+    terminal. The following command will do this, naming the new Pod
+    `percona-client`:
 
     ```bash
     $ oc run -i --rm --tty percona-client --image=percona:8.0 --restart=Never -- bash -il

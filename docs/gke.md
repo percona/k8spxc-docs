@@ -144,7 +144,9 @@ Also, you can see the same information when browsing Pods of your cluster in Goo
 
 ![image](assets/images/gke-quickstart-object-browser.png)
 
-If all nodes are up and running, you can try to connect to the cluster with the following command:
+If all nodes are up and running, you can try to connect to the cluster. Run a container
+    with `mysql` tool and connect its console output to your terminal. The following
+    command will do this, naming the new Pod `percona-client`:
 
 ```bash
 $ kubectl run -i --rm --tty percona-client --image=percona:8.0 --restart=Never -- bash -il
