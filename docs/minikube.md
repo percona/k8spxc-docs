@@ -82,8 +82,9 @@ Minikube:
 
 5. Check connectivity to a newly created cluster.
 
-    First of all, run percona-client and connect its console output to your
-    terminal (running it may require some time to deploy the correspondent Pod):
+    First of all, run a MySQL client container and connect its console output to your
+    terminal (running it may require some time to deploy the correspondent Pod).
+    The following command will do this, naming the new Pod `percona-client`:
 
     ```bash
     $ kubectl run -i --rm --tty percona-client --image=percona:8.0 --restart=Never -- bash -il
