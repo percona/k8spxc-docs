@@ -41,9 +41,25 @@ Minikube:
     $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cr-minimal.yaml
     ```
 
-    This deploys one Percona XtraDB Cluster node and one HAProxy node.
-    `deploy/cr-minimal.yaml` is for minimal non-production deployment. For
-    more configuration options please see `deploy/cr.yaml` and [Custom Resource Options](operator.md#operator-custom-resource-options).
+    !!! note
+
+        This deploys one Percona XtraDB Cluster node and one HAProxy node. The
+        [deploy/cr-minimal.yaml](https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cr-minimal.yaml) is for minimal non-production deployment.
+        For more configuration options please see
+        [deploy/cr.yaml](https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cr.yaml) and [Custom Resource Options](operator.md). You can clone the
+        repository with all manifests and source code by executing the following
+        command:
+
+        ```bash
+        $ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
+        ```
+
+        After editing the needed options, apply your modified `deploy/cr.yaml` file as follows:
+
+        ```bash
+        $ kubectl apply -f deploy/cr.yaml
+        ```
+
     Creation process will take some time. The process is over when both
     operator and replica set pod have reached their Running status.
     `kubectl get pods` output should look like this:
@@ -55,11 +71,9 @@ Minikube:
     minimal-cluster-haproxy-0                       2/2     Running   0          47m
     ```
 
-    You can clone the repository with all manifests and source code by executing the following command:
+    You can also track the progress via the Kubernetes dashboard:
 
-    ```default
-    $ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
-    ```
+    ![image](assets/images/minikube-pods.svg)
 
 4. During previous steps, the Operator has generated several [secrets](https://kubernetes.io/docs/concepts/configuration/secret/), including the
     password for the `root` user, which you will definitely need to access the
