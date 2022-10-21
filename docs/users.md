@@ -103,10 +103,10 @@ convenient from the user’s point of view. But the resulting Secrets
 object contains passwords stored as `data` - i.e., base64-encoded strings.
 If you want to update any field, you’ll need to encode the value into base64
 format. To do this, you can run `echo -n "password" | base64` (or just
-`echo -n "password" | base64` in case of BSD-based systems like Apple macOS) in
-your local shell to get valid values. For example, setting the PMM Server user’s
-password to `new_password` in the `my-cluster-name-secrets` object can be done
-with the following command:
+`echo -n "password" | base64` in case of Apple macOS) in your local shell to
+get valid values. For example, setting the PMM Server user’s password to
+`new_password` in the `my-cluster-name-secrets` object can be done with the
+following command:
 
 === "in Linux"
 
