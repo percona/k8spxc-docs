@@ -42,7 +42,7 @@ data:
     === "in Linux"
 
         ```bash
-        $ echo -n 'plain-text-string' | base64  --wrap=0
+        $ echo -n 'plain-text-string' | base64 --wrap=0
         ```
 
     === "in macOS"
