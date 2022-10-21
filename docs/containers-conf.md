@@ -22,7 +22,9 @@ data:
 As you can see, environment variables are stored as `data` - i.e.,
 base64-encoded strings, so you’ll need to encode the value of each variable.
 For example, To have `HA_CONNECTION_TIMEOUT` variable equal to `1000`, you
-can run `echo -n "1000" | base64 --wrap=0` in your local shell and get `MTAwMA==`.
+can run `echo -n "1000" | base64 --wrap=0` (or just `echo -n "1000" | base64`
+in case of BSD-based systems like Apple macOS) in your local shell and get
+`MTAwMA==`.
 
 !!! note
 

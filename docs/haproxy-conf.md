@@ -218,9 +218,17 @@ frontend galera-replica-in
 You can get a Base64 encoded string from your options via the command line as
 follows:
 
-```bash
-$ cat haproxy.cfg | base64 --wrap=0
-```
+=== "in Linux"
+
+    ```bash
+    $ cat haproxy.cfg | base64 --wrap=0
+    ```
+
+=== "in macOS"
+
+    ```bash
+    $ cat haproxy.cfg | base64
+    ```
 
 !!! note
 
