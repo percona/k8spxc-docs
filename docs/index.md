@@ -29,6 +29,8 @@ or in the cloud.
 
 * [Design and architecture](architecture.md)
 
+* [Comparison with other solutions](compare.md)
+
 # Quickstart guides
 
 * [Install with Helm](helm.md)
