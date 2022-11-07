@@ -602,7 +602,7 @@ configuration options for the HAProxy service.
 | **Example**     | `30` |
 | **Description** | The [Kubernetes grace period when terminating a Pod](https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods) |
 |                 | |
-| **Key**         | {{ optionlink('haproxy.loadBalancerSourceRanges') }} |
+| **Key**         | {{ optionlink('haproxy.loadbalancersourceranges') }} |
 | **Value**       | string |
 | **Example**     | `10.0.0.0/8` |
 | **Description** | The range of client IP addresses from which the load balancer should be reachable (if not set, there is no limitations) |
@@ -616,6 +616,16 @@ configuration options for the HAProxy service.
 | **Value**       | string |
 | **Example**     | `service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http` |
 | **Description** | The [Kubernetes annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) metadata for the load balancer Service |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.replicasServiceLabels') }} |
+| **Value**       | label |
+| **Example**     | `rack: rack-23` |
+| **Description** | The [Kubernetes labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) for the load balancer replicas Service |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.replicasServiceAnnotations') }} |
+| **Value**       | string |
+| **Example**     | `service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http` |
+| **Description** | The [Kubernetes annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) metadata for the load balancer replicas Service |
 |                 | |
 | **Key**         | {{ optionlink('haproxy.containerSecurityContext') }} |
 | **Value**       | subdoc |
