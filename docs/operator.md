@@ -869,7 +869,7 @@ configuration options for the ProxySQL daemon.
 | **Example**     | `30` |
 | **Description** | The [Kubernetes grace period when terminating a Pod](https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods) |
 |                 | |
-| **Key**         | {{ optionlink('proxysql.loadbalancersourceranges') }} |
+| **Key**         | {{ optionlink('proxysql.loadBalancerSourceRanges') }} |
 | **Value**       | string |
 | **Example**     | `10.0.0.0/8` |
 | **Description** | The range of client IP addresses from which the load balancer should be reachable (if not set, there is no limitations) |
