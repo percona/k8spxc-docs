@@ -7,10 +7,16 @@ the following ones:
 * [Custom Resource Definition](operator.md);
 * Database Management System (Percona XtraDB Cluster).
 
-Here is the list of recommended upgrade strategies:
+Here is the list of recommended upgrade scenarios:
 
 * Upgrade to the new version of the Operator *and* new version of the Database Management System (Percona XtraDB Cluster),
 * Minor Percona XtraDB Cluster version upgrade *without* the Operator upgrade.
+
+Finally, there are following update strategies:
+
+* Smart Uptates, controlled by the Operator (the recommended way),
+* Classic Kubernetes rolling update, or manual update of Pods.
+
 
 ## Upgrading the Operator
 
