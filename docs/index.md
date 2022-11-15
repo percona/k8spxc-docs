@@ -75,7 +75,7 @@ or in the cloud.
 
 * [Backup and restore](backups.md)
 
-* [Upgrade Percona XtraDB Cluster and the Operator](update.md)
+* [Upgrade Database and Operator](update.md)
 
 * [Horizontal and vertical scaling](scaling.md)
 

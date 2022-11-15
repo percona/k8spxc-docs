@@ -143,7 +143,7 @@ nav:
           
     - Management:
           - "Backup and restore": backups.md
-          - "Upgrade Percona XtraDB Cluster and the Operator": update.md
+          - "Upgrade Database and Operator": update.md
           - "Horizontal and vertical scaling": scaling.md
           - "Multi-cluster and multi-region deployment": replication.md
           - "Monitor with Percona Monitoring and Management (PMM)": monitoring.md

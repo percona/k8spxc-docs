@@ -1,15 +1,22 @@
-# Update Percona Operator for MySQL based on Percona XtraDB Cluster
+# Upgrade Database and Operator
 
 Starting from version 1.1.0, Percona Operator for MySQL based on Percona XtraDB Cluster
-allows upgrades to newer versions. This includes upgrades of the
-Operator itself, and upgrades of the Percona XtraDB Cluster.
+allows upgrades to newer versions. The upgradable components of the cluster are
+the following ones:
+* Operator;
+* [Custom Resource Definition](operator.md);
+* Database Management System (Percona XtraDB Cluster).
+
+Here is the list of recommended upgrade strategies:
+
+* Upgrade to the new version of the Operator *and* new version of the Database Management System (Percona XtraDB Cluster),
+* Minor Percona XtraDB Cluster version upgrade *without* the Operator upgrade.
 
 ## Upgrading the Operator
 
 The Operator upgrade includes the following steps.
 
-
-1. Update the Custom Resource Definition file for the Operator, taking it from
+1. Update the [Custom Resource Definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) file for the Operator, taking it from
     the official repository on Github, and do the same for the Role-based access
     control:
 
