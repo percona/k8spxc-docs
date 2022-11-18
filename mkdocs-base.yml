@@ -61,7 +61,9 @@ markdown_extensions:
   pymdownx.smartsymbols: {}
   pymdownx.tilde: {}
   pymdownx.superfences: {}
-  pymdownx.snippets: {}
+  pymdownx.snippets:
+    auto_append:
+      - includes/abbreviations.md
   pymdownx.tabbed:
     alternate_style: true
   pymdownx.highlight:

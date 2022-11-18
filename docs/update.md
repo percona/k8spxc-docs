@@ -1,26 +1,34 @@
 # Upgrade Database and Operator
 
-Starting from version 1.1.0, Percona Operator for MySQL based on Percona XtraDB Cluster
+Starting from the version 1.1.0, Percona Operator for MySQL based on Percona XtraDB Cluster
 allows upgrades to newer versions. The upgradable components of the cluster are
 the following ones:
-* Operator;
-* [Custom Resource Definition](operator.md);
+* the Operator;
+* [Custom Resource Definition (CRD)](operator.md),
 * Database Management System (Percona XtraDB Cluster).
 
-Here is the list of recommended upgrade scenarios:
+The list of recommended upgrade scenarios includes two variants:
 
-* Upgrade to the new version of the Operator *and* new version of the Database Management System (Percona XtraDB Cluster),
+* Upgrade to the new versions of the Operator *and* Percona XtraDB Cluster,
 * Minor Percona XtraDB Cluster version upgrade *without* the Operator upgrade.
 
-Finally, there are following update strategies:
+## Upgrade to the new versions of the Operator *and* Percona XtraDB Cluster
 
-* Smart Uptates, controlled by the Operator (the recommended way),
-* Classic Kubernetes rolling update, or manual update of Pods.
+In this scenario, components of the cluster are upgraded in the following order:
 
+1. the Operator and CRD,
+2. Percona XtraDB Cluster.
 
-## Upgrading the Operator
+### Upgrading the Operator and Custom Resource Definition
 
-The Operator upgrade includes the following steps.
+The Operator supports last 3 minor versions of the CRD.
+If you upgrade the Operator and do not upgrade the CRD (if CRD is older than the
+new Operator version by no more than three releases), you will be able to
+continue using the old CRD and even carry on Percona XtraDB Cluster minor
+version upgrades with it.
+
+But the recommended way is to update the Operator *and* CRD. The upgrade
+includes the following steps.
 
 1. Update the [Custom Resource Definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) file for the Operator, taking it from
     the official repository on Github, and do the same for the Role-based access
@@ -55,9 +63,22 @@ The Operator upgrade includes the following steps.
 
         Labels set on the Operator Pod will not be updated during upgrade.
 
-## Upgrading Percona XtraDB Cluster
+### Upgrading Percona XtraDB Cluster
 
-### Automatic upgrade
+The database management system (Percona XtraDB Cluster) can be upgraded following
+one of the following *update strategies*:
+
+* *Smart Uptates*, controlled by the Operator (**the recommended way**),
+* *Rolling Update*, initated manually and [controlled by the Kubernetes](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies),
+* *On Delete*, [done by Kubernetes](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies) when Pods are manually deleted one by one.
+
+In case of Smart Updates, the Operator can either detect the availability of the
+Percona XtraDB Cluster version or rely on the user's choice of the version. In
+both cases Pods are restarted by the Operator automatically in the order, which
+assures the primary instance to be updated last thus preventing possible
+connection issues until the whole cluster is updated to new settings.
+
+#### Smart Uptates strategy and the automatic upgrades
 
 Starting from version 1.5.0, the Operator can do fully automatic upgrades to
 the newer versions of Percona XtraDB Cluster within the method named *Smart
@@ -145,7 +166,7 @@ updates:
     ...
     ```
 
-### Semi-automatic upgrade
+#### Rolling Uptates strategy and semi-automatic upgrades
 
 Semi-automatic update of Percona XtraDB Cluster should be used with the Operator
 version 1.5.0 or earlier. For all newer versions, use automatic update
@@ -210,7 +231,7 @@ instead.
     $ kubectl rollout status sts cluster1-pxc
     ```
 
-### Manual upgrade
+### Manual upgrade (the On Delete strategy)
 
 Manual update of Percona XtraDB Cluster should be used with the Operator
 version 1.5.0 or earlier. For all newer versions, use automatic update
