@@ -16,23 +16,25 @@ The list of recommended upgrade scenarios includes two variants:
 
 In this scenario, components of the cluster are upgraded in the following order:
 
-1. the Operator and CRD,
+1. The Operator and CRD,
 2. Percona XtraDB Cluster.
 
-### Upgrading the Operator and Custom Resource Definition
+### Upgrading the Operator and CRD
 
-The Operator supports last 3 minor versions of the CRD.
-If you upgrade the Operator and do not upgrade the CRD (if CRD is older than the
-new Operator version by no more than three releases), you will be able to
-continue using the old CRD and even carry on Percona XtraDB Cluster minor
-version upgrades with it.
+!!! note
 
-But the recommended way is to update the Operator *and* CRD. The upgrade
-includes the following steps.
+    The Operator supports **last 3 versions of the CRD**, so it is technically
+    possible to skip upgrading the CRD and just upgrade the Operator. If the CRD
+    is older than the new Operator version *by no more than three releases*, you
+    will be able to continue using the old CRD and even carry on Percona XtraDB
+    Cluster minor version upgrades with it. But the recommended way is to update
+    the Operator *and* CRD.
 
-1. Update the [Custom Resource Definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) file for the Operator, taking it from
-    the official repository on Github, and do the same for the Role-based access
-    control:
+The upgrade includes the following steps.
+
+1. Update the [Custom Resource Definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
+    for the Operator, taking it from the official repository on Github, and do
+    the same for the Role-based access control:
 
     ```bash
     $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/crd.yaml
@@ -65,24 +67,23 @@ includes the following steps.
 
 ### Upgrading Percona XtraDB Cluster
 
-The database management system (Percona XtraDB Cluster) can be upgraded following
-one of the following *update strategies*:
+The database management system (Percona XtraDB Cluster) can be upgraded along
+with one of the following *update strategies*:
 
 * *Smart Uptates*, controlled by the Operator (**the recommended way**),
-* *Rolling Update*, initated manually and [controlled by the Kubernetes](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies),
+* *Rolling Update*, initated manually and [controlled by Kubernetes](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies),
 * *On Delete*, [done by Kubernetes](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies) when Pods are manually deleted one by one.
 
 In case of Smart Updates, the Operator can either detect the availability of the
 Percona XtraDB Cluster version or rely on the user's choice of the version. In
 both cases Pods are restarted by the Operator automatically in the order, which
-assures the primary instance to be updated last thus preventing possible
-connection issues until the whole cluster is updated to new settings.
+assures the primary instance to be updated last, preventing possible connection
+issues until the whole cluster is updated to the new settings.
 
 #### Smart Uptates strategy and the automatic upgrades
 
-Starting from version 1.5.0, the Operator can do fully automatic upgrades to
-the newer versions of Percona XtraDB Cluster within the method named *Smart
-Updates*.
+Smart Updates are available starting from the Operator version 1.5.0, allowing
+the Operator to do fully automatic upgrades of Percona XtraDB Cluster.
 
 To have this upgrade method enabled, make sure that the `updateStrategy` key
 in the `deploy/cr.yaml` configuration file is set to `SmartUpdate`.
@@ -98,7 +99,6 @@ the cluster Pods with the new image.
 The upgrade details are set in the `upgradeOptions` section of the
 `deploy/cr.yaml` configuration file. Make the following edits to configure
 updates:
-
 
 1. Set the `apply` option to one of the following values:
 
@@ -169,8 +169,7 @@ updates:
 #### Rolling Uptates strategy and semi-automatic upgrades
 
 Semi-automatic update of Percona XtraDB Cluster should be used with the Operator
-version 1.5.0 or earlier. For all newer versions, use automatic update
-instead.
+version 1.5.0 or earlier. For all newer versions, use [automatic update](update.md#smart-uptates-strategy-and-the-automatic-upgrades) instead.
 
 1. Edit the `deploy/cr.yaml` file, setting `updateStrategy` key to 
     `RollingUpdate`.
@@ -234,8 +233,7 @@ instead.
 ### Manual upgrade (the On Delete strategy)
 
 Manual update of Percona XtraDB Cluster should be used with the Operator
-version 1.5.0 or earlier. For all newer versions, use automatic update
-instead.
+version 1.5.0 or earlier. For all newer versions, use [automatic update](update.md#smart-uptates-strategy-and-the-automatic-upgrades) instead.
 
 1. Edit the `deploy/cr.yaml` file, setting `updateStrategy` key to
     `OnDelete`.
@@ -313,3 +311,12 @@ instead.
 
 4. The update process is successfully finished when all Pods have been
     restarted.
+
+
+## Minor Percona XtraDB Cluster version upgrade without the Operator upgrade
+
+In this scenario, the database management system (Percona XtraDB Cluster) is the
+only component of the cluster which is upgraded, and minor version upgrade is
+the only one to occur. For example, the image `percona-xtradb-cluster:8.0.27-18.1`
+can be upgraded to `percona-xtradb-cluster:8.0.25-15.1`.
+
