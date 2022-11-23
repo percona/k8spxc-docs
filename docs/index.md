@@ -105,4 +105,6 @@ or in the cloud.
 
 * [Frequently Asked Questions](faq.md)
 
+* [Old releases (documentation archive)](archive.md)
+
 * [Release Notes](ReleaseNotes/index.md)
