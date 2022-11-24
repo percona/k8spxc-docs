@@ -1,4 +1,4 @@
-# How to update Percona XtraDB Cluster manually
+# How to upgrade Percona XtraDB Cluster manually
 
 Percona Operator for MySQL based on Percona XtraDB Cluster supports upgrades 
 of the database management system (Percona XtraDB Cluster) starting from the

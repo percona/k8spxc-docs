@@ -93,7 +93,9 @@ or in the cloud.
 
 # HOWTOs
 
-* [Install Percona XtraDB Cluster in multi-namespace (cluster-wide) mode](cluster-wide.md)
+* [How to install Percona XtraDB Cluster in multi-namespace (cluster-wide) mode](cluster-wide.md)
+
+* [How to upgrade Percona XtraDB Cluster manually](update_manually.md)
 
 # Reference
 
