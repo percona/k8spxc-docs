@@ -49,7 +49,7 @@ The upgrade includes the following steps.
     ```
 
 2. Now you should [apply a patch](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your
-    deployment, supplying necessary image name with a newer version tag. This
+    deployment, supplying necessary image name with a newer version tag. You can find the proper
     image name for the current Operator release [in the list of certified images](images.md#custom-registry-images)
     (for older releases, please refer to the [old releases documentation archive](archive.md)).
     For example, updating to the `{{ release }}` version should look as
@@ -173,5 +173,5 @@ only component of the cluster which is upgraded, and minor version upgrade is
 the only one to occur. For example, the image `percona-xtradb-cluster:8.0.25-15.1`
 can be upgraded to `percona-xtradb-cluster:8.0.27-18.1`.
 
-You can find proper image name for the current Operator release [in the list of certified images](images.md#custom-registry-images). For older releases, please refer to the [old releases documentation archive](archive.md).
+You can find the proper image name for the current Operator release [in the list of certified images](images.md#custom-registry-images). For older releases, please refer to the [old releases documentation archive](archive.md).
 

@@ -45,7 +45,8 @@ Semi-automatic update of Percona XtraDB Cluster can be done as follows:
         to upgrade the Operator and CRD, if needed.
 
     Patching Custom Resource is done with the `kubectl patch pxc` command.
-    Actual image names can be found [in the list of certified images](images.md#custom-registry-images).
+    Actual image names can be found [in the list of certified images](images.md#custom-registry-images)
+    (for older releases, please refer to the [old releases documentation archive](archive.md)).
     For example, updating to the `{{ release }}` version should look as follows:
 
     === "For Percona XtraDB Cluster 8.0"
@@ -99,7 +100,8 @@ Manual update of Percona XtraDB Cluster can be done as follows:
         to upgrade the Operator and CRD, if needed.
 
     Patching Custom Resource is done with the `kubectl patch pxc` command.
-    Actual image names can be found [in the list of certified images](images.md#custom-registry-images).
+    Actual image names can be found [in the list of certified images](images.md#custom-registry-images)
+    (for older releases, please refer to the [old releases documentation archive](archive.md)).
     For example, updating to the `{{ release }}` version should look as
     follows, depending on whether you are using Percona XtraDB Cluster 5.7 or 8.0.
 
