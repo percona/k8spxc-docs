@@ -41,6 +41,8 @@ or in the cloud.
 
 * [Install on Amazon Elastic Kubernetes Service (AWS EKS)](eks.md)
 
+* [Install on Microsoft Azure Kubernetes Service (AKS)](aks.md)
+
 # Advanced Installation Guides
 
 * [Generic Kubernetes installation](kubernetes.md)
