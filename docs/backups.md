@@ -2,6 +2,9 @@
 
 The Operator usually stores Percona XtraDB Cluster backups on [Amazon S3 or S3-compatible
 storage](https://en.wikipedia.org/wiki/Amazon_S3#S3_API_and_competing_services) outside the Kubernetes cluster:
+The Operator usually stores Percona XtraDB Cluster backups outside the
+Kubernetes cluster, on [Amazon S3 or S3-compatible storage](https://en.wikipedia.org/wiki/Amazon_S3#S3_API_and_competing_services),
+or on [Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/):
 
 ![image](assets/images/backup-s3.png)
 
@@ -16,6 +19,16 @@ file to be executed automatically in proper time. *On-demand backups*
 can be done manually at any moment.
 
 ## Making scheduled backups
+
+Backups schedule is defined in the `backup` section of the
+[deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
+file. This section contains following subsections:
+
+* `storages` subsection contains data and configuration needed to store backups,
+* `schedule` subsection allows to actually schedule backups (the schedule is
+    specified in crontab format).
+
+### <a name="backups-scheduled-s3"></a> Backups on Amazon S3 or S3-compatible storage
 
 Since backups are stored separately on the Amazon S3, a secret with
 `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` should be present on
@@ -69,19 +82,10 @@ appropriate command to create the secret object, e.g.
     Also, setting [Google Cloud Storage Retention Period](https://cloud.google.com/storage/docs/bucket-lock)
     can cause a similar problem.
 
-Backups schedule is defined in the `backup` section of the
-[deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
-file. This section contains following subsections:
-
-
-* `storages` subsection contains data needed to access the S3-compatible cloud
-to store backups.
-
-
-* `schedule` subsection allows to actually schedule backups (the schedule is
-specified in crontab format).
-
-Here is an example of [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) which uses Amazon S3 storage for backups:
+All the data needed to access the S3-compatible cloud to store backups (credentials, name of the [bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingBucket.html) to keep backups in, etc.)should be
+put into the `backup.storages` subsection, and `backup.schedule` subsection
+should actually schedule backups in crontab-compatible way. Here is an example
+of [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) which uses Amazon S3 storage for backups:
 
 ```yaml
 ...
@@ -96,10 +100,10 @@ backup:
         credentialsSecret: my-cluster-name-backup-s3
   ...
   schedule:
-   - name: "sat-night-backup"
-     schedule: "0 0 * * 6"
-     keep: 3
-     storageName: s3-us-west
+    - name: "sat-night-backup"
+      schedule: "0 0 * * 6"
+      keep: 3
+      storageName: s3-us-west
   ...
 ```
 
@@ -121,8 +125,83 @@ for backups. Value of this key should be the same as the name used to
 create the secret object (`my-cluster-name-backup-s3` in the last
 example).
 
-The schedule is specified in crontab format as explained in
-[Custom Resource options](operator.md#operator-custom-resource-options).
+### <a name="backups-scheduled-azure"></a> Backups on Microsoft Azure Blob storage
+
+Since backups are stored separately on [Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/),
+a secret with `AZURE_STORAGE_ACCOUNT_NAME` and `AZURE_STORAGE_ACCOUNT_KEY` should be present on
+the Kubernetes cluster. The secrets file with these base64-encoded keys should
+be created: for example `deploy/backup-azure.yaml` file with the following
+contents.
+
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-cluster-azure-secret
+type: Opaque
+data:
+  AZURE_STORAGE_ACCOUNT_NAME: UkVQTEFDRS1XSVRILUFXUy1BQ0NFU1MtS0VZ
+  AZURE_STORAGE_ACCOUNT_KEY: UkVQTEFDRS1XSVRILUFXUy1TRUNSRVQtS0VZ
+```
+!!! note
+
+    The following command can be used to get a base64-encoded string from
+    a plain text one:
+    
+    === "in Linux"
+
+        ```bash
+        $ echo -n 'plain-text-string' | base64 --wrap=0
+        ```
+
+    === "in macOS"
+
+        ```bash
+        $ echo -n 'plain-text-string' | base64
+        ```
+
+The `name` value is the [Kubernetes secret](https://kubernetes.io/docs/concepts/configuration/secret/)
+name which will be used further. The `AZURE_STORAGE_ACCOUNT_NAME` and
+`AZURE_STORAGE_ACCOUNT_KEY` credentials will be used to access the storage
+(and obviously they should contain proper values to make this access
+possible). To have effect, secrets file should be applied with the appropriate
+command to create the Secrets object, e.g.
+`kubectl apply -f deploy/backup-azure.yaml` (for Kubernetes).
+
+All the data needed to access the Azure Blob storage to store backups
+(credentials, name of the [container](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction#containers) to keep backups in, etc.) should be
+put into the `backup.storages` subsection, and `backup.schedule` subsection
+should actually schedule backups in crontab-compatible way. Here is an example
+of [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
+which uses Azure Blob storage for backups:
+
+```yaml
+...
+backup:
+  enabled: true
+  ...
+  storages:
+    azure-blob:
+      type: azure
+      azure:
+        credentialsSecret: my-cluster-azure-secret
+        container: <your-container-name>
+  ...
+  schedule:
+    - name: "sat-night-backup"
+        schedule: "0 0 * * 6"
+        keep: 3
+        storageName: azure-blob
+  ...
+```
+The options within these three subsections are further explained in the
+[Operator Custom Resource options](operator.md).
+
+One option which should be mentioned separately is `credentialsSecret` which is
+a [Kubernetes secret](https://kubernetes.io/docs/concepts/configuration/secret/)
+for backups. Value of this key should be the same as the name used to
+create the secret object (`my-cluster-azure-secret` in the last example).
 
 ## Making on-demand backup
 
@@ -336,10 +415,12 @@ restoration can be done in the following way.
     * if you are restoring backup on the Kubernetes-based cluster *different*
         from one you have used to save this backup, set `spec.backupSource`
         subsection instead of `spec.backupName` field to point on the appropriate
-        PVC or S3-compatible storage:
+        PVC, or cloud storage:
 
-        1. If backup was stored on the PVC volume, `backupSource` should contain
-            the storage name (which should be configured in the main CR) and PVC Name:
+        === "PVC volume"
+
+            The `backupSource` key should contain the storage name (which should
+            be configured in the main CR) and PVC Name:
 
             ```yaml
             ...
@@ -349,11 +430,12 @@ restoration can be done in the following way.
               ...
             ```
 
+        === "S3-compatible storage"
 
-        2. If backup was stored on the S3-compatible storage, `backupSource`
-            should contain `destination` key equal to the s3 bucket with a special
-            `s3://` prefix, followed by the necessary S3 configuration keys, same
-            as in `deploy/cr.yaml` file:
+            The `backupSource` key should contain `destination` key equal to the
+            S3 [bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingBucket.html)
+            with a special `s3://` prefix, followed by the necessary S3
+            configuration keys, same as in `deploy/cr.yaml` file:
 
             ```yaml
             ...
@@ -363,7 +445,23 @@ restoration can be done in the following way.
                 credentialsSecret: my-cluster-name-backup-s3
                 region: us-west-2
                 endpointUrl: https://URL-OF-THE-S3-COMPATIBLE-STORAGE
+                ...
+            ```
+
+        === "Azure Blob storage"
+
+            The `backupSource` key should contain `destination` key equal to the
+            Azure Blob [container](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction#containers)
+            with a special `azure://` prefix, followed by the necessary Azure
+            configuration keys, same as in `deploy/cr.yaml` file:
+
+            ```yaml
             ...
+            backupSource:
+              destination: azure://AZURE-CONTAINER-NAME/BACKUP-NAME
+              azure:
+                credentialsSecret: my-cluster-azure-secret
+                ...
             ```
 
 2. After that, the actual restoration process can be started as follows:
@@ -427,9 +525,8 @@ you can put additional restoration parameters to the `restore.yaml` file
     `backupSource.storageName` key in the `deploy/backup/restore.yaml` file to
     the name of the appropriate storage,
 
-* if there is no necessary backup storage in `deploy/cr.yaml`, set  your
-    storage details in the `backupSource.s3` subsection instead of using the
-    `backupSource.storageName` field:
+* if there is no necessary backup storage in `deploy/cr.yaml`, set your
+    storage details instead of using the `backupSource.storageName` field:
 
     ```yaml
      ...
