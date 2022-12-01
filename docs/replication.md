@@ -123,13 +123,13 @@ You can change a password for this user as follows:
 === "in Linux"
 
     ```bash
-    $ kubectl patch secret/my-cluster-name-secrets -p '{"data":{"replication": "'$(echo -n new_password | base64 --wrap=0)'"}}'
+    $ kubectl patch secret/cluster1-secrets -p '{"data":{"replication": "'$(echo -n new_password | base64 --wrap=0)'"}}'
     ```
 
 === "in macOS"
 
     ```bash
-    $ kubectl patch secret/my-cluster-name-secrets -p '{"data":{"replication": "'$(echo -n new_password | base64)'"}}'
+    $ kubectl patch secret/cluster1-secrets -p '{"data":{"replication": "'$(echo -n new_password | base64)'"}}'
     ```
 
 If you have changed the `replication` user’s password on the Source cluster, and you use the Operator version 1.9.0, you can have a *replication is not running* error message in log, similar to the following one:

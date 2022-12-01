@@ -64,19 +64,19 @@ Kubernetes-based environment:
         run `echo -n "password" | base64 --wrap=0` (or just
         `echo -n "password" | base64` in case of Apple macOS) in your local
         shell to get valid values. For example, setting the PMM Server API Key
-        to `new_key` in the `my-cluster-name-secrets` object can be done with
+        to `new_key` in the `cluster1-secrets` object can be done with
         the following command:
 
         === "in Linux"
 
             ```bash
-            $ kubectl patch secret/my-cluster-name-secrets -p '{"data":{"pmmserverkey": "'$(echo -n new_key | base64 --wrap=0)'"}}'
+            $ kubectl patch secret/cluster1-secrets -p '{"data":{"pmmserverkey": "'$(echo -n new_key | base64 --wrap=0)'"}}'
             ```
 
         === "in macOS"
 
             ```bash
-            $ kubectl patch secret/my-cluster-name-secrets -p '{"data":{"pmmserverkey": "'$(echo -n new_key | base64)'"}}'
+            $ kubectl patch secret/cluster1-secrets -p '{"data":{"pmmserverkey": "'$(echo -n new_key | base64)'"}}'
             ```
 
     * you can also use `pmm.pxcParams` and `pmm.proxysqlParams` keys to

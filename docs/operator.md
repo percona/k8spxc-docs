@@ -6,7 +6,7 @@ file.
 
 The metadata part of this file contains the following keys:
 
-* `name` (`my-cluster-name` by default) sets the name of your Percona
+* `name` (`cluster1` by default) sets the name of your Percona
 XtraDB Cluster; it should include only [URL-compatible characters](https://datatracker.ietf.org/doc/html/rfc3986#section-2.3),
 not exceed 22 characters, start with an alphabetic character, and end with an
 alphanumeric character;
@@ -31,11 +31,11 @@ The spec part of the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-
 | allowUnsafeConfigurations | boolean | `false` | Prevents users from configuring a cluster with unsafe parameters such as starting the cluster with the number of Percona XtraDB Cluster instances which is less than 3, more than 5, or is an even number, with less than 2 ProxySQL or HAProxy Pods, or without TLS/SSL certificates (if `false`, unsafe parameters will be automatically changed to safe defaults)                             |
 | enableCRValidationWebhook | boolean | `true`  | Enables or disables schema validation before applying `cr.yaml` file (works only in [cluster-wide mode](cluster-wide.md#install-clusterwide) due to [access restrictions](faq.md#faq-validation)) |
 | pause           | boolean           | `false`                    | Pause/resume: setting it to `true` gracefully stops the cluster, and setting it to `false` after shut down starts the cluster back  |
-| secretsName     | string            | `my-cluster-secrets`       | A name for [users secrets](users.md#users)                             |
+| secretsName     | string            | `cluster1-secrets`         | A name for [users secrets](users.md#users)                             |
 | crVersion       | string            | `{{ release }}`                   | Version of the Operator the Custom Resource belongs to                 |
 | vaultSecretName | string            | `keyring-secret-vault`     | A secret for the [HashiCorp Vault](https://www.vaultproject.io/) to carry on [Data at Rest Encryption](encryption.md#encryption)    |
-| sslSecretName   | string            | `my-cluster-ssl`           | A secret with TLS certificate generated for *external* communications, see [Transport Layer Security (TLS)](TLS.md#tls) for details |
-| sslInternalSecretName  | string     | `my-cluster-ssl-internal`  | A secret with TLS certificate generated for *internal* communications, see [Transport Layer Security (TLS)](TLS.md#tls) for details |
+| sslSecretName   | string            | `cluster1-ssl`             | A secret with TLS certificate generated for *external* communications, see [Transport Layer Security (TLS)](TLS.md#tls) for details |
+| sslInternalSecretName  | string     | `cluster1-ssl-internal`    | A secret with TLS certificate generated for *internal* communications, see [Transport Layer Security (TLS)](TLS.md#tls) for details |
 | logCollectorSecretName | string     | `my-log-collector-secrets` | A secret for the [Fluent Bit Log Collector](https://fluentbit.io)      |
 | initImage       | string            | `percona/percona-xtradb-cluster-operator:{{ release }}` | An alternative image for the initial Operator installation |
 | tls             | subdoc            |                            | Extended cert-manager configuration section                            |

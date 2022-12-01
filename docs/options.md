@@ -22,7 +22,7 @@ configuration file by editing the configuration section of the
 
 ```yaml
 spec:
-  secretsName: my-cluster-secrets
+  secretsName: cluster1-secrets
   pxc:
     ...
       configuration: |
@@ -32,9 +32,8 @@ spec:
         wsrep_debug=CLIENT
 ```
 
-See the [Custom Resource options, PXC
-section](operator.html#operator-pxc-section)
-for more details
+See the [Custom Resource options, PXC section](operator.html#operator-pxc-section)
+for more details.
 
 ## Use a ConfigMap
 
@@ -43,8 +42,7 @@ options. A configmap allows Kubernetes to pass or update configuration
 data inside a containerized application.
 
 Use the `kubectl` command to create the configmap from external
-resources, for more information see [Configure a Pod to use a
-ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-a-configmap).
+resources, for more information see [Configure a Pod to use a ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-a-configmap).
 
 For example, let’s suppose that your application requires more
 connections. To increase your `max_connections` setting in MySQL, you
