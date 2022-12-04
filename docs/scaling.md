@@ -10,7 +10,7 @@ nothing more but changing this option and applying the updated
 configuration file. This may be done in a specifically saved config, or
 on the fly, using the following command:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl scale --replicas=5 pxc/cluster1
 ```
 
@@ -32,7 +32,7 @@ The following are the steps to increase the size:
 
 1. Extract and backup the yaml file for the cluster
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl get pxc cluster1 -o yaml --export > CR_backup.yaml
 ```
 
@@ -46,13 +46,13 @@ $ kubectl get pxc cluster1 -o yaml --export > CR_backup.yaml
 
     You can use the following command to delete the cluster:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl delete -f CR_backup.yaml
     ```
 
 3. For each node, edit the yaml to resize the PVC object.
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl edit pvc datadir-cluster1-pxc-0
     ```
 
@@ -69,7 +69,7 @@ $ kubectl get pxc cluster1 -o yaml --export > CR_backup.yaml
 
     Perform the same operation on the other nodes.
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl edit pvc datadir-cluster1-pxc-1
     $ kubectl edit pvc datadir-cluster1-pxc-2
     ```
@@ -77,12 +77,12 @@ $ kubectl get pxc cluster1 -o yaml --export > CR_backup.yaml
 4. In the CR configuration file, use vim or another text editor to edit
     the PVC size.
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ vim CR_backup.yaml
     ```
 
 5. Apply the updated configuration to the cluster.
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl apply -f CR_backup.yaml
     ```

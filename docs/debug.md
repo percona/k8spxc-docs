@@ -21,7 +21,7 @@ Logs are stored for 7 days and then rotated.
 
 Collected logs can be examined using the following command:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl logs cluster1-pxc-1 -c logs
 ```
 
@@ -50,13 +50,13 @@ of the container entry point is triggered by the presence of the
 For example, you can do it for the `pxc` container of an appropriate Percona
 XtraDB Cluster instance as follows:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl exec -it cluster1-pxc-0 -c pxc -- sh -c 'touch /var/lib/mysql/sleep-forever'
 ```
 
 If `pxc` container can’t start, you can use `logs` container instead:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl exec -it cluster1-pxc-0 -c logs -- sh -c 'touch /var/lib/mysql/sleep-forever'
 ```
 

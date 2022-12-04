@@ -53,7 +53,7 @@ the following information there:
 
 1. First of all, clone the percona-xtradb-cluster-operator repository:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
     $ cd percona-xtradb-cluster-operator
     ```
@@ -61,20 +61,20 @@ the following information there:
 2. Let’s suppose that Operator’s namespace should be the `pxc-operator` one.
     Create it as follows:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl create namespace pxc-operator
     ```
 
     Namespaces to be watched by the Operator should be created in the same way
     if not exist. Let’s say the Operator should watch the `pxc` namespace:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl create namespace pxc
     ```
 
 3. Apply the `deploy/cw-bundle.yaml` file with the following command:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl apply -f deploy/cw-bundle.yaml -n pxc-operator
     ```
 
@@ -82,14 +82,14 @@ the following information there:
     time by applying the `deploy/cr.yaml` configuration file, like in the case
     of normal installation:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl apply -f deploy/cr.yaml -n pxc
     ```
 
     The creation process will take some time. The process is over when both
     operator and replica set Pods have reached their Running status:
 
-    ```text
+    ``` {.text .no-copy}
     NAME                                               READY   STATUS    RESTARTS   AGE
     cluster1-haproxy-0                                 2/2     Running   0          6m17s
     cluster1-haproxy-1                                 2/2     Running   0          4m59s
@@ -102,7 +102,7 @@ the following information there:
 
 5. Check connectivity to newly created cluster
 
-    ```bash
+    ``` {.bash data-prompt="$" data-prompt-second="percona-client:/$"}
     $ kubectl run -i --rm --tty percona-client --image=percona:5.7 --restart=Never --env="POD_NAMESPACE=pxc" -- bash -il
     percona-client:/$ mysql -h cluster1-proxysql -uroot -proot_password
     ```

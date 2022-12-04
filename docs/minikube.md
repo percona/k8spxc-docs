@@ -50,13 +50,13 @@ Minikube:
         repository with all manifests and source code by executing the following
         command:
 
-        ```bash
+        ``` {.bash data-prompt="$" }
         $ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
         ```
 
         After editing the needed options, apply your modified `deploy/cr.yaml` file as follows:
 
-        ```bash
+        ``` {.bash data-prompt="$" }
         $ kubectl apply -f deploy/cr.yaml
         ```
 
@@ -64,7 +64,7 @@ Minikube:
     operator and replica set pod have reached their Running status.
     `kubectl get pods` output should look like this:
 
-    ```text
+    ``` {.text .no-copy}
     NAME                                            READY   STATUS    RESTARTS   AGE
     percona-xtradb-cluster-operator-d99c748-sqddq   1/1     Running   0          49m
     minimal-cluster-pxc-0                           3/3     Running   0          47m
@@ -100,20 +100,20 @@ Minikube:
     terminal (running it may require some time to deploy the correspondent Pod).
     The following command will do this, naming the new Pod `percona-client`:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl run -i --rm --tty percona-client --image=percona:8.0 --restart=Never -- bash -il
     ```
 
     Now run `mysql` tool in the percona-client command shell using the password
     obtained from the secret:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ mysql -h minimal-cluster-haproxy -uroot -proot_password
     ```
 
     This command will connect you to the MySQL monitor.
 
-    ```text
+    ``` {.text .no-copy}
     mysql: [Warning] Using a password on the command line interface can be insecure.
     Welcome to the MySQL monitor.  Commands end with ; or \g.
     Your MySQL connection id is 1872

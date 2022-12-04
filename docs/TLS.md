@@ -56,7 +56,7 @@ The steps to install the *cert-manager* are the following:
 
 The following commands perform all the needed actions:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl create namespace cert-manager
 $ kubectl label namespace cert-manager certmanager.k8s.io/disable-validation=true
 $ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.5.4/cert-manager.yaml
@@ -64,7 +64,7 @@ $ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1
 
 After the installation, you can verify the *cert-manager* by running the following command:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl get pods -n cert-manager
 ```
 
@@ -95,7 +95,7 @@ and another set is for internal ones. A secret created for the external use must
 be added to `cr.yaml/spec/secretsName`. A certificate generated for internal
 communications must be added to the `cr.yaml/spec/sslInternalSecretName`.
 
-```bash
+``` {.bash data-prompt="$" }
 $ cat <<EOF | cfssl gencert -initca - | cfssljson -bare ca
 {
   "CN": "Root CA",
@@ -156,13 +156,13 @@ you can make the Operator update along with the [official instruction](update.md
 1. First, check the necessary secrets names (`cluster1-ssl` and
     `cluster1-ssl-internal` by default):
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl get certificate
     ```
 
     You will have the following response:
 
-    ```text
+    ``` {.text .no-copy}
     NAME                    READY   SECRET                  AGE
     cluster1-ssl            True    cluster1-ssl            49m
     cluster1-ssl-internal   True    cluster1-ssl-internal   49m
@@ -170,13 +170,13 @@ you can make the Operator update along with the [official instruction](update.md
 
 2. Optionally you can also check that the certificates issuer is up and running:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl get issuer
     ```
 
     The response should be as follows:
 
-    ```text
+    ``` {.text .no-copy}
     NAME              READY   AGE
     cluster1-pxc-ca   True    49m
     ```
@@ -184,7 +184,7 @@ you can make the Operator update along with the [official instruction](update.md
 3. Now use the following command to find out the certificates validity dates,
     substituting Secrets names if necessary:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ {
       kubectl get secret/cluster1-ssl-internal -o jsonpath='{.data.tls\.crt}' | base64 --decode | openssl x509 -inform pem -noout -text | grep "Not After"
       kubectl get secret/cluster1-ssl -o jsonpath='{.data.ca\.crt}' | base64 --decode | openssl x509 -inform pem -noout -text | grep "Not After"
@@ -193,7 +193,7 @@ you can make the Operator update along with the [official instruction](update.md
 
     The resulting output will be self-explanatory:
 
-    ```text
+    ``` {.text .no-copy}
     Not After : Sep 15 11:04:53 2021 GMT
     Not After : Sep 15 11:04:53 2021 GMT
     ```
@@ -218,7 +218,7 @@ as follows.
 2. Get the current CA (`ca.pem.old`) and TLS (`tls.pem.old`) certificates
     and the TLS certificate key (`tls.key.old`):
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl get secret/cluster1-ssl-internal -o jsonpath='{.data.ca\.crt}' | base64 --decode > ca.pem.old
     $ kubectl get secret/cluster1-ssl-internal -o jsonpath='{.data.tls\.crt}' | base64 --decode > tls.pem.old
     $ kubectl get secret/cluster1-ssl-internal -o jsonpath='{.data.tls\.key}' | base64 --decode > tls.key.old
@@ -226,7 +226,7 @@ as follows.
 
 3. Combine new and current `ca.pem` into a `ca.pem.combined` file:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ cat ca.pem ca.pem.old >> ca.pem.combined
     ```
 
@@ -234,7 +234,7 @@ as follows.
     and key (`tls.key.old`), but a *new combined* `ca.pem`
     (`ca.pem.combined`):
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl delete secret/cluster1-ssl-internal
     $ kubectl create secret generic cluster1-ssl-internal --from-file=tls.crt=tls.pem.old --from-file=tls.key=tls.key.old --from-file=ca.crt=ca.pem.combined --type=kubernetes.io/tls
     ```
@@ -250,7 +250,7 @@ as follows.
     (`server.pem` in the example) and its key (`server-key.pem`), and again
     the combined CA certificate (`ca.pem.combined`):
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl delete secret/cluster1-ssl-internal
     $ kubectl create secret generic cluster1-ssl-internal --from-file=tls.crt=server.pem --from-file=tls.key=server-key.pem --from-file=ca.crt=ca.pem.combined --type=kubernetes.io/tls
     ```
@@ -264,7 +264,7 @@ as follows.
 9. Create a final Secrets object: use new TLS certificate (`server.pmm`) and
     its key (`server-key.pem`), and just the new CA certificate (`ca.pem`):
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl delete secret/cluster1-ssl-internal
     $ kubectl create secret generic cluster1-ssl-internal --from-file=tls.crt=server.pem --from-file=tls.key=server-key.pem --from-file=ca.crt=ca.pem --type=kubernetes.io/tls
     ```
@@ -286,7 +286,7 @@ Operator version prior to 1.9.0), you should move through the
 2. If cert-manager is used, delete issuer
     and TLS certificates:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ {
       kubectl delete issuer/cluster1-pxc-ca
       kubectl delete certificate/cluster1-ssl certificate/cluster1-ssl-internal
@@ -295,7 +295,7 @@ Operator version prior to 1.9.0), you should move through the
 
 3. Delete Secrets to force the SSL reconciliation:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl delete secret/cluster1-ssl secret/cluster1-ssl-internal
     ```
 

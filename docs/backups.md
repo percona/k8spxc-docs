@@ -41,13 +41,13 @@ data:
     
     === "in Linux"
 
-        ```bash
+        ``` {.bash data-prompt="$" }
         $ echo -n 'plain-text-string' | base64 --wrap=0
         ```
 
     === "in macOS"
 
-        ```bash
+        ``` {.bash data-prompt="$" }
         $ echo -n 'plain-text-string' | base64
         ```
 
@@ -151,7 +151,7 @@ The example of the backup configuration file is [deploy/backup/backup.yaml](http
 
 When the backup destination is configured and applied with kubectl apply -f deploy/cr.yaml command, the actual backup command is executed:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl apply -f deploy/backup/backup.yaml
 ```
 
@@ -160,8 +160,8 @@ $ kubectl apply -f deploy/backup/backup.yaml
     Storing backup settings in a separate file can be replaced by
     passing its content to the `kubectl apply` command as follows:
 
-    ```bash
-    cat <<EOF | kubectl apply -f-
+    ``` {.bash data-prompt="$" }
+    $ cat <<EOF | kubectl apply -f-
     apiVersion: pxc.percona.com/v1
     kind: PerconaXtraDBClusterBackup
     metadata:
@@ -303,7 +303,7 @@ Following things are needed to restore a previously saved backup:
 * Find out correct names for the **backup** and the **cluster**. Available
     backups can be listed with the following command:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl get pxc-backup
     ```
 
@@ -315,7 +315,7 @@ Following things are needed to restore a previously saved backup:
 And the following command will list existing Percona XtraDB Cluster names in
 the current Kubernetes-based environment:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl get pxc
 ```
 
@@ -368,7 +368,7 @@ restoration can be done in the following way.
 
 2. After that, the actual restoration process can be started as follows:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl apply -f deploy/backup/restore.yaml
     ```
 
@@ -377,7 +377,7 @@ restoration can be done in the following way.
         Storing backup settings in a separate file can be replaced by passing
         its content to the `kubectl apply` command as follows:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ cat <<EOF | kubectl apply -f-
     apiVersion: "pxc.percona.com/v1"
     kind: "PerconaXtraDBClusterRestore"
@@ -461,7 +461,7 @@ spec:
 
 The actual restoration process can be started as follows:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl apply -f deploy/backup/restore.yaml
 ```
 
@@ -470,7 +470,7 @@ $ kubectl apply -f deploy/backup/restore.yaml
     Storing backup settings in a separate file can be replaced by passing
     its content to the `kubectl apply` command as follows:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ cat <<EOF | kubectl apply -f-
     apiVersion: "pxc.percona.com/v1"
     kind: "PerconaXtraDBClusterRestore"
@@ -499,13 +499,13 @@ Manual deleting of a previously saved backup requires not more than the backup
 name. This name can be taken from the list of available backups returned
 by the following command:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl get pxc-backup
 ```
 
 When the name is known, backup can be deleted as follows:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl delete pxc-backup/<backup-name>
 ```
 
@@ -515,21 +515,21 @@ Make a local copy of a previously saved backup requires not more than
 the backup name. This name can be taken from the list of available
 backups returned by the following command:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl get pxc-backup
 ```
 
 When the name is known, backup can be downloaded to the local machine as
 follows:
 
-```bash
+``` {.bash data-prompt="$" }
 $ ./deploy/backup/copy-backup.sh <backup-name> path/to/dir
 ```
 
 For example, this downloaded backup can be restored to the local
 installation of Percona Server:
 
-```bash
+``` {.bash data-prompt="$" }
 $ service mysqld stop
 $ rm -rf /var/lib/mysql/*
 $ cat xtrabackup.stream | xbstream -x -C /var/lib/mysql

@@ -61,7 +61,7 @@ You should use the combination of the cluster name with the `-pxc`
 suffix as the naming convention for the configmap. To find the cluster
 name, you can use the following command:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl get pxc
 ```
 
@@ -74,13 +74,13 @@ $ kubectl create configmap <cluster-name>-pxc <resource-type=resource-name>
 The following example defines `cluster1-pxc` as the configmap name and the
 `my.cnf` file as the data source:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl create configmap cluster1-pxc --from-file=my.cnf
 ```
 
 To view the created configmap, use the following command:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl describe configmaps cluster1-pxc
 ```
 
@@ -96,7 +96,7 @@ name and the `pxc` suffix.
 
     To find the cluster name, you can use the following command:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl get pxc
     ```
 
@@ -120,13 +120,13 @@ follows:
 
 === "in Linux"
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ cat my.cnf | base64 --wrap=0
     ```
 
 === "in macOS"
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ cat my.cnf | base64
     ```
 
@@ -134,7 +134,7 @@ follows:
 
     Similarly, you can read the list of options from a Base64 encoded string:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ echo "W215c3FsZF0Kd3NyZXBfZGVidWc9T04KW3NzdF0Kd3NyZXBfZGVidWc9T04K" | base64 --decode
     ```
 
@@ -152,7 +152,7 @@ data:
 
 When ready, apply it with the following command:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl create -f deploy/my-pxc-secret.yaml
 ```
 

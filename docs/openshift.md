@@ -35,7 +35,7 @@ You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marke
 
 1. Clone the percona-xtradb-cluster-operator repository:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
     $ cd percona-xtradb-cluster-operator
     ```
@@ -53,7 +53,7 @@ You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marke
     This step should be done only once; it does not need to be repeated
     with the next Operator deployments, etc.
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ oc apply -f deploy/crd.yaml
     ```
 
@@ -65,21 +65,21 @@ You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marke
     If you want to manage your Percona XtraDB Cluster with a non-privileged user,
     necessary permissions can be granted by applying the next clusterrole:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ oc create clusterrole pxc-admin --verb="*" --resource=perconaxtradbclusters.pxc.percona.com,perconaxtradbclusters.pxc.percona.com/status,perconaxtradbclusterbackups.pxc.percona.com,perconaxtradbclusterbackups.pxc.percona.com/status,perconaxtradbclusterrestores.pxc.percona.com,perconaxtradbclusterrestores.pxc.percona.com/status
     $ oc adm policy add-cluster-role-to-user pxc-admin <some-user>
     ```
 
     If you have a [cert-manager](https://docs.cert-manager.io/en/release-0.8/getting-started/install/openshift.html) installed, then you have to execute two more commands to be able to     manage certificates with a non-privileged user:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ oc create clusterrole cert-admin --verb="*" --resource=issuers.certmanager.k8s.io,certificates.certmanager.k8s.io
     $ oc adm policy add-cluster-role-to-user cert-admin <some-user>
     ```
 
 3. The next thing to do is to create a new `pxc` project:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ oc new-project pxc
     ```
 
@@ -89,13 +89,13 @@ You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marke
     them, allowed to be done on specific Kubernetes resources (details
     about users and roles can be found in [OpenShift documentation](https://docs.openshift.com/enterprise/3.0/architecture/additional_concepts/authorization.html)).
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ oc apply -f deploy/rbac.yaml
     ```
 
     Finally, it’s time to start the operator within OpenShift:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ oc apply -f deploy/operator.yaml
     ```
 
@@ -110,7 +110,7 @@ You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marke
     After editing is finished, users secrets should be created using the
     following command:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ oc create -f deploy/secrets.yaml
     ```
 
@@ -124,14 +124,14 @@ You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marke
 3. After the operator is started and user secrets are added, Percona
     XtraDB Cluster can be created at any time with the following command:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ oc apply -f deploy/cr.yaml
     ```
 
     Creation process will take some time. The process is over when both
     operator and replica set pod have reached their Running status:
 
-    ```text
+    ``` {.text .no-copy}
     NAME                                               READY   STATUS    RESTARTS   AGE
     cluster1-haproxy-0                                 2/2     Running   0          6m17s
     cluster1-haproxy-1                                 2/2     Running   0          4m59s
@@ -147,14 +147,14 @@ You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marke
     terminal. The following command will do this, naming the new Pod
     `percona-client`:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ oc run -i --rm --tty percona-client --image=percona:8.0 --restart=Never -- bash -il
     percona-client:/$ mysql -h cluster1-haproxy -uroot -proot_password
     ```
 
     This command will connect you to the MySQL monitor.
 
-    ```text
+    ``` {.text .no-copy}
     mysql: [Warning] Using a password on the command line interface can be insecure.
     Welcome to the MySQL monitor.  Commands end with ; or \g.
     Your MySQL connection id is 1976
