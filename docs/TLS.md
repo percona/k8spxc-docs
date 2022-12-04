@@ -59,7 +59,7 @@ The following commands perform all the needed actions:
 ```bash
 $ kubectl create namespace cert-manager
 $ kubectl label namespace cert-manager certmanager.k8s.io/disable-validation=true
-$ kubectl_bin apply -f https://github.com/jetstack/cert-manager/releases/download/v1.5.4/cert-manager.yaml
+$ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.5.4/cert-manager.yaml
 ```
 
 After the installation, you can verify the *cert-manager* by running the following command:
@@ -121,7 +121,7 @@ $ cat <<EOF | cfssl gencert -ca=ca.pem  -ca-key=ca-key.pem - | cfssljson -bare s
 }
 EOF
 
-$ kubectl create secret generic my-cluster-ssl --from-file=tls.crt=server.pem --
+$ kubectl create secret generic cluster1-ssl --from-file=tls.crt=server.pem --
 from-file=tls.key=server-key.pem --from-file=ca.crt=ca.pem --
 type=kubernetes.io/tls
 ```
@@ -153,8 +153,8 @@ you can make the Operator update along with the [official instruction](update.md
 ### Check your certificates for expiration
 
 
-1. First, check the necessary secrets names (`my-cluster-ssl` and
-    `my-cluster-ssl-internal` by default):
+1. First, check the necessary secrets names (`cluster1-ssl` and
+    `cluster1-ssl-internal` by default):
 
     ```bash
     $ kubectl get certificate
@@ -163,9 +163,9 @@ you can make the Operator update along with the [official instruction](update.md
     You will have the following response:
 
     ```text
-    NAME                    READY   SECRET                    AGE
-    cluster1-ssl            True    my-cluster-ssl            49m
-    cluster1-ssl-internal   True    my-cluster-ssl-internal   49m
+    NAME                    READY   SECRET                  AGE
+    cluster1-ssl            True    cluster1-ssl            49m
+    cluster1-ssl-internal   True    cluster1-ssl-internal   49m
     ```
 
 2. Optionally you can also check that the certificates issuer is up and running:
@@ -186,8 +186,8 @@ you can make the Operator update along with the [official instruction](update.md
 
     ```bash
     $ {
-      kubectl get secret/my-cluster-ssl-internal -o jsonpath='{.data.tls\.crt}' | base64 --decode | openssl x509 -inform pem -noout -text | grep "Not After"
-      kubectl get secret/my-cluster-ssl -o jsonpath='{.data.ca\.crt}' | base64 --decode | openssl x509 -inform pem -noout -text | grep "Not After"
+      kubectl get secret/cluster1-ssl-internal -o jsonpath='{.data.tls\.crt}' | base64 --decode | openssl x509 -inform pem -noout -text | grep "Not After"
+      kubectl get secret/cluster1-ssl -o jsonpath='{.data.ca\.crt}' | base64 --decode | openssl x509 -inform pem -noout -text | grep "Not After"
       }
     ```
 
@@ -219,9 +219,9 @@ as follows.
     and the TLS certificate key (`tls.key.old`):
 
     ```bash
-    $ kubectl get secret/my-cluster-ssl-internal -o jsonpath='{.data.ca\.crt}' | base64 --decode > ca.pem.old
-    $ kubectl get secret/my-cluster-ssl-internal -o jsonpath='{.data.tls\.crt}' | base64 --decode > tls.pem.old
-    $ kubectl get secret/my-cluster-ssl-internal -o jsonpath='{.data.tls\.key}' | base64 --decode > tls.key.old
+    $ kubectl get secret/cluster1-ssl-internal -o jsonpath='{.data.ca\.crt}' | base64 --decode > ca.pem.old
+    $ kubectl get secret/cluster1-ssl-internal -o jsonpath='{.data.tls\.crt}' | base64 --decode > tls.pem.old
+    $ kubectl get secret/cluster1-ssl-internal -o jsonpath='{.data.tls\.key}' | base64 --decode > tls.key.old
     ```
 
 3. Combine new and current `ca.pem` into a `ca.pem.combined` file:
@@ -235,8 +235,8 @@ as follows.
     (`ca.pem.combined`):
 
     ```bash
-    $ kubectl delete secret/my-cluster-ssl-internal
-    $ kubectl create secret generic my-cluster-ssl-internal --from-file=tls.crt=tls.pem.old --from-file=tls.key=tls.key.old --from-file=ca.crt=ca.pem.combined --type=kubernetes.io/tls
+    $ kubectl delete secret/cluster1-ssl-internal
+    $ kubectl create secret generic cluster1-ssl-internal --from-file=tls.crt=tls.pem.old --from-file=tls.key=tls.key.old --from-file=ca.crt=ca.pem.combined --type=kubernetes.io/tls
     ```
 
 5. The cluster will go through a rolling reconciliation, but it will do it
@@ -251,8 +251,8 @@ as follows.
     the combined CA certificate (`ca.pem.combined`):
 
     ```bash
-    $ kubectl delete secret/my-cluster-ssl-internal
-    $ kubectl create secret generic my-cluster-ssl-internal --from-file=tls.crt=server.pem --from-file=tls.key=server-key.pem --from-file=ca.crt=ca.pem.combined --type=kubernetes.io/tls
+    $ kubectl delete secret/cluster1-ssl-internal
+    $ kubectl create secret generic cluster1-ssl-internal --from-file=tls.crt=server.pem --from-file=tls.key=server-key.pem --from-file=ca.crt=ca.pem.combined --type=kubernetes.io/tls
     ```
 
 8. The cluster will go through a rolling reconciliation, but it will do it
@@ -265,8 +265,8 @@ as follows.
     its key (`server-key.pem`), and just the new CA certificate (`ca.pem`):
 
     ```bash
-    $ kubectl delete secret/my-cluster-ssl-internal
-    $ kubectl create secret generic my-cluster-ssl-internal --from-file=tls.crt=server.pem --from-file=tls.key=server-key.pem --from-file=ca.crt=ca.pem --type=kubernetes.io/tls
+    $ kubectl delete secret/cluster1-ssl-internal
+    $ kubectl create secret generic cluster1-ssl-internal --from-file=tls.crt=server.pem --from-file=tls.key=server-key.pem --from-file=ca.crt=ca.pem --type=kubernetes.io/tls
     ```
 
 10. The cluster will go through a rolling reconciliation, but it will do it
@@ -296,7 +296,7 @@ Operator version prior to 1.9.0), you should move through the
 3. Delete Secrets to force the SSL reconciliation:
 
     ```bash
-    $ kubectl delete secret/my-cluster-ssl secret/my-cluster-ssl-internal
+    $ kubectl delete secret/cluster1-ssl secret/cluster1-ssl-internal
     ```
 
 4. Check certificates to make sure reconciliation have succeeded.

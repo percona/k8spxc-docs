@@ -46,7 +46,7 @@ Credentials for these users are stored as a [Kubernetes Secrets](https://kuberne
 The Operator requires Kubernetes Secrets before Percona XtraDB Cluster is
 started. It will either use existing Secrets or create a new Secrets object with
 randomly generated passwords if it didn’t exist.
-The name of the required Secrets (`my-cluster-secrets` by default)
+The name of the required Secrets (`cluster1` by default)
 should be set in the `spec.secretsName` option of the `deploy/cr.yaml`
 configuration file.
 
@@ -70,7 +70,7 @@ The following table shows system users’ names and purposes.
 ### YAML Object Format
 
 The default name of the Secrets object for these users is
-`my-cluster-secrets` and can be set in the CR for your cluster in
+`cluster1-secrets` and can be set in the CR for your cluster in
 `spec.secretName` to something different. When you create the object yourself,
 it should match the following simple format:
 
@@ -78,7 +78,7 @@ it should match the following simple format:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: my-cluster-secrets
+  name: cluster1-secrets
 type: Opaque
 stringData:
   root: root_password
@@ -105,19 +105,19 @@ If you want to update any field, you’ll need to encode the value into base64
 format. To do this, you can run `echo -n "password" | base64 --wrap=0` (or just
 `echo -n "password" | base64` in case of Apple macOS) in your local shell to
 get valid values. For example, setting the PMM Server user’s password to
-`new_password` in the `my-cluster-name-secrets` object can be done with the
+`new_password` in the `cluster1-secrets` object can be done with the
 following command:
 
 === "in Linux"
 
     ```bash
-    $ kubectl patch secret/my-cluster-name-secrets -p '{"data":{"pmmserver": "'$(echo -n new_password | base64 --wrap=0)'"}}'
+    $ kubectl patch secret/cluster1-secrets -p '{"data":{"pmmserver": "'$(echo -n new_password | base64 --wrap=0)'"}}'
     ```
 
 === "in macOS"
 
     ```bash
-    $ kubectl patch secret/my-cluster-name-secrets -p '{"data":{"pmmserver": "'$(echo -n new_password | base64)'"}}'
+    $ kubectl patch secret/cluster1-secrets -p '{"data":{"pmmserver": "'$(echo -n new_password | base64)'"}}'
     ```
 
 ### Password Rotation Policies and Timing
