@@ -13,7 +13,7 @@ The Operator upgrade includes the following steps.
     the official repository on Github, and do the same for the Role-based access
     control:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/crd.yaml
     $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/rbac.yaml
     ```
@@ -25,7 +25,7 @@ The Operator upgrade includes the following steps.
     For example, updating to the `{{ release }}` version should look as
     follows.
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl patch deployment percona-xtradb-cluster-operator \
       -p'{"spec":{"template":{"spec":{"containers":[{"name":"percona-xtradb-cluster-operator","image":"percona/percona-xtradb-cluster-operator:{{ release }}"}]}}}}'
     ```
@@ -34,7 +34,7 @@ The Operator upgrade includes the following steps.
     You can track the rollout process in real time with the
     `kubectl rollout status` command with the name of your cluster:
 
-    ```default
+    ``` {.bash data-prompt="$" }
     $ kubectl rollout status deployments percona-xtradb-cluster-operator
     ```
 
@@ -107,7 +107,7 @@ updates:
     2. Alternatively, you can run Version Service inside your cluster. This
         can be done with the `kubectl` command as follows:
 
-        ```bash
+        ``` {.bash data-prompt="$" }
         $ kubectl run version-service --image=perconalab/version-service --env="SERVE_HTTP=true" --port 11000 --expose
         ```
 
@@ -161,7 +161,7 @@ instead.
 
     1. For Percona XtraDB Cluster 5.7 run the following:
 
-        ```bash
+        ``` {.bash data-prompt="$" }
         $ kubectl patch pxc cluster1 --type=merge --patch '{
            "spec": {
                "crVersion":"{{ release }}",
@@ -176,7 +176,7 @@ instead.
 
     2. For Percona XtraDB Cluster 8.0 run the following:
 
-        ```bash
+        ``` {.bash data-prompt="$" }
         $ kubectl patch pxc cluster1 --type=merge --patch '{
            "spec": {
                "crVersion":"{{ release }}",
@@ -226,7 +226,7 @@ instead.
 
     1. For Percona XtraDB Cluster 5.7 run the following:
 
-        ```bash
+        ``` {.bash data-prompt="$" }
         $ kubectl patch pxc cluster1 --type=merge --patch '{
             "spec": {
                "crVersion":"{{ release }}",
@@ -241,7 +241,7 @@ instead.
 
     2. For Percona XtraDB Cluster 8.0 run the following:
 
-        ```bash
+        ``` {.bash data-prompt="$" }
         $ kubectl patch pxc cluster1 --type=merge --patch '{
             "spec": {
                "crVersion":"{{ release }}",
@@ -260,13 +260,13 @@ instead.
 
     1. Delete the Pod using its name with the command like the following one:
 
-        ```default
+        ``` {.bash data-prompt="$" }
         $ kubectl delete pod cluster1-pxc-2
         ```
 
     2. Wait until Pod becomes ready:
 
-        ```default
+        ``` {.bash data-prompt="$" }
         $ kubectl get pod cluster1-pxc-2
         ```
 

@@ -69,13 +69,13 @@ Kubernetes-based environment:
 
         === "in Linux"
 
-            ```bash
+            ``` {.bash data-prompt="$" }
             $ kubectl patch secret/cluster1-secrets -p '{"data":{"pmmserverkey": "'$(echo -n new_key | base64 --wrap=0)'"}}'
             ```
 
         === "in macOS"
 
-            ```bash
+            ``` {.bash data-prompt="$" }
             $ kubectl patch secret/cluster1-secrets -p '{"data":{"pmmserverkey": "'$(echo -n new_key | base64)'"}}'
             ```
 
@@ -97,14 +97,14 @@ Kubernetes-based environment:
 
     When done, apply the edited `deploy/cr.yaml` file:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl apply -f deploy/cr.yaml
     ```
 
 2. Check that corresponding Pods are not in a cycle of stopping and restarting.
     This cycle occurs if there are errors on the previous steps:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl get pods
     $ kubectl logs cluster1-pxc-node-0 -c pmm-client
     ```

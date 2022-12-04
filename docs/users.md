@@ -15,7 +15,7 @@ considered separately in the following sections.
 There are no unprivileged (general purpose) user accounts created by
 default. If you need general purpose users, please run commands below:
 
-```bash
+``` {.bash data-prompt="$" data-prompt-second="mysql>"}
 $ kubectl run -it --rm percona-client --image=percona:8.0 --restart=Never -- mysql -hcluster1-pxc -uroot -proot_password
 mysql> GRANT ALL PRIVILEGES ON database1.* TO 'user1'@'%' IDENTIFIED BY 'password1';
 ```
@@ -28,7 +28,7 @@ Verify that the user was created successfully. If successful, the
 following command will let you successfully login to MySQL shell via
 ProxySQL:
 
-```bash
+``` {.bash data-prompt="$" data-prompt-second="percona-client:/$"}
 $ kubectl run -it --rm percona-client --image=percona:8.0 --restart=Never -- bash -il
 percona-client:/$ mysql -h cluster1-proxysql -uuser1 -ppassword1
 mysql> SELECT * FROM database1.table1 LIMIT 1;
@@ -110,13 +110,13 @@ following command:
 
 === "in Linux"
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl patch secret/cluster1-secrets -p '{"data":{"pmmserver": "'$(echo -n new_password | base64 --wrap=0)'"}}'
     ```
 
 === "in macOS"
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl patch secret/cluster1-secrets -p '{"data":{"pmmserver": "'$(echo -n new_password | base64)'"}}'
     ```
 

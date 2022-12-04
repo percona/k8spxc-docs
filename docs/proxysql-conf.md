@@ -8,7 +8,7 @@ configuration file.
 
 Use the following command to enable ProxySQL:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl patch pxc cluster1 --type=merge --patch '{
   "spec": {
      "proxysql": {
@@ -186,7 +186,7 @@ You should use the combination of the cluster name with the `-proxysql`
 suffix as the naming convention for the configmap. To find the cluster
 name, you can use the following command:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl get pxc
 ```
 
@@ -199,13 +199,13 @@ $ kubectl create configmap <cluster-name>-proxysql <resource-type=resource-name>
 The following example defines `cluster1-proxysql` as the configmap name and
 the `proxysql.cnf` file as the data source:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl create configmap cluster1-proxysql --from-file=proxysql.cnf
 ```
 
 To view the created configmap, use the following command:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl describe configmaps cluster1-proxysql
 ```
 
@@ -221,7 +221,7 @@ name and the `proxysql` suffix.
 
     To find the cluster name, you can use the following command:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl get pxc
     ```
 
@@ -288,13 +288,13 @@ follows:
 
 === "in Linux"
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ cat proxysql.cnf | base64 --wrap=0
     ```
 
 === "in macOS"
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ cat proxysql.cnf | base64
     ```
 
@@ -303,7 +303,7 @@ follows:
     Similarly, you can read the list of options from a Base64 encoded
     string:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ echo "ZGF0YWRpcj0iL3Zhci9saWIvcHJveHlzcWwiCgphZG1pbl92YXJpYWJsZXMgPQp7CiBhZG1pbl9j\
       cmVkZW50aWFscz0icHJveHlhZG1pbjphZG1pbl9wYXNzd29yZCIKIG15c3FsX2lmYWNlcz0iMC4w\
       LjAuMDo2MDMyIgogcmVmcmVzaF9pbnRlcnZhbD0yMDAwCgogY2x1c3Rlcl91c2VybmFtZT0icHJv\
@@ -365,7 +365,7 @@ data:
 
 When ready, apply it with the following command:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl create -f deploy/my-proxysql-secret.yaml
 ```
 

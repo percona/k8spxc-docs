@@ -72,7 +72,7 @@ nodeGroups:
 When the cluster configuration file is ready, you can actually create your cluster
 by the following command:
 
-```bash
+``` {.bash data-prompt="$" }
 $ eksctl create cluster -f ~/cluster.yaml
 ```
 
@@ -82,7 +82,7 @@ $ eksctl create cluster -f ~/cluster.yaml
 
     So, create the namespace and save it in the namespace context for subsequent commands as follows (replace the `<namespace name>` placeholder with some descriptive name):
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl create namespace <namespace name>
     $ kubectl config set-context $(kubectl config current-context) --namespace=<namespace name>
     ```
@@ -91,25 +91,25 @@ $ eksctl create cluster -f ~/cluster.yaml
 
 2. Use the following `git clone` command to download the correct branch of the percona-xtradb-cluster-operator repository:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
     ```
 
     After the repository is downloaded, change the directory to run the rest of the commands in this document:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ cd percona-xtradb-cluster-operator
     ```
 
 3. Deploy the Operator with the following command:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl apply -f deploy/bundle.yaml
     ```
 
     The following confirmation is returned:
 
-    ```text
+    ``` {.text .no-copy}
     customresourcedefinition.apiextensions.k8s.io/perconaxtradbclusters.pxc.percona.com created
     customresourcedefinition.apiextensions.k8s.io/perconaxtradbclusterbackups.pxc.percona.com created
     customresourcedefinition.apiextensions.k8s.io/perconaxtradbclusterrestores.pxc.percona.com created
@@ -122,14 +122,14 @@ $ eksctl create cluster -f ~/cluster.yaml
 
 4. The operator has been started, and you can create the Percona XtraDB cluster:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl apply -f deploy/cr.yaml
     ```
 
     The process could take some time.
     The return statement confirms the creation:
 
-    ```text
+    ``` {.text .no-copy}
     perconaxtradbcluster.pxc.percona.com/cluster1 created
     ```
 
@@ -149,7 +149,7 @@ $ eksctl create cluster -f ~/cluster.yaml
 6. Now you can check wether you are able to connect to MySQL from the outside
     with the help of the `kubectl port-forward` command as follows:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl port-forward svc/example-proxysql 3306:3306 &
     $ mysql -h 127.0.0.1 -P 3306 -uroot -proot_password
     ```
