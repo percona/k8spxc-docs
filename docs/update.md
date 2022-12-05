@@ -37,6 +37,8 @@ In this scenario, components of the cluster are upgraded in the following order:
     to a newer version, which differs from the current version by more
     than one, make several incremental updates sequentially.
 
+#### Manual upgrade
+
 The upgrade includes the following steps.
 
 1. Update the [Custom Resource Definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
@@ -71,6 +73,44 @@ The upgrade includes the following steps.
     !!! note
 
         Labels set on the Operator Pod will not be updated during upgrade.
+
+#### Upgrade via helm
+
+If you have [installed the Operator using Helm](helm.md), you can upgrade the
+Operator with the `helm upgrade` command.
+
+1. In case if you installed the Operator with no [customized parameters](https://github.com/percona/percona-helm-charts/tree/main/charts/pxc-operator#installing-the-chart), the upgrade can be done as follows: 
+
+    ``` {.bash data-prompt="$" }
+    $ helm upgrade my-op percona/pxc-operator helm upgrade --version {{ release }}
+    ```
+
+    The `my-op` parameter in the above example is the name of a [release object](https://helm.sh/docs/intro/using_helm/#three-big-concepts)
+    which which you have chosen for the Operator when installing its Helm chart.
+
+    If the Operator was installed with some [customized parameters](https://github.com/percona/percona-helm-charts/tree/main/charts/pxc-operator#installing-the-chart), you should list these options in the upgrade command.
+    
+    
+    !!! note
+    
+    You can get list of used options in YAML format with the `helm get values my-op -a > my-values.yaml` command, and this file can be directly passed to the upgrade command as follows:
+
+    ``` {.bash data-prompt="$" }
+    $ helm upgrade my-op percona/pxc-operator helm upgrade --version {{ release }} -f my-values.yaml
+    ```
+
+2. Update the [Custom Resource Definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
+    for the Operator, taking it from the official repository on Github, and do
+    the same for the Role-based access control:
+
+    ```bash
+    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/crd.yaml
+    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/rbac.yaml
+    ```
+
+!!! note
+
+    You can use `helm upgrade` to upgrade the Operator only. The Database Management System (Percona XtraDB Cluster) should be upgraded in the same way whether you used helm to install it or not.
 
 ### Upgrading Percona XtraDB Cluster
 
