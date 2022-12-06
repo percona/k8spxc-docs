@@ -82,7 +82,7 @@ Operator with the `helm upgrade` command.
 1. In case if you installed the Operator with no [customized parameters](https://github.com/percona/percona-helm-charts/tree/main/charts/pxc-operator#installing-the-chart), the upgrade can be done as follows: 
 
     ``` {.bash data-prompt="$" }
-    $ helm upgrade my-op percona/pxc-operator helm upgrade --version {{ release }}
+    $ helm upgrade my-op percona/pxc-operator --version {{ release }}
     ```
 
     The `my-op` parameter in the above example is the name of a [release object](https://helm.sh/docs/intro/using_helm/#three-big-concepts)
@@ -96,7 +96,7 @@ Operator with the `helm upgrade` command.
     You can get list of used options in YAML format with the `helm get values my-op -a > my-values.yaml` command, and this file can be directly passed to the upgrade command as follows:
 
     ``` {.bash data-prompt="$" }
-    $ helm upgrade my-op percona/pxc-operator helm upgrade --version {{ release }} -f my-values.yaml
+    $ helm upgrade my-op percona/pxc-operator --version {{ release }} -f my-values.yaml
     ```
 
 2. Update the [Custom Resource Definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
