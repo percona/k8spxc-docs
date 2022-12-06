@@ -1,21 +1,12 @@
 1. You will need the login and password for the admin user to access the
     cluster. Use `kubectl get secrets` command to see the list of Secrets
     objects (by default the Secrets object you are interested in has
-    `cluster1-secrets` name). Then
-    `kubectl get secret cluster1-secrets -o yaml` command will return
-    the YAML file with generated Secrets, including the root password which
-    should look as follows
-
-    ```yaml
-    ...
-    data:
-      ...
-      root: cm9vdF9wYXNzd29yZA==
+    `cluster1-secrets` name). 
+    You can use the following command to get the password:
+    
+    ``` {.bash data-prompt="$" }
+    $ kubectl get secrets cluster1-secrets -o yaml -o jsonpath='{.data.root}' | base64 --decode | tr '\n' ' ' && echo " "
     ```
-
-    Here the actual login name and password are base64-encoded. Use 
-    `echo 'cm9vdF9wYXNzd29yZA==' | base64 --decode` command to bring it
-    back to a human-readable form.
 
 2. Run a container with `mysql` tool and connect its console output to your
     terminal. The following command will do this, naming the new Pod
