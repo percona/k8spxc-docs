@@ -45,7 +45,7 @@ The upgrade includes the following steps.
     for the Operator, taking it from the official repository on Github, and do
     the same for the Role-based access control:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/crd.yaml
     $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/rbac.yaml
     ```
@@ -57,7 +57,7 @@ The upgrade includes the following steps.
     For example, updating to the `{{ release }}` version should look as
     follows.
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl patch deployment percona-xtradb-cluster-operator \
       -p'{"spec":{"template":{"spec":{"containers":[{"name":"percona-xtradb-cluster-operator","image":"percona/percona-xtradb-cluster-operator:{{ release }}"}]}}}}'
     ```
@@ -66,7 +66,7 @@ The upgrade includes the following steps.
     You can track the rollout process in real time with the
     `kubectl rollout status` command with the name of your cluster:
 
-    ```default
+    ``` {.bash data-prompt="$" }
     $ kubectl rollout status deployments percona-xtradb-cluster-operator
     ```
 
@@ -103,7 +103,7 @@ Operator with the `helm upgrade` command.
     for the Operator, taking it from the official repository on Github, and do
     the same for the Role-based access control:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/crd.yaml
     $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/rbac.yaml
     ```
@@ -115,7 +115,7 @@ Operator with the `helm upgrade` command.
 ### Upgrading Percona XtraDB Cluster
 
 **The recommended way** to update the database management system (Percona XtraDB
-Cluster) is to use the *Smart Uptates strategy*, which means that updgrade
+Cluster) is to use the *Smart Update strategy*, which means that upgrade
 process is controlled by the Operator. But it is also possible to
 [carry updates manually](update_manually.md), if needed.
 
@@ -170,7 +170,8 @@ updates:
         When automatic upgrades are disabled by the `apply` option,
         Smart Update functionality will continue working for changes triggered
         by other events, such as updating a ConfigMap, rotating a password, or
-        changing resource values.
+        changing resource values. So, Smart Update strategy can be used even if
+        the automatic update by querying the Version Service server is disabled.
 
 2. Make sure the `versionServiceEndpoint` key is set to a valid Version
     Server URL (otherwise Smart Updates will not occur).
@@ -181,7 +182,7 @@ updates:
     2. Alternatively, you can run Version Service inside your cluster. This
         can be done with the `kubectl` command as follows:
 
-        ```bash
+        ``` {.bash data-prompt="$" }
         $ kubectl run version-service --image=perconalab/version-service --env="SERVE_HTTP=true" --port 11000 --expose
         ```
 
