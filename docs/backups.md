@@ -452,7 +452,7 @@ restoration can be done in the following way.
 
             The `backupSource` key should contain `destination` key equal to the
             Azure Blob [container](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction#containers)
-            with a special `azure://` prefix, followed by the necessary Azure
+            with `https://` prefix, followed by the necessary Azure
             configuration keys, same as in `deploy/cr.yaml` file:
 
             ```yaml
