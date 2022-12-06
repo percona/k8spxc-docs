@@ -447,11 +447,6 @@ configuration options for the HAProxy service.
 | **Example**     | `percona/percona-xtradb-cluster-operator:{{ release }}-haproxy` |
 | **Description** | HAProxy Docker image to use |
 |                 | |
-| **Key**         | {{ optionlink('haproxy.replicasServiceEnabled') }} |
-| **Value**       | boolean |
-| **Example**     | `true` |
-| **Description** | Enables or disables `haproxy-replicas` Service. This Service (on by default) forwards requests to all Percona XtraDB Cluster instances, and it **should not be used for write requests**! |
-|                 | |
 | **Key**         | {{ optionlink('haproxy.imagePullPolicy') }} |
 | **Value**       | string |
 | **Example**     | `Always` |
@@ -521,16 +516,6 @@ configuration options for the HAProxy service.
 | **Value**       | string |
 | **Example**     | `Cluster` |
 | **Description** | Specifies whether Service for HAProxy should [route external traffic to cluster-wide or to node-local endpoints](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip) (it can influence the load balancing effectiveness) |
-|                 | |
-| **Key**         | {{ optionlink('haproxy.replicasServiceType') }} |
-| **Value**       | string |
-| **Example**     | `ClusterIP` |
-| **Description** | Specifies the type of [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) to be used for HAProxy replicas |
-|                 | |
-| **Key**         | {{ optionlink('haproxy.replicasExternalTrafficPolicy') }} |
-| **Value**       | string |
-| **Example**     | `Cluster` |
-| **Description** | Specifies whether Service for HAProxy replicas should [route external traffic to cluster-wide or to node-local endpoints](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip) (it can influence the load balancing effectiveness) |
 |                 | |
 | **Key**         | {{ optionlink('haproxy.resources.requests.memory') }} |
 | **Value**       | string |
@@ -607,6 +592,11 @@ configuration options for the HAProxy service.
 | **Example**     | `10.0.0.0/8` |
 | **Description** | The range of client IP addresses from which the load balancer should be reachable (if not set, there is no limitations) |
 |                 | |
+| **Key**         | {{ optionlink('haproxy.loadBalancerIP') }} |
+| **Value**       | string |
+| **Example**     | `127.0.0.1` |
+| **Description** | The static IP-address for the load balancer |
+|                 | |
 | **Key**         | {{ optionlink('haproxy.serviceLabels') }} |
 | **Value**       | label |
 | **Example**     | `rack: rack-23` |
@@ -616,6 +606,41 @@ configuration options for the HAProxy service.
 | **Value**       | string |
 | **Example**     | `service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http` |
 | **Description** | The [Kubernetes annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) metadata for the load balancer Service |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.replicasServiceEnabled') }} |
+| **Value**       | boolean |
+| **Example**     | `true` |
+| **Description** | Enables or disables `haproxy-replicas` Service. This Service (on by default) forwards requests to all Percona XtraDB Cluster instances, and it **should not be used for write requests**! |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.replicasLoadBalancerSourceRanges') }} |
+| **Value**       | string |
+| **Example**     | `10.0.0.0/8` |
+| **Description** | The range of client IP addresses from which the load balancer should be reachable (if not set, there is no limitations) |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.replicasLoadBalancerIP') }} |
+| **Value**       | string |
+| **Example**     | `127.0.0.1` |
+| **Description** | The static IP-address for the replicas load balancer |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.replicasServiceType') }} |
+| **Value**       | string |
+| **Example**     | `ClusterIP` |
+| **Description** | Specifies the type of [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) to be used for HAProxy replicas |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.replicasExternalTrafficPolicy') }} |
+| **Value**       | string |
+| **Example**     | `Cluster` |
+| **Description** | Specifies whether Service for HAProxy replicas should [route external traffic to cluster-wide or to node-local endpoints](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip) (it can influence the load balancing effectiveness) |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.replicasServiceLabels') }} |
+| **Value**       | label |
+| **Example**     | `rack: rack-23` |
+| **Description** | The [Kubernetes labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) for the `haproxy-replicas` Service |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.replicasServiceAnnotations') }} |
+| **Value**       | string |
+| **Example**     | `service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http` |
+| **Description** | The [Kubernetes annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) metadata for the `haproxy-replicas` Service |
 |                 | |
 | **Key**         | {{ optionlink('haproxy.containerSecurityContext') }} |
 | **Value**       | subdoc |
