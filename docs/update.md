@@ -163,7 +163,7 @@ updates:
         (version numbers are specified as `{{ pxc80recommended }}`,
         `{{ pxc57recommended }}`, etc.),
 
-    * `Never` or `Disabled` - disable automatic upgrades
+    * `Never` or `Disabled` - disable automatic upgrades (the default choice starting from the Operator 1.12.0)
 
     !!! note
 
