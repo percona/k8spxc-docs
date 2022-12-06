@@ -487,6 +487,14 @@ $ kubectl apply -f deploy/backup/restore.yaml
     EOF
     ```
 
+<a name="backup-pitr-binlog-gaps"></a>
+
+Take into account, that Operator monitors the binlog gaps detected by
+binlog collector, if any. If backup contains such gaps, the Operator marks such
+backup as "not suitable for consistent PITR". Attempts to restore such backup 
+with point-in-time recovery will be blocked, and the restore operation will be
+marked as failed.
+
 ## Delete the unneeded backup
 
 The maximum amount of stored backups is controlled by the
