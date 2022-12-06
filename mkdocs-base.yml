@@ -143,6 +143,7 @@ nav:
           - "Load Balancing with ProxySQL": proxysql-conf.md
           - "Transport Encryption (TLS/SSL)": TLS.md
           - "Data at rest encryption": encryption.md
+          - "Telemetry": telemetry.md
           
     - Management:
           - "Backup and restore": backups.md
