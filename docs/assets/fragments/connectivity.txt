@@ -2,7 +2,8 @@
     cluster. Use `kubectl get secrets` command to see the list of Secrets
     objects (by default the Secrets object you are interested in has
     `cluster1-secrets` name). 
-    You can use the following command to get the password:
+    You can use the following command to get the password of the `root`
+    user:
     
     ``` {.bash data-prompt="$" }
     $ kubectl get secrets cluster1-secrets -o yaml -o jsonpath='{.data.root}' | base64 --decode | tr '\n' ' ' && echo " "
