@@ -458,7 +458,7 @@ restoration can be done in the following way.
             ```yaml
             ...
             backupSource:
-              destination: azure://AZURE-CONTAINER-NAME/BACKUP-NAME
+              destination: https://AZURE-CONTAINER-NAME/BACKUP-NAME
               azure:
                 credentialsSecret: my-cluster-azure-secret
                 ...
