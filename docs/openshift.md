@@ -99,6 +99,19 @@ You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marke
     $ oc apply -f deploy/operator.yaml
     ```
 
+    !!! note
+
+        You can simplify the Operator installation by applying a single
+        `deploy/bundle.yaml` file instead of running commands from the steps
+        2 and 4:
+        
+        ``` {.bash data-prompt="$" }
+        $ oc apply -f deploy/bundle.yaml
+        ```
+        
+        This will automatically create Custom Resource Definition, set up
+        role-based access control and install the Operator as one single action.
+
 ## Install Percona XtraDB Cluster
 
 1. Now that’s time to add the Percona XtraDB Cluster Users secrets to OpenShift.

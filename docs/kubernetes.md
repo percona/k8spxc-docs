@@ -12,7 +12,6 @@
     It is crucial to specify the right branch with `-b`
     option while cloning the code on this step. Please be careful.
 
-
 2. Now Custom Resource Definition for Percona XtraDB Cluster should be created
     from the `deploy/crd.yaml` file. Custom Resource Definition extends the
     standard set of resources which Kubernetes “knows” about with the new
@@ -56,6 +55,19 @@
     ``` {.bash data-prompt="$" }
     $ kubectl apply -f deploy/operator.yaml
     ```
+
+    !!! note
+
+        You can simplify the Operator installation by applying a single
+        `deploy/bundle.yaml` file instead of running commands from the steps
+        2 and 4:
+        
+        ``` {.bash data-prompt="$" }
+        $ kubectl apply -f deploy/bundle.yaml
+        ```
+        
+        This will automatically create Custom Resource Definition, set up
+        role-based access control and install the Operator as one single action.
 
 5. Now that’s time to add the Percona XtraDB Cluster Users secrets to
     Kubernetes. They should be placed in the data section of the
