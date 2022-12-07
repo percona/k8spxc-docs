@@ -594,6 +594,59 @@ $ kubectl apply -f deploy/backup/restore.yaml
     EOF
     ```
 
+<a name="backup-pitr-binlog-gaps"></a>
+
+Take into account, that Operator monitors the binlog gaps detected by
+binlog collector, if any. If backup contains such gaps, the Operator will mark
+the status of the latest successful backup with a new condition field that
+indicates backup can't guarantee consistent point-in-time recovery. This
+condition looks as follows:
+
+```yaml
+apiVersion: pxc.percona.com/v1
+kind: PerconaXtraDBClusterBackup
+metadata:
+  name: backup1
+spec:
+  pxcCluster: pitr
+  storageName: minio
+status:
+  completed: "2022-11-25T15:57:29Z"
+  conditions:
+  - lastTransitionTime: "2022-11-25T15:57:48Z"
+    message: Binlog with GTID set e41eb219-6cd8-11ed-94c8-9ebf697d3d20:21-22 not found
+    reason: BinlogGapDetected
+    status: "False"
+    type: PITRReady
+  state: Succeeded
+```
+
+Trying to restore from such backup (with the condition value "False") with
+point-in-time recovery will result in the following error: 
+
+```text
+Backup doesn't guarantee consistent recovery with PITR. Annotate PerconaXtraDBClusterRestore with percona.com/unsafe-pitr to force it.
+```
+
+You can disable this check and force the restore by annotating it with
+`pxc.percona.com/unsafe-pitr` as follows:
+
+```yaml
+apiVersion: pxc.percona.com/v1
+kind: PerconaXtraDBClusterRestore
+metadata:
+  annotations:
+    percona.com/unsafe-pitr: "true"
+  name: restore2
+spec:
+  pxcCluster: pitr
+  backupName: backup1
+  pitr:
+    type: latest
+    backupSource:
+      storageName: "minio-binlogs"
+```
+
 ## Delete the unneeded backup
 
 The maximum amount of stored backups is controlled by the
