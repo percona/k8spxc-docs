@@ -107,6 +107,27 @@ The cluster will be ready for asynchronous replication when you apply changes as
 $ kubectl apply -f deploy/cr.yaml
 ```
 
+!!! note
+
+    You can also [configure SSL channel for replication](https://dev.mysql.com/doc/refman/8.0/en/replication-encrypted-connections.html). Following 
+    options allow you using replication over an encrypted channel.
+    Set the `replicationChannels.configuration.ssl` key to true, optionally
+    enable host name identity verification with the
+    `replicationChannels.configuration.sslSkipVerify` key, and set
+    `replicationChannels.configuration.ca` key to the path name of the
+    Certificate Authority (CA) certificate file:
+    
+    ```yaml
+    replicationChannels:
+    - isSource: false
+      name: uspxc1_to_pxc2
+      configuration:
+        ssl: true
+        sslSkipVerify: true
+        ca: '/etc/mysql/ssl/ca.crt'
+        ...
+    ```
+
 ## System user for replication
 
 Replication channel demands a special [system user](users.md#users-system-users) with same credentials on both *Source* and *Replica*.
