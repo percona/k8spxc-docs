@@ -13,6 +13,18 @@ following ways:
 
 * use a Secret object.
 
+Often there's no need to add custom options, as the Operator takes care of
+providing MySQL with reasonable defaults. Also, some MySQL options can not
+be changed: you shouldn't change `require_secure_transport` option to `ON`, as
+it would break the behavior of the Operator.
+
+!!! note
+
+    If you still need something equal to `require_secure_transport=ON` to force
+    encrypted connections between client and server, the most convenient
+    workaround would be [creating MySQL users](users.md) with `REQUIRE SSL`
+    option.
+
 ## Edit the `deploy/cr.yaml` file
 
 You can add options from the
