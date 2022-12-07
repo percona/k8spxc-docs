@@ -138,6 +138,7 @@ nav:
           - "Application and system users": users.md
           - "Changing MySQL Options": options.md
           - "Anti-affinity and tolerations": constraints.md
+          - "Labels and annotations": annotations.md
           - "Local Storage support": storage.md
           - "Defining environment variables": containers-conf.md
           - "Load Balancing with HAProxy": haproxy-conf.md

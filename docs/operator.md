@@ -1,4 +1,4 @@
-# <a name="operator-custom-resource-options"></a>Custom Resource options
+# Custom Resource options
 
 Percona XtraDB Cluster managed by the Operator configured via the spec section
 of the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
@@ -35,6 +35,8 @@ The spec part of the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-
 | pause           | boolean           | `false`                    | Pause/resume: setting it to `true` gracefully stops the cluster, and setting it to `false` after shut down starts the cluster back  |
 | secretsName     | string            | `cluster1-secrets`         | A name for [users secrets](users.md#users)                             |
 | crVersion       | string            | `{{ release }}`                   | Version of the Operator the Custom Resource belongs to                 |
+|ignoreAnnotations| subdoc            | `iam.amazonaws.com/role`   | The list of annotations [to be ignored](annotations.md#annotations-ignore) by the Operator |
+| ignoreLabels    | subdoc            | `rack`                     | The list of labels [to be ignored](annotations.md#annotations-ignore) by the Operator |
 | vaultSecretName | string            | `keyring-secret-vault`     | A secret for the [HashiCorp Vault](https://www.vaultproject.io/) to carry on [Data at Rest Encryption](encryption.md#encryption)    |
 | sslSecretName   | string            | `cluster1-ssl`             | A secret with TLS certificate generated for *external* communications, see [Transport Layer Security (TLS)](TLS.md#tls) for details |
 | sslInternalSecretName  | string     | `cluster1-ssl-internal`    | A secret with TLS certificate generated for *internal* communications, see [Transport Layer Security (TLS)](TLS.md#tls) for details |

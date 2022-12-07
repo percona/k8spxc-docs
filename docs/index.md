@@ -59,6 +59,8 @@ or in the cloud.
 
 * [Anti-affinity and tolerations](constraints.md)
 
+* [Labels and annotations](annotations.md)
+
 * [Local Storage support](storage.md)
 
 * [Defining environment variables](containers-conf.md)
