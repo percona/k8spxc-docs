@@ -36,16 +36,16 @@ the following information there:
 
 * `WATCH_NAMESPACE` key-value pair in the `env` section should have
     `value` equal to a  comma-separated list of the namespaces to be watched by
-    the Operator, *and* the namespace in which the Operator resides (or just a
-    blank string to make the Operator deal with *all namespaces* in a Kubernetes
-    cluster).
+    the Operator (or just a blank string to make the Operator deal with
+    *all namespaces* in a Kubernetes cluster).
 
     !!! note
 
-        The list of namespaces to watch is fully supported by Percona
-        Distribution for MySQL Operator starting from the version 1.7. In version
-        1.6 you can only use cluster-wide mode with empty `WATCH_NAMESPACE` key
-        to watch all namespaces.
+        The list of namespaces to watch is fully supported by the Operator
+        starting from the version 1.7 (in the version 1.6 you can only use
+        cluster-wide mode with empty `WATCH_NAMESPACE` key to watch all
+        namespaces). Also, prior to the version 1.12.0 it was necessary to
+        mention the Operator's own namespace in the list of watched namespaces.
 
     The following simple example shows how to install Operator cluster-wide on
     Kubernetes.
@@ -106,3 +106,4 @@ the following information there:
     $ kubectl run -i --rm --tty percona-client --image=percona:5.7 --restart=Never --env="POD_NAMESPACE=pxc" -- bash -il
     percona-client:/$ mysql -h cluster1-proxysql -uroot -proot_password
     ```
+
