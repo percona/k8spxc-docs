@@ -16,7 +16,7 @@ The following steps will deploy Vault on Kubernetes with the [Helm 3 package man
 
 1. Add helm repo and install:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ helm repo add hashicorp https://helm.releases.hashicorp.com
     "hashicorp" has been added to your repositories
 
@@ -26,7 +26,7 @@ The following steps will deploy Vault on Kubernetes with the [Helm 3 package man
 2. After the installation, Vault should be first initialized and then unsealed.
     Initializing Vault is done with the following commands:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl exec -it pod/vault-service-0 -- vault operator init -key-shares=1 -key-threshold=1 -format=json > /tmp/vault-init
     $ unsealKey=$(jq -r ".unseal_keys_b64[]" < /tmp/vault-init)
     ```
@@ -34,7 +34,7 @@ The following steps will deploy Vault on Kubernetes with the [Helm 3 package man
     To unseal Vault, execute the following command **for each Pod** of Vault
     running:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl exec -it pod/vault-service-0 -- vault operator unseal "$unsealKey"
     ```
 
@@ -47,19 +47,19 @@ The following steps will deploy Vault on Kubernetes with the [Helm 3 package man
     there is no need in root permissions. We don’t recommend using the root token
     on the production system.
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ cat /tmp/vault-init | jq -r ".root_token"
     ```
 
     The output will be like follows:
 
-    ```text
+    ``` {.text .no-copy}
     s.VgQvaXl8xGFO1RUxAPbPbsfN
     ```
 
     Now login to Vault with this token and enable the “pxc-secret” secrets path:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl exec -it vault-service-0 -- /bin/sh
     $ vault login s.VgQvaXl8xGFO1RUxAPbPbsfN
     $ vault secrets enable --version=1 -path=pxc-secret kv
@@ -69,7 +69,7 @@ The following steps will deploy Vault on Kubernetes with the [Helm 3 package man
 
         You can also enable audit, which is not mandatory, but useful:
 
-        ```bash
+        ``` {.bash data-prompt="$" }
         $ vault audit enable file file_path=/vault/vault-audit.log
         ```
 

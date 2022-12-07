@@ -5,15 +5,14 @@ Percona Operator for MySQL based on Percona XtraDB Cluster:
 
 | Image                                                           | Digest                                                           |
 |:----------------------------------------------------------------|:-----------------------------------------------------------------|
-| percona/percona-xtradb-cluster-operator:1.11.0                  | 69501813d433aba1b9bd0babf7b7033000696da2a4c7fc582dac00c79a100c82 |
-| percona/percona-xtradb-cluster-operator:1.11.0-haproxy          | ebeb5b882394fd2a2c5ab302ecb410745a34bbe472a0846efb17ed8f234cf933 |
-| percona/percona-xtradb-cluster-operator:1.11.0-proxysql         | 5ca4d85015d0501492462efedc22d4e860423cdf2fa07f1eafbcc11a60bb0844 |
-| percona/percona-xtradb-cluster-operator:1.11.0-pxc8.0.25-backup | c3991f0959a3b4114d7ff629d9d3cdf0dc200c58443ca8ebb1446d8b1cbe416d |
-| percona/percona-xtradb-cluster-operator:1.11.0-pxc8.0-backup    | 37a087035f74c26c67e44dd437f6128b5af419902cd416b17f72f82eaaaf2dad |
-| percona/percona-xtradb-cluster-operator:1.11.0-pxc5.7.35-backup | ac9fcd3078107c6492c687eb98215d4e5daf27a02fb3c78ba4b9e9c01f2078b3 |
-| percona/percona-xtradb-cluster-operator:1.11.0-pxc5.7-backup    | 0424bb866cb171bd380c87ad3aa98047af90c1e6e61bf4d81d2c36864cb36e4d |
-| percona/percona-xtradb-cluster-operator:1.11.0-logcollector     | fda6ca8f7bf95e86808ae60e305cda8007f7a886688f9bcfa5a566d2b43d05c0 |
-| percona/pmm-client:2.28.0                                       | 87b72578691b168f821d71f9a1120c484def570dcdac47767041a5ad0a8be90c |
+| percona/percona-xtradb-cluster-operator:1.12.0                  | fbbf093bf7681e0784dd817ac311dea815140ce53aa9cdc79ada0bba067b06a8 |
+| percona/percona-xtradb-cluster-operator:1.12.0-haproxy          | d900211bf5684839cfbaab3ec939ef7bae770638c7d819904820a3882a2aea32 |
+| percona/percona-xtradb-cluster-operator:1.12.0-proxysql         | a0352f7491ba32f4cb1fb8edb1ad9248235f4ae1186932965383f47e3239e0f7 |
+| percona/percona-xtradb-cluster-operator:1.12.0-pxc8.0-backup    | d5a45266857dcccec973103cd5ad35306bdd83d540fa1f31be673aa12814d521 |
+| percona/percona-xtradb-cluster-operator:1.12.0-pxc5.7-backup    | 5ec440d514f57a5a49e62849674bd4df33ff3e7697037ef4b7ead9dd346af5f9 |
+| percona/percona-xtradb-cluster-operator:1.12.0-logcollector     | 6d4a4537fa766743c5aa6da8b683bf2656980d6979c31eab50a4be69c80f51ce |
+| percona/pmm-client:2.32.0                                       | ee2f3db541857e0a71633270596933441c4be579ce8e33c22cf150ead4f3622f |
+| percona/percona-xtradb-cluster:8.0.29-21.1                      | 96c6bb8189280aeb773e74ed46aa41c01781b62947ed70c89efeb9f41c367ee7 |
 | percona/percona-xtradb-cluster:8.0.27-18.1                      | a0fced75ecd2cd164dd9937917440911aed972476d48a2b8a84fe832bc67e43a |
 | percona/percona-xtradb-cluster:8.0.25-15.1                      | 529e979c86442429e6feabef9a2d9fc362f4626146f208fbfac704e145a492dd |
 | percona/percona-xtradb-cluster:8.0.23-14.1                      | 8109f7ca4fc465ba862c08021df12e77b65d384395078e31e270d14b77810d79 |
@@ -22,6 +21,7 @@ Percona Operator for MySQL based on Percona XtraDB Cluster:
 | percona/percona-xtradb-cluster:8.0.20-11.2                      | feda5612db18da824e971891d6084465aa9cdc9918c18001cd95ba30916da78b |
 | percona/percona-xtradb-cluster:8.0.20-11.1                      | 54b1b2f5153b78b05d651034d4603a13e685cbb9b45bfa09a39864fa3f169349 |
 | percona/percona-xtradb-cluster:8.0.19-10.1                      | 1058ae8eded735ebdf664807aad7187942fc9a1170b3fd0369574cb61206b63a |
+| percona/percona-xtradb-cluster:5.7.39-31.61                     | 9013170a71559bbac92ba9c2e986db9bda3a8a9e39ee1ee350e0ee94488bb6d7 |
 | percona/percona-xtradb-cluster:5.7.36-31.55                     | c7bad990fc7ca0fde89240e921052f49da08b67c7c6dc54239593d61710be504 |
 | percona/percona-xtradb-cluster:5.7.35-31.53                     | 4cc61888821d5b96942ebd1637e5622a1bccc607f6b7e0043dee3d430460ea75 |
 | percona/percona-xtradb-cluster:5.7.34-31.51                     | f8d51d7932b9bb1a5a896c7ae440256230eb69b55798ff37397aabfd58b80ccb |
@@ -33,4 +33,4 @@ Percona Operator for MySQL based on Percona XtraDB Cluster:
 | percona/percona-xtradb-cluster:5.7.29-31.43                     | 85fb479de073770280ae601cf3ec22dc5c8cca4c8b0dc893b09503767338e6f9 |
 | percona/percona-xtradb-cluster:5.7.28-31.41.2                   | fccd6525aaeedb5e436e9534e2a63aebcf743c043526dd05dba8519ebddc8b30 |
 | percona/percona-xtradb-cluster:5.7.27-31.39                     | 7d8eb4d2031c32c6e96451655f359d8e5e8e047dc95bada9a28c41c158876c26 |
-| percona/percona-xtradb-cluster:26-31.37                         | 9d43d8e435e4aca5c694f726cc736667cb938158635c5f01a0e9412905f1327f |
+| percona/percona-xtradb-cluster:5.7.26-31.37                     | 9d43d8e435e4aca5c694f726cc736667cb938158635c5f01a0e9412905f1327f |

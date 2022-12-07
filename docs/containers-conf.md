@@ -29,13 +29,13 @@ in case of Apple macOS) in your local shell and get `MTAwMA==`.
 
     Similarly, you can read the list of options from a Base64-encoded string:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ echo "MTAwMA==" | base64 --decode
     ```
 
 When ready, apply the YAML file with the following command:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl create -f deploy/my-env-secret.yaml
 ```
 
@@ -51,7 +51,7 @@ haproxy:
 
 Now apply the `deploy/cr.yaml` file with the following command:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl apply -f deploy/cr.yaml
 ```
 
@@ -82,7 +82,7 @@ data:
 If this YAML file was named `deploy/my-new-env-var-secret`, the command
 to apply it will be the following one:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl create -f deploy/my-new-env-secret.yaml
 ```
 
@@ -98,6 +98,6 @@ pxc:
 
 Don’t forget to apply the `deploy/cr.yaml` file, as usual:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl apply -f deploy/cr.yaml
 ```

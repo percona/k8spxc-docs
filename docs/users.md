@@ -10,12 +10,12 @@ MySQL user accounts within the Cluster can be divided into two different groups:
 As these two groups of user accounts serve different purposes, they are
 considered separately in the following sections.
 
-## [Unprivileged users](users.html#unprivileged-users)
+## Unprivileged users
 
 There are no unprivileged (general purpose) user accounts created by
 default. If you need general purpose users, please run commands below:
 
-```bash
+``` {.bash data-prompt="$" data-prompt-second="mysql>"}
 $ kubectl run -it --rm percona-client --image=percona:8.0 --restart=Never -- mysql -hcluster1-pxc -uroot -proot_password
 mysql> GRANT ALL PRIVILEGES ON database1.* TO 'user1'@'%' IDENTIFIED BY 'password1';
 ```
@@ -28,7 +28,7 @@ Verify that the user was created successfully. If successful, the
 following command will let you successfully login to MySQL shell via
 ProxySQL:
 
-```bash
+``` {.bash data-prompt="$" data-prompt-second="percona-client:/$"}
 $ kubectl run -it --rm percona-client --image=percona:8.0 --restart=Never -- bash -il
 percona-client:/$ mysql -h cluster1-proxysql -uuser1 -ppassword1
 mysql> SELECT * FROM database1.table1 LIMIT 1;
@@ -37,7 +37,7 @@ mysql> SELECT * FROM database1.table1 LIMIT 1;
 You may also try executing any simple SQL statement to ensure the
 permissions have been successfully granted.
 
-## [System Users](users.html#system-users)
+## System Users
 
 To automate the deployment and management of the cluster components,
 the Operator requires system-level Percona XtraDB Cluster users.
@@ -46,7 +46,7 @@ Credentials for these users are stored as a [Kubernetes Secrets](https://kuberne
 The Operator requires Kubernetes Secrets before Percona XtraDB Cluster is
 started. It will either use existing Secrets or create a new Secrets object with
 randomly generated passwords if it didn’t exist.
-The name of the required Secrets (`my-cluster-secrets` by default)
+The name of the required Secrets (`cluster1` by default)
 should be set in the `spec.secretsName` option of the `deploy/cr.yaml`
 configuration file.
 
@@ -70,7 +70,7 @@ The following table shows system users’ names and purposes.
 ### YAML Object Format
 
 The default name of the Secrets object for these users is
-`my-cluster-secrets` and can be set in the CR for your cluster in
+`cluster1-secrets` and can be set in the CR for your cluster in
 `spec.secretName` to something different. When you create the object yourself,
 it should match the following simple format:
 
@@ -78,7 +78,7 @@ it should match the following simple format:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: my-cluster-secrets
+  name: cluster1-secrets
 type: Opaque
 stringData:
   root: root_password
@@ -105,19 +105,19 @@ If you want to update any field, you’ll need to encode the value into base64
 format. To do this, you can run `echo -n "password" | base64 --wrap=0` (or just
 `echo -n "password" | base64` in case of Apple macOS) in your local shell to
 get valid values. For example, setting the PMM Server user’s password to
-`new_password` in the `my-cluster-name-secrets` object can be done with the
+`new_password` in the `cluster1-secrets` object can be done with the
 following command:
 
 === "in Linux"
 
-    ```bash
-    $ kubectl patch secret/my-cluster-name-secrets -p '{"data":{"pmmserver": "'$(echo -n new_password | base64 --wrap=0)'"}}'
+    ``` {.bash data-prompt="$" }
+    $ kubectl patch secret/cluster1-secrets -p '{"data":{"pmmserver": "'$(echo -n new_password | base64 --wrap=0)'"}}'
     ```
 
 === "in macOS"
 
-    ```bash
-    $ kubectl patch secret/my-cluster-name-secrets -p '{"data":{"pmmserver": "'$(echo -n new_password | base64)'"}}'
+    ``` {.bash data-prompt="$" }
+    $ kubectl patch secret/cluster1-secrets -p '{"data":{"pmmserver": "'$(echo -n new_password | base64)'"}}'
     ```
 
 ### Password Rotation Policies and Timing
@@ -139,7 +139,7 @@ implemented, which allows us to mark our system users as such.
 See [the official documentation on this feature](https://dev.mysql.com/doc/refman/8.0/en/account-categories.html)
 for more details.
 
-## [Development Mode](users.html#development-mode)
+## Development Mode
 
 To make development and testing easier, `deploy/secrets.yaml` secrets
 file contains default passwords for Percona XtraDB Cluster system users.

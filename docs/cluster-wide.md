@@ -36,16 +36,16 @@ the following information there:
 
 * `WATCH_NAMESPACE` key-value pair in the `env` section should have
     `value` equal to a  comma-separated list of the namespaces to be watched by
-    the Operator, *and* the namespace in which the Operator resides (or just a
-    blank string to make the Operator deal with *all namespaces* in a Kubernetes
-    cluster).
+    the Operator (or just a blank string to make the Operator deal with
+    *all namespaces* in a Kubernetes cluster).
 
     !!! note
 
-        The list of namespaces to watch is fully supported by Percona
-        Distribution for MySQL Operator starting from the version 1.7. In version
-        1.6 you can only use cluster-wide mode with empty `WATCH_NAMESPACE` key
-        to watch all namespaces.
+        The list of namespaces to watch is fully supported by the Operator
+        starting from the version 1.7 (in the version 1.6 you can only use
+        cluster-wide mode with empty `WATCH_NAMESPACE` key to watch all
+        namespaces). Also, prior to the version 1.12.0 it was necessary to
+        mention the Operator's own namespace in the list of watched namespaces.
 
     The following simple example shows how to install Operator cluster-wide on
     Kubernetes.
@@ -53,7 +53,7 @@ the following information there:
 
 1. First of all, clone the percona-xtradb-cluster-operator repository:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
     $ cd percona-xtradb-cluster-operator
     ```
@@ -61,20 +61,20 @@ the following information there:
 2. Let’s suppose that Operator’s namespace should be the `pxc-operator` one.
     Create it as follows:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl create namespace pxc-operator
     ```
 
     Namespaces to be watched by the Operator should be created in the same way
     if not exist. Let’s say the Operator should watch the `pxc` namespace:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl create namespace pxc
     ```
 
 3. Apply the `deploy/cw-bundle.yaml` file with the following command:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl apply -f deploy/cw-bundle.yaml -n pxc-operator
     ```
 
@@ -82,14 +82,14 @@ the following information there:
     time by applying the `deploy/cr.yaml` configuration file, like in the case
     of normal installation:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl apply -f deploy/cr.yaml -n pxc
     ```
 
     The creation process will take some time. The process is over when both
     operator and replica set Pods have reached their Running status:
 
-    ```text
+    ``` {.text .no-copy}
     NAME                                               READY   STATUS    RESTARTS   AGE
     cluster1-haproxy-0                                 2/2     Running   0          6m17s
     cluster1-haproxy-1                                 2/2     Running   0          4m59s
@@ -102,7 +102,42 @@ the following information there:
 
 5. Check connectivity to newly created cluster
 
-    ```bash
+    ``` {.bash data-prompt="$" data-prompt-second="percona-client:/$"}
     $ kubectl run -i --rm --tty percona-client --image=percona:5.7 --restart=Never --env="POD_NAMESPACE=pxc" -- bash -il
     percona-client:/$ mysql -h cluster1-proxysql -uroot -proot_password
     ```
+
+!!! note 
+
+    Some Kubernetes-based environments are specifically configured to have
+    communication across Namespaces is not allowed by default network policies.
+    In this case, you should specifically allow the Operator communication
+    across the needed Namespaces. Following the above example, you would need
+    to allow ingress traffic for the `pxc-operator` Namespace from the `pxc`
+    Namespace, and also from the `default` Namespace. You can do it with the
+    NetworkPolicy resource, specified in the YAML file as follows:
+    
+    ```yaml
+    apiVersion: networking.k8s.io/v1
+    kind: NetworkPolicy
+    metadata:
+      name: percona
+      namespace: pxc-operator
+    spec:
+      ingress:
+      - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: pxc
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: default
+      podSelector: {}
+      policyTypes:
+      - Ingress
+    ```
+    
+    Don't forget to apply the resulting file with the usual `kubectl apply`
+    command.
+
+    You can find more details about Network Policies [in the official Kubernetes documentation](https://kubernetes.io/docs/concepts/services-networking/network-policies/). 

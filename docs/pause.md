@@ -1,4 +1,4 @@
-# <a name="pause"></a>Pause/resume Percona XtraDB Cluster
+# Pause/resume Percona XtraDB Cluster
 
 There may be external situations when it is needed to shutdown the Percona
 XtraDB Cluster for a while and then start it back up (some works related to the
@@ -16,7 +16,7 @@ spec:
 Pausing the cluster may take some time, and when the process is over, you will
 see only the Operator Pod running:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl get pods
 NAME                                               READY   STATUS    RESTARTS   AGE
 percona-xtradb-cluster-operator-79966668bd-rswbk   1/1     Running   0          12m
@@ -28,7 +28,7 @@ to `false`.
 Starting the cluster will take time. The process is over when all Pods have
 reached their Running status:
 
-```text
+``` {.text .no-copy}
 NAME                                               READY   STATUS    RESTARTS   AGE
 cluster1-haproxy-0                                 2/2     Running   0          6m17s
 cluster1-haproxy-1                                 2/2     Running   0          4m59s

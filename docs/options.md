@@ -13,6 +13,18 @@ following ways:
 
 * use a Secret object.
 
+Often there's no need to add custom options, as the Operator takes care of
+providing MySQL with reasonable defaults. Also, some MySQL options can not
+be changed: you shouldn't change `require_secure_transport` option to `ON`, as
+it would break the behavior of the Operator.
+
+!!! note
+
+    If you still need something equal to `require_secure_transport=ON` to force
+    encrypted connections between client and server, the most convenient
+    workaround would be [creating MySQL users](users.md) with `REQUIRE SSL`
+    option.
+
 ## Edit the `deploy/cr.yaml` file
 
 You can add options from the
@@ -22,7 +34,7 @@ configuration file by editing the configuration section of the
 
 ```yaml
 spec:
-  secretsName: my-cluster-secrets
+  secretsName: cluster1-secrets
   pxc:
     ...
       configuration: |
@@ -32,9 +44,8 @@ spec:
         wsrep_debug=CLIENT
 ```
 
-See the [Custom Resource options, PXC
-section](operator.html#operator-pxc-section)
-for more details
+See the [Custom Resource options, PXC section](operator.md#operator-pxc-section)
+for more details.
 
 ## Use a ConfigMap
 
@@ -43,8 +54,7 @@ options. A configmap allows Kubernetes to pass or update configuration
 data inside a containerized application.
 
 Use the `kubectl` command to create the configmap from external
-resources, for more information see [Configure a Pod to use a
-ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-a-configmap).
+resources, for more information see [Configure a Pod to use a ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-a-configmap).
 
 For example, let’s suppose that your application requires more
 connections. To increase your `max_connections` setting in MySQL, you
@@ -63,7 +73,7 @@ You should use the combination of the cluster name with the `-pxc`
 suffix as the naming convention for the configmap. To find the cluster
 name, you can use the following command:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl get pxc
 ```
 
@@ -76,13 +86,13 @@ $ kubectl create configmap <cluster-name>-pxc <resource-type=resource-name>
 The following example defines `cluster1-pxc` as the configmap name and the
 `my.cnf` file as the data source:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl create configmap cluster1-pxc --from-file=my.cnf
 ```
 
 To view the created configmap, use the following command:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl describe configmaps cluster1-pxc
 ```
 
@@ -98,7 +108,7 @@ name and the `pxc` suffix.
 
     To find the cluster name, you can use the following command:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl get pxc
     ```
 
@@ -122,13 +132,13 @@ follows:
 
 === "in Linux"
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ cat my.cnf | base64 --wrap=0
     ```
 
 === "in macOS"
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ cat my.cnf | base64
     ```
 
@@ -136,7 +146,7 @@ follows:
 
     Similarly, you can read the list of options from a Base64 encoded string:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ echo "W215c3FsZF0Kd3NyZXBfZGVidWc9T04KW3NzdF0Kd3NyZXBfZGVidWc9T04K" | base64 --decode
     ```
 
@@ -154,7 +164,7 @@ data:
 
 When ready, apply it with the following command:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl create -f deploy/my-pxc-secret.yaml
 ```
 
@@ -167,13 +177,14 @@ $ kubectl create -f deploy/my-pxc-secret.yaml
 
 Do not forget to restart Percona XtraDB Cluster to ensure the cluster
 has updated the configuration (see details on how to connect in the
-[Install Percona XtraDB Cluster on Kubernetes](kubernetes.html) page).
+[Install Percona XtraDB Cluster on Kubernetes](kubernetes.md) page).
 
 ## Auto-tuning MySQL options
 
 Few configuration options for MySQL can be calculated and set by the Operator
-automatically based on the available Pod resources (memory and CPU) **if
-these options are not specified by user** (either in CR.yaml or in ConfigMap).
+automatically based on the available Pod resource limits (memory and CPU) **if
+constant values for these options are not specified by user** (either in
+CR.yaml or in ConfigMap).
 
 Options which can be set automatically are the following ones:
 
@@ -183,6 +194,16 @@ Options which can be set automatically are the following ones:
 
 If Percona XtraDB Cluster Pod limits are defined, then limits values are used to
 calculate these options. If Percona XtraDB Cluster Pod limits are not defined,
-Operator looks for Percona XtraDB Cluster Pod requests as the basis for
-calculations. if neither Percona XtraDB Cluster Pod limits nor Percona XtraDB
-Cluster Pod requests are defined, auto-tuning is not done.
+auto-tuning is not done.
+
+Also, starting from the Operator 1.12.0, there is another way of auto-tuning.
+You can use `"{{containerMemoryLimit}}"` as a value in `spec.pxc.configuration`
+as follows:
+
+```yaml
+pxc:
+    configuration: |
+    [mysqld]
+    innodb_buffer_pool_size={{'{{'}}containerMemoryLimit * 3 / 4{{'}}'}}
+    ...
+```

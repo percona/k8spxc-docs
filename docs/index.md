@@ -41,6 +41,8 @@ or in the cloud.
 
 * [Install on Amazon Elastic Kubernetes Service (AWS EKS)](eks.md)
 
+* [Install on Microsoft Azure Kubernetes Service (AKS)](aks.md)
+
 # Advanced Installation Guides
 
 * [Generic Kubernetes installation](kubernetes.md)
@@ -57,6 +59,8 @@ or in the cloud.
 
 * [Anti-affinity and tolerations](constraints.md)
 
+* [Labels and annotations](annotations.md)
+
 * [Local Storage support](storage.md)
 
 * [Defining environment variables](containers-conf.md)
@@ -69,13 +73,13 @@ or in the cloud.
 
 * [Data at rest encryption](encryption.md)
 
-
+* [Telemetry](telemetry.md)
 
 # Management
 
 * [Backup and restore](backups.md)
 
-* [Upgrade Percona XtraDB Cluster and the Operator](update.md)
+* [Upgrade Database and Operator](update.md)
 
 * [Horizontal and vertical scaling](scaling.md)
 
@@ -93,7 +97,9 @@ or in the cloud.
 
 # HOWTOs
 
-* [Install Percona XtraDB Cluster in multi-namespace (cluster-wide) mode](cluster-wide.md)
+* [How to install Percona XtraDB Cluster in multi-namespace (cluster-wide) mode](cluster-wide.md)
+
+* [How to upgrade Percona XtraDB Cluster manually](update_manually.md)
 
 # Reference
 
@@ -104,5 +110,7 @@ or in the cloud.
 * [Operator API](api.md)
 
 * [Frequently Asked Questions](faq.md)
+
+* [Old releases (documentation archive)](archive.md)
 
 * [Release Notes](ReleaseNotes/index.md)

@@ -43,8 +43,8 @@ The command to create a new Percona XtraDB Cluster with all its resources
 
 **Kubectl Command:**
 
-```bash
-kubectl apply -f percona-xtradb-cluster-operator/deploy/cr.yaml
+``` {.bash data-prompt="$" }
+$ kubectl apply -f percona-xtradb-cluster-operator/deploy/cr.yaml
 ```
 
 **URL:**
@@ -61,8 +61,8 @@ Authorization: Bearer $KUBE_TOKEN
 
 **cURL Request:**
 
-```bash
-curl -k -v -XPOST "https://$API_SERVER/apis/pxc.percona.com/v{{ apiversion }}/namespaces/default/perconaxtradbclusters" \
+``` {.bash data-prompt="$" }
+$ curl -k -v -XPOST "https://$API_SERVER/apis/pxc.percona.com/v{{ apiversion }}/namespaces/default/perconaxtradbclusters" \
             -H "Content-Type: application/json" \
             -H "Accept: application/json" \
             -H "Authorization: Bearer $KUBE_TOKEN" \
@@ -165,8 +165,8 @@ Lists all Percona XtraDB Clusters that exist in your kubernetes cluster
 
 **Kubectl Command:**
 
-```bash
-kubectl get pxc
+``` {.bash data-prompt="$" }
+$ kubectl get pxc
 ```
 
 **URL:**
@@ -183,8 +183,8 @@ Authorization: Bearer $KUBE_TOKEN
 
 **cURL Request:**
 
-```bash
-curl -k -v -XGET "https://$API_SERVER/apis/pxc.percona.com/v1/namespaces/default/perconaxtradbclusters?limit=500" \
+``` {.bash data-prompt="$" }
+$ curl -k -v -XGET "https://$API_SERVER/apis/pxc.percona.com/v1/namespaces/default/perconaxtradbclusters?limit=500" \
             -H "Accept: application/json;as=Table;v=v1;g=meta.k8s.io,application/json;as=Table;v=v1beta1;g=meta.k8s.io,application/json" \
             -H "Authorization: Bearer $KUBE_TOKEN"
 ```
@@ -211,8 +211,8 @@ Gets all information about the specified Percona XtraDB Cluster
 
 **Kubectl Command:**
 
-```bash
-kubectl get pxc/cluster1 -o json
+``` {.bash data-prompt="$" }
+$ kubectl get pxc/cluster1 -o json
 ```
 
 **URL:**
@@ -229,8 +229,8 @@ Authorization: Bearer $KUBE_TOKEN
 
 **cURL Request:**
 
-```bash
-curl -k -v -XGET "https://$API_SERVER/apis/pxc.percona.com/v1/namespaces/default/perconaxtradbclusters/cluster1" \
+``` {.bash data-prompt="$" }
+$ curl -k -v -XGET "https://$API_SERVER/apis/pxc.percona.com/v1/namespaces/default/perconaxtradbclusters/cluster1" \
             -H "Accept: application/json" \
             -H "Authorization: Bearer $KUBE_TOKEN"
 ```
@@ -258,8 +258,8 @@ current high availability needs
 
 **Kubectl Command:**
 
-```bash
-kubectl patch pxc cluster1 --type=merge --patch '{
+``` {.bash data-prompt="$" }
+$ kubectl patch pxc cluster1 --type=merge --patch '{
 "spec": {"pxc":{ "size": "5" }
 }}'
 ```
@@ -278,8 +278,8 @@ Authorization: Bearer $KUBE_TOKEN
 
 **cURL Request:**
 
-```bash
-curl -k -v -XPATCH "https://$API_SERVER/apis/pxc.percona.com/v1/namespaces/default/perconaxtradbclusters/cluster1" \
+``` {.bash data-prompt="$" }
+$ curl -k -v -XPATCH "https://$API_SERVER/apis/pxc.percona.com/v1/namespaces/default/perconaxtradbclusters/cluster1" \
             -H "Authorization: Bearer $KUBE_TOKEN" \
             -H "Content-Type: application/merge-patch+json"
             -H "Accept: application/json" \
@@ -319,8 +319,8 @@ Change the image of Percona XtraDB Cluster containers inside the cluster
 
 **Kubectl Command:**
 
-```bash
-kubectl patch pxc cluster1 --type=merge --patch '{
+``` {.bash data-prompt="$" }
+$ kubectl patch pxc cluster1 --type=merge --patch '{
 "spec": {"pxc":{ "image": "percona/percona-xtradb-cluster:5.7.30-31.43" }
 }}'
 ```
@@ -339,8 +339,8 @@ Authorization: Bearer $KUBE_TOKEN
 
 **cURL Request:**
 
-```bash
-curl -k -v -XPATCH "https://$API_SERVER/apis/pxc.percona.com/v1/namespaces/default/perconaxtradbclusters/cluster1" \
+``` {.bash data-prompt="$" }
+$ curl -k -v -XPATCH "https://$API_SERVER/apis/pxc.percona.com/v1/namespaces/default/perconaxtradbclusters/cluster1" \
             -H "Authorization: Bearer $KUBE_TOKEN" \
             -H "Accept: application/json" \
             -H "Content-Type: application/merge-patch+json"
@@ -381,8 +381,8 @@ passed on to the Percona XtraDB Cluster containers when they are created
 
 **Kubectl Command:**
 
-```bash
-kubectl create configmap cluster1-pxc3 --from-file=my.cnf
+``` {.bash data-prompt="$" }
+$ kubectl create configmap cluster1-pxc3 --from-file=my.cnf
 ```
 
 **my.cnf (Contains mysql configuration):**
@@ -406,8 +406,8 @@ Authorization: Bearer $KUBE_TOKEN
 
 **cURL Request:**
 
-```bash
-curl -k -v -XPOST "https://$API_SERVER/api/v1/namespaces/default/configmaps" \
+``` {.bash data-prompt="$" }
+$ curl -k -v -XPOST "https://$API_SERVER/api/v1/namespaces/default/configmaps" \
             -H "Accept: application/json" \
             -H "Authorization: Bearer $KUBE_TOKEN" \
             -d '{"apiVersion":"v1","data":{"my.cnf":"[mysqld]\nmax_connections=250\n"},"kind":"ConfigMap","metadata":{"creationTimestamp":null,"name":"cluster1-pxc3"}}' \
@@ -448,8 +448,8 @@ recover from disasters or make a roll-back later
 
 **Kubectl Command:**
 
-```bash
-kubectl apply -f percona-xtradb-cluster-operator/deploy/backup/backup.yaml
+``` {.bash data-prompt="$" }
+$ kubectl apply -f percona-xtradb-cluster-operator/deploy/backup/backup.yaml
 ```
 
 **URL:**
@@ -466,8 +466,8 @@ Authorization: Bearer $KUBE_TOKEN
 
 **cURL Request:**
 
-```bash
-curl -k -v -XPOST "https://$API_SERVER/apis/pxc.percona.com/v1/namespaces/default/perconaxtradbclusterbackups" \
+``` {.bash data-prompt="$" }
+$ curl -k -v -XPOST "https://$API_SERVER/apis/pxc.percona.com/v1/namespaces/default/perconaxtradbclusterbackups" \
             -H "Accept: application/json" \
             -H "Content-Type: application/json" \
             -d "@backup.json" -H "Authorization: Bearer $KUBE_TOKEN"
@@ -512,8 +512,8 @@ problem or to make a roll-back
 
 **Kubectl Command:**
 
-```bash
-kubectl apply -f percona-xtradb-cluster-operator/deploy/backup/restore.yaml
+``` {.bash data-prompt="$" }
+$ kubectl apply -f percona-xtradb-cluster-operator/deploy/backup/restore.yaml
 ```
 
 **URL:**
@@ -530,8 +530,8 @@ Authorization: Bearer $KUBE_TOKEN
 
 **cURL Request:**
 
-```bash
-curl -k -v -XPOST "https://$API_SERVER/apis/pxc.percona.com/v1/namespaces/default/perconaxtradbclusterrestores" \
+``` {.bash data-prompt="$" }
+$ curl -k -v -XPOST "https://$API_SERVER/apis/pxc.percona.com/v1/namespaces/default/perconaxtradbclusterrestores" \
             -H "Accept: application/json" \
             -H "Content-Type: application/json" \
             -d "@restore.json" \
