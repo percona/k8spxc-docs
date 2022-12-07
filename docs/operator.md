@@ -47,7 +47,7 @@ The spec part of the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-
 
 ## <a name="operator-issuerconf-section"></a>Extended cert-manager configuration section
 
-The `tls` section in the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains various configuration options for additional customization of the [TLS cert-manager](tls.certs.certmanager).
+The `tls` section in the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains various configuration options for additional customization of the [TLS cert-manager](TLS.md#tls-certs-certmanager).
 
 |                 | |
 |-----------------|-|

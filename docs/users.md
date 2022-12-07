@@ -10,7 +10,7 @@ MySQL user accounts within the Cluster can be divided into two different groups:
 As these two groups of user accounts serve different purposes, they are
 considered separately in the following sections.
 
-## [Unprivileged users](users.html#unprivileged-users)
+## Unprivileged users
 
 There are no unprivileged (general purpose) user accounts created by
 default. If you need general purpose users, please run commands below:
@@ -37,7 +37,7 @@ mysql> SELECT * FROM database1.table1 LIMIT 1;
 You may also try executing any simple SQL statement to ensure the
 permissions have been successfully granted.
 
-## [System Users](users.html#system-users)
+## System Users
 
 To automate the deployment and management of the cluster components,
 the Operator requires system-level Percona XtraDB Cluster users.
@@ -139,7 +139,7 @@ implemented, which allows us to mark our system users as such.
 See [the official documentation on this feature](https://dev.mysql.com/doc/refman/8.0/en/account-categories.html)
 for more details.
 
-## [Development Mode](users.html#development-mode)
+## Development Mode
 
 To make development and testing easier, `deploy/secrets.yaml` secrets
 file contains default passwords for Percona XtraDB Cluster system users.

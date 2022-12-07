@@ -21,13 +21,13 @@ You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marke
 
 2. Go to the [Percona Operator for MySQL](https://marketplace.redhat.com/en-us/products/percona-kubernetes-operator-for-percona-server-for-xtradb-cluster) page and click the Free trial button:
 
-    ![image](img/marketplace-operator-page.png)
+    ![image](assets/images/marketplace-operator-page.png)
 
     Here you can “start trial” of the Operator for 0.0 USD.
 
 3. When finished, chose `Workspace->Software` in the system menu on the top and choose the Operator:
 
-    ![image](img/marketplace-operator-install.png)
+    ![image](assets/images/marketplace-operator-install.png)
 
     Click the `Install Operator` button.
 

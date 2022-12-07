@@ -204,6 +204,6 @@ as follows:
 pxc:
     configuration: |
     [mysqld]
-    innodb_buffer_pool_size={{containerMemoryLimit * 3 / 4}}
+    innodb_buffer_pool_size={{'{{'}}containerMemoryLimit * 3 / 4{{'}}'}}
     ...
 ```
