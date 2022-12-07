@@ -99,16 +99,29 @@ You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marke
     $ oc apply -f deploy/operator.yaml
     ```
 
+    !!! note
+
+        You can simplify the Operator installation by applying a single
+        `deploy/bundle.yaml` file instead of running commands from the steps
+        2 and 4:
+        
+        ``` {.bash data-prompt="$" }
+        $ oc apply -f deploy/bundle.yaml
+        ```
+        
+        This will automatically create Custom Resource Definition, set up
+        role-based access control and install the Operator as one single action.
+
 ## Install Percona XtraDB Cluster
 
-1. Now that’s time to add the Percona XtraDB Cluster Users secrets to OpenShift.
-    They should be placed in the data section of the `deploy/secrets.yaml`
-    file as logins and plaintext passwords for the user accounts
-    (see [Kubernetes documentation](https://kubernetes.io/docs/concepts/configuration/secret/)
-    for details).
-
-    After editing is finished, users secrets should be created using the
-    following command:
+1. Now that’s time to add the Percona XtraDB Cluster users [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
+    with logins and passwords to Kubernetes. By default, the Operator generates
+    users Secrets automatically, and *no actions are required at this step*.
+    
+    Still, you can generate and apply your Secrets by your own. In this case,
+    place logins and plaintext passwords for the user accounts in the data
+    section of the `deploy/secrets.yaml` file; after editing is finished, create
+    users Secrets with the following command:
 
     ``` {.bash data-prompt="$" }
     $ oc create -f deploy/secrets.yaml

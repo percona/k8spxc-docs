@@ -12,7 +12,6 @@
     It is crucial to specify the right branch with `-b`
     option while cloning the code on this step. Please be careful.
 
-
 2. Now Custom Resource Definition for Percona XtraDB Cluster should be created
     from the `deploy/crd.yaml` file. Custom Resource Definition extends the
     standard set of resources which Kubernetes “knows” about with the new
@@ -57,14 +56,27 @@
     $ kubectl apply -f deploy/operator.yaml
     ```
 
-5. Now that’s time to add the Percona XtraDB Cluster Users secrets to
-    Kubernetes. They should be placed in the data section of the
-    `deploy/secrets.yaml` file as logins and plaintext passwords for the user
-    accounts (see [Kubernetes documentation](https://kubernetes.io/docs/concepts/configuration/secret/)
-    for details).
+    !!! note
 
-    After editing is finished, users secrets should be created using the
-    following command:
+        You can simplify the Operator installation by applying a single
+        `deploy/bundle.yaml` file instead of running commands from the steps
+        2 and 4:
+        
+        ``` {.bash data-prompt="$" }
+        $ kubectl apply -f deploy/bundle.yaml
+        ```
+        
+        This will automatically create Custom Resource Definition, set up
+        role-based access control and install the Operator as one single action.
+
+5. Now that’s time to add the Percona XtraDB Cluster users [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
+    with logins and passwords to Kubernetes. By default, the Operator generates
+    users Secrets automatically, and *no actions are required at this step*.
+    
+    Still, you can generate and apply your Secrets by your own. In this case,
+    place logins and plaintext passwords for the user accounts in the data
+    section of the `deploy/secrets.yaml` file; after editing is finished, create
+    users Secrets with the following command:
 
     ``` {.bash data-prompt="$" }
     $ kubectl create -f deploy/secrets.yaml
@@ -73,8 +85,8 @@
     More details about secrets can be found in [Users](users.md#users).
 
 6. Now certificates should be generated. By default, the Operator generates
-    certificates automatically, and no actions are required at this step. Still,
-    you can generate and apply your own certificates as secrets according
+    certificates automatically, and *no actions are required at this step*.
+    Still, you can generate and apply your own certificates as secrets according
     to the [TLS instructions](TLS.md#tls).
 
 7. After the operator is started and user secrets are added, Percona
