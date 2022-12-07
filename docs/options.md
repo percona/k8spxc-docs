@@ -44,7 +44,7 @@ spec:
         wsrep_debug=CLIENT
 ```
 
-See the [Custom Resource options, PXC section](operator.html#operator-pxc-section)
+See the [Custom Resource options, PXC section](operator.md#operator-pxc-section)
 for more details.
 
 ## Use a ConfigMap
@@ -177,7 +177,7 @@ $ kubectl create -f deploy/my-pxc-secret.yaml
 
 Do not forget to restart Percona XtraDB Cluster to ensure the cluster
 has updated the configuration (see details on how to connect in the
-[Install Percona XtraDB Cluster on Kubernetes](kubernetes.html) page).
+[Install Percona XtraDB Cluster on Kubernetes](kubernetes.md) page).
 
 ## Auto-tuning MySQL options
 
