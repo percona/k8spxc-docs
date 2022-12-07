@@ -968,6 +968,8 @@ configuration options for the ProxySQL daemon.
 The `logcollector` section in the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
 file contains configuration options for [Fluent Bit Log Collector](https://fluentbit.io).
 
+|                 | |
+|-----------------|-|
 | **Key**         | {{ optionlink('logcollector.enabled') }} |
 | **Value**       | boolean |
 | **Example**     | `true` |
