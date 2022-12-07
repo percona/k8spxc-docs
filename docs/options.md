@@ -182,8 +182,9 @@ has updated the configuration (see details on how to connect in the
 ## Auto-tuning MySQL options
 
 Few configuration options for MySQL can be calculated and set by the Operator
-automatically based on the available Pod resources (memory and CPU) **if
-these options are not specified by user** (either in CR.yaml or in ConfigMap).
+automatically based on the available Pod resource limits (memory and CPU) **if
+constant values for these options are not specified by user** (either in
+CR.yaml or in ConfigMap).
 
 Options which can be set automatically are the following ones:
 
@@ -193,6 +194,16 @@ Options which can be set automatically are the following ones:
 
 If Percona XtraDB Cluster Pod limits are defined, then limits values are used to
 calculate these options. If Percona XtraDB Cluster Pod limits are not defined,
-Operator looks for Percona XtraDB Cluster Pod requests as the basis for
-calculations. if neither Percona XtraDB Cluster Pod limits nor Percona XtraDB
-Cluster Pod requests are defined, auto-tuning is not done.
+auto-tuning is not done.
+
+Also, starting from the Operator 1.12.0, there is another way of auto-tuning.
+You can use `"{{containerMemoryLimit}}"` as a value in `spec.pxc.configuration`
+as follows:
+
+```yaml
+pxc:
+    configuration: |
+    [mysqld]
+    innodb_buffer_pool_size={{containerMemoryLimit * 3 / 4}}
+    ...
+```
