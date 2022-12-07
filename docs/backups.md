@@ -430,6 +430,16 @@ restoration can be done in the following way.
               ...
             ```
 
+            !!! note
+            
+                <a name="backups-headless-service"> If you need a [headless Service](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services) for the restore Pod (i.e. restoring from a Persistent Volume in a tenant network), mention this in the `metadata.annotations` as follows:
+
+                ```yaml
+                annotations:
+                  percona.com/headless-service: "true"
+                ...
+                ```
+
         === "S3-compatible storage"
 
             The `backupSource` key should contain `destination` key equal to the
