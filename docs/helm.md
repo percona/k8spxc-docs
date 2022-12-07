@@ -48,7 +48,7 @@ Install Helm following its [official installation instructions](https://docs.hel
 
 ## Installing Percona XtraDB Cluster with customized parameters
 
-The command above installs Percona XtraDB Cluster with [default parameters](operator.md#operator-custom-resource-options).
+The command above installs Percona XtraDB Cluster with [default parameters](operator.md).
 Custom options can be passed to a `helm install` command as a
 `--set key=value[,key=value]` argument. The options passed with a chart can be
 any of the Operator’s [Custom Resource options](https://github.com/percona/percona-helm-charts/tree/main/charts/pxc-db#installing-the-chart).

@@ -77,7 +77,7 @@ or in the cloud.
 
 * [Backup and restore](backups.md)
 
-* [Upgrade Percona XtraDB Cluster and the Operator](update.md)
+* [Upgrade Database and Operator](update.md)
 
 * [Horizontal and vertical scaling](scaling.md)
 
@@ -95,7 +95,9 @@ or in the cloud.
 
 # HOWTOs
 
-* [Install Percona XtraDB Cluster in multi-namespace (cluster-wide) mode](cluster-wide.md)
+* [How to install Percona XtraDB Cluster in multi-namespace (cluster-wide) mode](cluster-wide.md)
+
+* [How to upgrade Percona XtraDB Cluster manually](update_manually.md)
 
 # Reference
 

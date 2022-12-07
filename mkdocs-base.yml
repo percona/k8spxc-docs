@@ -63,7 +63,9 @@ markdown_extensions:
   pymdownx.smartsymbols: {}
   pymdownx.tilde: {}
   pymdownx.superfences: {}
-  pymdownx.snippets: {}
+  pymdownx.snippets:
+    auto_append:
+      - includes/abbreviations.md
   pymdownx.tabbed:
     alternate_style: true
   pymdownx.highlight:
@@ -148,7 +150,7 @@ nav:
           
     - Management:
           - "Backup and restore": backups.md
-          - "Upgrade Percona XtraDB Cluster and the Operator": update.md
+          - "Upgrade Database and Operator": update.md
           - "Horizontal and vertical scaling": scaling.md
           - "Multi-cluster and multi-region deployment": replication.md
           - "Monitor with Percona Monitoring and Management (PMM)": monitoring.md
@@ -158,7 +160,8 @@ nav:
           - "Debug and troubleshoot": debug.md
           
     - HOWTOs:
-          - "Install Percona XtraDB Cluster in multi-namespace (cluster-wide) mode": cluster-wide.md
+          - "How to install Percona XtraDB Cluster in multi-namespace (cluster-wide) mode": cluster-wide.md
+          - "How to upgrade Percona XtraDB Cluster manually": update_manually.md
           
     - Reference:
           - "Custom Resource options": operator.md
