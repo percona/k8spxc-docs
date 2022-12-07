@@ -107,3 +107,36 @@ the following information there:
     percona-client:/$ mysql -h cluster1-proxysql -uroot -proot_password
     ```
 
+!!! note 
+
+    Some Kubernetes-based environments are specifically configured to have
+    communication across Namespaces is not allowed by default network policies.
+    In this case, you should specifically allow the Operator communication
+    across the needed Namespaces. Following the above example, you would need
+    to allow ingress traffic for the `pxc-operator` Namespace from the `pxc`
+    Namespace, and also from the `default` Namespace. You can do it with the
+    NetworkPolicy resource, specified in the YAML file as follows:
+    
+    ```yaml
+    apiVersion: networking.k8s.io/v1
+    kind: NetworkPolicy
+    metadata:
+      name: percona
+      namespace: pxc-operator
+    spec:
+      ingress:
+      - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: pxc
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: default
+      podSelector: {}
+      policyTypes:
+      - Ingress
+    ```
+    
+    Don't forget to apply the resulting file with the usual `kubectl apply`
+    command.
+
