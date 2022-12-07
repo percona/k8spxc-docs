@@ -140,3 +140,4 @@ the following information there:
     Don't forget to apply the resulting file with the usual `kubectl apply`
     command.
 
+    You can find more details about Network Policies [in the official Kubernetes documentation](https://kubernetes.io/docs/concepts/services-networking/network-policies/). 
