@@ -215,4 +215,3 @@ the only one to occur. For example, the image `percona-xtradb-cluster:8.0.25-15.
 can be upgraded to `percona-xtradb-cluster:8.0.27-18.1`.
 
 You can find the proper image name for the current Operator release [in the list of certified images](images.md#custom-registry-images). For older releases, please refer to the [old releases documentation archive](archive.md).
-

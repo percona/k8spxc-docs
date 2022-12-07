@@ -14,7 +14,7 @@ If you would like to use *your local shell*, install the following:
 
 2. [kubectl](https://cloud.google.com/kubernetes-engine/docs/quickstart#choosing_a_shell). It is the Kubernetes command-line tool you will use to manage and deploy applications. To install the tool, run the following command:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ gcloud auth login
     $ gcloud components install kubectl
     ```
@@ -23,7 +23,7 @@ If you would like to use *your local shell*, install the following:
 
 You can configure the settings using the `gcloud` tool. You can run it either in the [Cloud Shell](https://cloud.google.com/shell/docs/quickstart) or in your local shell (if you have installed Google Cloud SDK locally on the previous step). The following command will create a cluster named `my-cluster-1`:
 
-```bash
+``` {.bash data-prompt="$" }
 $ gcloud container clusters create my-cluster-1 --project <project name> --zone us-central1-a --cluster-version {{ gkerecommended }} --machine-type n1-standard-4 --num-nodes=3
 ```
 
@@ -39,7 +39,7 @@ Now you should configure the command-line access to your newly created cluster t
 
 In the Google Cloud Console, select your cluster and then click the *Connect* shown on the above image. You will see the connect statement configures command-line access. After you have edited the statement, you may run the command in your local shell:
 
-```bash
+``` {.bash data-prompt="$" }
 $ gcloud container clusters get-credentials my-cluster-1 --zone us-central1-a --project <project name>
 ```
 
@@ -47,13 +47,13 @@ $ gcloud container clusters get-credentials my-cluster-1 --zone us-central1-a --
 
 1. First of all, use your [Cloud Identity and Access Management (Cloud IAM)](https://cloud.google.com/iam) to control access to the cluster. The following command will give you the ability to create Roles and RoleBindings:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl create clusterrolebinding cluster-admin-binding --clusterrole cluster-admin --user $(gcloud config get-value core/account)
     ```
 
     The return statement confirms the creation:
 
-    ```text
+    ``` {.text .no-copy}
     clusterrolebinding.rbac.authorization.k8s.io/cluster-admin-binding created
     ```
 
@@ -61,7 +61,7 @@ $ gcloud container clusters get-credentials my-cluster-1 --zone us-central1-a --
 
     So, create the namespace and save it in the namespace context for subsequent commands as follows (replace the `<namespace name>` placeholder with some descriptive name):
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl create namespace <namespace name>
     $ kubectl config set-context $(kubectl config current-context) --namespace=<namespace name>
     ```
@@ -70,25 +70,25 @@ $ gcloud container clusters get-credentials my-cluster-1 --zone us-central1-a --
 
 3. Use the following `git clone` command to download the correct branch of the percona-xtradb-cluster-operator repository:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
     ```
 
     After the repository is downloaded, change the directory to run the rest of the commands in this document:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ cd percona-xtradb-cluster-operator
     ```
 
 4. Deploy the Operator with the following command:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl apply -f deploy/bundle.yaml
     ```
 
     The following confirmation is returned:
 
-    ```text
+    ``` {.text .no-copy}
     customresourcedefinition.apiextensions.k8s.io/perconaxtradbclusters.pxc.percona.com created
     customresourcedefinition.apiextensions.k8s.io/perconaxtradbclusterbackups.pxc.percona.com created
     customresourcedefinition.apiextensions.k8s.io/perconaxtradbclusterrestores.pxc.percona.com created
@@ -101,20 +101,20 @@ $ gcloud container clusters get-credentials my-cluster-1 --zone us-central1-a --
 
 5. The operator has been started, and you can create the Percona XtraDB cluster:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl apply -f deploy/cr.yaml
     ```
 
     The process could take some time.
     The return statement confirms the creation:
 
-    ```text
+    ``` {.text .no-copy}
     perconaxtradbcluster.pxc.percona.com/cluster1 created
     ```
 
 6. During previous steps, the Operator has generated several [secrets](https://kubernetes.io/docs/concepts/configuration/secret/), including the password for the `root` user, which you will need to access the cluster.
 
-    Use `kubectl get secrets` command to see the list of Secrets objects (by default Secrets object you are interested in has `my-cluster-secrets` name). Then `kubectl get secret my-cluster-secrets -o yaml` will return the YAML file with generated secrets, including the root password which should look as follows:
+    Use `kubectl get secrets` command to see the list of Secrets objects (by default Secrets object you are interested in has `cluster1-secrets` name). Then `kubectl get secret cluster1-secrets -o yaml` will return the YAML file with generated secrets, including the root password which should look as follows:
 
     ```yaml
     ...
@@ -129,7 +129,7 @@ $ gcloud container clusters get-credentials my-cluster-1 --zone us-central1-a --
 
 It may take ten minutes to get the cluster started. You  can verify its creation with the `kubectl get pods` command:
 
-```text
+``` {.text .no-copy}
 NAME                                               READY   STATUS    RESTARTS   AGE
 cluster1-haproxy-0                                 2/2     Running   0          6m17s
 cluster1-haproxy-1                                 2/2     Running   0          4m59s
@@ -148,26 +148,26 @@ If all nodes are up and running, you can try to connect to the cluster. Run a co
     with `mysql` tool and connect its console output to your terminal. The following
     command will do this, naming the new Pod `percona-client`:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl run -i --rm --tty percona-client --image=percona:8.0 --restart=Never -- bash -il
 ```
 
 Executing this command will open a `bash` command prompt:
 
-```text
+``` {.text .no-copy}
 If you don't see a command prompt, try pressing enter.
 $
 ```
 
 Now run `mysql` tool in the percona-client command shell using the password obtained from the secret:
 
-```bash
-mysql -h cluster1-haproxy -uroot -proot_password
+``` {.bash data-prompt="$" }
+$ mysql -h cluster1-haproxy -uroot -proot_password
 ```
 
 This command will connect you to the MySQL monitor.
 
-```text
+``` {.text .no-copy}
 mysql: [Warning] Using a password on the command line interface can be insecure.
 Welcome to the MySQL monitor.  Commands end with ; or \g.
 Your MySQL connection id is 1976
@@ -185,13 +185,13 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
 The following example will use the MySQL prompt to check the `max_connections` variable:
 
-```bash
+``` {.bash data-prompt="mysql>" }
 mysql> SHOW VARIABLES LIKE "max_connections";
 ```
 
 The return statement displays the current max_connections.
 
-```text
+``` {.text .no-copy}
 +-----------------+-------+
 | Variable_name   | Value |
 +-----------------+-------+
@@ -204,7 +204,7 @@ The return statement displays the current max_connections.
 
 If `kubectl get pods` command had shown some errors, you can examine the problematic Pod with the `kubectl describe <pod name>` command.  For example, this command returns information for the selected Pod:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl describe pod cluster1-haproxy-2
 ```
 
@@ -226,7 +226,7 @@ There are several ways that you can delete the cluster.
 
 You can clean up the cluster with the `gcloud` command as follows:
 
-```bash
+``` {.bash data-prompt="$" }
 $ gcloud container clusters delete <cluster name>
 ```
 

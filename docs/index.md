@@ -41,6 +41,8 @@ or in the cloud.
 
 * [Install on Amazon Elastic Kubernetes Service (AWS EKS)](eks.md)
 
+* [Install on Microsoft Azure Kubernetes Service (AKS)](aks.md)
+
 # Advanced Installation Guides
 
 * [Generic Kubernetes installation](kubernetes.md)
@@ -69,7 +71,7 @@ or in the cloud.
 
 * [Data at rest encryption](encryption.md)
 
-
+* [Telemetry](telemetry.md)
 
 # Management
 
@@ -106,5 +108,7 @@ or in the cloud.
 * [Operator API](api.md)
 
 * [Frequently Asked Questions](faq.md)
+
+* [Old releases (documentation archive)](archive.md)
 
 * [Release Notes](ReleaseNotes/index.md)

@@ -15,14 +15,14 @@ Install Helm following its [official installation instructions](https://docs.hel
 1. Add the Percona’s Helm charts repository and make your Helm client up to
     date with it:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ helm repo add percona https://percona.github.io/percona-helm-charts/
     $ helm repo update
     ```
 
 2. Install the Percona Operator for MySQL based on Percona XtraDB Cluster:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ helm install my-op percona/pxc-operator
     ```
 
@@ -38,7 +38,7 @@ Install Helm following its [official installation instructions](https://docs.hel
 
 3. Install Percona XtraDB Cluster:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ helm install my-db percona/pxc-db
     ```
 
@@ -56,7 +56,7 @@ any of the Operator’s [Custom Resource options](https://github.com/percona/per
 The following example will deploy a Percona XtraDB Cluster Cluster in the
 `pxc` namespace, with disabled backups and 20 Gi storage:
 
-```bash
+``` {.bash data-prompt="$" }
 $ helm install my-db percona/pxc-db \
   --set pxc.volumeSpec.resources.requests.storage=20Gi \
   --set backup.enabled=false

@@ -35,7 +35,7 @@ spec:
 
 The cluster will be ready for asynchronous replication when you apply changes as usual:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl apply -f deploy/cr.yaml
 ```
 
@@ -103,9 +103,30 @@ spec:
 
 The cluster will be ready for asynchronous replication when you apply changes as usual:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl apply -f deploy/cr.yaml
 ```
+
+!!! note
+
+    You can also [configure SSL channel for replication](https://dev.mysql.com/doc/refman/8.0/en/replication-encrypted-connections.html). Following 
+    options allow you using replication over an encrypted channel.
+    Set the `replicationChannels.configuration.ssl` key to true, optionally
+    enable host name identity verification with the
+    `replicationChannels.configuration.sslSkipVerify` key, and set
+    `replicationChannels.configuration.ca` key to the path name of the
+    Certificate Authority (CA) certificate file:
+    
+    ```yaml
+    replicationChannels:
+    - isSource: false
+      name: uspxc1_to_pxc2
+      configuration:
+        ssl: true
+        sslSkipVerify: true
+        ca: '/etc/mysql/ssl/ca.crt'
+        ...
+    ```
 
 ## System user for replication
 
@@ -122,19 +143,19 @@ You can change a password for this user as follows:
 
 === "in Linux"
 
-    ```bash
-    $ kubectl patch secret/my-cluster-name-secrets -p '{"data":{"replication": "'$(echo -n new_password | base64 --wrap=0)'"}}'
+    ``` {.bash data-prompt="$" }
+    $ kubectl patch secret/cluster1-secrets -p '{"data":{"replication": "'$(echo -n new_password | base64 --wrap=0)'"}}'
     ```
 
 === "in macOS"
 
-    ```bash
-    $ kubectl patch secret/my-cluster-name-secrets -p '{"data":{"replication": "'$(echo -n new_password | base64)'"}}'
+    ``` {.bash data-prompt="$" }
+    $ kubectl patch secret/cluster1-secrets -p '{"data":{"replication": "'$(echo -n new_password | base64)'"}}'
     ```
 
 If you have changed the `replication` user’s password on the Source cluster, and you use the Operator version 1.9.0, you can have a *replication is not running* error message in log, similar to the following one:
 
-```text
+``` {.text .no-copy}
 {"level":"info","ts":1629715578.2569592,"caller":"zapr/zapr.go 69","msg":"Replication for channel is not running. Please, check the replication status","channel":"pxc2_to_pxc1"}
 ```
 
@@ -142,13 +163,13 @@ Fixing this involves the following steps.
 
 1. Find the Replica Pod which was chosen by the Operator for replication, using the following command:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl get pods --selector percona.com/replicationPod=true
     ```
 
 2. Get the shell access to this Pod and login to the MySQL monitor as a [root user](users.md#users-system-users):
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl exec -c pxc --stdin --tty <pod_name> -- /bin/bash
     bash-4.4$ mysql -uroot -proot_password
     ```

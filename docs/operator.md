@@ -6,17 +6,19 @@ file.
 
 The metadata part of this file contains the following keys:
 
-* `name` (`my-cluster-name` by default) sets the name of your Percona
+* `name` (`cluster1` by default) sets the name of your Percona
 XtraDB Cluster; it should include only [URL-compatible characters](https://datatracker.ietf.org/doc/html/rfc3986#section-2.3),
 not exceed 22 characters, start with an alphabetic character, and end with an
 alphanumeric character;
 
 * `finalizers.delete-pods-in-order` if present, activates the [Finalizer](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#finalizers) which controls the proper Pods deletion order in case of the cluster deletion event (on by default).
 
-* `finalizers.delete-pxc-pvc`, `delete-proxysql-pvc` if present, activates the [Finalizer](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#finalizers) which deletes [Persistent Volume Claims](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) for Percona XtraDB Cluster Pods after the cluster deletion event (off by default).
+* `finalizers.delete-pxc-pvc` if present, activates the [Finalizer](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#finalizers) which deletes [Persistent Volume Claims](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) for Percona XtraDB Cluster Pods after the cluster deletion event (off by default).
 
+* `finalizers.delete-proxysql-pvc` if present, activates the [Finalizer](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#finalizers) which deletes [Persistent Volume Claim](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) for ProxySQL Pod after the cluster deletion event (off by default).
 
-* `delete-proxysql-pvc` if present, activates the [Finalizer](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#finalizers) which deletes [Persistent Volume Claim](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) for ProxySQL Pod after the cluster deletion event (off by default).
+* <a name="finalizers-delete-ssl"></a> `finalizers.delete-ssl` if present, activates the [Finalizer](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#finalizers) which deletes [objects, created for SSL](TLS.md) (Secret, certificate, and issuer) after the cluster deletion event (off by default).
+ 
 
 The spec part of the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains the following sections:
 
@@ -31,11 +33,11 @@ The spec part of the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-
 | allowUnsafeConfigurations | boolean | `false` | Prevents users from configuring a cluster with unsafe parameters such as starting the cluster with the number of Percona XtraDB Cluster instances which is less than 3, more than 5, or is an even number, with less than 2 ProxySQL or HAProxy Pods, or without TLS/SSL certificates (if `false`, unsafe parameters will be automatically changed to safe defaults)                             |
 | enableCRValidationWebhook | boolean | `true`  | Enables or disables schema validation before applying `cr.yaml` file (works only in [cluster-wide mode](cluster-wide.md#install-clusterwide) due to [access restrictions](faq.md#faq-validation)) |
 | pause           | boolean           | `false`                    | Pause/resume: setting it to `true` gracefully stops the cluster, and setting it to `false` after shut down starts the cluster back  |
-| secretsName     | string            | `my-cluster-secrets`       | A name for [users secrets](users.md#users)                             |
+| secretsName     | string            | `cluster1-secrets`         | A name for [users secrets](users.md#users)                             |
 | crVersion       | string            | `{{ release }}`                   | Version of the Operator the Custom Resource belongs to                 |
 | vaultSecretName | string            | `keyring-secret-vault`     | A secret for the [HashiCorp Vault](https://www.vaultproject.io/) to carry on [Data at Rest Encryption](encryption.md#encryption)    |
-| sslSecretName   | string            | `my-cluster-ssl`           | A secret with TLS certificate generated for *external* communications, see [Transport Layer Security (TLS)](TLS.md#tls) for details |
-| sslInternalSecretName  | string     | `my-cluster-ssl-internal`  | A secret with TLS certificate generated for *internal* communications, see [Transport Layer Security (TLS)](TLS.md#tls) for details |
+| sslSecretName   | string            | `cluster1-ssl`             | A secret with TLS certificate generated for *external* communications, see [Transport Layer Security (TLS)](TLS.md#tls) for details |
+| sslInternalSecretName  | string     | `cluster1-ssl-internal`    | A secret with TLS certificate generated for *internal* communications, see [Transport Layer Security (TLS)](TLS.md#tls) for details |
 | logCollectorSecretName | string     | `my-log-collector-secrets` | A secret for the [Fluent Bit Log Collector](https://fluentbit.io)      |
 | initImage       | string            | `percona/percona-xtradb-cluster-operator:{{ release }}` | An alternative image for the initial Operator installation |
 | tls             | subdoc            |                            | Extended cert-manager configuration section                            |
@@ -155,6 +157,21 @@ in [cross-site replication](replication.md#operator-replication) |
 | **Value**       | int |
 | **Example**     | `60` |
 | **Description** | The interval between reconnection attempts in seconds to be used by Replica when the the existing connection source fails |
+|                 | |
+| **Key**         | {{ optionlink('pxc.replicationChannels.configuration.ssl') }} |
+| **Value**       | boolean |
+| **Example**     | `false` |
+| **Description** | Turns SSL for [replication channels](replication.md) on or off |
+|                 | |
+| **Key**         | {{ optionlink('pxc.replicationChannels.configuration.sslSkipVerify') }} |
+| **Value**       | boolean |
+| **Example**     | `true` |
+| **Description** | Turns the host name identity verification for SSL-based [replication](replication.md) on or off |
+|                 | |
+| **Key**         | {{ optionlink('pxc.replicationChannels.configuration.ca') }} |
+| **Value**       | string |
+| **Example**     | `/etc/mysql/ssl/ca.crt` |
+| **Description** | The path name of the Certificate Authority (CA) certificate file to be used if the SSL for [replication channels](replication.md) is turned on |
 |                 | |
 | **Key**         | {{ optionlink('pxc.replicationChannels.sourcesList.host') }} |
 | **Value**       | string |
@@ -447,11 +464,6 @@ configuration options for the HAProxy service.
 | **Example**     | `percona/percona-xtradb-cluster-operator:{{ release }}-haproxy` |
 | **Description** | HAProxy Docker image to use |
 |                 | |
-| **Key**         | {{ optionlink('haproxy.replicasServiceEnabled') }} |
-| **Value**       | boolean |
-| **Example**     | `true` |
-| **Description** | Enables or disables `haproxy-replicas` Service. This Service (on by default) forwards requests to all Percona XtraDB Cluster instances, and it **should not be used for write requests**! |
-|                 | |
 | **Key**         | {{ optionlink('haproxy.imagePullPolicy') }} |
 | **Value**       | string |
 | **Example**     | `Always` |
@@ -521,16 +533,6 @@ configuration options for the HAProxy service.
 | **Value**       | string |
 | **Example**     | `Cluster` |
 | **Description** | Specifies whether Service for HAProxy should [route external traffic to cluster-wide or to node-local endpoints](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip) (it can influence the load balancing effectiveness) |
-|                 | |
-| **Key**         | {{ optionlink('haproxy.replicasServiceType') }} |
-| **Value**       | string |
-| **Example**     | `ClusterIP` |
-| **Description** | Specifies the type of [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) to be used for HAProxy replicas |
-|                 | |
-| **Key**         | {{ optionlink('haproxy.replicasExternalTrafficPolicy') }} |
-| **Value**       | string |
-| **Example**     | `Cluster` |
-| **Description** | Specifies whether Service for HAProxy replicas should [route external traffic to cluster-wide or to node-local endpoints](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip) (it can influence the load balancing effectiveness) |
 |                 | |
 | **Key**         | {{ optionlink('haproxy.resources.requests.memory') }} |
 | **Value**       | string |
@@ -607,6 +609,11 @@ configuration options for the HAProxy service.
 | **Example**     | `10.0.0.0/8` |
 | **Description** | The range of client IP addresses from which the load balancer should be reachable (if not set, there is no limitations) |
 |                 | |
+| **Key**         | {{ optionlink('haproxy.loadBalancerIP') }} |
+| **Value**       | string |
+| **Example**     | `127.0.0.1` |
+| **Description** | The static IP-address for the load balancer |
+|                 | |
 | **Key**         | {{ optionlink('haproxy.serviceLabels') }} |
 | **Value**       | label |
 | **Example**     | `rack: rack-23` |
@@ -616,6 +623,41 @@ configuration options for the HAProxy service.
 | **Value**       | string |
 | **Example**     | `service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http` |
 | **Description** | The [Kubernetes annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) metadata for the load balancer Service |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.replicasServiceEnabled') }} |
+| **Value**       | boolean |
+| **Example**     | `true` |
+| **Description** | Enables or disables `haproxy-replicas` Service. This Service (on by default) forwards requests to all Percona XtraDB Cluster instances, and it **should not be used for write requests**! |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.replicasLoadBalancerSourceRanges') }} |
+| **Value**       | string |
+| **Example**     | `10.0.0.0/8` |
+| **Description** | The range of client IP addresses from which the load balancer should be reachable (if not set, there is no limitations) |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.replicasLoadBalancerIP') }} |
+| **Value**       | string |
+| **Example**     | `127.0.0.1` |
+| **Description** | The static IP-address for the replicas load balancer |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.replicasServiceType') }} |
+| **Value**       | string |
+| **Example**     | `ClusterIP` |
+| **Description** | Specifies the type of [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) to be used for HAProxy replicas |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.replicasExternalTrafficPolicy') }} |
+| **Value**       | string |
+| **Example**     | `Cluster` |
+| **Description** | Specifies whether Service for HAProxy replicas should [route external traffic to cluster-wide or to node-local endpoints](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip) (it can influence the load balancing effectiveness) |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.replicasServiceLabels') }} |
+| **Value**       | label |
+| **Example**     | `rack: rack-23` |
+| **Description** | The [Kubernetes labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) for the `haproxy-replicas` Service |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.replicasServiceAnnotations') }} |
+| **Value**       | string |
+| **Example**     | `service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http` |
+| **Description** | The [Kubernetes annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) metadata for the `haproxy-replicas` Service |
 |                 | |
 | **Key**         | {{ optionlink('haproxy.containerSecurityContext') }} |
 | **Value**       | subdoc |

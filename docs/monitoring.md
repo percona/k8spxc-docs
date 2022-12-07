@@ -64,19 +64,19 @@ Kubernetes-based environment:
         run `echo -n "password" | base64 --wrap=0` (or just
         `echo -n "password" | base64` in case of Apple macOS) in your local
         shell to get valid values. For example, setting the PMM Server API Key
-        to `new_key` in the `my-cluster-name-secrets` object can be done with
+        to `new_key` in the `cluster1-secrets` object can be done with
         the following command:
 
         === "in Linux"
 
-            ```bash
-            $ kubectl patch secret/my-cluster-name-secrets -p '{"data":{"pmmserverkey": "'$(echo -n new_key | base64 --wrap=0)'"}}'
+            ``` {.bash data-prompt="$" }
+            $ kubectl patch secret/cluster1-secrets -p '{"data":{"pmmserverkey": "'$(echo -n new_key | base64 --wrap=0)'"}}'
             ```
 
         === "in macOS"
 
-            ```bash
-            $ kubectl patch secret/my-cluster-name-secrets -p '{"data":{"pmmserverkey": "'$(echo -n new_key | base64)'"}}'
+            ``` {.bash data-prompt="$" }
+            $ kubectl patch secret/cluster1-secrets -p '{"data":{"pmmserverkey": "'$(echo -n new_key | base64)'"}}'
             ```
 
     * you can also use `pmm.pxcParams` and `pmm.proxysqlParams` keys to
@@ -97,14 +97,14 @@ Kubernetes-based environment:
 
     When done, apply the edited `deploy/cr.yaml` file:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl apply -f deploy/cr.yaml
     ```
 
 2. Check that corresponding Pods are not in a cycle of stopping and restarting.
     This cycle occurs if there are errors on the previous steps:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl get pods
     $ kubectl logs cluster1-pxc-node-0 -c pmm-client
     ```

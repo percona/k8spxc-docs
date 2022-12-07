@@ -130,7 +130,7 @@ spec:
 
 Don’t forget to apply it as usual:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl apply -f mypod.yaml
 ```
 
@@ -176,14 +176,14 @@ Core dumps are saved to  `DATADIR` (`var/lib/mysql/`). You can find
 appropriate core files in the following way (substitute `some-name-pxc-1` with
 the name of your Pod):
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl exec some-name-pxc-1 -c pxc -it -- sh -c 'ls -alh /var/lib/mysql/ | grep core'
 -rw------- 1 mysql mysql 1.3G Jan 15 09:30 core.20210015093005
 ```
 
 When identified, the appropriate core dump can be downloaded as follows:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl cp some-name-pxc-1:/var/lib/mysql/core.20210015093005  /tmp/core.20210015093005
 ```
 
@@ -192,7 +192,7 @@ $ kubectl cp some-name-pxc-1:/var/lib/mysql/core.20210015093005  /tmp/core.20210
     It is useful to provide Build ID and Server Version in addition to core
     dump when Creating a support ticket. Both can be found from logs:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl logs some-name-pxc-1 -c logs
 
     [1] init-deploy-949.some-name-pxc-1.mysqld-error.log: [1610702394.259356066, {"log"=>"09:19:54 UTC - mysqld got signal 11 ;"}]
