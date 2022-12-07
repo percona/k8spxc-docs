@@ -71,7 +71,7 @@ or in the cloud.
 
 * [Data at rest encryption](encryption.md)
 
-
+* [Telemetry](telemetry.md)
 
 # Management
 
