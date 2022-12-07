@@ -158,6 +158,21 @@ in [cross-site replication](replication.md#operator-replication) |
 | **Example**     | `60` |
 | **Description** | The interval between reconnection attempts in seconds to be used by Replica when the the existing connection source fails |
 |                 | |
+| **Key**         | {{ optionlink('pxc.replicationChannels.configuration.ssl') }} |
+| **Value**       | boolean |
+| **Example**     | `false` |
+| **Description** | Turns SSL for [replication channels](replication.md) on or off |
+|                 | |
+| **Key**         | {{ optionlink('pxc.replicationChannels.configuration.sslSkipVerify') }} |
+| **Value**       | boolean |
+| **Example**     | `true` |
+| **Description** | Turns the host name identity verification for SSL-based [replication](replication.md) on or off |
+|                 | |
+| **Key**         | {{ optionlink('pxc.replicationChannels.configuration.ca') }} |
+| **Value**       | string |
+| **Example**     | `/etc/mysql/ssl/ca.crt` |
+| **Description** | The path name of the Certificate Authority (CA) certificate file to be used if the SSL for [replication channels](replication.md) is turned on |
+|                 | |
 | **Key**         | {{ optionlink('pxc.replicationChannels.sourcesList.host') }} |
 | **Value**       | string |
 | **Example**     | `10.95.251.101` |
