@@ -1,4 +1,4 @@
-# <a name="pause"></a>Pause/resume Percona XtraDB Cluster
+# Pause/resume Percona XtraDB Cluster
 
 There may be external situations when it is needed to shutdown the Percona
 XtraDB Cluster for a while and then start it back up (some works related to the
