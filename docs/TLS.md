@@ -304,6 +304,15 @@ Operator version prior to 1.9.0), you should move through the
 5. Unpause the cluster [in a standard way](pause.md#operator-pause), and make
     sure it has reached its running state.
 
+### Keep certificates after deleting the cluster
+
+In case of cluster deletion, objects, created for SSL (Secret, certificate, and
+issuer) are not deleted by default.
+
+If the user wants the cleanup of objects created for SSL, there is a [finalizers.delete-ssl](operator.md#finalizers-delete-ssl)
+option in `deploy/cr.yaml`: if this finalizer is set, the Operator will delete
+Secret, certificate and issuer after the cluster deletion event.
+
 ## Run Percona XtraDB Cluster without TLS
 
 Omitting TLS is also possible, but we recommend that you run your cluster with
