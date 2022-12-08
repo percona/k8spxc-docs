@@ -256,3 +256,17 @@ $ kubectl scale --replicas=5 pxc/<CLUSTER NAME>
 
 In this example we have changed the size of the Percona XtraDB Cluster
 to `5` instances.
+
+## Automated scaling
+
+To automate horizontal scaling it is possible to use [Horizontal 
+Pod Autoscaler (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/). 
+It will scale the Custom Resource itself, letting Operator to deal 
+with everything else.
+
+It is also possible to use [Kuvernetes Event-driven Autoscaling (KEDA)](https://keda.sh/), 
+where you can apply more sophisticated logic for decision making on scaling.
+
+For now it is not possible to use Vertical Pod Autoscaler (VPA) with 
+the Operator due to the limitations it introduces for objects with 
+owner references.
