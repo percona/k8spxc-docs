@@ -3,6 +3,7 @@
 Starting from the version 1.1.0, Percona Operator for MySQL based on Percona XtraDB Cluster
 allows upgrades to newer versions. The upgradable components of the cluster are
 the following ones:
+
 * the Operator;
 * [Custom Resource Definition (CRD)](operator.md),
 * Database Management System (Percona XtraDB Cluster).
@@ -30,12 +31,10 @@ In this scenario, components of the cluster are upgraded in the following order:
     Cluster minor version upgrades with it. But the recommended way is to update
     the Operator *and* CRD.
 
-!!! note
-
-    Only the incremental update to a nearest minor version of the
-    Operator is supported (for example, update from 1.4.0 to 1.5.0). To update
-    to a newer version, which differs from the current version by more
-    than one, make several incremental updates sequentially.
+Only the incremental update to a nearest minor version of the
+Operator is supported (for example, update from 1.4.0 to 1.5.0). To update
+to a newer version, which differs from the current version by more
+than one, make several incremental updates sequentially.
 
 #### Manual upgrade
 
@@ -93,11 +92,11 @@ Operator with the `helm upgrade` command.
     
     !!! note
     
-    You can get list of used options in YAML format with the `helm get values my-op -a > my-values.yaml` command, and this file can be directly passed to the upgrade command as follows:
+        You can get list of used options in YAML format with the `helm get values my-op -a > my-values.yaml` command, and this file can be directly passed to the upgrade command as follows:
 
-    ``` {.bash data-prompt="$" }
-    $ helm upgrade my-op percona/pxc-operator --version {{ release }} -f my-values.yaml
-    ```
+        ``` {.bash data-prompt="$" }
+        $ helm upgrade my-op percona/pxc-operator --version {{ release }} -f my-values.yaml
+        ```
 
 2. Update the [Custom Resource Definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
     for the Operator, taking it from the official repository on Github, and do
