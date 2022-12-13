@@ -153,7 +153,7 @@ $ kubectl describe sc <storage class name> | grep allowVolumeExpansion
 
 Scaling the storage without Volume Expansion is also possible. We will
 need to delete Pods one by one and their persistent volumes to resync 
-the data to the new volumes. This can also be used to shring the storage.
+the data to the new volumes. This can also be used to shrink the storage.
 
 1. Edit the Custom Resource with the new storage size as follows:
 
