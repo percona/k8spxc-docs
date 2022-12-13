@@ -17,7 +17,7 @@ Percona XtraDB Cluster can be upgraded manually using one of the following
 * *Rolling Update*, initiated manually and [controlled by Kubernetes](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies),
 * *On Delete*, [done by Kubernetes on per-Pod basis](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies) when Pods are deleted.
 
-!!! warning:
+!!! warning
 
     In case of [Smart Updates](update.md#automatic-upgrade), the Operator can
     either detect the availability of the Percona XtraDB Cluster version or rely
@@ -38,7 +38,7 @@ Semi-automatic update of Percona XtraDB Cluster can be done as follows:
 2. Now you should [apply a patch](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your
     Custom Resource, setting necessary image names with a newer version tag.
 
-    !!! note:
+    !!! note
 
         Check the version of the Operator you have in your Kubernetes
         environment. Please refer to the [Operator upgrade guide](update.md#upgrading-the-operator)
@@ -93,7 +93,7 @@ Manual update of Percona XtraDB Cluster can be done as follows:
 2. Now you should [apply a patch](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your
     Custom Resource, setting necessary image names with a newer version tag.
 
-    !!! note:
+    !!! note
 
         Check the version of the Operator you have in your Kubernetes
         environment. Please refer to the [Operator upgrade guide](update.md#upgrading-the-operator)
