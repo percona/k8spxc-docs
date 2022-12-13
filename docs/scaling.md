@@ -155,7 +155,7 @@ Scaling the storage without Volume Expansion is also possible. We will
 need to delete Pods one by one and their persistent volumes to resync 
 the data to the new volumes. This can also be used to shring the storage.
 
-1. Patch the Custom Resource with the new storage size
+1. Edit the Custom Resource with the new storage size as follows:
 
     ``` {.text .no-copy}
     spec:
@@ -167,19 +167,19 @@ the data to the new volumes. This can also be used to shring the storage.
                 storage: <NEW STORAGE SIZE>
     ```
 
-    Apply the Custom Resource:
+    Apply the Custom Resource update in a usual way:
 
     ``` {.bash data-prompt="$" }
-    $ kubectl apply -f cr.yaml
+    $ kubectl apply -f deploy/cr.yaml
     ```
 
-2. Delete the StatefulSet with `orphan` option
+2. Delete the StatefulSet with the `orphan` option
 
     ``` {.bash data-prompt="$" }
     $ kubectl delete sts <statefulset-name> --cascade=orphan
     ```
 
-    The Pods will not go down and Operator is going to recreate
+    The Pods will not go down and the Operator is going to recreate
     the StatefulSet:
 
     ``` {.bash data-prompt="$" }
@@ -188,9 +188,9 @@ the data to the new volumes. This can also be used to shring the storage.
 
     ??? example "Expected output"
 
-    ``` {.text .no-copy}
-    cluster1-pxc       3/3     39s
-    ```
+        ``` {.text .no-copy}
+        cluster1-pxc       3/3     39s
+        ```
 
 3. Scale up the cluster (Optional)
 
@@ -199,16 +199,21 @@ the data to the new volumes. This can also be used to shring the storage.
     issues. To improve performance during the operation we are going to 
     change the size of the cluster from 3 to 5 nodes:
 
-    ``` {.text .no-copy}
+    ```yaml
+    ...
     spec:
       pxc:
-    -   size: 3
-    +   size: 5
-
+        size: 5
+    ```
+    
+    Apply the change:
+    
+    ``` {.bash data-prompt="$" }
     $ kubectl apply -f deploy/cr.yaml
     ```
 
     New Pods will already have new storage:
+    
     ``` {.bash data-prompt="$" }
     $ kubectl get pvc
     ```
@@ -239,16 +244,20 @@ Size of the cluster is controlled by a [size key](operator.md#pxc-size) in the [
 nothing more but changing this option and applying the updated
 configuration file. This may be done in a specifically saved config:
 
-``` {.text .no-copy}
+```yaml
+...
 spec:
   pxc:
--   size: 3
-+   size: 5
-
+    size: 5
+```
+    
+Apply the change:
+    
+``` {.bash data-prompt="$" }
 $ kubectl apply -f deploy/cr.yaml
 ```
 
-or on the fly, using the following command:
+Alternatively, you cana do it on the fly, using the following command:
 
 ``` {.bash data-prompt="$" }
 $ kubectl scale --replicas=5 pxc/<CLUSTER NAME>
