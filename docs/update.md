@@ -73,6 +73,15 @@ The upgrade includes the following steps.
 
         Labels set on the Operator Pod will not be updated during upgrade.
 
+4. Finally, patch the Custom Resource version in the `spec.crVersion` field
+    *for all clusters you are going to upgrade*. The appropriate patch command
+    for the cluster named `cluster1` looks as follows:
+
+    ``` {.bash data-prompt="$" }
+    $ kubectl patch pxc cluster1 --type=merge \
+    -p '{"spec":{"crVersion":"{{ release }}"}}'
+    ```
+
 #### Upgrade via helm
 
 If you have [installed the Operator using Helm](helm.md), you can upgrade the
