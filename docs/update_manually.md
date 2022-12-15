@@ -4,8 +4,8 @@ Percona Operator for MySQL based on Percona XtraDB Cluster supports upgrades
 of the database management system (Percona XtraDB Cluster) starting from the
 Operator version 1.1.0. The Operator 1.5.0 had automated such upgrades with a
 new upgrade strategy called [Smart Update](update.md#automatic-upgrade).
-Smart Update automates the upgrade process and still provides the user full
-control over updates, so it is the most convenient upgrade strategy.
+Smart Update automates the upgrade process while giving the user full control
+over updates, so it is the most convenient upgrade strategy.
 
 Still there may be use cases when automatic upgrade of Percona XtraDB Cluster
 is not an option (for example, you may be using Percona XtraDB Cluster with the
@@ -53,6 +53,7 @@ Semi-automatic update of Percona XtraDB Cluster can be done as follows:
         ```bash
         $ kubectl patch pxc cluster1 --type=merge --patch '{
            "spec": {
+               "crVersion":"{{ release }}",
                "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
                "proxysql": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-proxysql" },
                "haproxy":  { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-haproxy" },
@@ -66,6 +67,7 @@ Semi-automatic update of Percona XtraDB Cluster can be done as follows:
         ```bash
         $ kubectl patch pxc cluster1 --type=merge --patch '{
            "spec": {
+               "crVersion":"{{ release }}",
                "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc57recommended }}" },
                "proxysql": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-proxysql" },
                "haproxy":  { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-haproxy" },
@@ -109,6 +111,7 @@ Manual update of Percona XtraDB Cluster can be done as follows:
         ```bash
         $ kubectl patch pxc cluster1 --type=merge --patch '{
            "spec": {
+               "crVersion":"{{ release }}",
                "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
                "proxysql": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-proxysql" },
                "haproxy":  { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-haproxy" },
@@ -122,6 +125,7 @@ Manual update of Percona XtraDB Cluster can be done as follows:
         ```bash
         $ kubectl patch pxc cluster1 --type=merge --patch '{
            "spec": {
+               "crVersion":"{{ release }}",
                "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc57recommended }}" },
                "proxysql": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-proxysql" },
                "haproxy":  { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-haproxy" },
