@@ -150,13 +150,15 @@ You can configure Percona XtraDB Cluster upgrade as follows:
     $ kubectl patch pxc cluster1 --type=merge --patch '{"spec":{"crVersion":"{{ release }}"}}'
     ```
 
-2. Set the `upgradeOptions.apply` option to one of the following values:
+2. Change the `upgradeOptions.apply`  option from `Disabled` to one of the
+    following values:
 
-    * `Recommended` - automatic upgrades will choose the most recent version
-        of software flagged as "Recommended" (for clusters created from scratch,
-        the Percona XtraDB Cluster 8.0 version will be selected instead of the
-        Percona XtraDB Cluster 5.7 one regardless of the image path; for already
-        existing clusters, the 8.0 vs. 5.7 branch choice will be preserved),
+    * `Recommended` - [scheduled](operator.md#upgradeoptions-schedule) upgrades
+        will choose the most recent version of software flagged as "Recommended"
+        (for clusters created from scratch, the Percona XtraDB Cluster 8.0
+        version will be selected instead of the Percona XtraDB Cluster 5.7 one
+        regardless of the image path; for already existing clusters, the 8.0 vs.
+        5.7 branch choice will be preserved),
 
     * `8.0-recommended`, `5.7-recommended` - same as above, but preserves
         specific major Percona XtraDB Cluster version for newly provisioned
@@ -171,16 +173,19 @@ You can configure Percona XtraDB Cluster upgrade as follows:
 
     * *version number* - specify the desired version explicitly
         (version numbers are specified as `{{ pxc80recommended }}`,
-        `{{ pxc57recommended }}`, etc.),
+        `{{ pxc57recommended }}`, etc.). Actual versions can be found
+        [in the list of certified images](images.md#custom-registry-images)
+        (for older releases, please refer to the
+        [old releases documentation archive](archive.md)).
 
-    * `Never` or `Disabled` - disable automatic upgrades (the default choice
-        starting from the Operator 1.12.0).
+    * `Never` or `Disabled` - continue using Smart Update strategy with disabled
+        upgrades (the default choice starting from the Operator 1.12.0).
 
-3. Make sure the `versionServiceEndpoint` key is set to a valid Version
-    Server URL (otherwise upgrades will not occur).
+3. Make sure the `upgradeOptions.versionServiceEndpoint` key is set to a valid
+    Version Server URL (otherwise upgrades will not occur).
 
     1. You can use the URL of the official Percona’s Version Service (default).
-        Set `versionServiceEndpoint` to `https://check.percona.com`.
+        Set `upgradeOptions.versionServiceEndpoint` to `https://check.percona.com`.
 
     2. Alternatively, you can run Version Service inside your cluster. This
         can be done with the `kubectl` command as follows:
@@ -196,7 +201,7 @@ You can configure Percona XtraDB Cluster upgrade as follows:
         the Version Service URL can not be reached, no updgrades will be
         performed.
 
-4. Use the `schedule` option to specify the update check time in CRON format.
+4. Use the `upgradeOptions.schedule` option to specify the update check time in CRON format.
 
     The following example sets the midnight update checks with the official
     Percona’s Version Service:
