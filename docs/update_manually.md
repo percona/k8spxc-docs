@@ -1,9 +1,9 @@
-# How to upgrade Percona XtraDB Cluster manually
+# How to carry on low-level manual upgrades of Percona XtraDB Cluster
 
 Percona Operator for MySQL based on Percona XtraDB Cluster supports upgrades 
 of the database management system (Percona XtraDB Cluster) starting from the
 Operator version 1.1.0. The Operator 1.5.0 had automated such upgrades with a
-new upgrade strategy called [Smart Update](update.md#automatic-upgrade).
+new upgrade strategy called [Smart Update](update.md#more-on-upgrade-strategies).
 Smart Update automates the upgrade process while giving the user full control
 over updates, so it is the most convenient upgrade strategy.
 
@@ -28,7 +28,7 @@ Percona XtraDB Cluster can be upgraded manually using one of the following
     can't guarantee that Pods update order is optimal from the Percona XtraDB
     Cluster point of view.
 
-#### Rolling Update strategy and semi-automatic updates
+## Rolling Update strategy and semi-automatic updates
 
 Semi-automatic update of Percona XtraDB Cluster can be done as follows:
 
@@ -85,7 +85,7 @@ Semi-automatic update of Percona XtraDB Cluster can be done as follows:
     $ kubectl rollout status sts cluster1-pxc
     ```
 
-### Manual upgrade (the On Delete strategy)
+## Manual upgrade (the On Delete strategy)
 
 Manual update of Percona XtraDB Cluster can be done as follows:
 

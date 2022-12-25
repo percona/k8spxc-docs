@@ -13,14 +13,7 @@ The list of recommended upgrade scenarios includes two variants:
 * Upgrade to the new versions of the Operator *and* Percona XtraDB Cluster,
 * Minor Percona XtraDB Cluster version upgrade *without* the Operator upgrade.
 
-## Upgrade to the new versions of the Operator *and* Percona XtraDB Cluster
-
-In this scenario, components of the cluster are upgraded in the following order:
-
-1. The Operator and CRD,
-2. Percona XtraDB Cluster.
-
-### Upgrading the Operator and CRD
+## Upgrading the Operator and CRD
 
 !!! note
 
@@ -31,12 +24,12 @@ In this scenario, components of the cluster are upgraded in the following order:
     Cluster minor version upgrades with it. But the recommended way is to update
     the Operator *and* CRD.
 
-Only the incremental update to a nearest minor version of the
+Only the incremental update to a nearest version of the
 Operator is supported (for example, update from 1.4.0 to 1.5.0). To update
 to a newer version, which differs from the current version by more
 than one, make several incremental updates sequentially.
 
-#### Manual upgrade
+### Manual upgrade
 
 The upgrade includes the following steps.
 
@@ -73,7 +66,7 @@ The upgrade includes the following steps.
 
         Labels set on the Operator Pod will not be updated during upgrade.
 
-#### Upgrade via helm
+### Upgrade via helm
 
 If you have [installed the Operator using Helm](helm.md), you can upgrade the
 Operator with the `helm upgrade` command.
@@ -111,7 +104,7 @@ Operator with the `helm upgrade` command.
 
     You can use `helm upgrade` to upgrade the Operator only. The Database Management System (Percona XtraDB Cluster) should be upgraded in the same way whether you used helm to install it or not.
 
-### Upgrading Percona XtraDB Cluster
+## Upgrading Percona XtraDB Cluster
 
 The following section presumes that you are upgrading your cluster within the
 *Smart Update strategy*, when the Operator controls how the objects
@@ -121,29 +114,92 @@ are updated. Smart Update strategy is on when the `updateStrategy` key in the
 
 !!! note
 
-    Alternatively, you can set this key to `RollingUpdate` or `OnDelete`, which
-    means that you will have to [carry on updates manually](update_manually.md)
-    by interacting with Kubernetes at a lower level. But take into account, that
-    `SmartUpdate` strategy is not just for automating upgrades. Being turned on,
-    it allows to disable automatic upgrades, and still controls restarting Pods
-    in a proper order for changes triggered by other events, such as updating a
-    ConfigMap, rotating a password, or changing resource values. That's why
-    `SmartUpdate` strategy is useful even when you have no plans to automate
-    upgrades.
+    As an alternative, the `updateStrategy` key can be used to turn off
+    *Smart Update strategy*. You can find out more on this in the
+    [appropriate section](update.md#more-on-upgrade-strategies).
 
-Under the Smart Updates strategy, the Operator will either detect the
-availability of the Percona XtraDB Cluster version, or rely on the user's choice
-of the version. To check the availability of the new version, the Operator will
-query a special *Version Service* server at scheduled times to obtain fresh
-information about version numbers and valid image paths.
+### Manual upgrade
 
-If the current version should be upgraded, the Operator updates the
-Custom Resource to reflect the new image paths and carries on sequential Pods
-deletion, allowing StatefulSet to redeploy the cluster Pods with the new image.
-Pods are restarted by the Operator in the order, which assures the primary
-instance to be updated last, preventing possible connection issues until the
-whole cluster is updated to the new settings.
+Manual update of Percona XtraDB Cluster can be done as follows:
 
+1. Make sure that `spec.updateStrategy` option in the [Custom Resource](operator.md)
+    is set to `SmartUpdate`, `spec.upgradeOptions.apply` option is set to `Never`
+    or `Disabled` (this means that the Operator will not carry on upgrades
+    automatically).
+    
+    ```yaml
+    ...
+    spec:
+      updateStrategy: SmartUpdate
+      upgradeOptions:
+        apply: Disabled
+        ...
+    ```
+
+2. Now [apply a patch](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/)
+    to your Custom Resource, setting necessary Custom Resource version and image
+    names with a newer version tag.
+
+    !!! note
+
+        Check the version of the Operator you have in your Kubernetes
+        environment. Please refer to the [Operator upgrade guide](update.md#upgrading-the-operator)
+        to upgrade the Operator and CRD, if needed.
+
+    Patching Custom Resource is done with the `kubectl patch pxc` command.
+    Actual image names can be found [in the list of certified images](images.md#custom-registry-images)
+    (for older releases, please refer to the [old releases documentation archive](archive.md)).
+    For example, updating `cluster1` cluster to the `{{ release }}` version
+    should look as follows:
+
+    === "For Percona XtraDB Cluster 8.0"
+        ```bash
+        $ kubectl patch pxc cluster1 --type=merge --patch '{
+           "spec": {
+               "crVersion":"{{ release }}",
+               "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
+               "proxysql": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-proxysql" },
+               "haproxy":  { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-haproxy" },
+               "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc8.0-backup" },
+               "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector" },
+               "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
+           }}'
+        ```
+
+    === "For Percona XtraDB Cluster 5.7"
+        ```bash
+        $ kubectl patch pxc cluster1 --type=merge --patch '{
+           "spec": {
+               "crVersion":"{{ release }}",
+               "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc57recommended }}" },
+               "proxysql": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-proxysql" },
+               "haproxy":  { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-haproxy" },
+               "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc5.7-backup" },
+               "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector" },
+               "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
+           }}'
+        ```
+
+3. The deployment rollout will be automatically triggered by the applied patch.
+    You can track the rollout process in real time with the
+    `kubectl rollout status` command with the name of your cluster:
+
+    ```default
+    $ kubectl rollout status sts cluster1-pxc
+    ```
+
+### Automated upgrade
+
+*Smart Update strategy* allows you to automate upgrades even more. In this case
+the Operator can either detect the availability of the new Percona XtraDB
+Cluster version, or rely on the user's choice of the version. To check the
+availability of the new version, the Operator will query a special
+*Version Service* server at scheduled times to obtain fresh information about
+version numbers and valid image paths.
+
+If the current version should be upgraded, the Operator updates the Custom
+Resource to reflect the new image paths and carries on sequential Pods deletion,
+allowing StatefulSet to redeploy the cluster Pods with the new image.
 You can configure Percona XtraDB Cluster upgrade via the `deploy/cr.yaml`
 configuration file as follows:
 
@@ -159,6 +215,12 @@ configuration file as follows:
       crVersion: {{ release }}
       ...
     ```
+    
+    !!! note
+
+        If you don't update crVersion, minor version upgrade is the only one to
+        occur. For example, the image `percona-xtradb-cluster:8.0.25-15.1` can
+        be upgraded to `percona-xtradb-cluster:8.0.27-18.1`.
 
 3. Change the `upgradeOptions.apply`  option from `Disabled` to one of the
     following values:
@@ -187,9 +249,6 @@ configuration file as follows:
         [in the list of certified images](images.md#custom-registry-images)
         (for older releases, please refer to the
         [old releases documentation archive](archive.md)).
-
-    * `Never` or `Disabled` - continue using Smart Update strategy with disabled
-        upgrades (the default choice starting from the Operator 1.12.0).
 
 4. Make sure the `upgradeOptions.versionServiceEndpoint` key is set to a valid
     Version Server URL (otherwise upgrades will not occur).
@@ -240,16 +299,7 @@ configuration file as follows:
     $ kubectl apply -f deploy/cr.yaml
     ```
 
-## Minor Percona XtraDB Cluster version upgrade without the Operator upgrade
-
-In this scenario, the database (Percona XtraDB Cluster) is the only component of
-the cluster which is upgraded, and minor version upgrade is the only one to
-occur. For example, the image `percona-xtradb-cluster:8.0.25-15.1` can be
-upgraded to `percona-xtradb-cluster:8.0.27-18.1`.
-
-You can find the proper image name for the current Operator release
-[in the list of certified images](images.md#custom-registry-images). For older
-releases, please refer to the [old releases documentation archive](archive.md).
+## More on upgrade strategies
 
 The recommended way to upgrade your cluster is to use the
 *Smart Update strategy*, when the Operator controls how the objects
@@ -257,108 +307,12 @@ are updated. Smart Update strategy is on when the `updateStrategy` key in the
 [Custom Resource](operator.md) configuration file is set to `SmartUpdate`
 (this is the default value and the recommended way for upgrades).
 
-!!! note
-
-    Alternatively, you can set this key to `RollingUpdate` or `OnDelete`, which
-    means that you will have to [carry on updates manually](update_manually.md)
-    by interacting with Kubernetes at a lower level. But take into account, that
-    `SmartUpdate` strategy is not just for automating upgrades. Being turned on,
-    it allows to disable automatic upgrades, and still controls restarting Pods
-    in a proper order for changes triggered by other events, such as updating a
-    ConfigMap, rotating a password, or changing resource values. That's why
-    `SmartUpdate` strategy is useful even when you have no plans to automate
-    upgrades.
-
-You can configure Percona XtraDB Cluster minor version upgrade via the
-`deploy/cr.yaml` configuration file as follows:
-
-1. Make sure that `spec.updateStrategy` option is set to `SmartUpdate`:
-
-    ```yaml
-    ...
-    spec:
-      updateStrategy: SmartUpdate
-      ...
-    ```
-
-2. Change the `upgradeOptions.apply`  option from `Disabled` to one of the
-    following values:
-
-    * `Recommended` - [scheduled](operator.md#upgradeoptions-schedule) upgrades
-        will choose the most recent version of software flagged as "Recommended"
-        (for clusters created from scratch, the Percona XtraDB Cluster 8.0
-        version will be selected instead of the Percona XtraDB Cluster 5.7 one
-        regardless of the image path; for already existing clusters, the 8.0 vs.
-        5.7 branch choice will be preserved),
-
-    * `8.0-recommended`, `5.7-recommended` - same as above, but preserves
-        specific major Percona XtraDB Cluster version for newly provisioned
-        clusters (ex. 8.0 will not be automatically used instead of 5.7),
-
-    * `Latest` - automatic upgrades will choose the most recent minor version of
-        the software available,
-
-    * `8.0-latest`, `5.7-latest` - same as above, but preserves specific
-        major Percona XtraDB Cluster version for newly provisioned
-        clusters (ex. 8.0 will not be automatically used instead of 5.7),
-
-    * *version number* - specify the desired version explicitly
-        (version numbers are specified as `{{ pxc80recommended }}`,
-        `{{ pxc57recommended }}`, etc.). Actual versions can be found
-        [in the list of certified images](images.md#custom-registry-images)
-        (for older releases, please refer to the
-        [old releases documentation archive](archive.md)).
-
-    * `Never` or `Disabled` - continue using Smart Update strategy with disabled
-        upgrades (the default choice starting from the Operator 1.12.0).
-
-3. Make sure the `upgradeOptions.versionServiceEndpoint` key is set to a valid
-    Version Server URL (otherwise upgrades will not occur).
-
-    === "Percona’s Version Service (default)"
-        You can use the URL of the official Percona’s Version Service (default).
-        Set `upgradeOptions.versionServiceEndpoint` to `https://check.percona.com`.
-
-    === "Version Service inside your cluster"
-        Alternatively, you can run Version Service inside your cluster. This
-        can be done with the `kubectl` command as follows:
-
-        ``` {.bash data-prompt="$" }
-        $ kubectl run version-service --image=perconalab/version-service --env="SERVE_HTTP=true" --port 11000 --expose
-        ```
-
-    !!! note
-
-        Version Service is never checked if automatic updates are disabled in 
-        the `upgradeOptions.apply` option. If automatic updates are enabled, but
-        the Version Service URL can not be reached, no updgrades will be
-        performed.
-
-4. Use the `upgradeOptions.schedule` option to specify the update check time in CRON format.
-
-    The following example sets the midnight update checks with the official
-    Percona’s Version Service:
-
-    ```yaml
-    spec:
-      updateStrategy: SmartUpdate
-      upgradeOptions:
-        apply: Recommended
-        versionServiceEndpoint: https://check.percona.com
-        schedule: "0 0 * * *"
-    ...
-    ```
-
-    !!! note
-
-        You can force an immediate upgrade by changing the schedule to
-        `* * * * *` (continuously check and upgrade) and changing it back to
-        another more conservative schedule when the upgrade is complete.
-
-5. Don't forget to apply your changes to the Custom Resource in the usual way:
-
-    ``` {.bash data-prompt="$" }
-    $ kubectl apply -f deploy/cr.yaml
-    ```
-
-
+Alternatively, you can set this key to `RollingUpdate` or `OnDelete`, which
+means that you will have to
+[follow the low-level Kubernetes way of database upgrades](update_manually.md).
+But take into account, that `SmartUpdate` strategy is not just for simplifying
+upgrades. Being turned on, it allows to disable automatic upgrades, and still
+controls restarting Pods in a proper order for changes triggered by other
+events, such as updating a ConfigMap, rotating a password, or changing resource
+values. That's why `SmartUpdate` strategy is useful even when you have no plans
+to automate upgrades at all.
