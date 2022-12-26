@@ -180,6 +180,37 @@ Manual update of Percona XtraDB Cluster can be done as follows:
            }}'
         ```
 
+    !!! warning
+
+        The above command upgrades various components of the cluster including PMM Client. It is [highly recommended](https://docs.percona.com/percona-monitoring-and-management/how-to/upgrade.html) to upgrade PMM Server **before** upgrading PMM Client. If it wasn't done and you would like to avoid PMM Client upgrade, remove it from the list of images, reducing the last of two patch commands as follows:
+        
+        
+        === "For Percona XtraDB Cluster 8.0"
+            ```bash
+            $ kubectl patch pxc cluster1 --type=merge --patch '{
+               "spec": {
+                   "crVersion":"{{ release }}",
+                   "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
+                   "proxysql": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-proxysql" },
+                   "haproxy":  { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-haproxy" },
+                   "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc8.0-backup" },
+                   "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector" }
+               }}'
+            ```
+
+        === "For Percona XtraDB Cluster 5.7"
+            ```bash
+            $ kubectl patch pxc cluster1 --type=merge --patch '{
+               "spec": {
+                   "crVersion":"{{ release }}",
+                   "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc57recommended }}" },
+                   "proxysql": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-proxysql" },
+                   "haproxy":  { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-haproxy" },
+                   "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc5.7-backup" },
+                   "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector" }
+               }}'
+            ```
+
 3. The deployment rollout will be automatically triggered by the applied patch.
     You can track the rollout process in real time with the
     `kubectl rollout status` command with the name of your cluster:
