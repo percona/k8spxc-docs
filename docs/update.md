@@ -114,8 +114,8 @@ are updated. Smart Update strategy is on when the `updateStrategy` key in the
 
 !!! note
 
-    As an alternative, the `updateStrategy` key can be used to turn off
-    *Smart Update strategy*. You can find out more on this in the
+    As an alternative, the `updateStrategy` key can be set to `RollingUpdate` 
+    and `OnDelete`. You can find out more about it in the
     [appropriate section](update.md#more-on-upgrade-strategies).
 
 ### Manual upgrade
