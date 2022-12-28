@@ -73,7 +73,7 @@
     with logins and passwords to Kubernetes. By default, the Operator generates
     users Secrets automatically, and *no actions are required at this step*.
     
-    Still, you can generate and apply your Secrets by your own. In this case,
+    Still, you can generate and apply your Secrets on your own. In this case,
     place logins and plaintext passwords for the user accounts in the data
     section of the `deploy/secrets.yaml` file; after editing is finished, create
     users Secrets with the following command:
