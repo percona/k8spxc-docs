@@ -100,12 +100,43 @@ the following information there:
     percona-xtradb-cluster-operator-79966668bd-rswbk   1/1     Running   0          9m54s
     ```
 
-5. Check connectivity to newly created cluster
+5. Check the connectivity to the newly created cluster.
 
-    ``` {.bash data-prompt="$" data-prompt-second="percona-client:/$"}
-    $ kubectl run -i --rm --tty percona-client --image=percona:5.7 --restart=Never --env="POD_NAMESPACE=pxc" -- bash -il
-    percona-client:/$ mysql -h cluster1-proxysql -uroot -proot_password
+    First you will need the login and password for the admin user to access the
+    cluster. Use `kubectl get secrets` command to see the list of Secrets
+    objects (by default the Secrets object you are interested in has
+    `cluster1-secrets` name). 
+    You can use the following command to get the password of the `root`
+    user:
+    
+    ``` {.bash data-prompt="$" }
+    $ kubectl get secrets cluster1-secrets -o yaml -o jsonpath='{.data.root}' | base64 --decode | tr '\n' ' ' && echo " "
     ```
+
+    Now run a container with `mysql` tool and connect its console output to your
+    terminal. The following command will do this, naming the new Pod
+    `percona-client`:
+
+    ```{.bash data-prompt="$"}
+    $ kubectl run -i --rm --tty percona-client --image=percona:5.7 --restart=Never --env="POD_NAMESPACE=pxc" -- bash -il
+    ```
+    
+    Executing it may require some time to deploy the correspondent Pod.
+    
+    Now run `mysql` tool in the percona-client command shell using the password
+    obtained from the secret. The command will look different depending on
+    whether your cluster provides load balancing with [HAProxy](haproxy-conf.md)
+    (the default choice) or [ProxySQL](proxysql-conf.md):
+
+    === "with HAProxy (default)"
+        ```{.bash data-prompt="$"}
+        $ mysql -h cluster1-haproxy -uroot -p<root_password>
+        ```
+
+    === "with ProxySQL"
+        ```{.bash data-prompt="$"}
+        $ mysql -h cluster1-proxysql -uroot -p<root_password>
+        ```
 
 !!! note 
 
