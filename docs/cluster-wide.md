@@ -110,7 +110,7 @@ the following information there:
     user:
     
     ``` {.bash data-prompt="$" }
-    $ kubectl get secrets cluster1-secrets -o yaml -o jsonpath='{.data.root}' | base64 --decode | tr '\n' ' ' && echo " "
+    $ kubectl get secrets --namespace=pxc cluster1-secrets -o yaml -o jsonpath='{.data.root}' | base64 --decode | tr '\n' ' ' && echo " "
     ```
 
     Now run a container with `mysql` tool and connect its console output to your
