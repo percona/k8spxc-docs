@@ -4,11 +4,14 @@
 
 ## Pre-requisites
 
-Install Helm following its [official installation instructions](https://docs.helm.sh/using_helm/#installing-helm).
+1. **Helm** Install it [following the official installation instructions](https://docs.helm.sh/using_helm/#installing-helm).
 
 !!! note
 
     Helm v3 is needed to run the following steps.
+
+2. **kubectl** to manage and deploy applications on Kubernetes. Install
+it [following the official installation instructions](https://kubernetes.io/docs/tasks/tools/install-kubectl/).
 
 ## Installation
 

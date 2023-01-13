@@ -35,6 +35,12 @@ or in the cloud.
 
 * [Install with Helm](helm.md)
 
+* [Install with kubectl](kubectl.md)
+
+# Advanced Installation Guides
+
+* [Generic Kubernetes installation](kubernetes.md)
+
 * [Install on Minikube](minikube.md)
 
 * [Install on Google Kubernetes Engine (GKE)](gke.md)
@@ -42,11 +48,6 @@ or in the cloud.
 * [Install on Amazon Elastic Kubernetes Service (AWS EKS)](eks.md)
 
 * [Install on Microsoft Azure Kubernetes Service (AKS)](aks.md)
-
-# Advanced Installation Guides
-
-* [Generic Kubernetes installation](kubernetes.md)
-
 * [Install on OpenShift](openshift.md)
 
 * [Use private registry](custom-registry.md)

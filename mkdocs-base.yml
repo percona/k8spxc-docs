@@ -124,9 +124,10 @@ nav:
           
     - Quickstart guides:
           - "Install with Helm": helm.md
-          - "Install on Minikube": minikube.md
+          - "Install with kubectl": kubectl.md
           
     - Advanced Installation guide:
+          - "Install on Minikube": minikube.md
           - "Install on Google Kubernetes Engine (GKE)": gke.md
           - "Install on Amazon Elastic Kubernetes Service (AWS EKS)": eks.md
           - "Install on Microsoft Azure Kubernetes Service (AKS)": aks.md

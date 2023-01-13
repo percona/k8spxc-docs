@@ -24,10 +24,7 @@ Minikube:
     (parameters increase the virtual machine limits for the CPU cores and memory,
     to ensure stable work of the Operator). Being executed, this command will
     download needed virtualized images, then initialize and run the
-    cluster. After Minikube is successfully started, you can optionally run the
-    Kubernetes dashboard, which visually represents the state of your cluster.
-    Executing `minikube dashboard` will start the dashboard and open it in your
-    default web browser.
+    cluster.
 
 2. Deploy the operator with the following command:
 
@@ -71,28 +68,19 @@ Minikube:
     minimal-cluster-haproxy-0                       2/2     Running   0          47m
     ```
 
-    You can also track the progress via the Kubernetes dashboard:
-
-    ![image](assets/images/minikube-pods.svg)
-
 4. During previous steps, the Operator has generated several [secrets](https://kubernetes.io/docs/concepts/configuration/secret/), including the
     password for the `root` user, which you will definitely need to access the
-    cluster. Use `kubectl get secrets` to see the list of Secrets objects (by
-    default Secrets object you are interested in has `minimal-cluster-secrets` name).
-    Then `kubectl get secret minimal-cluster-secrets -o yaml` will return the YAML
-    file with generated secrets, including the root password which should look as
-    follows:
-
-    ```default
-    ...
-    data:
-      ...
-      root: cm9vdF9wYXNzd29yZA==
+    cluster. Use `kubectl get secrets minimal-cluster-secrets -o jsonpath='{.data.root}`
+    command to get root password which should look as follows:
+    ``` {.text .no-copy}
+    ZDdLaS1QUkgkWik+IU5AbA==
     ```
+    
+    Use `kubectl get secrets` to see the list of Secrets objects (by
+    default Secrets object you are interested in has `minimal-cluster-secrets` name).
 
     Here the actual password is base64-encoded, and
-    `echo 'cm9vdF9wYXNzd29yZA==' | base64 --decode` will bring it back to a
-    human-readable form.
+    `kubectl get secrets minimal-cluster-secrets -o jsonpath='{.data.root}' | base64 -d` will bring it back to a human-readable form.
 
 5. Check connectivity to a newly created cluster.
 
@@ -111,20 +99,4 @@ Minikube:
     $ mysql -h minimal-cluster-haproxy -uroot -proot_password
     ```
 
-    This command will connect you to the MySQL monitor.
-
-    ``` {.text .no-copy}
-    mysql: [Warning] Using a password on the command line interface can be insecure.
-    Welcome to the MySQL monitor.  Commands end with ; or \g.
-    Your MySQL connection id is 1872
-    Server version: 8.0.22-13.1 Percona XtraDB Cluster (GPL), Release rel13, Revision a48e6d5, WSREP version 26.4.3
-
-    Copyright (c) 2009-2021 Percona LLC and/or its affiliates
-    Copyright (c) 2000, 2021, Oracle and/or its affiliates.
-
-    Oracle is a registered trademark of Oracle Corporation and/or its
-    affiliates. Other names may be trademarks of their respective
-    owners.
-
-    Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-    ```
+    This command will connect you to the MySQL server.
