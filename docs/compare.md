@@ -2,14 +2,7 @@
 
 There are multiple ways to deploy and manage MySQL in Kubernetes. Here we will focus on comparing the following open source solutions:
 
-* [Bitnami Helm chart](https://github.com/bitnami/charts/tree/master/bitnami/mongodb)
-
 * [KubeDB](https://github.com/kubedb)
-
-* [MongoDB Community Operator](https://github.com/mongodb/mongodb-kubernetes-operator)
-
-* [Percona Operator for MongoDB](https://github.com/percona/percona-server-mongodb-operator/)
-
 * [Bitpoke MySQL Operator (former Presslabs)](https://github.com/bitpoke/mysql-operator/)
 * [Oracle MySQL Operator](https://github.com/mysql/mysql-operator)
 * [Moco](https://github.com/cybozu-go/moco) by Cybozu
@@ -48,7 +41,7 @@ Here are the backup and restore capabilities of each solution.
 |---------------------|:------------------------------------------:|:----------------------------------------:|:----------------------:|:----------------:|:---------------------:|:----------------:|
 | Scheduled backups   |             :heavy_check_mark:             |            :heavy_check_mark:            |   :heavy_check_mark:   |:heavy_check_mark:|     :no_entry_sign:   |:heavy_check_mark:|
 | Incremental backups |               :no_entry_sign:              |              :no_entry_sign:             |     :no_entry_sign:    |:heavy_check_mark:|     :no_entry_sign:   | :no_entry_sign:  |
-| PITR                |             :heavy_check_mark:             |            :heavy_check_mark:            |     :no_entry_sign:    | :no_entry_sign:  |     :no_entry_sign:   | :no_entry_sign:  |
+| PITR                |             :heavy_check_mark:             |              :no_entry_sign:             |     :no_entry_sign:    | :no_entry_sign:  |     :no_entry_sign:   | :no_entry_sign:  |
 | PVCs for backups    |             :heavy_check_mark:             |              :no_entry_sign:             |     :no_entry_sign:    | :no_entry_sign:  |     :no_entry_sign:   | :no_entry_sign:  |
 
 ## Monitoring
