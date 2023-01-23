@@ -12,11 +12,12 @@ But storing backups on [Persistent Volumes](https://kubernetes.io/docs/concepts/
 
 ![image](assets/images/backup-pv.png)
 
-The Operator allows doing backups in two ways.
+The Operator allows doing backups in two ways:
+
 *Scheduled backups* are configured in the
 [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
-file to be executed automatically in proper time. *On-demand backups*
-can be done manually at any moment.
+file to be executed automatically in proper time.
+*On-demand backups* can be done manually at any moment, are configured in the [deploy/backup/backup.yaml](https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/main/deploy/backup/backup.yaml).
 
 ## Making scheduled backups
 
@@ -33,7 +34,7 @@ file. This section contains following subsections:
 Since backups are stored separately on the Amazon S3, a secret with
 `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` should be present on
 the Kubernetes cluster. The secrets file with these base64-encoded keys should
-be created: for example `deploy/backup-s3.yaml` file with the following
+be created: for example [deploy/backup/backup-secret-s3.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/backup-secret-s3.yaml) file with the following
 contents:
 
 ```yaml
@@ -71,7 +72,7 @@ name which will be used further, and `AWS_ACCESS_KEY_ID` and
 obviously they should contain proper values to make this access
 possible). To have effect secrets file should be applied with the
 appropriate command to create the secret object, e.g.
-`kubectl apply -f deploy/backup-s3.yaml` (for Kubernetes).
+`kubectl apply -f deploy/backup/backup-secret-s3.yaml` (for Kubernetes).
 
 !!! note
 
@@ -130,7 +131,7 @@ example).
 Since backups are stored separately on [Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/),
 a secret with `AZURE_STORAGE_ACCOUNT_NAME` and `AZURE_STORAGE_ACCOUNT_KEY` should be present on
 the Kubernetes cluster. The secrets file with these base64-encoded keys should
-be created: for example `deploy/backup-azure.yaml` file with the following
+be created: for example [deploy/backup/backup-secret-azure.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/backup-secret-azure.yaml) file with the following
 contents.
 
 
@@ -141,8 +142,8 @@ metadata:
   name: my-cluster-azure-secret
 type: Opaque
 data:
-  AZURE_STORAGE_ACCOUNT_NAME: UkVQTEFDRS1XSVRILUFXUy1BQ0NFU1MtS0VZ
-  AZURE_STORAGE_ACCOUNT_KEY: UkVQTEFDRS1XSVRILUFXUy1TRUNSRVQtS0VZ
+  AZURE_STORAGE_ACCOUNT_NAME: UkVQTEFDRS1XSVRILUFaVVJFLVNUT1JBR0UtQUNDT1VOVC1OQU1F
+  AZURE_STORAGE_ACCOUNT_KEY: UkVQTEFDRS1XSVRILUFaVVJFLVNUT1JBR0UtQUNDT1VOVC1LRVk=
 ```
 !!! note
 
@@ -167,7 +168,7 @@ name which will be used further. The `AZURE_STORAGE_ACCOUNT_NAME` and
 (and obviously they should contain proper values to make this access
 possible). To have effect, secrets file should be applied with the appropriate
 command to create the Secrets object, e.g.
-`kubectl apply -f deploy/backup-azure.yaml` (for Kubernetes).
+`kubectl apply -f deploy/backup/backup-secret-azure.yaml` (for Kubernetes).
 
 All the data needed to access the Azure Blob storage to store backups
 (credentials, name of the [container](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction#containers) to keep backups in, etc.) should be
@@ -375,6 +376,58 @@ emptyDir/hostPath to S3), and later restore it to a [Persistent Volume](https://
     has a Secrets object with the same user passwords as in the original cluster.
     More details about secrets can be found in [System Users](users.md#users-system-users).
 
+The example of the restore configuration file is [deploy/backup/restore.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml) and contains
+the following options:
+
+## <a name="operator-backupsource-section"></a>PerconaXtraDBClusterRestore
+
+| Key             | Value type        | Description                                    | Required |
+| --------------- | ----------------- | ---------------------------------------------- | -------- |
+| metadata.name   | string            | The name of the restore                        | true     |
+| spec.pxcCluster | string            | Percona XtraDB Cluster name (the name of your running cluster) | true |
+| spec.backupName | string            | The name of your backup which should be restored | false  |
+| [spec.backupSource](backups.md#operator-restore-backupsource-options-section) | object | Define configuration for different restore sources | false    |
+| [spec.pitr](backups.md#operator-restore-pitr-options-section) | object | Define configuration for PITR restore | false |
+
+## <a name="operator-restore-backupsource-options-section"></a>PerconaXtraDBClusterRestore.backupSource
+
+| Key             | Value type        | Description                                    | Required |
+| --------------- | ----------------- | ---------------------------------------------- | -------- |
+| destination     | string            | Path to the backup                             | false    |
+| storageName     | string            | The storage name from CR `spec.backup.storages` | false |
+| [s3](backups.md#operator-restore-s3-options-section) | object | Define configuration for s3 compatible storages | false |
+| [azure](backups.md#operator-restore-azure-options-section) | object | Define configuration for azure blob storage | false |
+
+## <a name="operator-restore-s3-options-section"></a>PerconaXtraDBClusterRestore.backupSource.s3
+
+| Key             | Value type        | Description                                    | Required |
+| --------------- | ----------------- | ---------------------------------------------- | -------- |
+| bucket          | string            | The bucket with a backup                       | true     |
+| credentialsSecret | string          | The secret name for the backup                 | true     |
+| endpointUrl     | string            | A valid endpoint URL                           | false    |
+| region          | string            | The region corresponding to the S3 bucket      | false    |
+
+## <a name="operator-restore-azure-options-section"></a>PerconaXtraDBClusterRestore.backupSource.azure
+
+| Key             | Value type        | Description                                    | Required |
+| --------------- | ----------------- | ---------------------------------------------- | -------- |
+| credentialsSecret | string          | The secret name for the azure blob storage     | true     |
+| container       | string            | The container name of the azure blob storage   | true     |
+| endpointUrl     | string            | A valid endpoint URL                           | true     |
+| storageClass    | string            | The storage class name of the azure storage    | true     |
+
+## <a name="operator-restore-pitr-options-section"></a>PerconaXtraDBClusterRestore.pitr
+
+| Key             | Value type        | Description                                    | Required |
+| --------------- | ----------------- | ---------------------------------------------- | -------- |
+| type            | string            | The type of PITR recover                       | true     |
+| date            | string            | The exact date of recovery                     | true     |
+| gtid            | string            | The exact GTID for PITR recover                | true     |
+| [spec.backupSource](backups.md#operator-restore-backupsource-options-section) | object | Percona XtraDB Cluster backups section | true |
+| [s3](backups.md#operator-restore-s3-options-section) | object | Define configuration for s3 compatible storages | false |
+| [azure](backups.md#operator-restore-azure-options-section) | object | Define configuration for azure blob storage | false |
+
+
 Following things are needed to restore a previously saved backup:
 
 * Make sure that the cluster is running.
@@ -398,7 +451,7 @@ the current Kubernetes-based environment:
 $ kubectl get pxc
 ```
 
-### Restoring without point-in-time recovery
+### Restoring backup
 
 When the correct names for the backup and the cluster are known, backup
 restoration can be done in the following way.
@@ -526,9 +579,8 @@ you can put additional restoration parameters to the `restore.yaml` file
 * `date` key is used with `type=date` option - it contains value in
     datetime format,
 
-* `gtid` key (available since Operator 1.8.0) or `gtidSet` key (with Operator 1.7.0) used with `type=transaction` option - it contains exact
-    GTID or GTIDSet (the restore will not include the transaction with specified
-    GTID, but the one before it),
+* `gtid` key (available since Operator 1.8.0) used with `type=transaction` option - it contains exact
+    GTID,
 
 * if you have necessary backup storage mentioned in the `backup.storages`
     subsection of the `deploy/cr.yaml`  configuration file, you can just set
