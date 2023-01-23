@@ -98,19 +98,19 @@ Using it involves the following steps.
     When ready, apply the file with the `kubectl apply -f local-hostpath.yaml`
     command.
 
-#. Now you can deploy the Operator and Percona XtraDB Cluster using this
-StorageClass in `deploy/cr.yaml`:
+3. Now you can deploy the Operator and Percona XtraDB Cluster using this
+    StorageClass in `deploy/cr.yaml`:
 
-```yaml
-...
-volumeSpec:
-   persistentVolumeClaim:
-     storageClassName: localpv
-     accessModes: [ "ReadWriteOnce" ]
-     resources:
-       requests:
-         storage: 200Gi
-```
+    ```yaml
+    ...
+    volumeSpec:
+      persistentVolumeClaim:
+        storageClassName: localpv
+        accessModes: [ "ReadWriteOnce" ]
+          resources:
+            requests:
+              storage: 200Gi
+    ```
 
 !!! note
 
