@@ -1,4 +1,4 @@
-# Custom Resource options
+# Custom Resource PerconaXtraDBCluster options
 
 Percona XtraDB Cluster managed by the Operator configured via the spec section
 of the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
