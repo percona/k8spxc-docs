@@ -1,7 +1,5 @@
 # Providing Backups
 
-The Operator usually stores Percona XtraDB Cluster backups on [Amazon S3 or S3-compatible
-storage](https://en.wikipedia.org/wiki/Amazon_S3#S3_API_and_competing_services) outside the Kubernetes cluster:
 The Operator usually stores Percona XtraDB Cluster backups outside the
 Kubernetes cluster, on [Amazon S3 or S3-compatible storage](https://en.wikipedia.org/wiki/Amazon_S3#S3_API_and_competing_services),
 or on [Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/):
