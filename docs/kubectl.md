@@ -21,7 +21,7 @@ your Kubernetes environment:
     $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/bundle.yaml
     ```
 
-     ??? example "Expected output"
+    ??? example "Expected output"
 
         ```{.text .no-copy}
         customresourcedefinition.apiextensions.k8s.io/perconaxtradbclusters.pxc.percona.com created
