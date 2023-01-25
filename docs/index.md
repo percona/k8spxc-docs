@@ -39,8 +39,6 @@ or in the cloud.
 
 # Advanced Installation Guides
 
-* [Generic Kubernetes installation](kubernetes.md)
-
 * [Install on Minikube](minikube.md)
 
 * [Install on Google Kubernetes Engine (GKE)](gke.md)
@@ -48,9 +46,12 @@ or in the cloud.
 * [Install on Amazon Elastic Kubernetes Service (AWS EKS)](eks.md)
 
 * [Install on Microsoft Azure Kubernetes Service (AKS)](aks.md)
+
 * [Install on OpenShift](openshift.md)
 
-* [Use private registry](custom-registry.md)
+* [Generic Kubernetes installation](kubernetes.md)
+
+* [Multi-cluster and multi-region deployment](replication.md)
 
 # Configuration
 
@@ -84,7 +85,6 @@ or in the cloud.
 
 * [Horizontal and vertical scaling](scaling.md)
 
-* [Multi-cluster and multi-region deployment](replication.md)
 
 * [Monitor with Percona Monitoring and Management (PMM)](monitoring.md)
 
@@ -101,6 +101,8 @@ or in the cloud.
 * [How to install Percona XtraDB Cluster in multi-namespace (cluster-wide) mode](cluster-wide.md)
 
 * [How to upgrade Percona XtraDB Cluster manually](update_manually.md)
+
+* [How to use private registry](custom-registry.md)
 
 # Reference
 

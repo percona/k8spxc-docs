@@ -57,46 +57,61 @@ Minikube:
         $ kubectl apply -f deploy/cr.yaml
         ```
 
-    Creation process will take some time. The process is over when both
-    operator and replica set pod have reached their Running status.
-    `kubectl get pods` output should look like this:
+    Creation process will take some time. When the process is over your
+    cluster will obtain the `ready` status. You can check it with the following
+    command:
 
-    ``` {.text .no-copy}
-    NAME                                            READY   STATUS    RESTARTS   AGE
-    percona-xtradb-cluster-operator-d99c748-sqddq   1/1     Running   0          49m
-    minimal-cluster-pxc-0                           3/3     Running   0          47m
-    minimal-cluster-haproxy-0                       2/2     Running   0          47m
+    ```{.bash data-prompt="$" }
+    $ kubectl get pxc
     ```
 
-4. During previous steps, the Operator has generated several [secrets](https://kubernetes.io/docs/concepts/configuration/secret/), including the
-    password for the `root` user, which you will definitely need to access the
-    cluster. Use `kubectl get secrets minimal-cluster-secrets -o jsonpath='{.data.root}`
-    command to get root password which should look as follows:
-    ``` {.text .no-copy}
-    ZDdLaS1QUkgkWik+IU5AbA==
-    ```
+    ??? example "Expected output"
+
+        ```{.text .no-copy}
+        NAME       ENDPOINT                   STATUS   PXC   PROXYSQL   HAPROXY   AGE
+        cluster1   cluster1-haproxy.default   ready    3                3         5m51s
+        ```
+
+## Verifying the cluster operation
+
+It may take ten minutes to get the cluster started. When `kubectl get pxc`
+command finally shows you the cluster status as `ready`, you can try to connect
+to the cluster.
+
+1. You will need the login and password for the admin user to access the
+    cluster. Use `kubectl get secrets` command to see the list of Secrets
+    objects (by default the Secrets object you are interested in has
+    `minimal-cluster-secrets` name). 
+    You can use the following command to get the password of the `root`
+    user:
     
-    Use `kubectl get secrets` to see the list of Secrets objects (by
-    default Secrets object you are interested in has `minimal-cluster-secrets` name).
-
-    Here the actual password is base64-encoded, and
-    `kubectl get secrets minimal-cluster-secrets -o jsonpath='{.data.root}' | base64 -d` will bring it back to a human-readable form.
-
-5. Check connectivity to a newly created cluster.
-
-    First of all, run a MySQL client container and connect its console output to your
-    terminal (running it may require some time to deploy the correspondent Pod).
-    The following command will do this, naming the new Pod `percona-client`:
-
     ``` {.bash data-prompt="$" }
+    $ kubectl get secrets minimal-cluster-secrets -o yaml -o jsonpath='{.data.root}' | base64 --decode | tr '\n' ' ' && echo " "
+    ```
+
+2. Run a container with `mysql` tool and connect its console output to your
+    terminal. The following command will do this, naming the new Pod
+    `percona-client`:
+
+    ```bash
     $ kubectl run -i --rm --tty percona-client --image=percona:8.0 --restart=Never -- bash -il
     ```
 
-    Now run `mysql` tool in the percona-client command shell using the password
-    obtained from the secret:
+    Executing it may require some time to deploy the correspondent Pod.
 
-    ``` {.bash data-prompt="$" }
-    $ mysql -h minimal-cluster-haproxy -uroot -proot_password
-    ```
+3. Now run `mysql` tool in the percona-client command shell using the password
+    obtained from the secret. The command will look different depending on
+    whether your cluster provides load balancing with [HAProxy](haproxy-conf.md)
+    (the default choice) or [ProxySQL](proxysql-conf.md):
+
+    === "with HAProxy (default)"
+        ```bash
+        $ mysql -h minimal-cluster-haproxy -uroot -proot_password
+        ```
+
+    === "with ProxySQL"
+        ```bash
+        $ mysql -h minimal-cluster-proxysql -uroot -proot_password
+        ```
 
     This command will connect you to the MySQL server.
