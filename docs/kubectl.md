@@ -34,13 +34,7 @@ your Kubernetes environment:
         deployment.apps/percona-xtradb-cluster-operator created
         ```
 
-    As the result you will have the Operator Pod up and running. You can check the state of this Pod with the 
-    `kubectl get pods` command, which should bring you the output like follows:
-
-    ``` {.text .no-copy}
-    NAME                                            READY   STATUS    RESTARTS   AGE
-    percona-xtradb-cluster-operator-d99c748-sqddq   1/1     Running   0          1m
-    ```
+    As the result you will have the Operator Pod up and running. 
 
 2. Deploy Percona XtraDB Cluster:
 
