@@ -103,7 +103,9 @@ or in the cloud.
 
 # Reference
 
-* [Custom Resource options](operator.md)
+* [Main Custom Resource options](operator.md)
+
+* [Restore options](cr-restore.md)
 
 * [Percona certified images](images.md)
 

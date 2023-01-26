@@ -374,8 +374,7 @@ emptyDir/hostPath to S3), and later restore it to a [Persistent Volume](https://
     has a Secrets object with the same user passwords as in the original cluster.
     More details about secrets can be found in [System Users](users.md#users-system-users).
 
-The example of the restore configuration file is [deploy/backup/restore.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml) and contains
-the following [options](cr-restore.md)
+The example of the restore configuration file is [deploy/backup/restore.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml). The options that can be used in it are described in the [restore options reference](cr-restore.md).
 
 Following things are needed to restore a previously saved backup:
 

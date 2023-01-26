@@ -1,10 +1,11 @@
-# Custom Resource PerconaXtraDBCluster options
+# Custom Resource options reference
 
-Percona XtraDB Cluster managed by the Operator configured via the spec section
-of the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
-file.
+Percona XtraDB Cluster options are managed by the Operator via the 
+`PerconaXtraDBCluster` [Custom Resource](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) and can be configured via the
+[deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
+configuration file.
 
-The metadata part of this file contains the following keys:
+The metadata part contains the following keys:
 
 * `name` (`cluster1` by default) sets the name of your Percona
 XtraDB Cluster; it should include only [URL-compatible characters](https://datatracker.ietf.org/doc/html/rfc3986#section-2.3),
@@ -20,7 +21,7 @@ alphanumeric character;
 * <a name="finalizers-delete-ssl"></a> `finalizers.delete-ssl` if present, activates the [Finalizer](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#finalizers) which deletes [objects, created for SSL](TLS.md) (Secret, certificate, and issuer) after the cluster deletion event (off by default).
  
 
-The spec part of the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains the following sections:
+The spec part of the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) contains the following sections:
 
 | Key             | Value type        | Default | Description                                    |
 | --------------- | ----------------- | ------- | ---------------------------------------------- |

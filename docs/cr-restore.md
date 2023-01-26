@@ -1,7 +1,9 @@
-# Custom Resource PerconaXtraDBClusterRestore options
+# Restore options reference
 
-Percona XtraDB Cluster Restore managed by the Operator configured via the spec section
-of the [deploy/backup/restore.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml) and contains the following options:
+[Percona XtraDB Cluster Restore](backups.md#restoring-backup) options are managed by the Operator via the 
+`PerconaXtraDBClusterRestore` [Custom Resource](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) and can be configured via the
+[deploy/backup/restore.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml)
+configuration file. This Custrom Resource contains the following options:
 
 ## <a name="operator-backupsource-section"></a>PerconaXtraDBClusterRestore
 
@@ -27,7 +29,7 @@ of the [deploy/backup/restore.yaml](https://github.com/percona/percona-xtradb-cl
 | Key             | Value type        | Description                                    | Required |
 | --------------- | ----------------- | ---------------------------------------------- | -------- |
 | bucket          | string            | The bucket with a backup                       | true     |
-| credentialsSecret | string          | The secret name for the backup                 | true     |
+| credentialsSecret | string          | The Secret name for the backup                 | true     |
 | endpointUrl     | string            | A valid endpoint URL                           | false    |
 | region          | string            | The region corresponding to the S3 bucket      | false    |
 
@@ -35,7 +37,7 @@ of the [deploy/backup/restore.yaml](https://github.com/percona/percona-xtradb-cl
 
 | Key             | Value type        | Description                                    | Required |
 | --------------- | ----------------- | ---------------------------------------------- | -------- |
-| credentialsSecret | string          | The secret name for the azure blob storage     | true     |
+| credentialsSecret | string          | The Secret name for the azure blob storage     | true     |
 | container       | string            | The container name of the azure blob storage   | true     |
 | endpointUrl     | string            | A valid endpoint URL                           | false    |
 | storageClass    | string            | The storage class name of the azure storage    | false    |

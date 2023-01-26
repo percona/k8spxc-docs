@@ -163,8 +163,8 @@ nav:
           - "How to upgrade Percona XtraDB Cluster manually": update_manually.md
           
     - Reference:
-          - "Custom Resource PerconaXtraDBCluster options": operator.md
-          - "Custom Resource PerconaXtraDBClusterRestore options": cr-restore.md
+          - "Main Custom Resource options": operator.md
+          - "Restore options": cr-restore.md
           - "Percona certified images": images.md
           - "Operator API": api.md
           - "Frequently Asked Questions": faq.md
