@@ -526,10 +526,10 @@ you can put additional restoration parameters to the `restore.yaml` file
 
     * `skip` - skip a specific transaction (available since Operator 1.7.0).
 
-* `date` key is used with `type=date` option - it contains value in
+* `date` key is used with `type=date` option, and contains value in
     datetime format,
 
-* `gtid` key (available since Operator 1.8.0) used with `type=transaction` option - it contains exact
+* `gtid` key (available since the Operator 1.8.0) is used with `type=transaction` option, and contains exact
     GTID,
 
 * if you have necessary backup storage mentioned in the `backup.storages`

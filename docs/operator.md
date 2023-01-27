@@ -1220,7 +1220,7 @@ file contains the following configuration options for the regular Percona XtraDB
 [Percona XtraDB Cluster Restore](backups.md#restoring-backup) options are managed by the Operator via the 
 `PerconaXtraDBClusterRestore` [Custom Resource](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) and can be configured via the
 [deploy/backup/restore.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml)
-configuration file. This Custrom Resource contains the following options:
+configuration file. This Custom Resource contains the following options:
 
 ### <a name="operator-backupsource-section"></a>PerconaXtraDBClusterRestore
 
