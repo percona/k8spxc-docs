@@ -1,9 +1,14 @@
 # Custom Resource options reference
 
-Percona XtraDB Cluster options are managed by the Operator via the 
-`PerconaXtraDBCluster` [Custom Resource](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) and can be configured via the
-[deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
-configuration file.
+Percona Operator for MySQL uses [Custom Resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) to manage options for the various components of the cluster.
+
+* `PerconaXtraDBCluster` Custom Resource with Percona XtraDB Cluster options,
+* `PerconaXtraDBClusterBackup` and `PerconaXtraDBClusterRestore` Custom Resources contain options for Percona XtraBackup used to backup Percona XtraDB Cluster and to restore it from backups.
+
+## `PerconaXtraDBCluster` Custom Resource options
+
+`PerconaXtraDBCluster` Custom Resource contains options for Percona XtraDB Cluster and can be configured via the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) configuration file.
+
 
 The metadata part contains the following keys:
 
@@ -46,7 +51,7 @@ The spec part of the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-
 | tls             | subdoc            |                            | Extended cert-manager configuration section                            |
 | updateStrategy  | string            | `SmartUpdate`              | A strategy the Operator uses for [upgrades](update.md#operator-update) |
 
-## <a name="operator-issuerconf-section"></a>Extended cert-manager configuration section
+### <a name="operator-issuerconf-section"></a>Extended cert-manager configuration section
 
 The `tls` section in the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains various configuration options for additional customization of the [TLS cert-manager](TLS.md#tls-certs-certmanager).
 
@@ -72,7 +77,7 @@ The `tls` section in the [deploy/cr.yaml](https://github.com/percona/percona-xtr
 | **Example**     | `cert-manager.io` |
 | **Description** | A [cert-manager issuer group](https://cert-manager.io/docs/configuration/). Should be `cert-manager.io` for built-in cert-manager certificate issuers |
 
-## <a name="operator-upgradeoptions-section"></a>Upgrade options section
+### <a name="operator-upgradeoptions-section"></a>Upgrade options section
 
 The `upgradeOptions` section in the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains various configuration options to control Percona XtraDB Cluster upgrades.
 
@@ -93,7 +98,7 @@ The `upgradeOptions` section in the [deploy/cr.yaml](https://github.com/percona/
 | **Example**     | `0 2 \* \* \*` |
 | **Description** | Scheduled time to check for updates, specified in the [crontab format](https://en.wikipedia.org/wiki/Cron) |
 
-## <a name="operator-pxc-section"></a>PXC section
+### <a name="operator-pxc-section"></a>PXC section
 
 The `pxc` section in the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains general
 configuration options for the Percona XtraDB Cluster.
@@ -445,7 +450,7 @@ in [cross-site replication](replication.md#operator-replication) |
 | **Example**     | `600m` |
 | **Description** | [Kubernetes CPU limits](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Percona XtraDB Cluster sidecar container |
 
-## <a name="operator-haproxy-section"></a>HAProxy section
+### <a name="operator-haproxy-section"></a>HAProxy section
 
 The `haproxy` section in the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains
 configuration options for the HAProxy service.
@@ -722,7 +727,7 @@ configuration options for the HAProxy service.
 | **Example**     | `600m` |
 | **Description** | [Kubernetes CPU limits](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the sidecar HAProxy containers |
 
-## <a name="operator-proxysql-section"></a>ProxySQL section
+### <a name="operator-proxysql-section"></a>ProxySQL section
 
 The `proxysql` section in the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains
 configuration options for the ProxySQL daemon.
@@ -964,7 +969,7 @@ configuration options for the ProxySQL daemon.
 | **Example**     | `600m` |
 | **Description** | [Kubernetes CPU limits](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the sidecar ProxySQL containers |
 
-## <a name="operator-logcollector-section"></a>Log Collector section
+### <a name="operator-logcollector-section"></a>Log Collector section
 
 The `logcollector` section in the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
 file contains configuration options for [Fluent Bit Log Collector](https://fluentbit.io).
@@ -996,7 +1001,7 @@ file contains configuration options for [Fluent Bit Log Collector](https://fluen
 | **Example**     | `200m` |
 | **Description** | [Kubernetes CPU requests](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Log collector container |
 
-## <a name="operator-pmm-section"></a>PMM section
+### <a name="operator-pmm-section"></a>PMM section
 
 The `pmm` section in the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains configuration
 options for Percona Monitoring and Management.
@@ -1043,7 +1048,7 @@ options for Percona Monitoring and Management.
 | **Example**     | `--custom-labels=CUSTOM-LABELS` |
 | **Description** | Additional parameters which will be passed to the [pmm-admin add mysql](https://www.percona.com/doc/percona-monitoring-and-management/2.x/setting-up/client/mysql.html#adding-mysql-service-monitoring) command for `proxysql` Pods |
 
-## <a name="operator-backup-section"></a>Backup section
+### <a name="operator-backup-section"></a>Backup section
 
 The `backup` section in the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
 file contains the following configuration options for the regular Percona XtraDB Cluster backups.
@@ -1209,3 +1214,59 @@ file contains the following configuration options for the regular Percona XtraDB
 | **Value**       | int |
 | **Example**     | `60` |
 | **Description** | Seconds between running the binlog uploader |
+
+## PerconaXtraDBClusterRestore Custom Resource options
+
+[Percona XtraDB Cluster Restore](backups.md#restoring-backup) options are managed by the Operator via the 
+`PerconaXtraDBClusterRestore` [Custom Resource](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) and can be configured via the
+[deploy/backup/restore.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml)
+configuration file. This Custrom Resource contains the following options:
+
+### <a name="operator-backupsource-section"></a>PerconaXtraDBClusterRestore
+
+| Key             | Value type        | Description                                    | Required |
+| --------------- | ----------------- | ---------------------------------------------- | -------- |
+| metadata.name   | string            | The name of the restore                        | true     |
+| spec.pxcCluster | string            | Percona XtraDB Cluster name (the name of your running cluster) | true |
+| spec.backupName | string            | The name of your backup which should be restored | false  |
+| [spec.backupSource](cr-restore.md#operator-restore-backupsource-options-section) | object | Define configuration for different restore sources | false    |
+| [spec.pitr](cr-restore.md#operator-restore-pitr-options-section) | object | Define configuration for PITR restore | false |
+
+### <a name="operator-restore-backupsource-options-section"></a>PerconaXtraDBClusterRestore.backupSource
+
+| Key             | Value type        | Description                                    | Required |
+| --------------- | ----------------- | ---------------------------------------------- | -------- |
+| destination     | string            | Path to the backup                             | false    |
+| storageName     | string            | The storage name from CR `spec.backup.storages` | false |
+| [s3](cr-restore.md#operator-restore-s3-options-section) | object | Define configuration for s3 compatible storages | false |
+| [azure](cr-restore.md#operator-restore-azure-options-section) | object | Define configuration for azure blob storage | false |
+
+### <a name="operator-restore-s3-options-section"></a>PerconaXtraDBClusterRestore.backupSource.s3
+
+| Key             | Value type        | Description                                    | Required |
+| --------------- | ----------------- | ---------------------------------------------- | -------- |
+| bucket          | string            | The bucket with a backup                       | true     |
+| credentialsSecret | string          | The Secret name for the backup                 | true     |
+| endpointUrl     | string            | A valid endpoint URL                           | false    |
+| region          | string            | The region corresponding to the S3 bucket      | false    |
+
+### <a name="operator-restore-azure-options-section"></a>PerconaXtraDBClusterRestore.backupSource.azure
+
+| Key             | Value type        | Description                                    | Required |
+| --------------- | ----------------- | ---------------------------------------------- | -------- |
+| credentialsSecret | string          | The Secret name for the azure blob storage     | true     |
+| container       | string            | The container name of the azure blob storage   | true     |
+| endpointUrl     | string            | A valid endpoint URL                           | false    |
+| storageClass    | string            | The storage class name of the azure storage    | false    |
+
+### <a name="operator-restore-pitr-options-section"></a>PerconaXtraDBClusterRestore.pitr
+
+| Key             | Value type        | Description                                    | Required |
+| --------------- | ----------------- | ---------------------------------------------- | -------- |
+| type            | string            | The type of PITR recover                       | true     |
+| date            | string            | The exact date of recovery                     | true     |
+| gtid            | string            | The exact GTID for PITR recover                | true     |
+| [spec.backupSource](cr-restore.md#operator-restore-backupsource-options-section) | object | Percona XtraDB Cluster backups section | true |
+| [s3](cr-restore.md#operator-restore-s3-options-section) | object | Define configuration for s3 compatible storages | false |
+| [azure](cr-restore.md#operator-restore-azure-options-section) | object | Define configuration for azure blob storage | false |
+
