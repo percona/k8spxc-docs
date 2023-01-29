@@ -1238,8 +1238,8 @@ configuration file. This Custom Resource contains the following options:
 | --------------- | ----------------- | ---------------------------------------------- | -------- |
 | destination     | string            | Path to the backup                             | false    |
 | storageName     | string            | The storage name from CR `spec.backup.storages` | false |
-| [s3](cr-restore.md#operator-restore-s3-options-section) | object | Define configuration for s3 compatible storages | false |
-| [azure](cr-restore.md#operator-restore-azure-options-section) | object | Define configuration for azure blob storage | false |
+| [s3](operator.md#operator-restore-s3-options-section) | object | Define configuration for s3 compatible storages | false |
+| [azure](operator.md#operator-restore-azure-options-section) | object | Define configuration for azure blob storage | false |
 
 ### <a name="operator-restore-s3-options-section"></a>backupSource.s3
 
@@ -1266,7 +1266,7 @@ configuration file. This Custom Resource contains the following options:
 | type            | string            | The type of PITR recover                       | true     |
 | date            | string            | The exact date of recovery                     | true     |
 | gtid            | string            | The exact GTID for PITR recover                | true     |
-| [spec.backupSource](cr-restore.md#operator-restore-backupsource-options-section) | object | Percona XtraDB Cluster backups section | true |
-| [s3](cr-restore.md#operator-restore-s3-options-section) | object | Define configuration for s3 compatible storages | false |
-| [azure](cr-restore.md#operator-restore-azure-options-section) | object | Define configuration for azure blob storage | false |
+| [spec.backupSource](operator.md#operator-restore-backupsource-options-section) | object | Percona XtraDB Cluster backups section | true |
+| [s3](operator.md#operator-restore-s3-options-section) | object | Define configuration for s3 compatible storages | false |
+| [azure](operator.md#operator-restore-azure-options-section) | object | Define configuration for azure blob storage | false |
 
