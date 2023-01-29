@@ -5,7 +5,7 @@ Percona Operator for MySQL uses [Custom Resources](https://kubernetes.io/docs/co
 * `PerconaXtraDBCluster` Custom Resource with Percona XtraDB Cluster options,
 * `PerconaXtraDBClusterBackup` and `PerconaXtraDBClusterRestore` Custom Resources contain options for Percona XtraBackup used to backup Percona XtraDB Cluster and to restore it from backups.
 
-## `PerconaXtraDBCluster` Custom Resource options
+## PerconaXtraDBCluster Custom Resource options
 
 `PerconaXtraDBCluster` Custom Resource contains options for Percona XtraDB Cluster and can be configured via the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) configuration file.
 
