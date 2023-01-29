@@ -1229,10 +1229,10 @@ configuration file. This Custom Resource contains the following options:
 | metadata.name   | string            | The name of the restore                        | true     |
 | spec.pxcCluster | string            | Percona XtraDB Cluster name (the name of your running cluster) | true |
 | spec.backupName | string            | The name of your backup which should be restored | false  |
-| [spec.backupSource](cr-restore.md#operator-restore-backupsource-options-section) | object | Define configuration for different restore sources | false    |
-| [spec.pitr](cr-restore.md#operator-restore-pitr-options-section) | object | Define configuration for PITR restore | false |
+| [spec.backupSource](operator.md#operator-restore-backupsource-options-section) | object | Define configuration for different restore sources | false    |
+| [spec.pitr](operator.md#operator-restore-pitr-options-section) | object | Define configuration for PITR restore | false |
 
-### <a name="operator-restore-backupsource-options-section"></a>PerconaXtraDBClusterRestore.backupSource
+### <a name="operator-restore-backupsource-options-section"></a>backupSource
 
 | Key             | Value type        | Description                                    | Required |
 | --------------- | ----------------- | ---------------------------------------------- | -------- |
@@ -1241,7 +1241,7 @@ configuration file. This Custom Resource contains the following options:
 | [s3](cr-restore.md#operator-restore-s3-options-section) | object | Define configuration for s3 compatible storages | false |
 | [azure](cr-restore.md#operator-restore-azure-options-section) | object | Define configuration for azure blob storage | false |
 
-### <a name="operator-restore-s3-options-section"></a>PerconaXtraDBClusterRestore.backupSource.s3
+### <a name="operator-restore-s3-options-section"></a>backupSource.s3
 
 | Key             | Value type        | Description                                    | Required |
 | --------------- | ----------------- | ---------------------------------------------- | -------- |
@@ -1250,7 +1250,7 @@ configuration file. This Custom Resource contains the following options:
 | endpointUrl     | string            | A valid endpoint URL                           | false    |
 | region          | string            | The region corresponding to the S3 bucket      | false    |
 
-### <a name="operator-restore-azure-options-section"></a>PerconaXtraDBClusterRestore.backupSource.azure
+### <a name="operator-restore-azure-options-section"></a>backupSource.azure
 
 | Key             | Value type        | Description                                    | Required |
 | --------------- | ----------------- | ---------------------------------------------- | -------- |
@@ -1259,7 +1259,7 @@ configuration file. This Custom Resource contains the following options:
 | endpointUrl     | string            | A valid endpoint URL                           | false    |
 | storageClass    | string            | The storage class name of the azure storage    | false    |
 
-### <a name="operator-restore-pitr-options-section"></a>PerconaXtraDBClusterRestore.pitr
+### <a name="operator-restore-pitr-options-section"></a>pitr
 
 | Key             | Value type        | Description                                    | Required |
 | --------------- | ----------------- | ---------------------------------------------- | -------- |
