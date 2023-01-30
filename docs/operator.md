@@ -1215,14 +1215,12 @@ file contains the following configuration options for the regular Percona XtraDB
 | **Example**     | `60` |
 | **Description** | Seconds between running the binlog uploader |
 
-## PerconaXtraDBClusterRestore Custom Resource options
+## <a name="operator-backupsource-section"></a> PerconaXtraDBClusterRestore Custom Resource options
 
 [Percona XtraDB Cluster Restore](backups.md#restoring-backup) options are managed by the Operator via the 
 `PerconaXtraDBClusterRestore` [Custom Resource](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) and can be configured via the
 [deploy/backup/restore.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml)
 configuration file. This Custom Resource contains the following options:
-
-### <a name="operator-backupsource-section"></a>PerconaXtraDBClusterRestore
 
 | Key              | Value type        | Description                                    | Required |
 | ---------------- | ----------------- | ---------------------------------------------- | -------- |
@@ -1232,7 +1230,7 @@ configuration file. This Custom Resource contains the following options:
 | spec.backupSource| [subdoc](operator.md#operator-restore-backupsource-options-section)| Define configuration for different restore sources | false |
 | spec.pitr        | [subdoc](operator.md#operator-restore-pitr-options-section) | Define configuration for PITR restore | false |
 
-### <a name="operator-restore-backupsource-options-section"></a>backupSource
+### <a name="operator-restore-backupsource-options-section"></a>backupSource section
 
 | Key              | Value type        | Description                                    | Required |
 | ---------------- | ----------------- | ---------------------------------------------- | -------- |
@@ -1241,7 +1239,7 @@ configuration file. This Custom Resource contains the following options:
 | s3               | [subdoc](operator.md#operator-restore-s3-options-section)    | Define configuration for s3 compatible storages | false |
 | azure            | [subdoc](operator.md#operator-restore-azure-options-section) | Define configuration for azure blob storage     | false |
 
-### <a name="operator-restore-s3-options-section"></a>backupSource.s3
+### <a name="operator-restore-s3-options-section"></a>backupSource.s3 subsection
 
 | Key              | Value type        | Description                                    | Required |
 | ---------------- | ----------------- | ---------------------------------------------- | -------- |
@@ -1250,7 +1248,7 @@ configuration file. This Custom Resource contains the following options:
 | endpointUrl      | string            | A valid endpoint URL                           | false    |
 | region           | string            | The region corresponding to the S3 bucket      | false    |
 
-### <a name="operator-restore-azure-options-section"></a>backupSource.azure
+### <a name="operator-restore-azure-options-section"></a>backupSource.azure subsection
 
 | Key              | Value type        | Description                                    | Required |
 | ---------------- | ----------------- | ---------------------------------------------- | -------- |
@@ -1259,7 +1257,7 @@ configuration file. This Custom Resource contains the following options:
 | endpointUrl      | string            | A valid endpoint URL                           | false    |
 | storageClass     | string            | The storage class name of the azure storage    | false    |
 
-### <a name="operator-restore-pitr-options-section"></a>pitr
+### <a name="operator-restore-pitr-options-section"></a>pitr subsection
 
 | Key              | Value type        | Description                                    | Required |
 | ---------------- | ----------------- | ---------------------------------------------- | -------- |
