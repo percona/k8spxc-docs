@@ -1,4 +1,4 @@
- Custom Resource options reference
+# Custom Resource options reference
 
 Percona Operator for MySQL uses [Custom Resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) to manage options for the various components of the cluster.
 
@@ -1227,8 +1227,8 @@ configuration file. This Custom Resource contains the following options:
 | metadata.name    | string            | The name of the restore                        | true     |
 | spec.pxcCluster  | string            | Percona XtraDB Cluster name (the name of your running cluster) | true |
 | spec.backupName  | string            | The name of the backup which should be restored| false    |
-| spec.backupSource| [subdoc](operator.md#operator-restore-backupsource-options-section)| Define configuration for different restore sources | false |
-| spec.pitr        | [subdoc](operator.md#operator-restore-pitr-options-section) | Define configuration for PITR restore | false |
+| spec.backupSource| [subdoc](operator.md#operator-restore-backupsource-options-section)| Defines configuration for different restore sources | false |
+| spec.pitr        | [subdoc](operator.md#operator-restore-pitr-options-section) | Defines configuration for PITR restore | false |
 
 ### <a name="operator-restore-backupsource-options-section"></a>backupSource section
 
