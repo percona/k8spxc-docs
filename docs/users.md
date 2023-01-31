@@ -61,8 +61,8 @@ The following table shows system users’ names and purposes.
 | Admin          | root         | root                | Database administrative user, can be used by the application if needed |
 | ProxySQLAdmin  | proxyadmin   | proxyadmin          | ProxySQL administrative user, can be used to [add general-purpose ProxySQL users](https://github.com/sysown/proxysql/wiki/Users-configuration) |
 | Backup         | xtrabackup   | xtrabackup          | [User to run backups](https://www.percona.com/doc/percona-xtrabackup/2.4/using_xtrabackup/privileges.html) |
-| Cluster Check  | clustercheck | clustercheck        | [User for liveness checks and readiness checks](http://galeracluster.com/library/documentation/monitoring-cluster.html) |
-| Monitoring     | monitor      | monitor             | User for internal monitoring purposes and [PMM agent](https://www.percona.com/doc/percona-monitoring-and-management/security.html#pmm-security-password-protection-enabling) |
+| Cluster Check  | clustercheck | clustercheck        | User is deprecated in v1.12.0, unavailable in one of the next releases |
+| Monitoring     | monitor      | monitor             | User for internal monitoring purposes like liveness/readiness checks and [PMM agent](https://www.percona.com/doc/percona-monitoring-and-management/security.html#pmm-security-password-protection-enabling) |
 | PMM Server Password  | should be set through the [operator options](operator) | pmmserver | [Password used to access PMM Server](https://www.percona.com/doc/percona-monitoring-and-management/security.html#pmm-security-password-protection-enabling). **Password-based authorization method is deprecated since the Operator 1.11.0**. [Use token-based authorization instead](monitoring.md#operator-monitoring-client-token) |
 | Operator Admin | operator     | operator            | Database administrative user, should be used only by the Operator |
 | Replication    | replication  | replication         | Administrative user needed for [cross-site Percona XtraDB Cluster](operator-replication) |
@@ -86,7 +86,6 @@ stringData:
   monitor: monitory
   clustercheck: clustercheckpassword
   proxyadmin: admin_password
-  pmmserver: admin
   operator: operatoradmin
   replication: repl_password
 ```
@@ -104,20 +103,20 @@ object contains passwords stored as `data` - i.e., base64-encoded strings.
 If you want to update any field, you’ll need to encode the value into base64
 format. To do this, you can run `echo -n "password" | base64 --wrap=0` (or just
 `echo -n "password" | base64` in case of Apple macOS) in your local shell to
-get valid values. For example, setting the PMM Server user’s password to
+get valid values. For example, setting the Admin user’s password to
 `new_password` in the `cluster1-secrets` object can be done with the
 following command:
 
 === "in Linux"
 
     ``` {.bash data-prompt="$" }
-    $ kubectl patch secret/cluster1-secrets -p '{"data":{"pmmserver": "'$(echo -n new_password | base64 --wrap=0)'"}}'
+    $ kubectl patch secret/cluster1-secrets -p '{"data":{"root": "'$(echo -n new_password | base64 --wrap=0)'"}}'
     ```
 
 === "in macOS"
 
     ``` {.bash data-prompt="$" }
-    $ kubectl patch secret/cluster1-secrets -p '{"data":{"pmmserver": "'$(echo -n new_password | base64)'"}}'
+    $ kubectl patch secret/cluster1-secrets -p '{"data":{"root": "'$(echo -n new_password | base64)'"}}'
     ```
 
 ### Password Rotation Policies and Timing
@@ -152,9 +151,7 @@ These development mode credentials from `deploy/secrets.yaml` are:
 | xtrabackup   | `backup_password`      |
 | monitor      | `monitor`              |
 | clustercheck | `clustercheckpassword` |
-| proxyuser    | `s3cret`               |
 | proxyadmin   | `admin_password`       |
-| pmmserver    | `admin`                |
 | operator     | `operatoradmin`        |
 | replication  | `repl_password`        |
 
