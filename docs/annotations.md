@@ -64,9 +64,10 @@ spec:
 ...
 ```
 
-The Operator will ignore any annotation and label which keys **starts** with the
-mentioned above examples. For example, the following annotations and labels will
-be ignored after applying the above `cr.yaml` fragment:
+The Operator will ignore any Service annotation or label, key of which
+**starts** with the mentioned above examples. For example, the following
+annotations and labels will be ignored after applying the above `cr.yaml`
+fragment:
 
 ```yaml
 annotations:
@@ -74,7 +75,4 @@ annotations:
 labels:
   some.custom.cloud.label/smth: somethinghere
 ```
-
-The Operator will ignore specified annotations and labels for all objects: Pods,
-Services, etc.
 
