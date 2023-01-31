@@ -15,7 +15,7 @@ The Operator allows doing backups in two ways:
 *Scheduled backups* are configured in the
 [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
 file to be executed automatically in proper time.
-*On-demand backups* can be done manually at any moment, are configured in the [deploy/backup/backup.yaml](https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/main/deploy/backup/backup.yaml).
+*On-demand backups* can be done manually at any moment and are configured in the [deploy/backup/backup.yaml](https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/main/deploy/backup/backup.yaml).
 
 ## Making scheduled backups
 
@@ -472,7 +472,7 @@ restoration can be done in the following way.
             backupSource:
               destination: AZURE-CONTAINER-NAME/BACKUP-NAME
               azure:
-                container: <your-container-name>
+                container: AZURE-CONTAINER-NAME
                 credentialsSecret: my-cluster-azure-secret
                 ...
             ```
