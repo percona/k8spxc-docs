@@ -157,4 +157,4 @@ These development mode credentials from `deploy/secrets.yaml` are:
 
 !!! warning
 
-    Do not use the default Percona XtraDB Cluster user passwords inproduction!
+    Do not use the default Percona XtraDB Cluster user passwords in production!
