@@ -172,7 +172,7 @@ nav:
           - "Crash recovery": recovery.md
           
     - Troubleshooting:
-          - "Troubleshooting intro": debug.md
+          - "Initial troubleshooting": debug.md
           - "Exec into the container": debug-shell.md
           - "Check the logs": debug-logs.md
           - "Special debug images": debug-images.md

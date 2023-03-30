@@ -96,7 +96,7 @@ or in the cloud.
 
 # Troubleshooting
 
-* [Troubleshooting intro](debug.md)
+* [Initial troubleshooting](debug.md)
 
 * [Exec into the container](debug-shell.md)
 
