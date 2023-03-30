@@ -15,7 +15,7 @@ $ kubectl get pxc
 
 ??? example "Expected output"
 
-    ```text
+    ``` {.text .no-copy}
     NAME    ENDPOINT                STATUS   PXC   PROXYSQL   HAPROXY   AGE
     pxc-1   pxc-1-haproxy.default   ready    3                3         33d
     ```
@@ -27,13 +27,12 @@ The Custom Resource should have `Ready` status.
     You can check which Percona’s Custom Resources are present and get some information about them as follows:
 
     ``` {.bash data-prompt="$" }
-    $ kubectl exec -ti pxc-pxc-0 -c pxc -- date
+    $ kubectl api-resources | grep -i percona
     ```
 
     ??? example "Expected output"
 
-        ```text
-        $ kubectl api-resources | grep -i percona
+        ``` {.text .no-copy}
         perconaxtradbclusterbackups       pxc-backup,pxc-backups     pxc.percona.com/v1                     true         PerconaXtraDBClusterBackup
         perconaxtradbclusterrestores      pxc-restore,pxc-restores   pxc.percona.com/v1                     true         PerconaXtraDBClusterRestore
         perconaxtradbclusters             pxc,pxcs                   pxc.percona.com/v1                     true         PerconaXtraDBCluster
@@ -49,7 +48,7 @@ $ kubectl get crd perconaxtradbclusters.pxc.percona.com  -oyaml
 
 ??? example "Expected output"
 
-    ```text
+    ``` {.yaml .no-copy}
     ...
     apiVersion: apiextensions.k8s.io/v1
     kind: CustomResourceDefinition

@@ -1,5 +1,49 @@
 # Check the Logs
 
+Logs provide valuable information. It makes sense to check the logs of the
+database Pods as well as the Operator Pod. Following flags are helpful for
+checking the logs with the `kubectl logs` command:
+
+| Flag                          | Description                                                               |
+| ----------------------------- | ------------------------------------------------------------------------- |
+| `--container=<container-name>`| Print log of a specific container in case of multiple containers in a Pod |
+| `--follow`                    | Follows the logs for a live output                                        |
+| `--since=<time>`              | Print logs newer than the specified time, for example: `--since="10s"`    |
+| `--timestamps`                | Print timestamp in the logs (timezone is taken from the container)        |
+| `--previous`                  | Print previous instantiation of a container. This is extremely useful in case of container restart, where there is a need to check the logs on why the container restarted. Logs of previous instantiation might not be available in all the cases. |
+
+In the following examples we will access containers of the `pxc-pxc-0` Pod.
+
+* Just check logs of the `pxc` container:
+
+    ``` {.bash data-prompt="$" }
+    $ kubectl logs pxc-pxc-0 -c pxc
+    ```
+
+*  Check logs of the `pmm-client` container:
+
+    ``` {.bash data-prompt="$" }
+    $ kubectl logs pxc-pxc-0 -c pmm-client
+    ```
+
+*  Filter logs of the `pxc` container which are not older than 600 seconds:
+
+    ``` {.bash data-prompt="$" }
+    $ kubectl logs pxc-pxc-0 -c pxc --since=600s
+    ```
+
+*  Check logs of a previous instantiation of the `pxc` container, if any:
+
+    ``` {.bash data-prompt="$" }
+    $ kubectl logs pxc-pxc-0 -c pxc --previous
+    ```
+
+* Check logs of the `pxc` container, parsing the output with [jq JSON processor](https://stedolan.github.io/jq/):
+
+    ``` {.bash data-prompt="$" }
+    $ kubectl logs cluster1-pxc-1 -c pxc -f | jq -R 'fromjson?'
+    ```
+
 ## Cluster-level logging
 
 Cluster-level logging involves collecting logs from all Percona XtraDB Cluster
@@ -30,8 +74,4 @@ $ kubectl logs cluster1-pxc-1 -c logs
     Technically, logs are stored on the same Persistent Volume, which is
     used with the corresponding Percona XtraDB Cluster Pod. Therefore collected
     logs can be found in `DATADIR` (`var/lib/mysql/`).
-
-!!! note
-
-    You can parse output of the logs with [jq JSON processor](https://stedolan.github.io/jq/) as follows:  `kubectl logs cluster1-pxc-1 -c logs -f | jq -R 'fromjson?'`.
 

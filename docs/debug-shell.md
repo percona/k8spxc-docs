@@ -12,7 +12,7 @@ In the following examples we will access the container `pxc` of the `pxc-pxc-0` 
 
     ??? example "Expected output"
 
-        ```text
+        ``` {.text .no-copy}
         Thu Nov 24 10:01:17 UTC 2022
         ```
 
