@@ -55,21 +55,21 @@ The above command provides the following insights:
 
 * `READY` indicates how many containers in the Pod are ready to serve the
     traffic. In the above example, `cluster1-haproxy-0` container has all two
-    containers ready (2/2). For an application to work properly, all the
-    containers of the Pod should be ready.
-* `STATUS` indicates the current status of the Pod. The pod should be in a
+    containers ready (2/2). For an application to work properly, all containers
+    of the Pod should be ready.
+* `STATUS` indicates the current status of the Pod. The Pod should be in a
     `Running` state to confirm that the application is working as expected. You
     can find out other possible states in the [official Kubernetes documentation](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-phase).
 * `RESTARTS` indicates how many times containers of Pod were restarted. This is
     impacted by the [Container Restart Policy](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy).
     In an ideal world, the restart count would be zero, meaning no issues from
-    the very beginning. If restart count is greater than zero, it may be
-    reasonable to check why the restarts happen.
+    the beginning. If the restart count exceeds zero, it may be reasonable to
+    check why it happens.
 * `AGE`: Indicates how long the Pod is running. Any abnormality in this value
-    need to be checked upon.
+    needs to be checked.
 
 You can find more details about a specific Pod using the
-`kubectl describe pod <pod-name>` command.
+`kubectl describe pods <pod-name>` command.
 
 ``` {.bash data-prompt="$" }
 $ $ kubectl describe pods cluster1-pxc-0

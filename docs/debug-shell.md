@@ -1,6 +1,6 @@
 # Exec into the containers
 
-If you want to examine the contents of a container "in place" using remote access to it, you can use the `kubectl exec` command. It allows you to run any command or just open an interactive shell session in the container. Of course, you will be able to have shell access to the container only if container supports it and has a “Running” state.
+If you want to examine the contents of a container "in place" using remote access to it, you can use the `kubectl exec` command. It allows you to run any command or just open an interactive shell session in the container. Of course, you can have shell access to the container only if container supports it and has a “Running” state.
 
 In the following examples we will access the container `pxc` of the `cluster1-pxc-0` Pod.
 
@@ -16,10 +16,10 @@ In the following examples we will access the container `pxc` of the `cluster1-px
         Thu Nov 24 10:01:17 UTC 2022
         ```
 
-    If the command is not present in a container, you will see an error. For
+    You will see an error if the command is not present in a container. For
     example, trying to run the `time` command, which is not present in the
-    container, by executing `kubectl exec -ti cluster1-pxc-0 -c pxc -- time` will
-    have the result as follows:
+    container, by executing `kubectl exec -ti cluster1-pxc-0 -c pxc -- time`
+    would show the following result:
     
     ``` {.text .no-copy}
     error: Internal error occurred: error executing command in container: failed to exec in container: failed to start exec "71bdb96a65af89d3672cd0d69a8f2c1068542a97b1938e7f6f17d29a87d76453": OCI runtime exec failed: exec failed: unable to start container process: exec: "time": executable file not found in $PATH: unknown

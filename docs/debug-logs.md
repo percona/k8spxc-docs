@@ -1,8 +1,8 @@
 # Check the Logs
 
 Logs provide valuable information. It makes sense to check the logs of the
-database Pods as well as the Operator Pod. Following flags are helpful for
-checking the logs with the `kubectl logs` command:
+database Pods and the Operator Pod. Following flags are helpful for checking the
+logs with the `kubectl logs` command:
 
 | Flag                          | Description                                                               |
 | ----------------------------- | ------------------------------------------------------------------------- |
@@ -14,25 +14,25 @@ checking the logs with the `kubectl logs` command:
 
 In the following examples we will access containers of the `cluster1-pxc-0` Pod.
 
-* Just check logs of the `pxc` container:
+* Check logs of the `pxc` container:
 
     ``` {.bash data-prompt="$" }
     $ kubectl logs cluster1-pxc-0 -c pxc
     ```
 
-*  Check logs of the `pmm-client` container:
+* Check logs of the `pmm-client` container:
 
     ``` {.bash data-prompt="$" }
     $ kubectl logs cluster1-pxc-0 -c pmm-client
     ```
 
-*  Filter logs of the `pxc` container which are not older than 600 seconds:
+* Filter logs of the `pxc` container which are not older than 600 seconds:
 
     ``` {.bash data-prompt="$" }
     $ kubectl logs cluster1-pxc-0 -c pxc --since=600s
     ```
 
-*  Check logs of a previous instantiation of the `pxc` container, if any:
+* Check logs of a previous instantiation of the `pxc` container, if any:
 
     ``` {.bash data-prompt="$" }
     $ kubectl logs cluster1-pxc-0 -c pxc --previous
