@@ -94,7 +94,15 @@ or in the cloud.
 
 * [Crash recovery](recovery.md)
 
-* [Debug and troubleshoot](debug.md)
+# Troubleshooting
+
+* [Initial troubleshooting](debug.md)
+
+* [Exec into the container](debug-shell.md)
+
+* [Check the logs](debug-logs.md)
+
+* [Special debug images](debug-images.md)
 
 # HOWTOs
 
