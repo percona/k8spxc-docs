@@ -8,10 +8,12 @@ Percona Operator for MySQL based on Percona XtraDB Cluster:
 | percona/percona-xtradb-cluster-operator:1.12.0                  | fbbf093bf7681e0784dd817ac311dea815140ce53aa9cdc79ada0bba067b06a8 |
 | percona/percona-xtradb-cluster-operator:1.12.0-haproxy          | d900211bf5684839cfbaab3ec939ef7bae770638c7d819904820a3882a2aea32 |
 | percona/percona-xtradb-cluster-operator:1.12.0-proxysql         | a0352f7491ba32f4cb1fb8edb1ad9248235f4ae1186932965383f47e3239e0f7 |
+| percona/percona-xtradb-cluster-operator:1.12.0-pxc8.0.31-backup | 2eda0daac28521120fa262f7c6e8d3a24e92f0cf462837509a9b92b0dc05be8c |
 | percona/percona-xtradb-cluster-operator:1.12.0-pxc8.0-backup    | d5a45266857dcccec973103cd5ad35306bdd83d540fa1f31be673aa12814d521 |
 | percona/percona-xtradb-cluster-operator:1.12.0-pxc5.7-backup    | 5ec440d514f57a5a49e62849674bd4df33ff3e7697037ef4b7ead9dd346af5f9 |
 | percona/percona-xtradb-cluster-operator:1.12.0-logcollector     | 6d4a4537fa766743c5aa6da8b683bf2656980d6979c31eab50a4be69c80f51ce |
 | percona/pmm-client:2.32.0                                       | ee2f3db541857e0a71633270596933441c4be579ce8e33c22cf150ead4f3622f |
+| percona/percona-xtradb-cluster:8.0.31-23.2                      | ed1ceea0b594ae34a92c891b4e42bc543d24999c82e47382cf53e33be4ae1d71 |
 | percona/percona-xtradb-cluster:8.0.29-21.1                      | 96c6bb8189280aeb773e74ed46aa41c01781b62947ed70c89efeb9f41c367ee7 |
 | percona/percona-xtradb-cluster:8.0.27-18.1                      | a0fced75ecd2cd164dd9937917440911aed972476d48a2b8a84fe832bc67e43a |
 | percona/percona-xtradb-cluster:8.0.25-15.1                      | 529e979c86442429e6feabef9a2d9fc362f4626146f208fbfac704e145a492dd |
