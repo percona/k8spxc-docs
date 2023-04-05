@@ -121,7 +121,7 @@ extra: # Used in main.html template and can't be externalized
   apiversion: '1-12-0'
   certmanagerversion: '1.8.0'
   pxc57recommended: '5.7.39-31.61'
-  pxc80recommended: '8.0.29-21.1'
+  pxc80recommended: '8.0.31-23.2'
   pmm2recommended: '2.32.0'
   gkerecommended: '1.23'
   version:
