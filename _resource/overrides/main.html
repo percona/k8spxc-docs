@@ -20,6 +20,9 @@ by adding marketing-requested elements
 </div>
 {%- endmacro %}
               
+              {% block extrahead %}
+              {{ super() }}
+
               <html data-lt-installed="true">
                 <head>
                     <meta property="og:title" content="Percona Operator for MySQL based on Percona XtraDB Cluster">
@@ -30,9 +33,6 @@ by adding marketing-requested elements
                 <body>
                 </body>
               </html>
-
-              {% block extrahead %}
-              {{ super() }}
 
               <script>
               (function (w, d, s, l, i) {
