@@ -108,6 +108,7 @@ Kubernetes-based environment:
     ``` {.bash data-prompt="$" }
     $ kubectl get pods
     $ kubectl logs cluster1-pxc-0 -c pmm-client
+    ...
     ```
 
 3. Now you can access PMM via *https* in a web browser, with the
