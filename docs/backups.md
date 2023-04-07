@@ -657,7 +657,7 @@ backups are counted). Older backups are automatically deleted, so that amount of
 stored backups do not exceed this number. Setting `keep=0` or removing this
 option from `deploy/cr.yaml` disables automatic deletion of backups.
 
-Manual deleting of a previously saved backup requires not more than the backup
+Manual deleting of a previously saved backup requires no more than the backup
 name. This name can be taken from the list of available backups returned
 by the following command:
 
