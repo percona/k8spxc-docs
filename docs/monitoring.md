@@ -102,11 +102,13 @@ Kubernetes-based environment:
     ```
 
 2. Check that corresponding Pods are not in a cycle of stopping and restarting.
-    This cycle occurs if there are errors on the previous steps:
+    This cycle occurs if there are errors on the previous steps. For example,
+    you can use the following commands for the cluster named `cluster1`:
 
     ``` {.bash data-prompt="$" }
     $ kubectl get pods
-    $ kubectl logs cluster1-pxc-node-0 -c pmm-client
+    $ kubectl logs cluster1-pxc-0 -c pmm-client
+    ...
     ```
 
 3. Now you can access PMM via *https* in a web browser, with the
