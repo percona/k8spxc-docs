@@ -32,7 +32,8 @@ Kubernetes-based environment:
 
     * set `pmm.enabled=true`
 
-    * set the `pmm.serverHost` key to your PMM Server hostname,
+    * set the `pmm.serverHost` key to your PMM Server hostname or IP address
+        (it should be resolvable and reachable from within your cluster)
 
     * authorize PMM Client within PMM Server in one of two ways:
 
