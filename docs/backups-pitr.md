@@ -1,9 +1,9 @@
-# Storing operations logs for point-in-time recovery
+# Store operations logs for point-in-time recovery
 
 Point-in-time recovery functionality allows users to roll back the cluster to a
 specific transaction, time (or even skip a transaction in some cases).
 Technically, this feature involves continuously saving binary log updates
-[to the cloud storage](backups-storage.md). Point-in-time recovery is off by
+[to the backup storage](backups-storage.md). Point-in-time recovery is off by
 default and is supported by the Operator only with Percona XtraDB Cluster
 versions starting from 8.0.21-12.1.
 

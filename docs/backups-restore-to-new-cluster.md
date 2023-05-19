@@ -74,12 +74,12 @@ restoration can be done in the following way.
             === "S3-compatible storage"
 
                 The `destination` key should have value composed of three parts:
-                the `s3://` prefix, the S3 [bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingBucket.html)
-                name, and the actual backup name, which you have already found
-                out using the `kubectl get pxc-backup` command. Also you should
-                add necessary S3 configuration keys, [same](backups-storage.md)
-                as those used to configure S3-compatible storage for backups in
-                the `deploy/cr.yaml` file:
+                the `s3://` prefix, the S3 [bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingBucket.html),
+                and the backup name, which you have already found out using the
+                `kubectl get pxc-backup` command. Also you should add necessary
+                S3 configuration keys, [same](backups-storage.md) as those used
+                to configure S3-compatible storage for backups in the
+                `deploy/cr.yaml` file:
 
                 ```yaml
                 ...
@@ -95,17 +95,18 @@ restoration can be done in the following way.
 
             === "Azure Blob storage"
 
-                The `destination` key should have value composed of two parts:
-                the Azure Blob [container](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction#containers)
-                and backup name, which you have already found out using the
+                The `destination` key should have value composed of three parts:
+                the `azure://` prefix, the Azure Blob [container](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction#containers),
+                and the backup name, which you have already found out using the
                 `kubectl get pxc-backup` command. Also you should add necessary
-                Azure configuration keys, same as those used to configure Azure
-                Blob storage for backups in the `deploy/cr.yaml` file:
+                Azure configuration keys, [same](backups-storage.md) as those
+                used to configure Azure Blob storage for backups in the
+                `deploy/cr.yaml` file:
 
                 ```yaml
                 ...
                 backupSource:
-                  destination: AZURE-CONTAINER-NAME/BACKUP-NAME
+                  destination: azure://AZURE-CONTAINER-NAME/BACKUP-NAME
                   azure:
                     container: AZURE-CONTAINER-NAME
                     credentialsSecret: my-cluster-azure-secret

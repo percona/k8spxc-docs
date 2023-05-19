@@ -1,4 +1,4 @@
-# Making on-demand backup
+# Make on-demand backup
 
 1. To make an on-demand backup, you should first check your Custom Resource for
     the necessary options and make changes, if needed, using the
