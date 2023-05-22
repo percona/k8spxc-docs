@@ -26,11 +26,10 @@ it would break the behavior of the Operator.
     option.
 
 If you provide custom configuration to the Operator with several different ways
-at once, it will choose the only one. First, it looks for a Secret object. If
+at once, it will choose only one. First, it looks for a Secret object. If
 no matching Secrets are found, it looks for a custom configuration
 specified in the Custom Resource (the one provided via the `deploy/cr.yaml`
 file). If it wasn't found either, the Operator searches for a ConfigMap.
-
 
 ## Edit the `deploy/cr.yaml` file
 
