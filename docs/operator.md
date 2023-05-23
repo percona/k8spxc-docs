@@ -244,7 +244,7 @@ in [cross-site replication](replication.md#operator-replication) |
 | **Key**         | {{ optionlink('pxc.readinessProbes.timeoutSeconds') }} |
 | **Value**       | int |
 | **Example**     | `15` |
-| **Description** | Number of seconds after the container has started before [readiness probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) are initiated |
+| **Description** | Number of seconds after which the [readiness probe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) times out |
 |                 | |
 | **Key**         | {{ optionlink('pxc.readinessProbes.periodSeconds') }} |
 | **Value**       | int |
@@ -269,7 +269,7 @@ in [cross-site replication](replication.md#operator-replication) |
 | **Key**         | {{ optionlink('pxc.livenessProbes.timeoutSeconds') }} |
 | **Value**       | int |
 | **Example**     | `5` |
-| **Description** | Number of seconds after the container has started before [liveness probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) are initiated |
+| **Description** | Number of seconds after which the [liveness probe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) times out |
 |                 | |
 | **Key**         | {{ optionlink('pxc.livenessProbes.periodSeconds') }} |
 | **Value**       | int |
@@ -515,7 +515,7 @@ configuration options for the HAProxy service.
 | **Key**         | {{ optionlink('haproxy.readinessProbes.timeoutSeconds') }} |
 | **Value**       | int |
 | **Example**     | `1` |
-| **Description** | Number of seconds after the container has started before [readiness probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) are initiated |
+| **Description** | Number of seconds after which the [readiness probe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) times out |
 |                 | |
 | **Key**         | {{ optionlink('haproxy.readinessProbes.periodSeconds') }} |
 | **Value**       | int |
@@ -531,6 +531,31 @@ configuration options for the HAProxy service.
 | **Value**       | int |
 | **Example**     | `3` |
 | **Description** | When the [readiness probe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) fails, Kubernetes will try this number of times before marking the Pod Unready |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.livenessProbes.initialDelaySeconds') }} |
+| **Value**       | int |
+| **Example**     | `60` |
+| **Description** | Number of seconds to wait before performing the first [liveness probe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.livenessProbes.timeoutSeconds') }} |
+| **Value**       | int |
+| **Example**     | `5` |
+| **Description** | Number of seconds after which the [liveness probe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) times out |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.livenessProbes.periodSeconds') }} |
+| **Value**       | int |
+| **Example**     | `30` |
+| **Description** | How often (in seconds) to perform the [liveness probe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.livenessProbes.successThreshold') }} |
+| **Value**       | int |
+| **Example**     | `1` |
+| **Description** | Minimum consecutive successes for the [liveness probe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) to be considered successful after having failed |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.readinessProbes.failureThreshold') }} |
+| **Value**       | int |
+| **Example**     | `4` |
+| **Description** | When the [liveness probe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) fails, Kubernetes will try this number of times before marking the Pod Unready |
 |                 | |
 | **Key**         | {{ optionlink('haproxy.serviceType') }} |
 | **Value**       | string |
