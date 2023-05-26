@@ -27,7 +27,7 @@ The following steps will deploy Vault on Kubernetes with the [Helm 3 package man
     Initializing Vault is done with the following commands:
 
     ``` {.bash data-prompt="$" }
-    $ kubectl exec -it pod/vault-service-0 -- vault operator init -key-shares=1 -key-threshold=1 -format=json > /tmp/vault-init
+    $ kubectl exec -it pod/vault-0 -- vault operator init -key-shares=1 -key-threshold=1 -format=json > /tmp/vault-init
     $ unsealKey=$(jq -r ".unseal_keys_b64[]" < /tmp/vault-init)
     ```
 
@@ -35,7 +35,7 @@ The following steps will deploy Vault on Kubernetes with the [Helm 3 package man
     running:
 
     ``` {.bash data-prompt="$" }
-    $ kubectl exec -it pod/vault-service-0 -- vault operator unseal "$unsealKey"
+    $ kubectl exec -it pod/vault-0 -- vault operator unseal "$unsealKey"
     ```
 
 ## Configuring Vault
@@ -60,7 +60,7 @@ The following steps will deploy Vault on Kubernetes with the [Helm 3 package man
     Now login to Vault with this token and enable the “pxc-secret” secrets path:
 
     ``` {.bash data-prompt="$" }
-    $ kubectl exec -it vault-service-0 -- /bin/sh
+    $ kubectl exec -it vault-0 -- /bin/sh
     $ vault login s.VgQvaXl8xGFO1RUxAPbPbsfN
     $ vault secrets enable --version=1 -path=pxc-secret kv
     ```
