@@ -4,7 +4,7 @@ site_name: Percona Operator for MySQL based on Percona XtraDB Cluster
 site_description: Documentation
 site_author: Percona LLC
 site_url: ""
-copyright: Percona LLC and/or its affiliates, &#169; 2009 - 2022
+copyright: Percona LLC and/or its affiliates, &#169; 2009 - 2023
 use_directory_urls: false
 repo_name: percona/k8spxc-docs
 repo_url: https://github.com/percona/k8spxc-docs
@@ -97,7 +97,7 @@ plugins:
   with-pdf:
     output_path: "_pdf/percona-operator-for-mysql-pxc.pdf"
     cover_title: "Documentation"
-    cover_subtitle: 1.12.0 (December 7, 2022)
+    cover_subtitle: 1.13.0 (July 7, 2023)
     author: "Percona Technical Documentation Team"
     cover_logo: docs/assets/images/kubernetes-xtradb-logo.png
     custom_template_path: _resource/templates
@@ -123,8 +123,8 @@ extra: # Used in main.html template and can't be externalized
       make our documentation better.
   edit_page_text: '<i class="uil uil-pen"></i> <b>Edit this page</b>'
   updated_text: '<i class="uil uil-refresh"></i> Page updated'
-  release: '1.12.0'
-  apiversion: '1-12-0'
+  release: '1.13.0'
+  apiversion: '1-13-0'
   certmanagerversion: '1.8.0'
   pxc57recommended: '5.7.39-31.61'
   pxc80recommended: '8.0.31-23.2'
@@ -195,7 +195,8 @@ nav:
           - "Frequently Asked Questions": faq.md
           - "Old releases (documentation archive)": https://docs.percona.com/legacy-documentation/
     - Release Notes:
-          - "Release notes index": ReleaseNotes/index.md
+          - "Release notes index": ReleaseNotes/index.md          
+          - "Percona Operator for MySQL based on Percona XtraDB Cluster 1.13.0 (2023-07-07)": ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.13.0.md
           - "Percona Operator for MySQL based on Percona XtraDB Cluster 1.12.0 (2022-12-07)": ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.12.0.md
           - "Percona Operator for MySQL based on Percona XtraDB Cluster 1.11.0 (2022-06-03)": ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.11.0.md
           - "Percona Distribution for MySQL Operator 1.10.0 (2021-11-24)": ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.10.0.md
