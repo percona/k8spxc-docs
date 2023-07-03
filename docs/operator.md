@@ -1082,8 +1082,8 @@ file contains the following configuration options for the regular Percona XtraDB
 |-----------------|-|
 | **Key**         | {{ optionlink('backup.allowParallel') }} |
 | **Value**       | string |
-| **Example**     | `false` |
-| **Description** | Enables or disables parallel backup jobs. By default, parallel backup jobs are allowed. A user can disable them to prevent the cluster overload |
+| **Example**     | `true` |
+| **Description** | Enables or disables running backup jobs in parallel. By default, parallel backup jobs are enabled. A user can disable them to prevent the cluster overload |
 |                 | |
 | **Key**         | {{ optionlink('backup.image') }} |
 | **Value**       | string |
