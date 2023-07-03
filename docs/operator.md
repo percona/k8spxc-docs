@@ -30,12 +30,12 @@ The spec part of the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-
 
 | Key             | Value type        | Default | Description                                    |
 | --------------- | ----------------- | ------- | ---------------------------------------------- |
-| upgradeOptions  | subdoc            |         | Percona XtraDB Cluster upgrade options section |
-| pxc             | subdoc            |         | Percona XtraDB Cluster general section         |
-| haproxy         | subdoc            |         | HAProxy section                                |
-| proxysql        | subdoc            |         | ProxySQL section                               |
-| pmm             | subdoc            |         | Percona Monitoring and Management section      |
-| backup          | subdoc            |         | Percona XtraDB Cluster backups section         |
+| upgradeOptions  | [subdoc](#upgrade-options-section)|         | Percona XtraDB Cluster upgrade options section |
+| pxc             | [subdoc](#pxc-section)            |         | Percona XtraDB Cluster general section         |
+| haproxy         | [subdoc](#haproxy-section)        |         | HAProxy section                                |
+| proxysql        | [subdoc](#proxysql-section)       |         | ProxySQL section                               |
+| pmm             | [subdoc](#pmm-section)            |         | Percona Monitoring and Management section      |
+| backup          | [subdoc](#backup-section)         |         | Percona XtraDB Cluster backups section         |
 | allowUnsafeConfigurations | boolean | `false` | Prevents users from configuring a cluster with unsafe parameters such as starting the cluster with the number of Percona XtraDB Cluster instances which is less than 3, more than 5, or is an even number, with less than 2 ProxySQL or HAProxy Pods, or without TLS/SSL certificates (if `false`, unsafe parameters will be automatically changed to safe defaults)                             |
 | enableCRValidationWebhook | boolean | `true`  | Enables or disables schema validation before applying `cr.yaml` file (works only in [cluster-wide mode](cluster-wide.md#install-clusterwide) due to [access restrictions](faq.md#faq-validation)) |
 | pause           | boolean           | `false`                    | Pause/resume: setting it to `true` gracefully stops the cluster, and setting it to `false` after shut down starts the cluster back  |
@@ -48,10 +48,10 @@ The spec part of the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-
 | sslInternalSecretName  | string     | `cluster1-ssl-internal`    | A secret with TLS certificate generated for *internal* communications, see [Transport Layer Security (TLS)](TLS.md#tls) for details |
 | logCollectorSecretName | string     | `my-log-collector-secrets` | A secret for the [Fluent Bit Log Collector](https://fluentbit.io)      |
 | initImage       | string            | `percona/percona-xtradb-cluster-operator:{{ release }}` | An alternative image for the initial Operator installation |
-| tls             | subdoc            |                            | Extended cert-manager configuration section                            |
+| tls             | [subdoc](#tls-extended-cert-manager-configuration-section) |                            | Extended cert-manager configuration section  |
 | updateStrategy  | string            | `SmartUpdate`              | A strategy the Operator uses for [upgrades](update.md#operator-update) |
 
-### <a name="operator-issuerconf-section"></a>Extended cert-manager configuration section
+### <a name="operator-issuerconf-section"></a>TLS (extended cert-manager configuration section)
 
 The `tls` section in the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains various configuration options for additional customization of the [TLS cert-manager](TLS.md#tls-certs-certmanager).
 
@@ -1080,6 +1080,11 @@ file contains the following configuration options for the regular Percona XtraDB
 
 |                 | |
 |-----------------|-|
+| **Key**         | {{ optionlink('backup.allowParallel') }} |
+| **Value**       | string |
+| **Example**     | `false` |
+| **Description** | Enables or disables parallel backup jobs. By default, parallel backup jobs are allowed. A user can disable them to prevent the cluster overload |
+|                 | |
 | **Key**         | {{ optionlink('backup.image') }} |
 | **Value**       | string |
 | **Example**     | `percona/percona-xtradb-cluster-operator:{{ release }}-backup` |
