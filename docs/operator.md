@@ -1261,6 +1261,7 @@ configuration file. This Custom Resource contains the following options:
 | ---------------- | ----------------- | ---------------------------------------------- | -------- |
 | destination      | string            | Path to the backup                             | false    |
 | storageName      | string            | The storage name from CR `spec.backup.storages`| false    |
+| verifyTLS        | boolean           | Enable or disable verification of the storage server TLS certificate. Disabling it may be useful e.g. to skip TLS verification for private S3-compatible storage with a self-issued certificate | true |
 | s3               | [subdoc](operator.md#operator-restore-s3-options-section)    | Define configuration for s3 compatible storages | false |
 | azure            | [subdoc](operator.md#operator-restore-azure-options-section) | Define configuration for azure blob storage     | false |
 
