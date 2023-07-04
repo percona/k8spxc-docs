@@ -48,11 +48,10 @@
 * {{ k8spxcjira(1205) }}: Operator cannot delete backups on s3 with custom TLS
 * {{ k8spxcjira(1206) }}: pxc.livenessProbes.timeoutSeconds documentation differs from kubernetes.io
 * {{ k8spxcjira(1229) }}: Fix backup deletion from azure
-* {{ k8spxcjira(1236) }}: Operator should not print any passwords in logs
-* {{ k8spxcjira(1242) }}: pmm-client fails to add MySQL service, password is provided unquoted
-* {{ k8spxcjira(1243) }}: pmm agent is not deleted from server inventory on pod termination
-* {{ k8spxcjira(1247) }}: main branch - cluster cannot get ready when proxysql exposed with LoadBalancer
-* {{ k8spxcjira(1126) }}: helm chart pxc-db should not have backups enabled by default
+* {{ k8spxcjira(1236) }}: Fix the pxc container entypoint script printing passwords into the standart output
+* {{ k8spxcjira(1242) }}: Fix the bug due to which the unquoted password value was passed to the pmm-admin commands, making PMM Client unable to add MySQL service
+* {{ k8spxcjira(1243) }}: Fix the bug which prevented deleting PMM agent from the PMM Server inventory on Pod termination
+* {{ k8spxcjira(1126) }}: Fix the bug that `pxc-db`Helm chart had PVC-based backup storage enabled by default, which could be inconvenient for the users storign backups in cloud
 
 ## Supported Platforms
 
