@@ -1252,8 +1252,18 @@ configuration file. This Custom Resource contains the following options:
 | metadata.name    | string            | The name of the restore                        | true     |
 | spec.pxcCluster  | string            | Percona XtraDB Cluster name (the name of your running cluster) | true |
 | spec.backupName  | string            | The name of the backup which should be restored| false    |
+| spec.resources   | [subdoc](operator.md#operator-restore-resources-options-section)| Defines resources limits for the restore job | false |
 | spec.backupSource| [subdoc](operator.md#operator-restore-backupsource-options-section)| Defines configuration for different restore sources | false |
 | spec.pitr        | [subdoc](operator.md#operator-restore-pitr-options-section) | Defines configuration for PITR restore | false |
+
+### <a name="operator-restore-resources-options-section"></a>resources section
+
+| Key              | Value type        | Description                                    | Required |
+| ---------------- | ----------------- | ---------------------------------------------- | -------- |
+| requests.memory  | string            | The [Kubernetes memory requests](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the restore job (the specified value is used if memory limits are not set)   | false    |
+| requests.cpu     | string            | [Kubernetes CPU requests](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the restore job (the specified value is used if CPU limits are not set)                | false    |
+| limits.memory    | string            | The [Kubernetes memory limits](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the restore job (if set, the value will be used for memory requests as well) | false    |
+| limits.cpu       | string            | [Kubernetes CPU limits](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the restore job (if set, the value will be used for CPU requests as well)              | false    |
 
 ### <a name="operator-restore-backupsource-options-section"></a>backupSource section
 
@@ -1262,7 +1272,7 @@ configuration file. This Custom Resource contains the following options:
 | destination      | string            | Path to the backup                             | false    |
 | storageName      | string            | The storage name from CR `spec.backup.storages`| false    |
 | verifyTLS        | boolean           | Enable or disable verification of the storage server TLS certificate. Disabling it may be useful e.g. to skip TLS verification for private S3-compatible storage with a self-issued certificate | true |
-| s3               | [subdoc](operator.md#operator-restore-s3-options-section)    | Define configuration for s3 compatible storages | false |
+| s3               | [subdoc](operator.md#operator-restore-s3-options-section)    | Define configuration for S3 compatible storages | false |
 | azure            | [subdoc](operator.md#operator-restore-azure-options-section) | Define configuration for azure blob storage     | false |
 
 ### <a name="operator-restore-s3-options-section"></a>backupSource.s3 subsection
@@ -1291,6 +1301,6 @@ configuration file. This Custom Resource contains the following options:
 | date             | string            | The exact date of recovery                     | true     |
 | gtid             | string            | The exact GTID for PITR recover                | true     |
 | spec.backupSource| [subdoc](operator.md#operator-restore-backupsource-options-section)| Percona XtraDB Cluster backups section     | true  |
-| s3               | [subdoc](operator.md#operator-restore-s3-options-section)    | Defines configuration for s3 compatible storages | false |
+| s3               | [subdoc](operator.md#operator-restore-s3-options-section)    | Defines configuration for S3 compatible storages | false |
 | azure            | [subdoc](operator.md#operator-restore-azure-options-section) | Defines configuration for azure blob storage     | false |
 
