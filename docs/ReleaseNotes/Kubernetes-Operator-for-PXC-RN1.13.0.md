@@ -2,7 +2,7 @@
 
 * **Date**
 
-   July 7, 2023
+   July 6, 2023
 
 * **Installation**
 
@@ -12,28 +12,17 @@
 
 ## New Features
 
-* {{ k8spxcjira(1224) }}: Prevent parallel backups, allow to temporarily disable backup schedule
+* {{ k8spxcjira(1224) }}: New `backup.allowParallel` Custom Resource option allows to disable running backup jobs in parallel, which can be useful to avoid connection issues caused by the cluster overload
 
 ## Improvements
 
-* {{ k8spxcjira(362) }}: Reliability of ProxySQL & HAProxy checks
-* {{ k8spxcjira(1058) }}: Provide name and digest values for Percona Certified Images for non-latest releases
-* {{ k8spxcjira(1088) }}: Configurable PXC restore job CPU resources
-* {{ k8spxcjira(1166) }}: Create tags for percona-xtradb-cluster-8.0-backup image with PXB version information
-* {{ k8spxcjira(1178) }}: Update 'Design and architecture' documentation
-* {{ k8spxcjira(1187) }}: Improve 'Quickstart guide' doc	Slava Sarzhan	Pending Release	MERGED	
-* {{ k8spxcjira(1189) }}: Update base image for PXC operator 	Unassigned	Pending Release	MERGED	
-* {{ k8spxcjira(1190) }}: Update API for RuntimeClass
-* {{ k8spxcjira(1192) }}: Improve backup and restore documentation
-* {{ k8spxcjira(1202) }}: Set the pmm.serverHost: key to your PMM Server hostname Confusing
-* {{ k8spxcjira(1203) }}: kubectl logs cluster1-pxc-node-0 -c pmm-client, Node Name Should be Fixed
-* {{ k8spxcjira(1210) }}: Allow configuring HAProxy service as headless
-* {{ k8spxcjira(1225) }}: Operator (system) users should be created with the PASSWORD EXPIRE NEVER policy
-* {{ k8spxcjira(1248) }}: Fix documentation on using SSL with replication channels
-* {{ k8spxcjira(1249) }}: Fix documentation regarding xtrabackup user
-* {{ k8spxcjira(1251) }}: Cleanup deprecated methods for io/util
-* {{ k8spxcjira(1257) }}: Update all components for backup images
-* {{ k8spxcjira(1259) }}: Use official proxysql docker image
+* {{ k8spxcjira(362) }}: Code clean-up and refactoring for checking if ProxySQL and HAProxy enabled in the Custom Resource (thanks to Vladislav Safronov for contributing)
+* {{ k8spxcjira(1088) }}: It is now possilbe to configure CPU and memory resources for the backup restore job in the `PerconaXtraDBClusterRestore` Custom Resource options
+* {{ k8spxcjira(1166) }}: Starting from now, Docker image tags for Percona XtraBackup contain include full XtraBackup version instead of the major number used before
+* {{ k8spxcjira(1189) }}: Improve security and meet compliance requirements by building the Operator based on Red Hat Universal Base Image (UBI) 9 instead of UBI 8
+* {{ k8spxcjira(1192) }}: Backup and restore documentation was substantially improved to make it easier to work with, and [backup restore options](../operator.md#perconaxtradbclusterrestore-custom-resource-options) have been added to the Сustom Resource reference
+* {{ k8spxcjira(1210) }}: HAProxy service [can now be configured](...) as [headless](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services) at service creation time
+* {{ k8spxcjira(1225) }}: The Operator (system) users are now created with the `PASSWORD EXPIRE NEVER` policy to avoid breaking the cluster due to the password expiration set by the `default_password_lifetime` system variable
 
 ## Bugs Fixed
 
@@ -66,6 +55,8 @@
 * {{ k8spxcjira(1126) }}: helm chart pxc-db should not have backups enabled by default
 
 ## Supported Platforms
+
+The Operator was developed and tested with Percona Server for MySQL 8.0.32 and 5.7.42. Other options may also work but have not been tested.
 
 The following platforms were tested and are officially supported by the Operator
 1.13.0:
