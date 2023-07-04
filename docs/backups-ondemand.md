@@ -29,7 +29,7 @@
     ```yaml
     apiVersion: pxc.percona.com/v1
     kind: PerconaXtraDBClusterBackup
-metadata:
+    metadata:
       finalizers:
         - delete-s3-backup
       name: backup1
