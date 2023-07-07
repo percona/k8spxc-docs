@@ -104,7 +104,7 @@ restoration can be done in the following way.
             * `type` key can be equal to one of the following options,
 
                 * `date` - roll back to specific date,
-                * `transaction` - roll back to specific transaction (available since Operator 1.8.0),
+                * `transaction` - roll back up to the specific transaction, not including it (available since Operator 1.8.0),
                 * `latest` - recover to the latest possible transaction,
                 * `skip` - skip a specific transaction (available since Operator 1.7.0).
 
