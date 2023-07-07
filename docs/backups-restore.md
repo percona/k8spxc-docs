@@ -104,14 +104,14 @@ restoration can be done in the following way.
             * `type` key can be equal to one of the following options,
 
                 * `date` - roll back to specific date,
-                * `transaction` - roll back up to the specific transaction, not including it (available since Operator 1.8.0),
+                * `transaction` - roll back up to a specific transaction (available since Operator 1.8.0),
                 * `latest` - recover to the latest possible transaction,
                 * `skip` - skip a specific transaction (available since Operator 1.7.0).
 
             * `date` key is used with `type=date` option and contains value in
                 datetime format,
             * `gtid` key (available since the Operator 1.8.0) is used with `type=transaction` option and contains exact
-                GTID,
+                GTID of a transaction **which follows** the last transaction included into the recovery
 
         * use `backupSource.storageName` key to specify the exact name of the
             storage (the actual storage should be [already defined](backups-storage.md)
