@@ -131,6 +131,10 @@ take any action beyond changing the password.
     Please don’t change `secretName` option in CR, make changes inside
     the secrets object itself.
 
+Starting from the Operator version 1.13.0 system users are created with the `PASSWORD EXPIRE NEVER` policy.
+Also, same policy is automatically applied to system users on existing clusters when the Operator is upgraded to
+1.13.0.
+
 ### Marking System Users In MySQL
 
 Starting with MySQL 8.0.16, a new feature called Account Categories has been
