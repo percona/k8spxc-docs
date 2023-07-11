@@ -1,6 +1,8 @@
 # System Requirements
 
-The Operator supports Percona XtraDB Cluster (PXC) 5.7 and 8.0.
+The Operator was developed and tested with Percona XtraDB Cluster versions
+8.0.32-24.2 and 5.7.42-31.65. Other options may also work but have not been
+tested.
 
 ## Officially supported platforms
 

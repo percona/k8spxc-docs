@@ -125,11 +125,11 @@ extra: # Used in main.html template and can't be externalized
   updated_text: '<i class="uil uil-refresh"></i> Page updated'
   release: '1.13.0'
   apiversion: '1-13-0'
-  certmanagerversion: '1.8.0'
-  pxc57recommended: '5.7.39-31.61'
-  pxc80recommended: '8.0.31-23.2'
-  pmm2recommended: '2.32.0'
-  gkerecommended: '1.23'
+  certmanagerversion: '1.12.1'
+  pxc57recommended: '5.7.42-31.65'
+  pxc80recommended: '8.0.32-24.2'
+  pmm2recommended: '2.38.0'
+  gkerecommended: '1.27'
   version:
     provider: mike
 
