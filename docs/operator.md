@@ -762,7 +762,7 @@ configuration options for the ProxySQL daemon.
 | **Key**         | {{ optionlink('proxysql.enabled') }} |
 | **Value**       | boolean |
 | **Example**     | `false` |
-| **Description** | Enables or disables [load balancing with ProxySQL](https://www.percona.com/doc/percona-xtradb-cluster/5.7/howtos/proxysql.html) [Services](https://kubernetes.io/docs/concepts/services-networking/service/) |
+| **Description** | Enables or disables [load balancing with ProxySQL](https://www.percona.com/doc/percona-xtradb-cluster/5.7/howtos/proxysql.html) [Services](https://kubernetes.io/docs/concepts/services-networking/service/) **ProxySQL can be enabled only at cluster creation time**; otherwise you will be limited to HAProxy load balancing |
 |                 | |
 | **Key**         | {{ optionlink('proxysql.size') }} |
 | **Value**       | int |
