@@ -57,19 +57,21 @@
 
 ## Supported Platforms
 
-The Operator was developed and tested with Percona Server for MySQL 8.0.32 and 5.7.42. Other options may also work but have not been tested.
+The Operator was developed and tested with Percona XtraDB Cluster versions 8.0.32-24.2 and 5.7.42-31.65. Other options may also work but have not been tested. Other software components include:
+
+* Percona XtraBackup versions 2.4.28 and 8.0.32-26
+* HAProxy 2.6.12
+* ProxySQL 2.5.1-1.1
+* LogCollector based on fluent-bit 2.1.5
+* PMM Client 2.38.
 
 The following platforms were tested and are officially supported by the Operator
 1.13.0:
 
-* [Google Kubernetes Engine (GKE)](https://cloud.google.com/kubernetes-engine) 1.21 - 1.24
-
-* [Amazon Elastic Container Service for Kubernetes (EKS)](https://aws.amazon.com) 1.21 - 1.24
-
-* [Azure Kubernetes Service (AKS)](https://azure.microsoft.com/en-us/services/kubernetes-service/) 1.22 - 1.24
-
-* [OpenShift](https://www.redhat.com/en/technologies/cloud-computing/openshift) 4.10 - 4.11
-
-* [Minikube](https://minikube.sigs.k8s.io/docs/) 1.28
+* [Google Kubernetes Engine (GKE)](https://cloud.google.com/kubernetes-engine) 1.24 - 1.27
+* [Amazon Elastic Container Service for Kubernetes (EKS)](https://aws.amazon.com) 1.23 - 1.27
+* [Azure Kubernetes Service (AKS)](https://azure.microsoft.com/en-us/services/kubernetes-service/) 1.24 - 1.26
+* [OpenShift](https://www.redhat.com/en/technologies/cloud-computing/openshift) 4.10 - 4.13
+* [Minikube](https://minikube.sigs.k8s.io/docs/) 1.30 (based on Kubernetes 1.27)
 
 This list only includes the platforms that the Percona Operators are specifically tested on as part of the release process. Other Kubernetes flavors and versions depend on the backward compatibility offered by Kubernetes itself.
