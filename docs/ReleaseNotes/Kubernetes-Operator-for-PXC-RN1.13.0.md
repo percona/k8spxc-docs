@@ -11,7 +11,7 @@
 ## Release Highlights
 
 * It is now [possible to control](../operator.md#backup-allowparallel) whether backup jobs are executed  in parallel or sequentially, which can be useful to avoid the cluster overload; also, CPU and memory resource limits can now be configured for the backup restore job
-* A substantial improvement of the [backup documentation](../backup.md) was done in this release, making it much easier to read, and the [backup restore options](../operator.md#perconaxtradbclusterrestore-custom-resource-options) have been added to the Сustom Resource reference
+* A substantial improvement of the [backup documentation](../backups.md) was done in this release, making it much easier to read, and the [backup restore options](../operator.md#perconaxtradbclusterrestore-custom-resource-options) have been added to the Сustom Resource reference
 * In this release, we put a lot of effort into fixing bugs reported by the community. We are grateful to everyone who helped us to discover these issues and contributed to fixing them.
 
 ## New Features and improvements

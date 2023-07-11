@@ -37,179 +37,179 @@ Following things are needed to restore a previously saved backup:
 When the correct names for the backup and the cluster are known, backup
 restoration can be done in the following way.
 
-=== "Without point-in-time recovery"
+## Restore the cluster without point-in-time recovery
 
-    1. Set appropriate keys in the [deploy/backup/restore.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml) file.
+1. Set appropriate keys in the [deploy/backup/restore.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml) file.
 
-        * set `spec.pxcCluster` key to the name of the target cluster to restore
-            the backup on,
+    * set `spec.pxcCluster` key to the name of the target cluster to restore
+        the backup on,
 
-        * set `spec.backupName` key to the name of your backup,
+    * set `spec.backupName` key to the name of your backup,
 
-        * you can also use a `storageName` key to specify the exact name of the
-            storage (the actual storage should be [already defined](backups-storage.md)
-            in the `backup.storages` subsection of the `deploy/cr.yaml` file):
-
-            ```yaml
-            apiVersion: psmdb.percona.com/v1
-            kind: PerconaServerMongoDBRestore
-            metadata:
-              name: restore1
-            spec:
-              clusterName: my-cluster-name
-              backupName: backup1
-              storageName: s3-us-west
-            ```
-
-    2. After that, the actual restoration process can be started as follows:
-
-        ``` {.bash data-prompt="$" }
-        $ kubectl apply -f deploy/backup/restore.yaml
-        ```
-
-        !!! note
-
-            Storing backup settings in a separate file can be replaced by
-            passing its content to the `kubectl apply` command as follows:
-
-            ``` {.bash data-prompt="$" }
-            $ cat <<EOF | kubectl apply -f-
-            apiVersion: "pxc.percona.com/v1"
-            kind: "PerconaXtraDBClusterRestore"
-            metadata:
-              name: "restore1"
-            spec:
-              pxcCluster: "cluster1"
-              backupName: "backup1"
-            EOF
-            ```
-
-=== "With point-in-time recovery"
-
-    !!! note
-
-        Disable the point-in-time functionality on the existing cluster before
-        restoring a backup on it, regardless of whether the backup was made
-        with point-in-time recovery or without it.
-
-    1. Set appropriate keys in the [deploy/backup/restore.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml) file.
-
-        * set `spec.pxcCluster` key to the name of the target cluster to restore
-            the backup on,
-
-        * set `spec.backupName` key to the name of your backup,
-
-        * put additional restoration parameters to the `pitr` section:
-
-            * `type` key can be equal to one of the following options,
-
-                * `date` - roll back to specific date,
-                * `transaction` - roll back to a specific transaction (available since Operator 1.8.0),
-                * `latest` - recover to the latest possible transaction,
-                * `skip` - skip a specific transaction (available since Operator 1.7.0).
-
-            * `date` key is used with `type=date` option and contains value in
-                datetime format,
-            * `gtid` key (available since the Operator 1.8.0) is used with `type=transaction` option and contains exact
-                GTID of a transaction **which follows** the last transaction included into the recovery
-
-        * use `backupSource.storageName` key to specify the exact name of the
-            storage (the actual storage should be [already defined](backups-storage.md)
-            in the `backup.storages` subsection of the `deploy/cr.yaml` file).
-
-        The resulting `restore.yaml` file may look as follows:
+    * you can also use a `storageName` key to specify the exact name of the
+        storage (the actual storage should be [already defined](backups-storage.md)
+        in the `backup.storages` subsection of the `deploy/cr.yaml` file):
 
         ```yaml
-        apiVersion: pxc.percona.com/v1
-        kind: PerconaXtraDBClusterRestore
+        apiVersion: psmdb.percona.com/v1
+        kind: PerconaServerMongoDBRestore
         metadata:
           name: restore1
         spec:
-          pxcCluster: cluster1
+          clusterName: my-cluster-name
           backupName: backup1
-          pitr:
-            type: date
-            date: "2020-12-31 09:37:13"
-            backupSource:
-              storageName: "s3-us-west"
+          storageName: s3-us-west
         ```
 
-    2. Run the actual restoration process:
+2. After that, the actual restoration process can be started as follows:
+
+    ``` {.bash data-prompt="$" }
+    $ kubectl apply -f deploy/backup/restore.yaml
+    ```
+
+    !!! note
+
+        Storing backup settings in a separate file can be replaced by
+        passing its content to the `kubectl apply` command as follows:
 
         ``` {.bash data-prompt="$" }
-        $ kubectl apply -f deploy/backup/restore.yaml
+        $ cat <<EOF | kubectl apply -f-
+        apiVersion: "pxc.percona.com/v1"
+        kind: "PerconaXtraDBClusterRestore"
+        metadata:
+          name: "restore1"
+        spec:
+          pxcCluster: "cluster1"
+          backupName: "backup1"
+        EOF
         ```
 
-        !!! note
+## Restore the cluster with point-in-time recovery
 
-            Storing backup settings in a separate file can be replaced by
-            passing its content to the `kubectl apply` command as follows:
+!!! note
 
-            ``` {.bash data-prompt="$" }
-            $ cat <<EOF | kubectl apply -f-
-            apiVersion: "pxc.percona.com/v1"
-            kind: "PerconaXtraDBClusterRestore"
-            metadata:
-              name: "restore1"
-            spec:
-              pxcCluster: "cluster1"
-              backupName: "backup1"
-              pitr:
-                type: date
-                date: "2020-12-31 09:37:13"
-                backupSource:
-                  storageName: "s3-us-west"
-            EOF
-            ```
-    <a name="backup-pitr-binlog-gaps"></a>
+    Disable the point-in-time functionality on the existing cluster before
+    restoring a backup on it, regardless of whether the backup was made
+    with point-in-time recovery or without it.
 
-    Take into account, that Operator monitors the binlog gaps detected by
-    binlog collector, if any. If backup contains such gaps, the Operator will mark
-    the status of the latest successful backup with a new condition field that
-    indicates backup can't guarantee consistent point-in-time recovery. This
-    condition looks as follows:
+1. Set appropriate keys in the [deploy/backup/restore.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml) file.
 
-    ```yaml
-    apiVersion: pxc.percona.com/v1
-    kind: PerconaXtraDBClusterBackup
-    metadata:
-      name: backup1
-    spec:
-      pxcCluster: pitr
-      storageName: minio
-    status:
-      completed: "2022-11-25T15:57:29Z"
-      conditions:
-      - lastTransitionTime: "2022-11-25T15:57:48Z"
-        message: Binlog with GTID set e41eb219-6cd8-11ed-94c8-9ebf697d3d20:21-22 not found
-        reason: BinlogGapDetected
-        status: "False"
-        type: PITRReady
-      state: Succeeded
-    ```
+    * set `spec.pxcCluster` key to the name of the target cluster to restore
+        the backup on,
 
-    Trying to restore from such backup (with the condition value "False") with
-    point-in-time recovery will result in the following error: 
+    * set `spec.backupName` key to the name of your backup,
 
-    ```text
-    Backup doesn't guarantee consistent recovery with PITR. Annotate PerconaXtraDBClusterRestore with percona.com/unsafe-pitr to force it.
-    ```
+    * put additional restoration parameters to the `pitr` section:
 
-    You can disable this check and force the restore by annotating it with
-    `pxc.percona.com/unsafe-pitr` as follows:
+        * `type` key can be equal to one of the following options,
+
+            * `date` - roll back to specific date,
+            * `transaction` - roll back to a specific transaction (available since Operator 1.8.0),
+            * `latest` - recover to the latest possible transaction,
+            * `skip` - skip a specific transaction (available since Operator 1.7.0).
+
+        * `date` key is used with `type=date` option and contains value in
+            datetime format,
+        * `gtid` key (available since the Operator 1.8.0) is used with `type=transaction` option and contains exact
+            GTID of a transaction **which follows** the last transaction included into the recovery
+
+    * use `backupSource.storageName` key to specify the exact name of the
+        storage (the actual storage should be [already defined](backups-storage.md)
+        in the `backup.storages` subsection of the `deploy/cr.yaml` file).
+
+    The resulting `restore.yaml` file may look as follows:
 
     ```yaml
     apiVersion: pxc.percona.com/v1
     kind: PerconaXtraDBClusterRestore
     metadata:
-      annotations:
-        percona.com/unsafe-pitr: "true"
-      name: restore2
+      name: restore1
     spec:
-      pxcCluster: pitr
+      pxcCluster: cluster1
       backupName: backup1
       pitr:
-        type: latest
+        type: date
+        date: "2020-12-31 09:37:13"
         backupSource:
-          storageName: "minio-binlogs"
+          storageName: "s3-us-west"
     ```
+
+2. Run the actual restoration process:
+
+    ``` {.bash data-prompt="$" }
+    $ kubectl apply -f deploy/backup/restore.yaml
+    ```
+
+    !!! note
+
+        Storing backup settings in a separate file can be replaced by
+        passing its content to the `kubectl apply` command as follows:
+
+        ``` {.bash data-prompt="$" }
+        $ cat <<EOF | kubectl apply -f-
+        apiVersion: "pxc.percona.com/v1"
+        kind: "PerconaXtraDBClusterRestore"
+        metadata:
+          name: "restore1"
+        spec:
+          pxcCluster: "cluster1"
+          backupName: "backup1"
+          pitr:
+            type: date
+            date: "2020-12-31 09:37:13"
+            backupSource:
+              storageName: "s3-us-west"
+        EOF
+        ```
+<a name="backup-pitr-binlog-gaps"></a>
+
+Take into account, that Operator monitors the binlog gaps detected by
+binlog collector, if any. If backup contains such gaps, the Operator will mark
+the status of the latest successful backup with a new condition field that
+indicates backup can't guarantee consistent point-in-time recovery. This
+condition looks as follows:
+
+```yaml
+apiVersion: pxc.percona.com/v1
+kind: PerconaXtraDBClusterBackup
+metadata:
+  name: backup1
+spec:
+  pxcCluster: pitr
+  storageName: minio
+status:
+  completed: "2022-11-25T15:57:29Z"
+  conditions:
+  - lastTransitionTime: "2022-11-25T15:57:48Z"
+    message: Binlog with GTID set e41eb219-6cd8-11ed-94c8-9ebf697d3d20:21-22 not found
+    reason: BinlogGapDetected
+    status: "False"
+    type: PITRReady
+  state: Succeeded
+```
+
+Trying to restore from such backup (with the condition value "False") with
+point-in-time recovery will result in the following error: 
+
+```text
+Backup doesn't guarantee consistent recovery with PITR. Annotate PerconaXtraDBClusterRestore with percona.com/unsafe-pitr to force it.
+```
+
+You can disable this check and force the restore by annotating it with
+`pxc.percona.com/unsafe-pitr` as follows:
+
+```yaml
+apiVersion: pxc.percona.com/v1
+kind: PerconaXtraDBClusterRestore
+metadata:
+  annotations:
+    percona.com/unsafe-pitr: "true"
+  name: restore2
+spec:
+  pxcCluster: pitr
+  backupName: backup1
+  pitr:
+    type: latest
+    backupSource:
+      storageName: "minio-binlogs"
+```

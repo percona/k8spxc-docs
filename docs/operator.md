@@ -1260,13 +1260,6 @@ configuration file. This Custom Resource contains the following options:
 | spec.resources   | [subdoc](operator.md#operator-restore-resources-options-section)| Defines resources limits for the restore job | false |
 | spec.backupSource| [subdoc](operator.md#operator-restore-backupsource-options-section)| Defines configuration for different restore sources | false |
 | spec.pitr        | [subdoc](operator.md#operator-restore-pitr-options-section) | Defines configuration for PITR restore | false |
-#  resources:
-#    requests:
-#      memory: 100M
-#      cpu: 100m
-#    limits:
-#      memory: 200M
-#      cpu: 200m
 
 ### <a name="operator-restore-resources-options-section"></a>resources section
 
