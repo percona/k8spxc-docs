@@ -63,7 +63,7 @@ The Operator was developed and tested with Percona XtraDB Cluster versions 8.0.3
 * HAProxy 2.6.12
 * ProxySQL 2.5.1-1.1
 * LogCollector based on fluent-bit 2.1.5
-* PMM Client 2.38.
+* PMM Client 2.38
 
 The following platforms were tested and are officially supported by the Operator
 1.13.0:
