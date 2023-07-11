@@ -39,6 +39,25 @@ The resulting HAPproxy setup will contain two services:
     This service selects Percona XtraDB Cluster members to serve queries following
     the Round Robin load balancing algorithm.
 
+!!! note
+
+    <a name="headless-service"> If you need to configure `cluster1-haproxy` and
+    `cluster1-haproxy-replicas` as a [headless Service](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services)
+    (e.g. to use on the tenant network), add the following [annotation](annotations.md)
+    in the Custom Resource metadata section of the `deploy/cr.yaml`:
+
+     ```yaml
+    apiVersion: pxc.percona.com/v1
+    kind: PerconaXtraDBCluster
+    metadata:
+      name: cluster1
+      annotations:
+        percona.com/headless-service: true
+      ...
+    ```
+
+    This annotation works only at service creation time and can't be added later.
+
 When the cluster with HAProxy is upgraded, the following steps
 take place. First, reader members are upgraded one by one: the Operator waits
 until the upgraded Percona XtraDB Cluster member becomes synced, and then

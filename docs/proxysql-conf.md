@@ -28,6 +28,25 @@ $ kubectl patch pxc cluster1 --type=merge --patch '{
 The resulting setup will use the number zero Percona XtraDB Cluster member
 (`cluster1-pxc-0` by default) as writer.
 
+!!! note
+
+    <a name="headless-service"> If you need to configure ProxySQL service as a
+    [headless Service](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services)
+    (e.g. to use on the tenant network), add the following [annotation](annotations.md)
+    in the Custom Resource metadata section of the `deploy/cr.yaml`:
+
+     ```yaml
+    apiVersion: pxc.percona.com/v1
+    kind: PerconaXtraDBCluster
+    metadata:
+      name: cluster1
+      annotations:
+        percona.com/headless-service: true
+      ...
+    ```
+
+    This annotation works only at service creation time and can't be added later.
+
 When a cluster with ProxySQL is upgraded, the following steps
 take place. First, reader members are upgraded one by one: the Operator waits
 until the upgraded member shows up in ProxySQL with online status, and then
