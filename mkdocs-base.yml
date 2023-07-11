@@ -169,7 +169,16 @@ nav:
           - "Telemetry": telemetry.md
           
     - Management:
-          - "Backup and restore": backups.md
+          - Backup and restore:
+              - "About backups": backups.md
+              - "Configure storage for backups": backups-storage.md
+              - "Make scheduled backups": backups-scheduled.md
+              - "Make on-demand backup": backups-ondemand.md
+              - "Store operations logs for point-in-time recovery": backups-pitr.md
+              - "Enable compression for backups": backups-compress.md
+              - "Restore from a previously saved backup": backups-restore.md
+              - "Copy backup to a local machine": backups-copy.md
+              - "Delete the unneeded backup": backups-delete.md
           - "Upgrade Database and Operator": update.md
           - "Horizontal and vertical scaling": scaling.md
           - "Monitor with Percona Monitoring and Management (PMM)": monitoring.md
@@ -187,8 +196,9 @@ nav:
           - "How to install Percona XtraDB Cluster in multi-namespace (cluster-wide) mode": cluster-wide.md
           - "How to upgrade Percona XtraDB Cluster manually": update_manually.md
           - "How to use private registry": custom-registry.md
+          - "How to restore backup to a new Kubernetes-based environment": backups-restore-to-new-cluster.md
           - "How to use backups and asynchronous replication to move an external database to Kubernetes": backups-move-from-external-db.md
-          
+
     - Reference:
           - "Custom Resource options": operator.md
           - "Percona certified images": images.md

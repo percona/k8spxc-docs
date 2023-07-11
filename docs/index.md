@@ -79,7 +79,25 @@ or in the cloud.
 
 # Management
 
-* [Backup and restore](backups.md)
+* Backup and restore
+
+    * [About backups](backups.md)
+    
+    * [Configure storage for backups](backups-storage.md)
+    
+    * [Make scheduled backups](backups-scheduled.md)
+    
+    * [Make on-demand backup](backups-ondemand.md)
+    
+    * [Store operations logs for point-in-time recovery](backups-pitr.md)
+    
+    * [Enable compression for backups](backups-compress.md)
+    
+    * [Restore from a previously saved backup](backups-restore.md)
+    
+    * [Copy backup to a local machine](backups-copy.md)
+    
+    * [Delete the unneeded backup](backups-delete.md)
 
 * [Upgrade Database and Operator](update.md)
 
@@ -111,6 +129,8 @@ or in the cloud.
 * [How to upgrade Percona XtraDB Cluster manually](update_manually.md)
 
 * [How to use private registry](custom-registry.md)
+
+* [How to restore backup to a new Kubernetes-based environment](backups-restore-to-new-cluster.md)
 
 # Reference
 

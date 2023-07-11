@@ -73,5 +73,9 @@ $ kubectl logs cluster1-pxc-0 -c logs
 
     Technically, logs are stored on the same Persistent Volume, which is
     used with the corresponding Percona XtraDB Cluster Pod. Therefore collected
-    logs can be found in `DATADIR` (`var/lib/mysql/`).
-
+    logs can be found in `DATADIR` (`var/lib/mysql/`). Also, there is an additional
+    Secrets object for Fluent Bit passwords and other similar data, e.g. for
+    output plugins. The name of this Secrets object can be found in the
+    `logCollectorSecretName` option of the Custom Resource (it is set to
+    `my-log-collector-secrets` in the `deploy/cr.yaml` configuration file by
+    default).

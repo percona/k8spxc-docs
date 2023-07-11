@@ -30,12 +30,12 @@ The spec part of the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-
 
 | Key             | Value type        | Default | Description                                    |
 | --------------- | ----------------- | ------- | ---------------------------------------------- |
-| upgradeOptions  | subdoc            |         | Percona XtraDB Cluster upgrade options section |
-| pxc             | subdoc            |         | Percona XtraDB Cluster general section         |
-| haproxy         | subdoc            |         | HAProxy section                                |
-| proxysql        | subdoc            |         | ProxySQL section                               |
-| pmm             | subdoc            |         | Percona Monitoring and Management section      |
-| backup          | subdoc            |         | Percona XtraDB Cluster backups section         |
+| upgradeOptions  | [subdoc](#upgrade-options-section)|         | Percona XtraDB Cluster upgrade options section |
+| pxc             | [subdoc](#pxc-section)            |         | Percona XtraDB Cluster general section         |
+| haproxy         | [subdoc](#haproxy-section)        |         | HAProxy section                                |
+| proxysql        | [subdoc](#proxysql-section)       |         | ProxySQL section                               |
+| pmm             | [subdoc](#pmm-section)            |         | Percona Monitoring and Management section      |
+| backup          | [subdoc](#backup-section)         |         | Percona XtraDB Cluster backups section         |
 | allowUnsafeConfigurations | boolean | `false` | Prevents users from configuring a cluster with unsafe parameters such as starting the cluster with the number of Percona XtraDB Cluster instances which is less than 3, more than 5, or is an even number, with less than 2 ProxySQL or HAProxy Pods, or without TLS/SSL certificates (if `false`, unsafe parameters will be automatically changed to safe defaults)                             |
 | enableCRValidationWebhook | boolean | `true`  | Enables or disables schema validation before applying `cr.yaml` file (works only in [cluster-wide mode](cluster-wide.md#install-clusterwide) due to [access restrictions](faq.md#faq-validation)) |
 | pause           | boolean           | `false`                    | Pause/resume: setting it to `true` gracefully stops the cluster, and setting it to `false` after shut down starts the cluster back  |
@@ -46,12 +46,12 @@ The spec part of the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-
 | vaultSecretName | string            | `keyring-secret-vault`     | A secret for the [HashiCorp Vault](https://www.vaultproject.io/) to carry on [Data at Rest Encryption](encryption.md#encryption)    |
 | sslSecretName   | string            | `cluster1-ssl`             | A secret with TLS certificate generated for *external* communications, see [Transport Layer Security (TLS)](TLS.md#tls) for details |
 | sslInternalSecretName  | string     | `cluster1-ssl-internal`    | A secret with TLS certificate generated for *internal* communications, see [Transport Layer Security (TLS)](TLS.md#tls) for details |
-| logCollectorSecretName | string     | `my-log-collector-secrets` | A secret for the [Fluent Bit Log Collector](https://fluentbit.io)      |
+| logCollectorSecretName | string     | `my-log-collector-secrets` | A secret for the [Fluent Bit Log Collector](debug-logs.md#cluster-level-logging)      |
 | initImage       | string            | `percona/percona-xtradb-cluster-operator:{{ release }}` | An alternative image for the initial Operator installation |
-| tls             | subdoc            |                            | Extended cert-manager configuration section                            |
+| tls             | [subdoc](#tls-extended-cert-manager-configuration-section) |                            | Extended cert-manager configuration section  |
 | updateStrategy  | string            | `SmartUpdate`              | A strategy the Operator uses for [upgrades](update.md#operator-update) |
 
-### <a name="operator-issuerconf-section"></a>Extended cert-manager configuration section
+### <a name="operator-issuerconf-section"></a>TLS (extended cert-manager configuration section)
 
 The `tls` section in the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains various configuration options for additional customization of the [TLS cert-manager](TLS.md#tls-certs-certmanager).
 
@@ -1080,6 +1080,11 @@ file contains the following configuration options for the regular Percona XtraDB
 
 |                 | |
 |-----------------|-|
+| **Key**         | {{ optionlink('backup.allowParallel') }} |
+| **Value**       | string |
+| **Example**     | `true` |
+| **Description** | Enables or disables running backup jobs in parallel. By default, parallel backup jobs are enabled. A user can disable them to prevent the cluster overload |
+|                 | |
 | **Key**         | {{ optionlink('backup.image') }} |
 | **Value**       | string |
 | **Example**     | `percona/percona-xtradb-cluster-operator:{{ release }}-backup` |
@@ -1252,8 +1257,18 @@ configuration file. This Custom Resource contains the following options:
 | metadata.name    | string            | The name of the restore                        | true     |
 | spec.pxcCluster  | string            | Percona XtraDB Cluster name (the name of your running cluster) | true |
 | spec.backupName  | string            | The name of the backup which should be restored| false    |
+| spec.resources   | [subdoc](operator.md#operator-restore-resources-options-section)| Defines resources limits for the restore job | false |
 | spec.backupSource| [subdoc](operator.md#operator-restore-backupsource-options-section)| Defines configuration for different restore sources | false |
 | spec.pitr        | [subdoc](operator.md#operator-restore-pitr-options-section) | Defines configuration for PITR restore | false |
+
+### <a name="operator-restore-resources-options-section"></a>resources section
+
+| Key              | Value type        | Description                                    | Required |
+| ---------------- | ----------------- | ---------------------------------------------- | -------- |
+| requests.memory  | string            | The [Kubernetes memory requests](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the restore job (the specified value is used if memory limits are not set)   | false    |
+| requests.cpu     | string            | [Kubernetes CPU requests](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the restore job (the specified value is used if CPU limits are not set)                | false    |
+| limits.memory    | string            | The [Kubernetes memory limits](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the restore job (if set, the value will be used for memory requests as well) | false    |
+| limits.cpu       | string            | [Kubernetes CPU limits](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the restore job (if set, the value will be used for CPU requests as well)              | false    |
 
 ### <a name="operator-restore-backupsource-options-section"></a>backupSource section
 
@@ -1261,7 +1276,8 @@ configuration file. This Custom Resource contains the following options:
 | ---------------- | ----------------- | ---------------------------------------------- | -------- |
 | destination      | string            | Path to the backup                             | false    |
 | storageName      | string            | The storage name from CR `spec.backup.storages`| false    |
-| s3               | [subdoc](operator.md#operator-restore-s3-options-section)    | Define configuration for s3 compatible storages | false |
+| verifyTLS        | boolean           | Enable or disable verification of the storage server TLS certificate. Disabling it may be useful e.g. to skip TLS verification for private S3-compatible storage with a self-issued certificate | true |
+| s3               | [subdoc](operator.md#operator-restore-s3-options-section)    | Define configuration for S3 compatible storages | false |
 | azure            | [subdoc](operator.md#operator-restore-azure-options-section) | Define configuration for azure blob storage     | false |
 
 ### <a name="operator-restore-s3-options-section"></a>backupSource.s3 subsection
@@ -1290,6 +1306,6 @@ configuration file. This Custom Resource contains the following options:
 | date             | string            | The exact date of recovery                     | true     |
 | gtid             | string            | The exact GTID for PITR recover                | true     |
 | spec.backupSource| [subdoc](operator.md#operator-restore-backupsource-options-section)| Percona XtraDB Cluster backups section     | true  |
-| s3               | [subdoc](operator.md#operator-restore-s3-options-section)    | Defines configuration for s3 compatible storages | false |
+| s3               | [subdoc](operator.md#operator-restore-s3-options-section)    | Defines configuration for S3 compatible storages | false |
 | azure            | [subdoc](operator.md#operator-restore-azure-options-section) | Defines configuration for azure blob storage     | false |
 
