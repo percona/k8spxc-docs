@@ -2,7 +2,7 @@
 
 * **Date**
 
-   July 6, 2023
+   July 11, 2023
 
 * **Installation**
 
@@ -10,17 +10,21 @@
 
 ## Release Highlights
 
+* It is now [possible to control](../operator.md#backup-allowparallel) whether backup jobs are executed  in parallel or sequentially, which can be useful to avoid the cluster overload; also, CPU and memory resource limits can now be configured for the backup restore job
+* A substantial improvement of the [backup documentation](../backup.md) was done in this release, making it much easier to read, and the [backup restore options](../operator.md#perconaxtradbclusterrestore-custom-resource-options) have been added to the Сustom Resource reference
+* In this release, we put a lot of effort into fixing bugs reported by the community. We are grateful to everyone who helped us to discover these issues and contributed to fixing them.
+
 ## New Features and improvements
 
-* {{ k8spxcjira(1224) }}: New `backup.allowParallel` Custom Resource option allows to disable running backup jobs in parallel, which can be useful to avoid connection issues caused by the cluster overload
-
-* {{ k8spxcjira(362) }}: Code clean-up and refactoring for checking if ProxySQL and HAProxy enabled in the Custom Resource (thanks to Vladislav Safronov for contributing)
-* {{ k8spxcjira(1088) }}: It is now possilbe to configure CPU and memory resources for the backup restore job in the `PerconaXtraDBClusterRestore` Custom Resource options
+* {{ k8spxcjira(1088) }}: It is now possible to configure CPU and memory resources for the backup restore job in the PerconaXtraDBClusterRestore Custom Resource options
 * {{ k8spxcjira(1166) }}: Starting from now, Docker image tags for Percona XtraBackup include full XtraBackup version instead of the major number used before
 * {{ k8spxcjira(1189) }}: Improve security and meet compliance requirements by building the Operator based on Red Hat Universal Base Image (UBI) 9 instead of UBI 8
 * {{ k8spxcjira(1192) }}: Backup and restore documentation was substantially improved to make it easier to work with, and [backup restore options](../operator.md#perconaxtradbclusterrestore-custom-resource-options) have been added to the Сustom Resource reference
-* {{ k8spxcjira(1210) }}: HAProxy service [can now be configured](...) as [headless](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services) at service creation time
+* {{ k8spxcjira(1210) }}: A [headless service](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services) can now be configured for [ProxySQL](../proxysql-conf.md/headless-service) and [HAProxy](../haproxy-conf.md/headless-service) to make them usable on a tenant network (thanks to Vishal Anarase for contribution)
 * {{ k8spxcjira(1225) }}: The Operator (system) users are now created with the `PASSWORD EXPIRE NEVER` policy to avoid breaking the cluster due to the password expiration set by the `default_password_lifetime` system variable
+* {{ k8spxcjira(362) }}: Code clean-up and refactoring for checking if ProxySQL and HAProxy enabled in the Custom Resource (thanks to Vladislav Safronov for contributing)
+* {{ k8spxcjira(1224) }}: New `backup.allowParallel` Custom Resource option allows to disable running backup jobs in parallel, which can be useful to avoid connection issues caused by the cluster overload
+* {{ k8spxcjira(1183) }}: The Operator now uses the [caching_sha2_password](https://dev.mysql.com/doc/refman/8.0/en/caching-sha2-pluggable-authentication.html) authentication plugin for MySQL 8.0 instead of the older [mysql_native_password](https://dev.mysql.com/doc/refman/8.0/en/native-pluggable-authentication.html) one
 
 ## Bugs Fixed
 
@@ -33,12 +37,11 @@
 * {{ k8spxcjira(835) }} and {{ k8spxcjira(1029) }}: Fix a bug which prevented using ProxySQL on the replica cluster in cross-site replication
 * {{ k8spxcjira(989) }}: Fix a bug which caused on-demand (manual) backup to fail in IPv6-enabled (dual-stack) environments because of the backup script unable to figure out the proper Pod IPv4 address (thanks to Song Yang for contribution)
 * {{ k8spxcjira(1106) }}: Fix a bug which caused point-in-time recovery failure in case of a corrupted binlog file in `/var/lib/mysql`
-* {{ k8spxcjira(1122) }}: The new `verifyTLS` PerconaXtraDBClusterRestore Custom Resource option allows to disable verification of the storage server TLS certificate, which may be useful e.g. to skip TLS verification for private S3-compatible storage with a self-issued certificate **IMPROVEMENT** 
-* {{ k8spxcjira(1135) }}: Fix a bug which made it possible for cluster to incorrectly obtain READY status while  the svc EXTERNAL-IP was still in pending state
+* {{ k8spxcjira(1122) }}: Fix a bug which made disabling verification of the storage server TLS certificate with `verifyTLS` PerconaXtraDBClusterRestore Custom Resource option not working
+* {{ k8spxcjira(1135) }}: Fix a bug where a cluster could incorrectly get a READY status while it had a service with an external IP still in pending state
 * {{ k8spxcjira(1149) }}: Fix `delete-pxc-pvc` finalizer unable to delete TLS Secret used for external communications in case if this Secret had non-customized default name
 * {{ k8spxcjira(1161) }}: Fix a bug due to which PMM couldn't continue monitoring HAProxy Pods after the [PMM Server API key change](../monitoring#operator-monitoring-client-token)
 * {{ k8spxcjira(1163) }}: Fix a bug that made it impossible to delete the cluster in init state in case of enabled finalizers
-* {{ k8spxcjira(1193) }}: Operator requests cert-manager to generate server certificates with `IsCA: True` set **REMOVE**
 * {{ k8spxcjira(1199) }}: Fix a bug due to which the Operator couldn't restore backups from Azure blob storage if `spec.backupSource.azure.container` was not specified 
 * {{ k8spxcjira(1205) }}: Fix a bug which made the Operator to ignore the `verifyTLS` option for backups deletion caused by the `delete-s3-backup` finalizer (thanks to Christ-Jan Prinse for reporting)
 * {{ k8spxcjira(1229) }} and {{ k8spxcjira(1197) }}: Fix a bug due to which the Operator was unable to delete backups from Azure blob storage
@@ -46,6 +49,11 @@
 * {{ k8spxcjira(1242) }}: Fix a bug due to which the unquoted password value was passed to the pmm-admin commands, making PMM Client unable to add MySQL service
 * {{ k8spxcjira(1243) }}: Fix a bug which prevented deleting PMM agent from the PMM Server inventory on Pod termination
 * {{ k8spxcjira(1126) }}: Fix a bug that `pxc-db` Helm chart had PVC-based backup storage enabled by default, which could be inconvenient for the users storing backups in cloud
+* {{ k8spxcjira(1265) }}: Fix a bug due to which get pxc-backup command could show backup as failed after the first unsuccessful attempt while backup job was continuing attempts
+
+## Known issues and limitations
+
+* {{ k8spxcjira(1183) }}: Switching between HAProxy and ProxySQL load balancer can’t be done on existing clusters because ProxySQL does not yet support [caching_sha2_password](https://dev.mysql.com/doc/refman/8.0/en/caching-sha2-pluggable-authentication.html) authentication plugin; this makes it necessary to choose load balancer at the cluster creation time
 
 ## Supported Platforms
 
