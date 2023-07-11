@@ -12,7 +12,7 @@ This feature can be useful in several cases: for example, it can simplify migrat
 
     Cross-site replication is based on [Automatic Asynchronous Replication Connection Failover](https://dev.mysql.com/doc/refman/8.0/en/replication-asynchronous-connection-failover.html). Therefore it requires  MySQL 8.0.22+ (Percona XtraDB Cluster 8.0.22+) to work.
 
-Setting up MySQL for asynchronous replication without the Operator is described [here](https://www.percona.com/blog/2021/04/14/what-you-can-do-with-auto-failover-and-percona-distribution-for-mysql-8-0-x/) and is out of the scope for this document.
+Setting up MySQL for asynchronous replication without the Operator is out of the scope for this document, but it is described [here](https://www.percona.com/blog/2021/04/14/what-you-can-do-with-auto-failover-and-percona-distribution-for-mysql-8-0-x/) and is also covered by [this HowTo](backups-move-from-external-db.md).
 
 Configuring the cross-site replication for the cluster controlled by the Operator is explained in the following subsections.
 
