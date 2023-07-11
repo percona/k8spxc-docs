@@ -5,7 +5,11 @@ configuration for the components of your cluster. For example, you can use it to
 customize the configuration of HAProxy, or to add additional options for PMM
 Client.
 
-The Operator can store environment variables in [Kubernetes Secrets](https://kubernetes.io/docs/concepts/configuration/secret/). Here is an example with several HAProxy options:
+The Operator can store environment variables in [Kubernetes Secrets](https://kubernetes.io/docs/concepts/configuration/secret/). Here is an example with several options related to HAProxy: `HA_CONNECTION_TIMEOUT`
+(the custom timeout for health check connections to MySQL server), `OK_IF_DONOR`
+(make checks even for the [XtraDB cluster donor node](https://docs.percona.com/percona-xtradb-cluster/8.0/manual/state_snapshot_transfer.html)),
+and `HA_SERVER_OPTIONS` (the [custom options](https://docs.haproxy.org/2.6/configuration.html#5.2) for the server
+in the HAProxy configuration file).
 
 ```yaml
 apiVersion: v1
