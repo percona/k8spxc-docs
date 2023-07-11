@@ -60,7 +60,7 @@ The following table shows system users’ names and purposes.
 | -------------- | ------------ | ------------------- | ----------- |
 | Admin          | root         | root                | Database administrative user, can be used by the application if needed |
 | ProxySQLAdmin  | proxyadmin   | proxyadmin          | ProxySQL administrative user, can be used to [add general-purpose ProxySQL users](https://github.com/sysown/proxysql/wiki/Users-configuration) |
-| Backup         | xtrabackup   | xtrabackup          | [User to run backups](https://www.percona.com/doc/percona-xtrabackup/2.4/using_xtrabackup/privileges.html) |
+| Backup         | xtrabackup   | xtrabackup          | The [user to run backups](https://www.percona.com/doc/percona-xtrabackup/2.4/using_xtrabackup/privileges.html), granted `all` privileges for the [point-in-time recovery](backups.md#storing-binary-logs-for-point-in-time-recovery) needs |
 | Cluster Check  | clustercheck | clustercheck        | User is deprecated in v1.12.0, unavailable in one of the next releases |
 | Monitoring     | monitor      | monitor             | User for internal monitoring purposes like liveness/readiness checks and [PMM agent](https://www.percona.com/doc/percona-monitoring-and-management/security.html#pmm-security-password-protection-enabling) |
 | PMM Server Password  | should be set through the [operator options](operator) | pmmserver | [Password used to access PMM Server](https://www.percona.com/doc/percona-monitoring-and-management/security.html#pmm-security-password-protection-enabling). **Password-based authorization method is deprecated since the Operator 1.11.0**. [Use token-based authorization instead](monitoring.md#operator-monitoring-client-token) |
