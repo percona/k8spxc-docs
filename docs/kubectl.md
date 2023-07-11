@@ -34,7 +34,7 @@ your Kubernetes environment:
         deployment.apps/percona-xtradb-cluster-operator created
         ```
 
-    As the result you will have the Operator Pod up and running. 
+    As the result you will have the Operator Pod up and running.
 
 2. Deploy Percona XtraDB Cluster:
 

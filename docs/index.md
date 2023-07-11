@@ -132,6 +132,8 @@ or in the cloud.
 
 * [How to restore backup to a new Kubernetes-based environment](backups-restore-to-new-cluster.md)
 
+* [How to use backups and asynchronous replication to move an external database to Kubernetes](backups-move-from-external-db.md)
+
 # Reference
 
 * [Custom Resource options](operator.md)
