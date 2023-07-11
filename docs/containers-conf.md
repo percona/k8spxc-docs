@@ -21,7 +21,7 @@ data:
 
 !!! note
 
-     Variables used in this example have the following effect:
+     <a name="haproxy-options"> Variables used in this example have the following effect:
      
      * `HA_CONNECTION_TIMEOUT` allows to set custom timeout for health checks done by HAProxy (it repeatedly executes a simple status query on XtraDB Cluster instances). The default 10 seconds timeout is good for most workloads, but increase should be helpful in case of unstable Kubernetes network or soft lockups happening on Kubernetes nodes.
      * `OK_IF_DONOR` allows application connections to XtraDB Cluster donors. The backup is running on the donor node, and SQL queries combined with it could run slower than usual. Enable the option to grant application access when there is only one XtraDB Cluster node alive, and a second XtraDB Cluster node is joining the cluster via SST.
