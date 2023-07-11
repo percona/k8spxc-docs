@@ -2,28 +2,15 @@
 
 Percona Operator for MySQL based on Percona XtraDB Cluster provides a choice of two cluster components to
 provide load balancing and proxy service: you can use either [HAProxy](https://haproxy.org) or [ProxySQL](https://proxysql.com/).
-You can control which one to use, if any, by enabling or disabling via the
+You can choose which one to use, if any, by enabling or disabling via the
 `haproxy.enabled` and `proxysql.enabled` options in the `deploy/cr.yaml`
 configuration file.
 
-Use the following command to enable ProxySQL:
+!!! warning 
 
-``` {.bash data-prompt="$" }
-$ kubectl patch pxc cluster1 --type=merge --patch '{
-  "spec": {
-     "proxysql": {
-        "enabled": true,
-        "size": 3,
-        "image": "percona/percona-xtradb-cluster-operator:{{ release }}-proxysql" },
-     "haproxy": { "enabled": false }
-  }}'
-```
-
-!!! note
-
-    For obvious reasons the Operator will not allow the simultaneous
-    enabling of both HAProxy and ProxySQL. Also, switching from ProxySQL to
-    HAProxy will cause Percona XtraDB Cluster Pods restart.
+    You can enable ProxySQL only at cluster creation time. Otherwise you will be
+    able to use HAProxy only, and the switch from HAProxy to ProxySQL is not
+    possible.
 
 The resulting setup will use the number zero Percona XtraDB Cluster member
 (`cluster1-pxc-0` by default) as writer.

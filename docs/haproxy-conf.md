@@ -19,11 +19,11 @@ $ kubectl patch pxc cluster1 --type=merge --patch '{
   }}'
 ```
 
-!!! note
+!!! warning
 
-    For obvious reasons the Operator will not allow the simultaneous
-    enabling of both HAProxy and ProxySQL. Also, switching from ProxySQL to
-    HAProxy will cause Percona XtraDB Cluster Pods restart.
+    Switching from ProxySQL to HAProxy will cause Percona XtraDB Cluster Pods
+    restart. Switching from HAProxy to ProxySQL is not possible, and if you need
+    ProxySQL, this should be configured at cluster creation time.
 
 The resulting HAPproxy setup will contain two services:
 
