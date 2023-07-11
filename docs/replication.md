@@ -128,6 +128,9 @@ $ kubectl apply -f deploy/cr.yaml
         ca: '/etc/mysql/ssl/ca.crt'
         ...
     ```
+    
+    SSL certificates on both sides should be signed by the same certificate
+    authority for encrypted replication channels to work.
 
 ## System user for replication
 
