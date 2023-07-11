@@ -1,79 +1,95 @@
-# How to use backups to move the external database to Kubernetes
+# How to use backups and asynchronous replication to move an external database to Kubernetes
 
 The Operator enables you to restore a database from a backup made outside of Kubernetes environment to the target Kubernetes cluster using [Percona XtraBackup](https://docs.percona.com/percona-xtrabackup/8.0/index.html). In such a way you can migrate your external database to Kubernetes. Using [asyncronous replication](https://docs.percona.com/percona-operator-for-mysql/pxc/replication.html) between source and target environments enables you to reduce downtime and prevent data loss for your application.
 
-This document provides the steps how to migrate Percona Server for MySQL 8.0.23 deployed on premises to the Kubernetes cluster managed by the Operator using [asyncronous replication](https://docs.percona.com/percona-operator-for-mysql/pxc/replication.html). We recommend testing this migration in a non-production environment first, before applying it in production.
+This document provides the steps how to migrate Percona Server for MySQL 8.0 deployed on premises to the Kubernetes cluster managed by the Operator using [asyncronous replication](https://docs.percona.com/percona-operator-for-mysql/pxc/replication.html). We recommend testing this migration in a non-production environment first, before applying it in production.
 
 ## Requirements
 
 1. The MySQL version for source and target environments must be 8.0.22 and higher since asyncronous replication is available starting with MySQL version 8.0.22. 
 2. You must be running [Percona XtraBackup](https://docs.percona.com/percona-xtrabackup/8.0/index.html) as the backup tool on source environment. For how to install Percona XtraBackup, see the [installation instructions](https://docs.percona.com/percona-xtrabackup/8.0/installation.html)
-3. The storage used to save the backup is one of the supported storages: AWS S3 storage or Azure Blob Storage
-
+3. The storage used to save the backup should be one of the [supported cloud storages](backups-storage.md): AWS S3 or compatible storage, or Azure Blob Storage.
 
 ## Configure target environment
 
-1. [Deploy Percona Operator for MySQL based on Percona XtraDB Cluster](index.md#quickstart-guides). The following example illustrates [the deployment on Google Kubernetes Engine 1.20](gke.md):
+1. Deploy Percona Operator for MySQL and use it to create Percona XtraDB Cluster
+    following any of the[official installation guides](index.md#quickstart-guides).
+2. Create the YAML file with the credentials for accessing the storage, needed
+    to create the [Kubernetes Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
+    object. As and example here, we will use Amazon S3 storage. You will need to
+    create a Secret with the following data to store backups on the Amazon S3:
 
-   * Clone the repository
+    * the `metadata.name` key is the name which you will further use to refer
+        your Kubernetes Secret,
+    * the `data.AWS_ACCESS_KEY_ID` and `data.AWS_SECRET_ACCESS_KEY` keys are
+        base64-encoded credentials used to access the storage (obviously these
+        keys should contain proper values to make the access possible).
 
-      ```{.bash data-prompt="$"}
-      $ git clone -b v1.9.0 https://github.com/percona/percona-xtradb-cluster-operator
-      $ cd percona-xtradb-cluster-operator
-      ```
+    Create the Secrets file with these base64-encoded keys following the
+    [deploy/backup-s3.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/backup-secret-s3.yaml)
+    example:
 
-   * Deploy the Operator
-
-      ```{.bash data-prompt="$"}
-      $ kubectl apply -f deploy/bundle.yaml
-      ```
-
-2. Create Percona XtraDB Cluster using the default custom resource manifest (CR).
-
-   * Create the cluster's secret
-
-      ```{.bash data-prompt="$"}
-      $ kubectl apply -f deploy/secrets.yaml
-      ```
-
-   * Create the cluster. By default, the Operator deploys the latest version cluster.
-
-      ```{.bash data-prompt="$"}
-      $ kubectl apply -f deploy/cr.yaml
-      ```
-
-      **TIP**: you can find the version in the `pxc.image` parameter of the `cr.yaml` file and change it to the desired one, if needed. 
-
-3. Create the secrets file with the credentials for accessing the storage. The following is the example of the `S3-secret.yaml` file for AWS S3 bucket which will be used for access to the S3 bucket during the restoration procedure. 
-
-    Replace `XXXX` placeholders with your actual values.
-
-    ```yaml title="S3-secret.yaml"
+    ```yaml
     apiVersion: v1
     kind: Secret
     metadata:
-      name: aws-s3-secret
+      name: my-cluster-name-backup-s3
     type: Opaque
     data:
-      AWS_ACCESS_KEY_ID: XXXXXX
-      AWS_SECRET_ACCESS_KEY: XXXXXX
+      AWS_ACCESS_KEY_ID: UkVQTEFDRS1XSVRILUFXUy1BQ0NFU1MtS0VZ
+      AWS_SECRET_ACCESS_KEY: UkVQTEFDRS1XSVRILUFXUy1TRUNSRVQtS0VZ
     ```
 
-4. Apply the changes
+    !!! note
 
-    ```{.bash data-prompt="$"}
-    $ kubectl apply -f S3-secret.yaml
+        You can use the following command to get a base64-encoded string from a plain text one:
+
+        === "in Linux"
+
+            ``` {.bash data-prompt="$" }
+            $ echo -n 'plain-text-string' | base64 --wrap=0
+            ```
+
+        === "in macOS"
+
+            ``` {.bash data-prompt="$" }
+            $ echo -n 'plain-text-string' | base64
+            ```
+
+3. Once the editing is over, create the Kubernetes Secret object as follows:
+
+    ``` {.bash data-prompt="$" }
+    $ kubectl apply -f deploy/backup-s3.yaml
     ```
+
+4. You will need passwords for the `monitor`, `operator`, `xtrabackup` and
+    `replication` system users created by the Operator.
+    Use `kubectl get secrets` command to see the list of Secrets objects (by
+    default the Secrets object you are interested in has `cluster1-secrets`
+    name). When you know the Secrets name, you can get password for a specfic
+    user as follows:
+
+    ``` {.bash data-prompt="$" }
+    $ kubectl get secrets cluster1-secrets -o yaml -o jsonpath='{.data.<user_name>}' | base64 --decode | tr '\n' ' ' && echo " "
+    ```
+    
+    Repeat this command 4 times, substituting <user_name> with `monitor`,
+    `operator`, `xtrabackup` and `replication`. You will further use these
+    passwords when preparing the source environment.
 
 ## Prepare the source environment
 
-If you are already running Percona Sever for MySQL and Percona XtraBackuo in a testing environment, skip the installation and proceed to the configuration steps. 
+1. Use official installation instructions for either [Percona Server for MySQL](https://docs.percona.com/percona-server/8.0/quickstart-overview.html#install-percona-server-for-mysql) or [Percona XtraDB Cluster](https://docs.percona.com/percona-xtradb-cluster/8.0/install/index.html)
+    to have the database up and running in your source environment (skip this
+    step if one of them is already installed).
 
-If you are setting up the testing environment, do the following:
+2. Use official installation instructions for [Percona XtraBackup](https://docs.percona.com/percona-xtrabackup/8.0/installation.html)
+    to have it up and running in your source environment (skip this step if it
+    is already installed).
 
-1. [Install Percona Server for MySQL](https://docs.percona.com/percona-server/8.0/quickstart-overview.html#install-percona-server-for-mysql)
-2. [Install Percona XtraBackup](https://docs.percona.com/percona-xtrabackup/8.0/installation.html)
-3. Configure the replication with Global Transaction Identifiers (GTID). This step is required if you are running Percona Sever for MySQL. If you run Percona XtraDB cluster, replication is already configured.
+2. Configure the replication with Global Transaction Identifiers (GTID).
+    This step is required if you are running Percona Sever for MySQL. If you run
+    Percona XtraDB cluster, replication is already configured.
 
     Edit the `my.cnf` configuration file as follows: 
 
@@ -83,32 +99,42 @@ If you are setting up the testing environment, do the following:
     gtid_mode=ON
     ```
 
-4. Create all the required users for the Operator to use during the restore. Note that the user passwords must match the ones you specified in the `deploy/secrets.yaml` file. The following commands create users with the default passwords from the `deploy/secrets.yaml` file. Replace them with your values
+4. Create the `monitor`, `operator`, `xtrabackup`, and `replication` system
+    users which will be needed by the Operator to restore a backup. User
+    passwords must match the ones you have found out in your target environment.
+    
+    Use the following commands to create users with the actual passwords instead
+    of the `monitor_password`, `operator_password`, `xtrabackup_password`, and
+    `replication_password` placeholders:
 
     ```sql
-    CREATE USER 'monitor'@'%' IDENTIFIED BY 'monitory' WITH MAX_USER_CONNECTIONS 100;
+    CREATE USER 'monitor'@'%' IDENTIFIED BY 'monitor_password' WITH MAX_USER_CONNECTIONS 100;
     GRANT SELECT, PROCESS, SUPER, REPLICATION CLIENT, RELOAD ON *.* TO 'monitor'@'%';
     GRANT SERVICE_CONNECTION_ADMIN ON *.* TO 'monitor'@'%';
      
-    CREATE USER 'operator'@'%' IDENTIFIED BY 'operatoradmin';
+    CREATE USER 'operator'@'%' IDENTIFIED BY 'operator_password';
     GRANT ALL ON *.* TO 'operator'@'%' WITH GRANT OPTION;
      
-    CREATE USER 'xtrabackup'@'%' IDENTIFIED BY 'backup_password';
+    CREATE USER 'xtrabackup'@'%' IDENTIFIED BY 'xtrabackup_password';
     GRANT ALL ON *.* TO 'xtrabackup'@'%';
      
-    CREATE USER 'replication'@'%' IDENTIFIED BY 'repl_password';
+    CREATE USER 'replication'@'%' IDENTIFIED BY 'replication_password';
     GRANT REPLICATION SLAVE ON *.* to 'replication'@'%';
     FLUSH PRIVILEGES;
     ```
 
-## Make a backup
+## Make a backup in the source environment
 
-1. Export the storage credentials. Since we are using AWS S3 bucket, the command shows how to export AWS S3 credentials. Replace the ```XXXX``` placeholders with your values:
+1. Export the storage credentials as environment variables. Following the above
+    example, here is a command which shows how to export the AWS S3 credentials:
 
     ```{.bash data-prompt="$"}
     $ export AWS_ACCESS_KEY_ID=XXXXXX
     $ export AWS_SECRET_ACCESS_KEY=XXXXXX
     ```
+
+    Don't forget to replace the ```XXXX``` placeholders with your actual Amazon
+    access key ID and secret access key values.
 
 2. Make the backup of your database and upload it to the storage using [xbcloud](https://docs.percona.com/percona-xtrabackup/8.0/xbcloud-binary-overview.html?h=xbcloud). Replace the values for the `--target-dir`, `--password`, `--s3-bucket` with your values in the following command:
 
@@ -116,11 +142,13 @@ If you are setting up the testing environment, do the following:
     $ xtrabackup --backup --stream=xbstream --target-dir=/tmp/backups/ --extra-lsndirk=/tmp/backups/  --password=root_password | xbcloud put --storage=s3 --parallel=10 --md5 --s3-bucket="mysql-testing-bucket" "db-test-1"
     ```
 
-## Restore from a backup
+## Restore from a backup in the target environment
 
 If your source database didn't have any data, skip this step and proceed with the [asyncronous replication configuration](#configure-asyncronous-replication-in-the-kubernetes-cluster). Otherwise, restore the database in the target environment.
 
-1. Create the `restore.yaml` file with the following contents:
+1. To restore a backup, you will use the special restore configuration file.
+   The example of such file is [deploy/backup/restore.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml).
+   For example. your `restore.yaml` file may have the following contents:
 
     ```yaml title='restore.yaml'
     apiVersion: pxc.percona.com/v1
@@ -132,23 +160,29 @@ If your source database didn't have any data, skip this step and proceed with th
       backupSource:
         destination: s3://mysql-testing-bucket/db-test-1
         s3:
-          credentialsSecret: aws-s3-secret
-          region: us-east-1
+          credentialsSecret: my-cluster-name-backup-s3
+          region: us-west-2
     ```
 
-    Replace the path to the backup and the credentials with your values
+    Don't forget to replace the path to the backup and the credentials with your
+    values.
 
-2. Restore from the backup
+2. Restore from the backup:
     
     ```{.bash data-prompt="$"}
     $ kubectl apply -f restore.yml
     ```
 
+You can find more information on restoring backup to a new Kubernetes-based
+environment and see more examples [in a dedicated HowTo](/backups-restore-to-new-cluster.md).
+
 ## Configure asyncronous replication in the Kubernetes cluster
 
-To avoid data loss for your application, configure the asyncronous replication between the source database and target cluster.
+This step will allow you to avoid data loss for your application, configuring
+the asyncronous replication between the source database and the target cluster.
 
-1. Edit custom resource manifest `deploy/cr.yaml` to configure the `spec.pxc.replicationChannels` section.
+1. Edit the Custom Resource manifest `deploy/cr.yaml` in your target environment
+    to configure the `spec.pxc.replicationChannels` section.
 
     ```yaml title='cr.yaml'
     spec:
@@ -164,13 +198,23 @@ To avoid data loss for your application, configure the asyncronous replication b
               weight: 100
     ```
 
-2. Apply the changes
+    Apply the changes for your Custom Resource as usual:
 
     ```{.bash data-prompt="$"}
     $ kubectl apply -f deploy/cr.yaml
     ```
 
-3. Verify the replication by connecting to a PXC node in the cluetr and running the following command:
+2. Verify the replication by connecting to a Percona XtraDB Cluster node. You
+    can do it with `mysql` tool, and you will need the `root` system user
+    password created by the Operator for this. The password can be obtained in
+    a same way we used for other system users:
+
+    ``` {.bash data-prompt="$" }
+    $ kubectl get secrets cluster1-secrets -o yaml -o jsonpath='{.data.root}' | base64 --decode | tr '\n' ' ' && echo " "
+    ```
+
+    When you know the `root` password, you can use `kubectl` command as follows
+    (substitute `root_password` with the actual password you have just obtained):
 
     ```{.bash data-prompt="$"}
     $ kubectl exec -it cluster1-pxc-0 -c pxc -- mysql -uroot -proot_password -e "show replica status \G"
@@ -246,11 +290,14 @@ To avoid data loss for your application, configure the asyncronous replication b
 
 ## Promote the Kubernetes cluster as primary
 
-After you reconfigured your application to work with the new PXC cluster in Kubernetes, you can promote this cluster as primary.
+After you reconfigured your application to work with the new Percona XtraDB
+Cluster in Kubernetes, you can promote this cluster as primary.
 
-1. Stop the replication. Edit the `deploy/cr.yaml` resource manifest and comment the `replicationChannels` section
+1. Stop the replication. Edit the `deploy/cr.yaml` manifest and comment the
+`replicationChannels` subsection:
 
     ``` yaml title='cr.yaml'
+    ...
     spec:
       ...
       pxc:
@@ -264,20 +311,22 @@ After you reconfigured your application to work with the new PXC cluster in Kube
         #      weight: 100
     ```
 
-2. Stop the mysql service on the source environment to make sure no new data is written
+2. Stop the `mysqld` service in your source environment to make sure no new data
+    is written:
 
     ```{.bash data-prompt="$"}
     $ sudo systemctl stop mysqld
     ```
 
-3. Apply the changes to the Kubernetes cluster
+3. Apply the changes to the Kubernetes cluster in your target environment:
 
     ```{.bash data-prompt="$"}
     $ kubectl apply -f deploy/cr.yaml
     ```
 
-As a result, replication is stopped and the read-only mode is disabled for the PXC cluster.
+As a result, replication is stopped and the read-only mode is disabled for the
+Percona XtraDB Cluster.
 
 !!! admonition ""
 
-    This document is based on the blog post [Migration of a MySQL Database to a Kubernetes Cluster Using Asynchronous Replication](https://www.percona.com/blog/migration-of-a-mysql-database-to-a-kubernetes-cluster-using-asynchronous-replication/) by *Slava Sarzhan*.  
+    This document is based on the blog post [Migration of a MySQL Database to a Kubernetes Cluster Using Asynchronous Replication](https://www.percona.com/blog/migration-of-a-mysql-database-to-a-kubernetes-cluster-using-asynchronous-replication/) by *Slava Sarzhan*.
