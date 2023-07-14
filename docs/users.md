@@ -46,7 +46,7 @@ Credentials for these users are stored as a [Kubernetes Secrets](https://kuberne
 The Operator requires Kubernetes Secrets before Percona XtraDB Cluster is
 started. It will either use existing Secrets or create a new Secrets object with
 randomly generated passwords if it didn’t exist.
-The name of the required Secrets (`cluster1` by default)
+The name of the required Secrets (`cluster1-secrets` by default)
 should be set in the `spec.secretsName` option of the `deploy/cr.yaml`
 configuration file.
 
