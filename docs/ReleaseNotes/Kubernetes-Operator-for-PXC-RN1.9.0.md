@@ -9,7 +9,7 @@
 
 * **Installation**
 
-    For installation please refer to [the documentation page](https://www.percona.com/doc/kubernetes-operator-for-pxc/index.html#quickstart-guides)
+    For installation please refer to [the documentation page](../System-Requirements.md#installation-guidelines)
 
 
 ## Release Highlights

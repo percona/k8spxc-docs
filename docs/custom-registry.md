@@ -96,4 +96,4 @@ in the OpenShift environment.
     Please note it is possible to specify `imagePullSecrets` option for
     the images, if the registry requires authentication.
 
-9. Now follow the standard [Percona Operator for MySQL installation instruction](./openshift).
+9. Now follow the standard [Percona Operator for MySQL installation instruction](openshift.md).

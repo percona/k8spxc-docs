@@ -13,7 +13,7 @@ This document provides the steps how to migrate Percona Server for MySQL 8.0 dep
 ## Configure target environment
 
 1. Deploy Percona Operator for MySQL and use it to create Percona XtraDB Cluster
-    following any of the[official installation guides](index.md#quickstart-guides).
+    following any of the [official installation guides](System-Requirements.md#installation-guidelines).
 2. Create the YAML file with the credentials for accessing the storage, needed
     to create the [Kubernetes Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
     object. As and example here, we will use Amazon S3 storage. You will need to
