@@ -72,7 +72,7 @@ You can find more details about a specific Pod using the
 `kubectl describe pods <pod-name>` command.
 
 ``` {.bash data-prompt="$" }
-$ $ kubectl describe pods cluster1-pxc-0
+$ kubectl describe pods cluster1-pxc-0
 ```
 
 ??? example "Expected output"
