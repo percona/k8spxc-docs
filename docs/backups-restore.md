@@ -51,14 +51,13 @@ restoration can be done in the following way.
         in the `backup.storages` subsection of the `deploy/cr.yaml` file):
 
         ```yaml
-        apiVersion: psmdb.percona.com/v1
-        kind: PerconaServerMongoDBRestore
+        apiVersion: pxc.percona.com/v1
+        kind: PerconaXtraDBClusterRestore
         metadata:
           name: restore1
         spec:
-          clusterName: my-cluster-name
+          pxcCluster: cluster1
           backupName: backup1
-          storageName: s3-us-west
         ```
 
 2. After that, the actual restoration process can be started as follows:
