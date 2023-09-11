@@ -180,7 +180,7 @@ As a result, you have the `customresource-config-ksm` ConfigMap created.
 
             Optionally, check the rest of the file and make changes. For example, if you plan to gather metrics for Nodes with the Prometheus node exporter, set the `prometheus-node-exporter.enabled` option to `true`.
 
-         2. Run the following command to install the Victoria Metrics kubernetes monitoring stack. The `vm-k8s` value is the Release name. You can use a different name. Replace the `<namespace>` placeholder with your value. The Namespace must be the same as the Namespace for the Secret and ConfigMap.
+         2. Run the following command to install the Victoria Metrics Kubernetes monitoring stack. The `vm-k8s` value is the Release name. You can use a different name. Replace the `<namespace>` placeholder with your value. The Namespace must be the same as the Namespace for the Secret and ConfigMap.
 
              ```
              $ kubectl apply -f values.yaml -n <namespace>
