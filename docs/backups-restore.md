@@ -58,6 +58,7 @@ restoration can be done in the following way.
         spec:
           pxcCluster: cluster1
           backupName: backup1
+          storageName: s3-us-west
         ```
 
 2. After that, the actual restoration process can be started as follows:
