@@ -4,17 +4,22 @@ Versions of the cluster components and platforms tested with different Operator 
 
 Cluster components:
 
-| Operator | [PostgreSQL](https://www.postgresql.org/) | [pgBackRest](https://pgbackrest.org/) | [pgBouncer](http://pgbouncer.github.io/) |
-|:--------|:--------|:-----|:-------|
-| [2.2.0](ReleaseNotes/Kubernetes-Operator-for-PostgreSQL-RN2.2.0.md) | 12 - 15 | 2.43 | 1.18.0 |
-| [2.1.0](ReleaseNotes/Kubernetes-Operator-for-PostgreSQL-RN2.1.0.md) | 12 - 15 | 2.43 | 1.18.0 |
-| [2.0.0](ReleaseNotes/Kubernetes-Operator-for-PostgreSQL-RN2.0.0.md) | 12 - 14 | 2.41 | 1.17.0 |
-| [1.4.0](https://docs.percona.com/percona-operator-for-postgresql/1.0/ReleaseNotes/Kubernetes-Operator-for-PostgreSQL-RN1.4.0.html) | 12 - 14 | 2.43 | 1.18.0 |
-| [1.3.0](https://docs.percona.com/percona-operator-for-postgresql/1.0/ReleaseNotes/Kubernetes-Operator-for-PostgreSQL-RN1.3.0.html) | 12 - 14 | 2.38 | 1.17.0 |
-| [1.2.0](https://docs.percona.com/percona-operator-for-postgresql/1.0/ReleaseNotes/Kubernetes-Operator-for-PostgreSQL-RN1.2.0.html) | 12 - 14 | 2.37 | 1.16.1 |
-| [1.1.0](https://docs.percona.com/percona-operator-for-postgresql/1.0/ReleaseNotes/Kubernetes-Operator-for-PostgreSQL-RN1.1.0.html) | 12 - 14 | 2.34 | 1.16.0 for PostgreSQL 12, <br> 1.16.1 for other versions |
-| [1.0.0](https://docs.percona.com/percona-operator-for-postgresql/1.0/ReleaseNotes/Kubernetes-Operator-for-PostgreSQL-RN1.0.0.html) | 12 - 13 | 2.33 | 1.13.0 |
-
+| Operator | [MySQL](https://www.percona.com/software/mysql-database/percona-server) | [Percona XtraBackup](https://www.percona.com/software/mysql-database/percona-xtrabackup) | [HA Proxy](https://www.haproxy.org/) | [ProxySQL](https://proxysql.com/) |
+|:--------|:--------|:-----|:-------|:-------|
+| [1.13.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.13.0.md) | | | | |
+| [1.12.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.12.0.md) | | | | |
+| [1.11.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.11.0.md) | | | | |
+| [1.10.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.10.0.md) | | | | |
+| [1.9.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.9.0.md) | | | | |
+| [1.8.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.8.0.md) | | | | |
+| [1.7.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.7.0.md) | | | | |
+| [1.6.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.6.0.md) | | | | |
+| [1.5.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.5.0.md) | | | | |
+| [1.4.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.4.0.md) | | | | |
+| [1.3.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.3.0.md) | | | | |
+| [1.2.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.2.0.md) | | | | |
+| [1.1.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.1.0.md) | | | | |
+| [1.0.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.0.0.md) | | | | |
 Platforms:
 
 | Operator | [GKE](https://cloud.google.com/kubernetes-engine)         | [EKS](https://aws.amazon.com)         | [Openshift](https://www.redhat.com/en/technologies/cloud-computing/openshift) | [Minikube](https://github.com/kubernetes/minikube)                          |
@@ -27,4 +32,3 @@ Platforms:
 | [1.2.0](https://docs.percona.com/percona-operator-for-postgresql/1.0/ReleaseNotes/Kubernetes-Operator-for-PostgreSQL-RN1.2.0.html) | 1.19 - 1.22 | 1.19 - 1.21 | 4.7 - 4.10  | - |
 | [1.1.0](https://docs.percona.com/percona-operator-for-postgresql/1.0/ReleaseNotes/Kubernetes-Operator-for-PostgreSQL-RN1.1.0.html) | 1.19 - 1.22 | 1.18 - 1.21 | 4.7 - 4.9   | - |
 | [1.0.0](https://docs.percona.com/percona-operator-for-postgresql/1.0/ReleaseNotes/Kubernetes-Operator-for-PostgreSQL-RN1.0.0.html) | 1.17 - 1.21 | 1.21        | 4.6 - 4.8   | - |
-
