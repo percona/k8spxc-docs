@@ -37,3 +37,5 @@ Platforms:
 | [1.3.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.3.0.md)   | 1.11, 1.14  | -           | 3.11, 4.1   | -           | 1.12 |
 | [1.2.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.2.0.md)   | +           | -           | 3.11        | -           | +    |
 | [1.1.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.1.0.md)   | +           | -           | 3.11        | -           | +    |
+
+More detailed information about the cluster components for the current version of the Operator can be found [in the system requirements](System-Requirements.md) and [in the list of certified images](images.md). For previous releases of the Operator, you can check the same pages [in the documentation archive](https://docs.percona.com/legacy-documentation/).
