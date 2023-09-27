@@ -23,7 +23,7 @@ Cluster components:
 Platforms:
 
 | Operator | [GKE](https://cloud.google.com/kubernetes-engine)         | [EKS](https://aws.amazon.com)         | [Openshift](https://www.redhat.com/en/technologies/cloud-computing/openshift) | [AKS](https://azure.microsoft.com/en-us/services/kubernetes-service/) | [Minikube](https://github.com/kubernetes/minikube)                          |
-|:--------|:------------|:------------|:------------|:----------------------------------|
+|:--------|:------------|:------------|:------------|:--------------|:--------------------|
 | [1.13.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.13.0.md) | 1.24 - 1.27 | 1.23 - 1.27 | 4.10 - 4.13 | 1.24 - 1.26 | 1.30 |
 | [1.12.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.12.0.md) | 1.21 - 1.24 | 1.21 - 1.24 | 4.10 - 4.11 | 1.22 - 1.24 | 1.28 |
 | [1.11.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.11.0.md) | 1.20 - 1.23 | 1.20 - 1.22 | 4.7 - 4.10  | -           | 1.23 |
