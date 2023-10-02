@@ -190,7 +190,7 @@ nav:
           - "Initial troubleshooting": debug.md
           - "Exec into the container": debug-shell.md
           - "Check the logs": debug-logs.md
-          - "Special debug images": debug-images.md
+          - "Special debug images": debug-images.mdge
           
     - HOWTOs:
           - "How to install Percona XtraDB Cluster in multi-namespace (cluster-wide) mode": cluster-wide.md
@@ -203,6 +203,7 @@ nav:
     - Reference:
           - "Custom Resource options": operator.md
           - "Percona certified images": images.md
+          - "Versions compatibility": versions.md
           - "Operator API": api.md
           - "Frequently Asked Questions": faq.md
           - "Old releases (documentation archive)": https://docs.percona.com/legacy-documentation/
