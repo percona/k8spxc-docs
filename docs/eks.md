@@ -51,67 +51,101 @@ Also, you need to configure AWS CLI with your credentials according to the [offi
 
     At success, you will see the message that namespace/<namespace name> was created, and the context was modified.
 
-2. Use the following `git clone` command to download the correct branch of the percona-xtradb-cluster-operator repository:
+    Deploy the Operator using the following command:
 
-    ``` {.bash data-prompt="$" }
-    $ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
+    ```bash
+    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/bundle.yaml
     ```
 
-    After the repository is downloaded, change the directory to run the rest of the commands in this document:
+    ??? example "Expected output"
 
-    ``` {.bash data-prompt="$" }
-    $ cd percona-xtradb-cluster-operator
+        ```text
+        customresourcedefinition.apiextensions.k8s.io/perconaxtradbclusters.pxc.percona.com created
+        customresourcedefinition.apiextensions.k8s.io/perconaxtradbclusterbackups.pxc.percona.com created
+        customresourcedefinition.apiextensions.k8s.io/perconaxtradbclusterrestores.pxc.percona.com created
+        customresourcedefinition.apiextensions.k8s.io/perconaxtradbbackups.pxc.percona.com created
+        role.rbac.authorization.k8s.io/percona-xtradb-cluster-operator created
+        serviceaccount/percona-xtradb-cluster-operator created
+        rolebinding.rbac.authorization.k8s.io/service-account-percona-xtradb-cluster-operator created
+        deployment.apps/percona-xtradb-cluster-operator created
+        ```
+
+2. The operator has been started, and you can deploy Percona XtraDB Cluster:
+
+    ```bash
+    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cr.yaml
     ```
 
-3. Deploy the Operator with the following command:
+    ??? example "Expected output"
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl apply -f deploy/bundle.yaml
+        ```text
+        perconaxtradbcluster.pxc.percona.com/ cluster1 created
+        ```
+
+    !!! note
+
+        This deploys default Percona XtraDB Cluster configuration with three
+        HAProxy and three XtraDB Cluster instances. Please see
+        [deploy/cr.yaml](https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cr.yaml)
+        and [Custom Resource Options](operator.md) for the configuration
+        options. You can clone the repository with all manifests and source code
+        by executing the following command:
+
+        ```bash
+        $ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
+        ```
+
+        After editing the needed options, apply your modified `deploy/cr.yaml` file as follows:
+
+        ```bash
+        $ kubectl apply -f deploy/cr.yaml
+        ```
+
+    The creation process may take some time. When the process is over your
+    cluster will obtain the `ready` status. You can check it with the following
+    command:
+
+    ```bash
+    $ kubectl get pxc
     ```
 
-    The following confirmation is returned:
+    ??? example "Expected output"
 
-    ``` {.text .no-copy}
-    customresourcedefinition.apiextensions.k8s.io/perconaxtradbclusters.pxc.percona.com created
-    customresourcedefinition.apiextensions.k8s.io/perconaxtradbclusterbackups.pxc.percona.com created
-    customresourcedefinition.apiextensions.k8s.io/perconaxtradbclusterrestores.pxc.percona.com created
-    customresourcedefinition.apiextensions.k8s.io/perconaxtradbbackups.pxc.percona.com created
-    role.rbac.authorization.k8s.io/percona-xtradb-cluster-operator created
-    serviceaccount/percona-xtradb-cluster-operator created
-    rolebinding.rbac.authorization.k8s.io/service-account-percona-xtradb-cluster-operator created
-    deployment.apps/percona-xtradb-cluster-operator created
-    ```
+        ```text
+        NAME       ENDPOINT                   STATUS   PXC   PROXYSQL   HAPROXY   AGE
+        cluster1   cluster1-haproxy.default   ready    3                3         5m51s
+        ```
 
-4. The operator has been started, and you can create the Percona XtraDB cluster:
+## Verifying the cluster operation
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl apply -f deploy/cr.yaml
-    ```
+It may take ten minutes to get the cluster started. When `kubectl get pxc`
+command finally shows you the cluster status as `ready`, you can try to connect
+to the cluster.
 
-    The process could take some time.
-    The return statement confirms the creation:
+{% include 'assets/fragments/connectivity.txt' %}
 
-    ``` {.text .no-copy}
-    perconaxtradbcluster.pxc.percona.com/cluster1 created
-    ```
+## Troubleshooting
 
-5. During previous steps, the Operator has generated several [secrets](https://kubernetes.io/docs/concepts/configuration/secret/), including the password for the `root` user, which you will need to access the cluster.
+If `kubectl get pxc` command doesn't show `ready` status too long, you can 
+check the creation process with the `kubectl get pods` command:
 
-    Use `kubectl get secrets` command to see the list of Secrets objects (by default Secrets object you are interested in has `cluster1-secrets` name). Then `kubectl get secret cluster1-secrets -o yaml` will return the YAML file with generated secrets, including the root password which should look as follows:
+```bash
+$ kubectl get pods
+```
 
-    ```yaml
-    ...
-    data:
-      ...
-      root: cm9vdF9wYXNzd29yZA==
-    ```
+??? example "Expected output"
 
-    Here the actual password is base64-encoded, and `echo 'cm9vdF9wYXNzd29yZA==' | base64 --decode` will bring it back to a human-readable form (in this example it will be a `root_password` string).
+    --8<-- "./docs/assets/code/kubectl-get-pods-response.txt"
 
-6. Now you can check wether you are able to connect to MySQL from the outside
-    with the help of the `kubectl port-forward` command as follows:
+If the command output had shown some errors, you can examine the problematic
+Pod with the `kubectl describe <pod name>` command as follows:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl port-forward svc/example-proxysql 3306:3306 &
-    $ mysql -h 127.0.0.1 -P 3306 -uroot -proot_password
-    ```
+```bash
+$ kubectl describe pod  cluster1-pxc-2
+```
+
+Review the detailed information for `Warning` statements and then correct the
+configuration. An example of a warning is as follows:
+
+`Warning  FailedScheduling  68s (x4 over 2m22s)  default-scheduler  0/1 nodes are available: 1 node(s) didn’t match pod affinity/anti-affinity, 1 node(s) didn’t satisfy existing pods anti-affinity rules.`
+
