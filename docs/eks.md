@@ -53,13 +53,13 @@ Also, you need to configure AWS CLI with your credentials according to the [offi
 
     Deploy the Operator using the following command:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/bundle.yaml
     ```
 
     ??? example "Expected output"
 
-        ```text
+        ``` {.text .no-copy}
         customresourcedefinition.apiextensions.k8s.io/perconaxtradbclusters.pxc.percona.com created
         customresourcedefinition.apiextensions.k8s.io/perconaxtradbclusterbackups.pxc.percona.com created
         customresourcedefinition.apiextensions.k8s.io/perconaxtradbclusterrestores.pxc.percona.com created
@@ -72,13 +72,13 @@ Also, you need to configure AWS CLI with your credentials according to the [offi
 
 2. The operator has been started, and you can deploy Percona XtraDB Cluster:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cr.yaml
     ```
 
     ??? example "Expected output"
 
-        ```text
+        ``` {.text .no-copy}
         perconaxtradbcluster.pxc.percona.com/ cluster1 created
         ```
 
@@ -91,13 +91,13 @@ Also, you need to configure AWS CLI with your credentials according to the [offi
         options. You can clone the repository with all manifests and source code
         by executing the following command:
 
-        ```bash
+        ``` {.bash data-prompt="$" }
         $ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
         ```
 
         After editing the needed options, apply your modified `deploy/cr.yaml` file as follows:
 
-        ```bash
+        ``` {.bash data-prompt="$" }
         $ kubectl apply -f deploy/cr.yaml
         ```
 
@@ -105,13 +105,13 @@ Also, you need to configure AWS CLI with your credentials according to the [offi
     cluster will obtain the `ready` status. You can check it with the following
     command:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl get pxc
     ```
 
     ??? example "Expected output"
 
-        ```text
+        ``` {.text .no-copy}
         NAME       ENDPOINT                   STATUS   PXC   PROXYSQL   HAPROXY   AGE
         cluster1   cluster1-haproxy.default   ready    3                3         5m51s
         ```
@@ -129,7 +129,7 @@ to the cluster.
 If `kubectl get pxc` command doesn't show `ready` status too long, you can 
 check the creation process with the `kubectl get pods` command:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl get pods
 ```
 
@@ -140,7 +140,7 @@ $ kubectl get pods
 If the command output had shown some errors, you can examine the problematic
 Pod with the `kubectl describe <pod name>` command as follows:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl describe pod  cluster1-pxc-2
 ```
 
