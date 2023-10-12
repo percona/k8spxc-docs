@@ -29,7 +29,7 @@ To create your cluster, you will need the following data:
 You can create your cluster via command line using `az aks create` command.
 The following command will create a 3-node cluster named ` cluster1` within some [already existing](https://docs.microsoft.com/en-us/azure/aks/learn/quick-kubernetes-deploy-cli#create-a-resource-group) resource group named `my-resource-group`:
 
-```bash
+``` {.bash data-prompt="$" }
 $ az aks create --resource-group my-resource-group --name  cluster1 --enable-managed-identity --node-count 3 --node-vm-size Standard_B4ms --node-osdisk-size 30 --network-plugin kubenet  --generate-ssh-keys --outbound-type loadbalancer
 ```
 
@@ -43,7 +43,7 @@ You may wait a few minutes for the cluster to be generated.
 Now you should configure the command-line access to your newly created cluster
 to make `kubectl` be able to use it.
 
-```bash 
+``` {.bash data-prompt="$" } 
 az aks get-credentials --resource-group my-resource-group --name  cluster1
 ```
 
@@ -53,7 +53,7 @@ az aks get-credentials --resource-group my-resource-group --name  cluster1
     namespace. If that's not the desired one, you can create a new namespace
     and/or set the context for the namespace as follows (replace the `<namespace name>` placeholder with some descriptive name):
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl create namespace <namespace name>
     $ kubectl config set-context $(kubectl config current-context) --namespace=<namespace name>
     ```
@@ -62,13 +62,13 @@ az aks get-credentials --resource-group my-resource-group --name  cluster1
 
     Deploy the Operator using the following command:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/bundle.yaml
     ```
 
     ??? example "Expected output"
 
-        ```text
+        ``` {.text .no-copy}
         customresourcedefinition.apiextensions.k8s.io/perconaxtradbclusters.pxc.percona.com created
         customresourcedefinition.apiextensions.k8s.io/perconaxtradbclusterbackups.pxc.percona.com created
         customresourcedefinition.apiextensions.k8s.io/perconaxtradbclusterrestores.pxc.percona.com created
@@ -81,13 +81,13 @@ az aks get-credentials --resource-group my-resource-group --name  cluster1
 
 2. The operator has been started, and you can deploy Percona XtraDB Cluster:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cr.yaml
     ```
 
     ??? example "Expected output"
 
-        ```text
+        ``` {.text .no-copy}
         perconaxtradbcluster.pxc.percona.com/ cluster1 created
         ```
 
@@ -100,13 +100,13 @@ az aks get-credentials --resource-group my-resource-group --name  cluster1
         options. You can clone the repository with all manifests and source code
         by executing the following command:
 
-        ```bash
+        ``` {.bash data-prompt="$" }
         $ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
         ```
 
         After editing the needed options, apply your modified `deploy/cr.yaml` file as follows:
 
-        ```bash
+        ``` {.bash data-prompt="$" }
         $ kubectl apply -f deploy/cr.yaml
         ```
 
@@ -114,13 +114,13 @@ az aks get-credentials --resource-group my-resource-group --name  cluster1
     cluster will obtain the `ready` status. You can check it with the following
     command:
 
-    ```bash
+    ``` {.bash data-prompt="$" }
     $ kubectl get pxc
     ```
 
     ??? example "Expected output"
 
-        ```text
+        ``` {.text .no-copy}
         NAME       ENDPOINT                   STATUS   PXC   PROXYSQL   HAPROXY   AGE
         cluster1   cluster1-haproxy.default   ready    3                3         5m51s
         ```
@@ -138,7 +138,7 @@ to the cluster.
 If `kubectl get pxc` command doesn't show `ready` status too long, you can 
 check the creation process with the `kubectl get pods` command:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl get pods
 ```
 
@@ -149,7 +149,7 @@ $ kubectl get pods
 If the command output had shown some errors, you can examine the problematic
 Pod with the `kubectl describe <pod name>` command as follows:
 
-```bash
+``` {.bash data-prompt="$" }
 $ kubectl describe pod  cluster1-pxc-2
 ```
 
@@ -168,7 +168,7 @@ To delete your cluster, you will need the following data:
 You can clean up the cluster with the `az aks delete` command as follows (with
 real names instead of `<resource group>` and `<cluster name>` placeholders):
 
-```bash
+``` {.bash data-prompt="$" }
 $ az aks delete --name <cluster name> --resource-group <resource group> --yes --no-wait
 ```
 
