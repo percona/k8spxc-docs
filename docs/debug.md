@@ -54,7 +54,7 @@ $ kubectl get pods
 The above command provides the following insights:
 
 * `READY` indicates how many containers in the Pod are ready to serve the
-    traffic. In the above example, `cluster1-haproxy-0` container has all two
+    traffic. In the above example, `cluster1-haproxy-0` Pod has all two
     containers ready (2/2). For an application to work properly, all containers
     of the Pod should be ready.
 * `STATUS` indicates the current status of the Pod. The Pod should be in a
