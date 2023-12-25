@@ -9,7 +9,7 @@
 
 * **Installation**
 
-    [Installing Percona Operator for MySQL based on Percona XtraDB Cluster](https://www.percona.com/doc/kubernetes-operator-for-pxc/index.html#installation)
+    [Installing Percona Operator for MySQL based on Percona XtraDB Cluster](../System-Requirements.md#installation-guidelines)
 
 
 ## Release Highlights

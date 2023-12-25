@@ -9,7 +9,7 @@
 
 * **Installation**
 
-    [Installing Percona Kubernetes Operator for Percona XtraDB Cluster](https://www.percona.com/doc/kubernetes-operator-for-pxc/index.html#quickstart-guides)
+    [Installing Percona Kubernetes Operator for Percona XtraDB Cluster](../System-Requirements.md#installation-guidelines)
 
 
 ## Release Highlights

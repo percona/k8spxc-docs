@@ -6,7 +6,7 @@
 
 * **Installation**
 
-   [Installing Percona Operator for MySQL based on Percona XtraDB Cluster](index.md#quickstart-guides)
+   [Installing Percona Operator for MySQL based on Percona XtraDB Cluster](../System-Requirements.md#installation-guidelines)
 
 ## Release Highlights
 

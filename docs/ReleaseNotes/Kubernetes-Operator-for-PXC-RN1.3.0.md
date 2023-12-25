@@ -3,7 +3,7 @@
 Percona announces the *Percona Kubernetes Operator for Percona XtraDB Cluster*
 1.3.0 release on January 6, 2020. This release is now the current GA release
 in the 1.3 series. [Install the Kubernetes Operator for Percona XtraDB Cluster
-by following the instructions](https://www.percona.com/doc/kubernetes-operator-for-pxc/kubernetes.html).
+by following the instructions](../kubernetes.md).
 
 The Percona Kubernetes Operator for Percona XtraDB Cluster automates the
 lifecycle and provides a consistent Percona XtraDB Cluster instance. The
