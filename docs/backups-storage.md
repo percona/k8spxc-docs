@@ -19,7 +19,7 @@ object with credentials needed to access the storage.
             keys should contain proper values to make the access possible).
 
         Create the Secrets file with these base64-encoded keys following the
-        [deploy/backup-s3.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/backup-secret-s3.yaml)
+        [deploy/backup-secret-s3.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/backup-secret-s3.yaml)
         example:
 
         ```yaml
@@ -52,7 +52,7 @@ object with credentials needed to access the storage.
         Once the editing is over, create the Kubernetes Secret object as follows:
 
         ``` {.bash data-prompt="$" }
-        $ kubectl apply -f deploy/backup-s3.yaml
+        $ kubectl apply -f deploy/backup-secret-s3.yaml
         ```
 
         !!! note

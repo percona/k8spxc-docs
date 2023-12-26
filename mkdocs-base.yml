@@ -46,6 +46,8 @@ extra_css:
   - css/percona.css
   - css/version-select.css
   - css/nocopy.css
+  - css/extra.css
+  - css/design.css
 
 extra_javascript:
    - js/promptremover.js
@@ -66,7 +68,8 @@ markdown_extensions:
   pymdownx.smartsymbols: {}
   pymdownx.tilde: {}
   pymdownx.superfences: {}
-  pymdownx.snippets: {}
+  pymdownx.snippets:
+      base_path: ["snippets"]
   pymdownx.tabbed:
     alternate_style: true
   pymdownx.highlight:
@@ -134,6 +137,7 @@ extra: # Used in main.html template and can't be externalized
     provider: mike
 
 # Common navigation for percona.com, render.com and PDF
+
 nav:
 
     - Welcome: index.md
@@ -142,8 +146,15 @@ nav:
           - "Comparison with other solutions": compare.md
           
     - Quickstart guides:
-          - "Install with Helm": helm.md
-          - "Install with kubectl": kubectl.md
+          - Overview: quickstart.md
+          - Quick install:
+            - "Install with Helm": helm.md
+            - "Install with kubectl": kubectl.md
+          - Connect to Percona Server for MongoDB: connect.md
+          - Insert data: data-insert.md
+          - Make a backup: backup-tutorial.md
+          - Monitor the database with PMM: monitoring-tutorial.md
+          - what-next.md
           
     - Installation:
           - "System requirements": System-Requirements.md
@@ -193,12 +204,14 @@ nav:
           - "Special debug images": debug-images.mdge
           
     - HOWTOs:
+          - Install the database with customized parameters: custom-install.md 
           - "How to install Percona XtraDB Cluster in multi-namespace (cluster-wide) mode": cluster-wide.md
           - "How to upgrade Percona XtraDB Cluster manually": update_manually.md
           - "How to use private registry": custom-registry.md
           - "How to restore backup to a new Kubernetes-based environment": backups-restore-to-new-cluster.md
           - "How to use backups and asynchronous replication to move an external database to Kubernetes": backups-move-from-external-db.md
-          - "Monitor Kubernetes": monitor-kubernetes.md 
+          - "Monitor Kubernetes": monitor-kubernetes.md
+          - "Delete the Operator": delete.md
 
     - Reference:
           - "Custom Resource options": operator.md
