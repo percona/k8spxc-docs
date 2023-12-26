@@ -13,7 +13,7 @@
     terminal. The following command will do this, naming the new Pod
     `percona-client`:
 
-    ```bash
+    ```{.bash data-prompt="$"}
     $ kubectl run -i --rm --tty percona-client --image=percona:8.0 --restart=Never -- bash -il
     ```
 
@@ -25,11 +25,11 @@
     (the default choice) or [ProxySQL](proxysql-conf.md):
 
     === "with HAProxy (default)"
-        ```bash
+        ```{.bash data-prompt="$"}
         $ mysql -h cluster1-haproxy -uroot -proot_password
         ```
 
     === "with ProxySQL"
-        ```bash
+        ```{.bash data-prompt="$"}
         $ mysql -h cluster1-proxysql -uroot -proot_password
         ```

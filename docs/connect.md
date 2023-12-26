@@ -34,25 +34,25 @@ Here's how to get it:
 
 3. Run a container with `mysql` tool and connect its console output to your terminal. The following command does this, naming the new Pod `percona-client`:
 
-    ```bash
-    $ kubectl run -i --rm --tty percona-client --image=percona:8.0 --restart=Never -- bash -il
+    ```{.bash data-prompt="$"}
+    $ kubectl run -n <namespace> -i --rm --tty percona-client --image=percona:8.0 --restart=Never -- bash -il
     ```
     Executing it may require some time to deploy the correspondent Pod.
 
 4. Connect to Percona XtraDB Cluster. To do this, run `mysql` tool in the
-    percona-client command shell using the password obtained from the secret.
-    The command will look different depending on whether your cluster provides
-    load balancing with [HAProxy](haproxy-conf.md) (the default choice) or
-    [ProxySQL](proxysql-conf.md):
+    percona-client command shell using your cluster name and the password
+    obtained from the secret. The command will look different depending on
+    whether your cluster provides load balancing with [HAProxy](haproxy-conf.md)
+    (the default choice) or [ProxySQL](proxysql-conf.md):
 
     === "with HAProxy (default)"
-        ```bash
-        $ mysql -h cluster1-haproxy -uroot -proot_password
+        ```{.bash data-prompt="$"}
+        $ mysql -h <cluster_name>-haproxy -uroot -proot_password
         ```
 
     === "with ProxySQL"
-        ```bash
-        $ mysql -h cluster1-proxysql -uroot -proot_password
+        ```{.bash data-prompt="$"}
+        $ mysql -h <cluster_name>-proxysql -uroot -proot_password
         ```
 
 Congratulations! You have connected to Percona XtraDB Cluster. 
