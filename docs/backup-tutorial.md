@@ -128,11 +128,11 @@ Custom Resource, you can make your first backup.
 	??? example "Output"
 
 	    ```{.text .no-copy}
-	    NAME      CLUSTER       STORAGE      DESTINATION                                      TYPE      STATUS   COMPLETED   AGE
-	    backup1   cluster1      s3-us-west   s3://pxc-operator-testing/2023-10-10T16:36:46Z   logical   running              43s
+	    NAME      CLUSTER       STORAGE      DESTINATION                                      STATUS    COMPLETED   AGE
+	    backup1   cluster1      s3-us-west   s3://pxc-operator-testing/2023-10-10T16:36:46Z   Running               43s
 	    ```
 
-	When the status changes to `Ready`, backup is made.
+	When the status changes to `Succeeded`, backup is made.
 
 ## Troubleshooting 
 
@@ -147,7 +147,7 @@ You may face issues with the backup. To identify the issue, you can do the follo
 * [View the backup-agent logs](debug-logs.md). Use the previous command to find the name of the pod where the backup was made:
   
   ```{.bash data-prompt="$"}
-  $ kubectl logs pod/<pod-name> -c backup-agent -n <namespace>
+  $ kubectl logs pod/<pod-name> -c xtrabackup -n <namespace>
   ```
 
 Congratulations! You have made the first backup manually. Want to learn more about backups? See the [Backup and restore](backups.md) section for how to [configure point-in-time recovery](backups-pitr.md), and how to [automatically make backups according to the schedule](backups-scheduled.md).
