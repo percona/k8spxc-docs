@@ -2,10 +2,23 @@
 
 In this tutorial you will learn to insert sample data to Percona Server for MySQL.
 
-MySQL provides multiple methods for data insert. We will use a `For` loop to insert some sample documents.
+We will enter SQL statements via the same MySQL shell we used to [connect to the database](https://github.com/percona/k8spxc-docs/).
 {.power-number}
 
-1. Run the following command: 
+1. Let's create a separate database for our experiments:
+
+    ```mysql
+    CREATE DATABASE mydb;
+    use mydb;
+    ```
+
+   ??? example "Output"
+
+        ```text
+        ...
+        ```
+
+2. Now let's create a table which we will later fill with some sample data: 
 
     ```mysql
     CREATE TABLE extraordinary_gentlemen (
@@ -16,19 +29,13 @@ MySQL provides multiple methods for data insert. We will use a `For` loop to ins
     );
     ```
 
-    If there is no `test` collection created, MongoDB creates when inserting documents.
+   ??? example "Output"
 
-
-
-
-
-    ??? example "Output"
-
-        ```mysql
+        ```text
         ...
         ```
-
-2. Query the collection to verify the data insertion
+   
+3. Adding data to the newly created table will look as follows:
 
     ```mysql
     INSERT INTO `extraordinary_gentlemen` (`name`,`occupation`)
@@ -39,25 +46,39 @@ MySQL provides multiple methods for data insert. We will use a `For` loop to ins
       (“Tom Sawyer”, “secret service agent”);
     ```
 
+    ??? example "Output"
 
-    ``` {.mysql data-prompt="admin>"}
+        ```text
+        ...
+        ```
+
+4. Query the collection to verify the data insertion
+
+    ```mysql
+    SELECT *
+    FROM `extraordinary_gentlemen`;
+    ```
+
+   ??? example "Output"
+
+        ```text
+        ...
+        ```
+   
+5. Updating data in the database would be not much more difficult:
+
+    ```mysql
     UPDATE  `extraordinary_gentlemen`
        SET occupation = 'submariner'
     WHERE name = “Nemo”;
     ```
 
-    ??? example "Output"
+   ??? example "Output"
 
-        ```{.mysql .no-copy}
-        [
-          ...
-        ]
+        ```text
+        ...
         ```
-
-        You will have different `_id` values.
-
-Now your cluster has some data in it.
-
+   
 ## Next steps
 
 [Make a backup :material-arrow-right:](backup-tutorial.md){.md-button}   
