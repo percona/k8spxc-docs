@@ -150,7 +150,7 @@ nav:
           - Quick install:
             - "Install with Helm": helm.md
             - "Install with kubectl": kubectl.md
-          - Connect to Percona Server for MongoDB: connect.md
+          - Connect to the database: connect.md
           - Insert data: data-insert.md
           - Make a backup: backup-tutorial.md
           - Monitor the database with PMM: monitoring-tutorial.md
