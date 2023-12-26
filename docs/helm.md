@@ -13,7 +13,11 @@
 2. The **kubectl** tool to manage and deploy applications on Kubernetes. Install
 it [following the official installation instructions](https://kubernetes.io/docs/tasks/tools/install-kubectl/).
 
+
 ## Installation
+
+Here's a sequence of steps to follow:
+{.power-number}
 
 1. Add the Percona’s Helm charts repository and make your Helm client up to
     date with it:
@@ -23,44 +27,60 @@ it [following the official installation instructions](https://kubernetes.io/docs
     $ helm repo update
     ```
 
-2. Install the Percona Operator for MySQL based on Percona XtraDB Cluster:
+2. It is a good practice to isolate workloads in Kubernetes via namespaces. Create a namespace:
 
-    ``` {.bash data-prompt="$" }
-    $ helm install my-op percona/pxc-operator
+    ```{.bash data-prompt="$" }
+    $ kubectl create namespace <namespace>
     ```
 
-    The `my-op` parameter in the above example is the name of [a new release object](https://helm.sh/docs/intro/using_helm/#three-big-concepts)
+3. Install the Percona Operator for MySQL based on Percona XtraDB Cluster:
+
+    ``` {.bash data-prompt="$" }
+    $ helm install my-op percona/pxc-operator --namespace <namespace>
+    ```
+
+    The `namespace` is the name of your namespace. The `my-op` parameter in the
+    above example is the name of [a new release object](https://helm.sh/docs/intro/using_helm/#three-big-concepts)
     which is created for the Operator when you install its Helm chart (use any
     name you like).
 
-    !!! note
-
-        If nothing explicitly specified, `helm install` command will work
-        with `default` namespace. To use different namespace, provide it with
-        the following additional parameter: `--namespace my-namespace`.
-
-3. Install Percona XtraDB Cluster:
+4. Install Percona XtraDB Cluster:
 
     ``` {.bash data-prompt="$" }
-    $ helm install my-db percona/pxc-db
+    $ helm install my-db percona/pxc-db --namespace <namespace>
     ```
 
     The `my-db` parameter in the above example is the name of [a new release object](https://helm.sh/docs/intro/using_helm/#three-big-concepts)
     which is created for the Percona XtraDB Cluster when you install its Helm
     chart (use any name you like).
 
-## Installing Percona XtraDB Cluster with customized parameters
+5. Check the Operator and the Percona XtraDB Cluster Pods status.
 
-The command above installs Percona XtraDB Cluster with [default parameters](operator.md).
-Custom options can be passed to a `helm install` command as a
-`--set key=value[,key=value]` argument. The options passed with a chart can be
-any of the Operator’s [Custom Resource options](https://github.com/percona/percona-helm-charts/tree/main/charts/pxc-db#installing-the-chart).
+    ```{.bash data-prompt="$" }
+    $ kubectl get pxc -n <namespace>
+    ```
 
-The following example will deploy a Percona XtraDB Cluster Cluster in the
-`pxc` namespace, with disabled backups and 20 Gi storage:
+    The creation process may take some time. When the process is over your
+    cluster obtains the `ready` status. 
 
-``` {.bash data-prompt="$" }
-$ helm install my-db percona/pxc-db \
-  --set pxc.volumeSpec.resources.requests.storage=20Gi \
-  --set backup.enabled=false
-```
+    ??? example "Expected output"
+
+        ``` {.text .no-copy}
+        NAME       ENDPOINT                   STATUS   PXC   PROXYSQL   HAPROXY   AGE
+        cluster1   cluster1-haproxy.default   ready    3                3         33d
+        ```
+
+You have successfully installed and deployed the Operator with default parameters. 
+
+This deploys default Percona XtraDB Cluster configuration with three HAProxy and
+three XtraDB Cluster instances.
+
+You can check the rest of the Operator's parameters in the [Custom Resource options reference](operator.md#operator-custom-resource-options).
+
+## Next steps
+
+[Connect to Percona XtraDB Cluster :material-arrow-right:](connect.md){.md-button}
+
+## Useful links
+
+[Install Percona XtraDB Cluster with customized parameters](custom-install.md)

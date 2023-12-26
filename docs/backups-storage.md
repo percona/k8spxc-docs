@@ -19,7 +19,7 @@ object with credentials needed to access the storage.
             keys should contain proper values to make the access possible).
 
         Create the Secrets file with these base64-encoded keys following the
-        [deploy/backup-s3.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/backup-secret-s3.yaml)
+        [deploy/backup-secret-s3.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/backup-secret-s3.yaml)
         example:
 
         ```yaml
@@ -52,7 +52,7 @@ object with credentials needed to access the storage.
         Once the editing is over, create the Kubernetes Secret object as follows:
 
         ``` {.bash data-prompt="$" }
-        $ kubectl apply -f deploy/backup-s3.yaml
+        $ kubectl apply -f deploy/backup-secret-s3.yaml
         ```
 
         !!! note
@@ -209,29 +209,29 @@ object with credentials needed to access the storage.
 
 === "Persistent Volume"
 
-        Here is an example of the `deploy/cr.yaml` backup section fragment,
-        which configures a private volume for filesystem-type storage:
+    Here is an example of the `deploy/cr.yaml` backup section fragment,
+    which configures a private volume for filesystem-type storage:
 
-        ```yaml
-        ...
-        backup:
-          ...
-          storages:
-            fs-pvc:
-              type: filesystem
-              volume:
-                persistentVolumeClaim:
-                  accessModes: [ "ReadWriteOnce" ]
-                  resources:
-                    requests:
-              storage: 6Gi
-          ...
-        ```
+    ```yaml
+    ...
+    backup:
+      ...
+      storages:
+        fs-pvc:
+          type: filesystem
+          volume:
+            persistentVolumeClaim:
+              accessModes: [ "ReadWriteOnce" ]
+              resources:
+                requests:
+          storage: 6Gi
+      ...
+    ```
 
-        !!! note
+    !!! note
 
-            Please take into account that 6Gi storage size specified in this
-            example may be insufficient for the real-life setups; consider using
-            tens or hundreds of gigabytes. Also, you can edit this option later,
-            and changes will take effect after applying the updated
+        Please take into account that 6Gi storage size specified in this
+        example may be insufficient for the real-life setups; consider using
+        tens or hundreds of gigabytes. Also, you can edit this option later,
+        and changes will take effect after applying the updated
             `deploy/cr.yaml` file with `kubectl`.
