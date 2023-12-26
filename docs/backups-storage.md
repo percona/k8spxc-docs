@@ -209,29 +209,29 @@ object with credentials needed to access the storage.
 
 === "Persistent Volume"
 
-        Here is an example of the `deploy/cr.yaml` backup section fragment,
-        which configures a private volume for filesystem-type storage:
+    Here is an example of the `deploy/cr.yaml` backup section fragment,
+    which configures a private volume for filesystem-type storage:
 
-        ```yaml
-        ...
-        backup:
-          ...
-          storages:
-            fs-pvc:
-              type: filesystem
-              volume:
-                persistentVolumeClaim:
-                  accessModes: [ "ReadWriteOnce" ]
-                  resources:
-                    requests:
-              storage: 6Gi
-          ...
-        ```
+    ```yaml
+    ...
+    backup:
+      ...
+      storages:
+        fs-pvc:
+          type: filesystem
+          volume:
+            persistentVolumeClaim:
+              accessModes: [ "ReadWriteOnce" ]
+              resources:
+                requests:
+          storage: 6Gi
+      ...
+    ```
 
-        !!! note
+    !!! note
 
-            Please take into account that 6Gi storage size specified in this
-            example may be insufficient for the real-life setups; consider using
-            tens or hundreds of gigabytes. Also, you can edit this option later,
-            and changes will take effect after applying the updated
+        Please take into account that 6Gi storage size specified in this
+        example may be insufficient for the real-life setups; consider using
+        tens or hundreds of gigabytes. Also, you can edit this option later,
+        and changes will take effect after applying the updated
             `deploy/cr.yaml` file with `kubectl`.
