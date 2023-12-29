@@ -64,7 +64,7 @@ Here's a sequence of steps to follow:
 3. Deploy Percona XtraDB Cluster:
 
     ```{.bash data-prompt="$" }
-    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cr.yaml
+    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cr.yaml -n <namespace>
     ```
 
     ??? example "Expected output"
