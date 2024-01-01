@@ -8,7 +8,7 @@ We recommend installing the Operator with the [kubectl](https://kubernetes.io/do
 
 [Install with kubectl :material-arrow-down:](#prerequisites){.md-button} [Install with Helm :material-arrow-right:](helm.md){.md-button}
 
-## Pre-requisites
+## Prerequisites
 
 To install Percona XtraDB Cluster, you need the following:
 
