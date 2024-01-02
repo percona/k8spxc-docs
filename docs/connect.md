@@ -43,16 +43,20 @@ Here's how to get it:
     percona-client command shell using your cluster name and the password
     obtained from the secret. The command will look different depending on
     whether your cluster provides load balancing with [HAProxy](haproxy-conf.md)
-    (the default choice) or [ProxySQL](proxysql-conf.md):
+    (the default choice) or [ProxySQL](proxysql-conf.md).
+    If your password contains special characters ($\&<>, etc), they may be
+    interpreted by the shell, and you may get "Permission denied" messages,
+    so use single quotes ' ' when entering the password, single quotes also
+    avoid variable expansion:
 
     === "with HAProxy (default)"
         ```{.bash data-prompt="$"}
-        $ mysql -h <cluster_name>-haproxy -uroot -proot_password
+        $ mysql -h <cluster_name>-haproxy -uroot -p'root_password'
         ```
 
     === "with ProxySQL"
         ```{.bash data-prompt="$"}
-        $ mysql -h <cluster_name>-proxysql -uroot -proot_password
+        $ mysql -h <cluster_name>-proxysql -uroot -p'root_password'
         ```
 
 Congratulations! You have connected to Percona XtraDB Cluster. 
