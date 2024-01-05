@@ -12,30 +12,29 @@
 
 ## New Features 
 
-* {{ k8spxcjira(1237) }}: Do not start restore if credentials are invalid or backup doesn't exist
-* {{ k8spxcjira(1298) }}: Prefix support for PMM
-* {{ k8spxcjira(1313) }}: Add 'Earliest restorable time' and 'Latest restorable time' for PITR
-* {{ k8spxcjira(1334) }}: Add support for postStart/preStop hooks
+* {{ k8spxcjira(1237) }}: The operator now checks if the needed Secrets exist and connects to the storage to check the existence of a backup before starting the restore process
+* {{ k8spxcjira(1298) }}: Configuring custom [prefix](../containers-conf.md) for Percona Monitoring and Management (PMM) environment variables Secret will allow using one PMM Server with multiple same name clusters
+* {{ k8spxcjira(1313) }}: The `kubectl get pxc-backup` command now shows Latest restorable time to make it easier to pick a point-in-time recovery target
+* {{ k8spxcjira(1334) }}: The new `lifecycle.postStart` and `lifecycle.preStop` Custom Resource options allow configuring [postStart and preStop hooks](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/) for ProxySQL and HAProxy Pods
+
 
 ## Improvements
 
-* {{ k8spxcjira(1079) }}: Standardize cluster and components service exposure
-* {{ k8spxcjira(1105) }}: PiTR support for self-signed S3 certificates
-* {{ k8spxcjira(1128) }}: mc: <ERROR> Unable to initialize new alias from the provided credentials. The secret key required to complete authentication could not be found. The region must be specified if this is not the home region f │ │ or the tenancy.
+* {{ k8spxcjira(1079) }}: Standardize cluster and components service [exposure](../expose.md) to have unification of the expose configuration across all Percona Operators
+* {{ k8spxcjira(1105) }}: Allow point-in-time recovery backups on S3-compatible storage with using self-signed certificates
+* {{ k8spxcjira(1128) }}: mc: <ERROR> Unable to initialize new alias from the provided credentials. The secret key required to complete authentication could not be found. The region must be specified if this is not the home region f │ │ or the tenancy (thanks to Cagri Biroglu for contributing)
 * {{ k8spxcjira(1144) }}: Mark backups in S3 bucket as PITR unready
-* {{ k8spxcjira(1147) }}:Print Last_IO_Error for replication channel if it's not empty 
-* {{ k8spxcjira(1151) }}: Improve PITR restore status
-* {{ k8spxcjira(1230) }}: Add Labels for all the k8s objects created by Operator
-* {{ k8spxcjira(1254) }}: Missing upgrade documentation for Percona XtraDB Cluster in multi-namespace (cluster-wide) mode
-* {{ k8spxcjira(1264) }}: Liveness probe does not work if sql_mode ANSI_QUOTES is enabled
-* {{ k8spxcjira(1271) }}: Backup stalls with S3 upload network issue
-* {{ k8spxcjira(1294) }}: PITR process should have a readiness probe
-* {{ k8spxcjira(1301) }}: Ability to run the operator locally against a remote K8S cluster
-* {{ k8spxcjira(1317) }}: Reduce hits to version service 
-* {{ k8spxcjira(1323) }}: Adding "prefix" to XtraDB Backup Operator CRD
-* {{ k8spxcjira(200) }}: Add support for custom options for xtrabackup, xbstream, xbcloud
-* {{ k8spxcjira(345) }}: Add topologySpreadConstraints to the specs for even distribution of the pods
-* {{ k8spxcjira(927) }}: Service Labels and Annotation for PXC
+* {{ k8spxcjira(1147) }}: Improve log messages by printing the `Last_IO_Error` for a replication channel if it's not empty
+* {{ k8spxcjira(1151) }}: The `kubectl get pxc-restore` command now shows the "Starting cluster" status to indicate that the point-in-time recovery process is finished
+* {{ k8spxcjira(1230) }}: Add Labels for all Kubernetes objects created by Operator (backups/restores, Secrets, Volumes, etc.) to make them clearly distinguishable
+* {{ k8spxcjira(1264) }}: Liveness probe didn't work if `sql_mode` ANSI_QUOTES enabled **BUG FIX?**
+* {{ k8spxcjira(1271) }}: Use timeout to avoid backup stalls in case of the S3 upload network issues
+* {{ k8spxcjira(1293) }} and {{ k8spxcjira(1294) }}: The new `backup.pitr.timeoutSeconds` Custom Resource option allows setting a timeout for the point-in-time recovery process
+* {{ k8spxcjira(1301) }}: The Operator can now be [run locally](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/CONTRIBUTING.md#1-contributing-to-the-source-tree) against a remote Kubernetes cluster, which simplifies the development process, substantially shortening the way to make and try minor code improvements
+* {{ k8spxcjira(1317) }}: Reduce hits to version service by using a one hour interval
+* {{ k8spxcjira(200) }}: The new `containerOptions` subsections were added to pxc-backup, pxc-restore and pxc Custom Resourcess to allow setting custom options for xtrabackup, xbstream, xbcloud tools used by the Operator
+* {{ k8spxcjira(345) }}: The new `topologySpreadConstraints` Custom Resource option allows to use [Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/#spread-constraints-for-pods) to achieve even distribution of Pods across the Kubernetes cluster
+* {{ k8spxcjira(927) }}: The new `serviceLabel` and `serviceAnnotation` Custom Resource options allow setting Service Labels and Annotation for XtraDB Cluster Pods
 
 ## Bugs Fixed
 
@@ -54,7 +53,6 @@
 * {{ k8spxcjira(1281) }}: Fix replication for cross-site
 * {{ k8spxcjira(1286) }}: tls certificate page is not up to date
 * {{ k8spxcjira(1288) }}: Make backup schedule name mandatory
-* {{ k8spxcjira(1293) }}: pitr process hanging indefinitely while connecting to mysql
 * {{ k8spxcjira(1302) }}: finalizers delete-s3-backup with GCS protection will cause an OOM
 * {{ k8spxcjira(1329) }}: pmm agent is failing in openshift with temp folder permission issue
 * {{ k8spxcjira(1333) }}: Scheduled backup failed if pxc cluster name is not unique across namespaces
