@@ -38,24 +38,22 @@
 
 ## Bugs Fixed
 
-* {{ k8spxcjira(1029) }}: replica cluster (cross-site) doesn't work with proxysql
-* {{ k8spxcjira(1067) }}: Changes to certain fields in cr.spec.haproxy does not upgrade the haproxy statefulset
-* {{ k8spxcjira(1106) }}: PiTR silently not uploading files if a corrupted binlog file exists in /var/lib/mysql
-* {{ k8spxcjira(1159) }}: cluster status flapping on invalid password change
+* {{ k8spxcjira(1029) }}: Fix a bug due to which replica cluster at cross-site replication couldn't work with ProxySQL
+* {{ k8spxcjira(1067) }}: Fix a bug that caused the Operator not tracking changes in a number of Custom Resource options in the `haproxy` subsection
+* {{ k8spxcjira(1106) }}: Fix a bug which caused point-in-time recovery silently not uploading files if a corrupted binlog file existed in /var/lib/mysql
+* {{ k8spxcjira(1159) }}: Cluster status was repeatedly switching between "ready" and "error" if the password change did not satisfy the complexity and was rejected by MySQL.
 * {{ k8spxcjira(1256) }}: Operator cannot clean replication's failover sources if replications have been stopped
-* {{ k8spxcjira(1263) }}: PiTR restore fails if xtrabackup user password is changed in binary log files
-* {{ k8spxcjira(1268) }}: pxc-container restarted immediately if /var/lib/mysql/sleep-forever file is removed
-* {{ k8spxcjira(1269) }}: wrong message about switching from haproxy to proxysql
+* {{ k8spxcjira(1263) }}: Fix a bug where point-in-time recovery was failing if the xtrabackup user password was changed in the binary log files
+* {{ k8spxcjira(1268) }}: pxc-container restarted immediately if /var/lib/mysql/sleep-forever file is removed **not noticeable to end user**
+* {{ k8spxcjira(1269) }}: switching from HAProxy to ProxySQL was broken for Percona XtraDB Cluster 5.7
 * {{ k8spxcjira(1274) }}: PXC init container inherits PXC node resource requirements
 * {{ k8spxcjira(1275) }}: Replication error due to caching_sha2_password
 * {{ k8spxcjira(1276) }}: HAProxy should be configured in a way it logs connection problems
 * {{ k8spxcjira(1277) }}: HAProxy logs do not have timestamps
 * {{ k8spxcjira(1281) }}: Fix replication for cross-site
-* {{ k8spxcjira(1286) }}: tls certificate page is not up to date
-* {{ k8spxcjira(1288) }}: Make backup schedule name mandatory
+* {{ k8spxcjira(1288) }}: The Operator didn't treated the name for scheduled backup as a mandatory field
 * {{ k8spxcjira(1302) }}: finalizers delete-s3-backup with GCS protection will cause an OOM
-* {{ k8spxcjira(1329) }}: pmm agent is failing in openshift with temp folder permission issue
-* {{ k8spxcjira(1333) }}: Scheduled backup failed if pxc cluster name is not unique across namespaces
+* {{ k8spxcjira(1333) }}: Scheduled backup was failing if Percona XtraDB Cluster name was not unique across namespaces
 * {{ k8spxcjira(1335) }}: Haproxy is not stopping connections after failover from pxc-2 to pxc-0
 * {{ k8spxcjira(878) }}: Check if we still use "clustercheck" user somewhere
 
