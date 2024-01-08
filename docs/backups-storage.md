@@ -224,7 +224,7 @@ object with credentials needed to access the storage.
               accessModes: [ "ReadWriteOnce" ]
               resources:
                 requests:
-          storage: 6Gi
+                  storage: 6G
       ...
     ```
 
