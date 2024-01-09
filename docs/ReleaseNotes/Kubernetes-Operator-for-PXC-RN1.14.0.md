@@ -42,21 +42,17 @@
 * {{ k8spxcjira(1067) }}: Fix a bug that caused the Operator not tracking changes in a number of Custom Resource options in the `haproxy` subsection
 * {{ k8spxcjira(1106) }}: Fix a bug which caused point-in-time recovery silently not uploading files if a corrupted binlog file existed in /var/lib/mysql
 * {{ k8spxcjira(1159) }}: Cluster status was repeatedly switching between "ready" and "error" if the password change did not satisfy the complexity and was rejected by MySQL.
-* {{ k8spxcjira(1256) }}: Operator cannot clean replication's failover sources if replications have been stopped
+* {{ k8spxcjira(1256) }}: Fix a bug where the Operator was unable to perform a cleanup by deleting a replication channel if the replication was already stopped
 * {{ k8spxcjira(1263) }}: Fix a bug where point-in-time recovery was failing if the xtrabackup user password was changed in the binary log files
 * {{ k8spxcjira(1268) }}: pxc-container restarted immediately if /var/lib/mysql/sleep-forever file is removed **not noticeable to end user**
-* {{ k8spxcjira(1269) }}: switching from HAProxy to ProxySQL was broken for Percona XtraDB Cluster 5.7
-* {{ k8spxcjira(1274) }}: PXC init container inherits PXC node resource requirements
-* {{ k8spxcjira(1275) }}: Replication error due to caching_sha2_password
-* {{ k8spxcjira(1276) }}: HAProxy should be configured in a way it logs connection problems
-* {{ k8spxcjira(1277) }}: HAProxy logs do not have timestamps
-* {{ k8spxcjira(1281) }}: Fix replication for cross-site
-* {{ k8spxcjira(1288) }}: The Operator didn't treated the name for scheduled backup as a mandatory field
-* {{ k8spxcjira(1302) }}: finalizers delete-s3-backup with GCS protection will cause an OOM
+* {{ k8spxcjira(1269) }}: Fix a bug due to which switching from HAProxy to ProxySQL was broken for Percona XtraDB Cluster 5.7
+* {{ k8spxcjira(1274) }}: PXC init container used by XtraDB Cluster and HAProxy instances inherited XtraDB Cluster resource requirements which was too much for HAProxy (Thanks Tristan for reporting)
+* {{ k8spxcjira(1275) }}: Fix a bug which caused replication error after switching system accounts to caching_sha2_password authentication plugin which became in previous release
+* {{ k8spxcjira(1276) }} and {{ k8spxcjira(1277) }}: HAProxy log format was changed to JSON with additional information such as timestamps to simplify troubleshooting **improvement?**
+* {{ k8spxcjira(1288) }}: The Operator didn't treated the name for scheduled backup as a mandatory field **improvement?**
+* {{ k8spxcjira(1302) }}: Fix a bug where the Operator was continuously trying to delete a backup from an S3 bucket that has a retention policy configured and `delete-s3-backup` finalizer present, which could cause out-of-memory issue in case of tight Pod's memory limits
 * {{ k8spxcjira(1333) }}: Scheduled backup was failing if Percona XtraDB Cluster name was not unique across namespaces
-* {{ k8spxcjira(1335) }}: Haproxy is not stopping connections after failover from pxc-2 to pxc-0
-* {{ k8spxcjira(878) }}: Check if we still use "clustercheck" user somewhere
-
+* {{ k8spxcjira(1335) }}: Fix a bug where HAProxy was not stopping existing connections in case of Percona XtraDB Cluster instance instead of  switching them to another instance
 
 ## Supported Platforms
 
