@@ -449,6 +449,16 @@ in [cross-site replication](replication.md#operator-replication) |
 | **Value**       | string |
 | **Example**     | `600m` |
 | **Description** | [Kubernetes CPU limits](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Percona XtraDB Cluster sidecar container |
+|                 | |
+| **Key**         | {{ optionlink('pxc.lifecycle.preStop.exec.command') }} |
+| **Value**       | array |
+| **Example**     | `["/bin/true"]` |
+| **Description** | Command for the [preStop lifecycle hook](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/) for Percona XtraDB Cluster Pods |
+|                 | |
+| **Key**         | {{ optionlink('pxc.lifecycle.postStart.exec.command') }} |
+| **Value**       | array |
+| **Example**     | `["/bin/true"]` |
+| **Description** | Command for the [postStart lifecycle hook](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/) for Percona XtraDB Cluster Pods |
 
 ### <a name="operator-haproxy-section"></a>HAProxy section
 
@@ -751,6 +761,16 @@ configuration options for the HAProxy service.
 | **Value**       | string |
 | **Example**     | `600m` |
 | **Description** | [Kubernetes CPU limits](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the sidecar HAProxy containers |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.lifecycle.preStop.exec.command') }} |
+| **Value**       | array |
+| **Example**     | `["/bin/true"]` |
+| **Description** | Command for the [preStop lifecycle hook](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/) for HAProxy Pods |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.lifecycle.postStart.exec.command') }} |
+| **Value**       | array |
+| **Example**     | `["/bin/true"]` |
+| **Description** | Command for the [postStart lifecycle hook](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/) for HAProxy Pods |
 
 ### <a name="operator-proxysql-section"></a>ProxySQL section
 
@@ -993,6 +1013,16 @@ configuration options for the ProxySQL daemon.
 | **Value**       | string |
 | **Example**     | `600m` |
 | **Description** | [Kubernetes CPU limits](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the sidecar ProxySQL containers |
+|                 | |
+| **Key**         | {{ optionlink('proxysql.lifecycle.preStop.exec.command') }} |
+| **Value**       | array |
+| **Example**     | `["/bin/true"]` |
+| **Description** | Command for the [preStop lifecycle hook](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/) for ProxySQL Pods |
+|                 | |
+| **Key**         | {{ optionlink('proxysql.lifecycle.postStart.exec.command') }} |
+| **Value**       | array |
+| **Example**     | `["/bin/true"]` |
+| **Description** | Command for the [postStart lifecycle hook](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/) for ProxySQL Pods |
 
 ### <a name="operator-logcollector-section"></a>Log Collector section
 
@@ -1072,6 +1102,11 @@ options for Percona Monitoring and Management.
 | **Value**       | string |
 | **Example**     | `--custom-labels=CUSTOM-LABELS` |
 | **Description** | Additional parameters which will be passed to the [pmm-admin add mysql](https://www.percona.com/doc/percona-monitoring-and-management/2.x/setting-up/client/mysql.html#adding-mysql-service-monitoring) command for `proxysql` Pods |
+|                 | |
+| **Key**         | {{ optionlink('pmm.containerSecurityContext') }} |
+| **Value**       | subdoc |
+| **Example**     | `privileged: false` |
+| **Description** | A custom [Kubernetes Security Context for a Container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) to be used instead of the default one |
 
 ### <a name="operator-backup-section"></a>Backup section
 
