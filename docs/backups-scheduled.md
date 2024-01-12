@@ -32,7 +32,7 @@ backup:
         bucket: S3-BACKUP-BUCKET-NAME-HERE
         region: us-west-2
         credentialsSecret: my-cluster-name-backup-s3
-  tasks:
+  schedule:
    - name: "sat-night-backup"
      schedule: "0 0 * * 6"
      keep: 3
