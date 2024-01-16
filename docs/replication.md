@@ -16,6 +16,13 @@ Setting up MySQL for asynchronous replication without the Operator is out of the
 
 Configuring the cross-site replication for the cluster controlled by the Operator is explained in the following subsections.
 
+## Creating a Replica cluster
+
+Cross-site replication can be configured on two sibling Percona XtraDB Clusters.
+That's why you should first make a fully operational clone of your main database cluster. After that your original cluster will be configured as *Source*, and a new one (the clone) will be configured as *Replica*.
+
+The easiest way to achieve this is to use backups. You make a full backup of your main database cluster, and restore it to a new Kubernetes-based environment, following [this HowTo](backups-restore-to-new-cluster.md).
+
 ## Configuring cross-site replication on Source instances
 
 You can configure *Source* instances for cross-site replication with `spec.pxc.replicationChannels` subsection in the `deploy/cr.yaml` configuration file. It is an array of channels, and you should provide the following keys for the channel in your *Source* Percona XtraDB Cluster:
@@ -141,9 +148,9 @@ credentials stored in a Secret object [along with other system users](users.md#u
 
 !!! note
 
-    If the cluster is outside of Kubernetes and is not under the Operator’s control, [the appropriate user with necessary permissions](https://dev.mysql.com/doc/refman/8.0/en/replication-asynchronous-connection-failover.html) should be created manually.
+    If the Replica cluster is not a clone of the original one (for example, it's outside of Kubernetes and is not under the Operator’s control) [the appropriate user with necessary permissions](https://dev.mysql.com/doc/refman/8.0/en/replication-asynchronous-connection-failover.html) should be created manually.
 
-You can change a password for this user as follows:
+If you need you can change a password for this user as follows:
 
 === "in Linux"
 
