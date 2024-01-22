@@ -67,7 +67,9 @@ spec:
     be internet-facing.
 
 To list the endpoints assigned to PXC Pods list the Kubernetes Service objects by
-executing `kubectl get services -l "app.kubernetes.io/instance=CLUSTER_NAME"` command.
+executing `kubectl get services -l "app.kubernetes.io/instance=cluster1"` command
+(don't forget to substitute `cluster1` with the real name of your cluster, if you
+don't use the default name).
 
 ## Configuring cross-site replication on Replica instances
 
