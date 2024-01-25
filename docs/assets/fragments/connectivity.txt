@@ -1,12 +1,13 @@
 1. You will need the login and password for the admin user to access the
     cluster. Use `kubectl get secrets` command to see the list of Secrets
     objects (by default the Secrets object you are interested in has
-    `cluster1-secrets` name). 
+    `cluster1-secrets` name).
     You can use the following command to get the password of the `root`
-    user:
+    user (don't forget to substitute the `<namespace>` placeholder with your
+    namespace):
     
     ``` {.bash data-prompt="$" }
-    $ kubectl get secret cluster1-secrets -o jsonpath='{.data.root}' | base64 --decode && echo
+    $ kubectl get secret cluster1-secrets -n <namespace> --template='{{"{{"}}.data.root | base64decode{{"}}"}}{{"{{"}}"\n"{{"}}"}}'
     ```
 
 2. Run a container with `mysql` tool and connect its console output to your
@@ -14,22 +15,23 @@
     `percona-client`:
 
     ```{.bash data-prompt="$"}
-    $ kubectl run -i --rm --tty percona-client --image=percona:8.0 --restart=Never -- bash -il
+    $ kubectl run -n <namespace> -i --rm --tty percona-client --image=percona:8.0 --restart=Never -- bash -il
     ```
 
     Executing it may require some time to deploy the correspondent Pod.
 
 3. Now run `mysql` tool in the percona-client command shell using the password
-    obtained from the secret. The command will look different depending on
-    whether your cluster provides load balancing with [HAProxy](haproxy-conf.md)
-    (the default choice) or [ProxySQL](proxysql-conf.md):
+    obtained from the secret instead of the `<root_password>` placeholder.
+    The command will look different depending on whether your cluster provides
+    load balancing with [HAProxy](haproxy-conf.md) (the default choice) or
+    [ProxySQL](proxysql-conf.md):
 
     === "with HAProxy (default)"
         ```{.bash data-prompt="$"}
-        $ mysql -h cluster1-haproxy -uroot -p<root_password>
+        $ mysql -h cluster1-haproxy -uroot -p'<root_password>'
         ```
 
     === "with ProxySQL"
         ```{.bash data-prompt="$"}
-        $ mysql -h cluster1-proxysql -uroot -p<root_password>
+        $ mysql -h cluster1-proxysql -uroot -p'<root_password>'
         ```

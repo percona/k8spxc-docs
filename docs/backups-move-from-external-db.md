@@ -70,7 +70,7 @@ This document provides the steps how to migrate Percona Server for MySQL 8.0 dep
     user as follows:
 
     ``` {.bash data-prompt="$" }
-    $ kubectl get secrets cluster1-secrets -o yaml -o jsonpath='{.data.<user_name>}' | base64 --decode | tr '\n' ' ' && echo " "
+    $ kubectl get secrets cluster1-secrets --template='{{"{{"}}.data.<user_name> | base64decode{{"}}"}}{{"{{"}}"\n"{{"}}"}}'
     ```
     
     Repeat this command 4 times, substituting <user_name> with `monitor`,
