@@ -6,7 +6,7 @@
     user:
     
     ``` {.bash data-prompt="$" }
-    $ kubectl get secrets cluster1-secrets -o yaml -o jsonpath='{.data.root}' | base64 --decode | tr '\n' ' ' && echo " "
+    $ kubectl get secret cluster1-secrets -o jsonpath='{.data.root}' | base64 --decode && echo
     ```
 
 2. Run a container with `mysql` tool and connect its console output to your
@@ -26,10 +26,10 @@
 
     === "with HAProxy (default)"
         ```{.bash data-prompt="$"}
-        $ mysql -h cluster1-haproxy -uroot -proot_password
+        $ mysql -h cluster1-haproxy -uroot -p<root_password>
         ```
 
     === "with ProxySQL"
         ```{.bash data-prompt="$"}
-        $ mysql -h cluster1-proxysql -uroot -proot_password
+        $ mysql -h cluster1-proxysql -uroot -p<root_password>
         ```
