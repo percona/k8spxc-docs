@@ -70,7 +70,7 @@ Here is an example:
 ```yaml
 ...
 proxysql:
-  enabled: false
+  enabled: true
   size: 3
   image: percona/percona-xtradb-cluster-operator:{{ release }}-proxysql
   configuration: |
