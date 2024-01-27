@@ -1,10 +1,12 @@
 # Make a backup
 
-In this tutorial you will learn how to make a logical backup of your data manually. To learn more about backups, see the [Backup and restore](backups.md) section.
+In this tutorial, you will learn how to make a logical backup of your data manually. To learn more about backups, see the [Backup and restore](backups.md) section.
 
 ## Considerations
 
-In this tutorial we use the [AWS S3](https://aws.amazon.com/s3/) as the backup storage. You need the following S3-related information:
+First, download the Percona XtraDB Cluster Operator repository from GitHub by using the following command: `git clone https://github.com/percona/percona-xtradb-cluster-operator.git`. This repository is essential for setting up backups.
+
+In this tutorial, we use the [AWS S3](https://aws.amazon.com/s3/) as the backup storage. You need the following S3-related information:
    
 * the name of the S3 storage
 * the name of the S3 bucket
