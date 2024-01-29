@@ -33,15 +33,8 @@ spec:
       isSource: true
 ```
 
-The cluster will be ready for asynchronous replication when you apply changes as usual:
-
-``` {.bash data-prompt="$" }
-$ kubectl apply -f deploy/cr.yaml
-```
-
-## Exposing instances of Percona XtraDB Cluster
-
-You need to expose every Percona XtraDB Cluster Pod of the *Source* cluster to
+<a name="exposing-instances-of-percona-xtradb-cluster"></a> You will also
+need to expose every Percona XtraDB Cluster Pod of the *Source* cluster to
 make it possible for the *Replica* cluster to connect. This is done through the
 `pxc.expose` section in the `deploy/cr.yaml` configuration file as follows.
 
@@ -58,6 +51,12 @@ spec:
     This will create a LoadBalancer per each Percona XtraDB Cluster Pod.
     In most cases, for cross-region replication to work this Load Balancer should
     be internet-facing.
+
+The cluster will be ready for asynchronous replication when you apply changes as usual:
+
+``` {.bash data-prompt="$" }
+$ kubectl apply -f deploy/cr.yaml
+```
 
 To list the endpoints assigned to PXC Pods list the Kubernetes Service objects by
 executing `kubectl get services -l "app.kubernetes.io/instance=CLUSTER_NAME"` command.
