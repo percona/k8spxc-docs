@@ -53,7 +53,7 @@ If you don’t have access to AWS, you can use any S3-compatible storage like [M
 	$ kubectl apply -f deploy/backup-secret-s3.yaml -n <namespace>
 	```
 
-4. Update your `deploy/cr.yaml` configuration. Specify the following parameters in the `backups` section:
+4. Update your `deploy/cr.yaml` configuration. Specify the following parameters in the `backup` section:
 
     * set the `storages.<NAME>.type` to `s3`. Substitute the `<NAME>` part with some arbitrary name that you will later use to refer this storage when making backups and restores.
     * set the `storages.<NAME>.s3.credentialsSecret` to the name you used to refer your Kubernetes Secret (`my-cluster-name-backup-s3` in the previous step).
