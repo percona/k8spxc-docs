@@ -1240,22 +1240,22 @@ file contains the following configuration options for the regular Percona XtraDB
 | **Example**     | `disktype: ssd` |
 | **Description** | [Kubernetes nodeSelector](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector) |
 |                 | |
-| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;..topologySpreadConstraints.labelSelector.matchLabels') }} |
+| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.topologySpreadConstraints.labelSelector.matchLabels') }} |
 | **Value**       | label |
 | **Example**     | `app.kubernetes.io/name: percona-xtradb-cluster-operator` |
 | **Description** | The Label selector for the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
 |                 | |
-| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;..topologySpreadConstraints.maxSkew') }} |
+| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.topologySpreadConstraints.maxSkew') }} |
 | **Value**       | int |
 | **Example**     | 1 |
 | **Description** | The degree to which Pods may be unevenly distributed under the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
 |                 | |
-| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;..topologySpreadConstraints.topologyKey') }} |
+| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.topologySpreadConstraints.topologyKey') }} |
 | **Value**       | string |
 | **Example**     | `kubernetes.io/hostname` |
 | **Description** | The key of node labels for the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
 |                 | |
-| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;..topologySpreadConstraints.whenUnsatisfiable') }} |
+| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.topologySpreadConstraints.whenUnsatisfiable') }} |
 | **Value**       | string |
 | **Example**     | `DoNotSchedule` |
 | **Description** | What to do with a Pod if it doesn't satisfy the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
