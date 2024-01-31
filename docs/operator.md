@@ -1066,12 +1066,12 @@ options for Percona Monitoring and Management.
 | **Key**         | {{ optionlink('pmm.pxcParams') }} |
 | **Value**       | string |
 | **Example**     | `--disable-tablestats-limit=2000` |
-| **Description** | Additional parameters which will be passed to the [pmm-admin add mysql](https://www.percona.com/doc/percona-monitoring-and-management/2.x/setting-up/client/mysql.html#adding-mysql-service-monitoring) command for `pxc` Pods |
+| **Description** | Additional parameters which will be passed to the [pmm-admin add mysql](https://docs.percona.com/percona-monitoring-and-management/setting-up/client/mysql.html) command for `pxc` Pods |
 |                 | |
 | **Key**         | {{ optionlink('pmm.proxysqlParams') }} |
 | **Value**       | string |
 | **Example**     | `--custom-labels=CUSTOM-LABELS` |
-| **Description** | Additional parameters which will be passed to the [pmm-admin add mysql](https://www.percona.com/doc/percona-monitoring-and-management/2.x/setting-up/client/mysql.html#adding-mysql-service-monitoring) command for `proxysql` Pods |
+| **Description** | Additional parameters which will be passed to the [pmm-admin add proxysql](https://docs.percona.com/percona-monitoring-and-management/setting-up/client/proxysql.html) command for `proxysql` Pods |
 
 ### <a name="operator-backup-section"></a>Backup section
 
