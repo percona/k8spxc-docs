@@ -1071,7 +1071,7 @@ options for Percona Monitoring and Management.
 | **Key**         | {{ optionlink('pmm.proxysqlParams') }} |
 | **Value**       | string |
 | **Example**     | `--custom-labels=CUSTOM-LABELS` |
-| **Description** | Additional parameters which will be passed to the [pmm-admin add mysql](https://www.percona.com/doc/percona-monitoring-and-management/2.x/setting-up/client/mysql.html#adding-mysql-service-monitoring) command for `proxysql` Pods |
+| **Description** | Additional parameters which will be passed to the [pmm-admin add proxysql](https://www.percona.com/doc/percona-monitoring-and-management/2.x/setting-up/client/mysql.html#adding-mysql-service-monitoring) command for `proxysql` Pods |
 
 ### <a name="operator-backup-section"></a>Backup section
 
