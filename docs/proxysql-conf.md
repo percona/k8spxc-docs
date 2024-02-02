@@ -408,7 +408,7 @@ percona-xtradb-cluster-operator-dc67778fd-qtspz   1/1     Running   0          6
 The next command will print you the needed admin password:
 
 ```default
-$ kubectl get secrets $(kubectl get pxc -o jsonpath='{.items[].spec.seretsName}') -o template='{{'{{'}} .data.proxyadmin | base64decode {{'}}'}}'
+$ kubectl get secrets $(kubectl get pxc -o jsonpath='{.items[].spec.secretsName}') -o template='{{'{{'}} .data.proxyadmin | base64decode {{'}}'}}'
 ```
 
 When both Pod name and admin password are known, connect to the ProxySQL as
