@@ -123,12 +123,12 @@ configuration options for the Percona XtraDB Cluster.
 | **Key**         | {{ optionlink('pxc.expose.enabled') }} |
 | **Value**       | boolean |
 | **Example**     | `true` |
-| **Description** | Enable or disable exposing Percona XtraDB Cluster nodes with dedicated IP addresses |
+| **Description** | Enable or disable exposing Percona XtraDB Cluster instances with dedicated IP addresses |
 |                 | |
 | **Key**         | {{ optionlink('pxc.expose.type') }} |
 | **Value**       | string |
 | **Example**     | `LoadBalancer` |
-| **Description** | The [Kubernetes Service Type](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) used for xposure |
+| **Description** | The [Kubernetes Service Type](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) used for exposure |
 |                 | |
 | **Key**         | {{ optionlink('pxc.expose.externalTrafficPolicy') }} |
 | **Value**       | string |
@@ -635,12 +635,12 @@ configuration options for the HAProxy service.
 | **Key**         | {{ optionlink('haproxy.exposePrimary.enabled') }} |
 | **Value**       | boolean |
 | **Example**     | `false` |
-| **Description** | Enables or disables the HAProxy Service |
+| **Description** | Enables or disables the HAProxy primary instance Service |
 |                 | |
 | **Key**         | {{ optionlink('haproxy.exposePrimary.type') }} |
 | **Value**       | string |
 | **Example**     | `ClusterIP` |
-| **Description** | Specifies the type of [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) to be used for HAProxy |
+| **Description** | Specifies the type of [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) to be used for HAProxy primary instance Service |
 |                 | |
 | **Key**         | {{ optionlink('haproxy.exposePrimary.externalTrafficPolicy') }} |
 | **Value**       | string |
@@ -650,7 +650,7 @@ configuration options for the HAProxy service.
 | **Key**         | {{ optionlink('haproxy.exposePrimary.internalTrafficPolicy') }} |
 | **Value**       | string |
 | **Example**     | `Cluster` |
-| **Description** | Specifies whether Service for HAProxy should [route internal traffic to cluster-wide or to node-local endpoints](https://kubernetes.io/docs/concepts/services-networking/service-traffic-policy/) (it can influence the load balancing effectiveness) |
+| **Description** | Specifies whether Service for HAProxy primary instance should [route internal traffic to cluster-wide or to node-local endpoints](https://kubernetes.io/docs/concepts/services-networking/service-traffic-policy/) (it can influence the load balancing effectiveness) |
 |                 | |
 | **Key**         | {{ optionlink('haproxy.exposePrimary.loadBalancerSourceRanges') }} |
 | **Value**       | string |
@@ -864,7 +864,7 @@ configuration options for the ProxySQL daemon.
 | **Example**     | `10.0.0.0/8` |
 | **Description** | The range of client IP addresses from which the load balancer should be reachable (if not set, there is no limitations) |
                  | |
-| **Key**         | {{ optionlink('haproxy.expose.loadBalancerIP') }} |
+| **Key**         | {{ optionlink('proxysql.expose.loadBalancerIP') }} |
 | **Value**       | string |
 | **Example**     | `127.0.0.1` |
 | **Description** | The static IP-address for the load balancer |

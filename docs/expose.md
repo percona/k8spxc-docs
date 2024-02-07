@@ -33,8 +33,8 @@ object with the `kubectl get service` command:
 
 ```{.bash data-prompt="$"}
 $ kubectl get service cluster1-haproxy
-NAME               TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)                      AGE
-cluster1-haproxy   ClusterIP   10.76.2.102   <none>        3306/TCP,3307/TCP,3309/TCP   2m32s
+NAME               TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)                                 AGE
+cluster1-haproxy   ClusterIP   10.92.11.16   <none>        3306/TCP,3309/TCP,33062/TCP,33060/TCP   2m32s
 ```
 
 ### Exposing cluster with ProxySQL
