@@ -1103,7 +1103,7 @@ file contains the following configuration options for the regular Percona XtraDB
 | **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.type') }} |
 | **Value**       | string |
 | **Example**     | `s3` |
-| **Description** | The cloud storage type used for backups. Only `s3` and `filesystem` types are supported |
+| **Description** | The cloud storage type used for backups. Only `s3`, `azure`, and `filesystem` types are supported |
 |                 | |
 | **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.verifyTLS') }} |
 | **Value**       | boolean |
