@@ -33,8 +33,9 @@ object with the `kubectl get service` command:
 
 ```{.bash data-prompt="$"}
 $ kubectl get service cluster1-haproxy
-NAME               TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)                                 AGE
-cluster1-haproxy   ClusterIP   10.92.11.16   <none>        3306/TCP,3309/TCP,33062/TCP,33060/TCP   2m32s
+NAME                        TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)                                                         AGE
+cluster1-haproxy            LoadBalancer   10.12.23.173   <pending>     3306:32548/TCP,3309:30787/TCP,33062:32347/TCP,33060:31867/TCP   14s
+cluster1-haproxy-replicas   LoadBalancer   10.12.25.208   <pending>     3306:32166/TCP                                                  14s
 ```
 
 ### Exposing cluster with ProxySQL
@@ -53,8 +54,8 @@ object with the `kubectl get service` command:
 
 ```{.bash data-prompt="$"}
 $ kubectl get service cluster1-mysql-primary
-NAME                     TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)                                                         AGE
-cluster1-mysql-primary   LoadBalancer   10.40.37.98    35.192.172.85   3306:32146/TCP,33062:31062/TCP,33060:32026/TCP,6033:30521/TCP   3m31s
+NAME                     TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)                        AGE
+cluster1-proxysql        LoadBalancer   10.0.238.36    <pending>     3306:30408/TCP,33062:30217/TCP   115s
 ```
 
 As you could notice, this command also shows mapped ports the application can
@@ -92,11 +93,11 @@ corresponding Services with the `kubectl get services` command:
 
 ```{.bash data-prompt="$"}
 $ kubectl get services
-NAME                     TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)                                                         AGE
+NAME                              TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)                                 AGE
 ...
-cluster1-mysql-0         LoadBalancer   10.40.44.110   104.198.16.21   3306:31009/TCP,33062:31319/TCP,33060:30737/TCP,6033:30660/TCP   75s
-cluster1-mysql-1         LoadBalancer   10.40.42.5     34.70.170.187   3306:30601/TCP,33062:30273/TCP,33060:30910/TCP,6033:30847/TCP   75s
-cluster1-mysql-2         LoadBalancer   10.40.42.158   35.193.50.44    3306:32042/TCP,33062:31576/TCP,33060:31656/TCP,6033:31448/TCP   75s
+cluster1-pxc-0                    LoadBalancer   10.120.15.23    34.132.93.114   3306:30771/TCP                          111s
+cluster1-pxc-1                    LoadBalancer   10.120.8.132    35.188.39.15    3306:30832/TCP                          111s
+cluster1-pxc-2                    LoadBalancer   10.120.14.65    34.16.25.126    3306:32018/TCP                          111s
 ```
 
 As you could notice, this command also shows mapped ports the application can
