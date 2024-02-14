@@ -16,7 +16,7 @@
 * {{ k8spxcjira(1298) }}: Configuring custom [prefix](../containers-conf.md) for Percona Monitoring and Management (PMM) environment variables Secret will allow using one PMM Server with multiple same name clusters
 * {{ k8spxcjira(1313) }}: The `kubectl get pxc-backup` command now shows Latest restorable time to make it easier to pick a point-in-time recovery target
 * {{ k8spxcjira(1334) }}: The new `lifecycle.postStart` and `lifecycle.preStop` Custom Resource options allow configuring [postStart and preStop hooks](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/) for ProxySQL and HAProxy Pods
-
+* {{ k8spxcjira(1341) }}: Automate resizing volumes Kubernetes supports volume expansion since v1.24 but there’s no straightforward way to resize PVCs using the operator. We want to allow users to resize their PVCs by just patching the PerconaXtraDBCluster custom resource. Use `persistentVolumeClaim".resources.requests.storage`
 
 ## Improvements
 
@@ -35,6 +35,7 @@
 * {{ k8spxcjira(200) }}: The new `containerOptions` subsections were added to pxc-backup, pxc-restore and pxc Custom Resourcess to allow setting custom options for xtrabackup, xbstream, xbcloud tools used by the Operator
 * {{ k8spxcjira(345) }}: The new `topologySpreadConstraints` Custom Resource option allows to use [Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/#spread-constraints-for-pods) to achieve even distribution of Pods across the Kubernetes cluster
 * {{ k8spxcjira(927) }}: The new `serviceLabel` and `serviceAnnotation` Custom Resource options allow setting Service Labels and Annotation for XtraDB Cluster Pods
+* {{ k8spxcjira(1254) }}: Upgrade instructions for Percona XtraDB Cluster in multi-namespace (cluster-wide) mode [were added to documentation](cluster-wide.md#upgrade)
 
 ## Bugs Fixed
 
@@ -53,6 +54,10 @@
 * {{ k8spxcjira(1302) }}: Fix a bug where the Operator was continuously trying to delete a backup from an S3 bucket that has a retention policy configured and `delete-s3-backup` finalizer present, which could cause out-of-memory issue in case of tight Pod's memory limits
 * {{ k8spxcjira(1333) }}: Scheduled backup was failing if Percona XtraDB Cluster name was not unique across namespaces
 * {{ k8spxcjira(1335) }}: Fix a bug where HAProxy was not stopping existing connections in case of Percona XtraDB Cluster instance instead of  switching them to another instance
+* {{ k8spxcjira(1335) }}: Fix a bug where HAProxy was not aware of the IP address change in case of the restarted Percona XtraDB Cluster Pod and couldn't reach it until the DNS cache update
+* {{ k8spxcjira(1345) }}: Fix a regression where the Operator was unable to customize readinessProbe of the pxc container
+* {{ k8spxcjira(1350) }}: Fix a bug due to which log rotate could cause locking TOI ([Total Order Isolation](https://galeracluster.com/library/documentation/schema-upgrades.html#toi)) DDL operation on the cluster with flush error logs, resulting in unnecessary synchronization on the whole cluster and possible warnings in logs
+* {{ k8spxcjira(1352) }}: Use `innodb_flush_log_at_trx_commit=2` system variable instead of unsafe `innodb_flush_log_at_trx_commit=0` **SKIP: not noticeable to the end user**
 
 ## Supported Platforms
 
