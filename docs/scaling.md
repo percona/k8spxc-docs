@@ -78,7 +78,7 @@ $ kubectl describe sc <storage class name> | grep allowVolumeExpansion
 
     !!! warning
 
-        Automatic storage scaling by the Operator is in a technical preview stage
+        Automated storage scaling by the Operator is in a technical preview stage
         and is not recommended for production environments.
 
     For example, you can do it by editing and applying the `deploy/cr.yaml` file:
