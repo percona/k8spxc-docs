@@ -100,7 +100,6 @@ $ kubectl describe sc <storage class name> | grep allowVolumeExpansion
     ``` {.bash data-prompt="$" }
     $ kubectl apply -f cr.yaml
     ```
-```
 
 === "Manual scaling"
 
