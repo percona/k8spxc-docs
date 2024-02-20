@@ -15,6 +15,9 @@ configuration file.
 The resulting setup will use the number zero Percona XtraDB Cluster member
 (`cluster1-pxc-0` by default) as writer.
 
+[proxysql.expose.enabled](operator.md#proxysql-expose-enabled) Custom Resource
+option enables or disables the apropriate `cluster1-proxysql` service.
+
 !!! note
 
     <a name="headless-service"> If you need to configure ProxySQL service as a

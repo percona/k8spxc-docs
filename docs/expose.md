@@ -8,60 +8,69 @@ configured by the Operator.
 This document describes the usage of [Custom Resource manifest options](operator.md#operator-custom-resource-options)
 to expose the clusters deployed with the Operator.
 
+### Exposing cluster with HAProxy or ProxySQL
+
 The Operator provides a choice of two cluster components to
 provide load balancing and proxy service: you can use either [HAProxy](https://haproxy.org) or [ProxySQL](https://proxysql.com/).
 
-![image](assets/images/pxc-replication.svg)
+![image](assets/images/replication.svg)
 
-### Exposing cluster with HAProxy
 
-Load balancing and proxy service with [HAProxy](https://haproxy.org) is enabled
-by default.
+Load balancing and proxy service with [HAProxy](https://haproxy.org) is the
+default choice.
 
-You can control whether to use it or not by enabling or disabling it via the
-`haproxy.enabled` option in the `deploy/cr.yaml` configuration file.
+* See [how you can enable and use HAProxy and what are the limitations](haproxy-conf.md).
+* See [how you can enable and use ProxySQL and what are the limitations](proxysql-conf.md).
 
-See [how you can enable or disable HAProxy and what are the limitations](haproxy-conf.md).
+=== "HAProxy"
 
-The resulting HAProxy setup will contain the `cluster1-haproxy` service
-listening on ports 3306 (MySQL primary), 3307 (MySQL replicas), and 3309 (the [proxy protocol](https://www.haproxy.com/blog/haproxy/proxy-protocol/)
-useful for operations such as asynchronous calls).
+    The default HAProxy based setup will contain the `cluster1-haproxy` Service
+    listening on ports 3306 (MySQL primary) and 3309 (the
+    [proxy protocol](https://www.haproxy.com/blog/haproxy/proxy-protocol/) useful
+    for operations such as asynchronous calls), and also `cluster1-haproxy-replicas`
+    Service for MySQL replicas, listening on port 3306 (this Service
+    **should not be used for write requests**).
 
-When the cluster is configured in this way, you can find the endpoint (the
-public IP address of the load balancer in our example) by getting the Service
-object with the `kubectl get service` command:
+    You can find the endpoint (the public IP address of the load balancer in our
+    example) by getting the Service object with the `kubectl get service` command.
+    The output will be as follows:
 
-```{.bash data-prompt="$"}
-$ kubectl get service cluster1-haproxy
-NAME                        TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)                                                         AGE
-cluster1-haproxy            LoadBalancer   10.12.23.173   <pending>     3306:32548/TCP,3309:30787/TCP,33062:32347/TCP,33060:31867/TCP   14s
-cluster1-haproxy-replicas   LoadBalancer   10.12.25.208   <pending>     3306:32166/TCP                                                  14s
-```
+    ```{.bash data-prompt="$"}
+    $ kubectl get service cluster1-haproxy
+    NAME                        TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)                                                         AGE
+    cluster1-haproxy            LoadBalancer   10.12.23.173   <pending>     3306:32548/TCP,3309:30787/TCP,33062:32347/TCP,33060:31867/TCP   14s
+    cluster1-haproxy-replicas   LoadBalancer   10.12.25.208   <pending>     3306:32166/TCP                                                  14s
+    ```
 
-### Exposing cluster with ProxySQL
+    You can control creation of these two Services with the following Custom
+    Resource options:
 
-Load balancing and proxy service with [ProxySQL](https://proxysql.com/) is disabled
-by default.
+    * [haproxy.exposePrimary.enabled](operator.md#haproxy-exposePrimary-enabled)
+        enables or disables `cluster1-haproxy` Service,
+    * [haproxy.exposeReplicas.enabled](operator.md#haproxy-exposeReplicas-enabled)
+        enables or disables `haproxy-replicas` Service.
 
-You can control whether to use it or not by enabling or disabling it via the
-`proxysql.enabled` option in the `deploy/cr.yaml` configuration file.
+=== "ProxySQL"
 
-See [how you can enable or disable ProxySQL and what are the limitations](proxysql-conf.md).
+    If you configured your cluster with ProxySQL based setup, you will have 
+    `cluster1-proxysql` Service.
+    You can find the endpoint (the public IP address of the load balancer in our
+    example) by getting the Service object with the `kubectl get service` command.
+    The output will be as follows:
 
-When the cluster is configured in this way, you can find the endpoint (the
-public IP address of the load balancer in our example) by getting the Service
-object with the `kubectl get service` command:
+    ```{.bash data-prompt="$"}
+    $ kubectl get service cluster1-proxysql
+    NAME                     TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)                        AGE
+    cluster1-proxysql        LoadBalancer   10.0.238.36    35.192.172.85   3306:30408/TCP,33062:30217/TCP   115s
+    ```
 
-```{.bash data-prompt="$"}
-$ kubectl get service cluster1-mysql-primary
-NAME                     TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)                        AGE
-cluster1-proxysql        LoadBalancer   10.0.238.36    <pending>     3306:30408/TCP,33062:30217/TCP   115s
-```
+    As you could notice, this command also shows mapped ports the application 
+    can use to communicate with MySQL primary instance (`3306` for the classic
+    MySQL protocol).
 
-As you could notice, this command also shows mapped ports the application can
-use to communicate with MySQL primary instance (e.g. `3306` for the classic
-MySQL protocol, or `33060` for [MySQL X Protocol](https://dev.mysql.com/doc/dev/mysql-server/latest/page_mysqlx_protocol.html)
-useful for operations such as asynchronous calls).
+    You can enable or disable this Service with the
+    [proxysql.expose.enabled](operator.md#proxysql-expose-enabled) Custom
+    Resource option.
 
 ## Service per Pod
 
@@ -75,7 +84,7 @@ This is possible by setting the following options in [spec.mysql section](operat
 
 * [pxc.expose.enabled](operator.md#pxc-expose-enabled) enables or disables exposure
     of Percona XtraDB Cluster instances,
-* [mysql.expose.type](operator.md#mysql-expose-type) defines the Kubernetes Service
+* [pxc.expose.type](operator.md#pxc-expose-type) defines the Kubernetes Service
     object type.
 
 The following example creates a dedicated LoadBalancer Service for each node of
@@ -105,11 +114,3 @@ use to communicate with MySQL instances (e.g. `3306` for the classic MySQL
 protocol, or `33060` for [MySQL X Protocol](https://dev.mysql.com/doc/dev/mysql-server/latest/page_mysqlx_protocol.html)
 useful for operations such as asynchronous calls).
 
-Also, you can expose other components of your cluster in a similar way:
-
-* [haproxy.exposePrimary.enabled](operator.md#haproxy-exposePrimary-enabled) enables or disables exposure
-    of HAProxy primary instances,
-* [haproxy.exposeReplicas.enabled](operator.md#haproxy-exposeReplicas-enabled) enables or disables
-    `haproxy-replicas` Service. This Service (on by default) forwards requests to all Percona XtraDB Cluster instances, and it **should not be used for write requests**!
-* [proxysql.expose.enabled](operator.md#proxysql-expose-enabled) enables or disables exposure
-    of ProxySQL instances,
