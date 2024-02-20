@@ -42,9 +42,43 @@ Kubernetes manages storage with a PersistentVolume (PV), a segment of
 storage supplied by the administrator, and a PersistentVolumeClaim
 (PVC), a request for storage from a user. In Kubernetes v1.11 the
 feature was added to allow a user to increase the size of an existing
-PVC object. The user cannot shrink the size of an existing PVC object.
+PVC object (considered stable since Kubernetes v1.24).
+The user cannot shrink the size of an existing PVC object.
 
-#### Volume Expansion capability
+#### Automatic scaling
+
+The Operator allows to scale Percona XtraDB Cluster storage automatically since
+version 1.14.0.
+
+!!! warning
+
+     Automatic storage scaling by the Operator is in a technical preview stage
+     and is not recommended for production environments!
+
+You can expand storage by changing the value of the
+`pxc.volumeSpec.persistentVolumeClaim.resources.requests.storage` in the Custom
+Resource, e.g. by editing and applying the `deploy/cr.yaml` file:
+
+    ``` {.text .no-copy}
+    spec:
+      ...
+      pxc:
+        ...
+        volumeSpec:
+          persistentVolumeClaim:
+            resources:
+              requests:
+                storage: <NEW STORAGE SIZE>
+        ...
+    ```
+
+    Apply changes as usual:
+
+    ``` {.bash data-prompt="$" }
+    $ kubectl apply -f cr.yaml
+    ```
+
+#### Manual scaling with Volume Expansion capability
 
 Certain volume types support PVCs expansion (exact details about
 PVCs and the supported volume types can be found in [Kubernetes
@@ -149,7 +183,7 @@ $ kubectl describe sc <storage class name> | grep allowVolumeExpansion
         cluster1-pxc       3/3     39s
         ```
 
-#### No Volume Expansion capability
+#### Manual scaling without Volume Expansion capability
 
 Scaling the storage without Volume Expansion is also possible. We will
 need to delete Pods one by one and their persistent volumes to resync 
