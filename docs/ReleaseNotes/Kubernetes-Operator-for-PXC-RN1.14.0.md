@@ -59,6 +59,11 @@
 * {{ k8spxcjira(1350) }}: Fix a bug due to which log rotate could cause locking TOI ([Total Order Isolation](https://galeracluster.com/library/documentation/schema-upgrades.html#toi)) DDL operation on the cluster with flush error logs, resulting in unnecessary synchronization on the whole cluster and possible warnings in logs
 * {{ k8spxcjira(1352) }}: Use `innodb_flush_log_at_trx_commit=2` system variable instead of unsafe `innodb_flush_log_at_trx_commit=0` **SKIP: not noticeable to the end user**
 
+## Deprecation, Rename and Removal
+
+* {{ k8spxcjira(1079) }}: Custom Resource options for service exposure of Percona XtraDB Cluster HAProxy Primary, HAProxy Replicas, and ProxySQL were moved to dedicated `pxc.expose`, `haproxy.exposePrimary`, `haproxy.exposeReplicas`, and `proxysql.expose` subsections. This brings more structure to the Custom Resouce and implements the same approach across all Percona Operators
+* {{ k8spxcjira(878) }}: The `clustercheck` system user deprecated in v1.12.0 was completely removed in this release
+
 ## Supported Platforms
 
 The Operator was developed and tested with Percona XtraDB Cluster versions 8.0.32-24.2 and 5.7.42-31.65. Other options may also work but have not been tested. Other software components include:

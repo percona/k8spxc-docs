@@ -153,8 +153,7 @@ These development mode credentials from `deploy/secrets.yaml` are:
 | ------------ | ---------------------- |
 | root         | `root_password`        |
 | xtrabackup   | `backup_password`      |
-| monitor      | `monitor`              |
-| clustercheck | `clustercheckpassword` |
+| monitor      | `monitory`             |
 | proxyadmin   | `admin_password`       |
 | operator     | `operatoradmin`        |
 | replication  | `repl_password`        |
