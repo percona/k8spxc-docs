@@ -70,7 +70,7 @@ Kubernetes supports the Persistent Volume expansion as a stable feature since v1
 
 ## Deprecation, Rename and Removal
 
-* {{ k8spxcjira(1079) }}: Custom Resource options for service exposure of Percona XtraDB Cluster HAProxy Primary, HAProxy Replicas, and ProxySQL were moved to dedicated `pxc.expose`, `haproxy.exposePrimary`, `haproxy.exposeReplicas`, and `proxysql.expose` subsections. This brings more structure to the Custom Resouce and implements the same approach across all Percona Operators
+* {{ k8spxcjira(1079) }}: Custom Resource options for service exposure of Percona XtraDB Cluster HAProxy Primary, HAProxy Replicas, and ProxySQL were moved to dedicated `pxc.expose`, `haproxy.exposePrimary`, `haproxy.exposeReplicas`, and `proxysql.expose` subsections. This brings more structure to the Custom Resource and implements the same approach across all Percona Operators
 * {{ k8spxcjira(1274) }}: The `initImage` Custom Resource option which allows providing an alternative image with various options for the initial Operator installation, was moved to a dedicated subsection and is now available as `initContainer.image`
 * {{ k8spxcjira(878) }}: The `clustercheck` system user deprecated in v1.12.0 was completely removed in this release
 
