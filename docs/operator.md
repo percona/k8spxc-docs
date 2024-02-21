@@ -236,6 +236,16 @@ in [cross-site replication](replication.md#operator-replication) |
 | **Example**     | `rack: rack-22` |
 | **Description** | [Labels are key-value pairs attached to objects](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) |
 |                 | |
+| **Key**         | {{ optionlink('pxc.serviceLabels') }} |
+| **Value**       | label |
+| **Example**     | `rack: rack-23` |
+| **Description** | The [Kubernetes labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) for the Percona XtraDB Cluster Service |
+|                 | |
+| **Key**         | {{ optionlink('pxc.serviceAnnotations') }} |
+| **Value**       | string |
+| **Example**     | `service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http` |
+| **Description** | The [Kubernetes annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) metadata for the Percona XtraDB Cluster Service |
+|                 | |
 | **Key**         | {{ optionlink('pxc.readinessProbes.initialDelaySeconds') }} |
 | **Value**       | int |
 | **Example**     | `15` |
