@@ -142,7 +142,8 @@ restoration can be done in the following way.
         query the backup for this information as follows:
        
        ``` {.bash data-prompt="$" }
-       $ kubectl get pxc-backup <backup_name> -o jsonpath='{.status.latestRestorableTime}')`
+       $ kubectl get pxc-backup <backup_name> -o jsonpath='{.status.earliestRestorableTime}'
+       $ kubectl get pxc-backup <backup_name> -o jsonpath='{.status.latestRestorableTime}'
        ```
 
 2. Run the actual restoration process:
