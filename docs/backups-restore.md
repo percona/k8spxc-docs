@@ -223,7 +223,7 @@ and so will fail to reconcile the cluster.
 Let's consider an example with four backups, first two of which were done before
 the password rotation and therefore have different passwords:
 
-``` {.text .no-copy .hl_lines="2 3"}
+``` {.text .no-copy hl_lines="2 3"}
 NAME      CLUSTER    STORAGE   DESTINATION      STATUS      COMPLETED   AGE
 backup1   cluster1   fs-pvc    pvc/xb-backup1   Succeeded   23m         24m
 backup2   cluster1   fs-pvc    pvc/xb-backup2   Succeeded   18m         19m
