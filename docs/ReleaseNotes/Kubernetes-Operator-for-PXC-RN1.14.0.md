@@ -2,7 +2,7 @@
 
 * **Date**
 
-   January 1X, 2024
+   February 28, 2024
 
 * **Installation**
 
@@ -48,7 +48,6 @@ Kubernetes supports the Persistent Volume expansion as a stable feature since v1
 
 ## Bugs Fixed
 
-* {{ k8spxcjira(1029) }}: Fix a bug due to which replica cluster at cross-site replication couldn't work with ProxySQL
 * {{ k8spxcjira(1067) }}: Fix a bug that caused the Operator not tracking changes in a number of Custom Resource options in the `haproxy` subsection
 * {{ k8spxcjira(1106) }}: Fix a bug which caused point-in-time recovery silently not uploading files if a corrupted binlog file existed in /var/lib/mysql
 * {{ k8spxcjira(1159) }}: Cluster status was repeatedly switching between "ready" and "error" if the password change did not satisfy the complexity and was rejected by MySQL.
