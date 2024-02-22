@@ -1210,6 +1210,26 @@ file contains the following configuration options for the regular Percona XtraDB
 | **Example**     | <pre>fsGroup: 1001<br>supplementalGroups: [1001, 1002, 1003]</pre> |
 | **Description** | A custom [Kubernetes Security Context for a Pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) to be used instead of the default one |
 |                 | |
+| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.containerOptions.env') }} |
+| **Value**       | subdoc |
+| **Example**     | <pre>- name: VERIFY_TLS<br>  value: "false"</pre> |
+| **Description** | The [environment variables set as key-value pairs](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/) for the backup container |
+|                 | |
+| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.containerOptions.args.xtrabackup') }} |
+| **Value**       | subdoc |
+| **Example**     | <pre>- "--someflag=abc"</pre> |
+| **Description** | Custom [command line options](https://docs.percona.com/percona-xtrabackup/innovation-release/xtrabackup-option-reference.html) for the `xtrabackup` Percona XtraBackup tool |
+|                 | |
+| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.containerOptions.args.xbcloud') }} |
+| **Value**       | subdoc |
+| **Example**     | <pre>- "--someflag=abc"</pre> |
+| **Description** | Custom [command line options](https://docs.percona.com/percona-xtrabackup/innovation-release/xbcloud-options.html) for the `xbcloud` Percona XtraBackup tool |
+|                 | |
+| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.containerOptions.args.xbstream') }} |
+| **Value**       | subdoc |
+| **Example**     | <pre>- "--someflag=abc"</pre> |
+| **Description** | Custom [command line options](https://docs.percona.com/percona-xtrabackup/innovation-release/xbstream-options.html) for the `xbstream` Percona XtraBackup tool |
+|                 | |
 | **Key**         | {{ optionlink('backup.schedule.name') }} |
 | **Value**       | string |
 | **Example**     | `sat-night-backup` |
