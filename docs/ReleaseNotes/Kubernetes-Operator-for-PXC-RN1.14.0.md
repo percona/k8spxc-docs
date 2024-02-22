@@ -76,21 +76,21 @@ Kubernetes supports the Persistent Volume expansion as a stable feature since v1
 
 ## Supported Platforms
 
-The Operator was developed and tested with Percona XtraDB Cluster versions 8.0.32-24.2 and 5.7.42-31.65. Other options may also work but have not been tested. Other software components include:
+The Operator was developed and tested with Percona XtraDB Cluster versions 8.0.35-27.1 and 5.7.44-31.65. Other options may also work but have not been tested. Other software components include:
 
-* Percona XtraBackup versions 2.4.28 and 8.0.32-26
-* HAProxy 2.6.12
-* ProxySQL 2.5.1-1.1
-* LogCollector based on fluent-bit 2.1.5
-* PMM Client 2.38
+* Percona XtraBackup versions 2.4.29-1 and 8.0.35-30.1
+* HAProxy 2.8.5-1
+* ProxySQL 2.5.5-1.1
+* LogCollector based on fluent-bit 2.1.10-1
+* PMM Client 2.41.1
 
 The following platforms were tested and are officially supported by the Operator
 1.14.0:
 
-* [Google Kubernetes Engine (GKE)](https://cloud.google.com/kubernetes-engine) 1.24 - 1.27
-* [Amazon Elastic Container Service for Kubernetes (EKS)](https://aws.amazon.com) 1.23 - 1.27
-* [Azure Kubernetes Service (AKS)](https://azure.microsoft.com/en-us/services/kubernetes-service/) 1.24 - 1.26
-* [OpenShift](https://www.redhat.com/en/technologies/cloud-computing/openshift) 4.10 - 4.13
-* [Minikube](https://minikube.sigs.k8s.io/docs/) 1.30 (based on Kubernetes 1.27)
+* [Google Kubernetes Engine (GKE)](https://cloud.google.com/kubernetes-engine) 1.25 - 1.29
+* [Amazon Elastic Container Service for Kubernetes (EKS)](https://aws.amazon.com) 1.24 - 1.29
+* [Azure Kubernetes Service (AKS)](https://azure.microsoft.com/en-us/services/kubernetes-service/) 1.26 - 1.28
+* [OpenShift](https://www.redhat.com/en/technologies/cloud-computing/openshift) 4.12.50 - 4.14.13
+* [Minikube](https://minikube.sigs.k8s.io/docs/) 1.32.0
 
 This list only includes the platforms that the Percona Operators are specifically tested on as part of the release process. Other Kubernetes flavors and versions depend on the backward compatibility offered by Kubernetes itself.
