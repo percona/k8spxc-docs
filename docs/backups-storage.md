@@ -238,14 +238,14 @@ object with credentials needed to access the storage.
 
 !!! note
 
-    Typically, the Percona XtraBackup tool used by the Operator to perform the
+    Typically, Percona XtraBackup tools used by the Operator to perform the
     backup/restore process does not require any additional configuration beyond
-    the standard parameters specified in the storage section. However, if access
-    to non-standard cloud storage requires some fine-tuning, you can pass
+    the standard parameters mentioned above. However, if access
+    to a non-standard cloud requires some fine-tuning, you can pass
     additional options to the binary XtraBackup utilities using the following
     Custom Resource options:
     [backup.storages.STORAGE_NAME.containerOptions.args.xtrabackup](operator.md#backup-storages-containeroptions-args-xtrabackup),
     [backup.storages.STORAGE_NAME.containerOptions.args.xbcloud](operator.md#backup-storages-containeroptions-args-xbcloud), and
-    [backup.storages.STORAGE_NAME.containerOptions.args.xbstream](operator.md#backup-storages-containeroptions-args-xbstream),
-    or set environment variables with
+    [backup.storages.STORAGE_NAME.containerOptions.args.xbstream](operator.md#backup-storages-containeroptions-args-xbstream).
+    Also, you can set environment variables for the XtraBackup container with
     [backup.storages.STORAGE_NAME.containerOptions.env](operator.md#backup-storages-containeroptions-env).
