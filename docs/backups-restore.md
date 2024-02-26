@@ -137,12 +137,11 @@ restoration can be done in the following way.
    !!! note
    
        Full backup objects available with the `kubectl get pxc-backup` command
-       have two information fields handy when selecting a backup to restore:
-        "Earliest restorable time" and "Latest restorable time". You can easily
+       have a "Latest restorable time" information field handy when selecting
+       a backup to restore. You can easily
         query the backup for this information as follows:
        
        ``` {.bash data-prompt="$" }
-       $ kubectl get pxc-backup <backup_name> -o jsonpath='{.status.earliestRestorableTime}'
        $ kubectl get pxc-backup <backup_name> -o jsonpath='{.status.latestRestorableTime}'
        ```
 
