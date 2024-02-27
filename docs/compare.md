@@ -39,10 +39,10 @@ Here are the backup and restore capabilities of each solution.
 
 | Feature/Product     | Percona Operator for MySQL  (based on PXC) | Percona Operator for MySQL (based on PS) | Bitpoke MySQL Operator |       Moco       | Oracle MySQL Operator |      Vitess      |
 |---------------------|:------------------------------------------:|:----------------------------------------:|:----------------------:|:----------------:|:---------------------:|:----------------:|
-| Scheduled backups   |             :white_check_mark:             |            :white_check_mark:            |   :white_check_mark:   |:white_check_mark:|     :no_entry_sign:   |:white_check_mark:|
+| Scheduled backups   |             :white_check_mark:             |            :white_check_mark:            |   :white_check_mark:   |:white_check_mark:|     :white_check_mark:     |:white_check_mark:|
 | Incremental backups |               :no_entry_sign:              |              :no_entry_sign:             |     :no_entry_sign:    |:white_check_mark:|     :no_entry_sign:   | :no_entry_sign:  |
 | PITR                |             :white_check_mark:             |              :no_entry_sign:             |     :no_entry_sign:    | :no_entry_sign:  |     :no_entry_sign:   | :no_entry_sign:  |
-| PVCs for backups    |             :white_check_mark:             |              :no_entry_sign:             |     :no_entry_sign:    | :no_entry_sign:  |     :no_entry_sign:   | :no_entry_sign:  |
+| PVCs for backups    |             :white_check_mark:             |              :no_entry_sign:             |     :no_entry_sign:    | :no_entry_sign:  |     :white_check_mark:    | :no_entry_sign:  |
 
 ## Monitoring
 
