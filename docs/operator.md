@@ -130,6 +130,11 @@ configuration options for the Percona XtraDB Cluster.
 | **Example**     | `LoadBalancer` |
 | **Description** | The [Kubernetes Service Type](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) used for exposure |
 |                 | |
+| **Key**         | {{ optionlink('pxc.expose.trafficPolicy') }} |
+| **Value**       | string |
+| **Example**     | `Local` |
+| **Description** | Specifies whether Service should [route external traffic to cluster-wide or node-local endpoints](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip) (it can influence the load balancing effectiveness) **This option is deprecated and will be removed in future releases**. Use `pxc.expose.externalTrafficPolicy` instead |
+|                 | |
 | **Key**         | {{ optionlink('pxc.expose.externalTrafficPolicy') }} |
 | **Value**       | string |
 | **Example**     | `Local` |
@@ -537,6 +542,16 @@ configuration options for the HAProxy service.
 | **Example**     | `3` |
 | **Description** | When the [readiness probe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) fails, Kubernetes will try this number of times before marking the Pod Unready |
 |                 | |
+| **Key**         | {{ optionlink('haproxy.serviceType') }} |
+| **Value**       | string |
+| **Example**     | `ClusterIP` |
+| **Description** | Specifies the type of [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) to be used for HAProxy. **This option is deprecated and will be removed in future releases**. Use `haproxy.exposePrimary.type` instead |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.externalTrafficPolicy') }} |
+| **Value**       | string |
+| **Example**     | `Cluster` |
+| **Description** | Specifies whether Service for HAProxy should [route external traffic to cluster-wide or to node-local endpoints](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip) (it can influence the load balancing effectiveness). **This option is deprecated and will be removed in future releases**. Use `haproxy.exposePrimary.externalTrafficPolicy` instead |
+|                 | |
 | **Key**         | {{ optionlink('haproxy.livenessProbes.initialDelaySeconds') }} |
 | **Value**       | int |
 | **Example**     | `60` |
@@ -662,35 +677,70 @@ configuration options for the HAProxy service.
 | **Example**     | `127.0.0.1` |
 | **Description** | The static IP-address for the load balancer |
 |                 | |
+| **Key**         | {{ optionlink('haproxy.serviceLabels') }} |
+| **Value**       | label |
+| **Example**     | `rack: rack-22` |
+| **Description** | The [Kubernetes labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) for the load balancer Service. **This option is deprecated and will be removed in future releases**. Use `haproxy.exposePrimary.labels` instead |
+|                 | |
 | **Key**         | {{ optionlink('haproxy.exposePrimary.labels') }} |
 | **Value**       | label |
 | **Example**     | `rack: rack-22` |
 | **Description** | The [Kubernetes labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) for the load balancer Service |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.serviceAnnotations') }} |
+| **Value**       | string |
+| **Example**     | `service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp` |
+| **Description** | The [Kubernetes annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) metadata for the load balancer Service. **This option is deprecated and will be removed in future releases**. Use `haproxy.exposePrimary.annotations` instead |
 |                 | |
 | **Key**         | {{ optionlink('haproxy.exposePrimary.annotations') }} |
 | **Value**       | string |
 | **Example**     | `service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp` |
 | **Description** | The [Kubernetes annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) metadata for the load balancer Service |
 |                 | |
+| **Key**         | {{ optionlink('haproxy.replicasServiceEnabled') }} |
+| **Value**       | boolean |
+| **Example**     | `false` |
+| **Description** | Enables or disables `haproxy-replicas` Service. This Service (on by default) forwards requests to all Percona XtraDB Cluster instances, and it *should not be used for write requests*! **This option is deprecated and will be removed in future releases**. Use `haproxy.exposeReplicas.enabled` instead |
+|                 | |
 | **Key**         | {{ optionlink('haproxy.exposeReplicas.enabled') }} |
 | **Value**       | boolean |
 | **Example**     | `false` |
 | **Description** | Enables or disables `haproxy-replicas` Service. This Service (on by default) forwards requests to all Percona XtraDB Cluster instances, and it **should not be used for write requests**! |
 |                 | |
+| **Key**         | {{ optionlink('haproxy.replicasLoadBalancerSourceRanges') }} |
+| **Value**       | string |
+| **Example**     | `10.0.0.0/8` |
+| **Description** | The range of client IP addresses from which the load balancer should be reachable (if not set, no limitations). **This option is deprecated and will be removed in future releases**. Use `haproxy.exposeReplicas.loadBalancerSourceRanges` instead |
+|                 | |
 | **Key**         | {{ optionlink('haproxy.exposeReplicas.loadBalancerSourceRanges') }} |
 | **Value**       | string |
 | **Example**     | `10.0.0.0/8` |
-| **Description** | The range of client IP addresses from which the load balancer should be reachable (if not set, there is no limitations) |
+| **Description** | The range of client IP addresses from which the load balancer should be reachable (if not set, no limitations) |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.replicasLoadBalancerIP') }} |
+| **Value**       | string |
+| **Example**     | `127.0.0.1` |
+| **Description** | The static IP-address for the replicas load balancer. **This option is deprecated and will be removed in future releases**. Use `haproxy.exposeReplicas.loadBalancerIP` instead | |
 |                 | |
 | **Key**         | {{ optionlink('haproxy.exposeReplicas.loadBalancerIP') }} |
 | **Value**       | string |
 | **Example**     | `127.0.0.1` |
 | **Description** | The static IP-address for the replicas load balancer |
 |                 | |
+| **Key**         | {{ optionlink('haproxy.replicasServiceType') }} |
+| **Value**       | string |
+| **Example**     | `ClusterIP` |
+| **Description** | Specifies the type of [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) to be used for HAProxy replicas. **This option is deprecated and will be removed in future releases**. Use `haproxy.exposeReplicas.serviceType` instead |
+|                 | |
 | **Key**         | {{ optionlink('haproxy.exposeReplicas.serviceType') }} |
 | **Value**       | string |
 | **Example**     | `ClusterIP` |
 | **Description** | Specifies the type of [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) to be used for HAProxy replicas |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.replicasExternalTrafficPolicy') }} |
+| **Value**       | string |
+| **Example**     | `Cluster` |
+| **Description** | Specifies whether Service for HAProxy replicas should [route external traffic to cluster-wide or to node-local endpoints](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip) (it can influence the load balancing effectiveness). **This option is deprecated and will be removed in future releases**. Use `haproxy.exposeReplicas.externalTrafficPolicy` instead |
 |                 | |
 | **Key**         | {{ optionlink('haproxy.exposeReplicas.externalTrafficPolicy') }} |
 | **Value**       | string |
@@ -702,10 +752,20 @@ configuration options for the HAProxy service.
 | **Example**     | `Cluster` |
 | **Description** | Specifies whether Service for HAProxy replicas should [route internal traffic to cluster-wide or to node-local endpoints](https://kubernetes.io/docs/concepts/services-networking/service-traffic-policy/) (it can influence the load balancing effectiveness) |
 |                 | |
+| **Key**         | {{ optionlink('haproxy.replicasServiceLabels') }} |
+| **Value**       | label |
+| **Example**     | `rack: rack-22` |
+| **Description** | The [Kubernetes labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) for the `haproxy-replicas` Service. **This option is deprecated and will be removed in future releases**. Use `haproxy.exposeReplicas.labels` instead |
+|                 | |
 | **Key**         | {{ optionlink('haproxy.exposeReplicas.labels') }} |
 | **Value**       | label |
 | **Example**     | `rack: rack-22` |
 | **Description** | The [Kubernetes labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) for the `haproxy-replicas` Service |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.replicasServiceAnnotations') }} |
+| **Value**       | string |
+| **Example**     | `service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp` |
+| **Description** | The [Kubernetes annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) metadata for the `haproxy-replicas` Service. **This option is deprecated and will be removed in future releases**. Use `haproxy.exposeReplicas.annotations` instead  |
 |                 | |
 | **Key**         | {{ optionlink('haproxy.exposeReplicas.annotations') }} |
 | **Value**       | string |
@@ -834,10 +894,20 @@ configuration options for the ProxySQL daemon.
 | **Example**     | `false` |
 | **Description** | Enable or disable exposing ProxySQL nodes with dedicated IP addresses |
 |                 | |
-| **Key**         | {{ optionlink('proxysql.expose.exposeserviceType') }} |
+| **Key**         | {{ optionlink('proxysql.serviceType') }} |
+| **Value**       | string |
+| **Example**     | `ClusterIP` |
+| **Description** | Specifies the type of [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) to be used. **This option is deprecated and will be removed in future releases**. Use `proxysql.expose.type` instead |
+|                 | |
+| **Key**         | {{ optionlink('proxysql.expose.type') }} |
 | **Value**       | string |
 | **Example**     | `ClusterIP` |
 | **Description** | Specifies the type of [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) to be used |
+|                 | |
+| **Key**         | {{ optionlink('proxysql.externalTrafficPolicy') }} |
+| **Value**       | string |
+| **Example**     | `Local` |
+| **Description** | Specifies whether Service for ProxySQL should [route external traffic to cluster-wide or to node-local endpoints](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip) (it can influence the load balancing effectiveness). **This option is deprecated and will be removed in future releases**. Use `proxysql.expose.externalTrafficPolicy` instead |
 |                 | |
 | **Key**         | {{ optionlink('proxysql.expose.externalTrafficPolicy') }} |
 | **Value**       | string |
@@ -849,21 +919,36 @@ configuration options for the ProxySQL daemon.
 | **Example**     | `Local` |
 | **Description** | Specifies whether Service for ProxySQL should [route internal traffic to cluster-wide or to node-local endpoints](https://kubernetes.io/docs/concepts/services-networking/service-traffic-policy/) (it can influence the load balancing effectiveness) |
 |                 | |
+| **Key**         | {{ optionlink('proxysql.serviceAnnotations') }} |
+| **Value**       | label |
+| **Example**     | `service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp` |
+| **Description** | The [Kubernetes annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) metadata for the load balancer Service. **This option is deprecated and will be removed in future releases**. Use `proxysql.expose.annotations` instead  |
+|                 | |
 | **Key**         | {{ optionlink('proxysql.expose.annotations') }} |
 | **Value**       | label |
 | **Example**     | `service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp` |
 | **Description** | The [Kubernetes annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) metadata for the load balancer Service |
+|                 | |
+| **Key**         | {{ optionlink('proxysql.serviceLabels') }} |
+| **Value**       | label |
+| **Example**     | `rack: rack-22` |
+| **Description** | The [Kubernetes labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) for the load balancer Service. **This option is deprecated and will be removed in future releases**. Use `proxysql.expose.labels` instead |
 |                 | |
 | **Key**         | {{ optionlink('proxysql.expose.labels') }} |
 | **Value**       | label |
 | **Example**     | `rack: rack-22` |
 | **Description** | The [Kubernetes labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) for the load balancer Service |
 |                 | |
+| **Key**         | {{ optionlink('proxysql.loadBalancerSourceRanges') }} |
+| **Value**       | string |
+| **Example**     | `10.0.0.0/8` |
+| **Description** | The range of client IP addresses from which the load balancer should be reachable (if not set, there is no limitations). **This option is deprecated and will be removed in future releases**. Use `proxysql.expose.loadBalancerSourceRanges` instead  |
+|                 | |
 | **Key**         | {{ optionlink('proxysql.expose.loadBalancerSourceRanges') }} |
 | **Value**       | string |
 | **Example**     | `10.0.0.0/8` |
 | **Description** | The range of client IP addresses from which the load balancer should be reachable (if not set, there is no limitations) |
-                 | |
+|                 | |
 | **Key**         | {{ optionlink('proxysql.expose.loadBalancerIP') }} |
 | **Value**       | string |
 | **Example**     | `127.0.0.1` |
