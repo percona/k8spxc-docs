@@ -1137,6 +1137,13 @@ options for Percona Monitoring and Management.
 | **Value**       | string |
 | **Example**     | `--custom-labels=CUSTOM-LABELS` |
 | **Description** | Additional parameters which will be passed to the [pmm-admin add proxysql](https://docs.percona.com/percona-monitoring-and-management/setting-up/client/proxysql.html) command for `proxysql` Pods |
+|                 | |
+| **Key**         | {{ optionlink('pmm.containerSecurityContext') }}
+| **Value**       | subdoc |
+| **Example**     | `privileged: false` |
+| **Description** | A custom [Kubernetes Security Context for a Container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) to be used instead of the default one |
+
+
 
 ### <a name="operator-backup-section"></a>Backup section
 
