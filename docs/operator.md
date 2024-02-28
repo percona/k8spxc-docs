@@ -140,6 +140,11 @@ configuration options for the Percona XtraDB Cluster.
 | **Example**     | `10.0.0.0/8` |
 | **Description** | The range of client IP addresses from which the load balancer should be reachable (if not set, there is no limitations) |
 |                 | |
+| **Key**         | {{ optionlink('pxc.expose.loadBalancerIP') }} |
+| **Value**       | string |
+| **Example**     | `127.0.0.1` |
+| **Description** | The static IP-address for the load balancer |
+|                 | |
 | **Key**         | {{ optionlink('pxc.expose.annotations') }} |
 | **Value**       | string |
 | **Example**     | `networking.gke.io/load-balancer-type: "Internal"` |
