@@ -1269,6 +1269,11 @@ file contains the following configuration options for the regular Percona XtraDB
 | **Value**       | int |
 | **Example**     | `60` |
 | **Description** | Seconds between running the binlog uploader |
+|                 | |
+| **Key**         | {{ optionlink('backup.pitr.timeoutSeconds') }} |
+| **Value**       | int |
+| **Example**     | `60` |
+| **Description** | Timeout in seconds for the binlog to be uploaded; the  binlog uploader container will be restarted after exceeding this timeout |
 
 ## <a name="operator-backupsource-section"></a> PerconaXtraDBClusterRestore Custom Resource options
 
