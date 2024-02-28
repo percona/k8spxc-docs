@@ -75,7 +75,7 @@ You can pass custom configuration to HAProxy in one of the following ways:
 !!! note
 
     If you specify a custom HAProxy configuration in this way, the
-    Operator doesn’t provide its own HAProxy configuration file. That’s why you
+    Operator doesn’t provide its own HAProxy configuration file except [several hardcoded options](https://github.com/percona/percona-docker/blob/main/haproxy/dockerdir/etc/haproxy/haproxy.cfg) (which therefore can't be overwritten). That’s why you
     should specify either a full set of configuration options or nothing.
 
 ### Edit the `deploy/cr.yaml` file
