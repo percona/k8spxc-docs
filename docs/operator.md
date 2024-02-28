@@ -474,6 +474,16 @@ in [cross-site replication](replication.md#operator-replication) |
 | **Value**       | string |
 | **Example**     | `600m` |
 | **Description** | [Kubernetes CPU limits](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Percona XtraDB Cluster sidecar container |
+|                 | |
+| **Key**         | {{ optionlink('pxc.lifecycle.preStop.exec.command') }} |
+| **Value**       | array |
+| **Example**     | `["/bin/true"]` |
+| **Description** | Command for the [preStop lifecycle hook](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/) for Percona XtraDB Cluster Pods |
+|                 | |
+| **Key**         | {{ optionlink('pxc.lifecycle.postStart.exec.command') }} |
+| **Value**       | array |
+| **Example**     | `["/bin/true"]` |
+| **Description** | Command for the [postStart lifecycle hook](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/) for Percona XtraDB Cluster Pods |
 
 ### <a name="operator-haproxy-section"></a>HAProxy section
 
@@ -796,6 +806,16 @@ configuration options for the HAProxy service.
 | **Value**       | string |
 | **Example**     | `600m` |
 | **Description** | [Kubernetes CPU limits](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the sidecar HAProxy containers |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.lifecycle.preStop.exec.command') }} |
+| **Value**       | array |
+| **Example**     | `["/bin/true"]` |
+| **Description** | Command for the [preStop lifecycle hook](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/) for HAProxy Pods |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.lifecycle.postStart.exec.command') }} |
+| **Value**       | array |
+| **Example**     | `["/bin/true"]` |
+| **Description** | Command for the [postStart lifecycle hook](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/) for HAProxy Pods |
 
 ### <a name="operator-proxysql-section"></a>ProxySQL section
 
@@ -1058,6 +1078,16 @@ configuration options for the ProxySQL daemon.
 | **Value**       | string |
 | **Example**     | `600m` |
 | **Description** | [Kubernetes CPU limits](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the sidecar ProxySQL containers |
+|                 | |
+| **Key**         | {{ optionlink('proxysql.lifecycle.preStop.exec.command') }} |
+| **Value**       | array |
+| **Example**     | `["/bin/true"]` |
+| **Description** | Command for the [preStop lifecycle hook](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/) for ProxySQL Pods |
+|                 | |
+| **Key**         | {{ optionlink('proxysql.lifecycle.postStart.exec.command') }} |
+| **Value**       | array |
+| **Example**     | `["/bin/true"]` |
+| **Description** | Command for the [postStart lifecycle hook](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/) for ProxySQL Pods |
 
 ### <a name="operator-logcollector-section"></a>Log Collector section
 
