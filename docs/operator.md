@@ -47,6 +47,7 @@ The spec part of the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-
 | sslSecretName   | string            | `cluster1-ssl`             | A secret with TLS certificate generated for *external* communications, see [Transport Layer Security (TLS)](TLS.md#tls) for details |
 | sslInternalSecretName  | string     | `cluster1-ssl-internal`    | A secret with TLS certificate generated for *internal* communications, see [Transport Layer Security (TLS)](TLS.md#tls) for details |
 | logCollectorSecretName | string     | `my-log-collector-secrets` | A secret for the [Fluent Bit Log Collector](debug-logs.md#cluster-level-logging)      |
+| initImage       | string            | `percona/percona-xtradb-cluster-operator:{{ release }}` | An alternative image for the initial Operator installation. **This option is deprecated and will be removed in future releases**. Use `initContainer.image` instead |
 | initContainer   | [subdoc](#operator-initcontainer-section) |    | An alternative image for the initial Operator installation |
 | tls             | [subdoc](#tls-extended-cert-manager-configuration-section) |                            | Extended cert-manager configuration section  |
 | updateStrategy  | string            | `SmartUpdate`              | A strategy the Operator uses for [upgrades](update.md#operator-update) |
