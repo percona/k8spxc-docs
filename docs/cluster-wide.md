@@ -1,5 +1,7 @@
 # Install Percona XtraDB Cluster in multi-namespace (cluster-wide) mode
 
+## Difference between single-namespace and multi-namespace Operator deployment
+
 By default, Percona Operator for MySQL based on Percona XtraDB Cluster functions in a specific Kubernetes
 namespace. You can create one during installation (like it is shown in the
 [installation instructions](kubernetes.md#install-kubernetes)) or just use the `default`
@@ -22,6 +24,8 @@ limited to a specific namespace. But it is possible to run it in so-called
     Please take into account that if several Operators are configured to
     watch the same namespace, it is entirely unpredictable which one will get
     ownership of the Custom Resource in it, so this situation should be avoided.
+
+## Installing the Operator in cluster-wide mode
 
 To use the Operator in such *cluster-wide* mode, you should install it with a
 different set of configuration YAML files, which are available in the `deploy`
@@ -110,7 +114,7 @@ the following information there:
     user:
     
     ``` {.bash data-prompt="$" }
-    $ kubectl get secrets --namespace=pxc cluster1-secrets -o yaml -o jsonpath='{.data.root}' | base64 --decode | tr '\n' ' ' && echo " "
+    $ kubectl get secrets --namespace=pxc cluster1-secrets --template='{{"{{"}}.data.root | base64decode{{"}}"}}{{"{{"}}"\n"{{"}}"}}'
     ```
 
     Now run a container with `mysql` tool and connect its console output to your
@@ -124,18 +128,19 @@ the following information there:
     Executing it may require some time to deploy the correspondent Pod.
     
     Now run `mysql` tool in the percona-client command shell using the password
-    obtained from the secret. The command will look different depending on
-    whether your cluster provides load balancing with [HAProxy](haproxy-conf.md)
-    (the default choice) or [ProxySQL](proxysql-conf.md):
+    obtained from the secret instead of the `<root_password>` placeholder. The 
+    command will look different depending on whether your cluster provides load
+    balancing with [HAProxy](haproxy-conf.md) (the default choice) or
+    [ProxySQL](proxysql-conf.md):
 
     === "with HAProxy (default)"
         ```{.bash data-prompt="$"}
-        $ mysql -h cluster1-haproxy -uroot -p<root_password>
+        $ mysql -h cluster1-haproxy -uroot -p'<root_password>'
         ```
 
     === "with ProxySQL"
         ```{.bash data-prompt="$"}
-        $ mysql -h cluster1-proxysql -uroot -p<root_password>
+        $ mysql -h cluster1-proxysql -uroot -p'<root_password>'
         ```
 
 !!! note 
@@ -172,3 +177,42 @@ the following information there:
     command.
 
     You can find more details about Network Policies [in the official Kubernetes documentation](https://kubernetes.io/docs/concepts/services-networking/network-policies/). 
+
+## Upgrading the Operator in cluster-wide mode
+
+Cluster-wide Operator is upgraded similarly to a single-namespace one. Both deployment variants provide you with the same three upgradable components:
+
+* the Operator;
+* [Custom Resource Definition (CRD)](operator.md),
+* Database Management System (Percona XtraDB Cluster).
+ 
+To upgrade the cluster-wide Operator you follow the [standard upgrade scenario](update.md#upgrading-the-operator-and-crd) concerning the Operator's namespace and a different YAML configuration file: the one with a special `cw-` prefix, `deploy/cw-rbac.yaml`. The resulting steps will look as follows.
+
+1. Update the [Custom Resource Definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
+    for the Operator, taking it from the official repository on Github, and do
+    the same for the Role-based access control:
+
+    ``` {.bash data-prompt="$" }
+    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/crd.yaml
+    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cw-rbac.yaml
+    ```
+
+2. Now you should [apply a patch](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your
+    deployment, supplying the necessary image name with a newer version tag. You can find the proper
+    image name for the current Operator release [in the list of certified images](images.md#custom-registry-images)
+    (for older releases, please refer to the [old releases documentation archive](archive.md)).
+    For example, updating to the `{{ release }}` version in the `pxc-operator` namespace should look as
+    follows.
+
+    ``` {.bash data-prompt="$" }
+    $ kubectl patch deployment percona-xtradb-cluster-operator \
+      -p'{"spec":{"template":{"spec":{"containers":[{"name":"percona-xtradb-cluster-operator","image":"percona/percona-xtradb-cluster-operator:{{ release }}"}]}}}}' -n pxc-operator
+    ```
+
+3. The deployment rollout will be automatically triggered by the applied patch.
+    You can track the rollout process in real time with the
+    `kubectl rollout status` command with the name of your cluster:
+
+    ``` {.bash data-prompt="$" }
+    $ kubectl rollout status deployments percona-xtradb-cluster-operator -n pxc-operator
+    ```

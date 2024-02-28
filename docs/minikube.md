@@ -86,7 +86,7 @@ to the cluster.
     user:
     
     ``` {.bash data-prompt="$" }
-    $ kubectl get secrets minimal-cluster-secrets -o yaml -o jsonpath='{.data.root}' | base64 --decode | tr '\n' ' ' && echo " "
+    $ kubectl get secrets minimal-cluster-secrets --template='{{"{{"}}.data.root | base64decode{{"}}"}}{{"{{"}}"\n"{{"}}"}}'
     ```
 
 2. Run a container with `mysql` tool and connect its console output to your
@@ -100,18 +100,19 @@ to the cluster.
     Executing it may require some time to deploy the correspondent Pod.
 
 3. Now run `mysql` tool in the percona-client command shell using the password
-    obtained from the secret. The command will look different depending on
-    whether your cluster provides load balancing with [HAProxy](haproxy-conf.md)
-    (the default choice) or [ProxySQL](proxysql-conf.md):
+    obtained from the secret instead of the `<root_password>` placeholder. The
+    command will look different depending on whether your cluster provides load
+    balancing with [HAProxy](haproxy-conf.md) (the default choice) or
+    [ProxySQL](proxysql-conf.md):
 
     === "with HAProxy (default)"
         ```bash
-        $ mysql -h minimal-cluster-haproxy -uroot -proot_password
+        $ mysql -h minimal-cluster-haproxy -uroot -p'<root_password>'
         ```
 
     === "with ProxySQL"
         ```bash
-        $ mysql -h minimal-cluster-proxysql -uroot -proot_password
+        $ mysql -h minimal-cluster-proxysql -uroot -p'<root_password>'
         ```
 
     This command will connect you to the MySQL server.

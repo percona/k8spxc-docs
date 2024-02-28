@@ -26,6 +26,17 @@ metadata:
     ...
 ```
 
+!!! note
+
+    Setting `percona.com/issue-vault-token: "true"` annotation is just an
+    example, but this exact annotation has a special meaning. If you add this
+    annotation present and have [HashiCorp Vault](https://www.vaultproject.io/)
+    installed (for example, it is used for [data at rest encryption](encryption.md)),
+    the Operator will not start a cluster but will be printing a
+    `wait for token issuing` log message in a loop until the annotation is
+    deleted (for example, this can be combined with a user's automation
+    script making some Vault-related preparations).
+
 The easiest way to check which labels are attached to a specific object with is
 using the additional `--show-labels` option of the `kubectl get` command.
 Checking the annotations is not much more difficult: it can be done as in the

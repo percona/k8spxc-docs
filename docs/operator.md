@@ -140,6 +140,11 @@ configuration options for the Percona XtraDB Cluster.
 | **Example**     | `10.0.0.0/8` |
 | **Description** | The range of client IP addresses from which the load balancer should be reachable (if not set, there is no limitations) |
 |                 | |
+| **Key**         | {{ optionlink('pxc.expose.loadBalancerIP') }} |
+| **Value**       | string |
+| **Example**     | `127.0.0.1` |
+| **Description** | The static IP-address for the load balancer |
+|                 | |
 | **Key**         | {{ optionlink('pxc.expose.annotations') }} |
 | **Value**       | string |
 | **Example**     | `networking.gke.io/load-balancer-type: "Internal"` |
@@ -325,6 +330,26 @@ in [cross-site replication](replication.md#operator-replication) |
 | **Value**       | label |
 | **Example**     | `disktype: ssd` |
 | **Description** | [Kubernetes nodeSelector](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector) |
+|                 | |
+| **Key**         | {{ optionlink('pxc.topologySpreadConstraints.labelSelector.matchLabels') }} |
+| **Value**       | label |
+| **Example**     | `app.kubernetes.io/name: percona-xtradb-cluster-operator` |
+| **Description** | The Label selector for the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
+| **Key**         | {{ optionlink('pxc.topologySpreadConstraints.maxSkew') }} |
+| **Value**       | int |
+| **Example**     | 1 |
+| **Description** | The degree to which Pods may be unevenly distributed under the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
+| **Key**         | {{ optionlink('pxc.topologySpreadConstraints.topologyKey') }} |
+| **Value**       | string |
+| **Example**     | `kubernetes.io/hostname` |
+| **Description** | The key of node labels for the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
+| **Key**         | {{ optionlink('pxc.topologySpreadConstraints.whenUnsatisfiable') }} |
+| **Value**       | string |
+| **Example**     | `DoNotSchedule` |
+| **Description** | What to do with a Pod if it doesn't satisfy the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
 |                 | |
 | **Key**         | {{ optionlink('pxc.affinity.topologyKey') }} |
 | **Value**       | string |
@@ -607,6 +632,26 @@ configuration options for the HAProxy service.
 | **Example**     | `disktype: ssd` |
 | **Description** | [Kubernetes nodeSelector](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector) |
 |                 | |
+| **Key**         | {{ optionlink('haproxy.topologySpreadConstraints.labelSelector.matchLabels') }} |
+| **Value**       | label |
+| **Example**     | `app.kubernetes.io/name: percona-xtradb-cluster-operator` |
+| **Description** | The Label selector for the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.topologySpreadConstraints.maxSkew') }} |
+| **Value**       | int |
+| **Example**     | 1 |
+| **Description** | The degree to which Pods may be unevenly distributed under the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.topologySpreadConstraints.topologyKey') }} |
+| **Value**       | string |
+| **Example**     | `kubernetes.io/hostname` |
+| **Description** | The key of node labels for the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.topologySpreadConstraints.whenUnsatisfiable') }} |
+| **Value**       | string |
+| **Example**     | `DoNotSchedule` |
+| **Description** | What to do with a Pod if it doesn't satisfy the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
 | **Key**         | {{ optionlink('haproxy.affinity.topologyKey') }} |
 | **Value**       | string |
 | **Example**     | `kubernetes.io/hostname` |
@@ -859,6 +904,26 @@ configuration options for the ProxySQL daemon.
 | **Example**     | `disktype: ssd` |
 | **Description** | [Kubernetes nodeSelector](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector) |
 |                 | |
+| **Key**         | {{ optionlink('proxysql.topologySpreadConstraints.labelSelector.matchLabels') }} |
+| **Value**       | label |
+| **Example**     | `app.kubernetes.io/name: percona-xtradb-cluster-operator` |
+| **Description** | The Label selector for the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
+| **Key**         | {{ optionlink('proxysql.topologySpreadConstraints.maxSkew') }} |
+| **Value**       | int |
+| **Example**     | 1 |
+| **Description** | The degree to which Pods may be unevenly distributed under the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
+| **Key**         | {{ optionlink('proxysql.topologySpreadConstraints.topologyKey') }} |
+| **Value**       | string |
+| **Example**     | `kubernetes.io/hostname` |
+| **Description** | The key of node labels for the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
+| **Key**         | {{ optionlink('proxysql.topologySpreadConstraints.whenUnsatisfiable') }} |
+| **Value**       | string |
+| **Example**     | `DoNotSchedule` |
+| **Description** | What to do with a Pod if it doesn't satisfy the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
 | **Key**         | {{ optionlink('proxysql.affinity.topologyKey') }} |
 | **Value**       | string |
 | **Example**     | `kubernetes.io/hostname` |
@@ -1066,17 +1131,19 @@ options for Percona Monitoring and Management.
 | **Key**         | {{ optionlink('pmm.pxcParams') }} |
 | **Value**       | string |
 | **Example**     | `--disable-tablestats-limit=2000` |
-| **Description** | Additional parameters which will be passed to the [pmm-admin add mysql](https://www.percona.com/doc/percona-monitoring-and-management/2.x/setting-up/client/mysql.html#adding-mysql-service-monitoring) command for `pxc` Pods |
+| **Description** | Additional parameters which will be passed to the [pmm-admin add mysql](https://docs.percona.com/percona-monitoring-and-management/setting-up/client/mysql.html) command for `pxc` Pods |
 |                 | |
 | **Key**         | {{ optionlink('pmm.proxysqlParams') }} |
 | **Value**       | string |
 | **Example**     | `--custom-labels=CUSTOM-LABELS` |
-| **Description** | Additional parameters which will be passed to the [pmm-admin add mysql](https://www.percona.com/doc/percona-monitoring-and-management/2.x/setting-up/client/mysql.html#adding-mysql-service-monitoring) command for `proxysql` Pods |
+| **Description** | Additional parameters which will be passed to the [pmm-admin add proxysql](https://docs.percona.com/percona-monitoring-and-management/setting-up/client/proxysql.html) command for `proxysql` Pods |
 |                 | |
-| **Key**         | {{ optionlink('pmm.containerSecurityContext') }} |
+| **Key**         | {{ optionlink('pmm.containerSecurityContext') }}
 | **Value**       | subdoc |
 | **Example**     | `privileged: false` |
 | **Description** | A custom [Kubernetes Security Context for a Container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) to be used instead of the default one |
+
+
 
 ### <a name="operator-backup-section"></a>Backup section
 
@@ -1108,7 +1175,7 @@ file contains the following configuration options for the regular Percona XtraDB
 | **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.type') }} |
 | **Value**       | string |
 | **Example**     | `s3` |
-| **Description** | The cloud storage type used for backups. Only `s3` and `filesystem` types are supported |
+| **Description** | The cloud storage type used for backups. Only `s3`, `azure`, and `filesystem` types are supported |
 |                 | |
 | **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.verifyTLS') }} |
 | **Value**       | boolean |
@@ -1185,6 +1252,26 @@ file contains the following configuration options for the regular Percona XtraDB
 | **Example**     | `disktype: ssd` |
 | **Description** | [Kubernetes nodeSelector](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector) |
 |                 | |
+| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.topologySpreadConstraints.labelSelector.matchLabels') }} |
+| **Value**       | label |
+| **Example**     | `app.kubernetes.io/name: percona-xtradb-cluster-operator` |
+| **Description** | The Label selector for the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
+| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.topologySpreadConstraints.maxSkew') }} |
+| **Value**       | int |
+| **Example**     | 1 |
+| **Description** | The degree to which Pods may be unevenly distributed under the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
+| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.topologySpreadConstraints.topologyKey') }} |
+| **Value**       | string |
+| **Example**     | `kubernetes.io/hostname` |
+| **Description** | The key of node labels for the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
+| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.topologySpreadConstraints.whenUnsatisfiable') }} |
+| **Value**       | string |
+| **Example**     | `DoNotSchedule` |
+| **Description** | What to do with a Pod if it doesn't satisfy the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
 | **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.affinity.nodeAffinity') }} |
 | **Value**       | subdoc |
 | **Example**     | |
@@ -1214,6 +1301,26 @@ file contains the following configuration options for the regular Percona XtraDB
 | **Value**       | subdoc |
 | **Example**     | <pre>fsGroup: 1001<br>supplementalGroups: [1001, 1002, 1003]</pre> |
 | **Description** | A custom [Kubernetes Security Context for a Pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) to be used instead of the default one |
+|                 | |
+| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.containerOptions.env') }} |
+| **Value**       | subdoc |
+| **Example**     | <pre>- name: VERIFY_TLS<br>  value: "false"</pre> |
+| **Description** | The [environment variables set as key-value pairs](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/) for the backup container |
+|                 | |
+| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.containerOptions.args.xtrabackup') }} |
+| **Value**       | subdoc |
+| **Example**     | <pre>- "--someflag=abc"</pre> |
+| **Description** | Custom [command line options](https://docs.percona.com/percona-xtrabackup/innovation-release/xtrabackup-option-reference.html) for the `xtrabackup` Percona XtraBackup tool |
+|                 | |
+| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.containerOptions.args.xbcloud') }} |
+| **Value**       | subdoc |
+| **Example**     | <pre>- "--someflag=abc"</pre> |
+| **Description** | Custom [command line options](https://docs.percona.com/percona-xtrabackup/innovation-release/xbcloud-options.html) for the `xbcloud` Percona XtraBackup tool |
+|                 | |
+| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.containerOptions.args.xbstream') }} |
+| **Value**       | subdoc |
+| **Example**     | <pre>- "--someflag=abc"</pre> |
+| **Description** | Custom [command line options](https://docs.percona.com/percona-xtrabackup/innovation-release/xbstream-options.html) for the `xbstream` Percona XtraBackup tool |
 |                 | |
 | **Key**         | {{ optionlink('backup.schedule.name') }} |
 | **Value**       | string |
@@ -1249,6 +1356,11 @@ file contains the following configuration options for the regular Percona XtraDB
 | **Value**       | int |
 | **Example**     | `60` |
 | **Description** | Seconds between running the binlog uploader |
+|                 | |
+| **Key**         | {{ optionlink('backup.pitr.timeoutSeconds') }} |
+| **Value**       | int |
+| **Example**     | `60` |
+| **Description** | Timeout in seconds for the binlog to be uploaded; the  binlog uploader container will be restarted after exceeding this timeout |
 
 ## <a name="operator-backupsource-section"></a> PerconaXtraDBClusterRestore Custom Resource options
 

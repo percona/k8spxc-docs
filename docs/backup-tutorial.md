@@ -1,10 +1,10 @@
 # Make a backup
 
-In this tutorial you will learn how to make a logical backup of your data manually. To learn more about backups, see the [Backup and restore](backups.md) section.
+In this tutorial, you will learn how to make a logical backup of your data manually. To learn more about backups, see the [Backup and restore](backups.md) section.
 
-## Considerations
+## Considerations and prerequisites
 
-In this tutorial we use the [AWS S3](https://aws.amazon.com/s3/) as the backup storage. You need the following S3-related information:
+In this tutorial, we use the [AWS S3](https://aws.amazon.com/s3/) as the backup storage. You need the following S3-related information:
    
 * the name of the S3 storage
 * the name of the S3 bucket
@@ -12,6 +12,19 @@ In this tutorial we use the [AWS S3](https://aws.amazon.com/s3/) as the backup s
 * the S3 credentials to be used to access the storage. 
 
 If you don’t have access to AWS, you can use any S3-compatible storage like [MinIO](https://min.io/docs/minio/linux/index.html). Also [check the list of supported storages](backups.md#backup-storage).
+
+Also, we will use some files from the Operator repository for setting up
+backups. So, clone the percona-xtradb-cluster-operator repository:
+
+``` {.bash data-prompt="$" }
+$ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
+$ cd percona-xtradb-cluster-operator
+```
+
+!!! note
+
+    It is important to specify the right branch with `-b`
+    option while cloning the code on this step. Please be careful.
 
 ## Configure backup storage {.power-number}
 
@@ -53,7 +66,7 @@ If you don’t have access to AWS, you can use any S3-compatible storage like [M
 	$ kubectl apply -f deploy/backup-secret-s3.yaml -n <namespace>
 	```
 
-4. Update your `deploy/cr.yaml` configuration. Specify the following parameters in the `backups` section:
+4. Update your `deploy/cr.yaml` configuration. Specify the following parameters in the `backup` section:
 
     * set the `storages.<NAME>.type` to `s3`. Substitute the `<NAME>` part with some arbitrary name that you will later use to refer this storage when making backups and restores.
     * set the `storages.<NAME>.s3.credentialsSecret` to the name you used to refer your Kubernetes Secret (`my-cluster-name-backup-s3` in the previous step).

@@ -5,10 +5,10 @@ it was made, but also on any Kubernetes-based environment with the installed
 Operator.
 
 When restoring to a new Kubernetes-based environment, make sure it has a Secrets
-object with the same user passwords as in the original cluster. More details
+object with the same **user passwords** as in the original cluster. More details
 about secrets can be found in [System Users](users.md#users-system-users).
-The name of the required Secrets object can be found out from the `spec.secrets`
-key in the `deploy/cr.yaml` (`my-cluster-name-secrets` by default).
+The name of the required Secrets object can be found out from the
+`spec.secretsName` key in the `deploy/cr.yaml` (`cluster1-secrets` by default).
 
 To restore a backup, you will use the special restore configuration file. The
 example of such file is [deploy/backup/restore.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml). The list of options that can be used in it can

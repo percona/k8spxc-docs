@@ -50,4 +50,30 @@ object, do the following:
     $ kubectl patch secret/cluster1-secrets -p '{"data":{"pmmserverkey": "'$(echo -n new_key | base64)'"}}'
     ```
 
+## Add custom PMM prefix to the cluster name
 
+When user has several clusters with the same namespace, cluster and Pod names,
+and a single PMM Server, it is possible to add only one of them to the PMM
+Server instance because of this names coincidence.
+
+For such cases it is possible to specify a custom prefix to the cluster name,
+which will be visible within PMM, and so names will become unique.
+
+You can do it by setting the `PMM_PREFIX` environment variable via the Secret,
+specified in the `pxc.envVarsSecret` Custom Resource option.
+
+Here is an example of the YAML file used to create the Secret with the
+`my-unique-prefix-` prefix encoded in base64 format:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-env-var-secrets
+type: Opaque
+data:
+  PMM_PREFIX: bXktdW5pcXVlLXByZWZpeC0=
+```
+
+Follow the [instruction](containers-conf.md) on all details needed to create a
+Secret for environment variables and adding them to the Custom Resource.

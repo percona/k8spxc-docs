@@ -41,7 +41,7 @@ Generally, rely on the quickstart guide if you are a beginner user of the
 specific platform and/or you are new to the Percona Distribution for MySQL
 Operator as a whole.
 
-## Which versions of MySQL the Percona Operator for MySQL supports?
+## Which versions of MySQL does the Percona Operator for MySQL support?
 
 Percona Operator for MySQL based on Percona XtraDB Cluster provides a ready-to-use installation of the
 MySQL-based Percona XtraDB Cluster inside your Kubernetes installation. It works
@@ -55,7 +55,7 @@ following recommended versions: {{ pxc80recommended }} and
 to the version of Percona Server in use. More details on the exact Percona
 Server version can be found in the release notes ([8.0](https://www.percona.com/doc/percona-server/8.0/release-notes/release-notes_index.html), [5.7](https://www.percona.com/doc/percona-server/5.7/release-notes/release-notes_index.html)).
 
-## How HAProxy is better than ProxySQL?
+## How is HAProxy better than ProxySQL?
 
 Percona Operator for MySQL based on Percona XtraDB Cluster supports both HAProxy and ProxySQL as a load
 balancer. HAProxy is turned on by default, but both solutions are similar in
@@ -73,7 +73,7 @@ object-relational mapping), performance requirements, advanced routing and
 caching needs with one or another project, components already in use in the
 current infrastructure, and any other specific needs of the application.
 
-## How can I add create a directory on the node to use it as a local storage
+## How can I create a directory on the node to use it as a local storage
 
 You can [configure hostPath volume](storage.md#storage-hostpath) to mount some
 existing file or directory from the node’s filesystem into the Pod and use it

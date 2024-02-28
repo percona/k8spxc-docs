@@ -275,7 +275,7 @@ kind: Secret
 metadata:
   name: cluster1-haproxy
 data:
-  my.cnf: "IGdsb2JhbAogICBtYXhjb25uIDIwNDgKICAgZXh0ZXJuYWwtY2hlY2sKICAgc3RhdHMgc29ja2V0\
+  haproxy.cfg: "IGdsb2JhbAogICBtYXhjb25uIDIwNDgKICAgZXh0ZXJuYWwtY2hlY2sKICAgc3RhdHMgc29ja2V0\
      IC92YXIvcnVuL2hhcHJveHkuc29jayBtb2RlIDYwMCBleHBvc2UtZmQgbGlzdGVuZXJzIGxldmVs\
      IHVzZXIKIGRlZmF1bHRzCiAgIGxvZyBnbG9iYWwKICAgbW9kZSB0Y3AKICAgcmV0cmllcyAxMAog\
      ICB0aW1lb3V0IGNsaWVudCAxMDAwMAogICB0aW1lb3V0IGNvbm5lY3QgMTAwNTAwCiAgIHRpbWVv\
@@ -299,7 +299,7 @@ $ kubectl create -f deploy/my-haproxy-secret.yaml
 
 ## Enabling the Proxy protocol
 
-The Proxy protocol [allows](https://www.percona.com/doc/percona-server/LATEST/flexibility/proxy_protocol_support.html)
+The Proxy protocol [allows](https://docs.percona.com/percona-server/innovation-release/proxy-protocol-support.html)
 HAProxy to provide a real client address to Percona XtraDB Cluster.
 
 !!! note
@@ -314,7 +314,7 @@ XtraDB Cluster is important: e.g. it allows to have privilege grants based on
 client/application address, and significantly enhance auditing.
 
 You can enable Proxy protocol on Percona XtraDB Cluster by adding
-[proxy_protocol_networks](https://www.percona.com/doc/percona-server/LATEST/flexibility/proxy_protocol_support.html#proxy_protocol_networks)
+[proxy_protocol_networks](https://docs.percona.com/percona-server/innovation-release/proxy-protocol-support.html#proxy_protocol_networks)
 option to [pxc.configuration](operator.md#pxc-configuration) key in the `deploy/cr.yaml` configuration
 file.
 

@@ -11,7 +11,7 @@ object with credentials needed to access the storage.
 
     1. To store backups on the Amazon S3, you need to create a Secret with
         the following values:
-    
+
         * the `metadata.name` key is the name which you wll further use to refer
             your Kubernetes Secret,
         * the `data.AWS_ACCESS_KEY_ID` and `data.AWS_SECRET_ACCESS_KEY` keys are
@@ -19,7 +19,7 @@ object with credentials needed to access the storage.
             keys should contain proper values to make the access possible).
 
         Create the Secrets file with these base64-encoded keys following the
-        [deploy/backup-secret-s3.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/backup-secret-s3.yaml)
+        [deploy/backup/backup-secret-s3.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/backup-secret-s3.yaml)
         example:
 
         ```yaml
@@ -52,12 +52,12 @@ object with credentials needed to access the storage.
         Once the editing is over, create the Kubernetes Secret object as follows:
 
         ``` {.bash data-prompt="$" }
-        $ kubectl apply -f deploy/backup-secret-s3.yaml
+        $ kubectl apply -f deploy/backup/backup-secret-s3.yaml
         ```
 
         !!! note
 
-            In case if the previous backup attempt fails (because of a temporary
+            In case the previous backup attempt fails (because of a temporary
             networking problem, etc.) the backup job tries to delete the unsuccessful
             backup leftovers first, and then makes a retry. Therefore there will be no
             backup retry without [DELETE permissions to the objects in the bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-with-s3-actions.html).
@@ -67,21 +67,21 @@ object with credentials needed to access the storage.
 
     2. Put the data needed to access the S3-compatible cloud into the
         `backup.storages` subsection of the Custom Resource.
-    
+
         * `storages.<NAME>.type` should be set to `s3` (substitute the <NAME>
            part with some arbitrary name you will later use to refer this
            storage when making backups and restores).
-    
+
         * `storages.<NAME>.s3.credentialsSecret` key should be set to the name
             used to refer your Kubernetes Secret (`my-cluster-name-backup-s3` in
             the last example).
-    
+
         * `storages.<NAME>.s3.bucket` and `storages.<NAME>.s3.region` should
-           contain the S3 bucket and region. Also you can use
-           `storages.<NAME>.s3.prefix` option to specify the path (sub-folder)
-           to the backups inside the S3 bucket. If prefix is not set, backups
+           contain the S3 bucket and region. Also you can specify the path
+           (sub-folder) to the backups inside the S3 bucket, like
+           `bucket: operator-testing/binlogs`. If prefix is not set, backups
            are stored in the root directory.
-    
+
         * if you use some S3-compatible storage instead of the original Amazon
             S3, add the [endpointURL](https://docs.min.io/docs/aws-cli-with-minio.html)
             key in the `s3` subsection, which should point to the actual cloud
@@ -112,7 +112,7 @@ object with credentials needed to access the storage.
                 credentialsSecret: my-cluster-name-backup-s3
           ...
         ```
-        
+
         ??? note "Using AWS EC2 instances for backups makes it possible to automate access to AWS S3 buckets based on [IAM roles](https://kubernetes-on-aws.readthedocs.io/en/latest/user-guide/iam-roles.html) for Service Accounts with no need to specify the S3 credentials explicitly."
 
             Following steps are needed to turn this feature on:
@@ -170,20 +170,20 @@ object with credentials needed to access the storage.
         Once the editing is over, create the Kubernetes Secret object as follows:
 
         ``` {.bash data-prompt="$" }
-        $ kubectl apply -f deploy/backup-secret-azure.yaml
+        $ kubectl apply -f deploy/backup/backup-secret-azure.yaml
         ```
 
     2. Put the data needed to access the Azure Blob storage into the
         `backup.storages` subsection of the Custom Resource.
-    
+
         * `storages.<NAME>.type should be set to `azure` (substitute the <NAME> part
            with some arbitrary name you will later use to refer this storage when
            making backups and restores).
-    
+
         * `storages.<NAME>.azure.credentialsSecret` key should be set to the name used
             to refer your Kubernetes Secret (`azure-secret` in the last
             example).
-    
+
         * `storages.<NAME>.azure.container` option should contain the name of the
            Azure [container](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction#containers).
 
@@ -235,3 +235,17 @@ object with credentials needed to access the storage.
         tens or hundreds of gigabytes. Also, you can edit this option later,
         and changes will take effect after applying the updated
             `deploy/cr.yaml` file with `kubectl`.
+
+!!! note
+
+    Typically, Percona XtraBackup tools used by the Operator to perform the
+    backup/restore process does not require any additional configuration beyond
+    the standard parameters mentioned above. However, if access
+    to a non-standard cloud requires some fine-tuning, you can pass
+    additional options to the binary XtraBackup utilities using the following
+    Custom Resource options:
+    [backup.storages.STORAGE_NAME.containerOptions.args.xtrabackup](operator.md#backup-storages-containeroptions-args-xtrabackup),
+    [backup.storages.STORAGE_NAME.containerOptions.args.xbcloud](operator.md#backup-storages-containeroptions-args-xbcloud), and
+    [backup.storages.STORAGE_NAME.containerOptions.args.xbstream](operator.md#backup-storages-containeroptions-args-xbstream).
+    Also, you can set environment variables for the XtraBackup container with
+    [backup.storages.STORAGE_NAME.containerOptions.env](operator.md#backup-storages-containeroptions-env).

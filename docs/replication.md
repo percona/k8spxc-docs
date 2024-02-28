@@ -16,6 +16,13 @@ Setting up MySQL for asynchronous replication without the Operator is out of the
 
 Configuring the cross-site replication for the cluster controlled by the Operator is explained in the following subsections.
 
+## Creating a Replica cluster
+
+Cross-site replication can be configured on two sibling Percona XtraDB Clusters.
+That's why you should first make a fully operational clone of your main database cluster. After that your original cluster will be configured as *Source*, and a new one (the clone) will be configured as *Replica*.
+
+The easiest way to achieve this is to use backups. You make a full backup of your main database cluster, and restore it to a new Kubernetes-based environment, following [this HowTo](backups-restore-to-new-cluster.md).
+
 ## Configuring cross-site replication on Source instances
 
 You can configure *Source* instances for cross-site replication with `spec.pxc.replicationChannels` subsection in the `deploy/cr.yaml` configuration file. It is an array of channels, and you should provide the following keys for the channel in your *Source* Percona XtraDB Cluster:
@@ -33,15 +40,8 @@ spec:
       isSource: true
 ```
 
-The cluster will be ready for asynchronous replication when you apply changes as usual:
-
-``` {.bash data-prompt="$" }
-$ kubectl apply -f deploy/cr.yaml
-```
-
-## Exposing instances of Percona XtraDB Cluster
-
-You need to expose every Percona XtraDB Cluster Pod of the *Source* cluster to
+<a name="exposing-instances-of-percona-xtradb-cluster"></a> You will also
+need to expose every Percona XtraDB Cluster Pod of the *Source* cluster to
 make it possible for the *Replica* cluster to connect. This is done through the
 `pxc.expose` section in the `deploy/cr.yaml` configuration file as follows.
 
@@ -59,8 +59,16 @@ spec:
     In most cases, for cross-region replication to work this Load Balancer should
     be internet-facing.
 
+The cluster will be ready for asynchronous replication when you apply changes as usual:
+
+``` {.bash data-prompt="$" }
+$ kubectl apply -f deploy/cr.yaml
+```
+
 To list the endpoints assigned to PXC Pods list the Kubernetes Service objects by
-executing `kubectl get services -l "app.kubernetes.io/instance=CLUSTER_NAME"` command.
+executing `kubectl get services -l "app.kubernetes.io/instance=cluster1"` command
+(don't forget to substitute `cluster1` with the real name of your cluster, if you
+don't use the default name).
 
 ## Configuring cross-site replication on Replica instances
 
@@ -141,9 +149,9 @@ credentials stored in a Secret object [along with other system users](users.md#u
 
 !!! note
 
-    If the cluster is outside of Kubernetes and is not under the Operator’s control, [the appropriate user with necessary permissions](https://dev.mysql.com/doc/refman/8.0/en/replication-asynchronous-connection-failover.html) should be created manually.
+    If the Replica cluster is not a clone of the original one (for example, it's outside of Kubernetes and is not under the Operator’s control) [the appropriate user with necessary permissions](https://dev.mysql.com/doc/refman/8.0/en/replication-asynchronous-connection-failover.html) should be created manually.
 
-You can change a password for this user as follows:
+If you need you can change a password for this user as follows:
 
 === "in Linux"
 
