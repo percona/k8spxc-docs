@@ -47,9 +47,44 @@ The spec part of the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-
 | sslSecretName   | string            | `cluster1-ssl`             | A secret with TLS certificate generated for *external* communications, see [Transport Layer Security (TLS)](TLS.md#tls) for details |
 | sslInternalSecretName  | string     | `cluster1-ssl-internal`    | A secret with TLS certificate generated for *internal* communications, see [Transport Layer Security (TLS)](TLS.md#tls) for details |
 | logCollectorSecretName | string     | `my-log-collector-secrets` | A secret for the [Fluent Bit Log Collector](debug-logs.md#cluster-level-logging)      |
-| initImage       | string            | `percona/percona-xtradb-cluster-operator:{{ release }}` | An alternative image for the initial Operator installation |
+| initImage       | string            | `percona/percona-xtradb-cluster-operator:{{ release }}` | An alternative image for the initial Operator installation. **This option is deprecated and will be removed in future releases**. Use `initContainer.image` instead |
+| initContainer   | [subdoc](#operator-initcontainer-section) |    | An alternative image for the initial Operator installation |
 | tls             | [subdoc](#tls-extended-cert-manager-configuration-section) |                            | Extended cert-manager configuration section  |
 | updateStrategy  | string            | `SmartUpdate`              | A strategy the Operator uses for [upgrades](update.md#operator-update) |
+
+
+### <a name="operator-initcontainer-section"></a>initContainer configuration section
+
+The `initContainer` section in the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file 
+allows providing an alternative image with various options for the initial Operator installation.
+
+|                 | |
+|-----------------|-|
+| **Key**         | {{ optionlink('initContainer.image') }} |
+| **Value**       | string |
+| **Example**     | `percona/percona-xtradb-cluster-operator:{{ release }}` |
+| **Description** | An alternative image for the initial Operator installation |
+|                 | |
+| **Key**         | {{ optionlink('initContainer.resources.requests.memory') }} |
+| **Value**       | string |
+| **Example**     | `1G` |
+| **Description** | The [Kubernetes memory requests](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for an image used while the initial Operator installation |
+|                 | |
+| **Key**         | {{ optionlink('initContainer.resources.requests.cpu') }} |
+| **Value**       | string |
+| **Example**     | `600m` |
+| **Description** | [Kubernetes CPU requests](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for an image used while the initial Operator installation |
+|                 | |
+| **Key**         | {{ optionlink('initContainer.resources.limits.memory') }} |
+| **Value**       | string |
+| **Example**     | `1G` |
+| **Description** | [Kubernetes memory limits](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for an image used while the initial Operator installation |
+|                 | |
+| **Key**         | {{ optionlink('initContainer.resources.limits.cpu') }} |
+| **Value**       | string |
+| **Example**     | `1` |
+| **Description** | [Kubernetes CPU limits](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for an image used while the initial Operator installation |
+
 
 ### <a name="operator-issuerconf-section"></a>TLS (extended cert-manager configuration section)
 
