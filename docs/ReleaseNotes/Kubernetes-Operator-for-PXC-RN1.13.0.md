@@ -40,7 +40,7 @@
 * {{ k8spxcjira(1122) }}: Fix a bug which made disabling verification of the storage server TLS certificate with `verifyTLS` PerconaXtraDBClusterRestore Custom Resource option not working
 * {{ k8spxcjira(1135) }}: Fix a bug where a cluster could incorrectly get a READY status while it had a service with an external IP still in pending state
 * {{ k8spxcjira(1149) }}: Fix `delete-pxc-pvc` finalizer unable to delete TLS Secret used for external communications in case if this Secret had non-customized default name
-* {{ k8spxcjira(1161) }}: Fix a bug due to which PMM couldn't continue monitoring HAProxy Pods after the [PMM Server API key change](../monitoring#operator-monitoring-client-token)
+* {{ k8spxcjira(1161) }}: Fix a bug due to which PMM couldn't continue monitoring HAProxy Pods after the [PMM Server API key change](../monitoring.md#operator-monitoring-client-token)
 * {{ k8spxcjira(1163) }}: Fix a bug that made it impossible to delete the cluster in init state in case of enabled finalizers
 * {{ k8spxcjira(1199) }}: Fix a bug due to which the Operator couldn't restore backups from Azure blob storage if `spec.backupSource.azure.container` was not specified 
 * {{ k8spxcjira(1205) }}: Fix a bug which made the Operator to ignore the `verifyTLS` option for backups deletion caused by the `delete-s3-backup` finalizer (thanks to Christ-Jan Prinse for reporting)

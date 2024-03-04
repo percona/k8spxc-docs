@@ -202,7 +202,7 @@ nav:
           - "Initial troubleshooting": debug.md
           - "Exec into the container": debug-shell.md
           - "Check the logs": debug-logs.md
-          - "Special debug images": debug-images.mdge
+          - "Special debug images": debug-images.md
           
     - HOWTOs:
           - Install the database with customized parameters: custom-install.md 
