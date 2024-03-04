@@ -25,9 +25,9 @@ $ kubectl patch pxc cluster1 --type=merge --patch '{
     restart. Switching from HAProxy to ProxySQL is not possible, and if you need
     ProxySQL, this should be configured at cluster creation time.
 
-The resulting HAPproxy setup will contain two services:
+The resulting HAPproxy setup normally contains two services:
 
-* `cluster1-haproxy` service listening on ports 3306 (MySQL) and 3309 (the [proxy protocol](https://www.haproxy.com/blog/haproxy/proxy-protocol/)).
+* `cluster1-haproxy` service listening on ports 3306 (MySQL) and 3309 (the [proxy protocol](https://www.haproxy.com/blog/haproxy/proxy-protocol/) useful for operations such as asynchronous calls).
     This service is pointing to the number zero Percona XtraDB Cluster member
     (`cluster1-pxc-0`) by default when this member is available. If a zero
     member is not available, members are selected in descending order of their
@@ -35,9 +35,17 @@ The resulting HAPproxy setup will contain two services:
     can be used for both read and write load, or it can also be used just for
     write load (single writer mode) in setups with split write and read loads.
 
+    [haproxy.exposePrimary.enabled](operator.md#haproxy-exposePrimary-enabled)
+    Custom Resource option enables or disables `cluster1-haproxy` service.
+
 * `cluster1-haproxy-replicas` listening on port 3306 (MySQL).
     This service selects Percona XtraDB Cluster members to serve queries following
     the Round Robin load balancing algorithm.
+    It **should not be used for write requests**.
+
+    [haproxy.exposeReplicas.enabled](operator.md#haproxy-exposeReplicas-enabled)
+    Custom Resource option enables or disables `cluster1-haproxy-replicas`
+    service (on by default).
 
 !!! note
 
