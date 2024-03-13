@@ -21,9 +21,9 @@ Kubernetes supports the Persistent Volume expansion as a stable feature since v1
 ## New Features 
 
 
-* {{ k8spxcjira(1298) }}: Custom [prefix](../containers-conf.md) ffor Percona Monitoring and Management (PMM) allows using one PMM Server to monitor multiple databases even if they have identical cluster names
+* {{ k8spxcjira(1298) }}: Custom [prefix](../containers-conf.md) for Percona Monitoring and Management (PMM) allows using one PMM Server to monitor multiple databases even if they have identical cluster names
 * {{ k8spxcjira(1334) }}: The new `lifecycle.postStart` and `lifecycle.preStop` Custom Resource options allow configuring [postStart and preStop hooks](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/) for ProxySQL and HAProxy Pods
-* {{ k8spxcjira(1341) }}: t is now possible to resize Persistent Volume Claims by patching the PerconaXtraDBCluster custom resource. Change  `persistentVolumeClaim.resources.requests.storage` and let the Operator do the scaling
+* {{ k8spxcjira(1341) }}: It is now possible to resize Persistent Volume Claims by patching the PerconaXtraDBCluster custom resource. Change  `persistentVolumeClaim.resources.requests.storage` and let the Operator do the scaling
 
 ## Improvements
 

@@ -174,7 +174,7 @@ If your source database didn't have any data, skip this step and proceed with th
     ```
 
 You can find more information on restoring backup to a new Kubernetes-based
-environment and see more examples [in a dedicated HowTo](/backups-restore-to-new-cluster.md).
+environment and see more examples [in a dedicated HowTo](backups-restore-to-new-cluster.md).
 
 ## Configure asyncronous replication in the Kubernetes cluster
 
