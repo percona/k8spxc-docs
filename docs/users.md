@@ -62,9 +62,9 @@ The following table shows system users’ names and purposes.
 | ProxySQLAdmin  | proxyadmin   | proxyadmin          | ProxySQL administrative user, can be used to [add general-purpose ProxySQL users](https://github.com/sysown/proxysql/wiki/Users-configuration) |
 | Backup         | xtrabackup   | xtrabackup          | The [user to run backups](https://www.percona.com/doc/percona-xtrabackup/2.4/using_xtrabackup/privileges.html), granted `all` privileges for the [point-in-time recovery](backups.md#storing-binary-logs-for-point-in-time-recovery) needs |
 | Monitoring     | monitor      | monitor             | User for internal monitoring purposes like liveness/readiness checks and [PMM agent](https://www.percona.com/doc/percona-monitoring-and-management/security.html#pmm-security-password-protection-enabling) |
-| PMM Server Password  | should be set through the [operator options](operator) | pmmserver | [Password used to access PMM Server](https://www.percona.com/doc/percona-monitoring-and-management/security.html#pmm-security-password-protection-enabling). **Password-based authorization method is deprecated since the Operator 1.11.0**. [Use token-based authorization instead](monitoring.md#operator-monitoring-client-token) |
+| PMM Server Password  | should be set through the [operator options](operator.md) | pmmserver | [Password used to access PMM Server](https://www.percona.com/doc/percona-monitoring-and-management/security.html#pmm-security-password-protection-enabling). **Password-based authorization method is deprecated since the Operator 1.11.0**. [Use token-based authorization instead](monitoring.md#operator-monitoring-client-token) |
 | Operator Admin | operator     | operator            | Database administrative user, should be used only by the Operator |
-| Replication    | replication  | replication         | Administrative user needed for [cross-site Percona XtraDB Cluster](operator-replication) |
+| Replication    | replication  | replication         | Administrative user needed for [cross-site Percona XtraDB Cluster](replication.md) |
 
 ### YAML Object Format
 
