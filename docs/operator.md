@@ -1350,7 +1350,7 @@ file contains the following configuration options for the regular Percona XtraDB
 | **Key**         | {{ optionlink('backup.backoffLimit') }} |
 | **Value**       | int |
 | **Example**     | `6` |
-| **Description** | The number of retries to make a backup |
+| **Description** | The number of retries to make a backup (by default, 10 retries are made) |
 |                 | |
 | **Key**         | {{ optionlink('backup.imagePullSecrets.name') }} |
 | **Value**       | string |
