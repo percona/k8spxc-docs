@@ -74,45 +74,8 @@ Minikube:
 
 ## Verifying the cluster operation
 
-It may take ten minutes to get the cluster started. When `kubectl get pxc`
-command finally shows you the cluster status as `ready`, you can try to connect
+It may take ten minutes to get the cluster started. When the `kubectl get pxc`
+command output shows you the cluster status as `ready`, you can try to connect
 to the cluster.
 
-1. You will need the login and password for the admin user to access the
-    cluster. Use `kubectl get secrets` command to see the list of Secrets
-    objects (by default the Secrets object you are interested in has
-    `minimal-cluster-secrets` name). 
-    You can use the following command to get the password of the `root`
-    user:
-    
-    ``` {.bash data-prompt="$" }
-    $ kubectl get secrets minimal-cluster-secrets --template='{{"{{"}}.data.root | base64decode{{"}}"}}{{"{{"}}"\n"{{"}}"}}'
-    ```
-
-2. Run a container with `mysql` tool and connect its console output to your
-    terminal. The following command will do this, naming the new Pod
-    `percona-client`:
-
-    ```bash
-    $ kubectl run -i --rm --tty percona-client --image=percona:8.0 --restart=Never -- bash -il
-    ```
-
-    Executing it may require some time to deploy the correspondent Pod.
-
-3. Now run `mysql` tool in the percona-client command shell using the password
-    obtained from the secret instead of the `<root_password>` placeholder. The
-    command will look different depending on whether your cluster provides load
-    balancing with [HAProxy](haproxy-conf.md) (the default choice) or
-    [ProxySQL](proxysql-conf.md):
-
-    === "with HAProxy (default)"
-        ```bash
-        $ mysql -h minimal-cluster-haproxy -uroot -p'<root_password>'
-        ```
-
-    === "with ProxySQL"
-        ```bash
-        $ mysql -h minimal-cluster-proxysql -uroot -p'<root_password>'
-        ```
-
-    This command will connect you to the MySQL server.
+{% include 'assets/fragments/connectivity.txt' %}
