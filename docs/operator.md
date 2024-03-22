@@ -12,7 +12,7 @@ Percona Operator for MySQL uses [Custom Resources](https://kubernetes.io/docs/co
 
 The metadata part contains the following keys:
 
-* `name` (`cluster1` by default) sets the name of your Percona
+* <a name="metadata-name"></a> `name` (`cluster1` by default) sets the name of your Percona
 XtraDB Cluster; it should include only [URL-compatible characters](https://datatracker.ietf.org/doc/html/rfc3986#section-2.3),
 not exceed 22 characters, start with an alphabetic character, and end with an
 alphanumeric character;
