@@ -110,27 +110,8 @@
     percona-xtradb-cluster-operator-79966668bd-rswbk   1/1     Running   0          9m54s
     ```
 
-8. Check connectivity to newly created cluster
+## Verify the cluster operation
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl run -i --rm --tty percona-client --image=percona:8.0 --restart=Never -- bash -il
-    percona-client:/$ mysql -h cluster1-haproxy -uroot -proot_password
-    ```
+Now, let's connect to the cluster.
 
-    This command will connect you to the MySQL monitor.
-
-    ``` {.text .no-copy}
-    mysql: [Warning] Using a password on the command line interface can be insecure.
-    Welcome to the MySQL monitor.  Commands end with ; or \g.
-    Your MySQL connection id is 1976
-    Server version: 8.0.19-10 Percona XtraDB Cluster (GPL), Release rel10, Revision 727f180, WSREP version 26.4.3
-
-    Copyright (c) 2009-2020 Percona LLC and/or its affiliates
-    Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
-
-    Oracle is a registered trademark of Oracle Corporation and/or its
-    affiliates. Other names may be trademarks of their respective
-    owners.
-
-    Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-    ```
+{% include 'assets/fragments/connectivity.txt' %}
