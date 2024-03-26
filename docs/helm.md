@@ -75,7 +75,7 @@ You have successfully installed and deployed the Operator with default parameter
 This deploys default Percona XtraDB Cluster configuration with three HAProxy and
 three XtraDB Cluster instances.
 
-You can check the rest of the Operator's parameters in the [Custom Resource options reference](operator.md#operator-custom-resource-options).
+You can find in the documentation for the charts which [Operator](https://github.com/percona/percona-helm-charts/tree/main/charts/pxc-operator#installing-the-chart) and [database](https://github.com/percona/percona-helm-charts/tree/main/charts/pxc-db#installing-the-chart) parameters can be customized during installation.
 
 ## Next steps
 
