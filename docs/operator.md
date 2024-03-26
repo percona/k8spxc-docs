@@ -12,7 +12,7 @@ Percona Operator for MySQL uses [Custom Resources](https://kubernetes.io/docs/co
 
 The metadata part contains the following keys:
 
-* `name` (`cluster1` by default) sets the name of your Percona
+* <a name="metadata-name"></a> `name` (`cluster1` by default) sets the name of your Percona
 XtraDB Cluster; it should include only [URL-compatible characters](https://datatracker.ietf.org/doc/html/rfc3986#section-2.3),
 not exceed 22 characters, start with an alphabetic character, and end with an
 alphanumeric character;
@@ -1350,7 +1350,7 @@ file contains the following configuration options for the regular Percona XtraDB
 | **Key**         | {{ optionlink('backup.backoffLimit') }} |
 | **Value**       | int |
 | **Example**     | `6` |
-| **Description** | The number of retries to make a backup |
+| **Description** | The number of retries to make a backup (by default, 10 retries are made) |
 |                 | |
 | **Key**         | {{ optionlink('backup.imagePullSecrets.name') }} |
 | **Value**       | string |
