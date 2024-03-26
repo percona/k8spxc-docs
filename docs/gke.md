@@ -152,7 +152,7 @@ $ kubectl get pods
 
 ??? example "Expected output"
 
-    --8<-- "./docs/assets/code/kubectl-get-pods-response.txt"
+    --8<-- "cli/kubectl-get-pods-response.md"
 
 Also, you can see the same information when browsing Pods of your cluster in Google Cloud console via the *Object Browser*:
 
