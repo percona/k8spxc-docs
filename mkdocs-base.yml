@@ -71,26 +71,7 @@ markdown_extensions:
   pymdownx.tilde: {}
   pymdownx.superfences: {}
   pymdownx.snippets:
-      base_path:
-      - snippets
-      - docs/assets/code/api-backup-cluster-request-json.txt
-      - docs/assets/code/api-restore-cluster-response-json.txt
-      - docs/assets/code/api-backup-cluster-response-json.txt
-      - docs/assets/code/api-scale-cluster-request-json.txt
-      - docs/assets/code/api-create-cluster-request-json.txt
-      - docs/assets/code/api-scale-cluster-response-json.txt
-      - docs/assets/code/api-create-cluster-response-json.txt
-      - docs/assets/code/api-update-cluster-image-request-json.txt
-      - docs/assets/code/api-get-status-of-cluster-response-json.txt
-      - docs/assets/code/api-update-cluster-image-response-json.txt
-      - docs/assets/code/api-list-cluster-response-json.txt
-      - docs/assets/code/kubectl-get-minimal-response.txt
-      - docs/assets/code/api-pass-config-to-cluster-request-json.txt
-      - docs/assets/code/kubectl-get-pods-response.txt
-      - docs/assets/code/api-pass-config-to-cluster-response-json.txt
-      - docs/assets/code/mysql-welcome-response.txt
-      - docs/assets/code/api-restore-cluster-request-json.txt
-
+      base_path: ["snippets"]
   pymdownx.tabbed:
     alternate_style: true
   pymdownx.highlight:
