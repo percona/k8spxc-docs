@@ -148,7 +148,7 @@ to invalid variable setting in the manifest
 and Management Server is now deprecated and will be removed in future releases
 in favor of a token-based one. Password-based authorization was used by the
 Operator before this release to provide MySQL monitoring, but now using the
-API Key [is the recommended authorization method](../monitoring.md#operator-monitoring-client-token)
+API Key [is the recommended authorization method](../monitoring-tutorial.md#__tabbed_1_1)
 
 ## Supported Platforms
 

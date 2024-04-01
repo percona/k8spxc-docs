@@ -29,10 +29,38 @@ To install PMM Client as a side-car container in your Kubernetes-based environme
 
     === "Token-based authorization (recommended)"
 
-        <a name="operator-monitoring-client-token"></a>
-        1. [Generate the PMM Server API Key](https://docs.percona.com/percona-monitoring-and-management/details/api.html#api-keys-and-authentication). Specify the Admin role when getting the API Key. 
+        1. [Get the PMM API key from PMM Server :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/details/api.html#api-keys-and-authentication). The API key must have the role "Admin". You need this key to authorize PMM Client within PMM Server. 
 
-        <i warning>:material-alert: Warning:</i> The API key is not rotated automatically.
+            === ":material-view-dashboard-variant: From PMM UI"          
+
+                [Generate the PMM API key :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/details/api.html#api-keys-and-authentication){.md-button} 
+
+            === ":material-console: From command line"        
+
+                You can query your PMM Server installation for the API
+                Key using `curl` and `jq` utilities.         
+
+                Retrieve the user credentials from the PMM Server:        
+
+                ```.bash
+                PMM_AUTH=$(echo -n admin:$(kubectl get secret pmm-secret -o jsonpath='{.data.PMM_ADMIN_PASSWORD}' | base64 --decode) | base64)
+                ```        
+
+                Replace the `$PMM_SERVER_IP` placeholder with your real PMM Server hostname in the following command:
+                
+                ```.bash 
+                export API_KEY=$(curl --insecure -X POST -H "Authorization: Basic $PMM_AUTH" -H 'Content-Type: application/json'  -d '{"name":"operator", "role": "Admin"}' "https://$PMM_SERVER_IP/graph/api/auth/keys" | jq .key)
+                ```        
+
+                To get the API_KEY value, run:        
+
+                ```.bash
+                echo $API_KEY
+                ```        
+
+                The output shows the base64 encoded API key.         
+
+            <i warning>:material-alert: Warning:</i> The API key is not rotated automatically.
 
         2. Edit the [deploy/secrets.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/secrets.yaml) secrets file and specify the PMM API key for the `pmmserverkey` option.
         3. Apply the configuration for the changes to take effect.
