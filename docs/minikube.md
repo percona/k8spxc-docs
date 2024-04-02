@@ -1,5 +1,7 @@
 # Install Percona XtraDB Cluster on Minikube
 
+{%set clusterName = 'minimal-cluster' %}
+
 Installing the Percona Operator for MySQL based on Percona XtraDB Cluster on [minikube](https://github.com/kubernetes/minikube)
 is the easiest way to try it locally without a cloud provider. Minikube runs
 Kubernetes on GNU/Linux, Windows, or macOS system using a system-wide
@@ -68,8 +70,8 @@ Minikube:
     ??? example "Expected output"
 
         ```{.text .no-copy}
-        NAME       ENDPOINT                   STATUS   PXC   PROXYSQL   HAPROXY   AGE
-        cluster1   cluster1-haproxy.default   ready    3                3         5m51s
+        NAME              ENDPOINT                          STATUS   PXC   PROXYSQL   HAPROXY   AGE
+        minimal-cluster   minimal-cluster-haproxy.default   ready    3                3         5m51s
         ```
 
 ## Verifying the cluster operation
