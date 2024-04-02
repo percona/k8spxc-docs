@@ -8,14 +8,15 @@ Here’s how to get it:
     $ {{ commandName }} get secrets
     ```
     The Secrets object you are interested in has the
-    `my-cluster-name-secrets` name.
+    `{{ clusterName }}-secrets` name by default.
 
 2. Use the following command to get the password of the `root`
-    user.  Substitute the `<my-cluster-name>` and `<namespace>` placeholders with your
-    values:
+    user.  Substitute the `<namespace>` placeholder with your
+    value (and use the different Secrets object name instead
+    of the `{{ clusterName }}-secrets`, if needed):
     
     ``` {.bash data-prompt="$" }
-    $ {{ commandName }} get secret my-cluster-name-secrets -n <namespace> --template='{{"{{"}}.data.root | base64decode{{"}}"}}{{"{{"}}"\n"{{"}}"}}'
+    $ {{ commandName }} get secret {{ clusterName }}-secrets -n <namespace> --template='{{"{{"}}.data.root | base64decode{{"}}"}}{{"{{"}}"\n"{{"}}"}}'
     ```
 
 3. Run a container with `mysql` tool and connect its console output to your
@@ -36,12 +37,12 @@ Here’s how to get it:
 
     === "with HAProxy (default)"
         ```{.bash data-prompt="$"}
-        $ mysql -h cluster1-haproxy -uroot -p'<root_password>'
+        $ mysql -h {{ clusterName }}-haproxy -uroot -p'<root_password>'
         ```
 
     === "with ProxySQL"
         ```{.bash data-prompt="$"}
-        $ mysql -h cluster1-proxysql -uroot -p'<root_password>'
+        $ mysql -h {{ clusterName }}-proxysql -uroot -p'<root_password>'
         ```
     
     This command will connect you to the MySQL server.
