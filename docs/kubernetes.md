@@ -96,19 +96,20 @@
     $ kubectl apply -f deploy/cr.yaml
     ```
 
-    Creation process will take some time. The process is over when both
-    operator and replica set pod have reached their Running status:
+    Creation process will take some time. When the process is over your
+    cluster will obtain the `ready` status. You can check it with the following
+    command:
 
-    ``` {.text .no-copy}
-    NAME                                               READY   STATUS    RESTARTS   AGE
-    cluster1-haproxy-0                                 2/2     Running   0          6m17s
-    cluster1-haproxy-1                                 2/2     Running   0          4m59s
-    cluster1-haproxy-2                                 2/2     Running   0          4m36s
-    cluster1-pxc-0                                     3/3     Running   0          6m17s
-    cluster1-pxc-1                                     3/3     Running   0          5m3s
-    cluster1-pxc-2                                     3/3     Running   0          3m56s
-    percona-xtradb-cluster-operator-79966668bd-rswbk   1/1     Running   0          9m54s
+    ``` {.bash data-prompt="$" }
+    $ kubectl get pxc
     ```
+
+    ??? example "Expected output"
+
+        ``` {.text .no-copy}
+        NAME       ENDPOINT                   STATUS   PXC   PROXYSQL   HAPROXY   AGE
+        cluster1   cluster1-haproxy.default   ready    3                3         5m51s
+        ```
 
 ## Verify the cluster operation
 
