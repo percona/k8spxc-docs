@@ -113,6 +113,8 @@
 
 ## Verify the cluster operation
 
-Now, let's connect to the cluster.
+It may take ten minutes to get the cluster started. When `kubectl get pxc`
+command finally shows you the cluster status as `ready`, you can try to connect
+to the cluster.
 
 {% include 'assets/fragments/connectivity.txt' %}
