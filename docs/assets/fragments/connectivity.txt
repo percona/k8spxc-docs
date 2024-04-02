@@ -27,7 +27,7 @@ Here’s how to get it:
     $ {{ commandName }} run -n <namespace> -i --rm --tty percona-client --image=percona:8.0 --restart=Never -- bash -il
     ```
 
-    Executing it may require some time to deploy the correspondent Pod.
+    Executing it may require some time to deploy the corresponding Pod.
 
 3. Now run the `mysql` tool in the `percona-client` command shell using the password
     obtained from the Secret instead of the `<root_password>` placeholder.
