@@ -143,51 +143,24 @@ You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marke
     $ oc apply -f deploy/cr.yaml
     ```
 
-    Creation process will take some time. The process is over when both
-    operator and replica set pod have reached their Running status:
-
-    ``` {.text .no-copy}
-    NAME                                               READY   STATUS    RESTARTS   AGE
-    cluster1-haproxy-0                                 2/2     Running   0          6m17s
-    cluster1-haproxy-1                                 2/2     Running   0          4m59s
-    cluster1-haproxy-2                                 2/2     Running   0          4m36s
-    cluster1-pxc-0                                     3/3     Running   0          6m17s
-    cluster1-pxc-1                                     3/3     Running   0          5m3s
-    cluster1-pxc-2                                     3/3     Running   0          3m56s
-    percona-xtradb-cluster-operator-79966668bd-rswbk   1/1     Running   0          9m54s
-    ```
-
-4. Check connectivity to newly created cluster. Run a container with MySQL 
-    monitor and connect its console output to your
-    terminal. The following command will do this, naming the new Pod
-    `percona-client`:
+    The creation process may take some time. When the process is over your
+    cluster will obtain the `ready` status. You can check it with the following
+    command:
 
     ``` {.bash data-prompt="$" }
-    $ oc run -i --rm --tty percona-client --image=percona:8.0 --restart=Never -- bash -il
-    percona-client:/$ mysql -h cluster1-haproxy -uroot -proot_password
+    $ oc get pxc
     ```
 
-    This command will connect you to the MySQL monitor.
+    ??? example "Expected output"
 
-    ``` {.text .no-copy}
-    mysql: [Warning] Using a password on the command line interface can be insecure.
-    Welcome to the MySQL monitor.  Commands end with ; or \g.
-    Your MySQL connection id is 1976
-    Server version: 8.0.19-10 Percona XtraDB Cluster (GPL), Release rel10, Revision 727f180, WSREP version 26.4.3
-
-    Copyright (c) 2009-2020 Percona LLC and/or its affiliates
-    Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
-
-    Oracle is a registered trademark of Oracle Corporation and/or its
-    affiliates. Other names may be trademarks of their respective
-    owners.
-
-    Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-    ```
+        ``` {.text .no-copy}
+        NAME       ENDPOINT                   STATUS   PXC   PROXYSQL   HAPROXY   AGE
+        cluster1   cluster1-haproxy.default   ready    3                3         5m51s
+        ```
 
 ## Verify the cluster operation
 
-It may take ten minutes to get the cluster started. When the `kubectl get pxc`
+It may take ten minutes to get the cluster started. When the `oc get pxc`
 command output shows you the cluster status as `ready`, you can try to connect
 to the cluster.
 
