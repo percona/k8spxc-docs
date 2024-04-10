@@ -16,8 +16,8 @@ theme:
   favicon: assets/images/percona-favicon.ico
   custom_dir: _resource/overrides/
   font:
-    text: Chivo, Colfax, Franziska
-    text: Poppins
+    text: Roboto
+    code: Roboto Mono
   palette:
     # Light mode
     - media: "(prefers-color-scheme: light)"
