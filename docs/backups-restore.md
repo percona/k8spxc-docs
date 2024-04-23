@@ -134,16 +134,16 @@ restoration can be done in the following way.
           storageName: "s3-us-west"
     ```
 
-   !!! note
-   
-       Full backup objects available with the `kubectl get pxc-backup` command
-       have a "Latest restorable time" information field handy when selecting
-       a backup to restore. You can easily
-       query the backup for this information as follows:
+    !!! note
+    
+        Full backup objects available with the `kubectl get pxc-backup` command
+        have a "Latest restorable time" information field handy when selecting
+        a backup to restore. You can easily
+        query the backup for this information as follows:
        
-       ``` {.bash data-prompt="$" }
-       $ kubectl get pxc-backup <backup_name> -o jsonpath='{.status.latestRestorableTime}'
-       ```
+        ``` {.bash data-prompt="$" }
+        $ kubectl get pxc-backup <backup_name> -o jsonpath='{.status.latestRestorableTime}'
+        ```
 
 2. Run the actual restoration process:
 
