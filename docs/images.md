@@ -1,7 +1,7 @@
 # Percona certified images
 
 Following table presents Percona’s certified docker images to be used with the
-Percona Operator for MySQL based on Percona XtraDB Cluster:
+Percona Operator for MySQL based on Percona XtraDB Cluster.
 
 | Image                                                                  | Digest                                                           |
 |:-----------------------------------------------------------------------|:-----------------------------------------------------------------|
@@ -24,9 +24,28 @@ Percona Operator for MySQL based on Percona XtraDB Cluster:
 | percona/percona-xtradb-cluster:5.7.39-31.61                            | 9013170a71559bbac92ba9c2e986db9bda3a8a9e39ee1ee350e0ee94488bb6d7 |
 | percona/percona-xtradb-cluster:5.7.36-31.55                            | c7bad990fc7ca0fde89240e921052f49da08b67c7c6dc54239593d61710be504 |
 | percona/percona-xtradb-cluster:5.7.34-31.51                            | f8d51d7932b9bb1a5a896c7ae440256230eb69b55798ff37397aabfd58b80ccb |
-| **Images added for support of Percona XtraDB Cluster distribution 8.0.36**: | |
+| **Images added to support Percona XtraDB Cluster 8.0.36**: | |
 | percona/percona-xtradb-cluster-operator:1.14.0-proxysql2.5.5-1.2       | fcd7c1366f26f3dbaeff65d7ee08c43bbb88838cec9a0085447c1b56c717870d |
 | percona/percona-xtradb-cluster-operator:1.14.0-pxc8.0.36-backup-pxb8.0.35 | c17261dc7c40af2ab28510e702d4b6a2fb76b30001991fad3ddfa4271cc18157 |
 | percona/pmm-client:2.41.2                                              | 16d2499c1cbcc1af51bd3752fe7623b0d0a319ee128b12d41cadf8080d1ce56b |
 | percona/percona-xtradb-cluster:8.0.36-28.1                             | ed99f585a27257726a985fee5f50cd957f94f5b9ae70a5d2f0fa1e68336f3abe |
+
+Image tags are starting with the Operator's version and include a number of
+optional fields: the Percona XtraDB Cluster version ("pxc8.0.36"), name of the
+actual component in the image ("haproxy", "backup", etc.), and the version of
+this component ("pxb8.0.35"):
+
+`operator_version-[pxc_version]-[component_name]-[component_version]`
+
+An example looks as follows: `1.14.0-pxc8.0-backup-pxb8.0.35`
+
+Percona XtraDB Cluster versions may have different
+detalization ("pxc" prefix with major and minor numbers, like "pxc8.0", or
+with minor, major, and patch numbers, like "pxc8.0.36", or the full XtraDB
+Cluster version without prefix: major, minor, and patch numbers followed by
+a dash and the version of Percona Server this XtraDB Cluster version is based
+on, like "8.0.36-28.1").
+
+Note, that PMM Client images have their own tags, just containing the version
+of PMM.
 
