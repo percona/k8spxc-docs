@@ -37,7 +37,7 @@ this component ("pxb8.0.35"):
 
 `operator_version-[pxc_version]-[component_name]-[component_version]`
 
-An example looks as follows: `1.14.0-pxc8.0-backup-pxb8.0.35`
+An example looks as follows: `1.14.0-pxc8.0.36-backup-pxb8.0.35`
 
 Percona XtraDB Cluster versions may have different
 detalization ("pxc" prefix with major and minor numbers, like "pxc8.0", or
