@@ -636,6 +636,7 @@ i[warning] [class*="moji"] {
        -moz-appearance: none;
             appearance: none;
     align-self: center;
+    font-family: var(--fHeading);
     font-size: 0.9rem;
     line-height: 1;
     font-weight: 700;
