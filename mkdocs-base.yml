@@ -49,7 +49,7 @@ extra_css:
   - https://unicons.iconscout.com/release/v3.0.3/css/line.css
   - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css
   - css/percona.css
-  - css/version-select.css
+  #- css/version-select.css
   - css/nocopy.css
   - css/extra.css
   - css/design.css
@@ -59,6 +59,7 @@ extra_css:
 extra_javascript:
    - js/promptremover.js
    - js/consent.js
+   - js/percona-select.js
 #  - js/version-select.js
 #  - js/toctree.js
 #  - js/lightgallery.min.js
@@ -117,7 +118,7 @@ plugins:
   # https://pypi.org/project/mkdocs-htmlproofer-plugin/
   #    htmlproofer: {}
   mike:
-    version_selector: true
+    version_selector: false
     css_dir: css
     javascript_dir: js
     canonical_version: null
