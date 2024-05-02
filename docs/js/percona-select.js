@@ -3,8 +3,8 @@ const selectBox = document.getElementById('versionSelect');
 if (selectBox) {
     // Populate the select box with options based on the versionMap
     const versionMap = { 
-        'based on Percona XtraDB Cluster': '/based on Percona Server for MySQL/',
-        'based on Percona Server for MySQL': '/based on Percona XtraDB Cluster/',
+        'based on Percona XtraDB Cluster': '/pxc/',
+        'based on Percona Server for MySQL': '/ps/',
         // Add new versions here as needed
     };
 
