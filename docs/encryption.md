@@ -88,7 +88,7 @@ The following steps will deploy Vault on Kubernetes with the [Helm 3 package man
         stringData:
           keyring_vault.conf: |-
              token = s.VgQvaXl8xGFO1RUxAPbPbsfN
-             vault_url = vault-service.vault-service.svc.cluster.local
+             vault_url = http://vault-service.vault-service.svc.cluster.local:8200
              secret_mount_point = pxc-secret
         ```
 
@@ -114,7 +114,7 @@ The following steps will deploy Vault on Kubernetes with the [Helm 3 package man
         stringData:
           keyring_vault.conf: |-
             token = = s.VgQvaXl8xGFO1RUxAPbPbsfN
-            vault_url = https://vault-service.vault-service.svc.cluster.local
+            vault_url = https://vault-service.vault-service.svc.cluster.local:8200
             secret_mount_point = pxc-secret
             vault_ca = /etc/mysql/vault-keyring-secret/ca.cert
           ca.cert: |-
