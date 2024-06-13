@@ -85,6 +85,10 @@ You can pass custom configuration to HAProxy in one of the following ways:
     If you specify a custom HAProxy configuration in this way, the
     Operator doesn’t provide its own HAProxy configuration file except [several hardcoded options](https://github.com/percona/percona-docker/blob/main/haproxy/dockerdir/etc/haproxy/haproxy.cfg) (which therefore can't be overwritten). That’s why you
     should specify either a full set of configuration options or nothing.
+    Additionally, when [upgrading Percona XtraDB Cluster](update.md#upgrading-percona-xtradb-cluster)
+    it would be wise to check the [HA Proxy release information](https://www.haproxy.org/)
+    and make sure that the new version is still compatible with your existing
+    custom config.
 
 ### Edit the `deploy/cr.yaml` file
 

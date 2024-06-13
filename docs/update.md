@@ -182,9 +182,12 @@ Manual update of Percona XtraDB Cluster can be done as follows:
 
     !!! warning
 
-        The above command upgrades various components of the cluster including PMM Client. It is [highly recommended](https://docs.percona.com/percona-monitoring-and-management/how-to/upgrade.html) to upgrade PMM Server **before** upgrading PMM Client. If it wasn't done and you would like to avoid PMM Client upgrade, remove it from the list of images, reducing the last of two patch commands as follows:
-        
-        
+        The above command upgrades various components of the cluster including PMM Client and HA Proxy, which may need additional attention.
+
+        * If you are using [custom configuration for HA Proxy](haproxy-conf.md#passing-custom-configuration-options-to-haproxy), check [HA Proxy release information](https://www.haproxy.org/) to make sure that the version you are applying is compatible with your existing custom config.
+
+        * It is [highly recommended](https://docs.percona.com/percona-monitoring-and-management/how-to/upgrade.html) to upgrade PMM Server **before** upgrading PMM Client. If it wasn't done and you would like to avoid PMM Client upgrade, remove it from the list of images, reducing the last of two patch commands as follows:
+
         === "For Percona XtraDB Cluster 8.0"
             ```bash
             $ kubectl patch pxc cluster1 --type=merge --patch '{
