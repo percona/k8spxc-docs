@@ -117,7 +117,7 @@ As an alternative, the `updateStrategy` key can be set to `RollingUpdate` and
 
 !!! warning
 
-    The upgrade includes various components of the cluster including PMM Client
+    The upgrade covers various components of the cluster including PMM Client
     and HA Proxy, which may need additional attention.
     
     *  It is [highly recommended](https://docs.percona.com/percona-monitoring-and-management/how-to/upgrade.html)
