@@ -112,11 +112,23 @@ are updated. Smart Update strategy is on when the `updateStrategy` key in the
 [Custom Resource](operator.md) configuration file is set to `SmartUpdate`
 (this is the default value and the recommended way for upgrades).
 
-!!! note
+As an alternative, the `updateStrategy` key can be set to `RollingUpdate` and
+`OnDelete`. You can find out more about it in the [appropriate section](update.md#more-on-upgrade-strategies).
 
-    As an alternative, the `updateStrategy` key can be set to `RollingUpdate` 
-    and `OnDelete`. You can find out more about it in the
-    [appropriate section](update.md#more-on-upgrade-strategies).
+!!! warning
+
+    The upgrade includes various components of the cluster including PMM Client
+    and HA Proxy, which may need additional attention.
+    
+    *  It is [highly recommended](https://docs.percona.com/percona-monitoring-and-management/how-to/upgrade.html)
+        to upgrade PMM Server **before** upgrading PMM Client.
+    
+    * If you are using [custom configuration for HA Proxy](haproxy-conf.md#passing-custom-configuration-options-to-haproxy), 
+        **before upgrading**, check the HA Proxy configuration file provided by
+        the Operator (for example, `haproxy-global.cfg` for the Operator version
+        {{ release }} can be found [here](https://github.com/percona/percona-docker/blob/pxc-operator-{{ release }}/haproxy/dockerdir/etc/haproxy/haproxy-global.cfg)).
+        Make sure that your custom config is still compatible with new variant,
+        and make necessary additions, if needed.
 
 ### Manual upgrade
 
@@ -182,11 +194,7 @@ Manual update of Percona XtraDB Cluster can be done as follows:
 
     !!! warning
 
-        The above command upgrades various components of the cluster including PMM Client and HA Proxy, which may need additional attention.
-
-        * If you are using [custom configuration for HA Proxy](haproxy-conf.md#passing-custom-configuration-options-to-haproxy), check [HA Proxy release information](https://www.haproxy.org/) to make sure that the version you are applying is compatible with your existing custom config.
-
-        * It is [highly recommended](https://docs.percona.com/percona-monitoring-and-management/how-to/upgrade.html) to upgrade PMM Server **before** upgrading PMM Client. If it wasn't done and you would like to avoid PMM Client upgrade, remove it from the list of images, reducing the last of two patch commands as follows:
+        The above command upgrades various components of the cluster including PMM Client. If you didn't follow the [official recommendation](https://docs.percona.com/percona-monitoring-and-management/how-to/upgrade.html) to upgrade PMM Server before upgrading PMM Client, you can avoid PMM Client upgrade by removeing it from the list of images as follows:
 
         === "For Percona XtraDB Cluster 8.0"
             ```bash
