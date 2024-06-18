@@ -89,7 +89,7 @@ You can pass custom configuration to HAProxy in one of the following ways:
     it would be wise to check the
     [HA Proxy configuration file](https://github.com/percona/percona-docker/blob/pxc-operator-{{ release }}/haproxy/dockerdir/etc/haproxy/haproxy-global.cfg)
     provided by the Operator and make sure that your custom config is still
-    compatible with new variant.
+    compatible with the new variant.
 
 ### Edit the `deploy/cr.yaml` file
 
