@@ -124,7 +124,7 @@ As an alternative, the `updateStrategy` key can be set to `RollingUpdate` and
         to upgrade PMM Server **before** upgrading PMM Client.
     
     * If you are using [custom configuration for HA Proxy](haproxy-conf.md#passing-custom-configuration-options-to-haproxy), 
-        **before upgrading**, check the HA Proxy configuration file provided by
+        **before upgrading**, check the HAProxy configuration file provided by
         the Operator (for example, `haproxy-global.cfg` for the Operator version
         {{ release }} can be found [here](https://github.com/percona/percona-docker/blob/pxc-operator-{{ release }}/haproxy/dockerdir/etc/haproxy/haproxy-global.cfg)).
         Make sure that your custom config is still compatible with the new
