@@ -37,7 +37,6 @@ the following information there:
 
 * `subjects.namespace` option should contain the namespace which will host
     the Operator,
-
 * `WATCH_NAMESPACE` key-value pair in the `env` section should have
     `value` equal to a  comma-separated list of the namespaces to be watched by
     the Operator (or just a blank string to make the Operator deal with
@@ -51,8 +50,8 @@ the following information there:
         namespaces). Also, prior to the version 1.12.0 it was necessary to
         mention the Operator's own namespace in the list of watched namespaces.
 
-    The following simple example shows how to install Operator cluster-wide on
-    Kubernetes.
+The following simple example shows how to install Operator cluster-wide on
+Kubernetes.
 
 
 1. First of all, clone the percona-xtradb-cluster-operator repository:
@@ -76,13 +75,29 @@ the following information there:
     $ kubectl create namespace pxc
     ```
 
-3. Apply the `deploy/cw-bundle.yaml` file with the following command:
+3. Edit the ``deploy/cw-bundle.yaml`` configuration file to set proper
+    namespaces:
+
+    ```yaml
+    ...
+    subjects:
+    - kind: ServiceAccount
+      name: percona-xtradb-cluster-operator
+      namespace: "pxc"
+    ...
+    env:
+             - name: WATCH_NAMESPACE
+               value: "pxc"
+    ...
+    ```
+
+4. Apply the `deploy/cw-bundle.yaml` file with the following command:
 
     ``` {.bash data-prompt="$" }
     $ kubectl apply -f deploy/cw-bundle.yaml -n pxc-operator
     ```
 
-4. After the Operator is started, Percona XtraDB Cluster can be created at any
+5. After the Operator is started, Percona XtraDB Cluster can be created at any
     time by applying the `deploy/cr.yaml` configuration file, like in the case
     of normal installation:
 
@@ -90,26 +105,31 @@ the following information there:
     $ kubectl apply -f deploy/cr.yaml -n pxc
     ```
 
-    The creation process will take some time. The process is over when both
-    operator and replica set Pods have reached their Running status:
+    The creation process will take some time. When the process is over your
+    cluster will obtain the `ready` status. You can check it with the following
+    command:
 
-    ``` {.text .no-copy}
-    NAME                                               READY   STATUS    RESTARTS   AGE
-    cluster1-haproxy-0                                 2/2     Running   0          6m17s
-    cluster1-haproxy-1                                 2/2     Running   0          4m59s
-    cluster1-haproxy-2                                 2/2     Running   0          4m36s
-    cluster1-pxc-0                                     3/3     Running   0          6m17s
-    cluster1-pxc-1                                     3/3     Running   0          5m3s
-    cluster1-pxc-2                                     3/3     Running   0          3m56s
-    percona-xtradb-cluster-operator-79966668bd-rswbk   1/1     Running   0          9m54s
+    ``` {.bash data-prompt="$" }
+    $ kubectl get pxc
     ```
 
-5. Check the connectivity to the newly created cluster.
+    ??? example "Expected output"
 
-    First you will need the login and password for the admin user to access the
+        ``` {.text .no-copy}
+        NAME       ENDPOINT                   STATUS   PXC   PROXYSQL   HAPROXY   AGE
+        cluster1   cluster1-haproxy.default   ready    3                3         5m51s
+        ```
+
+## Verifying the cluster operation
+
+It may take ten minutes to get the cluster started. When `kubectl get pxc`
+command finally shows you the cluster status as `ready`, you can try to connect
+to the cluster.
+
+1. You will need the login and password for the admin user to access the
     cluster. Use `kubectl get secrets` command to see the list of Secrets
     objects (by default the Secrets object you are interested in has
-    `cluster1-secrets` name). 
+    `cluster1-secrets` name).
     You can use the following command to get the password of the `root`
     user:
     
@@ -117,7 +137,7 @@ the following information there:
     $ kubectl get secrets --namespace=pxc cluster1-secrets --template='{{"{{"}}.data.root | base64decode{{"}}"}}{{"{{"}}"\n"{{"}}"}}'
     ```
 
-    Now run a container with `mysql` tool and connect its console output to your
+2. Run a container with `mysql` tool and connect its console output to your
     terminal. The following command will do this, naming the new Pod
     `percona-client`:
 
