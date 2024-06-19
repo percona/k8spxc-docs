@@ -194,7 +194,7 @@ Manual update of Percona XtraDB Cluster can be done as follows:
 
     !!! warning
 
-        The above command upgrades various components of the cluster including PMM Client. If you didn't follow the [official recommendation](https://docs.percona.com/percona-monitoring-and-management/how-to/upgrade.html) to upgrade PMM Server before upgrading PMM Client, you can avoid PMM Client upgrade by removeing it from the list of images as follows:
+        The above command upgrades various components of the cluster including PMM Client. If you didn't follow the [official recommendation](https://docs.percona.com/percona-monitoring-and-management/how-to/upgrade.html) to upgrade PMM Server before upgrading PMM Client, you can avoid PMM Client upgrade by removing it from the list of images as follows:
 
         === "For Percona XtraDB Cluster 8.0"
             ```bash
