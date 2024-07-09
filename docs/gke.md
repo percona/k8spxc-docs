@@ -182,13 +182,22 @@ Clicking the problematic Pod will bring you to the details page with the same wa
 
 There are several ways that you can delete the cluster.
 
-You can clean up the cluster with the `gcloud` command as follows:
+You can clean up the cluster with the `gcloud container clusters delete <cluster name> --zone <zone location>` command. The return statement requests your confirmation of the deletion. Type `y` to confirm.
 
 ``` {.bash data-prompt="$" }
-$ gcloud container clusters delete <cluster name>
+$ gcloud container clusters delete my-cluster-1 --zone us-central1-a
 ```
 
-The return statement requests your confirmation of the deletion. Type `y` to confirm.
+??? example "Expected output"
+
+    ``` {.text .no-copy}
+    The following clusters will be deleted.
+     - [my-cluster-1] in [us-central1-a]
+
+    Do you want to continue (Y/n)?  y
+
+    Deleting cluster my-cluster-1...⠧
+    ```
 
 Also, you can delete your cluster via the GKE console. Just click the appropriate trashcan icon in the clusters list:
 
