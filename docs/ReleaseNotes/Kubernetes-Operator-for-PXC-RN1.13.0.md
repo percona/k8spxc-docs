@@ -20,7 +20,7 @@
 * {{ k8spxcjira(1166) }}: Starting from now, Docker image tags for Percona XtraBackup include full XtraBackup version instead of the major number used before
 * {{ k8spxcjira(1189) }}: Improve security and meet compliance requirements by building the Operator based on Red Hat Universal Base Image (UBI) 9 instead of UBI 8
 * {{ k8spxcjira(1192) }}: Backup and restore documentation was substantially improved to make it easier to work with, and [backup restore options](../operator.md#perconaxtradbclusterrestore-custom-resource-options) have been added to the Сustom Resource reference
-* {{ k8spxcjira(1210) }}: A [headless service](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services) can now be configured for [ProxySQL](../proxysql-conf.md/headless-service) and [HAProxy](../haproxy-conf.md/headless-service) to make them usable on a tenant network (thanks to Vishal Anarase for contribution)
+* {{ k8spxcjira(1210) }}: A [headless service](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services) can now be configured for [ProxySQL](../proxysql-conf.md/#headless-service) and [HAProxy](../haproxy-conf.md/#headless-service) to make them usable on a tenant network (thanks to Vishal Anarase for contribution)
 * {{ k8spxcjira(1225) }}: The Operator (system) users are now created with the `PASSWORD EXPIRE NEVER` policy to avoid breaking the cluster due to the password expiration set by the `default_password_lifetime` system variable
 * {{ k8spxcjira(362) }}: Code clean-up and refactoring for checking if ProxySQL and HAProxy enabled in the Custom Resource (thanks to Vladislav Safronov for contributing)
 * {{ k8spxcjira(1224) }}: New `backup.allowParallel` Custom Resource option allows to disable running backup jobs in parallel, which can be useful to avoid connection issues caused by the cluster overload
@@ -40,7 +40,7 @@
 * {{ k8spxcjira(1122) }}: Fix a bug which made disabling verification of the storage server TLS certificate with `verifyTLS` PerconaXtraDBClusterRestore Custom Resource option not working
 * {{ k8spxcjira(1135) }}: Fix a bug where a cluster could incorrectly get a READY status while it had a service with an external IP still in pending state
 * {{ k8spxcjira(1149) }}: Fix `delete-pxc-pvc` finalizer unable to delete TLS Secret used for external communications in case if this Secret had non-customized default name
-* {{ k8spxcjira(1161) }}: Fix a bug due to which PMM couldn't continue monitoring HAProxy Pods after the [PMM Server API key change](../monitoring#operator-monitoring-client-token)
+* {{ k8spxcjira(1161) }}: Fix a bug due to which PMM couldn't continue monitoring HAProxy Pods after the [PMM Server API key change](../monitoring.md#operator-monitoring-client-token)
 * {{ k8spxcjira(1163) }}: Fix a bug that made it impossible to delete the cluster in init state in case of enabled finalizers
 * {{ k8spxcjira(1199) }}: Fix a bug due to which the Operator couldn't restore backups from Azure blob storage if `spec.backupSource.azure.container` was not specified 
 * {{ k8spxcjira(1205) }}: Fix a bug which made the Operator to ignore the `verifyTLS` option for backups deletion caused by the `delete-s3-backup` finalizer (thanks to Christ-Jan Prinse for reporting)

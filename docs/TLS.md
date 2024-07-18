@@ -164,6 +164,7 @@ you can make the Operator update along with the [official instruction](update.md
 
     ``` {.text .no-copy}
     NAME                    READY   SECRET                  AGE
+    cluster1-ca-cert        True    cluster1-ca-cert        49m
     cluster1-ssl            True    cluster1-ssl            49m
     cluster1-ssl-internal   True    cluster1-ssl-internal   49m
     ```
@@ -177,8 +178,9 @@ you can make the Operator update along with the [official instruction](update.md
     The response should be as follows:
 
     ``` {.text .no-copy}
-    NAME              READY   AGE
-    cluster1-pxc-ca   True    49m
+    NAME                     READY   AGE
+    cluster1-pxc-ca-issuer   True    49m
+    cluster1-pxc-issuer      True    49m
     ```
 
 3. Now use the following command to find out the certificates validity dates,

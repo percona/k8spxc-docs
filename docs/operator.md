@@ -47,9 +47,44 @@ The spec part of the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-
 | sslSecretName   | string            | `cluster1-ssl`             | A secret with TLS certificate generated for *external* communications, see [Transport Layer Security (TLS)](TLS.md#tls) for details |
 | sslInternalSecretName  | string     | `cluster1-ssl-internal`    | A secret with TLS certificate generated for *internal* communications, see [Transport Layer Security (TLS)](TLS.md#tls) for details |
 | logCollectorSecretName | string     | `my-log-collector-secrets` | A secret for the [Fluent Bit Log Collector](debug-logs.md#cluster-level-logging)      |
-| initImage       | string            | `percona/percona-xtradb-cluster-operator:{{ release }}` | An alternative image for the initial Operator installation |
+| initImage       | string            | `percona/percona-xtradb-cluster-operator:{{ release }}` | An alternative image for the initial Operator installation. **This option is deprecated and will be removed in future releases**. Use `initContainer.image` instead |
+| initContainer   | [subdoc](#operator-initcontainer-section) |    | An alternative image for the initial Operator installation |
 | tls             | [subdoc](#tls-extended-cert-manager-configuration-section) |                            | Extended cert-manager configuration section  |
 | updateStrategy  | string            | `SmartUpdate`              | A strategy the Operator uses for [upgrades](update.md#operator-update) |
+
+
+### <a name="operator-initcontainer-section"></a>initContainer configuration section
+
+The `initContainer` section in the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file 
+allows providing an alternative image with various options for the initial Operator installation.
+
+|                 | |
+|-----------------|-|
+| **Key**         | {{ optionlink('initContainer.image') }} |
+| **Value**       | string |
+| **Example**     | `percona/percona-xtradb-cluster-operator:{{ release }}` |
+| **Description** | An alternative image for the initial Operator installation |
+|                 | |
+| **Key**         | {{ optionlink('initContainer.resources.requests.memory') }} |
+| **Value**       | string |
+| **Example**     | `1G` |
+| **Description** | The [Kubernetes memory requests](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for an image used while the initial Operator installation |
+|                 | |
+| **Key**         | {{ optionlink('initContainer.resources.requests.cpu') }} |
+| **Value**       | string |
+| **Example**     | `600m` |
+| **Description** | [Kubernetes CPU requests](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for an image used while the initial Operator installation |
+|                 | |
+| **Key**         | {{ optionlink('initContainer.resources.limits.memory') }} |
+| **Value**       | string |
+| **Example**     | `1G` |
+| **Description** | [Kubernetes memory limits](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for an image used while the initial Operator installation |
+|                 | |
+| **Key**         | {{ optionlink('initContainer.resources.limits.cpu') }} |
+| **Value**       | string |
+| **Example**     | `1` |
+| **Description** | [Kubernetes CPU limits](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for an image used while the initial Operator installation |
+
 
 ### <a name="operator-issuerconf-section"></a>TLS (extended cert-manager configuration section)
 
@@ -123,22 +158,37 @@ configuration options for the Percona XtraDB Cluster.
 | **Key**         | {{ optionlink('pxc.expose.enabled') }} |
 | **Value**       | boolean |
 | **Example**     | `true` |
-| **Description** | Enable or disable exposing Percona XtraDB Cluster nodes with dedicated IP addresses |
+| **Description** | Enable or disable exposing Percona XtraDB Cluster instances with dedicated IP addresses |
 |                 | |
 | **Key**         | {{ optionlink('pxc.expose.type') }} |
 | **Value**       | string |
 | **Example**     | `LoadBalancer` |
-| **Description** | The [Kubernetes Service Type](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) used for xposure |
+| **Description** | The [Kubernetes Service Type](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) used for exposure |
 |                 | |
 | **Key**         | {{ optionlink('pxc.expose.trafficPolicy') }} |
 | **Value**       | string |
 | **Example**     | `Local` |
-| **Description** | Specifies whether Service should [route external traffic to cluster-wide or node-local endpoints](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip) (it can influence the load balancing effectiveness) |
+| **Description** | Specifies whether Service should [route external traffic to cluster-wide or node-local endpoints](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip) (it can influence the load balancing effectiveness) **This option is deprecated and will be removed in future releases**. Use `pxc.expose.externalTrafficPolicy` instead |
+|                 | |
+| **Key**         | {{ optionlink('pxc.expose.externalTrafficPolicy') }} |
+| **Value**       | string |
+| **Example**     | `Local` |
+| **Description** | Specifies whether Service for Percona XtraDB Cluster should [route external traffic to cluster-wide or to node-local endpoints](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip) (it can influence the load balancing effectiveness) |
+|                 | |
+| **Key**         | {{ optionlink('pxc.expose.internalTrafficPolicy') }} |
+| **Value**       | string |
+| **Example**     | `Local` |
+| **Description** | Specifies whether Service for Percona XtraDB Cluster should [route internal traffic to cluster-wide or to node-local endpoints](https://kubernetes.io/docs/concepts/services-networking/service-traffic-policy/) (it can influence the load balancing effectiveness) |
 |                 | |
 | **Key**         | {{ optionlink('pxc.expose.loadBalancerSourceRanges') }} |
 | **Value**       | string |
 | **Example**     | `10.0.0.0/8` |
 | **Description** | The range of client IP addresses from which the load balancer should be reachable (if not set, there is no limitations) |
+|                 | |
+| **Key**         | {{ optionlink('pxc.expose.loadBalancerIP') }} |
+| **Value**       | string |
+| **Example**     | `127.0.0.1` |
+| **Description** | The static IP-address for the load balancer |
 |                 | |
 | **Key**         | {{ optionlink('pxc.expose.annotations') }} |
 | **Value**       | string |
@@ -326,6 +376,26 @@ in [cross-site replication](replication.md#operator-replication) |
 | **Example**     | `disktype: ssd` |
 | **Description** | [Kubernetes nodeSelector](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector) |
 |                 | |
+| **Key**         | {{ optionlink('pxc.topologySpreadConstraints.labelSelector.matchLabels') }} |
+| **Value**       | label |
+| **Example**     | `app.kubernetes.io/name: percona-xtradb-cluster-operator` |
+| **Description** | The Label selector for the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
+| **Key**         | {{ optionlink('pxc.topologySpreadConstraints.maxSkew') }} |
+| **Value**       | int |
+| **Example**     | 1 |
+| **Description** | The degree to which Pods may be unevenly distributed under the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
+| **Key**         | {{ optionlink('pxc.topologySpreadConstraints.topologyKey') }} |
+| **Value**       | string |
+| **Example**     | `kubernetes.io/hostname` |
+| **Description** | The key of node labels for the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
+| **Key**         | {{ optionlink('pxc.topologySpreadConstraints.whenUnsatisfiable') }} |
+| **Value**       | string |
+| **Example**     | `DoNotSchedule` |
+| **Description** | What to do with a Pod if it doesn't satisfy the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
 | **Key**         | {{ optionlink('pxc.affinity.topologyKey') }} |
 | **Value**       | string |
 | **Example**     | `kubernetes.io/hostname` |
@@ -449,6 +519,16 @@ in [cross-site replication](replication.md#operator-replication) |
 | **Value**       | string |
 | **Example**     | `600m` |
 | **Description** | [Kubernetes CPU limits](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Percona XtraDB Cluster sidecar container |
+|                 | |
+| **Key**         | {{ optionlink('pxc.lifecycle.preStop.exec.command') }} |
+| **Value**       | array |
+| **Example**     | `["/bin/true"]` |
+| **Description** | Command for the [preStop lifecycle hook](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/) for Percona XtraDB Cluster Pods |
+|                 | |
+| **Key**         | {{ optionlink('pxc.lifecycle.postStart.exec.command') }} |
+| **Value**       | array |
+| **Example**     | `["/bin/true"]` |
+| **Description** | Command for the [postStart lifecycle hook](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/) for Percona XtraDB Cluster Pods |
 
 ### <a name="operator-haproxy-section"></a>HAProxy section
 
@@ -532,6 +612,16 @@ configuration options for the HAProxy service.
 | **Example**     | `3` |
 | **Description** | When the [readiness probe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) fails, Kubernetes will try this number of times before marking the Pod Unready |
 |                 | |
+| **Key**         | {{ optionlink('haproxy.serviceType') }} |
+| **Value**       | string |
+| **Example**     | `ClusterIP` |
+| **Description** | Specifies the type of [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) to be used for HAProxy. **This option is deprecated and will be removed in future releases**. Use `haproxy.exposePrimary.type` instead |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.externalTrafficPolicy') }} |
+| **Value**       | string |
+| **Example**     | `Cluster` |
+| **Description** | Specifies whether Service for HAProxy should [route external traffic to cluster-wide or to node-local endpoints](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip) (it can influence the load balancing effectiveness). **This option is deprecated and will be removed in future releases**. Use `haproxy.exposePrimary.externalTrafficPolicy` instead |
+|                 | |
 | **Key**         | {{ optionlink('haproxy.livenessProbes.initialDelaySeconds') }} |
 | **Value**       | int |
 | **Example**     | `60` |
@@ -556,16 +646,6 @@ configuration options for the HAProxy service.
 | **Value**       | int |
 | **Example**     | `4` |
 | **Description** | When the [liveness probe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) fails, Kubernetes will try this number of times before marking the Pod Unready |
-|                 | |
-| **Key**         | {{ optionlink('haproxy.serviceType') }} |
-| **Value**       | string |
-| **Example**     | `ClusterIP` |
-| **Description** | Specifies the type of [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) to be used for HAProxy |
-|                 | |
-| **Key**         | {{ optionlink('haproxy.externalTrafficPolicy') }} |
-| **Value**       | string |
-| **Example**     | `Cluster` |
-| **Description** | Specifies whether Service for HAProxy should [route external traffic to cluster-wide or to node-local endpoints](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip) (it can influence the load balancing effectiveness) |
 |                 | |
 | **Key**         | {{ optionlink('haproxy.resources.requests.memory') }} |
 | **Value**       | string |
@@ -607,6 +687,26 @@ configuration options for the HAProxy service.
 | **Example**     | `disktype: ssd` |
 | **Description** | [Kubernetes nodeSelector](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector) |
 |                 | |
+| **Key**         | {{ optionlink('haproxy.topologySpreadConstraints.labelSelector.matchLabels') }} |
+| **Value**       | label |
+| **Example**     | `app.kubernetes.io/name: percona-xtradb-cluster-operator` |
+| **Description** | The Label selector for the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.topologySpreadConstraints.maxSkew') }} |
+| **Value**       | int |
+| **Example**     | 1 |
+| **Description** | The degree to which Pods may be unevenly distributed under the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.topologySpreadConstraints.topologyKey') }} |
+| **Value**       | string |
+| **Example**     | `kubernetes.io/hostname` |
+| **Description** | The key of node labels for the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.topologySpreadConstraints.whenUnsatisfiable') }} |
+| **Value**       | string |
+| **Example**     | `DoNotSchedule` |
+| **Description** | What to do with a Pod if it doesn't satisfy the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
 | **Key**         | {{ optionlink('haproxy.affinity.topologyKey') }} |
 | **Value**       | string |
 | **Example**     | `kubernetes.io/hostname` |
@@ -637,37 +737,82 @@ configuration options for the HAProxy service.
 | **Example**     | `30` |
 | **Description** | The [Kubernetes grace period when terminating a Pod](https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods) |
 |                 | |
-| **Key**         | {{ optionlink('haproxy.loadBalancerSourceRanges') }} |
+| **Key**         | {{ optionlink('haproxy.exposePrimary.enabled') }} |
+| **Value**       | boolean |
+| **Example**     | `false` |
+| **Description** | Enables or disables the HAProxy primary instance Service |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.exposePrimary.type') }} |
+| **Value**       | string |
+| **Example**     | `ClusterIP` |
+| **Description** | Specifies the type of [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) to be used for HAProxy primary instance Service |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.exposePrimary.externalTrafficPolicy') }} |
+| **Value**       | string |
+| **Example**     | `Cluster` |
+| **Description** | Specifies whether Service for HAProxy should [route external traffic to cluster-wide or to node-local endpoints](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip) (it can influence the load balancing effectiveness) |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.exposePrimary.internalTrafficPolicy') }} |
+| **Value**       | string |
+| **Example**     | `Cluster` |
+| **Description** | Specifies whether Service for HAProxy primary instance should [route internal traffic to cluster-wide or to node-local endpoints](https://kubernetes.io/docs/concepts/services-networking/service-traffic-policy/) (it can influence the load balancing effectiveness) |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.exposePrimary.loadBalancerSourceRanges') }} |
 | **Value**       | string |
 | **Example**     | `10.0.0.0/8` |
 | **Description** | The range of client IP addresses from which the load balancer should be reachable (if not set, there is no limitations) |
 |                 | |
-| **Key**         | {{ optionlink('haproxy.loadBalancerIP') }} |
+| **Key**         | {{ optionlink('haproxy.exposePrimary.loadBalancerIP') }} |
 | **Value**       | string |
 | **Example**     | `127.0.0.1` |
 | **Description** | The static IP-address for the load balancer |
 |                 | |
 | **Key**         | {{ optionlink('haproxy.serviceLabels') }} |
 | **Value**       | label |
-| **Example**     | `rack: rack-23` |
+| **Example**     | `rack: rack-22` |
+| **Description** | The [Kubernetes labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) for the load balancer Service. **This option is deprecated and will be removed in future releases**. Use `haproxy.exposePrimary.labels` instead |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.exposePrimary.labels') }} |
+| **Value**       | label |
+| **Example**     | `rack: rack-22` |
 | **Description** | The [Kubernetes labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) for the load balancer Service |
 |                 | |
 | **Key**         | {{ optionlink('haproxy.serviceAnnotations') }} |
 | **Value**       | string |
-| **Example**     | `service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http` |
+| **Example**     | `service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp` |
+| **Description** | The [Kubernetes annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) metadata for the load balancer Service. **This option is deprecated and will be removed in future releases**. Use `haproxy.exposePrimary.annotations` instead |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.exposePrimary.annotations') }} |
+| **Value**       | string |
+| **Example**     | `service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp` |
 | **Description** | The [Kubernetes annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) metadata for the load balancer Service |
 |                 | |
 | **Key**         | {{ optionlink('haproxy.replicasServiceEnabled') }} |
 | **Value**       | boolean |
-| **Example**     | `true` |
+| **Example**     | `false` |
+| **Description** | Enables or disables `haproxy-replicas` Service. This Service (on by default) forwards requests to all Percona XtraDB Cluster instances, and it *should not be used for write requests*! **This option is deprecated and will be removed in future releases**. Use `haproxy.exposeReplicas.enabled` instead |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.exposeReplicas.enabled') }} |
+| **Value**       | boolean |
+| **Example**     | `false` |
 | **Description** | Enables or disables `haproxy-replicas` Service. This Service (on by default) forwards requests to all Percona XtraDB Cluster instances, and it **should not be used for write requests**! |
 |                 | |
 | **Key**         | {{ optionlink('haproxy.replicasLoadBalancerSourceRanges') }} |
 | **Value**       | string |
 | **Example**     | `10.0.0.0/8` |
-| **Description** | The range of client IP addresses from which the load balancer should be reachable (if not set, there is no limitations) |
+| **Description** | The range of client IP addresses from which the load balancer should be reachable (if not set, no limitations). **This option is deprecated and will be removed in future releases**. Use `haproxy.exposeReplicas.loadBalancerSourceRanges` instead |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.exposeReplicas.loadBalancerSourceRanges') }} |
+| **Value**       | string |
+| **Example**     | `10.0.0.0/8` |
+| **Description** | The range of client IP addresses from which the load balancer should be reachable (if not set, no limitations) |
 |                 | |
 | **Key**         | {{ optionlink('haproxy.replicasLoadBalancerIP') }} |
+| **Value**       | string |
+| **Example**     | `127.0.0.1` |
+| **Description** | The static IP-address for the replicas load balancer. **This option is deprecated and will be removed in future releases**. Use `haproxy.exposeReplicas.loadBalancerIP` instead | |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.exposeReplicas.loadBalancerIP') }} |
 | **Value**       | string |
 | **Example**     | `127.0.0.1` |
 | **Description** | The static IP-address for the replicas load balancer |
@@ -675,21 +820,46 @@ configuration options for the HAProxy service.
 | **Key**         | {{ optionlink('haproxy.replicasServiceType') }} |
 | **Value**       | string |
 | **Example**     | `ClusterIP` |
+| **Description** | Specifies the type of [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) to be used for HAProxy replicas. **This option is deprecated and will be removed in future releases**. Use `haproxy.exposeReplicas.serviceType` instead |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.exposeReplicas.serviceType') }} |
+| **Value**       | string |
+| **Example**     | `ClusterIP` |
 | **Description** | Specifies the type of [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) to be used for HAProxy replicas |
 |                 | |
 | **Key**         | {{ optionlink('haproxy.replicasExternalTrafficPolicy') }} |
 | **Value**       | string |
 | **Example**     | `Cluster` |
+| **Description** | Specifies whether Service for HAProxy replicas should [route external traffic to cluster-wide or to node-local endpoints](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip) (it can influence the load balancing effectiveness). **This option is deprecated and will be removed in future releases**. Use `haproxy.exposeReplicas.externalTrafficPolicy` instead |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.exposeReplicas.externalTrafficPolicy') }} |
+| **Value**       | string |
+| **Example**     | `Cluster` |
 | **Description** | Specifies whether Service for HAProxy replicas should [route external traffic to cluster-wide or to node-local endpoints](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip) (it can influence the load balancing effectiveness) |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.exposeReplicas.internalTrafficPolicy') }} |
+| **Value**       | string |
+| **Example**     | `Cluster` |
+| **Description** | Specifies whether Service for HAProxy replicas should [route internal traffic to cluster-wide or to node-local endpoints](https://kubernetes.io/docs/concepts/services-networking/service-traffic-policy/) (it can influence the load balancing effectiveness) |
 |                 | |
 | **Key**         | {{ optionlink('haproxy.replicasServiceLabels') }} |
 | **Value**       | label |
-| **Example**     | `rack: rack-23` |
+| **Example**     | `rack: rack-22` |
+| **Description** | The [Kubernetes labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) for the `haproxy-replicas` Service. **This option is deprecated and will be removed in future releases**. Use `haproxy.exposeReplicas.labels` instead |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.exposeReplicas.labels') }} |
+| **Value**       | label |
+| **Example**     | `rack: rack-22` |
 | **Description** | The [Kubernetes labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) for the `haproxy-replicas` Service |
 |                 | |
 | **Key**         | {{ optionlink('haproxy.replicasServiceAnnotations') }} |
 | **Value**       | string |
-| **Example**     | `service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http` |
+| **Example**     | `service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp` |
+| **Description** | The [Kubernetes annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) metadata for the `haproxy-replicas` Service. **This option is deprecated and will be removed in future releases**. Use `haproxy.exposeReplicas.annotations` instead  |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.exposeReplicas.annotations') }} |
+| **Value**       | string |
+| **Example**     | `service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp` |
 | **Description** | The [Kubernetes annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) metadata for the `haproxy-replicas` Service |
 |                 | |
 | **Key**         | {{ optionlink('haproxy.containerSecurityContext') }} |
@@ -751,6 +921,16 @@ configuration options for the HAProxy service.
 | **Value**       | string |
 | **Example**     | `600m` |
 | **Description** | [Kubernetes CPU limits](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the sidecar HAProxy containers |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.lifecycle.preStop.exec.command') }} |
+| **Value**       | array |
+| **Example**     | `["/bin/true"]` |
+| **Description** | Command for the [preStop lifecycle hook](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/) for HAProxy Pods |
+|                 | |
+| **Key**         | {{ optionlink('haproxy.lifecycle.postStart.exec.command') }} |
+| **Value**       | array |
+| **Example**     | `["/bin/true"]` |
+| **Description** | Command for the [postStart lifecycle hook](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/) for HAProxy Pods |
 
 ### <a name="operator-proxysql-section"></a>ProxySQL section
 
@@ -809,15 +989,70 @@ configuration options for the ProxySQL daemon.
 | **Example**     | `rack: rack-22` |
 | **Description** | [Labels are key-value pairs attached to objects](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) |
 |                 | |
+| **Key**         | {{ optionlink('proxysql.expose.enabled') }} |
+| **Value**       | boolean |
+| **Example**     | `false` |
+| **Description** | Enable or disable exposing ProxySQL nodes with dedicated IP addresses |
+|                 | |
 | **Key**         | {{ optionlink('proxysql.serviceType') }} |
+| **Value**       | string |
+| **Example**     | `ClusterIP` |
+| **Description** | Specifies the type of [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) to be used. **This option is deprecated and will be removed in future releases**. Use `proxysql.expose.type` instead |
+|                 | |
+| **Key**         | {{ optionlink('proxysql.expose.type') }} |
 | **Value**       | string |
 | **Example**     | `ClusterIP` |
 | **Description** | Specifies the type of [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) to be used |
 |                 | |
 | **Key**         | {{ optionlink('proxysql.externalTrafficPolicy') }} |
 | **Value**       | string |
-| **Example**     | `Cluster` |
-| **Description** | Specifies whether Service should [route external traffic to cluster-wide or node-local endpoints](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip) (it can influence the load balancing effectiveness) |
+| **Example**     | `Local` |
+| **Description** | Specifies whether Service for ProxySQL should [route external traffic to cluster-wide or to node-local endpoints](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip) (it can influence the load balancing effectiveness). **This option is deprecated and will be removed in future releases**. Use `proxysql.expose.externalTrafficPolicy` instead |
+|                 | |
+| **Key**         | {{ optionlink('proxysql.expose.externalTrafficPolicy') }} |
+| **Value**       | string |
+| **Example**     | `Local` |
+| **Description** | Specifies whether Service for ProxySQL should [route external traffic to cluster-wide or to node-local endpoints](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip) (it can influence the load balancing effectiveness) |
+|                 | |
+| **Key**         | {{ optionlink('proxysql.expose.internalTrafficPolicy') }} |
+| **Value**       | string |
+| **Example**     | `Local` |
+| **Description** | Specifies whether Service for ProxySQL should [route internal traffic to cluster-wide or to node-local endpoints](https://kubernetes.io/docs/concepts/services-networking/service-traffic-policy/) (it can influence the load balancing effectiveness) |
+|                 | |
+| **Key**         | {{ optionlink('proxysql.serviceAnnotations') }} |
+| **Value**       | label |
+| **Example**     | `service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp` |
+| **Description** | The [Kubernetes annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) metadata for the load balancer Service. **This option is deprecated and will be removed in future releases**. Use `proxysql.expose.annotations` instead  |
+|                 | |
+| **Key**         | {{ optionlink('proxysql.expose.annotations') }} |
+| **Value**       | label |
+| **Example**     | `service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp` |
+| **Description** | The [Kubernetes annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) metadata for the load balancer Service |
+|                 | |
+| **Key**         | {{ optionlink('proxysql.serviceLabels') }} |
+| **Value**       | label |
+| **Example**     | `rack: rack-22` |
+| **Description** | The [Kubernetes labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) for the load balancer Service. **This option is deprecated and will be removed in future releases**. Use `proxysql.expose.labels` instead |
+|                 | |
+| **Key**         | {{ optionlink('proxysql.expose.labels') }} |
+| **Value**       | label |
+| **Example**     | `rack: rack-22` |
+| **Description** | The [Kubernetes labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) for the load balancer Service |
+|                 | |
+| **Key**         | {{ optionlink('proxysql.loadBalancerSourceRanges') }} |
+| **Value**       | string |
+| **Example**     | `10.0.0.0/8` |
+| **Description** | The range of client IP addresses from which the load balancer should be reachable (if not set, there is no limitations). **This option is deprecated and will be removed in future releases**. Use `proxysql.expose.loadBalancerSourceRanges` instead  |
+|                 | |
+| **Key**         | {{ optionlink('proxysql.expose.loadBalancerSourceRanges') }} |
+| **Value**       | string |
+| **Example**     | `10.0.0.0/8` |
+| **Description** | The range of client IP addresses from which the load balancer should be reachable (if not set, there is no limitations) |
+|                 | |
+| **Key**         | {{ optionlink('proxysql.expose.loadBalancerIP') }} |
+| **Value**       | string |
+| **Example**     | `127.0.0.1` |
+| **Description** | The static IP-address for the load balancer |
 |                 | |
 | **Key**         | {{ optionlink('proxysql.resources.requests.memory') }} |
 | **Value**       | string |
@@ -858,6 +1093,26 @@ configuration options for the ProxySQL daemon.
 | **Value**       | label |
 | **Example**     | `disktype: ssd` |
 | **Description** | [Kubernetes nodeSelector](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector) |
+|                 | |
+| **Key**         | {{ optionlink('proxysql.topologySpreadConstraints.labelSelector.matchLabels') }} |
+| **Value**       | label |
+| **Example**     | `app.kubernetes.io/name: percona-xtradb-cluster-operator` |
+| **Description** | The Label selector for the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
+| **Key**         | {{ optionlink('proxysql.topologySpreadConstraints.maxSkew') }} |
+| **Value**       | int |
+| **Example**     | 1 |
+| **Description** | The degree to which Pods may be unevenly distributed under the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
+| **Key**         | {{ optionlink('proxysql.topologySpreadConstraints.topologyKey') }} |
+| **Value**       | string |
+| **Example**     | `kubernetes.io/hostname` |
+| **Description** | The key of node labels for the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
+| **Key**         | {{ optionlink('proxysql.topologySpreadConstraints.whenUnsatisfiable') }} |
+| **Value**       | string |
+| **Example**     | `DoNotSchedule` |
+| **Description** | What to do with a Pod if it doesn't satisfy the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
 |                 | |
 | **Key**         | {{ optionlink('proxysql.affinity.topologyKey') }} |
 | **Value**       | string |
@@ -919,21 +1174,6 @@ configuration options for the ProxySQL daemon.
 | **Example**     | `30` |
 | **Description** | The [Kubernetes grace period when terminating a Pod](https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods) |
 |                 | |
-| **Key**         | {{ optionlink('proxysql.loadBalancerSourceRanges') }} |
-| **Value**       | string |
-| **Example**     | `10.0.0.0/8` |
-| **Description** | The range of client IP addresses from which the load balancer should be reachable (if not set, there is no limitations) |
-|                 | |
-| **Key**         | {{ optionlink('proxysql.serviceLabels') }} |
-| **Value**       | label |
-| **Example**     | `rack: rack-23` |
-| **Description** | The [Kubernetes labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) for the load balancer Service |
-|                 | |
-| **Key**         | {{ optionlink('proxysql.serviceAnnotations') }} |
-| **Value**       | string |
-| **Example**     | `service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http` |
-| **Description** | The [Kubernetes annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) metadata for the load balancer Service |
-|                 | |
 | **Key**         | {{ optionlink('proxysql.containerSecurityContext') }} |
 | **Value**       | subdoc |
 | **Example**     | `privileged: true` |
@@ -993,6 +1233,16 @@ configuration options for the ProxySQL daemon.
 | **Value**       | string |
 | **Example**     | `600m` |
 | **Description** | [Kubernetes CPU limits](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the sidecar ProxySQL containers |
+|                 | |
+| **Key**         | {{ optionlink('proxysql.lifecycle.preStop.exec.command') }} |
+| **Value**       | array |
+| **Example**     | `["/bin/true"]` |
+| **Description** | Command for the [preStop lifecycle hook](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/) for ProxySQL Pods |
+|                 | |
+| **Key**         | {{ optionlink('proxysql.lifecycle.postStart.exec.command') }} |
+| **Value**       | array |
+| **Example**     | `["/bin/true"]` |
+| **Description** | Command for the [postStart lifecycle hook](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/) for ProxySQL Pods |
 
 ### <a name="operator-logcollector-section"></a>Log Collector section
 
@@ -1066,12 +1316,19 @@ options for Percona Monitoring and Management.
 | **Key**         | {{ optionlink('pmm.pxcParams') }} |
 | **Value**       | string |
 | **Example**     | `--disable-tablestats-limit=2000` |
-| **Description** | Additional parameters which will be passed to the [pmm-admin add mysql](https://www.percona.com/doc/percona-monitoring-and-management/2.x/setting-up/client/mysql.html#adding-mysql-service-monitoring) command for `pxc` Pods |
+| **Description** | Additional parameters which will be passed to the [pmm-admin add mysql](https://docs.percona.com/percona-monitoring-and-management/setting-up/client/mysql.html) command for `pxc` Pods |
 |                 | |
 | **Key**         | {{ optionlink('pmm.proxysqlParams') }} |
 | **Value**       | string |
 | **Example**     | `--custom-labels=CUSTOM-LABELS` |
-| **Description** | Additional parameters which will be passed to the [pmm-admin add mysql](https://www.percona.com/doc/percona-monitoring-and-management/2.x/setting-up/client/mysql.html#adding-mysql-service-monitoring) command for `proxysql` Pods |
+| **Description** | Additional parameters which will be passed to the [pmm-admin add proxysql](https://docs.percona.com/percona-monitoring-and-management/setting-up/client/proxysql.html) command for `proxysql` Pods |
+|                 | |
+| **Key**         | {{ optionlink('pmm.containerSecurityContext') }}
+| **Value**       | subdoc |
+| **Example**     | `privileged: false` |
+| **Description** | A custom [Kubernetes Security Context for a Container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) to be used instead of the default one |
+
+
 
 ### <a name="operator-backup-section"></a>Backup section
 
@@ -1103,7 +1360,7 @@ file contains the following configuration options for the regular Percona XtraDB
 | **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.type') }} |
 | **Value**       | string |
 | **Example**     | `s3` |
-| **Description** | The cloud storage type used for backups. Only `s3` and `filesystem` types are supported |
+| **Description** | The cloud storage type used for backups. Only `s3`, `azure`, and `filesystem` types are supported |
 |                 | |
 | **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.verifyTLS') }} |
 | **Value**       | boolean |
@@ -1180,6 +1437,26 @@ file contains the following configuration options for the regular Percona XtraDB
 | **Example**     | `disktype: ssd` |
 | **Description** | [Kubernetes nodeSelector](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector) |
 |                 | |
+| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.topologySpreadConstraints.labelSelector.matchLabels') }} |
+| **Value**       | label |
+| **Example**     | `app.kubernetes.io/name: percona-xtradb-cluster-operator` |
+| **Description** | The Label selector for the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
+| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.topologySpreadConstraints.maxSkew') }} |
+| **Value**       | int |
+| **Example**     | 1 |
+| **Description** | The degree to which Pods may be unevenly distributed under the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
+| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.topologySpreadConstraints.topologyKey') }} |
+| **Value**       | string |
+| **Example**     | `kubernetes.io/hostname` |
+| **Description** | The key of node labels for the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
+| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.topologySpreadConstraints.whenUnsatisfiable') }} |
+| **Value**       | string |
+| **Example**     | `DoNotSchedule` |
+| **Description** | What to do with a Pod if it doesn't satisfy the [Kubernetes Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/) |
+|                 | |
 | **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.affinity.nodeAffinity') }} |
 | **Value**       | subdoc |
 | **Example**     | |
@@ -1209,6 +1486,26 @@ file contains the following configuration options for the regular Percona XtraDB
 | **Value**       | subdoc |
 | **Example**     | <pre>fsGroup: 1001<br>supplementalGroups: [1001, 1002, 1003]</pre> |
 | **Description** | A custom [Kubernetes Security Context for a Pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) to be used instead of the default one |
+|                 | |
+| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.containerOptions.env') }} |
+| **Value**       | subdoc |
+| **Example**     | <pre>- name: VERIFY_TLS<br>  value: "false"</pre> |
+| **Description** | The [environment variables set as key-value pairs](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/) for the backup container |
+|                 | |
+| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.containerOptions.args.xtrabackup') }} |
+| **Value**       | subdoc |
+| **Example**     | <pre>- "--someflag=abc"</pre> |
+| **Description** | Custom [command line options](https://docs.percona.com/percona-xtrabackup/innovation-release/xtrabackup-option-reference.html) for the `xtrabackup` Percona XtraBackup tool |
+|                 | |
+| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.containerOptions.args.xbcloud') }} |
+| **Value**       | subdoc |
+| **Example**     | <pre>- "--someflag=abc"</pre> |
+| **Description** | Custom [command line options](https://docs.percona.com/percona-xtrabackup/innovation-release/xbcloud-options.html) for the `xbcloud` Percona XtraBackup tool |
+|                 | |
+| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.containerOptions.args.xbstream') }} |
+| **Value**       | subdoc |
+| **Example**     | <pre>- "--someflag=abc"</pre> |
+| **Description** | Custom [command line options](https://docs.percona.com/percona-xtrabackup/innovation-release/xbstream-options.html) for the `xbstream` Percona XtraBackup tool |
 |                 | |
 | **Key**         | {{ optionlink('backup.schedule.name') }} |
 | **Value**       | string |
@@ -1244,6 +1541,11 @@ file contains the following configuration options for the regular Percona XtraDB
 | **Value**       | int |
 | **Example**     | `60` |
 | **Description** | Seconds between running the binlog uploader |
+|                 | |
+| **Key**         | {{ optionlink('backup.pitr.timeoutSeconds') }} |
+| **Value**       | int |
+| **Example**     | `60` |
+| **Description** | Timeout in seconds for the binlog to be uploaded; the  binlog uploader container will be restarted after exceeding this timeout |
 
 ## <a name="operator-backupsource-section"></a> PerconaXtraDBClusterRestore Custom Resource options
 

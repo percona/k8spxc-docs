@@ -70,7 +70,7 @@ This document provides the steps how to migrate Percona Server for MySQL 8.0 dep
     user as follows:
 
     ``` {.bash data-prompt="$" }
-    $ kubectl get secrets cluster1-secrets -o yaml -o jsonpath='{.data.<user_name>}' | base64 --decode | tr '\n' ' ' && echo " "
+    $ kubectl get secrets cluster1-secrets --template='{{"{{"}}.data.<user_name> | base64decode{{"}}"}}{{"{{"}}"\n"{{"}}"}}'
     ```
     
     Repeat this command 4 times, substituting <user_name> with `monitor`,
@@ -174,7 +174,7 @@ If your source database didn't have any data, skip this step and proceed with th
     ```
 
 You can find more information on restoring backup to a new Kubernetes-based
-environment and see more examples [in a dedicated HowTo](/backups-restore-to-new-cluster.md).
+environment and see more examples [in a dedicated HowTo](backups-restore-to-new-cluster.md).
 
 ## Configure asyncronous replication in the Kubernetes cluster
 

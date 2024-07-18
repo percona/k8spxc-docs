@@ -1,4 +1,4 @@
-# Store operations logs for point-in-time recovery
+# Store binary logs for point-in-time recovery
 
 Point-in-time recovery functionality allows users to roll back the cluster to a
 specific transaction, time (or even skip a transaction in some cases).

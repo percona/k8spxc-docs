@@ -15,6 +15,9 @@ configuration file.
 The resulting setup will use the number zero Percona XtraDB Cluster member
 (`cluster1-pxc-0` by default) as writer.
 
+[proxysql.expose.enabled](operator.md#proxysql-expose-enabled) Custom Resource
+option enables or disables the apropriate `cluster1-proxysql` service.
+
 !!! note
 
     <a name="headless-service"> If you need to configure ProxySQL service as a
@@ -70,7 +73,7 @@ Here is an example:
 ```yaml
 ...
 proxysql:
-  enabled: false
+  enabled: true
   size: 3
   image: percona/percona-xtradb-cluster-operator:{{ release }}-proxysql
   configuration: |
@@ -345,7 +348,7 @@ kind: Secret
 metadata:
   name: cluster1-proxysql
 data:
-  my.cnf: "ZGF0YWRpcj0iL3Zhci9saWIvcHJveHlzcWwiCgphZG1pbl92YXJpYWJsZXMgPQp7CiBhZG1pbl9j\
+  proxysql.cnf: "ZGF0YWRpcj0iL3Zhci9saWIvcHJveHlzcWwiCgphZG1pbl92YXJpYWJsZXMgPQp7CiBhZG1pbl9j\
      cmVkZW50aWFscz0icHJveHlhZG1pbjphZG1pbl9wYXNzd29yZCIKIG15c3FsX2lmYWNlcz0iMC4w\
      LjAuMDo2MDMyIgogcmVmcmVzaF9pbnRlcnZhbD0yMDAwCgogY2x1c3Rlcl91c2VybmFtZT0icHJv\
      eHlhZG1pbiIKIGNsdXN0ZXJfcGFzc3dvcmQ9ImFkbWluX3Bhc3N3b3JkIgogY2x1c3Rlcl9jaGVj\
@@ -408,7 +411,7 @@ percona-xtradb-cluster-operator-dc67778fd-qtspz   1/1     Running   0          6
 The next command will print you the needed admin password:
 
 ```default
-$ kubectl get secrets $(kubectl get pxc -o jsonpath='{.items[].spec.seretsName}') -o template='{{'{{'}} .data.proxyadmin | base64decode {{'}}'}}'
+$ kubectl get secrets $(kubectl get pxc -o jsonpath='{.items[].spec.secretsName}') -o template='{{'{{'}} .data.proxyadmin | base64decode {{'}}'}}'
 ```
 
 When both Pod name and admin password are known, connect to the ProxySQL as

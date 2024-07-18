@@ -25,9 +25,9 @@ $ kubectl patch pxc cluster1 --type=merge --patch '{
     restart. Switching from HAProxy to ProxySQL is not possible, and if you need
     ProxySQL, this should be configured at cluster creation time.
 
-The resulting HAPproxy setup will contain two services:
+The resulting HAPproxy setup normally contains two services:
 
-* `cluster1-haproxy` service listening on ports 3306 (MySQL) and 3309 (the [proxy protocol](https://www.haproxy.com/blog/haproxy/proxy-protocol/)).
+* `cluster1-haproxy` service listening on ports 3306 (MySQL) and 3309 (the [proxy protocol](https://www.haproxy.com/blog/haproxy/proxy-protocol/) useful for operations such as asynchronous calls).
     This service is pointing to the number zero Percona XtraDB Cluster member
     (`cluster1-pxc-0`) by default when this member is available. If a zero
     member is not available, members are selected in descending order of their
@@ -35,9 +35,17 @@ The resulting HAPproxy setup will contain two services:
     can be used for both read and write load, or it can also be used just for
     write load (single writer mode) in setups with split write and read loads.
 
+    [haproxy.exposePrimary.enabled](operator.md#haproxy-exposePrimary-enabled)
+    Custom Resource option enables or disables `cluster1-haproxy` service.
+
 * `cluster1-haproxy-replicas` listening on port 3306 (MySQL).
     This service selects Percona XtraDB Cluster members to serve queries following
     the Round Robin load balancing algorithm.
+    It **should not be used for write requests**.
+
+    [haproxy.exposeReplicas.enabled](operator.md#haproxy-exposeReplicas-enabled)
+    Custom Resource option enables or disables `cluster1-haproxy-replicas`
+    service (on by default).
 
 !!! note
 
@@ -75,8 +83,13 @@ You can pass custom configuration to HAProxy in one of the following ways:
 !!! note
 
     If you specify a custom HAProxy configuration in this way, the
-    Operator doesn’t provide its own HAProxy configuration file. That’s why you
+    Operator doesn’t provide its own HAProxy configuration file except [several hardcoded options](https://github.com/percona/percona-docker/blob/pxc-operator-{{ release }}/haproxy/dockerdir/etc/haproxy/haproxy.cfg) (which therefore can't be overwritten). That’s why you
     should specify either a full set of configuration options or nothing.
+    Additionally, when [upgrading Percona XtraDB Cluster](update.md#upgrading-percona-xtradb-cluster)
+    it would be wise to check the
+    [HAProxy configuration file](https://github.com/percona/percona-docker/blob/pxc-operator-{{ release }}/haproxy/dockerdir/etc/haproxy/haproxy-global.cfg)
+    provided by the Operator and make sure that your custom config is still
+    compatible with the new variant.
 
 ### Edit the `deploy/cr.yaml` file
 
@@ -275,7 +288,7 @@ kind: Secret
 metadata:
   name: cluster1-haproxy
 data:
-  my.cnf: "IGdsb2JhbAogICBtYXhjb25uIDIwNDgKICAgZXh0ZXJuYWwtY2hlY2sKICAgc3RhdHMgc29ja2V0\
+  haproxy.cfg: "IGdsb2JhbAogICBtYXhjb25uIDIwNDgKICAgZXh0ZXJuYWwtY2hlY2sKICAgc3RhdHMgc29ja2V0\
      IC92YXIvcnVuL2hhcHJveHkuc29jayBtb2RlIDYwMCBleHBvc2UtZmQgbGlzdGVuZXJzIGxldmVs\
      IHVzZXIKIGRlZmF1bHRzCiAgIGxvZyBnbG9iYWwKICAgbW9kZSB0Y3AKICAgcmV0cmllcyAxMAog\
      ICB0aW1lb3V0IGNsaWVudCAxMDAwMAogICB0aW1lb3V0IGNvbm5lY3QgMTAwNTAwCiAgIHRpbWVv\
@@ -299,7 +312,7 @@ $ kubectl create -f deploy/my-haproxy-secret.yaml
 
 ## Enabling the Proxy protocol
 
-The Proxy protocol [allows](https://www.percona.com/doc/percona-server/LATEST/flexibility/proxy_protocol_support.html)
+The Proxy protocol [allows](https://docs.percona.com/percona-server/innovation-release/proxy-protocol-support.html)
 HAProxy to provide a real client address to Percona XtraDB Cluster.
 
 !!! note
@@ -314,7 +327,7 @@ XtraDB Cluster is important: e.g. it allows to have privilege grants based on
 client/application address, and significantly enhance auditing.
 
 You can enable Proxy protocol on Percona XtraDB Cluster by adding
-[proxy_protocol_networks](https://www.percona.com/doc/percona-server/LATEST/flexibility/proxy_protocol_support.html#proxy_protocol_networks)
+[proxy_protocol_networks](https://docs.percona.com/percona-server/innovation-release/proxy-protocol-support.html#proxy_protocol_networks)
 option to [pxc.configuration](operator.md#pxc-configuration) key in the `deploy/cr.yaml` configuration
 file.
 

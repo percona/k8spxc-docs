@@ -1,10 +1,10 @@
 # MkDocs configuration
 # Used as base - look for .yml files with INHERIT
-site_name: Percona Operator for MySQL based on Percona XtraDB Cluster
+site_name: Percona Operator for MySQL
 site_description: Documentation
 site_author: Percona LLC
 site_url: ""
-copyright: Percona LLC and/or its affiliates, &#169; 2009 - 2023
+copyright: Percona LLC and/or its affiliates, &#169; 2009 - 2024
 use_directory_urls: false
 repo_name: percona/k8spxc-docs
 repo_url: https://github.com/percona/k8spxc-docs
@@ -12,26 +12,31 @@ edit_uri: edit/main/docs/
 
 theme:
   name: material
-  logo: assets/images/percona-logo.svg
-  favicon: assets/images/percona-favicon.ico
+  logo: assets/operators-mark.svg
+  favicon: assets/operators-fav.svg
   custom_dir: _resource/overrides/
   font:
-    text: Chivo, Colfax, Franziska
-    text: Poppins
+    text: Roboto
+    code: Roboto Mono
   palette:
-    # Light mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Color theme set to Automatic. Click to change
     - media: "(prefers-color-scheme: light)"
       scheme: percona-light
+      primary: custom
+      accent: custom
       toggle:
-        icon: material/toggle-switch-off-outline
-        name: Switch to light mode
-
-    # Dark mode 
+        icon: material/brightness-7
+        name: Color theme set to Light Mode. Click to change
     - media: "(prefers-color-scheme: dark)"
-      scheme: slate
+      scheme: percona-dark
+      primary: custom
+      accent: custom
       toggle:
-        icon: material/toggle-switch
-        name: Switch to dark mode
+        icon: material/brightness-4
+        name: Color theme set to Dark Mode. Click to change
 
 # Theme features
 
@@ -43,14 +48,18 @@ theme:
 extra_css:
   - https://unicons.iconscout.com/release/v3.0.3/css/line.css
   - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css
-  - css/percona.css
-  - css/version-select.css
+  #- css/percona.css
+  #- css/version-select.css
   - css/nocopy.css
-  - css/extra.css
   - css/design.css
+  - css/osano.css
+  - css/operators.css
+  - css/extra.css
 
 extra_javascript:
    - js/promptremover.js
+   - js/consent.js
+   - js/percona-select.js
 #  - js/version-select.js
 #  - js/toctree.js
 #  - js/lightgallery.min.js
@@ -75,8 +84,8 @@ markdown_extensions:
   pymdownx.highlight:
     linenums: false
   pymdownx.emoji:
-    emoji_index: !!python/name:materialx.emoji.twemoji
-    emoji_generator: !!python/name:materialx.emoji.to_svg
+    emoji_index: !!python/name:material.extensions.emoji.twemoji
+    emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
 plugins:
   section-index: {}
@@ -100,7 +109,7 @@ plugins:
   with-pdf:
     output_path: "_pdf/percona-operator-for-mysql-pxc.pdf"
     cover_title: "Percona Operator for MySQL based on Percona XtraDB Cluster documentation"
-    cover_subtitle: 1.13.0 (July 11, 2023)
+    cover_subtitle: 1.14.0 (March 04, 2024)
     author: "Percona Technical Documentation Team"
     cover_logo: docs/assets/images/percona_kubernetes_icon.png
     custom_template_path: _resource/templates
@@ -109,30 +118,23 @@ plugins:
   # https://pypi.org/project/mkdocs-htmlproofer-plugin/
   #    htmlproofer: {}
   mike:
-    version_selector: true
+    version_selector: false
     css_dir: css
     javascript_dir: js
     canonical_version: null
 
 extra: # Used in main.html template and can't be externalized
-  homepage:
-    https://docs.percona.com
-  consent:
-    title: Cookie consent
-    description: >- 
-      We use cookies to recognize your repeated visits and preferences, as well
-      as to measure the effectiveness of our documentation and whether users
-      find what they're searching for. With your consent, you're helping us to
-      make our documentation better. Read more about <a class="reference external" href="https://www.percona.com/20180524-cookie-policy" target="_blank">Percona Cookie Policy</a>.
   edit_page_text: '<i class="uil uil-pen"></i> <b>Edit this page</b>'
   updated_text: '<i class="uil uil-refresh"></i> Page updated'
-  release: '1.13.0'
-  apiversion: '1-13-0'
-  certmanagerversion: '1.12.1'
-  pxc57recommended: '5.7.42-31.65'
-  pxc80recommended: '8.0.32-24.2'
-  pmm2recommended: '2.38.0'
-  gkerecommended: '1.27'
+  commandName: 'kubectl'
+  clusterName: 'cluster1'
+  release: '1.14.0'
+  apiversion: '1-14-0'
+  certmanagerversion: '1.14.2'
+  pxc57recommended: '5.7.44-31.65'
+  pxc80recommended: '8.0.35-27.1'
+  pmm2recommended: '2.41.1'
+  gkerecommended: '1.29'
   version:
     provider: mike
 
@@ -159,6 +161,7 @@ nav:
     - Installation:
           - "System requirements": System-Requirements.md
           - "Install on Minikube": minikube.md
+          - "Install with Everest": everest.md
           - "Install on Google Kubernetes Engine (GKE)": gke.md
           - "Install on Amazon Elastic Kubernetes Service (AWS EKS)": eks.md
           - "Install on Microsoft Azure Kubernetes Service (AKS)": aks.md
@@ -168,6 +171,7 @@ nav:
           
     - Configuration:
           - "Application and system users": users.md
+          - "Exposing the cluster": expose.md
           - "Changing MySQL Options": options.md
           - "Anti-affinity and tolerations": constraints.md
           - "Labels and annotations": annotations.md
@@ -185,7 +189,7 @@ nav:
               - "Configure storage for backups": backups-storage.md
               - "Make scheduled backups": backups-scheduled.md
               - "Make on-demand backup": backups-ondemand.md
-              - "Store operations logs for point-in-time recovery": backups-pitr.md
+              - "Store binary logs for point-in-time recovery": backups-pitr.md
               - "Enable compression for backups": backups-compress.md
               - "Restore from a previously saved backup": backups-restore.md
               - "Copy backup to a local machine": backups-copy.md
@@ -201,7 +205,7 @@ nav:
           - "Initial troubleshooting": debug.md
           - "Exec into the container": debug-shell.md
           - "Check the logs": debug-logs.md
-          - "Special debug images": debug-images.mdge
+          - "Special debug images": debug-images.md
           
     - HOWTOs:
           - Install the database with customized parameters: custom-install.md 
@@ -223,7 +227,8 @@ nav:
           - "Copyright and licensing information": copyright.md
           - "Trademark policy": trademark-policy.md
     - Release Notes:
-          - "Release notes index": ReleaseNotes/index.md          
+          - "Release notes index": ReleaseNotes/index.md
+          - "Percona Operator for MySQL based on Percona XtraDB Cluster 1.14.0 (2024-03-04)": ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.14.0.md
           - "Percona Operator for MySQL based on Percona XtraDB Cluster 1.13.0 (2023-07-11)": ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.13.0.md
           - "Percona Operator for MySQL based on Percona XtraDB Cluster 1.12.0 (2022-12-07)": ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.12.0.md
           - "Percona Operator for MySQL based on Percona XtraDB Cluster 1.11.0 (2022-06-03)": ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.11.0.md

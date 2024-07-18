@@ -29,7 +29,7 @@ Here's how to get it:
 2. Retrieve the password for the root user. Replace the `secret-name` and `namespace` with your values in the following commands:
 
    ```{.bash data-prompt="$"}
-   $ kubectl get secret <secret-name> -n <namespace> -o yaml -o jsonpath='{.data.root}' | base64 --decode | tr '\n' ' ' && echo " "
+   $ kubectl get secret <secret-name> -n <namespace> --template='{{"{{"}}.data.root | base64decode{{"}}"}}{{"{{"}}"\n"{{"}}"}}'
    ```
 
 3. Run a container with `mysql` tool and connect its console output to your terminal. The following command does this, naming the new Pod `percona-client`:
@@ -44,19 +44,19 @@ Here's how to get it:
     obtained from the secret. The command will look different depending on
     whether your cluster provides load balancing with [HAProxy](haproxy-conf.md)
     (the default choice) or [ProxySQL](proxysql-conf.md).
-    If your password contains special characters ($\&<>, etc), they may be
-    interpreted by the shell, and you may get "Permission denied" messages,
-    so use single quotes ' ' when entering the password, single quotes also
-    avoid variable expansion:
+    If your password contains special characters, they may be interpreted
+    by the shell, and you may get "Permission denied" messages,so put the
+    password in single quotes (single quotes also avoid variable expansion in
+    scripts):
 
     === "with HAProxy (default)"
         ```{.bash data-prompt="$"}
-        $ mysql -h <cluster_name>-haproxy -uroot -p'root_password'
+        $ mysql -h <cluster_name>-haproxy -uroot -p'<root_password>'
         ```
 
     === "with ProxySQL"
         ```{.bash data-prompt="$"}
-        $ mysql -h <cluster_name>-proxysql -uroot -p'root_password'
+        $ mysql -h <cluster_name>-proxysql -uroot -p'<root_password>'
         ```
 
 Congratulations! You have connected to Percona XtraDB Cluster. 

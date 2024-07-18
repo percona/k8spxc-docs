@@ -71,7 +71,7 @@ $ gcloud container clusters get-credentials my-cluster-1 --zone us-central1-a --
     Deploy the Operator using the following command:
 
     ``` {.bash data-prompt="$" }
-    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/bundle.yaml
+    $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/bundle.yaml
     ```
 
     ??? example "Expected output"
@@ -152,7 +152,7 @@ $ kubectl get pods
 
 ??? example "Expected output"
 
-    --8<-- "./docs/assets/code/kubectl-get-pods-response.txt"
+    --8<-- "cli/kubectl-get-pods-response.md"
 
 Also, you can see the same information when browsing Pods of your cluster in Google Cloud console via the *Object Browser*:
 
@@ -182,13 +182,22 @@ Clicking the problematic Pod will bring you to the details page with the same wa
 
 There are several ways that you can delete the cluster.
 
-You can clean up the cluster with the `gcloud` command as follows:
+You can clean up the cluster with the `gcloud container clusters delete <cluster name> --zone <zone location>` command. The return statement requests your confirmation of the deletion. Type `y` to confirm.
 
 ``` {.bash data-prompt="$" }
-$ gcloud container clusters delete <cluster name>
+$ gcloud container clusters delete my-cluster-1 --zone us-central1-a
 ```
 
-The return statement requests your confirmation of the deletion. Type `y` to confirm.
+??? example "Expected output"
+
+    ``` {.text .no-copy}
+    The following clusters will be deleted.
+     - [my-cluster-1] in [us-central1-a]
+
+    Do you want to continue (Y/n)?  y
+
+    Deleting cluster my-cluster-1...⠧
+    ```
 
 Also, you can delete your cluster via the GKE console. Just click the appropriate trashcan icon in the clusters list:
 

@@ -38,8 +38,8 @@ The upgrade includes the following steps.
     the same for the Role-based access control:
 
     ``` {.bash data-prompt="$" }
-    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/crd.yaml
-    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/rbac.yaml
+    $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/crd.yaml
+    $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/rbac.yaml
     ```
 
 2. Now you should [apply a patch](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your
@@ -96,8 +96,8 @@ Operator with the `helm upgrade` command.
     the same for the Role-based access control:
 
     ``` {.bash data-prompt="$" }
-    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/crd.yaml
-    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/rbac.yaml
+    $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/crd.yaml
+    $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/rbac.yaml
     ```
 
 !!! note
@@ -112,11 +112,22 @@ are updated. Smart Update strategy is on when the `updateStrategy` key in the
 [Custom Resource](operator.md) configuration file is set to `SmartUpdate`
 (this is the default value and the recommended way for upgrades).
 
-!!! note
+As an alternative, the `updateStrategy` key can be set to `RollingUpdate` and
+`OnDelete`. You can find out more about it in the [appropriate section](update.md#more-on-upgrade-strategies).
 
-    As an alternative, the `updateStrategy` key can be set to `RollingUpdate` 
-    and `OnDelete`. You can find out more about it in the
-    [appropriate section](update.md#more-on-upgrade-strategies).
+!!! warning
+
+    The upgrade covers various components of the cluster including PMM Client
+    and HA Proxy, which may need additional attention.
+    
+    *  It is [highly recommended to upgrade PMM Server](https://docs.percona.com/percona-monitoring-and-management/how-to/upgrade.html) **before** upgrading PMM Client.
+    
+    * If you are using [custom configuration for HAProxy](haproxy-conf.md#passing-custom-configuration-options-to-haproxy), 
+        **before upgrading**, check the HAProxy configuration file provided by
+        the Operator (for example, `haproxy-global.cfg` for the Operator version
+        {{ release }} can be found [here](https://github.com/percona/percona-docker/blob/pxc-operator-{{ release }}/haproxy/dockerdir/etc/haproxy/haproxy-global.cfg)).
+        Make sure that your custom config is still compatible with the new
+        variant, and make necessary additions, if needed.
 
 ### Manual upgrade
 
@@ -182,9 +193,8 @@ Manual update of Percona XtraDB Cluster can be done as follows:
 
     !!! warning
 
-        The above command upgrades various components of the cluster including PMM Client. It is [highly recommended](https://docs.percona.com/percona-monitoring-and-management/how-to/upgrade.html) to upgrade PMM Server **before** upgrading PMM Client. If it wasn't done and you would like to avoid PMM Client upgrade, remove it from the list of images, reducing the last of two patch commands as follows:
-        
-        
+        The above command upgrades various components of the cluster including PMM Client. If you didn't follow the [official recommendation](https://docs.percona.com/percona-monitoring-and-management/how-to/upgrade.html) to upgrade PMM Server before upgrading PMM Client, you can avoid PMM Client upgrade by removing it from the list of images as follows:
+
         === "For Percona XtraDB Cluster 8.0"
             ```bash
             $ kubectl patch pxc cluster1 --type=merge --patch '{
