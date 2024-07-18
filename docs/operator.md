@@ -1377,12 +1377,12 @@ file contains the following configuration options for the regular Percona XtraDB
 | **Example**     | |
 | **Description** | The [Amazon S3 bucket](https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingBucket.html) name for backups |
 |                 | |
-| **Key**         | {{ optionlink('backup.storages.s3.&lt;storage-name&gt;.region') }} |
+| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.s3.region') }} |
 | **Value**       | string |
 | **Example**     | `us-east-1` |
 | **Description** | The [AWS region](https://docs.aws.amazon.com/general/latest/gr/rande.html) to use. Please note **this option is mandatory** for Amazon and all S3-compatible storages |
 |                 | |
-| **Key**         | {{ optionlink('backup.storages.s3.&lt;storage-name&gt;.endpointUrl') }} |
+| **Key**         | {{ optionlink('backup.storages.&lt;storage-name&gt;.s3.endpointUrl') }} |
 | **Value**       | string |
 | **Example**     | |
 | **Description** | The endpoint URL of the S3-compatible storage to be used (not needed for the original Amazon S3 cloud) |
