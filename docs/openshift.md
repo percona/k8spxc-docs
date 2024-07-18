@@ -56,7 +56,7 @@ You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marke
     with the next Operator deployments, etc.
 
     ``` {.bash data-prompt="$" }
-    $ oc apply -f deploy/crd.yaml
+    $ oc apply --server-side -f deploy/crd.yaml
     ```
 
     !!! note
@@ -108,7 +108,7 @@ You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marke
         2 and 4:
         
         ``` {.bash data-prompt="$" }
-        $ oc apply -f deploy/bundle.yaml
+        $ oc apply --server-side -f deploy/bundle.yaml
         ```
         
         This will automatically create Custom Resource Definition, set up

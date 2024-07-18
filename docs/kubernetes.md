@@ -21,7 +21,7 @@
     with the next Operator deployments, etc.
 
     ``` {.bash data-prompt="$" }
-    $ kubectl apply -f deploy/crd.yaml
+    $ kubectl apply --server-side -f deploy/crd.yaml
     ```
 
 3. The next thing to do is to add the `pxc` namespace to Kubernetes,
@@ -63,7 +63,7 @@
         2 and 4:
         
         ``` {.bash data-prompt="$" }
-        $ kubectl apply -f deploy/bundle.yaml
+        $ kubectl apply --server-side -f deploy/bundle.yaml
         ```
         
         This will automatically create Custom Resource Definition, set up

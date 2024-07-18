@@ -54,7 +54,7 @@ Also, you need to configure AWS CLI with your credentials according to the [offi
     Deploy the Operator using the following command:
 
     ``` {.bash data-prompt="$" }
-    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/bundle.yaml
+    $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/bundle.yaml
     ```
 
     ??? example "Expected output"

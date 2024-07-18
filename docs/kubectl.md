@@ -43,7 +43,7 @@ Here's a sequence of steps to follow:
 2. Deploy the Operator with the following command:
 
     ```{.bash data-prompt="$" }
-    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/bundle.yaml  -n <namespace>
+    $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/bundle.yaml  -n <namespace>
     ```
 
     ??? example "Expected output"

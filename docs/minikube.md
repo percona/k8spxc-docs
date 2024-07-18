@@ -31,7 +31,7 @@ Minikube:
 2. Deploy the operator with the following command:
 
     ```{.bash data-prompt="$" }
-    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/bundle.yaml
+    $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/bundle.yaml
     ```
 
 3. Deploy Percona XtraDB Cluster:
