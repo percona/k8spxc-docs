@@ -79,7 +79,7 @@ the following information there:
 3. Apply the `deploy/cw-bundle.yaml` file with the following command:
 
     ``` {.bash data-prompt="$" }
-    $ kubectl apply -f deploy/cw-bundle.yaml -n pxc-operator
+    $ kubectl apply --server-side -f deploy/cw-bundle.yaml -n pxc-operator
     ```
 
 4. After the Operator is started, Percona XtraDB Cluster can be created at any
@@ -193,8 +193,8 @@ To upgrade the cluster-wide Operator you follow the [standard upgrade scenario](
     the same for the Role-based access control:
 
     ``` {.bash data-prompt="$" }
-    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/crd.yaml
-    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cw-rbac.yaml
+    $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/crd.yaml
+    $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cw-rbac.yaml
     ```
 
 2. Now you should [apply a patch](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your

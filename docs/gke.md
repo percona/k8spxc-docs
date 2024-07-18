@@ -71,7 +71,7 @@ $ gcloud container clusters get-credentials my-cluster-1 --zone us-central1-a --
     Deploy the Operator using the following command:
 
     ``` {.bash data-prompt="$" }
-    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/bundle.yaml
+    $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/bundle.yaml
     ```
 
     ??? example "Expected output"
