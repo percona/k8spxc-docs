@@ -8,7 +8,7 @@ Events can be checked by the following command
 $ kubectl get events
 ```
 
-??? example "Expected output"
+???+ example "Expected output"
 
     ``` {.text .no-copy}
     LAST SEEN   TYPE      REASON                   OBJECT                                                                   MESSAGE
@@ -23,7 +23,7 @@ Use the following command to sort the output in a reverse chronological fashion.
 $ kubectl get events --sort-by=".lastTimestamp"
 ```
 
-??? example "Expected output"
+???+ example "Expected output"
 
     ``` {.text .no-copy}
     LAST SEEN   TYPE      REASON                   OBJECT                                                                   MESSAGE
@@ -79,13 +79,13 @@ For example, the following command provides events of Pod only:
 $ kubectl get events --field-selector involvedObject.kind=Pod
 ```
 
-More fields can be added to the field-selector flag for filtering events further. Example: the following command provides events of Pod by name “xb-cron-pxc-pxc-backup-stora-202211245300-3qf7g-bpm5s”.  
+More fields can be added to the field-selector flag for filtering events further. Example: the following command provides events of Pod by name `xb-cron-pxc-pxc-backup-stora-202211245300-3qf7g-bpm5s`.
 
 ```{.bash data-prompt="$"}
 $ kubectl get events --field-selector involvedObject.kind=Pod,involvedObject.name=xb-cron-pxc-pxc-backup-stora-202211245300-3qf7g-bpm5s
 ```
 
-??? example "Expected output"
+???+ example "Expected output"
 
     ``` {.text .no-copy}
     LAST SEEN   TYPE      REASON                   OBJECT                                                      MESSAGE
@@ -93,7 +93,37 @@ $ kubectl get events --field-selector involvedObject.kind=Pod,involvedObject.nam
     53m         Normal    NotTriggerScaleUp        pod/xb-cron-pxc-pxc-backup-stora-202211245300-3qf7g-bpm5s   pod didn't trigger scale-up: 3 pod has unbound immediate PersistentVolumeClaims
     ```
 
+Same way you can query events for other Kubernetes object (StatefulSet, Custom Resource, etc.) to investigate any problems to them:
 
+```{.bash data-prompt="$"}
+$ kubectl get events --field-selector involvedObject.kind=PerconaXtraDBCluster,involvedObject.name=cluster1
+```
+
+???+ example "Expected output"
+
+    ``` {.text .no-copy}
+    LAST SEEN   TYPE      REASON                     OBJECT                        MESSAGE
+    10m         Warning   AsyncReplicationNotReady   perconaservermysql/cluster1   cluster1-mysql-1: [not_replicating]
+    ...
+    ```
+
+Alternatively, you can see events for a specific object in the output of `kubectl describe` command:
+
+```{.bash data-prompt="$"}
+$ kubectl describe ps cluster1
+```
+
+??? example "Expected output"
+
+    ``` {.text .no-copy}
+    Name:         cluster1
+    ...
+    Events:
+      Type     Reason                    Age                From           Message
+      ----     ------                    ----               ----           -------
+      Warning  AsyncReplicationNotReady  10m (x23 over 13m)    ps-controller  cluster1-mysql-1: [not_replicating]
+    ...
+    ```
 
 Check `kubectl get events --help` to know about more options.
 
