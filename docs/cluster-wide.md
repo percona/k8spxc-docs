@@ -137,7 +137,7 @@ to the cluster.
     $ kubectl get secrets --namespace=pxc cluster1-secrets --template='{{"{{"}}.data.root | base64decode{{"}}"}}{{"{{"}}"\n"{{"}}"}}'
     ```
 
-2. Run a container with `mysql` tool and connect its console output to your
+2. Run a container with `mysql` client and connect its console output to your
     terminal. The following command will do this, naming the new Pod
     `percona-client`:
 
