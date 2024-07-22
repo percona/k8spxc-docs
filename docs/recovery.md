@@ -72,7 +72,7 @@ $ kubectl exec cluster1-pxc-2 -c pxc -- sh -c 'kill -s USR1 1'
 This method involves the following steps:
 
 * swap the original Percona XtraDB Cluster image with the
-    [debug image](debug.md#debug-images), which does not reboot after the crash, and
+    [debug image](debug-images.md), which does not reboot after the crash, and
     force all Pods to run it,
 
 * find the Pod with the most recent Percona XtraDB Cluster data, run recovery
