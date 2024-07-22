@@ -21,10 +21,10 @@ from MySQL clients and forwards it to backend MySQL servers.
 !!! note
 
     Optionally the Operator allows using ProxySQL daemon instead of HAProxy,
-    which provides [SQL-aware database workload management](https://proxysql.com/compare)
+    which provides [SQL-aware database workload management :octicons-link-external-16:](https://proxysql.com/compare)
     and can be more more efficient in comparison with other load balancers.
 
-To provide high availability operator uses [node affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity)
+To provide high availability operator uses [node affinity :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity)
 to run Percona XtraDB Cluster instances on separate worker nodes if possible. If
 some node fails, the pod with it is automatically re-created on another node.
 

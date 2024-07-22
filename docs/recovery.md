@@ -149,7 +149,7 @@ which is based on three Percona XtraDB Cluster Pods.
 
 6. Wait for all Percona XtraDB Cluster Pods to start, then find the Percona
     XtraDB Cluster instance with the most recent data - i.e. the one with the
-    highest [sequence number (seqno)](https://www.percona.com/blog/2017/12/14/sequence-numbers-seqno-percona-xtradb-cluster/):
+    highest [sequence number (seqno) :octicons-link-external-16:](https://www.percona.com/blog/2017/12/14/sequence-numbers-seqno-percona-xtradb-cluster/):
 
     ``` {.bash data-prompt="$" }
     $ for i in $(seq 0 $(($(kubectl get pxc cluster1 -o jsonpath='{.spec.pxc.size}')-1))); do echo "###############cluster1-pxc-$i##############"; kubectl exec cluster1-pxc-$i -- cat /var/lib/mysql/grastate.dat; done

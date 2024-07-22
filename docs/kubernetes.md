@@ -36,7 +36,7 @@
     up from the `deploy/rbac.yaml` file. Briefly speaking, role-based access is
     based on specifically defined roles and actions corresponding to
     them, allowed to be done on specific Kubernetes resources (details
-    about users and roles can be found in [Kubernetes documentation](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#default-roles-and-role-bindings)).
+    about users and roles can be found in [Kubernetes documentation :octicons-link-external-16:](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#default-roles-and-role-bindings)).
 
     ``` {.bash data-prompt="$" }
     $ kubectl apply -f deploy/rbac.yaml
@@ -69,7 +69,7 @@
         This will automatically create Custom Resource Definition, set up
         role-based access control and install the Operator as one single action.
 
-5. Now that’s time to add the Percona XtraDB Cluster users [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
+5. Now that’s time to add the Percona XtraDB Cluster users [Secrets :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/secret/)
     with logins and passwords to Kubernetes. By default, the Operator generates
     users Secrets automatically, and *no actions are required at this step*.
     

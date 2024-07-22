@@ -2,14 +2,14 @@
 
 There are multiple ways to deploy and manage MySQL in Kubernetes. Here we will focus on comparing the following open source solutions:
 
-* [KubeDB](https://github.com/kubedb)
-* [Bitpoke MySQL Operator (former Presslabs)](https://github.com/bitpoke/mysql-operator/)
-* [Oracle MySQL Operator](https://github.com/mysql/mysql-operator)
-* [Moco](https://github.com/cybozu-go/moco) by Cybozu
-* [Vitess Operator](https://github.com/planetscale/vitess-operator) by PlanetScale
+* [KubeDB :octicons-link-external-16:](https://github.com/kubedb)
+* [Bitpoke MySQL Operator (former Presslabs) :octicons-link-external-16:](https://github.com/bitpoke/mysql-operator/)
+* [Oracle MySQL Operator :octicons-link-external-16:](https://github.com/mysql/mysql-operator)
+* [Moco :octicons-link-external-16:](https://github.com/cybozu-go/moco) by Cybozu
+* [Vitess Operator :octicons-link-external-16:](https://github.com/planetscale/vitess-operator) by PlanetScale
 * Percona Operator for MySQL
-    * [based on Percona XtraDB Cluster](https://github.com/percona/percona-xtradb-cluster-operator/)
-    * [based on Percona Server for MySQL](https://github.com/percona/percona-server-mysql-operator/)
+    * [based on Percona XtraDB Cluster :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/)
+    * [based on Percona Server for MySQL :octicons-link-external-16:](https://github.com/percona/percona-server-mysql-operator/)
 
 ## Generic
 

@@ -11,14 +11,14 @@
 ## Release Highlights
 
 * [Azure Kubernetes Service (AKS)](../aks.md) is now officially supported platform, so developers and vendors of the solutions based on the Azure platform can take advantage of the official support from Percona or just use officially certified Percona Operator for MysQL images; also, [Azure Blob Storage can now be used for backups](../backups.md#backups-scheduled-azure)
-* This release also includes fixes to the following CVEs (Common Vulnerabilities and Exposures): [CVE-2021-20329](https://nvd.nist.gov/vuln/detail/CVE-2021-20329) (potential injections in MongoDB Go Driver used HAProxy, which had no effect on Percona Operator for MySQL), and  [CVE-2022-42898](https://access.redhat.com/security/cve/CVE-2022-42898) (images used by the Operator suffering from the unauthenticated denial of service vulnerability). Users of previous Operator versions are advised to [upgrade](../update.md) to version 1.12.0 which resolves this issue
+* This release also includes fixes to the following CVEs (Common Vulnerabilities and Exposures): [CVE-2021-20329 :octicons-link-external-16:](https://nvd.nist.gov/vuln/detail/CVE-2021-20329) (potential injections in MongoDB Go Driver used HAProxy, which had no effect on Percona Operator for MySQL), and  [CVE-2022-42898 :octicons-link-external-16:](https://access.redhat.com/security/cve/CVE-2022-42898) (images used by the Operator suffering from the unauthenticated denial of service vulnerability). Users of previous Operator versions are advised to [upgrade](../update.md) to version 1.12.0 which resolves this issue
 
 ## New Features
 
 * {{ k8spxcjira(1043) }} and {{ k8spxcjira(1005) }}: Add support for the [Azure Kubernetes Service (AKS)](../aks.md) platform and allow [using Azure Blob Storage](../backups.md#backups-scheduled-azure) for backups
 * {{ k8spxcjira(1010) }}: Allow [using templates](../options.md#auto-tuning-mysql-options) to define `innodb_buffer_pool_size` auto-tuning based on container memory limits
 * {{ k8spxcjira(1082) }}: New `ignoreAnnotations` and `ignoreLabels` Custom Resource options allow to list [specific annotations and labels](../annotations.md) for Kubernetes Service objects, which the Operator should ignore (useful with various Kubernetes flavors which add annotations to the objects managed by the Operator)
-* {{ k8spxcjira(1120) }}: Add [headless service](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services) support for the restore Pod to [make it possible](../backups.md#backups-headless-service) restoring backups from a Persistent Volume on a tenant network (thanks to Zulh for contribution)
+* {{ k8spxcjira(1120) }}: Add [headless service :octicons-link-external-16:](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services) support for the restore Pod to [make it possible](../backups.md#backups-headless-service) restoring backups from a Persistent Volume on a tenant network (thanks to Zulh for contribution)
 * {{ k8spxcjira(1140) }}: The Operator now [allows using SSL channel](../replication.md#replication-ssl) for cross-site replication (thanks to Alvaro Aguilar-Tablada Espinosa for contribution)
 
 ## Improvements
@@ -35,7 +35,7 @@
 
 ## Bugs Fixed
 
-* {{ k8spxcjira(1158) }}: Fix [CVE-2022-42898](https://access.redhat.com/security/cve/CVE-2022-42898) vulnerability found in MIT krb5, which made images used by the Operator vulnerable to DoS attacks
+* {{ k8spxcjira(1158) }}: Fix [CVE-2022-42898 :octicons-link-external-16:](https://access.redhat.com/security/cve/CVE-2022-42898) vulnerability found in MIT krb5, which made images used by the Operator vulnerable to DoS attacks
 * {{ k8spxcjira(1028) }}: Fix a bug that prevented the Operator to automatically tune `innodb_buffer_pool_size` and `innodb_buffer_pool_chunk_size` variables
 * {{ k8spxcjira(1036) }}: Fix the bug that caused Liveness Probe failure when XtraBackup was running and the `wsrep_sync_wait` option was set, making the instance to be rejected from the cluster
 * {{ k8spxcjira(1065) }}: Fix a bug due to which, in a pair of scheduled backups close in time, the next backup could overwrite the previous one: bucket destination was made more unique by including seconds
@@ -51,14 +51,14 @@
 The following platforms were tested and are officially supported by the Operator
 1.12.0:
 
-* [Google Kubernetes Engine (GKE)](https://cloud.google.com/kubernetes-engine) 1.21 - 1.24
+* [Google Kubernetes Engine (GKE) :octicons-link-external-16:](https://cloud.google.com/kubernetes-engine) 1.21 - 1.24
 
-* [Amazon Elastic Container Service for Kubernetes (EKS)](https://aws.amazon.com) 1.21 - 1.24
+* [Amazon Elastic Container Service for Kubernetes (EKS) :octicons-link-external-16:](https://aws.amazon.com) 1.21 - 1.24
 
-* [Azure Kubernetes Service (AKS)](https://azure.microsoft.com/en-us/services/kubernetes-service/) 1.22 - 1.24
+* [Azure Kubernetes Service (AKS) :octicons-link-external-16:](https://azure.microsoft.com/en-us/services/kubernetes-service/) 1.22 - 1.24
 
-* [OpenShift](https://www.redhat.com/en/technologies/cloud-computing/openshift) 4.10 - 4.11
+* [OpenShift :octicons-link-external-16:](https://www.redhat.com/en/technologies/cloud-computing/openshift) 4.10 - 4.11
 
-* [Minikube](https://minikube.sigs.k8s.io/docs/) 1.28
+* [Minikube :octicons-link-external-16:](https://minikube.sigs.k8s.io/docs/) 1.28
 
 This list only includes the platforms that the Percona Operators are specifically tested on as part of the release process. Other Kubernetes flavors and versions depend on the backward compatibility offered by Kubernetes itself.

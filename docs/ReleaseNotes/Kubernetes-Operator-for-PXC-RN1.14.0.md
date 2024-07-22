@@ -22,7 +22,7 @@ Kubernetes supports the Persistent Volume expansion as a stable feature since v1
 
 
 * {{ k8spxcjira(1298) }}: Custom [prefix](../containers-conf.md) for Percona Monitoring and Management (PMM) allows using one PMM Server to monitor multiple databases even if they have identical cluster names
-* {{ k8spxcjira(1334) }}: The new `lifecycle.postStart` and `lifecycle.preStop` Custom Resource options allow configuring [postStart and preStop hooks](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/) for ProxySQL and HAProxy Pods
+* {{ k8spxcjira(1334) }}: The new `lifecycle.postStart` and `lifecycle.preStop` Custom Resource options allow configuring [postStart and preStop hooks :octicons-link-external-16:](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/) for ProxySQL and HAProxy Pods
 * {{ k8spxcjira(1341) }}: It is now possible to resize Persistent Volume Claims by patching the PerconaXtraDBCluster custom resource. Change  `persistentVolumeClaim.resources.requests.storage` and let the Operator do the scaling
 
 ## Improvements
@@ -35,9 +35,9 @@ Kubernetes supports the Persistent Volume expansion as a stable feature since v1
 * {{ k8spxcjira(1230) }}: Add Labels for all Kubernetes objects created by Operator (backups/restores, Secrets, Volumes, etc.) to make them clearly distinguishable
 * {{ k8spxcjira(1271) }}: Use timeout to avoid backup stalls in case of the S3 upload network issues
 * {{ k8spxcjira(1293) }} and {{ k8spxcjira(1294) }}: The new `backup.pitr.timeoutSeconds` Custom Resource option allows setting a timeout for the point-in-time recovery process
-* {{ k8spxcjira(1301) }}: The Operator can now be [run locally](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/CONTRIBUTING.md#1-contributing-to-the-source-tree) against a remote Kubernetes cluster, which simplifies the development process, substantially shortening the way to make and try minor code improvements
+* {{ k8spxcjira(1301) }}: The Operator can now be [run locally :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/CONTRIBUTING.md#1-contributing-to-the-source-tree) against a remote Kubernetes cluster, which simplifies the development process, substantially shortening the way to make and try minor code improvements
 * {{ k8spxcjira(200) }} and {{ k8spxcjira(1128) }}: The new `containerOptions` subsections were added to `pxc-backup`, `pxc-restore`, and `pxc` Custom Resources to allow setting custom options for xtrabackup, xbstream, and xbcloud tools used by the Operator
-* {{ k8spxcjira(345) }}: The new `topologySpreadConstraints` Custom Resource option allows to use [Pod Topology Spread Constraints](https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/#spread-constraints-for-pods) to achieve even distribution of Pods across the Kubernetes cluster
+* {{ k8spxcjira(345) }}: The new `topologySpreadConstraints` Custom Resource option allows to use [Pod Topology Spread Constraints :octicons-link-external-16:](https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/#spread-constraints-for-pods) to achieve even distribution of Pods across the Kubernetes cluster
 * {{ k8spxcjira(927) }}: The new `serviceLabel` and `serviceAnnotation` Custom Resource options allow setting Service Labels and Annotations for XtraDB Cluster Pods
 * {{ k8spxcjira(1340) }}: The new Custom Resource option allows setting custom containerSecurityContext for PMM containers (thanks Marko Weiß for report)
 * {{ k8spxcjira(1254) }}: Upgrade instructions for Percona XtraDB Cluster in multi-namespace (cluster-wide) mode [were added to documentation](../cluster-wide.md#upgrade)
@@ -61,7 +61,7 @@ Kubernetes supports the Persistent Volume expansion as a stable feature since v1
 * {{ k8spxcjira(1335) }}: Fix a bug where HAProxy was not stopping existing connections to primary in case of Percona XtraDB Cluster instance failover but only routed new ones to another instance
 * {{ k8spxcjira(1339) }}: Fix a bug where HAProxy was not aware of the IP address change in case of the restarted Percona XtraDB Cluster Pod and couldn't reach it until the DNS cache update
 * {{ k8spxcjira(1345) }}: Fix a regression where the Operator was unable to customize readinessProbe of the pxc container
-* {{ k8spxcjira(1350) }}: Fix a bug due to which log rotate could cause locking TOI ([Total Order Isolation](https://galeracluster.com/library/documentation/schema-upgrades.html#toi)) DDL operation on the cluster with flush error logs, resulting in unnecessary synchronization on the whole cluster and possible warnings in logs
+* {{ k8spxcjira(1350) }}: Fix a bug due to which log rotate could cause locking TOI ([Total Order Isolation :octicons-link-external-16:](https://galeracluster.com/library/documentation/schema-upgrades.html#toi)) DDL operation on the cluster with flush error logs, resulting in unnecessary synchronization on the whole cluster and possible warnings in logs
 
 ## Deprecation, Rename and Removal
 
@@ -82,10 +82,10 @@ The Operator was developed and tested with Percona XtraDB Cluster versions 8.0.3
 The following platforms were tested and are officially supported by the Operator
 1.14.0:
 
-* [Google Kubernetes Engine (GKE)](https://cloud.google.com/kubernetes-engine) 1.25 - 1.29
-* [Amazon Elastic Container Service for Kubernetes (EKS)](https://aws.amazon.com) 1.24 - 1.29
-* [Azure Kubernetes Service (AKS)](https://azure.microsoft.com/en-us/services/kubernetes-service/) 1.26 - 1.28
-* [OpenShift](https://www.redhat.com/en/technologies/cloud-computing/openshift) 4.12.50 - 4.14.13
-* [Minikube](https://minikube.sigs.k8s.io/docs/) 1.32.0
+* [Google Kubernetes Engine (GKE) :octicons-link-external-16:](https://cloud.google.com/kubernetes-engine) 1.25 - 1.29
+* [Amazon Elastic Container Service for Kubernetes (EKS) :octicons-link-external-16:](https://aws.amazon.com) 1.24 - 1.29
+* [Azure Kubernetes Service (AKS) :octicons-link-external-16:](https://azure.microsoft.com/en-us/services/kubernetes-service/) 1.26 - 1.28
+* [OpenShift :octicons-link-external-16:](https://www.redhat.com/en/technologies/cloud-computing/openshift) 4.12.50 - 4.14.13
+* [Minikube :octicons-link-external-16:](https://minikube.sigs.k8s.io/docs/) 1.32.0
 
 This list only includes the platforms that the Percona Operators are specifically tested on as part of the release process. Other Kubernetes flavors and versions depend on the backward compatibility offered by Kubernetes itself.

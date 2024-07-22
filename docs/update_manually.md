@@ -14,8 +14,8 @@ Operator version 1.5.0 or earlier), and you have to carry on upgrades manually.
 Percona XtraDB Cluster can be upgraded manually using one of the following
 *upgrade strategies*:
 
-* *Rolling Update*, initiated manually and [controlled by Kubernetes](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies),
-* *On Delete*, [done by Kubernetes on per-Pod basis](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies) when Pods are deleted.
+* *Rolling Update*, initiated manually and [controlled by Kubernetes :octicons-link-external-16:](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies),
+* *On Delete*, [done by Kubernetes on per-Pod basis :octicons-link-external-16:](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies) when Pods are deleted.
 
 !!! warning
 
@@ -35,7 +35,7 @@ Semi-automatic update of Percona XtraDB Cluster can be done as follows:
 1. Edit the `deploy/cr.yaml` file, setting `updateStrategy` key to 
     `RollingUpdate`.
 
-2. Now you should [apply a patch](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your
+2. Now you should [apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your
     Custom Resource, setting necessary image names with a newer version tag.
 
     !!! note
@@ -92,7 +92,7 @@ Manual update of Percona XtraDB Cluster can be done as follows:
 1. Edit the `deploy/cr.yaml` file, setting `updateStrategy` key to
     `OnDelete`.
 
-2. Now you should [apply a patch](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your
+2. Now you should [apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your
     Custom Resource, setting necessary image names with a newer version tag.
 
     !!! note

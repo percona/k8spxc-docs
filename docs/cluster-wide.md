@@ -196,7 +196,7 @@ to the cluster.
     Don't forget to apply the resulting file with the usual `kubectl apply`
     command.
 
-    You can find more details about Network Policies [in the official Kubernetes documentation](https://kubernetes.io/docs/concepts/services-networking/network-policies/). 
+    You can find more details about Network Policies [in the official Kubernetes documentation :octicons-link-external-16:](https://kubernetes.io/docs/concepts/services-networking/network-policies/). 
 
 ## Upgrading the Operator in cluster-wide mode
 
@@ -208,7 +208,7 @@ Cluster-wide Operator is upgraded similarly to a single-namespace one. Both depl
  
 To upgrade the cluster-wide Operator you follow the [standard upgrade scenario](update.md#upgrading-the-operator-and-crd) concerning the Operator's namespace and a different YAML configuration file: the one with a special `cw-` prefix, `deploy/cw-rbac.yaml`. The resulting steps will look as follows.
 
-1. Update the [Custom Resource Definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
+1. Update the [Custom Resource Definition :octicons-link-external-16:](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
     for the Operator, taking it from the official repository on Github, and do
     the same for the Role-based access control:
 
@@ -217,7 +217,7 @@ To upgrade the cluster-wide Operator you follow the [standard upgrade scenario](
     $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cw-rbac.yaml
     ```
 
-2. Now you should [apply a patch](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your
+2. Now you should [apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your
     deployment, supplying the necessary image name with a newer version tag. You can find the proper
     image name for the current Operator release [in the list of certified images](images.md#custom-registry-images)
     (for older releases, please refer to the [old releases documentation archive](archive.md)).

@@ -1,7 +1,7 @@
 # Making scheduled backups
 
 Backups schedule is defined in the `backup` section of the Custom
-Resource and can be configured via the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
+Resource and can be configured via the [deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
 file.
 
 1. The `backup.storages` subsection should contain at least one [configured storage](backups-storage.md).
@@ -12,7 +12,7 @@ file.
         will be needed later to [restore the bakup](backups-restore.md)).
 
     * specify the `backup.schedule.schedule` option with the desired backup
-        schedule in [crontab format](https://en.wikipedia.org/wiki/Cron).
+        schedule in [crontab format :octicons-link-external-16:](https://en.wikipedia.org/wiki/Cron).
 
     * set the `backup.schedule.storageName` key to the name of your [already configured storage](backups-storage.md).
 

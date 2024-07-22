@@ -3,8 +3,8 @@
 ## Specify additional PMM parameters
 
 You can use Custom Resource `pmm.pxcParams` and `pmm.proxysqlParams` keys to
-specify additional parameters for [pmm-admin add mysql](https://www.percona.com/doc/percona-monitoring-and-management/2.x/setting-up/client/mysql.html#adding-mysql-service-monitoring) and
-[pmm-admin add proxysql](https://www.percona.com/doc/percona-monitoring-and-management/2.x/setting-up/client/proxysql.html)
+specify additional parameters for [pmm-admin add mysql :octicons-link-external-16:](https://www.percona.com/doc/percona-monitoring-and-management/2.x/setting-up/client/mysql.html#adding-mysql-service-monitoring) and
+[pmm-admin add proxysql :octicons-link-external-16:](https://www.percona.com/doc/percona-monitoring-and-management/2.x/setting-up/client/proxysql.html)
 commands respectively, if needed.
 
 Please take into account that Operator automatically manages common Percona

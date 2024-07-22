@@ -5,10 +5,10 @@ but [restoring it on a different Kubernetes-based environment with the installed
 
 Backups **cannot be restored** to [emptyDir and hostPath volumes](storage.md#storage-local),
 but it is possible to make a backup from such storage (i. e., from
-emptyDir/hostPath to S3), and later restore it to a [Persistent Volume](https://kubernetes.io/docs/concepts/storage/persistent-volumes/).
+emptyDir/hostPath to S3), and later restore it to a [Persistent Volume :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/persistent-volumes/).
 
 To restore a backup, you will use the special restore configuration file. The
-example of such file is [deploy/backup/restore.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml). The list of options that can be used in it can
+example of such file is [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml). The list of options that can be used in it can
 be found in the [restore options reference](operator.md#perconaxtradbclusterrestore-custom-resource-options).
 
 Following things are needed to restore a previously saved backup:
@@ -39,7 +39,7 @@ restoration can be done in the following way.
 
 ## Restore the cluster without point-in-time recovery
 
-1. Set appropriate keys in the [deploy/backup/restore.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml) file.
+1. Set appropriate keys in the [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml) file.
 
     * set `spec.pxcCluster` key to the name of the target cluster to restore
         the backup on,
@@ -92,7 +92,7 @@ restoration can be done in the following way.
     restoring a backup on it, regardless of whether the backup was made
     with point-in-time recovery or without it.
 
-1. Set appropriate keys in the [deploy/backup/restore.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml) file.
+1. Set appropriate keys in the [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml) file.
 
     * set `spec.pxcCluster` key to the name of the target cluster to restore
         the backup on,

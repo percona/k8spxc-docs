@@ -15,10 +15,10 @@
 ## Release Highlights
 
 
-* It is now [possible](https://www.percona.com/doc/kubernetes-operator-for-pxc/scaling.html)
+* It is now [possible :octicons-link-external-16:](https://www.percona.com/doc/kubernetes-operator-for-pxc/scaling.html)
 to use `kubectl scale` command to scale Percona XtraDB Cluster horizontally
 (add or remove Replica Set instances). You can also use  [Horizontal Pod
-Autoscaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/)
+Autoscaler :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/)
 which will scale your database cluster based on various metrics, such as CPU utilization.
 
 
@@ -34,56 +34,56 @@ configuration file.
 ## New Features
 
 
-* [K8SPXC-528](https://jira.percona.com/browse/K8SPXC-528): Support for [custom sidecar containers](../faq.md#faq-sidecar)
+* [K8SPXC-528 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-528): Support for [custom sidecar containers](../faq.md#faq-sidecar)
 to extend the Operator capabilities
 
 
-* [K8SPXC-647](https://jira.percona.com/browse/K8SPXC-647): Allow the cluster [scale in and scale out](../scaling.md#operator-scale)
+* [K8SPXC-647 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-647): Allow the cluster [scale in and scale out](../scaling.md#operator-scale)
 with the `kubectl scale` command or Horizontal Pod Autoscaler
 
 
-* [K8SPXC-643](https://jira.percona.com/browse/K8SPXC-643): Operator can now automatically recover Percona XtraDB
-Cluster after the [network partitioning](https://en.wikipedia.org/wiki/Network_partition)
+* [K8SPXC-643 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-643): Operator can now automatically recover Percona XtraDB
+Cluster after the [network partitioning :octicons-link-external-16:](https://en.wikipedia.org/wiki/Network_partition)
 
 ## Improvements
 
 
-* [K8SPXC-442](https://jira.percona.com/browse/K8SPXC-442): The Operator can now automatically remove old backups
+* [K8SPXC-442 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-442): The Operator can now automatically remove old backups
 from S3 storage if the retention period is set (thanks to Davi S Evangelista
 for reporting this issue)
 
 
-* [K8SPXC-697](https://jira.percona.com/browse/K8SPXC-697): Add namespace support in the
+* [K8SPXC-697 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-697): Add namespace support in the
 [script used to copy backups](../backups.md#backups-copy) from remote storage to a
 local machine
 
 
-* [K8SPXC-627](https://jira.percona.com/browse/K8SPXC-627): Point-in-time recovery uploader now chooses the Pod
+* [K8SPXC-627 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-627): Point-in-time recovery uploader now chooses the Pod
 with the oldest binary log in the cluster to ensure log consistency
 
 
-* [K8SPXC-618](https://jira.percona.com/browse/K8SPXC-618): Add debug symbols from the [percona-xtradb-cluster-server-debuginfo](https://www.percona.com/doc/percona-server/8.0/installation/yum_repo.html#what-s-in-each-rpm-package)
+* [K8SPXC-618 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-618): Add debug symbols from the [percona-xtradb-cluster-server-debuginfo :octicons-link-external-16:](https://www.percona.com/doc/percona-server/8.0/installation/yum_repo.html#what-s-in-each-rpm-package)
 package to the Percona XtraDB Cluster debug docker image to simplify
 troubleshooting
 
 
-* [K8SPXC-599](https://jira.percona.com/browse/K8SPXC-599): It is now possible to
+* [K8SPXC-599 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-599): It is now possible to
 [recover](../backups.md#backups-pitr-restore) databases up to a specific transaction
 with the Point-in-time Recovery feature. Previously the user could only
 recover to specific date and time
 
 
-* [K8SPXC-598](https://jira.percona.com/browse/K8SPXC-598): Point-in-time recovery feature now works with
+* [K8SPXC-598 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-598): Point-in-time recovery feature now works with
 compressed backups
 
 
-* [K8SPXC-536](https://jira.percona.com/browse/K8SPXC-536): It is now possible to explicitly set the version of
+* [K8SPXC-536 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-536): It is now possible to explicitly set the version of
 Percona XtraDB Cluster for newly provisioned clusters. Before that, all new
 clusters were started with the latest PXC version if Version Service was
 enabled
 
 
-* [K8SPXC-522](https://jira.percona.com/browse/K8SPXC-522): Add support for the `runtimeClassName` Kubernetes
+* [K8SPXC-522 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-522): Add support for the `runtimeClassName` Kubernetes
 feature for selecting the container runtime
 
 
@@ -93,59 +93,59 @@ messages
 ## Known Issues and Limitations
 
 
-* [K8SPXC-701](https://jira.percona.com/browse/K8SPXC-701): Scheduled backups are not compatible with Kubernetes
+* [K8SPXC-701 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-701): Scheduled backups are not compatible with Kubernetes
 1.20 in cluster-wide mode.
 
 ## Bugs Fixed
 
 
-* [K8SPXC-654](https://jira.percona.com/browse/K8SPXC-654): Use MySQL administrative port for Kubernetes
+* [K8SPXC-654 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-654): Use MySQL administrative port for Kubernetes
 liveness/readiness probes to avoid false positive failures
 
 
-* [K8SPXC-614](https://jira.percona.com/browse/K8SPXC-614), [K8SPXC-619](https://jira.percona.com/browse/K8SPXC-619), [K8SPXC-545](https://jira.percona.com/browse/K8SPXC-545), [K8SPXC-641](https://jira.percona.com/browse/K8SPXC-641), [K8SPXC-576](https://jira.percona.com/browse/K8SPXC-576): Fix multiple bugs due to which changes of various objects in `deploy/cr.yaml` were not applied to the running cluster (thanks to Sergiy Prykhodko for reporting some of these issues)
+* [K8SPXC-614 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-614), [K8SPXC-619 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-619), [K8SPXC-545 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-545), [K8SPXC-641 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-641), [K8SPXC-576 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-576): Fix multiple bugs due to which changes of various objects in `deploy/cr.yaml` were not applied to the running cluster (thanks to Sergiy Prykhodko for reporting some of these issues)
 
 
-* [K8SPXC-596](https://jira.percona.com/browse/K8SPXC-596): Fix a bug due to which liveness probe for `pxc`
+* [K8SPXC-596 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-596): Fix a bug due to which liveness probe for `pxc`
 container could cause zombie processes
 
 
-* [K8SPXC-632](https://jira.percona.com/browse/K8SPXC-632): Fix a bug preventing point-in-time recovery when
+* [K8SPXC-632 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-632): Fix a bug preventing point-in-time recovery when
 multiple clusters were uploading binary logs to a single S3 bucket
 
 
-* [K8SPXC-573](https://jira.percona.com/browse/K8SPXC-573): Fix a bug that prevented using special characters in
+* [K8SPXC-573 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-573): Fix a bug that prevented using special characters in
 XtraBackup password (thanks to Gertjan Bijl for reporting this issue)
 
 
-* [K8SPXC-571](https://jira.percona.com/browse/K8SPXC-571): Fix a bug where Percona XtraDB Cluster went into a
+* [K8SPXC-571 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-571): Fix a bug where Percona XtraDB Cluster went into a
 desynced state at backup job crash (Thanks to Dimitrij Hilt for reporting this
 issue)
 
 
-* [K8SPXC-430](https://jira.percona.com/browse/K8SPXC-430): Galera Arbitrator used for backups does not break the
+* [K8SPXC-430 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-430): Galera Arbitrator used for backups does not break the
 cluster anymore in various cases
 
 
-* [K8SPXC-684](https://jira.percona.com/browse/K8SPXC-684): Fix a bug due to which point-in-time recovery backup
+* [K8SPXC-684 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-684): Fix a bug due to which point-in-time recovery backup
 didn’t allow specifying the `endpointUrl` for Amazon S3 storage
 
 
-* [K8SPXC-681](https://jira.percona.com/browse/K8SPXC-681): Fix operator crash which occurred when non-existing
+* [K8SPXC-681 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-681): Fix operator crash which occurred when non-existing
 storage name was specified for point-in-time recovery
 
 
-* [K8SPXC-638](https://jira.percona.com/browse/K8SPXC-638): Fix unneeded delay in showing logs with
+* [K8SPXC-638 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-638): Fix unneeded delay in showing logs with
 the `kubectl logs` command for the logs container
 
 
-* [K8SPXC-609](https://jira.percona.com/browse/K8SPXC-609): Fix frequent HAProxy service NodePort updates which
+* [K8SPXC-609 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-609): Fix frequent HAProxy service NodePort updates which
 were causing issues with load balancers
 
 
-* [K8SPXC-542](https://jira.percona.com/browse/K8SPXC-542): Fix a bug due to which  backups were taken only for one
+* [K8SPXC-542 :octicons-link-external-16:](https://jira.percona.com/browse/K8SPXC-542): Fix a bug due to which  backups were taken only for one
 cluster out of many controlled by one Operator
 
 
-* [CLOUD-611](https://jira.percona.com/browse/CLOUD-611): Stop using the already deprecated runtime/scheme package
+* [CLOUD-611 :octicons-link-external-16:](https://jira.percona.com/browse/CLOUD-611): Stop using the already deprecated runtime/scheme package
 (Thanks to Jerome Küttner for reporting this issue)

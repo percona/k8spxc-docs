@@ -7,7 +7,7 @@ applications but provides ways to store state (in Persistent Volumes, etc.) if
 the application needs it. Generally, a stateless mode of operation is supposed
 to provide better safety, sustainability, and scalability, it makes the
 already-deployed components interchangeable. You can find more about substantial
-benefits brought by Kubernetes to databases in [this blog post](https://www.percona.com/blog/2020/10/08/the-criticality-of-a-kubernetes-operator-for-databases/).
+benefits brought by Kubernetes to databases in [this blog post :octicons-link-external-16:](https://www.percona.com/blog/2020/10/08/the-criticality-of-a-kubernetes-operator-for-databases/).
 
 The architecture of state-centric applications (like databases) should be
 composed in a right way to avoid crashes, data loss, or data inconsistencies
@@ -18,9 +18,9 @@ highly available MySQL database clusters on Kubernetes.
 ## How can I contact the developers?
 
 The best place to discuss Percona Operator for MySQL based on Percona XtraDB Cluster
-with developers and other community members is the [community forum](https://forums.percona.com/categories/kubernetes-operator-percona-xtradb-cluster).
+with developers and other community members is the [community forum :octicons-link-external-16:](https://forums.percona.com/categories/kubernetes-operator-percona-xtradb-cluster).
 
-If you would like to report a bug, use the [Percona Operator for MySQL project in JIRA](https://jira.percona.com/projects/K8SPXC).
+If you would like to report a bug, use the [Percona Operator for MySQL project in JIRA :octicons-link-external-16:](https://jira.percona.com/projects/K8SPXC).
 
 ## What is the difference between the Operator quickstart and advanced installation ways?
 
@@ -48,12 +48,12 @@ MySQL-based Percona XtraDB Cluster inside your Kubernetes installation. It works
 with both MySQL 8.0 and 5.7 branches, and the exact version is determined by the
 Docker image in use.
 
-Percona-certified Docker images used by the Operator are listed [here](https://www.percona.com/doc/kubernetes-operator-for-pxc/images.html).
+Percona-certified Docker images used by the Operator are listed [here :octicons-link-external-16:](https://www.percona.com/doc/kubernetes-operator-for-pxc/images.html).
 As you can see, both Percona XtraDB Cluster 8.0 and 5.7 are supported with the
 following recommended versions: {{ pxc80recommended }} and
 {{ pxc57recommended }}. Three major numbers in the XtraDB Cluster version refer
 to the version of Percona Server in use. More details on the exact Percona
-Server version can be found in the release notes ([8.0](https://www.percona.com/doc/percona-server/8.0/release-notes/release-notes_index.html), [5.7](https://www.percona.com/doc/percona-server/5.7/release-notes/release-notes_index.html)).
+Server version can be found in the release notes ([8.0 :octicons-link-external-16:](https://www.percona.com/doc/percona-server/8.0/release-notes/release-notes_index.html), [5.7 :octicons-link-external-16:](https://www.percona.com/doc/percona-server/5.7/release-notes/release-notes_index.html)).
 
 ## How is HAProxy better than ProxySQL?
 
@@ -159,7 +159,7 @@ sections.
 
 !!! note
 
-    Custom sidecar containers [can easily access other components of your cluster](https://kubernetes.io/docs/concepts/workloads/pods/#resource-sharing-and-communication).
+    Custom sidecar containers [can easily access other components of your cluster :octicons-link-external-16:](https://kubernetes.io/docs/concepts/workloads/pods/#resource-sharing-and-communication).
     Therefore they should be used carefully and by experienced users only.
 
 Find more information on sidecar containers in the appropriate
@@ -169,9 +169,9 @@ Find more information on sidecar containers in the appropriate
 
 In the Percona XtraDB Cluster crash case, gathering all possible information for
 enhanced diagnostics to be shared with Percona Support helps to solve an issue
-faster. One of such helpful artifacts is [core dump](https://en.wikipedia.org/wiki/Core_dump).
+faster. One of such helpful artifacts is [core dump :octicons-link-external-16:](https://en.wikipedia.org/wiki/Core_dump).
 
-Percona XtraDB Cluster can create core dumps on crush [using libcoredumper](https://www.percona.com/doc/percona-server/5.7/diagnostics/libcoredumper.html). The Operator has this feature turned on by default.
+Percona XtraDB Cluster can create core dumps on crush [using libcoredumper :octicons-link-external-16:](https://www.percona.com/doc/percona-server/5.7/diagnostics/libcoredumper.html). The Operator has this feature turned on by default.
 Core dumps are saved to  `DATADIR` (`var/lib/mysql/`). You can find
 appropriate core files in the following way (substitute `some-name-pxc-1` with
 the name of your Pod):
@@ -209,7 +209,7 @@ You can configure the Operator to use one of two different proxies, HAProxy
 Operator, but they have some differences in the architecture, which can make one
 of them more suitable then the other one in some use cases.
 
-The main difference is that HAProxy operates in TCP mode as an [OSI level 4 proxy](https://www.haproxy.com/blog/layer-4-and-layer-7-proxy-mode/),
+The main difference is that HAProxy operates in TCP mode as an [OSI level 4 proxy :octicons-link-external-16:](https://www.haproxy.com/blog/layer-4-and-layer-7-proxy-mode/),
 while ProxySQL implements OSI level 7 proxy, and thus can provide some additional
 functionality like read/write split, firewalling and caching.
 
@@ -219,19 +219,19 @@ Kubernetes and ProxySQL.
 
 You can enable ProxySQL only at cluster creation time. Otherwise you will be 
 able to use HAProxy only. The switch from HAProxy to ProxySQL is not possible,
-because ProxySQL does not yet support [caching_sha2_password](https://dev.mysql.com/doc/refman/8.0/en/caching-sha2-pluggable-authentication.html)
+because ProxySQL does not yet support [caching_sha2_password :octicons-link-external-16:](https://dev.mysql.com/doc/refman/8.0/en/caching-sha2-pluggable-authentication.html)
 MySQL authentication plugin used by the Operator by default instead of the older
-[mysql_native_password](https://dev.mysql.com/doc/refman/8.0/en/native-pluggable-authentication.html) one.
+[mysql_native_password :octicons-link-external-16:](https://dev.mysql.com/doc/refman/8.0/en/native-pluggable-authentication.html) one.
 
 See more detailed functionality and performance comparison of using the Operator
-with both solutions in [this blog post](https://www.percona.com/blog/2021/01/11/percona-kubernetes-operator-for-percona-xtradb-cluster-haproxy-or-proxysql/).
+with both solutions in [this blog post :octicons-link-external-16:](https://www.percona.com/blog/2021/01/11/percona-kubernetes-operator-for-percona-xtradb-cluster-haproxy-or-proxysql/).
 
 ## Which additional access permissions are used by the Custom Resource validation webhook?
 
-The `spec.enableCRValidationWebhook` key in the [deploy/cr.yaml](https://github.com/percona/percona-server-mongodb-operator/blob/main/deploy/cr.yaml)
+The `spec.enableCRValidationWebhook` key in the [deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-server-mongodb-operator/blob/main/deploy/cr.yaml)
 file enables or disables schema validation done by the Operator before applying
 `cr.yaml` file. This feature works only in [cluster-wide mode](cluster-wide.md#install-clusterwide)
-due to access restrictions. It uses the following additional [RBAC permissions](https://kubernetes.io/docs/reference/access-authn-authz/rbac/):
+due to access restrictions. It uses the following additional [RBAC permissions :octicons-link-external-16:](https://kubernetes.io/docs/reference/access-authn-authz/rbac/):
 
 ```yaml
 - apiGroups:

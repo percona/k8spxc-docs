@@ -4,14 +4,14 @@ Percona announces the general availability of *Percona Kubernetes Operator for P
 
 The Percona Kubernetes Operator for Percona XtraDB Cluster automates the lifecycle and provides a consistent Percona XtraDB Cluster instance. The Operator can be used to create a Percona XtraDB Cluster, or scale an existing Cluster and contains the necessary Kubernetes settings.
 
-The Operator simplifies the deployment and management of the [Percona XtraDB Cluster](https://www.percona.com/software/mysql-database/percona-xtradb-cluster) in Kubernetes-based environments. It extends the Kubernetes API with a new custom resource for deploying, configuring and managing the application through the whole life cycle.
+The Operator simplifies the deployment and management of the [Percona XtraDB Cluster :octicons-link-external-16:](https://www.percona.com/software/mysql-database/percona-xtradb-cluster) in Kubernetes-based environments. It extends the Kubernetes API with a new custom resource for deploying, configuring and managing the application through the whole life cycle.
 
-The Operator source code is available [in our Github repository](https://github.com/percona/percona-xtradb-cluster-operator). All of Percona’s software is open-source and free.
+The Operator source code is available [in our Github repository :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator). All of Percona’s software is open-source and free.
 
 **New features and improvements**:
 
 
-* Now the Percona Kubernetes Operator [allows upgrading](https://www.percona.com/doc/kubernetes-operator-for-pxc/update.html) Percona XtraDB Cluster to newer versions, either in semi-automatic or in manual mode.
+* Now the Percona Kubernetes Operator [allows upgrading :octicons-link-external-16:](https://www.percona.com/doc/kubernetes-operator-for-pxc/update.html) Percona XtraDB Cluster to newer versions, either in semi-automatic or in manual mode.
 
 
 * Also, two modes are implemented for updating the Percona XtraDB Cluster `my.cnf` configuration file: in *automatic configuration update* mode Percona XtraDB Cluster Pods are immediately re-created to populate changed options from the Operator YAML file, while in *manual mode* changes are held until Percona XtraDB Cluster Pods are re-created manually.
@@ -20,17 +20,17 @@ The Operator source code is available [in our Github repository](https://github.
 * A separate service account is now used by the Operator’s containers which need special privileges, and all other Pods run on default service account with limited permissions.
 
 
-* [User secrets](https://www.percona.com/doc/kubernetes-operator-for-pxc/users.html) are now generated automatically if don’t exist: this feature especially helps reduce work in repeated development environment testing and reduces the chance of accidentally pushing predefined development passwords to production environments.
+* [User secrets :octicons-link-external-16:](https://www.percona.com/doc/kubernetes-operator-for-pxc/users.html) are now generated automatically if don’t exist: this feature especially helps reduce work in repeated development environment testing and reduces the chance of accidentally pushing predefined development passwords to production environments.
 
 
-* The Operator [is now able to generate TLS certificates itself](https://www.percona.com/doc/kubernetes-operator-for-pxc/TLS.html) which removes the need in manual certificate generation.
+* The Operator [is now able to generate TLS certificates itself :octicons-link-external-16:](https://www.percona.com/doc/kubernetes-operator-for-pxc/TLS.html) which removes the need in manual certificate generation.
 
 
-* The list of officially supported platforms now includes [Minikube](https://www.percona.com/doc/kubernetes-operator-for-pxc/minikube.html), which provides an easy way to test the Operator locally on your own machine before deploying it on a cloud.
+* The list of officially supported platforms now includes [Minikube :octicons-link-external-16:](https://www.percona.com/doc/kubernetes-operator-for-pxc/minikube.html), which provides an easy way to test the Operator locally on your own machine before deploying it on a cloud.
 
 
 * Also, Google Kubernetes Engine 1.14 and OpenShift Platform 4.1 are now supported.
 
-[Percona XtraDB Cluster](http://www.percona.com/doc/percona-xtradb-cluster/) is an open source, cost-effective and robust clustering solution for businesses. It integrates Percona Server for MySQL with the Galera replication library to produce a highly-available and scalable MySQL® cluster complete with synchronous multi-primary replication, zero data loss and automatic node provisioning using Percona XtraBackup.
+[Percona XtraDB Cluster :octicons-link-external-16:](http://www.percona.com/doc/percona-xtradb-cluster/) is an open source, cost-effective and robust clustering solution for businesses. It integrates Percona Server for MySQL with the Galera replication library to produce a highly-available and scalable MySQL® cluster complete with synchronous multi-primary replication, zero data loss and automatic node provisioning using Percona XtraBackup.
 
-Help us improve our software quality by reporting any bugs you encounter using [our bug tracking system](https://jira.percona.com/secure/Dashboard.jspa).
+Help us improve our software quality by reporting any bugs you encounter using [our bug tracking system :octicons-link-external-16:](https://jira.percona.com/secure/Dashboard.jspa).

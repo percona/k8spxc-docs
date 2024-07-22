@@ -1,7 +1,7 @@
 # Labels and annotations
 
-[Labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/)
-and [annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/)
+[Labels :octicons-link-external-16:](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/)
+and [annotations :octicons-link-external-16:](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/)
 are used to attach additional metadata information to Kubernetes resources.
 
 Labels and annotations are rather similar. The difference between them is that
@@ -30,7 +30,7 @@ metadata:
 
     Setting `percona.com/issue-vault-token: "true"` annotation is just an
     example, but this exact annotation has a special meaning. If you add this
-    annotation present and have [HashiCorp Vault](https://www.vaultproject.io/)
+    annotation present and have [HashiCorp Vault :octicons-link-external-16:](https://www.vaultproject.io/)
     installed (for example, it is used for [data at rest encryption](encryption.md)),
     the Operator will not start a cluster but will be printing a
     `wait for token issuing` log message in a loop until the annotation is

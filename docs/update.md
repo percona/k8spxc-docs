@@ -33,7 +33,7 @@ than one, make several incremental updates sequentially.
 
 The upgrade includes the following steps.
 
-1. Update the [Custom Resource Definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
+1. Update the [Custom Resource Definition :octicons-link-external-16:](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
     for the Operator, taking it from the official repository on Github, and do
     the same for the Role-based access control:
 
@@ -42,7 +42,7 @@ The upgrade includes the following steps.
     $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/rbac.yaml
     ```
 
-2. Now you should [apply a patch](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your
+2. Now you should [apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your
     deployment, supplying necessary image name with a newer version tag. You can find the proper
     image name for the current Operator release [in the list of certified images](images.md#custom-registry-images)
     (for older releases, please refer to the [old releases documentation archive](archive.md)).
@@ -71,16 +71,16 @@ The upgrade includes the following steps.
 If you have [installed the Operator using Helm](helm.md), you can upgrade the
 Operator with the `helm upgrade` command.
 
-1. In case if you installed the Operator with no [customized parameters](https://github.com/percona/percona-helm-charts/tree/main/charts/pxc-operator#installing-the-chart), the upgrade can be done as follows: 
+1. In case if you installed the Operator with no [customized parameters :octicons-link-external-16:](https://github.com/percona/percona-helm-charts/tree/main/charts/pxc-operator#installing-the-chart), the upgrade can be done as follows: 
 
     ``` {.bash data-prompt="$" }
     $ helm upgrade my-op percona/pxc-operator --version {{ release }}
     ```
 
-    The `my-op` parameter in the above example is the name of a [release object](https://helm.sh/docs/intro/using_helm/#three-big-concepts)
+    The `my-op` parameter in the above example is the name of a [release object :octicons-link-external-16:](https://helm.sh/docs/intro/using_helm/#three-big-concepts)
     which which you have chosen for the Operator when installing its Helm chart.
 
-    If the Operator was installed with some [customized parameters](https://github.com/percona/percona-helm-charts/tree/main/charts/pxc-operator#installing-the-chart), you should list these options in the upgrade command.
+    If the Operator was installed with some [customized parameters :octicons-link-external-16:](https://github.com/percona/percona-helm-charts/tree/main/charts/pxc-operator#installing-the-chart), you should list these options in the upgrade command.
     
     
     !!! note
@@ -91,7 +91,7 @@ Operator with the `helm upgrade` command.
         $ helm upgrade my-op percona/pxc-operator --version {{ release }} -f my-values.yaml
         ```
 
-2. Update the [Custom Resource Definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
+2. Update the [Custom Resource Definition :octicons-link-external-16:](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
     for the Operator, taking it from the official repository on Github, and do
     the same for the Role-based access control:
 
@@ -120,12 +120,12 @@ As an alternative, the `updateStrategy` key can be set to `RollingUpdate` and
     The upgrade covers various components of the cluster including PMM Client
     and HA Proxy, which may need additional attention.
     
-    *  It is [highly recommended to upgrade PMM Server](https://docs.percona.com/percona-monitoring-and-management/how-to/upgrade.html) **before** upgrading PMM Client.
+    *  It is [highly recommended to upgrade PMM Server :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/how-to/upgrade.html) **before** upgrading PMM Client.
     
     * If you are using [custom configuration for HAProxy](haproxy-conf.md#passing-custom-configuration-options-to-haproxy), 
         **before upgrading**, check the HAProxy configuration file provided by
         the Operator (for example, `haproxy-global.cfg` for the Operator version
-        {{ release }} can be found [here](https://github.com/percona/percona-docker/blob/pxc-operator-{{ release }}/haproxy/dockerdir/etc/haproxy/haproxy-global.cfg)).
+        {{ release }} can be found [here :octicons-link-external-16:](https://github.com/percona/percona-docker/blob/pxc-operator-{{ release }}/haproxy/dockerdir/etc/haproxy/haproxy-global.cfg)).
         Make sure that your custom config is still compatible with the new
         variant, and make necessary additions, if needed.
 
@@ -147,7 +147,7 @@ Manual update of Percona XtraDB Cluster can be done as follows:
         ...
     ```
 
-2. Now [apply a patch](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/)
+2. Now [apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/)
     to your Custom Resource, setting necessary Custom Resource version and image
     names with a newer version tag.
 
@@ -193,7 +193,7 @@ Manual update of Percona XtraDB Cluster can be done as follows:
 
     !!! warning
 
-        The above command upgrades various components of the cluster including PMM Client. If you didn't follow the [official recommendation](https://docs.percona.com/percona-monitoring-and-management/how-to/upgrade.html) to upgrade PMM Server before upgrading PMM Client, you can avoid PMM Client upgrade by removing it from the list of images as follows:
+        The above command upgrades various components of the cluster including PMM Client. If you didn't follow the [official recommendation :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/how-to/upgrade.html) to upgrade PMM Server before upgrading PMM Client, you can avoid PMM Client upgrade by removing it from the list of images as follows:
 
         === "For Percona XtraDB Cluster 8.0"
             ```bash
