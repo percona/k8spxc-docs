@@ -11,7 +11,7 @@ The Operator source code is available [in our Github repository :octicons-link-e
 **New features and improvements**:
 
 
-* Now the Percona Kubernetes Operator [allows upgrading :octicons-link-external-16:](https://www.percona.com/doc/kubernetes-operator-for-pxc/update.html) Percona XtraDB Cluster to newer versions, either in semi-automatic or in manual mode.
+* Now the Percona Kubernetes Operator [allows upgrading](../update.md) Percona XtraDB Cluster to newer versions, either in semi-automatic or in manual mode.
 
 
 * Also, two modes are implemented for updating the Percona XtraDB Cluster `my.cnf` configuration file: in *automatic configuration update* mode Percona XtraDB Cluster Pods are immediately re-created to populate changed options from the Operator YAML file, while in *manual mode* changes are held until Percona XtraDB Cluster Pods are re-created manually.
@@ -20,13 +20,13 @@ The Operator source code is available [in our Github repository :octicons-link-e
 * A separate service account is now used by the Operator’s containers which need special privileges, and all other Pods run on default service account with limited permissions.
 
 
-* [User secrets :octicons-link-external-16:](https://www.percona.com/doc/kubernetes-operator-for-pxc/users.html) are now generated automatically if don’t exist: this feature especially helps reduce work in repeated development environment testing and reduces the chance of accidentally pushing predefined development passwords to production environments.
+* [User secrets](../users.md) are now generated automatically if don’t exist: this feature especially helps reduce work in repeated development environment testing and reduces the chance of accidentally pushing predefined development passwords to production environments.
 
 
-* The Operator [is now able to generate TLS certificates itself :octicons-link-external-16:](https://www.percona.com/doc/kubernetes-operator-for-pxc/TLS.html) which removes the need in manual certificate generation.
+* The Operator [is now able to generate TLS certificates itself](../TLS.md) which removes the need in manual certificate generation.
 
 
-* The list of officially supported platforms now includes [Minikube :octicons-link-external-16:](https://www.percona.com/doc/kubernetes-operator-for-pxc/minikube.html), which provides an easy way to test the Operator locally on your own machine before deploying it on a cloud.
+* The list of officially supported platforms now includes [Minikube](../minikube.md), which provides an easy way to test the Operator locally on your own machine before deploying it on a cloud.
 
 
 * Also, Google Kubernetes Engine 1.14 and OpenShift Platform 4.1 are now supported.
