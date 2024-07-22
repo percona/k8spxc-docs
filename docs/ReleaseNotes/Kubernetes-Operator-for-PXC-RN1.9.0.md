@@ -19,13 +19,13 @@
 **Percona Distribution for MySQL Operator**. This new name emphasizes
 gradual changes which incorporated a collection of Percona’s solutions to run
 and operate Percona Server for MySQL and Percona XtraDB Cluster, available
-separately as [Percona Distribution for MySQL](https://www.percona.com/doc/percona-distribution-mysql/8.0/index.html).
+separately as [Percona Distribution for MySQL :octicons-link-external-16:](https://www.percona.com/doc/percona-distribution-mysql/8.0/index.html).
 
 
-* Now you can [see HAProxy metrics](https://www.percona.com/doc/percona-monitoring-and-management/2.x/setting-up/client/haproxy.html) in your favorite Percona Monitoring and Management (PMM) dashboards automatically.
+* Now you can [see HAProxy metrics :octicons-link-external-16:](https://www.percona.com/doc/percona-monitoring-and-management/2.x/setting-up/client/haproxy.html) in your favorite Percona Monitoring and Management (PMM) dashboards automatically.
 
 
-* The [cross-site replication](../replication.md#operator-replication) feature allows an
+* The [cross-site replication](../replication.md) feature allows an
 asynchronous replication between two Percona XtraDB Clusters, including
 scenarios when one of the clusters is outside of the Kubernetes environment.
 The feature is intended for the following use cases:
@@ -45,13 +45,13 @@ control, or carry on backward migration,
 
 
 * [K8SPXC-657](https://jira.percona.com/browse/K8SPXC-657): Use Secrets to store custom configuration with
-sensitive data for [Percona XtraDB Cluster](../options.md#operator-configmaps),
-[HAProxy](../haproxy-conf.md#haproxy-conf-custom), and [ProxySQL](../proxysql-conf.md#proxysql-conf-custom)
+sensitive data for [Percona XtraDB Cluster](../options.md#use-a-secret-object),
+[HAProxy](../haproxy-conf.md#use-a-secret-object), and [ProxySQL](../proxysql-conf.md#use-a-secret-object)
 Pods
 
 
 * [K8SPXC-308](https://jira.percona.com/browse/K8SPXC-308): Implement Percona XtraDB Cluster
-[asynchronous replication](../replication.md#operator-replication) within the Operator
+[asynchronous replication](../replication.md) within the Operator
 
 
 * [K8SPXC-688](https://jira.percona.com/browse/K8SPXC-688): Define [environment variables](../containers-conf.md#faq-env) in the
@@ -119,7 +119,7 @@ Percona XtraDB Cluster Pods if the unsafe flag is not set
 updates from the Operator to minimize the pressure on the Kubernetes cluster
 
 
-* [K8SPXC-421](https://jira.percona.com/browse/K8SPXC-421): It is now possible to [use X Plugin](https://www.percona.com/blog/2019/01/07/understanding-mysql-x-all-flavors/)
+* [K8SPXC-421](https://jira.percona.com/browse/K8SPXC-421): It is now possible to [use X Plugin :octicons-link-external-16:](https://www.percona.com/blog/2019/01/07/understanding-mysql-x-all-flavors/)
 with Percona XtraDB Cluster Pods
 
 ## Known Issues and Limitations

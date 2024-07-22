@@ -1,6 +1,6 @@
 # Enable compression for backups
 
-There is a possibility to enable [LZ4 compression](https://en.wikipedia.org/wiki/LZ4_(compression_algorithm))
+There is a possibility to enable [LZ4 compression :octicons-link-external-16:](https://en.wikipedia.org/wiki/LZ4_(compression_algorithm))
 for backups.
 
 !!! note
@@ -25,6 +25,6 @@ pxc:
     ...
 ```
 
-When enabled, compression will be used for both backups and [SST](https://www.percona.com/doc/percona-xtradb-cluster/8.0/manual/state_snapshot_transfer.html).
+When enabled, compression will be used for both backups and [SST :octicons-link-external-16:](https://www.percona.com/doc/percona-xtradb-cluster/8.0/manual/state_snapshot_transfer.html).
 
 

@@ -58,7 +58,7 @@ database Pod if pmm-agent is not working properly
 remaining binlogs in the restore log while point-in-time recovery in progress
 
 
-* [K8SPXC-920](https://jira.percona.com/browse/K8SPXC-920): Using the new [Percona XtraBackup Exponential Backoff feature](https://docs.percona.com/percona-xtrabackup/8.0/xbcloud/xbcloud_exbackoff.html)
+* [K8SPXC-920](https://jira.percona.com/browse/K8SPXC-920): Using the new [Percona XtraBackup Exponential Backoff feature :octicons-link-external-16:](https://docs.percona.com/percona-xtrabackup/8.0/xbcloud/xbcloud_exbackoff.html)
 decreases the number of occasional unsuccessful backups due to more effective
 retries timing (Thanks to Dustin Falgout for reporting this issue)
 
@@ -156,15 +156,15 @@ The following platforms were tested and are officially supported by the Operator
 1.11.0:
 
 
-* [OpenShift](https://www.redhat.com/en/technologies/cloud-computing/openshift) 4.7 - 4.10
+* [OpenShift :octicons-link-external-16:](https://www.redhat.com/en/technologies/cloud-computing/openshift) 4.7 - 4.10
 
 
-* [Google Kubernetes Engine (GKE)](https://cloud.google.com/kubernetes-engine) 1.20 - 1.23
+* [Google Kubernetes Engine (GKE) :octicons-link-external-16:](https://cloud.google.com/kubernetes-engine) 1.20 - 1.23
 
 
-* [Amazon Elastic Container Service for Kubernetes (EKS)](https://aws.amazon.com) 1.20 - 1.22
+* [Amazon Elastic Container Service for Kubernetes (EKS) :octicons-link-external-16:](https://aws.amazon.com) 1.20 - 1.22
 
 
-* [Minikube](https://minikube.sigs.k8s.io/docs/) 1.23
+* [Minikube :octicons-link-external-16:](https://minikube.sigs.k8s.io/docs/) 1.23
 
 This list only includes the platforms that the Percona Operators are specifically tested on as part of the release process. Other Kubernetes flavors and versions depend on the backward compatibility offered by Kubernetes itself.

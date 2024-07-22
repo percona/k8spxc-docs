@@ -2,7 +2,7 @@
 
 {%set commandName = 'oc' %}
 
-Percona Operator for Percona XtrabDB Cluster is a [Red Hat Certified Operator](https://connect.redhat.com/en/partner-with-us/red-hat-openshift-certification). This means that Percona Operator is portable across hybrid clouds and fully supports the Red Hat OpenShift lifecycle.
+Percona Operator for Percona XtrabDB Cluster is a [Red Hat Certified Operator :octicons-link-external-16:](https://connect.redhat.com/en/partner-with-us/red-hat-openshift-certification). This means that Percona Operator is portable across hybrid clouds and fully supports the Red Hat OpenShift lifecycle.
 
 Installing Percona XtraDB Cluster on OpenShift includes two steps:
 
@@ -14,14 +14,14 @@ Installing Percona XtraDB Cluster on OpenShift includes two steps:
 
 ## Install the Operator
 
-You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marketplace](https://marketplace.redhat.com) web interface or using the command line interface.
+You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marketplace :octicons-link-external-16:](https://marketplace.redhat.com) web interface or using the command line interface.
 
 ### Install the Operator via the Red Hat Marketplace
 
 
-1. login to the Red Hat Marketplace and register your cluster [following the official instructions](https://marketplace.redhat.com/en-us/workspace/clusters/add/register).
+1. login to the Red Hat Marketplace and register your cluster [following the official instructions :octicons-link-external-16:](https://marketplace.redhat.com/en-us/workspace/clusters/add/register).
 
-2. Go to the [Percona Operator for MySQL](https://marketplace.redhat.com/en-us/products/percona-kubernetes-operator-for-percona-server-for-xtradb-cluster) page and click the Free trial button:
+2. Go to the [Percona Operator for MySQL :octicons-link-external-16:](https://marketplace.redhat.com/en-us/products/percona-kubernetes-operator-for-percona-server-for-xtradb-cluster) page and click the Free trial button:
 
     ![image](assets/images/marketplace-operator-page.png)
 
@@ -72,7 +72,7 @@ You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marke
     $ oc adm policy add-cluster-role-to-user pxc-admin <some-user>
     ```
 
-    If you have a [cert-manager](https://docs.cert-manager.io/en/release-0.8/getting-started/install/openshift.html) installed, then you have to execute two more commands to be able to     manage certificates with a non-privileged user:
+    If you have a [cert-manager :octicons-link-external-16:](https://docs.cert-manager.io/en/release-0.8/getting-started/install/openshift.html) installed, then you have to execute two more commands to be able to     manage certificates with a non-privileged user:
 
     ``` {.bash data-prompt="$" }
     $ oc create clusterrole cert-admin --verb="*" --resource=issuers.certmanager.k8s.io,certificates.certmanager.k8s.io
@@ -89,7 +89,7 @@ You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marke
     up from the `deploy/rbac.yaml` file. Briefly speaking, role-based access is
     based on specifically defined roles and actions corresponding to
     them, allowed to be done on specific Kubernetes resources (details
-    about users and roles can be found in [OpenShift documentation](https://docs.openshift.com/enterprise/3.0/architecture/additional_concepts/authorization.html)).
+    about users and roles can be found in [OpenShift documentation :octicons-link-external-16:](https://docs.openshift.com/enterprise/3.0/architecture/additional_concepts/authorization.html)).
 
     ``` {.bash data-prompt="$" }
     $ oc apply -f deploy/rbac.yaml
@@ -116,7 +116,7 @@ You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marke
 
 ## Install Percona XtraDB Cluster
 
-1. Now that’s time to add the Percona XtraDB Cluster users [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
+1. Now that’s time to add the Percona XtraDB Cluster users [Secrets :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/secret/)
     with logins and passwords to Kubernetes. By default, the Operator generates
     users Secrets automatically, and *no actions are required at this step*.
     

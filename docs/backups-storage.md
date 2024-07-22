@@ -1,10 +1,10 @@
 # Configure storage for backups
 
 You can configure storage for backups in the `backup.storages` subsection of the
-Custom Resource, using the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
+Custom Resource, using the [deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
 configuration file.
 
-You should also create the [Kubernetes Secret](https://kubernetes.io/docs/concepts/configuration/secret/)
+You should also create the [Kubernetes Secret :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/secret/)
 object with credentials needed to access the storage.
 
 === "Amazon S3 or S3-compatible storage"
@@ -19,7 +19,7 @@ object with credentials needed to access the storage.
             keys should contain proper values to make the access possible).
 
         Create the Secrets file with these base64-encoded keys following the
-        [deploy/backup/backup-secret-s3.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/backup-secret-s3.yaml)
+        [deploy/backup/backup-secret-s3.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/backup-secret-s3.yaml)
         example:
 
         ```yaml
@@ -60,8 +60,8 @@ object with credentials needed to access the storage.
             In case the previous backup attempt fails (because of a temporary
             networking problem, etc.) the backup job tries to delete the unsuccessful
             backup leftovers first, and then makes a retry. Therefore there will be no
-            backup retry without [DELETE permissions to the objects in the bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-with-s3-actions.html).
-            Also, setting [Google Cloud Storage Retention Period](https://cloud.google.com/storage/docs/bucket-lock)
+            backup retry without [DELETE permissions to the objects in the bucket :octicons-link-external-16:](https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-with-s3-actions.html).
+            Also, setting [Google Cloud Storage Retention Period :octicons-link-external-16:](https://cloud.google.com/storage/docs/bucket-lock)
             can cause a similar problem.
 
 
@@ -83,11 +83,11 @@ object with credentials needed to access the storage.
            are stored in the root directory.
 
         * if you use some S3-compatible storage instead of the original Amazon
-            S3, add the [endpointURL](https://docs.min.io/docs/aws-cli-with-minio.html)
+            S3, add the [endpointURL :octicons-link-external-16:](https://docs.min.io/docs/aws-cli-with-minio.html)
             key in the `s3` subsection, which should point to the actual cloud
             used for backups. This value is specific to the cloud provider. For
-            example, using [Google Cloud](https://cloud.google.com) involves the
-            [following](https://storage.googleapis.com) endpointUrl:
+            example, using [Google Cloud :octicons-link-external-16:](https://cloud.google.com) involves the
+            [following :octicons-link-external-16:](https://storage.googleapis.com) endpointUrl:
 
             ```yaml
             endpointUrl: https://storage.googleapis.com
@@ -96,7 +96,7 @@ object with credentials needed to access the storage.
         The options within the `storages.<NAME>.s3` subsection are further
         explained in the [Operator Custom Resource options](operator.md#operator-backup-section).
 
-        Here is an example of the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
+        Here is an example of the [deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
         configuration file which configures Amazon S3 storage for backups:
 
         ```yaml
@@ -113,11 +113,11 @@ object with credentials needed to access the storage.
           ...
         ```
 
-        ??? note "Using AWS EC2 instances for backups makes it possible to automate access to AWS S3 buckets based on [IAM roles](https://kubernetes-on-aws.readthedocs.io/en/latest/user-guide/iam-roles.html) for Service Accounts with no need to specify the S3 credentials explicitly."
+        ??? note "Using AWS EC2 instances for backups makes it possible to automate access to AWS S3 buckets based on [IAM roles :octicons-link-external-16:](https://kubernetes-on-aws.readthedocs.io/en/latest/user-guide/iam-roles.html) for Service Accounts with no need to specify the S3 credentials explicitly."
 
             Following steps are needed to turn this feature on:
 
-            * Create the [IAM instance profile](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html)
+            * Create the [IAM instance profile :octicons-link-external-16:](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html)
                 and the permission policy within where you specify the access level that
                 grants the access to S3 buckets.
             * Attach the IAM profile to an EC2 instance.
@@ -138,7 +138,7 @@ object with credentials needed to access the storage.
             possible).
 
         Create the Secrets file with these base64-encoded keys following the
-        [deploy/backup/backup-secret-azure.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/backup-secret-azure.yaml) example:
+        [deploy/backup/backup-secret-azure.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/backup-secret-azure.yaml) example:
 
         ```yaml
         apiVersion: v1
@@ -185,13 +185,13 @@ object with credentials needed to access the storage.
             example).
 
         * `storages.<NAME>.azure.container` option should contain the name of the
-           Azure [container](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction#containers).
+           Azure [container :octicons-link-external-16:](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction#containers).
 
         The options within the `storages.<NAME>.azure` subsection are further explained
         in the [Operator Custom Resource options](operator.md#operator-backup-section).
 
         Here is an example
-        of the [deploy/cr.yaml](https://github.com/percona/percona-server-mongodb-operator/blob/main/deploy/cr.yaml)
+        of the [deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-server-mongodb-operator/blob/main/deploy/cr.yaml)
         configuration file which configures Azure Blob storage for backups:
 
         ```yaml

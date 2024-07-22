@@ -22,7 +22,7 @@ mysql> GRANT ALL PRIVILEGES ON database1.* TO 'user1'@'%' IDENTIFIED BY 'passwor
 
 !!! note
 
-    MySQL password here should not exceed 32 characters due to the [replication-specific limit introduced in MySQL 5.7.5](https://dev.mysql.com/doc/relnotes/mysql/5.7/en/news-5-7-5.html).
+    MySQL password here should not exceed 32 characters due to the [replication-specific limit introduced in MySQL 5.7.5 :octicons-link-external-16:](https://dev.mysql.com/doc/relnotes/mysql/5.7/en/news-5-7-5.html).
 
 Verify that the user was created successfully. If successful, the
 following command will let you successfully login to MySQL shell via
@@ -42,7 +42,7 @@ permissions have been successfully granted.
 To automate the deployment and management of the cluster components,
 the Operator requires system-level Percona XtraDB Cluster users.
 
-Credentials for these users are stored as a [Kubernetes Secrets](https://kubernetes.io/docs/concepts/configuration/secret/) object.
+Credentials for these users are stored as a [Kubernetes Secrets :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/secret/) object.
 The Operator requires Kubernetes Secrets before Percona XtraDB Cluster is
 started. It will either use existing Secrets or create a new Secrets object with
 randomly generated passwords if it didn’t exist.
@@ -59,10 +59,10 @@ The following table shows system users’ names and purposes.
 | User Purpose   | Username     | Password Secret Key | Description |
 | -------------- | ------------ | ------------------- | ----------- |
 | Admin          | root         | root                | Database administrative user, can be used by the application if needed |
-| ProxySQLAdmin  | proxyadmin   | proxyadmin          | ProxySQL administrative user, can be used to [add general-purpose ProxySQL users](https://github.com/sysown/proxysql/wiki/Users-configuration) |
-| Backup         | xtrabackup   | xtrabackup          | The [user to run backups](https://www.percona.com/doc/percona-xtrabackup/2.4/using_xtrabackup/privileges.html), granted `all` privileges for the [point-in-time recovery](backups.md#storing-binary-logs-for-point-in-time-recovery) needs |
-| Monitoring     | monitor      | monitor             | User for internal monitoring purposes like liveness/readiness checks and [PMM agent](https://www.percona.com/doc/percona-monitoring-and-management/security.html#pmm-security-password-protection-enabling) |
-| PMM Server Password  | should be set through the [operator options](operator.md) | pmmserver | [Password used to access PMM Server](https://www.percona.com/doc/percona-monitoring-and-management/security.html#pmm-security-password-protection-enabling). **Password-based authorization method is deprecated since the Operator 1.11.0**. [Use token-based authorization instead](monitoring.md#operator-monitoring-client-token) |
+| ProxySQLAdmin  | proxyadmin   | proxyadmin          | ProxySQL administrative user, can be used to [add general-purpose ProxySQL users :octicons-link-external-16:](https://github.com/sysown/proxysql/wiki/Users-configuration) |
+| Backup         | xtrabackup   | xtrabackup          | The [user to run backups :octicons-link-external-16:](https://www.percona.com/doc/percona-xtrabackup/2.4/using_xtrabackup/privileges.html), granted `all` privileges for the [point-in-time recovery](backups-pitr.md) needs |
+| Monitoring     | monitor      | monitor             | User for internal monitoring purposes like liveness/readiness checks and [PMM agent :octicons-link-external-16:](https://www.percona.com/doc/percona-monitoring-and-management/security.html#pmm-security-password-protection-enabling) |
+| PMM Server Password  | should be set through the [operator options](operator.md) | pmmserver | [Password used to access PMM Server :octicons-link-external-16:](https://www.percona.com/doc/percona-monitoring-and-management/security.html#pmm-security-password-protection-enabling). **Password-based authorization method is deprecated since the Operator 1.11.0**. [Use token-based authorization instead](monitoring.md#operator-monitoring-client-token) |
 | Operator Admin | operator     | operator            | Database administrative user, should be used only by the Operator |
 | Replication    | replication  | replication         | Administrative user needed for [cross-site Percona XtraDB Cluster](replication.md) |
 
@@ -137,7 +137,7 @@ Also, same policy is automatically applied to system users on existing clusters 
 
 Starting with MySQL 8.0.16, a new feature called Account Categories has been
 implemented, which allows us to mark our system users as such.
-See [the official documentation on this feature](https://dev.mysql.com/doc/refman/8.0/en/account-categories.html)
+See [the official documentation on this feature :octicons-link-external-16:](https://dev.mysql.com/doc/refman/8.0/en/account-categories.html)
 for more details.
 
 ## Development Mode

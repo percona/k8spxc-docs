@@ -1,6 +1,6 @@
 # *Percona Kubernetes Operator for Percona XtraDB Cluster* 1.0.0
 
-Percona announces the general availability of *Percona Kubernetes Operator for Percona XtraDB Cluster* 1.0.0 on May 29, 2019. This release is now the current GA release in the 1.0 series. [Install the Kubernetes Operator for Percona XtraDB Cluster by following the instructions](../kubernetes.md). Please see the [GA release announcement](https://www.percona.com/blog/2019/05/29/percona-kubernetes-operators/). All of Percona’s software is open-source and free.
+Percona announces the general availability of *Percona Kubernetes Operator for Percona XtraDB Cluster* 1.0.0 on May 29, 2019. This release is now the current GA release in the 1.0 series. [Install the Kubernetes Operator for Percona XtraDB Cluster by following the instructions](../kubernetes.md). Please see the [GA release announcement :octicons-link-external-16:](https://www.percona.com/blog/2019/05/29/percona-kubernetes-operators/). All of Percona’s software is open-source and free.
 
 The Percona Kubernetes Operator for Percona XtraDB Cluster automates the lifecycle and provides a consistent Percona XtraDB Cluster instance. The Operator can be used to create a Percona XtraDB Cluster, or scale an existing Cluster and contains the necessary Kubernetes settings.
 
@@ -46,4 +46,4 @@ The advantages are the following:
 
 ## Installation
 
-Installation is performed by following the documentation installation instructions for [Kubernetes](https://www.percona.com/doc/kubernetes-operator-for-pxc/kubernetes.html) and [OpenShift](https://www.percona.com/doc/kubernetes-operator-for-pxc/openshift.html).
+Installation is performed by following the documentation installation instructions for [Kubernetes](../kubernetes.md) and [OpenShift](../openshift.md).

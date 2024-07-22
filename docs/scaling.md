@@ -16,7 +16,7 @@ about adding more nodes to the cluster.
 There are multiple components that Operator deploys and manages: Percona 
 XtraDB Cluster (PXC), HAProxy or ProxySQL, etc. To add or reduce CPU or Memory 
 you need to edit corresponding sections in the Custom Resource. We follow 
-the structure for `requests` and `limits` that Kubernetes [provides](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/).
+the structure for `requests` and `limits` that Kubernetes [provides :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/).
 
 To add more resources to your MySQL nodes in PXC edit the following section in
 the Custom Resource:
@@ -55,7 +55,7 @@ option, if the volume type supports PVCs expansion.
 
 Certain volume types support PVCs expansion (exact details about
 PVCs and the supported volume types can be found in
-[Kubernetes documentation](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#expanding-persistent-volumes-claims)).
+[Kubernetes documentation :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#expanding-persistent-volumes-claims)).
 
 You can run the following command to check if your storage supports the
 expansion capability:
@@ -229,11 +229,11 @@ to `5` instances.
 ## Automated scaling
 
 To automate horizontal scaling it is possible to use [Horizontal 
-Pod Autoscaler (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/). 
+Pod Autoscaler (HPA) :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/). 
 It will scale the Custom Resource itself, letting Operator to deal 
 with everything else.
 
-It is also possible to use [Kuvernetes Event-driven Autoscaling (KEDA)](https://keda.sh/), 
+It is also possible to use [Kuvernetes Event-driven Autoscaling (KEDA) :octicons-link-external-16:](https://keda.sh/), 
 where you can apply more sophisticated logic for decision making on scaling.
 
 For now it is not possible to use Vertical Pod Autoscaler (VPA) with 

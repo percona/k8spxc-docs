@@ -2,7 +2,7 @@
 
 Percona Operator for MySQL based on Percona XtraDB Cluster provides entry points for accessing the database by client
 applications in several scenarios. In either way the cluster is exposed with
-regular Kubernetes [Service objects](https://kubernetes.io/docs/concepts/services-networking/service/),
+regular Kubernetes [Service objects :octicons-link-external-16:](https://kubernetes.io/docs/concepts/services-networking/service/),
 configured by the Operator.
 
 This document describes the usage of [Custom Resource manifest options](operator.md#operator-custom-resource-options)
@@ -11,12 +11,12 @@ to expose the clusters deployed with the Operator.
 ### Exposing cluster with HAProxy or ProxySQL
 
 The Operator provides a choice of two cluster components to
-provide load balancing and proxy service: you can use either [HAProxy](https://haproxy.org) or [ProxySQL](https://proxysql.com/).
+provide load balancing and proxy service: you can use either [HAProxy :octicons-link-external-16:](https://haproxy.org) or [ProxySQL :octicons-link-external-16:](https://proxysql.com/).
 
 ![image](assets/images/replication.svg)
 
 
-Load balancing and proxy service with [HAProxy](https://haproxy.org) is the
+Load balancing and proxy service with [HAProxy :octicons-link-external-16:](https://haproxy.org) is the
 default choice.
 
 * See [how you can enable and use HAProxy and what are the limitations](haproxy-conf.md).
@@ -26,7 +26,7 @@ default choice.
 
     The default HAProxy based setup will contain the `cluster1-haproxy` Service
     listening on ports 3306 (MySQL primary) and 3309 (the
-    [proxy protocol](https://www.haproxy.com/blog/haproxy/proxy-protocol/) useful
+    [proxy protocol :octicons-link-external-16:](https://www.haproxy.com/blog/haproxy/proxy-protocol/) useful
     for operations such as asynchronous calls), and also `cluster1-haproxy-replicas`
     Service for MySQL replicas, listening on port 3306 (this Service
     **should not be used for write requests**).
@@ -111,6 +111,6 @@ cluster1-pxc-2                    LoadBalancer   10.120.14.65    34.16.25.126   
 
 As you could notice, this command also shows mapped ports the application can
 use to communicate with MySQL instances (e.g. `3306` for the classic MySQL
-protocol, or `33060` for [MySQL X Protocol](https://dev.mysql.com/doc/dev/mysql-server/latest/page_mysqlx_protocol.html)
+protocol, or `33060` for [MySQL X Protocol :octicons-link-external-16:](https://dev.mysql.com/doc/dev/mysql-server/latest/page_mysqlx_protocol.html)
 useful for operations such as asynchronous calls).
 

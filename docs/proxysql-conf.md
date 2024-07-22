@@ -1,7 +1,7 @@
 # Configuring Load Balancing with ProxySQL
 
 Percona Operator for MySQL based on Percona XtraDB Cluster provides a choice of two cluster components to
-provide load balancing and proxy service: you can use either [HAProxy](https://haproxy.org) or [ProxySQL](https://proxysql.com/).
+provide load balancing and proxy service: you can use either [HAProxy :octicons-link-external-16:](https://haproxy.org) or [ProxySQL :octicons-link-external-16:](https://proxysql.com/).
 You can choose which one to use, if any, by enabling or disabling via the
 `haproxy.enabled` and `proxysql.enabled` options in the `deploy/cr.yaml`
 configuration file.
@@ -21,7 +21,7 @@ option enables or disables the apropriate `cluster1-proxysql` service.
 !!! note
 
     <a name="headless-service"> If you need to configure ProxySQL service as a
-    [headless Service](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services)
+    [headless Service :octicons-link-external-16:](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services)
     (e.g. to use on the tenant network), add the following [annotation](annotations.md)
     in the Custom Resource metadata section of the `deploy/cr.yaml`:
 
@@ -67,7 +67,7 @@ You can pass custom configuration to ProxySQL
 
 ### Edit the `deploy/cr.yaml` file
 
-You can add options from the [proxysql.cnf](https://proxysql.com/documentation/configuring-proxysql/) configuration file by editing the `proxysql.configuration` key in the `deploy/cr.yaml` file.
+You can add options from the [proxysql.cnf :octicons-link-external-16:](https://proxysql.com/documentation/configuring-proxysql/) configuration file by editing the `proxysql.configuration` key in the `deploy/cr.yaml` file.
 Here is an example:
 
 ```yaml
@@ -134,7 +134,7 @@ data inside a containerized application.
 
 Use the `kubectl` command to create the configmap from external
 resources, for more information see [Configure a Pod to use a
-ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-a-configmap).
+ConfigMap :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-a-configmap).
 
 For example, you define a `proxysql.cnf` configuration file with the following
 setting:
@@ -221,7 +221,7 @@ $ kubectl describe configmaps cluster1-proxysql
 
 ### Use a Secret Object
 
-The Operator can also store configuration options in [Kubernetes Secrets](https://kubernetes.io/docs/concepts/configuration/secret/).
+The Operator can also store configuration options in [Kubernetes Secrets :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/secret/).
 This can be useful if you need additional protection for some sensitive data.
 
 You should create a Secret object with a specific name, composed of your cluster
@@ -238,7 +238,7 @@ name and the `proxysql` suffix.
 Configuration options should be put inside a specific key inside of the `data`
 section. The name of this key is `proxysql.cnf` for ProxySQL Pods.
 
-Actual options should be encoded with [Base64](https://en.wikipedia.org/wiki/Base64).
+Actual options should be encoded with [Base64 :octicons-link-external-16:](https://en.wikipedia.org/wiki/Base64).
 
 For example, let’s define a `proxysql.cnf` configuration file and put there
 options we used in the previous example:
@@ -386,7 +386,7 @@ $ kubectl create -f deploy/my-proxysql-secret.yaml
 
 ## Accessing the ProxySQL Admin Interface
 
-You can use [ProxySQL admin interface](https://www.percona.com/blog/2017/06/07/proxysql-admin-interface-not-typical-mysql-server/) to  configure its settings.
+You can use [ProxySQL admin interface :octicons-link-external-16:](https://www.percona.com/blog/2017/06/07/proxysql-admin-interface-not-typical-mysql-server/) to  configure its settings.
 
 Configuring ProxySQL in this way means connecting to it using the MySQL
 protocol, and two things are needed to do it:

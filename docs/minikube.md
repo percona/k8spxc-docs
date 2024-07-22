@@ -2,7 +2,7 @@
 
 {%set clusterName = 'minimal-cluster' %}
 
-Installing the Percona Operator for MySQL based on Percona XtraDB Cluster on [minikube](https://github.com/kubernetes/minikube)
+Installing the Percona Operator for MySQL based on Percona XtraDB Cluster on [minikube :octicons-link-external-16:](https://github.com/kubernetes/minikube)
 is the easiest way to try it locally without a cloud provider. Minikube runs
 Kubernetes on GNU/Linux, Windows, or macOS system using a system-wide
 hypervisor, such as VirtualBox, KVM/QEMU, VMware Fusion or Hyper-V. Using it is
@@ -12,7 +12,7 @@ on a cloud.
 The following steps are needed to run the Operator and Percona XtraDB Cluster on
 Minikube:
 
-1. [Install Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/),
+1. [Install Minikube :octicons-link-external-16:](https://kubernetes.io/docs/tasks/tools/install-minikube/),
     using a way recommended for your system. This includes the installation of
     the following three components:
 
@@ -43,9 +43,9 @@ Minikube:
     !!! note
 
         This deploys one Percona XtraDB Cluster node and one HAProxy node. The
-        [deploy/cr-minimal.yaml](https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cr-minimal.yaml) is for minimal non-production deployment.
+        [deploy/cr-minimal.yaml :octicons-link-external-16:](https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cr-minimal.yaml) is for minimal non-production deployment.
         For more configuration options please see
-        [deploy/cr.yaml](https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cr.yaml) and [Custom Resource Options](operator.md). You can clone the
+        [deploy/cr.yaml :octicons-link-external-16:](https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cr.yaml) and [Custom Resource Options](operator.md). You can clone the
         repository with all manifests and source code by executing the following
         command:
 

@@ -15,7 +15,7 @@
 ## New Features
 
 
-* [K8SPXC-172](https://jira.percona.com/browse/K8SPXC-172): Full data-at-rest encryption available in PXC 8.0 is now supported by the Operator. This feature is implemented with the help of the `keyring_vault` plugin which ships with PXC 8.0.  By utilizing [Vault](https://www.vaultproject.io) we enable our customers to follow best practices with encryption in their environment.
+* [K8SPXC-172](https://jira.percona.com/browse/K8SPXC-172): Full data-at-rest encryption available in PXC 8.0 is now supported by the Operator. This feature is implemented with the help of the `keyring_vault` plugin which ships with PXC 8.0.  By utilizing [Vault :octicons-link-external-16:](https://www.vaultproject.io) we enable our customers to follow best practices with encryption in their environment.
 
 
 * [K8SPXC-125](https://jira.percona.com/browse/K8SPXC-125): Percona XtraDB Cluster 8.0 is now supported

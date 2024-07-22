@@ -11,12 +11,12 @@ Operator can be used to create a Percona XtraDB Cluster, or scale an existing
 Cluster and contains the necessary Kubernetes settings.
 
 The Operator simplifies the deployment and management of the [Percona XtraDB
-Cluster](https://www.percona.com/software/mysql-database/percona-xtradb-cluster)
+Cluster :octicons-link-external-16:](https://www.percona.com/software/mysql-database/percona-xtradb-cluster)
 in Kubernetes-based environments. It extends the Kubernetes API with a new
 custom resource for deploying, configuring and managing the application through
 the whole life cycle.
 
-The Operator source code is available [in our Github repository](https://github.com/percona/percona-xtradb-cluster-operator).
+The Operator source code is available [in our Github repository :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator).
 All of Percona’s software is open-source and free.
 
 **New features and improvements:**
@@ -81,7 +81,7 @@ it’s grace period timeout, resulting in an unrecoverable failure
 * [CLOUD-243](https://jira.percona.com/browse/CLOUD-243): Using MYSQL_ROOT_PASSWORD with special characters in a
 ProxySQL docker image was breaking the entrypoint initialization process
 
-[Percona XtraDB Cluster](http://www.percona.com/doc/percona-xtradb-cluster/)
+[Percona XtraDB Cluster :octicons-link-external-16:](http://www.percona.com/doc/percona-xtradb-cluster/)
 is an open source, cost-effective and robust clustering solution for businesses.
 It integrates Percona Server for MySQL with the Galera replication library to
 produce a highly-available and scalable MySQL® cluster complete with synchronous
@@ -89,4 +89,4 @@ multi-primary replication, zero data loss and automatic node provisioning using
 Percona XtraBackup.
 
 Help us improve our software quality by reporting any bugs you encounter using
-[our bug tracking system](https://jira.percona.com/secure/Dashboard.jspa).
+[our bug tracking system :octicons-link-external-16:](https://jira.percona.com/secure/Dashboard.jspa).

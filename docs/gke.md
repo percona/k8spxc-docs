@@ -1,6 +1,6 @@
 # Install Percona XtraDB Cluster on Google Kubernetes Engine (GKE)
 
-This quickstart shows you how to configure the Percona Operator for MySQL based on Percona XtraDB Cluster with the Google Kubernetes Engine. The document assumes some experience with Google Kubernetes Engine (GKE). For more information on the GKE, see the [Kubernetes Engine Quickstart](https://cloud.google.com/kubernetes-engine/docs/quickstart).
+This quickstart shows you how to configure the Percona Operator for MySQL based on Percona XtraDB Cluster with the Google Kubernetes Engine. The document assumes some experience with Google Kubernetes Engine (GKE). For more information on the GKE, see the [Kubernetes Engine Quickstart :octicons-link-external-16:](https://cloud.google.com/kubernetes-engine/docs/quickstart).
 
 ## Prerequisites
 
@@ -10,9 +10,9 @@ To use *Google Cloud shell*, you need nothing but a modern web browser.
 
 If you would like to use *your local shell*, install the following:
 
-1. [gcloud](https://cloud.google.com/sdk/docs/quickstarts). This tool is part of the Google Cloud SDK. To install it, select your operating system on the [official Google Cloud SDK documentation page](https://cloud.google.com/sdk/docs) and then follow the instructions.
+1. [gcloud :octicons-link-external-16:](https://cloud.google.com/sdk/docs/quickstarts). This tool is part of the Google Cloud SDK. To install it, select your operating system on the [official Google Cloud SDK documentation page :octicons-link-external-16:](https://cloud.google.com/sdk/docs) and then follow the instructions.
 
-2. [kubectl](https://cloud.google.com/kubernetes-engine/docs/quickstart#choosing_a_shell). It is the Kubernetes command-line tool you will use to manage and deploy applications. To install the tool, run the following command:
+2. [kubectl :octicons-link-external-16:](https://cloud.google.com/kubernetes-engine/docs/quickstart#choosing_a_shell). It is the Kubernetes command-line tool you will use to manage and deploy applications. To install the tool, run the following command:
 
     ``` {.bash data-prompt="$" }
     $ gcloud auth login
@@ -21,7 +21,7 @@ If you would like to use *your local shell*, install the following:
 
 ## Configuring default settings for the cluster
 
-You can configure the settings using the `gcloud` tool. You can run it either in the [Cloud Shell](https://cloud.google.com/shell/docs/quickstart) or in your local shell (if you have installed Google Cloud SDK locally on the previous step). The following command will create a cluster named `my-cluster-1`:
+You can configure the settings using the `gcloud` tool. You can run it either in the [Cloud Shell :octicons-link-external-16:](https://cloud.google.com/shell/docs/quickstart) or in your local shell (if you have installed Google Cloud SDK locally on the previous step). The following command will create a cluster named `my-cluster-1`:
 
 ``` {.bash data-prompt="$" }
 $ gcloud container clusters create my-cluster-1 --project <project name> --zone us-central1-a --cluster-version {{ gkerecommended }} --machine-type n1-standard-4 --num-nodes=3
@@ -45,7 +45,7 @@ $ gcloud container clusters get-credentials my-cluster-1 --zone us-central1-a --
 
 ## Installing the Operator
 
-1. First of all, use your [Cloud Identity and Access Management (Cloud IAM)](https://cloud.google.com/iam) to control access to the cluster. The following command will give you the ability to create Roles and RoleBindings:
+1. First of all, use your [Cloud Identity and Access Management (Cloud IAM) :octicons-link-external-16:](https://cloud.google.com/iam) to control access to the cluster. The following command will give you the ability to create Roles and RoleBindings:
 
     ``` {.bash data-prompt="$" }
     $ kubectl create clusterrolebinding cluster-admin-binding --clusterrole cluster-admin --user $(gcloud config get-value core/account)
@@ -103,7 +103,7 @@ $ gcloud container clusters get-credentials my-cluster-1 --zone us-central1-a --
 
         This deploys default Percona XtraDB Cluster configuration with three
         HAProxy and three XtraDB Cluster instances. Please see
-        [deploy/cr.yaml](https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cr.yaml)
+        [deploy/cr.yaml :octicons-link-external-16:](https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cr.yaml)
         and [Custom Resource Options](operator.md) for the configuration
         options. You can clone the repository with all manifests and source code
         by executing the following command:

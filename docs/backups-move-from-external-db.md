@@ -1,13 +1,13 @@
 # How to use backups and asynchronous replication to move an external database to Kubernetes
 
-The Operator enables you to restore a database from a backup made outside of Kubernetes environment to the target Kubernetes cluster using [Percona XtraBackup](https://docs.percona.com/percona-xtrabackup/8.0/index.html). In such a way you can migrate your external database to Kubernetes. Using [asyncronous replication](https://docs.percona.com/percona-operator-for-mysql/pxc/replication.html) between source and target environments enables you to reduce downtime and prevent data loss for your application.
+The Operator enables you to restore a database from a backup made outside of Kubernetes environment to the target Kubernetes cluster using [Percona XtraBackup :octicons-link-external-16:](https://docs.percona.com/percona-xtrabackup/8.0/index.html). In such a way you can migrate your external database to Kubernetes. Using [asyncronous replication :octicons-link-external-16:](replication.md) between source and target environments enables you to reduce downtime and prevent data loss for your application.
 
-This document provides the steps how to migrate Percona Server for MySQL 8.0 deployed on premises to the Kubernetes cluster managed by the Operator using [asyncronous replication](https://docs.percona.com/percona-operator-for-mysql/pxc/replication.html). We recommend testing this migration in a non-production environment first, before applying it in production.
+This document provides the steps how to migrate Percona Server for MySQL 8.0 deployed on premises to the Kubernetes cluster managed by the Operator using [asyncronous replication :octicons-link-external-16:](replication.md). We recommend testing this migration in a non-production environment first, before applying it in production.
 
 ## Requirements
 
 1. The MySQL version for source and target environments must be 8.0.22 and higher since asyncronous replication is available starting with MySQL version 8.0.22. 
-2. You must be running [Percona XtraBackup](https://docs.percona.com/percona-xtrabackup/8.0/index.html) as the backup tool on source environment. For how to install Percona XtraBackup, see the [installation instructions](https://docs.percona.com/percona-xtrabackup/8.0/installation.html)
+2. You must be running [Percona XtraBackup :octicons-link-external-16:](https://docs.percona.com/percona-xtrabackup/8.0/index.html) as the backup tool on source environment. For how to install Percona XtraBackup, see the [installation instructions :octicons-link-external-16:](https://docs.percona.com/percona-xtrabackup/8.0/installation.html)
 3. The storage used to save the backup should be one of the [supported cloud storages](backups-storage.md): AWS S3 or compatible storage, or Azure Blob Storage.
 
 ## Configure target environment
@@ -15,7 +15,7 @@ This document provides the steps how to migrate Percona Server for MySQL 8.0 dep
 1. Deploy Percona Operator for MySQL and use it to create Percona XtraDB Cluster
     following any of the [official installation guides](System-Requirements.md#installation-guidelines).
 2. Create the YAML file with the credentials for accessing the storage, needed
-    to create the [Kubernetes Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
+    to create the [Kubernetes Secrets :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/secret/)
     object. As and example here, we will use Amazon S3 storage. You will need to
     create a Secret with the following data to store backups on the Amazon S3:
 
@@ -26,7 +26,7 @@ This document provides the steps how to migrate Percona Server for MySQL 8.0 dep
         keys should contain proper values to make the access possible).
 
     Create the Secrets file with these base64-encoded keys following the
-    [deploy/backup-s3.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/backup-secret-s3.yaml)
+    [deploy/backup-s3.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/backup-secret-s3.yaml)
     example:
 
     ```yaml
@@ -79,11 +79,11 @@ This document provides the steps how to migrate Percona Server for MySQL 8.0 dep
 
 ## Prepare the source environment
 
-1. Use official installation instructions for either [Percona Server for MySQL](https://docs.percona.com/percona-server/8.0/quickstart-overview.html#install-percona-server-for-mysql) or [Percona XtraDB Cluster](https://docs.percona.com/percona-xtradb-cluster/8.0/install/index.html)
+1. Use official installation instructions for either [Percona Server for MySQL :octicons-link-external-16:](https://docs.percona.com/percona-server/8.0/quickstart-overview.html#install-percona-server-for-mysql) or [Percona XtraDB Cluster :octicons-link-external-16:](https://docs.percona.com/percona-xtradb-cluster/8.0/install/index.html)
     to have the database up and running in your source environment (skip this
     step if one of them is already installed).
 
-2. Use official installation instructions for [Percona XtraBackup](https://docs.percona.com/percona-xtrabackup/8.0/installation.html)
+2. Use official installation instructions for [Percona XtraBackup :octicons-link-external-16:](https://docs.percona.com/percona-xtrabackup/8.0/installation.html)
     to have it up and running in your source environment (skip this step if it
     is already installed).
 
@@ -136,7 +136,7 @@ This document provides the steps how to migrate Percona Server for MySQL 8.0 dep
     Don't forget to replace the ```XXXX``` placeholders with your actual Amazon
     access key ID and secret access key values.
 
-2. Make the backup of your database and upload it to the storage using [xbcloud](https://docs.percona.com/percona-xtrabackup/8.0/xbcloud-binary-overview.html?h=xbcloud). Replace the values for the `--target-dir`, `--password`, `--s3-bucket` with your values in the following command:
+2. Make the backup of your database and upload it to the storage using [xbcloud :octicons-link-external-16:](https://docs.percona.com/percona-xtrabackup/8.0/xbcloud-binary-overview.html?h=xbcloud). Replace the values for the `--target-dir`, `--password`, `--s3-bucket` with your values in the following command:
 
     ```{.bash data-prompt="$"}
     $ xtrabackup --backup --stream=xbstream --target-dir=/tmp/backups/ --extra-lsndirk=/tmp/backups/  --password=root_password | xbcloud put --storage=s3 --parallel=10 --md5 --s3-bucket="mysql-testing-bucket" "db-test-1"
@@ -147,7 +147,7 @@ This document provides the steps how to migrate Percona Server for MySQL 8.0 dep
 If your source database didn't have any data, skip this step and proceed with the [asyncronous replication configuration](#configure-asyncronous-replication-in-the-kubernetes-cluster). Otherwise, restore the database in the target environment.
 
 1. To restore a backup, you will use the special restore configuration file.
-   The example of such file is [deploy/backup/restore.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml).
+   The example of such file is [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml).
    For example. your `restore.yaml` file may have the following contents:
 
     ```yaml title='restore.yaml'
@@ -329,4 +329,4 @@ Percona XtraDB Cluster.
 
 !!! admonition ""
 
-    This document is based on the blog post [Migration of a MySQL Database to a Kubernetes Cluster Using Asynchronous Replication](https://www.percona.com/blog/migration-of-a-mysql-database-to-a-kubernetes-cluster-using-asynchronous-replication/) by *Slava Sarzhan*.
+    This document is based on the blog post [Migration of a MySQL Database to a Kubernetes Cluster Using Asynchronous Replication :octicons-link-external-16:](https://www.percona.com/blog/migration-of-a-mysql-database-to-a-kubernetes-cluster-using-asynchronous-replication/) by *Slava Sarzhan*.
