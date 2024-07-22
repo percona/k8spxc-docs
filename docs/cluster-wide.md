@@ -4,7 +4,7 @@
 
 By default, Percona Operator for MySQL based on Percona XtraDB Cluster functions in a specific Kubernetes
 namespace. You can create one during installation (like it is shown in the
-[installation instructions](kubernetes.md#install-kubernetes)) or just use the `default`
+[installation instructions](kubernetes.md)) or just use the `default`
 namespace. This approach allows several Operators to co-exist in one
 Kubernetes-based environment, being separated in different namespaces:
 
@@ -219,8 +219,8 @@ To upgrade the cluster-wide Operator you follow the [standard upgrade scenario](
 
 2. Now you should [apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your
     deployment, supplying the necessary image name with a newer version tag. You can find the proper
-    image name for the current Operator release [in the list of certified images](images.md#custom-registry-images)
-    (for older releases, please refer to the [old releases documentation archive](archive.md)).
+    image name for the current Operator release [in the list of certified images](images.md)
+    (for older releases, please refer to the [old releases documentation archive :octicons-link-external-16:](https://docs.percona.com/legacy-documentation/)).
     For example, updating to the `{{ release }}` version in the `pxc-operator` namespace should look as
     follows.
 
