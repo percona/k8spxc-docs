@@ -46,4 +46,4 @@ The advantages are the following:
 
 ## Installation
 
-Installation is performed by following the documentation installation instructions for [Kubernetes :octicons-link-external-16:](https://www.percona.com/doc/kubernetes-operator-for-pxc/kubernetes.html) and [OpenShift :octicons-link-external-16:](https://www.percona.com/doc/kubernetes-operator-for-pxc/openshift.html).
+Installation is performed by following the documentation installation instructions for [Kubernetes](../kubernetes.md) and [OpenShift](../openshift.md).
