@@ -154,12 +154,12 @@ Manual update of Percona XtraDB Cluster can be done as follows:
     !!! note
 
         Check the version of the Operator you have in your Kubernetes
-        environment. Please refer to the [Operator upgrade guide](update.md#upgrading-the-operator)
+        environment. Please refer to the [Operator upgrade guide](update.md#upgrading-the-operator-and-crd)
         to upgrade the Operator and CRD, if needed.
 
     Patching Custom Resource is done with the `kubectl patch pxc` command.
     Actual image names can be found [in the list of certified images](images.md#custom-registry-images)
-    (for older releases, please refer to the [old releases documentation archive](archive.md)).
+    (for older releases, please refer to the [old releases documentation archive :octicons-link-external-16:](https://docs.percona.com/legacy-documentation/)).
     For example, updating `cluster1` cluster to the `{{ release }}` version
     should look as follows:
 
@@ -287,9 +287,9 @@ configuration file as follows:
     * *version number* - specify the desired version explicitly
         (version numbers are specified as `{{ pxc80recommended }}`,
         `{{ pxc57recommended }}`, etc.). Actual versions can be found
-        [in the list of certified images](images.md#custom-registry-images)
+        [in the list of certified images](images.md)
         (for older releases, please refer to the
-        [old releases documentation archive](archive.md)).
+        [old releases documentation archive :octicons-link-external-16:](https://docs.percona.com/legacy-documentation/)).
 
 4. Make sure the `upgradeOptions.versionServiceEndpoint` key is set to a valid
     Version Server URL (otherwise upgrades will not occur).
