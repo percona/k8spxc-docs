@@ -48,7 +48,7 @@ MySQL-based Percona XtraDB Cluster inside your Kubernetes installation. It works
 with both MySQL 8.0 and 5.7 branches, and the exact version is determined by the
 Docker image in use.
 
-Percona-certified Docker images used by the Operator are listed [here :octicons-link-external-16:](https://www.percona.com/doc/kubernetes-operator-for-pxc/images.html).
+Percona-certified Docker images used by the Operator are listed [here](images.md).
 As you can see, both Percona XtraDB Cluster 8.0 and 5.7 are supported with the
 following recommended versions: {{ pxc80recommended }} and
 {{ pxc57recommended }}. Three major numbers in the XtraDB Cluster version refer
@@ -75,7 +75,7 @@ current infrastructure, and any other specific needs of the application.
 
 ## How can I create a directory on the node to use it as a local storage
 
-You can [configure hostPath volume](storage.md#storage-hostpath) to mount some
+You can [configure hostPath volume](storage.md#hostpath) to mount some
 existing file or directory from the node’s filesystem into the Pod and use it
 as a local storage. The directory used for local storage should already exist
 in the node’s filesystem. You can create it through the shell access to the node,
@@ -163,7 +163,7 @@ sections.
     Therefore they should be used carefully and by experienced users only.
 
 Find more information on sidecar containers in the appropriate
-[documentation page](sidecar.md#operator-sidecar).
+[documentation page](sidecar.md).
 
 ## How to get core dumps in case of the Percona XtraDB Cluster crash
 
