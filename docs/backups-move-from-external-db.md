@@ -1,8 +1,8 @@
 # How to use backups and asynchronous replication to move an external database to Kubernetes
 
-The Operator enables you to restore a database from a backup made outside of Kubernetes environment to the target Kubernetes cluster using [Percona XtraBackup :octicons-link-external-16:](https://docs.percona.com/percona-xtrabackup/8.0/index.html). In such a way you can migrate your external database to Kubernetes. Using [asyncronous replication :octicons-link-external-16:](https://docs.percona.com/percona-operator-for-mysql/pxc/replication.html) between source and target environments enables you to reduce downtime and prevent data loss for your application.
+The Operator enables you to restore a database from a backup made outside of Kubernetes environment to the target Kubernetes cluster using [Percona XtraBackup :octicons-link-external-16:](https://docs.percona.com/percona-xtrabackup/8.0/index.html). In such a way you can migrate your external database to Kubernetes. Using [asyncronous replication :octicons-link-external-16:](replication.md) between source and target environments enables you to reduce downtime and prevent data loss for your application.
 
-This document provides the steps how to migrate Percona Server for MySQL 8.0 deployed on premises to the Kubernetes cluster managed by the Operator using [asyncronous replication :octicons-link-external-16:](https://docs.percona.com/percona-operator-for-mysql/pxc/replication.html). We recommend testing this migration in a non-production environment first, before applying it in production.
+This document provides the steps how to migrate Percona Server for MySQL 8.0 deployed on premises to the Kubernetes cluster managed by the Operator using [asyncronous replication :octicons-link-external-16:](replication.md). We recommend testing this migration in a non-production environment first, before applying it in production.
 
 ## Requirements
 
