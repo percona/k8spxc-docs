@@ -10,12 +10,12 @@
 
 ## Release Highlights
 
-* [Azure Kubernetes Service (AKS)](../aks.md) is now officially supported platform, so developers and vendors of the solutions based on the Azure platform can take advantage of the official support from Percona or just use officially certified Percona Operator for MysQL images; also, [Azure Blob Storage can now be used for backups](../backups.md#backups-scheduled-azure)
+* [Azure Kubernetes Service (AKS)](../aks.md) is now officially supported platform, so developers and vendors of the solutions based on the Azure platform can take advantage of the official support from Percona or just use officially certified Percona Operator for MysQL images; also, [Azure Blob Storage can now be used for backups](../backups-storage.md#__tabbed_1_2)
 * This release also includes fixes to the following CVEs (Common Vulnerabilities and Exposures): [CVE-2021-20329 :octicons-link-external-16:](https://nvd.nist.gov/vuln/detail/CVE-2021-20329) (potential injections in MongoDB Go Driver used HAProxy, which had no effect on Percona Operator for MySQL), and  [CVE-2022-42898 :octicons-link-external-16:](https://access.redhat.com/security/cve/CVE-2022-42898) (images used by the Operator suffering from the unauthenticated denial of service vulnerability). Users of previous Operator versions are advised to [upgrade](../update.md) to version 1.12.0 which resolves this issue
 
 ## New Features
 
-* {{ k8spxcjira(1043) }} and {{ k8spxcjira(1005) }}: Add support for the [Azure Kubernetes Service (AKS)](../aks.md) platform and allow [using Azure Blob Storage](../backups.md#__tabbed_1_2) for backups
+* {{ k8spxcjira(1043) }} and {{ k8spxcjira(1005) }}: Add support for the [Azure Kubernetes Service (AKS)](../aks.md) platform and allow [using Azure Blob Storage](../backups-storage.md#__tabbed_1_2) for backups
 * {{ k8spxcjira(1010) }}: Allow [using templates](../options.md#auto-tuning-mysql-options) to define `innodb_buffer_pool_size` auto-tuning based on container memory limits
 * {{ k8spxcjira(1082) }}: New `ignoreAnnotations` and `ignoreLabels` Custom Resource options allow to list [specific annotations and labels](../annotations.md) for Kubernetes Service objects, which the Operator should ignore (useful with various Kubernetes flavors which add annotations to the objects managed by the Operator)
 * {{ k8spxcjira(1120) }}: Add [headless service :octicons-link-external-16:](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services) support for the restore Pod to [make it possible](../backups-restore-to-new-cluster.md#backups-headless-service) restoring backups from a Persistent Volume on a tenant network (thanks to Zulh for contribution)
@@ -24,12 +24,12 @@
 ## Improvements
 
 * {{ k8spxcjira(1104) }}: Starting from now, the Operator changed its API version to v1 instead of having a separate API version for each release. Three last API version are supported in addition to `v1`, which substantially reduces the size of Custom Resource Definition to prevent reaching the etcd limit
-* {{ k8spxcjira(955) }}: Add Custom Resource options to set static IP-address for the [HAProxy](../operator.md#haproxyloadbalancerip) and [ProxySQL](../operator.md#proxysqlloadbalancerip) LoadBalancers
+* {{ k8spxcjira(955) }}: Add Custom Resource options to set static IP-address for the [HAProxy](../operator.md#haproxyexposeprimaryloadbalancerip) and [ProxySQL](../operator.md#proxysqlexposeloadbalancerip) LoadBalancers
 * {{ k8spxcjira(1032) }}: Disable [automated upgrade](../update.md#automated-upgrade) by default to prevent an unplanned downtime for user applications and to provide defaults more focused on strict user’s control over the cluster
 * {{ k8spxcjira(1095) }}: Process the SIGTERM signal to avoid unneeded lags in case of Percona XtraDB Cluster recovery or using the debug image to start up
 * {{ k8spxcjira(1113) }}: Utilize dual password feature of MySQL 8 to avoid cluster restart when changing password of the `monitor` user
 * {{ k8spxcjira(1125) }}: The Operator now does not attempt to start Percona Monitoring and Management (PMM) client sidecar if the corresponding secret does not contain the `pmmserver` or `pmmserverkey` key
-* {{ k8spxcjira(1153) }}: Configuring the log structuring and leveling [is now supported](../debug-logs.md#changing-logs-representation) using the `LOG_STRUCTURED` and `LOG_LEVEL` environment variables. This reduces the information overload in logs, still leaving the possibility of getting more details when needed, for example, for debugging
+* {{ k8spxcjira(1153) }}: Configuring the log structuring and leveling is now supported using the `LOG_STRUCTURED` and `LOG_LEVEL` environment variables. This reduces the information overload in logs, still leaving the possibility of getting more details when needed, for example, for debugging
 * {{ k8spxcjira(1123) }}: Starting from now, installing the Operator for cluster-wide (multi-namespace) doesn’t require to add Operator’s own namespace to the list of watched namespaces (thanks to Bart Vercoulen for reporting this issue)
 * {{ k8spxcjira(1030) }}: The new [delete-ssl](../operator.md#finalizers-delete-ssl) finalizer can now be used to automatically delete objects created for SSL (Secret, certificate, and issuer) in case of cluster deletion
 

@@ -244,8 +244,8 @@ object with credentials needed to access the storage.
     to a non-standard cloud requires some fine-tuning, you can pass
     additional options to the binary XtraBackup utilities using the following
     Custom Resource options:
-    [backup.storages.STORAGE_NAME.containerOptions.args.xtrabackup](operator.md#backupstoragescontaineroptionsargs-xtrabackup),
-    [backup.storages.STORAGE_NAME.containerOptions.args.xbcloud](operator.md#backupstoragescontaineroptionsargsxbcloud), and
-    [backup.storages.STORAGE_NAME.containerOptions.args.xbstream](operator.md#backupstoragescontaineroptionsargsxbstream).
+    [backup.storages.STORAGE_NAME.containerOptions.args.xtrabackup](operator.md#backupstoragesstorage-namecontaineroptionsargsxtrabackup),
+    [backup.storages.STORAGE_NAME.containerOptions.args.xbcloud](operator.md#backupstoragesstorage-namecontaineroptionsargsxbcloud), and
+    [backup.storages.STORAGE_NAME.containerOptions.args.xbstream](operator.md#backupstoragesstorage-namecontaineroptionsargsxbstream).
     Also, you can set environment variables for the XtraBackup container with
-    [backup.storages.STORAGE_NAME.containerOptions.env](operator.md#backupstoragescontaineroptionsenv).
+    [backup.storages.STORAGE_NAME.containerOptions.env](operator.md#backupstoragesstorage-namecontaineroptionsenv).

@@ -35,7 +35,7 @@ The resulting HAPproxy setup normally contains two services:
     can be used for both read and write load, or it can also be used just for
     write load (single writer mode) in setups with split write and read loads.
 
-    [haproxy.exposePrimary.enabled](operator.md#haproxyexposePrimaryenabled)
+    [haproxy.exposePrimary.enabled](operator.md#haproxyexposeprimaryenabled)
     Custom Resource option enables or disables `cluster1-haproxy` service.
 
 * `cluster1-haproxy-replicas` listening on port 3306 (MySQL).
@@ -43,7 +43,7 @@ The resulting HAPproxy setup normally contains two services:
     the Round Robin load balancing algorithm.
     It **should not be used for write requests**.
 
-    [haproxy.exposeReplicas.enabled](operator.md#haproxyexposeReplicasenabled)
+    [haproxy.exposeReplicas.enabled](operator.md#haproxyexposereplicasenabled)
     Custom Resource option enables or disables `cluster1-haproxy-replicas`
     service (on by default).
 

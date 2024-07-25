@@ -25,7 +25,7 @@
 
 * [K8SPXC-936](https://jira.percona.com/browse/K8SPXC-936): Allow modifying the init script via Custom Resource, which is useful for troubleshooting the Operator’s issues
 
-* [K8SPXC-758](https://jira.percona.com/browse/K8SPXC-758): Allow to [skip TLS verification for backup storage](../operator.md#backupstorages-verifytls), useful for self-hosted S3-compatible storage with a self-signed certificate
+* [K8SPXC-758](https://jira.percona.com/browse/K8SPXC-758): Allow to [skip TLS verification for backup storage](../operator.md#backupstoragesstorage-nameverifytls), useful for self-hosted S3-compatible storage with a self-signed certificate
 
 ## Improvements
 

@@ -45,9 +45,9 @@ default choice.
     You can control creation of these two Services with the following Custom
     Resource options:
 
-    * [haproxy.exposePrimary.enabled](operator.md#haproxyexposePrimaryenabled)
+    * [haproxy.exposePrimary.enabled](operator.md#haproxyexposeprimaryenabled)
         enables or disables `cluster1-haproxy` Service,
-    * [haproxy.exposeReplicas.enabled](operator.md#haproxyexposeReplicasenabled)
+    * [haproxy.exposeReplicas.enabled](operator.md#haproxyexposereplicasenabled)
         enables or disables `haproxy-replicas` Service.
 
 === "ProxySQL"
