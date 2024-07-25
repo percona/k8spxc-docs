@@ -35,7 +35,7 @@ The resulting HAPproxy setup normally contains two services:
     can be used for both read and write load, or it can also be used just for
     write load (single writer mode) in setups with split write and read loads.
 
-    [haproxy.exposePrimary.enabled](operator.md#haproxy-exposePrimary-enabled)
+    [haproxy.exposePrimary.enabled](operator.md#haproxyexposePrimaryenabled)
     Custom Resource option enables or disables `cluster1-haproxy` service.
 
 * `cluster1-haproxy-replicas` listening on port 3306 (MySQL).
@@ -43,7 +43,7 @@ The resulting HAPproxy setup normally contains two services:
     the Round Robin load balancing algorithm.
     It **should not be used for write requests**.
 
-    [haproxy.exposeReplicas.enabled](operator.md#haproxy-exposeReplicas-enabled)
+    [haproxy.exposeReplicas.enabled](operator.md#haproxyexposeReplicasenabled)
     Custom Resource option enables or disables `cluster1-haproxy-replicas`
     service (on by default).
 
@@ -328,12 +328,12 @@ client/application address, and significantly enhance auditing.
 
 You can enable Proxy protocol on Percona XtraDB Cluster by adding
 [proxy_protocol_networks :octicons-link-external-16:](https://docs.percona.com/percona-server/innovation-release/proxy-protocol-support.html#proxy_protocol_networks)
-option to [pxc.configuration](operator.md#pxc-configuration) key in the `deploy/cr.yaml` configuration
+option to [pxc.configuration](operator.md#pxcconfiguration) key in the `deploy/cr.yaml` configuration
 file.
 
 !!! note
 
     Depending on the load balancer of your cloud provider, you may also
-    need setting [haproxy.externaltrafficpolicy](operator.md#haproxy-externaltrafficpolicy) option in `deploy/cr.yaml`.
+    need setting [haproxy.externaltrafficpolicy](operator.md#haproxyexternaltrafficpolicy) option in `deploy/cr.yaml`.
 
 More information about Proxy protocol can be found in the [official HAProxy documentation :octicons-link-external-16:](https://www.haproxy.com/blog/using-haproxy-with-the-proxy-protocol-to-better-secure-your-database/).

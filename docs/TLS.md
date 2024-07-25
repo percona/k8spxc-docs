@@ -141,7 +141,7 @@ automatically on schedule and without downtime.
 
 Versions of the Operator prior 1.9.0 have used 3 month root certificate, which
 caused issues with the automatic TLS certificates update. If that’s your case,
-you can make the Operator update along with the [official instruction](update.md#operator-update).
+you can make the Operator update along with the [official instruction](update.md).
 
 !!! note
 
@@ -282,7 +282,7 @@ If your certificates have been already expired (or if you continue to use the
 Operator version prior to 1.9.0), you should move through the
 *pause - update Secrets - unpause* route as follows.
 
-1. Pause the cluster [in a standard way](pause.md#operator-pause), and make
+1. Pause the cluster [in a standard way](pause.md), and make
     sure it has reached its paused state.
 
 2. If cert-manager is used, delete issuer
@@ -303,7 +303,7 @@ Operator version prior to 1.9.0), you should move through the
 
 4. Check certificates to make sure reconciliation have succeeded.
 
-5. Unpause the cluster [in a standard way](pause.md#operator-pause), and make
+5. Unpause the cluster [in a standard way](pause.md), and make
     sure it has reached its running state.
 
 ### Keep certificates after deleting the cluster

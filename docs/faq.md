@@ -230,7 +230,7 @@ with both solutions in [this blog post :octicons-link-external-16:](https://www.
 
 The `spec.enableCRValidationWebhook` key in the [deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-server-mongodb-operator/blob/main/deploy/cr.yaml)
 file enables or disables schema validation done by the Operator before applying
-`cr.yaml` file. This feature works only in [cluster-wide mode](cluster-wide.md#install-clusterwide)
+`cr.yaml` file. This feature works only in [cluster-wide mode](cluster-wide.md)
 due to access restrictions. It uses the following additional [RBAC permissions :octicons-link-external-16:](https://kubernetes.io/docs/reference/access-authn-authz/rbac/):
 
 ```yaml

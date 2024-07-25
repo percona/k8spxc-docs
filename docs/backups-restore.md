@@ -3,7 +3,7 @@
 The backup is normally restored on the Kubernetes cluster where it was made,
 but [restoring it on a different Kubernetes-based environment with the installed Operator is also possible](backups-restore-to-new-cluster.md).
 
-Backups **cannot be restored** to [emptyDir and hostPath volumes](storage.md#storage-local),
+Backups **cannot be restored** to [emptyDir and hostPath volumes](storage.md),
 but it is possible to make a backup from such storage (i. e., from
 emptyDir/hostPath to S3), and later restore it to a [Persistent Volume :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/persistent-volumes/).
 

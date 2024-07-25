@@ -35,7 +35,7 @@ spec:
         cpu: 2
 ```
 
-Use our reference documentation for the [Custom Resource options](operator.md#operator-custom-resource-options) 
+Use our reference documentation for the [Custom Resource options](operator.md) 
 for more details about other components.
 
 ### Scale storage
@@ -199,7 +199,7 @@ the data to the new volumes. **This can also be used to shrink the storage.**
 
 ## Horizontal scaling
 
-Size of the cluster is controlled by a [size key](operator.md#pxc-size) in the [Custom Resource options](operator.md#operator-custom-resource-options) configuration. That’s why scaling the cluster needs
+Size of the cluster is controlled by a [size key](operator.md#pxcsize) in the [Custom Resource options](operator.md) configuration. That’s why scaling the cluster needs
 nothing more but changing this option and applying the updated
 configuration file. This may be done in a specifically saved config:
 

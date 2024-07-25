@@ -14,7 +14,7 @@ To force cluster bootstrap with this node, edit the grastate.dat file manually a
 !!! note
 
     To avoid this, shutdown your cluster correctly
-    as it is written in [Pause/resume Percona XtraDB Cluster](pause.md#operator-pause).
+    as it is written in [Pause/resume Percona XtraDB Cluster](pause.md).
 
 The Percona Operator for MySQL based on Percona XtraDB Cluster provides two ways of recovery
 after a full cluster crash.
@@ -90,7 +90,7 @@ which is based on three Percona XtraDB Cluster Pods.
     indicated otherwise.
 
 1. Check the current Update Strategy with the following command to make sure
-    [Smart Updates](update.md#operator-update-smartupdates) are turned off during the
+    [Smart Updates](update.md#more-on-upgrade-strategies) are turned off during the
     recovery:
 
     ``` {.bash data-prompt="$" }

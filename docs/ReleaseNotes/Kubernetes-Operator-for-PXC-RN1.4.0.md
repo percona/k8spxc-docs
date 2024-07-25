@@ -36,7 +36,7 @@ was added to the list of the officially supported platforms
 * [K8SPXC-221](https://jira.percona.com/browse/K8SPXC-221): The Operator now updates observedGeneration status message to allow better monitoring of the cluster rollout or backup/restore process
 
 
-* [K8SPXC-213](https://jira.percona.com/browse/K8SPXC-213): A special [PXC debug image](../debug.md#debug-images) is now available. It avoids restarting on fail and contains additional tools useful for debugging
+* [K8SPXC-213](https://jira.percona.com/browse/K8SPXC-213): A special [PXC debug image](../debug-images.md) is now available. It avoids restarting on fail and contains additional tools useful for debugging
 
 
 * [K8SPXC-100](https://jira.percona.com/browse/K8SPXC-100): The Operator now implements the crash tolerance on the one member crash. The implementation is based on starting Pods with `mysqld --wsrep_recover` command if there was no graceful shutdown

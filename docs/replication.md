@@ -142,10 +142,10 @@ $ kubectl apply -f deploy/cr.yaml
 
 ## System user for replication
 
-Replication channel demands a special [system user](users.md#users-system-users) with same credentials on both *Source* and *Replica*.
+Replication channel demands a special [system user](users.md#system-users) with same credentials on both *Source* and *Replica*.
 
 The Operator creates a system-level Percona XtraDB Cluster user named `replication` for this purpose, with
-credentials stored in a Secret object [along with other system users](users.md#users-system-users).
+credentials stored in a Secret object [along with other system users](users.md#system-users).
 
 !!! note
 
@@ -179,7 +179,7 @@ Fixing this involves the following steps.
     $ kubectl get pods --selector percona.com/replicationPod=true
     ```
 
-2. Get the shell access to this Pod and login to the MySQL monitor as a [root user](users.md#users-system-users):
+2. Get the shell access to this Pod and login to the MySQL monitor as a [root user](users.md#system-users):
 
     ``` {.bash data-prompt="$" }
     $ kubectl exec -c pxc --stdin --tty <pod_name> -- /bin/bash

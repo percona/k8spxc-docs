@@ -15,21 +15,21 @@
 ## New Features
 
 
-* [K8SPXC-394](https://jira.percona.com/browse/K8SPXC-394): Support of [“cluster-wide” mode](../cluster-wide.md#install-clusterwide) for Percona XtraDB Cluster Operator
+* [K8SPXC-394](https://jira.percona.com/browse/K8SPXC-394): Support of [“cluster-wide” mode](../cluster-wide.md) for Percona XtraDB Cluster Operator
 
 
-* [K8SPXC-416](https://jira.percona.com/browse/K8SPXC-416): [Support of the proxy-protocol](../haproxy-conf.md#haproxy-conf-protocol) in HAProxy (to use this feature, you should have a Percona XtraDB Cluster image version `8.0.21` or newer)
+* [K8SPXC-416](https://jira.percona.com/browse/K8SPXC-416): [Support of the proxy-protocol](../haproxy-conf.md#enabling-the-proxy-protocol) in HAProxy (to use this feature, you should have a Percona XtraDB Cluster image version `8.0.21` or newer)
 
 
-* [K8SPXC-429](https://jira.percona.com/browse/K8SPXC-429): A possibility to [restore backups to a new Kubernetes-based environment](../backups.md#backups-restore) with no existing Percona XtraDB Cluster Custom Resource
+* [K8SPXC-429](https://jira.percona.com/browse/K8SPXC-429): A possibility to [restore backups to a new Kubernetes-based environment](../backups-restore.md) with no existing Percona XtraDB Cluster Custom Resource
 
 
-* [K8SPXC-343](https://jira.percona.com/browse/K8SPXC-343): Helm chart [officially provided with the Operator](../helm.md#install-helm)
+* [K8SPXC-343](https://jira.percona.com/browse/K8SPXC-343): Helm chart [officially provided with the Operator](../helm.md)
 
 ## Improvements
 
 
-* [K8SPXC-144](https://jira.percona.com/browse/K8SPXC-144): Allow [adding ProxySQL configuration options](../proxysql-conf.md#proxysql-conf-custom)
+* [K8SPXC-144](https://jira.percona.com/browse/K8SPXC-144): Allow [adding ProxySQL configuration options](../proxysql-conf.md#passing-custom-configuration-options-to-proxysql)
 
 
 * [K8SPXC-398](https://jira.percona.com/browse/K8SPXC-398): New `crVersion key` in `deploy/cr.yaml` to indicate the API version that the Custom Resource corresponds to (thanks to user mike.saah for contribution)

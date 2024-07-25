@@ -87,7 +87,7 @@
 6. Now certificates should be generated. By default, the Operator generates
     certificates automatically, and *no actions are required at this step*.
     Still, you can generate and apply your own certificates as secrets according
-    to the [TLS instructions](TLS.md#tls).
+    to the [TLS instructions](TLS.md).
 
 7. After the operator is started and user secrets are added, Percona
     XtraDB Cluster can be created at any time with the following command:
