@@ -369,299 +369,299 @@ The interval between reconnection attempts in seconds to be used by Replica when
 
 ### `pxc.replicationChannels.configuration.ssl`
 
+Turns SSL for [replication channels](replication.md) on or off.
+
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-toggle-switch-outline: boolean     | `false` |
 
-Turns SSL for [replication channels](replication.md) on or off.
-
 ### `pxc.replicationChannels.configuration.sslSkipVerify`
+
+Turns the host name identity verification for SSL-based [replication](replication.md) on or off.
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-toggle-switch-outline: boolean     | `true` |
 
-Turns the host name identity verification for SSL-based [replication](replication.md) on or off.
-
 ### `pxc.replicationChannels.configuration.ca`
+
+The path name of the Certificate Authority (CA) certificate file to be used if the SSL for [replication channels](replication.md) is turned on.
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-code-string: string     | `/etc/mysql/ssl/ca.crt` |
 
-The path name of the Certificate Authority (CA) certificate file to be used if the SSL for [replication channels](replication.md) is turned on.
-
 ### `pxc.replicationChannels.sourcesList.host`
+
+For the [cross-site replication](replication.md#operator-replication) Replica cluster, this key should contain the hostname or IP address of the Source cluster.
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-code-string: string     | `10.95.251.101` |
 
-For the [cross-site replication](replication.md#operator-replication) Replica cluster, this key should contain the hostname or IP address of the Source cluster.
-
 ### `pxc.replicationChannels.sourcesList.port`
+
+For the [cross-site replication](replication.md#operator-replication) Replica cluster, this key should contain the Source port number.
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-numeric-1-box: int     | `3306` |
 
-For the [cross-site replication](replication.md#operator-replication) Replica cluster, this key should contain the Source port number.
-
 ### `pxc.replicationChannels.sourcesList.weight`
+
+For the [cross-site replication](replication.md#operator-replication) Replica cluster, this key should contain the Source cluster weight (varies from `1` to `100`, the cluster with the higher number will be selected as the replication source first).
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-numeric-1-box: int     | `100` |
 
-For the [cross-site replication](replication.md#operator-replication) Replica cluster, this key should contain the Source cluster weight (varies from `1` to `100`, the cluster with the higher number will be selected as the replication source first).
-
 ### `pxc.readinessDelaySec`
+
+Adds a delay before a run check to verify the application is ready to process traffic.
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-numeric-1-box: int     | `15` |
 
-Adds a delay before a run check to verify the application is ready to process traffic.
-
 ### `pxc.livenessDelaySec`
+
+Adds a delay before the run check ensures the application is healthy and capable of processing requests.
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-numeric-1-box: int     | `300` |
 
-Adds a delay before the run check ensures the application is healthy and capable of processing requests.
-
 ### `pxc.configuration`
+
+The `my.cnf` file options to be passed to Percona XtraDB cluster nodes.
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-code-string: string     | <pre>&#124;<br>[mysqld]<br>wsrep_debug=ON<br>wsrep-provider_options=gcache.size=1G;gcache.recover=yes</pre> |
 
-The `my.cnf` file options to be passed to Percona XtraDB cluster nodes.
-
 ### `pxc.imagePullSecrets.name`
+
+The [Kubernetes ImagePullSecret :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/secret/#using-imagepullsecrets).
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-code-string: string     | `private-registry-credentials` |
 
-The [Kubernetes ImagePullSecret :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/secret/#using-imagepullsecrets).
-
 ### `pxc.priorityClassName`
+
+The [Kubernetes Pod priority class :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass).
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-code-string: string     | `high-priority` |
 
-The [Kubernetes Pod priority class :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass).
-
 ### `pxc.schedulerName`
+
+The [Kubernetes Scheduler :octicons-link-external-16:](https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers).
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-code-string: string     | `mycustom-scheduler` |
 
-The [Kubernetes Scheduler :octicons-link-external-16:](https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers).
-
 ### `pxc.annotations`
+
+The [Kubernetes annotations :octicons-link-external-16:](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/).
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-label-outline: label     | `iam.amazonaws.com/role: role-arn` |
 
-The [Kubernetes annotations :octicons-link-external-16:](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/).
-
 ### `pxc.labels`
+
+[Labels are key-value pairs attached to objects :octicons-link-external-16:](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/).
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-label-outline: label     | `rack: rack-22` |
 
-[Labels are key-value pairs attached to objects :octicons-link-external-16:](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/).
-
 ### `pxc.readinessProbes.initialDelaySeconds`
-
-| Value type  | Example    |
-| ----------- | ---------- |
-| :material-numeric-1-box: int     | `15` |
 
 Number of seconds to wait before performing the first [readiness probe :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/).
 
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `15` |
+
 ### `pxc.readinessProbes.timeoutSeconds`
+
+Number of seconds after which the [readiness probe :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) times out.
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-numeric-1-box: int     | `15` |
 
-Number of seconds after which the [readiness probe :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) times out.
-
 ### `pxc.readinessProbes.periodSeconds`
+
+How often (in seconds) to perform the [readiness probe :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/).
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-numeric-1-box: int     | `30` |
 
-How often (in seconds) to perform the [readiness probe :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/).
-
 ### `pxc.readinessProbes.successThreshold`
+
+Minimum consecutive successes for the [readiness probe :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) to be considered successful after having failed.
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-numeric-1-box: int     | `1` |
 
-Minimum consecutive successes for the [readiness probe :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) to be considered successful after having failed.
-
 ### `pxc.readinessProbes.failureThreshold`
+
+When the [readiness probe :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) fails, Kubernetes will try this number of times before marking the Pod Unready.
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-numeric-1-box: int     | `5` |
 
-When the [readiness probe :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) fails, Kubernetes will try this number of times before marking the Pod Unready.
-
 ### `pxc.livenessProbes.initialDelaySeconds`
+
+Number of seconds to wait before performing the first [liveness probe :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/).
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-numeric-1-box: int     | `300` |
 
-Number of seconds to wait before performing the first [liveness probe :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/).
-
 ### `pxc.livenessProbes.timeoutSeconds`
+
+Number of seconds after which the [liveness probe :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) times out.
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-numeric-1-box: int     | `5` |
 
-Number of seconds after which the [liveness probe :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) times out.
-
 ### `pxc.livenessProbes.periodSeconds`
+
+How often (in seconds) to perform the [liveness probe :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/).
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-numeric-1-box: int     | `10` |
 
-How often (in seconds) to perform the [liveness probe :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/).
-
 ### `pxc.livenessProbes.successThreshold`
+
+Minimum consecutive successes for the [liveness probe :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) to be considered successful after having failed.
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-numeric-1-box: int     | `1` |
 
-Minimum consecutive successes for the [liveness probe :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) to be considered successful after having failed.
-
 ### `pxc.livenessProbes.failureThreshold`
+
+When the [liveness probe :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) fails, Kubernetes will try this number of times before restarting the container.
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-numeric-1-box: int     | `3` |
 
-When the [liveness probe :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) fails, Kubernetes will try this number of times before restarting the container.
-
 ### `pxc.envVarsSecret`
+
+A secret with environment variables, see [Define environment variables](containers-conf.md#faq-env) for details.
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-code-string: string     | `my-env-var-secrets` |
 
-A secret with environment variables, see [Define environment variables](containers-conf.md#faq-env) for details.
-
 ### `pxc.resources.requests.memory`
+
+The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Percona XtraDB Cluster container.
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-code-string: string     | `1G` |
 
-The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Percona XtraDB Cluster container.
-
 ### `pxc.resources.requests.cpu`
+
+[Kubernetes CPU requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Percona XtraDB Cluster container.
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-code-string: string     | `600m` |
 
-[Kubernetes CPU requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Percona XtraDB Cluster container.
-
 ### `pxc.resources.requests.ephemeral-storage`
-
-| Value type  | Example    |
-| ----------- | ---------- |
-| :material-code-string: string     | `1G` |
 
 Kubernetes [Ephemeral Storage :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/ephemeral-volumes/) [requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Percona XtraDB Cluster container.
 
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `1G` |
+
 ### `pxc.resources.limits.memory`
+
+[Kubernetes memory limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Percona XtraDB Cluster container.
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-code-string: string     | `1G` |
 
-[Kubernetes memory limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Percona XtraDB Cluster container.
-
 ### `pxc.resources.limits.cpu`
+
+[Kubernetes CPU limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Percona XtraDB Cluster container.
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-code-string: string     | `1` |
 
-[Kubernetes CPU limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Percona XtraDB Cluster container.
-
 ### `pxc.resources.limits.ephemeral-storage`
+
+Kubernetes [Ephemeral Storage :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/ephemeral-volumes/) [limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Percona XtraDB Cluster container.
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-code-string: string     | `1G` |
 
-Kubernetes [Ephemeral Storage :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/ephemeral-volumes/) [limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Percona XtraDB Cluster container.
-
 ### `pxc.nodeSelector`
+
+[Kubernetes nodeSelector :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector).
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-label-outline: label     | `disktype: ssd` |
 
-[Kubernetes nodeSelector :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector).
-
 ### `pxc.topologySpreadConstraints.labelSelector.matchLabels`
+
+The Label selector for the [Kubernetes Pod Topology Spread Constraints :octicons-link-external-16:](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/).
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-label-outline: label     | `app.kubernetes.io/name: percona-xtradb-cluster-operator` |
 
-The Label selector for the [Kubernetes Pod Topology Spread Constraints :octicons-link-external-16:](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/).
-
 ### `pxc.topologySpreadConstraints.maxSkew`
+
+The degree to which Pods may be unevenly distributed under the [Kubernetes Pod Topology Spread Constraints :octicons-link-external-16:](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/).
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-numeric-1-box: int     | 1 |
 
-The degree to which Pods may be unevenly distributed under the [Kubernetes Pod Topology Spread Constraints :octicons-link-external-16:](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/).
-
 ### `pxc.topologySpreadConstraints.topologyKey`
+
+The key of node labels for the [Kubernetes Pod Topology Spread Constraints :octicons-link-external-16:](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/).
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-code-string: string     | `kubernetes.io/hostname` |
 
-The key of node labels for the [Kubernetes Pod Topology Spread Constraints :octicons-link-external-16:](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/).
-
 ### `pxc.topologySpreadConstraints.whenUnsatisfiable`
+
+What to do with a Pod if it doesn't satisfy the [Kubernetes Pod Topology Spread Constraints :octicons-link-external-16:](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/).
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-code-string: string     | `DoNotSchedule` |
 
-What to do with a Pod if it doesn't satisfy the [Kubernetes Pod Topology Spread Constraints :octicons-link-external-16:](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/).
-
 ### `pxc.affinity.topologyKey`
+
+The Operator [topology key :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity) node anti-affinity constraint.
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-code-string: string     | `kubernetes.io/hostname` |
-
-The Operator [topology key :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity) node anti-affinity constraint.
 
 ### `pxc.affinity.advanced`
 
@@ -1286,7 +1286,7 @@ Enables or disables `haproxy-replicas` Service. This Service (on by default) for
 
 ### `haproxy.exposeReplicas.enabled`
 
-Enables or disables `haproxy-replicas` Service. This Service (on by default) forwards requests to all Percona XtraDB Cluster instances, and it **should not be used for write requests**!.
+Enables or disables `haproxy-replicas` Service. This Service (on by default) forwards requests to all Percona XtraDB Cluster instances, and it **should not be used for write requests**!
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1310,7 +1310,7 @@ The range of client IP addresses from which the load balancer should be reachabl
 
 ### `haproxy.replicasLoadBalancerIP`
 
-The static IP-address for the replicas load balancer. **This option is deprecated and will be removed in future releases**. Use `haproxy.exposeReplicas.loadBalancerIP` instead |.
+The static IP-address for the replicas load balancer. **This option is deprecated and will be removed in future releases**. Use `haproxy.exposeReplicas.loadBalancerIP` instead.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1382,7 +1382,7 @@ The [Kubernetes labels :octicons-link-external-16:](https://kubernetes.io/docs/c
 
 ### `haproxy.replicasServiceAnnotations`
 
-The [Kubernetes annotations :octicons-link-external-16:](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) metadata for the `haproxy-replicas` Service. **This option is deprecated and will be removed in future releases**. Use `haproxy.exposeReplicas.annotations` instead .
+The [Kubernetes annotations :octicons-link-external-16:](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) metadata for the `haproxy-replicas` Service. **This option is deprecated and will be removed in future releases**. Use `haproxy.exposeReplicas.annotations` instead.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1523,7 +1523,7 @@ Enables or disables [load balancing with ProxySQL :octicons-link-external-16:](h
 
 ### `proxysql.size`
 
-The number of the ProxySQL daemons [to provide load balancing :octicons-link-external-16:](https://www.percona.com/doc/percona-xtradb-cluster/5.7/howtos/proxysql.html). It should be 2 or more unless the `spec.allowUnsafeConfigurations` key is set to true|
+The number of the ProxySQL daemons [to provide load balancing :octicons-link-external-16:](https://www.percona.com/doc/percona-xtradb-cluster/5.7/howtos/proxysql.html). It should be 2 or more unless the `spec.allowUnsafeConfigurations` key is set to true.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1643,7 +1643,7 @@ Specifies whether Service for ProxySQL should [route internal traffic to cluster
 
 ### `proxysql.serviceAnnotations`
 
-The [Kubernetes annotations :octicons-link-external-16:](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) metadata for the load balancer Service. **This option is deprecated and will be removed in future releases**. Use `proxysql.expose.annotations` instead .
+The [Kubernetes annotations :octicons-link-external-16:](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) metadata for the load balancer Service. **This option is deprecated and will be removed in future releases**. Use `proxysql.expose.annotations` instead.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1675,7 +1675,7 @@ The [Kubernetes labels :octicons-link-external-16:](https://kubernetes.io/docs/c
 
 ### `proxysql.loadBalancerSourceRanges`
 
-The range of client IP addresses from which the load balancer should be reachable (if not set, there is no limitations). **This option is deprecated and will be removed in future releases**. Use `proxysql.expose.loadBalancerSourceRanges` instead .
+The range of client IP addresses from which the load balancer should be reachable (if not set, there is no limitations). **This option is deprecated and will be removed in future releases**. Use `proxysql.expose.loadBalancerSourceRanges` instead.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -2115,12 +2115,13 @@ Additional parameters which will be passed to the [pmm-admin add proxysql :octic
 | ----------- | ---------- |
 | :material-code-string: string     | `--custom-labels=CUSTOM-LABELS` |
 
-### `pmm.containerSecurityContext') }}
+### `pmm.containerSecurityContext`
+
+A custom [Kubernetes Security Context for a Container :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) to be used instead of the default one.
+
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-text-long: subdoc     | `privileged: false` |
-
-A custom [Kubernetes Security Context for a Container :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) to be used instead of the default one.
 
 ## <a name="operator-backup-section"></a>Backup section
 
@@ -2301,7 +2302,7 @@ The degree to which Pods may be unevenly distributed under the [Kubernetes Pod T
 
 | Value type  | Example    |
 | ----------- | ---------- |
-| :material-numeric-1-box: int     | 1 |
+| :material-numeric-1-box: int     | `1` |
 
 ### `backup.storages.STORAGE-NAME.topologySpreadConstraints.topologyKey`
 
