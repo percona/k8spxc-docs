@@ -19,7 +19,7 @@ Percona XtraDB Cluster can be upgraded manually using one of the following
 
 !!! warning
 
-    In case of [Smart Updates](update.md#automatic-upgrade), the Operator can
+    In case of [Smart Updates](update.md#automated-upgrade), the Operator can
     either detect the availability of the Percona XtraDB Cluster version or rely
     on the user's choice of the version. In both cases Pods are restarted by the
     Operator automatically in the order, which assures the primary instance to

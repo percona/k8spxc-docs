@@ -36,7 +36,7 @@ Prevents users from configuring a cluster with unsafe parameters such as startin
 | :material-toggle-switch-outline: boolean     | `false` |
 ### `enableCRValidationWebhook`
 
-Enables or disables schema validation before applying `cr.yaml` file (works only in [cluster-wide mode](cluster-wide.md#install-clusterwide) due to [access restrictions](faq.md#faq-validation)).
+Enables or disables schema validation before applying `cr.yaml` file (works only in [cluster-wide mode](cluster-wide.md) due to [access restrictions](faq.md#which-additional-access-permissions-are-used-by-the-custom-resource-validation-webhook)).
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -84,7 +84,7 @@ The list of labels [to be ignored](annotations.md#annotations-ignore) by the Ope
 
 ### `vaultSecretName`
 
-A secret for the [HashiCorp Vault :octicons-link-external-16:](https://www.vaultproject.io/) to carry on [Data at Rest Encryption](encryption.md#encryption).
+A secret for the [HashiCorp Vault :octicons-link-external-16:](https://www.vaultproject.io/) to carry on [Data at Rest Encryption](encryption.md).
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -93,7 +93,7 @@ A secret for the [HashiCorp Vault :octicons-link-external-16:](https://www.vault
 
 ### `sslSecretName`
 
-A secret with TLS certificate generated for *external* communications, see [Transport Layer Security (TLS)](TLS.md#tls) for details.
+A secret with TLS certificate generated for *external* communications, see [Transport Layer Security (TLS)](TLS.md) for details.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -101,7 +101,7 @@ A secret with TLS certificate generated for *external* communications, see [Tran
 
 ### `sslInternalSecretName`
 
-A secret with TLS certificate generated for *internal* communications, see [Transport Layer Security (TLS)](TLS.md#tls) for details.
+A secret with TLS certificate generated for *internal* communications, see [Transport Layer Security (TLS)](TLS.md) for details.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -125,7 +125,7 @@ An alternative image for the initial Operator installation. **This option is dep
 
 ### `updateStrategy`
 
-A strategy the Operator uses for [upgrades](update.md#operator-update).
+A strategy the Operator uses for [upgrades](update.md#more-on-upgrade-strategies).
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -227,7 +227,7 @@ The Version Service URL used to check versions compatibility for upgrade.
 
 ### `upgradeOptions.apply`
 
-Specifies how [updates are processed](update.md#operator-update-smartupdates) by the Operator. `Never` or `Disabled` will completely disable automatic upgrades, otherwise it can be set to `Latest` or `Recommended` or to a specific version string of Percona XtraDB Cluster (e.g. `8.0.19-10.1`) that is wished to be version-locked (so that the user can control the version running, but use automatic upgrades to move between them).
+Specifies how [updates are processed](update.md#automated-upgrade) by the Operator. `Never` or `Disabled` will completely disable automatic upgrades, otherwise it can be set to `Latest` or `Recommended` or to a specific version string of Percona XtraDB Cluster (e.g. `8.0.19-10.1`) that is wished to be version-locked (so that the user can control the version running, but use automatic upgrades to move between them).
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -256,7 +256,7 @@ The size of the Percona XtraDB cluster must be 3 or 5 for [High Availability :oc
 
 ### `pxc.image`
 
-The Docker image of the Percona cluster used (actual image names for Percona XtraDB Cluster 8.0 and Percona XtraDB Cluster 5.7 can be found [in the list of certified images](images.md#custom-registry-images)).
+The Docker image of the Percona cluster used (actual image names for Percona XtraDB Cluster 8.0 and Percona XtraDB Cluster 5.7 can be found [in the list of certified images](images.md)).
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -264,7 +264,7 @@ The Docker image of the Percona cluster used (actual image names for Percona Xtr
 
 ### `pxc.autoRecovery`
 
-Turns [Automatic Crash Recovery](recovery.md#recovery-auto) on or off.
+Turns [Automatic Crash Recovery](recovery.md#automatic-crash-recovery) on or off.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -336,7 +336,7 @@ The [Kubernetes annotations :octicons-link-external-16:](https://kubernetes.io/d
 
 ### `pxc.replicationChannels.name`
 
-Name of the replication channel for [cross-site replication](replication.md#operator-replication).
+Name of the replication channel for [cross-site replication](replication.md).
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -345,7 +345,7 @@ Name of the replication channel for [cross-site replication](replication.md#oper
 ### `pxc.replicationChannels.isSource`
 
 Should the cluster act as Source (`true`) or Replica (`false`)
-in [cross-site replication](replication.md#operator-replication).
+in [cross-site replication](replication.md).
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -393,7 +393,7 @@ The path name of the Certificate Authority (CA) certificate file to be used if t
 
 ### `pxc.replicationChannels.sourcesList.host`
 
-For the [cross-site replication](replication.md#operator-replication) Replica cluster, this key should contain the hostname or IP address of the Source cluster.
+For the [cross-site replication](replication.md) Replica cluster, this key should contain the hostname or IP address of the Source cluster.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -401,7 +401,7 @@ For the [cross-site replication](replication.md#operator-replication) Replica cl
 
 ### `pxc.replicationChannels.sourcesList.port`
 
-For the [cross-site replication](replication.md#operator-replication) Replica cluster, this key should contain the Source port number.
+For the [cross-site replication](replication.md) Replica cluster, this key should contain the Source port number.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -409,7 +409,7 @@ For the [cross-site replication](replication.md#operator-replication) Replica cl
 
 ### `pxc.replicationChannels.sourcesList.weight`
 
-For the [cross-site replication](replication.md#operator-replication) Replica cluster, this key should contain the Source cluster weight (varies from `1` to `100`, the cluster with the higher number will be selected as the replication source first).
+For the [cross-site replication](replication.md) Replica cluster, this key should contain the Source cluster weight (varies from `1` to `100`, the cluster with the higher number will be selected as the replication source first).
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -561,7 +561,7 @@ When the [liveness probe :octicons-link-external-16:](https://kubernetes.io/docs
 
 ### `pxc.envVarsSecret`
 
-A secret with environment variables, see [Define environment variables](containers-conf.md#faq-env) for details.
+A secret with environment variables, see [Define environment variables](containers-conf.md) for details.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -793,7 +793,7 @@ Name of the [Kubernetes Runtime Class :octicons-link-external-16:](https://kuber
 
 ### `pxc.sidecars.image`
 
-Image for the [custom sidecar container](faq.md#faq-sidecar) for Percona XtraDB Cluster Pods.
+Image for the [custom sidecar container](sidecar.md) for Percona XtraDB Cluster Pods.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -801,7 +801,7 @@ Image for the [custom sidecar container](faq.md#faq-sidecar) for Percona XtraDB 
 
 ### `pxc.sidecars.command`
 
-Command for the [custom sidecar container](faq.md#faq-sidecar) for Percona XtraDB Cluster Pods.
+Command for the [custom sidecar container](sidecar.md) for Percona XtraDB Cluster Pods.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -809,7 +809,7 @@ Command for the [custom sidecar container](faq.md#faq-sidecar) for Percona XtraD
 
 ### `pxc.sidecars.args`
 
-Command arguments for the [custom sidecar container](faq.md#faq-sidecar) for Percona XtraDB Cluster Pods.
+Command arguments for the [custom sidecar container](sidecar.md) for Percona XtraDB Cluster Pods.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -817,7 +817,7 @@ Command arguments for the [custom sidecar container](faq.md#faq-sidecar) for Per
 
 ### `pxc.sidecars.name`
 
-Name of the [custom sidecar container](faq.md#faq-sidecar) for Percona XtraDB Cluster Pods.
+Name of the [custom sidecar container](sidecar.md) for Percona XtraDB Cluster Pods.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -934,7 +934,7 @@ Adds a delay before the run check ensures the application is healthy and capable
 
 ### `haproxy.configuration`
 
-The [custom HAProxy configuration file](haproxy-conf.md#haproxy-conf-custom) contents.
+The [custom HAProxy configuration file](haproxy-conf.md#passing-custom-configuration-options-to-haproxy) contents.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1086,7 +1086,7 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 
 ### `haproxy.envVarsSecret`
 
-A secret with environment variables, see [Define environment variables](containers-conf.md#faq-env) for details.
+A secret with environment variables, see [Define environment variables](containers-conf.md) for details.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1430,7 +1430,7 @@ Name of the [Kubernetes Runtime Class :octicons-link-external-16:](https://kuber
 
 ### `haproxy.sidecars.image`
 
-Image for the [custom sidecar container](faq.md#faq-sidecar) for the HAProxy Pod.
+Image for the [custom sidecar container](sidecar.md) for the HAProxy Pod.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1438,7 +1438,7 @@ Image for the [custom sidecar container](faq.md#faq-sidecar) for the HAProxy Pod
 
 ### `haproxy.sidecars.command`
 
-Command for the [custom sidecar container](faq.md#faq-sidecar) for the HAProxy Pod.
+Command for the [custom sidecar container](sidecar.md) for the HAProxy Pod.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1446,7 +1446,7 @@ Command for the [custom sidecar container](faq.md#faq-sidecar) for the HAProxy P
 
 ### `haproxy.sidecars.args`
 
-Command arguments for the [custom sidecar container](faq.md#faq-sidecar) for the HAProxy Pod.
+Command arguments for the [custom sidecar container](sidecar.md) for the HAProxy Pod.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1454,7 +1454,7 @@ Command arguments for the [custom sidecar container](faq.md#faq-sidecar) for the
 
 ### `haproxy.sidecars.name`
 
-Name of the [custom sidecar container](faq.md#faq-sidecar) for the HAProxy Pod.
+Name of the [custom sidecar container](sidecar.md) for the HAProxy Pod.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1571,7 +1571,7 @@ Adds a delay before the run check ensures the application is healthy and capable
 
 ### `proxysql.configuration`
 
-The [custom ProxySQL configuration file](proxysql-conf.md#proxysql-conf-custom) contents.
+The [custom ProxySQL configuration file](proxysql-conf.md#passing-custom-configuration-options-to-proxysql) contents.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1731,7 +1731,7 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 
 ### `proxysql.envVarsSecret`
 
-A secret with environment variables, see [Define environment variables](containers-conf.md#faq-env) for details.
+A secret with environment variables, see [Define environment variables](containers-conf.md) for details.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1923,7 +1923,7 @@ Name of the [Kubernetes Runtime Class :octicons-link-external-16:](https://kuber
 
 ### `proxysql.sidecars.image`
 
-Image for the [custom sidecar container](faq.md#faq-sidecar) for the ProxySQL Pod.
+Image for the [custom sidecar container](sidecar.md) for the ProxySQL Pod.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1931,7 +1931,7 @@ Image for the [custom sidecar container](faq.md#faq-sidecar) for the ProxySQL Po
 
 ### `proxysql.sidecars.command`
 
-Command for the [custom sidecar container](faq.md#faq-sidecar) for the ProxySQL Pod.
+Command for the [custom sidecar container](sidecar.md) for the ProxySQL Pod.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1939,7 +1939,7 @@ Command for the [custom sidecar container](faq.md#faq-sidecar) for the ProxySQL 
 
 ### `proxysql.sidecars.args`
 
-Command arguments for the [custom sidecar container](faq.md#faq-sidecar) for the ProxySQL Pod.
+Command arguments for the [custom sidecar container](sidecar.md) for the ProxySQL Pod.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1947,7 +1947,7 @@ Command arguments for the [custom sidecar container](faq.md#faq-sidecar) for the
 
 ### `proxysql.sidecars.name`
 
-Name of the [custom sidecar container](faq.md#faq-sidecar) for the ProxySQL Pod.
+Name of the [custom sidecar container](sidecar.md) for the ProxySQL Pod.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -2008,7 +2008,7 @@ file contains configuration options for [Fluent Bit Log Collector :octicons-link
 
 ### `logcollector.enabled`
 
-Enables or disables [cluster-level logging with Fluent Bit](debug.md#debug-images-logs).
+Enables or disables [cluster-level logging with Fluent Bit](debug-logs.md#cluster-level-logging).
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -2434,7 +2434,7 @@ The name of the storage for the backups configured in the `storages` or `fs-pvc`
 
 ### `backup.pitr.enabled`
 
-Enables or disables [point-in-time-recovery functionality](backups.md#backups-pitr-binlog).
+Enables or disables [point-in-time-recovery functionality](backups-pitr.md).
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -2466,7 +2466,7 @@ Timeout in seconds for the binlog to be uploaded; the  binlog uploader container
 
 ## <a name="operator-backupsource-section"></a> PerconaXtraDBClusterRestore Custom Resource options
 
-[Percona XtraDB Cluster Restore](backups.md#restoring-backup) options are managed by the Operator via the 
+[Percona XtraDB Cluster Restore](backups-restore.md) options are managed by the Operator via the 
 `PerconaXtraDBClusterRestore` [Custom Resource :octicons-link-external-16:](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) and can be configured via the
 [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml)
 configuration file. This Custom Resource contains the following options:

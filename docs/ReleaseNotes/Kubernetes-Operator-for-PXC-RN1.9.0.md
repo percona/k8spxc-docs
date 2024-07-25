@@ -54,7 +54,7 @@ Pods
 [asynchronous replication](../replication.md) within the Operator
 
 
-* [K8SPXC-688](https://jira.percona.com/browse/K8SPXC-688): Define [environment variables](../containers-conf.md#faq-env) in the
+* [K8SPXC-688](https://jira.percona.com/browse/K8SPXC-688): Define [environment variables](../containers-conf.md) in the
 Custom Resource to provide containers with additional customizations
 
 ## Improvements
@@ -65,7 +65,7 @@ Management integration and support
 
 
 * [K8SPXC-791](https://jira.percona.com/browse/K8SPXC-791): Allow
-[stopping the restart-on-fail loop](../debug.md#debug-images-no-restart) for Percona
+[stopping the restart-on-fail loop](../debug-images.md) for Percona
 XtraDB Cluster and Log Collector Pods without special debug images
 
 
@@ -136,7 +136,7 @@ auto recovery functionality even with the `auto_recovery` flag set to false
 
 
 * [K8SPXC-706](https://jira.percona.com/browse/K8SPXC-706): TLS certificates
-[renewal by a cert-manager was failing](../TLS.md#tls-certs-update-check-issuer)
+[renewal by a cert-manager was failing](../TLS.md#update-certificates)
 (Thanks to Jeff Andrews for reporting this issue)
 
 

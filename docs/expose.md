@@ -5,7 +5,7 @@ applications in several scenarios. In either way the cluster is exposed with
 regular Kubernetes [Service objects :octicons-link-external-16:](https://kubernetes.io/docs/concepts/services-networking/service/),
 configured by the Operator.
 
-This document describes the usage of [Custom Resource manifest options](operator.md#operator-custom-resource-options)
+This document describes the usage of [Custom Resource manifest options](operator.md)
 to expose the clusters deployed with the Operator.
 
 ### Exposing cluster with HAProxy or ProxySQL
@@ -45,9 +45,9 @@ default choice.
     You can control creation of these two Services with the following Custom
     Resource options:
 
-    * [haproxy.exposePrimary.enabled](operator.md#haproxy-exposePrimary-enabled)
+    * [haproxy.exposePrimary.enabled](operator.md#haproxyexposePrimaryenabled)
         enables or disables `cluster1-haproxy` Service,
-    * [haproxy.exposeReplicas.enabled](operator.md#haproxy-exposeReplicas-enabled)
+    * [haproxy.exposeReplicas.enabled](operator.md#haproxyexposeReplicasenabled)
         enables or disables `haproxy-replicas` Service.
 
 === "ProxySQL"
@@ -69,7 +69,7 @@ default choice.
     MySQL protocol).
 
     You can enable or disable this Service with the
-    [proxysql.expose.enabled](operator.md#proxysql-expose-enabled) Custom
+    [proxysql.expose.enabled](operator.md#proxysqlexposeenabled) Custom
     Resource option.
 
 ## Service per Pod
@@ -80,11 +80,11 @@ implemented on the application level).
 
 ![image](assets/images/exposure-all.svg)
 
-This is possible by setting the following options in [spec.mysql section](operator.md#operator-mysql-section).
+This is possible by setting the following options in [spec.pxc section](operator.md#operator-pxc-section).
 
-* [pxc.expose.enabled](operator.md#pxc-expose-enabled) enables or disables exposure
+* [pxc.expose.enabled](operator.md#pxcexposeenabled) enables or disables exposure
     of Percona XtraDB Cluster instances,
-* [pxc.expose.type](operator.md#pxc-expose-type) defines the Kubernetes Service
+* [pxc.expose.type](operator.md#pxcexposetype) defines the Kubernetes Service
     object type.
 
 The following example creates a dedicated LoadBalancer Service for each node of

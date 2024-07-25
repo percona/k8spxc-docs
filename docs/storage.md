@@ -42,11 +42,11 @@ volumeSpec:
 ```
 
 Please note, that hostPath directory is not created automatically! It
-should be [created manually on the node’s filesystem](faq.md#faq-hostpath).
+should be [created manually on the node’s filesystem](faq.md#how-can-i-create-a-directory-on-the-node-to-use-it-as-a-local-storage).
 Also, it should have the attributives (access permissions, ownership, SELinux
 security context) which would allow Pod to access the correspondent filesystem
-objects according to [pxc.containerSecurityContext](operator.md#pxc-containersecuritycontext)
-and [pxc.podSecurityContext](operator.md#pxc-podsecuritycontext).
+objects according to [pxc.containerSecurityContext](operator.md#pxccontainersecuritycontext)
+and [pxc.podSecurityContext](operator.md#pxcpodsecuritycontext).
 
 `hostPath` is useful when you are able to perform manual actions
 during the first run and have strong need in improved disk performance.

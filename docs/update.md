@@ -44,8 +44,8 @@ The upgrade includes the following steps.
 
 2. Now you should [apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your
     deployment, supplying necessary image name with a newer version tag. You can find the proper
-    image name for the current Operator release [in the list of certified images](images.md#custom-registry-images)
-    (for older releases, please refer to the [old releases documentation archive](archive.md)).
+    image name for the current Operator release [in the list of certified images](images.md)
+    (for older releases, please refer to the [old releases documentation archive :octicons-link-external-16:](https://docs.percona.com/legacy-documentation/))).
     For example, updating to the `{{ release }}` version should look as
     follows.
 
@@ -158,7 +158,7 @@ Manual update of Percona XtraDB Cluster can be done as follows:
         to upgrade the Operator and CRD, if needed.
 
     Patching Custom Resource is done with the `kubectl patch pxc` command.
-    Actual image names can be found [in the list of certified images](images.md#custom-registry-images)
+    Actual image names can be found [in the list of certified images](images.md)
     (for older releases, please refer to the [old releases documentation archive :octicons-link-external-16:](https://docs.percona.com/legacy-documentation/)).
     For example, updating `cluster1` cluster to the `{{ release }}` version
     should look as follows:
@@ -266,7 +266,7 @@ configuration file as follows:
 3. Change the `upgradeOptions.apply`  option from `Disabled` to one of the
     following values:
 
-    * `Recommended` - [scheduled](operator.md#upgradeoptions-schedule) upgrades
+    * `Recommended` - [scheduled](operator.md#upgradeoptionsschedule) upgrades
         will choose the most recent version of software flagged as "Recommended"
         (for clusters created from scratch, the Percona XtraDB Cluster 8.0
         version will be selected instead of the Percona XtraDB Cluster 5.7 one

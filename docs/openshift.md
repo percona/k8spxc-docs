@@ -129,12 +129,12 @@ You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marke
     $ oc create -f deploy/secrets.yaml
     ```
 
-    More details about secrets can be found in [Users](users.md#users).
+    More details about secrets can be found in [Users](users.md).
 
 2. Now certificates should be generated. By default, the Operator generates
     certificates automatically, and no actions are required at this step. Still,
     you can generate and apply your own certificates as secrets according
-    to the [TLS instructions](TLS.md#tls).
+    to the [TLS instructions](TLS.md).
 
 3. After the operator is started and user secrets are added, Percona
     XtraDB Cluster can be created at any time with the following command:

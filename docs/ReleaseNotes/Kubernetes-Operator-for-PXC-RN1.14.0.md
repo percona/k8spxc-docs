@@ -40,7 +40,7 @@ Kubernetes supports the Persistent Volume expansion as a stable feature since v1
 * {{ k8spxcjira(345) }}: The new `topologySpreadConstraints` Custom Resource option allows to use [Pod Topology Spread Constraints :octicons-link-external-16:](https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/#spread-constraints-for-pods) to achieve even distribution of Pods across the Kubernetes cluster
 * {{ k8spxcjira(927) }}: The new `serviceLabel` and `serviceAnnotation` Custom Resource options allow setting Service Labels and Annotations for XtraDB Cluster Pods
 * {{ k8spxcjira(1340) }}: The new Custom Resource option allows setting custom containerSecurityContext for PMM containers (thanks Marko Weiß for report)
-* {{ k8spxcjira(1254) }}: Upgrade instructions for Percona XtraDB Cluster in multi-namespace (cluster-wide) mode [were added to documentation](../cluster-wide.md#upgrade)
+* {{ k8spxcjira(1254) }}: Upgrade instructions for Percona XtraDB Cluster in multi-namespace (cluster-wide) mode [were added to documentation](../cluster-wide.md#upgrading-the-operator-in-cluster-wide-mode)
 * {{ k8spxcjira(1276) }} and {{ k8spxcjira(1277) }}: HAProxy log format was changed to JSON with additional information such as timestamps to simplify troubleshooting
 
 ## Bugs Fixed

@@ -8,7 +8,7 @@ for backups.
     This feature is available only with Percona XtraDB Cluster 8.0 and not
     Percona XtraDB Cluster 5.7.
 
-To enable compression, use [pxc.configuration](operator.md#pxc-configuration)
+To enable compression, use [pxc.configuration](operator.md#pxcconfiguration)
 key in the `deploy/cr.yaml` configuration file to supply Percona XtraDB Cluster
 nodes with two additional `my.cnf` options under its `[sst]` and `[xtrabackup]`
 sections as follows:
