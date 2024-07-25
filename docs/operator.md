@@ -207,7 +207,7 @@ A [cert-manager issuer type :octicons-link-external-16:](https://cert-manager.io
 
 ### `tls.issuerConf.group`
 
-A [cert-manager issuer group :octicons-link-external-16:](https://cert-manager.io/docs/configuration/). Should be `cert-manager.io` for built-in cert-manager certificate issuers |
+A [cert-manager issuer group :octicons-link-external-16:](https://cert-manager.io/docs/configuration/). Should be `cert-manager.io` for built-in cert-manager certificate issuers.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -248,11 +248,11 @@ configuration options for the Percona XtraDB Cluster.
 
 ### `pxc.size`
 
+The size of the Percona XtraDB cluster must be 3 or 5 for [High Availability :octicons-link-external-16:](https://www.percona.com/doc/percona-xtradb-cluster/5.7/intro.html). other values are allowed if the `spec.allowUnsafeConfigurations` key is set to true.
+
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-numeric-1-box: int     | `3` |
-
-The size of the Percona XtraDB cluster must be 3 or 5 for [High Availability :octicons-link-external-16:](https://www.percona.com/doc/percona-xtradb-cluster/5.7/intro.html). other values are allowed if the `spec.allowUnsafeConfigurations` key is set to true.
 
 ### `pxc.image`
 
