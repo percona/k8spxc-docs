@@ -24,12 +24,12 @@ If you would like to use *your local shell*, install the following:
 You can configure the settings using the `gcloud` tool. You can run it either in the [Cloud Shell :octicons-link-external-16:](https://cloud.google.com/shell/docs/quickstart) or in your local shell (if you have installed Google Cloud SDK locally on the previous step). The following command will create a cluster named `my-cluster-1`:
 
 ``` {.bash data-prompt="$" }
-$ gcloud container clusters create my-cluster-1 --project <project name> --zone us-central1-a --cluster-version {{ gkerecommended }} --machine-type n1-standard-4 --num-nodes=3
+$ gcloud container clusters create my-cluster-1 --project <project ID> --zone us-central1-a --cluster-version {{ gkerecommended }} --machine-type n1-standard-4 --num-nodes=3
 ```
 
 !!! note
 
-    You must edit the following command and other command-line statements to replace the `<project name>` placeholder with your project name. You may also be required to edit the *zone location*, which is set to `us-central1` in the above example. Other parameters specify that we are creating a cluster with 3 nodes and with machine type of 4 vCPUs and 45 GB memory.
+    You must edit the above command and other command-line statements to replace the `<project ID>` placeholder with your project ID (see available projects with `gcloud projects list` command). You may also be required to edit the *zone location*, which is set to `us-central1-a` in the above example. Other parameters specify that we are creating a cluster with 3 nodes and with machine type of 4 vCPUs.
 
 You may wait a few minutes for the cluster to be generated, and then you will see it listed in the Google Cloud console (select *Kubernetes Engine* → *Clusters* in the left menu panel):
 
@@ -185,7 +185,7 @@ There are several ways that you can delete the cluster.
 You can clean up the cluster with the `gcloud container clusters delete <cluster name> --zone <zone location>` command. The return statement requests your confirmation of the deletion. Type `y` to confirm.
 
 ``` {.bash data-prompt="$" }
-$ gcloud container clusters delete my-cluster-1 --zone us-central1-a
+$ gcloud container clusters delete my-cluster-1 --zone us-central1-a --project <project ID>
 ```
 
 ??? example "Expected output"
