@@ -48,8 +48,7 @@ theme:
 extra_css:
   - https://unicons.iconscout.com/release/v3.0.3/css/line.css
   - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css
-  #- css/percona.css
-  #- css/version-select.css
+#  - css/version-select.css
   - css/nocopy.css
   - css/design.css
   - css/osano.css
@@ -60,14 +59,15 @@ extra_javascript:
    - js/promptremover.js
    - js/consent.js
    - js/percona-select.js
-#  - js/version-select.js
+#   - js/version-select.js
 #  - js/toctree.js
 #  - js/lightgallery.min.js
 
 markdown_extensions:
   attr_list: {}
   toc:
-    permalink: True
+    permalink: true
+  md_in_html: {}
   admonition: {}
   def_list: {}
   meta: {}
@@ -77,12 +77,15 @@ markdown_extensions:
   pymdownx.smartsymbols: {}
   pymdownx.tilde: {}
   pymdownx.superfences: {}
-  pymdownx.snippets:
-      base_path: ["snippets"]
-      auto_append:
-        - services-banner.md
   pymdownx.tabbed:
     alternate_style: true
+  pymdownx.snippets:
+      base_path:
+        - snippets
+        - docs/assets/code
+        - docs/assets/fragments
+      auto_append:
+        - services-banner.md
   pymdownx.highlight:
     linenums: false
   pymdownx.emoji:
@@ -141,7 +144,6 @@ extra: # Used in main.html template and can't be externalized
     provider: mike
 
 # Common navigation for percona.com, render.com and PDF
-
 nav:
 
     - Welcome: index.md
