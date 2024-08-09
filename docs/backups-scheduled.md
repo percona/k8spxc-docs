@@ -59,7 +59,7 @@ backup:
 
     Deleting CronJob is straightforward:
     
-         ```{.bash data-prompt="$" }
+    ```{.bash data-prompt="$" }
     $ kubectl delete cronjob sat-night-backup -n <namespace>
     ```
 
