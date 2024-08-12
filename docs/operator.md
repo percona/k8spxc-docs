@@ -2024,7 +2024,7 @@ Log Collector Docker image to use.
 
 ### `logcollector.configuration`
 
-Additional configuration options (see [Fluent Bit official documentation :octicons-link-external-16:](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/configuration-file) for details).
+Additional configuration options (see [Fluent Bit official documentation :octicons-link-external-16:](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/classic-mode/configuration-file) for details).
 
 | Value type  | Example    |
 | ----------- | ---------- |
