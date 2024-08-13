@@ -19,8 +19,6 @@
 
 ## Improvements
 
-* {{ k8spxcjira() }}: 
-* {{ k8spxcjira() }}: 
 * {{ k8spxcjira(1259) }}: Use official proxysql and haproxy docker images
 * {{ k8spxcjira(1337) }}: Inject pitr binary to backup pod using init container
 * {{ k8spxcjira(1342) }}: Generate OLM bundle automatically
