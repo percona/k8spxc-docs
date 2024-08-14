@@ -31,10 +31,9 @@ Also, it should be noted that changing `haproxy.exposeReplicas.onlyReaders` valu
 
 ## Bugs Fixed
 
-* {{ k8spxcjira(925) }}: Updating the Percona Operator to 1.9.0 or 1.10.0 does not delete existing backup cronjobs
-* {{ k8spxcjira(1067) }}: Changes to certain fields in cr.spec.haproxy does not upgrade the haproxy statefulset
+* {{ k8spxcjira(1067) }}: Fix a bug where changing `gracePeriod`, `nodeSelector`, `priorityClassName`, `runtimeClassName`, and `schedulerName` fields in the `haproxy` Custom Resource subsection didn't propagate changes to the haproxy StatefulSet
 * {{ k8spxcjira(1219) }}: SST thread lost
-* {{ k8spxcjira(1338) }}: Binlog collector pod is restarted during PXC rolling restart
+* {{ k8spxcjira(1338) }}: Fix a bug where binlog collector Pod had unnecessary restart during the XtraDB Cluster rolling restart
 * {{ k8spxcjira(1364) }}: Fix a bug where log rotation functionality didn't work when the `proxy_protocol_networks` option was enabled in the [XtraDB Cluster custom configuration](../operator.md#pxcconfiguration)
 * {{ k8spxcjira(1365) }}: Fix `pxc-operator` Helm chart bug where it wasn't able to create namespaces if multiple namespaces were specified in the watchNamespace option
 * {{ k8spxcjira(1371) }}: Fix a bug in `pxc-db` Helm chart which had wrong Percona XtraDB Cluster version for the 1.14.0 release and tried to downgrade the database in case of the helm chart upgrade
