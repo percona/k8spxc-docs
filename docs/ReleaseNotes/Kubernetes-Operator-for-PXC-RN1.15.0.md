@@ -45,6 +45,13 @@ Also, it should be noted that changing `haproxy.exposeReplicas.onlyReaders` valu
 
 ## Deprecation, Rename and Removal
 
+* Finalizers were renamed to contain fully qualified domain names:
+
+    * `delete-pxc-pods-in-order` renamed to `percona.com/delete-pxc-pods-in-order`
+    * `delete-ssl` renamed to `percona.com/delete-ssl`
+    * `delete-proxysql-pvc` renamed to `percona.com/delete-proxysql-pvc`
+    * `delete-pxc-pvc` renamed to `percona.com/delete-pxc-pvc`
+
 * The `pxc-operator` Helm chart now has `createNamespace` option now is set to `false` by default, resulting in not creating any namespaces unless explicitly allowed to do so by the user
 
 ## Supported Platforms
