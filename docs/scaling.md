@@ -77,8 +77,7 @@ Custom Resource.
 
 !!! warning
 
-    Automated storage scaling by the Operator is in a technical preview stage
-    and is not recommended for production environments.
+    If the new storage size required by the Custom Resource option can't be reached (for example, when there is a resource quota in place and the PVC storage limits are reached), the Operator will continue attempts to fulfill the scaling request, until the value is manually reverted in the Custom Resource.
 
 For example, you can do it by editing and applying the `deploy/cr.yaml` file:
 
