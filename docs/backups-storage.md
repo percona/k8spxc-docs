@@ -113,18 +113,6 @@ object with credentials needed to access the storage.
           ...
         ```
 
-        ??? note "Using AWS EC2 instances for backups makes it possible to automate access to AWS S3 buckets based on [IAM roles :octicons-link-external-16:](https://kubernetes-on-aws.readthedocs.io/en/latest/user-guide/iam-roles.html) for Service Accounts with no need to specify the S3 credentials explicitly."
-
-            Following steps are needed to turn this feature on:
-
-            * Create the [IAM instance profile :octicons-link-external-16:](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html)
-                and the permission policy within where you specify the access level that
-                grants the access to S3 buckets.
-            * Attach the IAM profile to an EC2 instance.
-            * Configure an S3 storage bucket and verify the connection from the EC2
-                instance to it.
-            * Do not provide `s3.credentialsSecret` for the storage in `deploy/cr.yaml`.
-
 === "Microsoft Azure Blob storage"
 
     1. To store backups on the Azure Blob storage, you need to create a
