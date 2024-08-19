@@ -29,11 +29,12 @@ The toplevel spec elemets of the [deploy/cr.yaml :octicons-link-external-16:](ht
 
 ### `allowUnsafeConfigurations`
 
-Prevents users from configuring a cluster with unsafe parameters such as starting the cluster with the number of Percona XtraDB Cluster instances which is less than 3, more than 5, or is an even number, with less than 2 ProxySQL or HAProxy Pods, or without TLS/SSL certificates (if `false`, unsafe parameters will be automatically changed to safe defaults).
+Prevents users from configuring a cluster with unsafe parameters such as starting the cluster with the number of Percona XtraDB Cluster instances which is less than 3, more than 5, or is an even number, with less than 2 ProxySQL or HAProxy Pods, or without TLS/SSL certificates (if `false`, unsafe parameters will be automatically changed to safe defaults). **This option is deprecated and will be removed in future releases**. Use `unsafeFlags` subsection instead.
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-toggle-switch-outline: boolean     | `false` |
+
 ### `enableCRValidationWebhook`
 
 Enables or disables schema validation before applying `cr.yaml` file (works only in [cluster-wide mode](cluster-wide.md) due to [access restrictions](faq.md#which-additional-access-permissions-are-used-by-the-custom-resource-validation-webhook)).
@@ -131,6 +132,41 @@ A strategy the Operator uses for [upgrades](update.md#more-on-upgrade-strategies
 | ----------- | ---------- |
 | :material-code-string: string     | `SmartUpdate`              | 
 
+## <a name="operator-unsafeflags-section"></a>Unsafe flags section
+
+The `unsafeFlags` section in the [deploy/cr.yaml  :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains various configuration options to prevent users from configuring a cluster with unsafe parameters.
+
+### `unsafeFlags.tls`
+
+Prevents users from configuring a cluster without TLS/SSL certificates (if `false`, the Operator will automatically change unsafe parameters to safe defaults).
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-toggle-switch-outline: boolean     |`false` |
+
+### `unsafeFlags.pxcSize`
+
+Prevents users from configuring a cluster with unsafe parameters: starting it with less than 3 Percona XtraDB Cluster instances (if `false`, the Operator will automatically change unsafe parameters to safe defaults).
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-toggle-switch-outline: boolean     |`false` |
+
+### `unsafeFlags.proxySize`
+
+Prevents users from configuring a cluster with less than 2 ProxySQL or HAProxy Pods, (if `false`, the Operator will automatically change unsafe parameters to safe defaults).
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-toggle-switch-outline: boolean     |`false` |
+
+### `unsafeFlags.backupIfUnhealthy`
+
+Prevents running backup on a cluster with [failed health checks :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes).
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-toggle-switch-outline: boolean     |`false` |
 
 ## <a name="operator-initcontainer-section"></a>initContainer configuration section
 
@@ -180,6 +216,15 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 ## <a name="operator-issuerconf-section"></a>TLS (extended cert-manager configuration section)
 
 The `tls` section in the [deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains various configuration options for additional customization of the [TLS cert-manager](TLS.md#tls-certs-certmanager).
+
+### `tls.enabled`
+
+Enables or disables the [TLS encryption](TLS.md). If set to `false`,
+ it also requires setting `unsafeFlags.tls option to `true`.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-toggle-switch-outline: boolean     | `true` |
 
 ### `tls.SANs`
 
