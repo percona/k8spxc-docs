@@ -50,6 +50,10 @@ default choice.
     * [haproxy.exposeReplicas.enabled](operator.md#haproxyexposereplicasenabled)
         enables or disables `haproxy-replicas` Service.
 
+    By default `haproxy-replica` Service directs connections to all Pods of the database cluster in a round-robin manner, but `haproxy.exposeReplicas.onlyReaders` Custom Resource option allows to modify this behavior: setting it to `true` excludes current MySQL primary instance (writer) from the list, leaving only the reader instances. By default the option is set to `false`, which means that `haproxy-replicas` sends traffic to all Pods, including the active writer. The feature can be useful to simplify the application logic by splitting read and write MySQL traffic on the Kubernetes level.
+
+    Also, it should be noted that changing `haproxy.exposeReplicas.onlyReaders` value will cause HAProxy Pods to restart.
+
 === "ProxySQL"
 
     If you configured your cluster with ProxySQL based setup, you will have 
