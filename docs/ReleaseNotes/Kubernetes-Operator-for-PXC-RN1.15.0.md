@@ -12,7 +12,7 @@
 
 ### Allowing `haproxy-replica` Service to cycle through the reader instances only
 
-By default [haproxy-replica Service](../expose.md#__tabbed_1_1) directs connections to all Pods of the database cluster in a round-robin manner. The new `haproxy.exposeReplicas.onlyReaders` Custom Resource option allows to modify this behavior: setting it to `true` excludes current MySQL primary instance (writer) from the list, leaving only the reader instances. By default the option is set to false, which means that `haproxy-replicas` cycles sends traffic to all Pods, including the active writer. The feature can be useful to simplify the application logic by splitting read and write MySQL traffic on the Kubernetes level.
+By default [haproxy-replica Service](../expose.md#__tabbed_1_1) directs connections to all Pods of the database cluster in a round-robin manner. The new `haproxy.exposeReplicas.onlyReaders` Custom Resource option allows to modify this behavior: setting it to `true` excludes current MySQL primary instance (writer) from the list, leaving only the reader instances. By default the option is set to false, which means that `haproxy-replicas` sends traffic to all Pods, including the active writer. The feature can be useful to simplify the application logic by splitting read and write MySQL traffic on the Kubernetes level.
 
 Also, it should be noted that changing `haproxy.exposeReplicas.onlyReaders` value will cause HAProxy Pods to restart.
 
@@ -25,15 +25,15 @@ Also, it should be noted that changing `haproxy.exposeReplicas.onlyReaders` valu
 ## Improvements
 
 * {{ k8spxcjira(1358) }}: PXC Operator doesn't enable TLS for pxc cluster if allowUnsafeConfiguration is set to true
-* {{ k8spxcjira(1368) }}: [Kubernetes PVC DataSources](https://kubernetes-csi.github.io/docs/volume-datasources.html) for XtdaDB Cluster Volumes are now officially supported via the [pxc.volumeSpec.persistentVolumeClaim.dataSource](../opeartor.md#pxcvolumespecpersistentvolumeclaimdataSourcename) subsection in the Custom Resource
+* {{ k8spxcjira(1368) }}: [Kubernetes PVC DataSources](https://kubernetes-csi.github.io/docs/volume-datasources.html) for Percona XtraDB Cluster Volumes are now officially supported via the [pxc.volumeSpec.persistentVolumeClaim.dataSource](../opeartor.md#pxcvolumespecpersistentvolumeclaimdataSourcename) subsection in the Custom Resource
 * {{ k8spxcjira(1385) }}: The Operator functionality for dynamic Volumes resize now checks resource quotas and the PVC storage limits
 * {{ k8spxcjira(1423) }}: The `percona.com/delete-pxc-pvc` finalizer is now able to delete also the `mysql-init` technical secret that is created by the Operator on change of the user passwords' secret to make new passwords get updated in the database
 
 ## Bugs Fixed
 
 * {{ k8spxcjira(1067) }}: Fix a bug where changing `gracePeriod`, `nodeSelector`, `priorityClassName`, `runtimeClassName`, and `schedulerName` fields in the `haproxy` Custom Resource subsection didn't propagate changes to the haproxy StatefulSet
-* {{ k8spxcjira(1338) }}: Fix a bug where binlog collector Pod had unnecessary restart during the XtraDB Cluster rolling restart
-* {{ k8spxcjira(1364) }}: Fix a bug where log rotation functionality didn't work when the `proxy_protocol_networks` option was enabled in the [XtraDB Cluster custom configuration](../operator.md#pxcconfiguration)
+* {{ k8spxcjira(1338) }}: Fix a bug where binary log collector Pod had unnecessary restart during the Percona XtraDB Cluster rolling restart
+* {{ k8spxcjira(1364) }}: Fix a bug where log rotation functionality didn't work when the `proxy_protocol_networks` option was enabled in the [Percona XtraDB Cluster custom configuration](../operator.md#pxcconfiguration)
 * {{ k8spxcjira(1365) }}: Fix `pxc-operator` Helm chart bug where it wasn't able to create namespaces if multiple namespaces were specified in the watchNamespace option
 * {{ k8spxcjira(1371) }}: Fix a bug in `pxc-db` Helm chart which had wrong Percona XtraDB Cluster version for the 1.14.0 release and tried to downgrade the database in case of the helm chart upgrade
 * {{ k8spxcjira(1380) }}: Fix a bug due to which values in the resources requests for the restore job Pod were overwritten by the resources limits ones
