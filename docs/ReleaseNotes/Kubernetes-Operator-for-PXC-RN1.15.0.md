@@ -47,7 +47,7 @@ Also, TLS configuration is now [enabled or disabled](../TLS.md#run-percona-xtrad
 
 * {{ k8spxcjira(1357) }}: HAProxy Pod no longer restarts when the `operator` user's password changes, which is useful or the applications with persistent connection to  MySQL
 * {{ k8spxcjira(1358) }}: Removing `allowUnsafeConfigurations` Custom Resource option in favor of fine-grained safety control in the `unsafeFlags` subsection
-* {{ k8spxcjira(1368) }}: [Kubernetes PVC DataSources](https://kubernetes-csi.github.io/docs/volume-datasources.html) for Percona XtraDB Cluster Volumes are now officially supported via the [pxc.volumeSpec.persistentVolumeClaim.dataSource](../operator.md#pxcvolumespecpersistentvolumeclaimdataSourcename) subsection in the Custom Resource
+* {{ k8spxcjira(1368) }}: [Kubernetes PVC DataSources](https://kubernetes-csi.github.io/docs/volume-datasources.html) for Percona XtraDB Cluster Volumes are now officially supported via the [pxc.volumeSpec.persistentVolumeClaim.dataSource](../operator.md#pxcvolumespecpersistentvolumeclaimdatasourcename) subsection in the Custom Resource
 * {{ k8spxcjira(1385) }}: Dynamic Volume resize now checks resource quotas and the PVC storage limits
 * {{ k8spxcjira(1423) }}: The `percona.com/delete-pxc-pvc` finalizer is now able to delete also temporary secrets created by the Operator
 
