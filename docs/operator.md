@@ -777,13 +777,37 @@ The [Kubernetes PersistentVolumeClaim :octicons-link-external-16:](https://kuber
 | ----------- | ---------- |
 |:material-application-array-outline: array     | `[ReadWriteOnce]` |
 
-### `pxc.volumeSpec.resources.requests.storage`
+### `pxc.volumeSpec.persistentVolumeClaim.datasource.name`
 
-The [Kubernetes PersistentVolumeClaim :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims) size for the Percona XtraDB cluster.
+Set the [Kubernetes storage class :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/storage-classes/) to use with the Percona XtraDB Cluster [PersistentVolumeClaim :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims).
 
 | Value type  | Example    |
 | ----------- | ---------- |
-| :material-code-string: string     | `6Gi` |
+| :material-code-string: string     | `standard` |
+
+### `pxc.volumeSpec.persistentVolumeClaim.datasource.name`
+
+The name of PVC used as a data source to [create the Percona XtraDB Cluster Volumes by cloning :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/volume-pvc-datasource/).
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `new-snapshot-test` |
+
+### `pxc.volumeSpec.persistentVolumeClaim.datasource.kind`
+
+The  [Kubernetes DataSource type :octicons-link-external-16:](https://kubernetes-csi.github.io/docs/volume-datasources.html#supported-datasources).
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `VolumeSnapshot` |
+
+### `pxc.volumeSpec.resources.requests.apiGroup`
+
+The [Kubernetes API group :octicons-link-external-16:](https://kubernetes.io/docs/reference/using-api/#api-groups) to use for [PVC Data Source :octicons-link-external-16:](https://kubernetes-csi.github.io/docs/volume-datasources.html).
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `snapshot.storage.k8s.io` |
 
 ### `pxc.gracePeriod`
 
