@@ -1283,7 +1283,15 @@ Enables or disables `haproxy-replicas` Service. This Service (on by default) for
 
 ### `haproxy.exposeReplicas.enabled`
 
-Enables or disables `haproxy-replicas` Service. This Service (on by default) forwards requests to all Percona XtraDB Cluster instances, and it **should not be used for write requests**!
+Enables or disables `haproxy-replicas` Service. This Service default forwards requests to all Percona XtraDB Cluster instances, and it **should not be used for write requests**!
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-toggle-switch-outline: boolean     | `true` |
+
+### `haproxy.exposeReplicas.onlyReaders`
+
+Setting it to `true` excludes current MySQL primary instance (writer) from the list of Pods, to which `haproxy-replicas` Service directs connections, leaving only the reader instances.
 
 | Value type  | Example    |
 | ----------- | ---------- |
