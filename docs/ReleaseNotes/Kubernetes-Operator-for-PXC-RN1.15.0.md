@@ -68,7 +68,7 @@ Also, TLS configuration is now [enabled or disabled](../TLS.md#run-percona-xtrad
 ## Deprecation, Rename and Removal
 
 
-* Starting from now, `allowUnsafeConfigurations` Custom Resource option is deprecated in favor of a number of options under the `unsafeFlags` subsection. Setting `allowUnsafeConfigurations` won’t have any effect; upgrading existing clusters with `allowUnsafeConfigurations=true` will cause everything under `unsafeFlags` set to `true` and TLS funuctionality disabled
+* Starting from now, `allowUnsafeConfigurations` Custom Resource option is deprecated in favor of a number of options under the `unsafeFlags` subsection. Also, starting from now the Operator will not set safe defaults automatically. Upgrading existing clusters with `allowUnsafeConfiguration=false` and a configuration considered unsafe (i.e. `pxc.size<3` or  `tls.enabled=false`) will print errors in the log and the cluster will have `error` status until the values are fixed.
 
 * Finalizers were renamed to contain fully qualified domain names:
 
