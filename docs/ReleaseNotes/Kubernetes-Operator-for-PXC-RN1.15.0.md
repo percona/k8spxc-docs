@@ -10,24 +10,46 @@
 
 ## Release Highlights
 
+### General availability of the automated volume resizing
+
+The possibility to resize Persistent Volumes [by just changing the value](../scaling.md#scale-storage) of the `resources.requests.storage` option in the PerconaXtraDBCluster custom resource, introduced in the previous release as a technical preview, graduates to general availability.
+
 ### Allowing `haproxy-replica` Service to cycle through the reader instances only
 
 By default [haproxy-replica Service](../expose.md#__tabbed_1_1) directs connections to all Pods of the database cluster in a round-robin manner. The new `haproxy.exposeReplicas.onlyReaders` Custom Resource option allows to modify this behavior: setting it to `true` excludes current MySQL primary instance (writer) from the list, leaving only the reader instances. By default the option is set to false, which means that `haproxy-replicas` sends traffic to all Pods, including the active writer. The feature can be useful to simplify the application logic by splitting read and write MySQL traffic on the Kubernetes level.
 
 Also, it should be noted that changing `haproxy.exposeReplicas.onlyReaders` value will cause HAProxy Pods to restart.
 
+### Fixing the overloaded `allowUnsafeConfigurations` flag
+
+In the previous Operator versions `allowUnsafeConfigurations` Custom Resource option was used to allow configuring a cluster with unsafe parameters, such as starting it with less than 3 Percona XtraDB Cluster instances. In fact, setting this option to `true` resulted in a wide range of reduced safety features without the user's explicit intent: disabling TLS, allowing backups in unhealthy clusters, etc.
+
+With this release, a separate `unsafeFlags` Custom Resource section is introduced for the fine-grained control of the safety loosening features:
+
+```yaml
+unsafeFlags:
+  tls: false
+  pxcSize: false
+  proxySize: false
+  backupIfUnhealthy: false
+```
+
+If the appropriate option is set to `false` and the Operator detects unsafe parameters, it sets cluster status to `error`, and prints an error message in the log.
+
+Also, TLS configuration is now [enabled or disabled](../TLS.md#run-percona-xtradb-cluster-without-tls) by setting `unsafeFlags.tls` and  `tls.enabled` Custom Resource options to `true` or `false`.
+
 ## New Features 
 
 * {{ k8spxcjira(1330) }}: A new `haproxy.exposeReplicas.onlyReaders` Custom Resource option makes `haproxy-replicas` Service to [forward requests](../expose.md#__tabbed_1_1) to reader instances of the MySQL cluster, avoiding the primary (writer) instance.
 * {{ k8spxcjira(1355) }}: Finalizers were renamed to contain fully qualified domain names (FQDNs), avoiding potential conflicts with other finalizer names in the same Kubernetes environment
-* {{ k8spxcjira(1357) }}: HAProxy Pod is not restarted anymore on password change of the `operator` user, which eliminates delays and query faults for the applications having persistent connection to MySQL **IMPROVEMENT?**
 
 ## Improvements
 
-* {{ k8spxcjira(1358) }}: PXC Operator doesn't enable TLS for pxc cluster if allowUnsafeConfiguration is set to true
+* {{ k8spxcjira(1357) }}: HAProxy Pod no longer restarts when the `operator` user's password changes, which is useful or the applications with persistent connection to  MySQL
+* {{ k8spxcjira(1358) }}: Removing `allowUnsafeConfigurations` Custom Resource option in favor of fine-grained safety control in the `unsafeFlags` subsection
 * {{ k8spxcjira(1368) }}: [Kubernetes PVC DataSources](https://kubernetes-csi.github.io/docs/volume-datasources.html) for Percona XtraDB Cluster Volumes are now officially supported via the [pxc.volumeSpec.persistentVolumeClaim.dataSource](../opeartor.md#pxcvolumespecpersistentvolumeclaimdataSourcename) subsection in the Custom Resource
-* {{ k8spxcjira(1385) }}: The Operator functionality for dynamic Volumes resize now checks resource quotas and the PVC storage limits
-* {{ k8spxcjira(1423) }}: The `percona.com/delete-pxc-pvc` finalizer is now able to delete also the `mysql-init` technical secret that is created by the Operator on change of the user passwords' secret to make new passwords get updated in the database
+* {{ k8spxcjira(1385) }}: Dynamic Volume resize now checks resource quotas and the PVC storage limits
+* {{ k8spxcjira(1423) }}: The `percona.com/delete-pxc-pvc` finalizer is now able to delete also temporary secrets created by the Operator
 
 ## Bugs Fixed
 
@@ -38,12 +60,15 @@ Also, it should be noted that changing `haproxy.exposeReplicas.onlyReaders` valu
 * {{ k8spxcjira(1371) }}: Fix a bug in `pxc-db` Helm chart which had wrong Percona XtraDB Cluster version for the 1.14.0 release and tried to downgrade the database in case of the helm chart upgrade
 * {{ k8spxcjira(1380) }}: Fix a bug due to which values in the resources requests for the restore job Pod were overwritten by the resources limits ones
 * {{ k8spxcjira(1381) }}: Fix a bug where HAProxy check script was not correctly identifying all the possible ”offline” state of a PXC instance, causing applications connects to an instance NOT able to serve the query
-* {{ k8spxcjira(1382) }}: Fix a bug where creating a backup on S3 storage failed if `s3.credentialsSecret` Custom Resource option was not present, even in case of the automated "credential-less" access based on IAM roles
-* {{ k8spxcjira(1396) }}: The `xtrabackup` user didn't have rights to to grant privileges available in its own privilege level to other users, which caused the point-in-time recovery fail due to access denied
+* {{ k8spxcjira(1382) }}: Fix a bug where creating a backup on S3 storage failed automatically if `s3.credentialsSecret` Custom Resource option was not present
+* {{ k8spxcjira(1396) }}: The `xtrabackup` user didn't have rights to grant privileges available in its own privilege level to other users, which caused the point-in-time recovery fail due to access denied
 * {{ k8spxcjira(1408) }}: Fix a bug where the Operator blocked all restores (including ones without PiTR) in case of a binlog gap detected, instead of only blocking PiTR restores
 * {{ k8spxcjira(1418) }}: Fix a bug where CA Certificate generated by cert-manager had expiration period of 1 year instead of the 3 years period used by the Operator for other generated certificates, including ones used for internal and external communications
 
 ## Deprecation, Rename and Removal
+
+
+* Starting from now, `allowUnsafeConfigurations` Custom Resource option is deprecated in favor of a number of options under the `unsafeFlags` subsection. Setting `allowUnsafeConfigurations` won’t have any effect; upgrading existing clusters with `allowUnsafeConfigurations=true` will cause everything under `unsafeFlags` set to `true` and TLS funuctionality disabled
 
 * Finalizers were renamed to contain fully qualified domain names:
 
