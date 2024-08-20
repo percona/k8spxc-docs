@@ -1294,7 +1294,7 @@ Enables or disables `haproxy-replicas` Service. This Service default forwards re
 
 ### `haproxy.exposeReplicas.onlyReaders`
 
-setting it to `true` excludes current MySQL primary instance (writer) from the list of Pods, to which `haproxy-replicas` Service directs connections, leaving only the reader instances.
+Setting it to `true` excludes current MySQL primary instance (writer) from the list of Pods, to which `haproxy-replicas` Service directs connections, leaving only the reader instances.
 
 | Value type  | Example    |
 | ----------- | ---------- |
