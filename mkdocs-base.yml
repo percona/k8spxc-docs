@@ -231,6 +231,9 @@ nav:
           - "Operator API": api.md
           - "Frequently Asked Questions": faq.md
           - "Old releases (documentation archive)": https://docs.percona.com/legacy-documentation/
+          - Development documentation:
+              - "Building and testing the Operator": https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.14.0/e2e-tests/README.md
+              - "Contributing": https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.14.0/CONTRIBUTING.md
           - "Copyright and licensing information": copyright.md
           - "Trademark policy": trademark-policy.md
     - Release Notes:
