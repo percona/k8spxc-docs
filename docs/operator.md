@@ -29,7 +29,7 @@ The toplevel spec elemets of the [deploy/cr.yaml :octicons-link-external-16:](ht
 
 ### `allowUnsafeConfigurations`
 
-Prevents users from configuring a cluster with unsafe parameters such as starting the cluster with the number of Percona XtraDB Cluster instances which is less than 3, more than 5, or is an even number, with less than 2 ProxySQL or HAProxy Pods, or without TLS/SSL certificates (if `false`, unsafe parameters will be automatically changed to safe defaults). **This option is deprecated and will be removed in future releases**. Use `unsafeFlags` subsection instead.
+Prevents users from configuring a cluster with unsafe parameters such as starting the cluster with the number of Percona XtraDB Cluster instances which is less than 3, more than 5, or is an even number, with less than 2 ProxySQL or HAProxy Pods, or without TLS/SSL certificates. **This option is deprecated and will be removed in future releases**. Use `unsafeFlags` subsection instead.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -293,7 +293,7 @@ configuration options for the Percona XtraDB Cluster.
 
 ### `pxc.size`
 
-The size of the Percona XtraDB cluster must be 3 or 5 for [High Availability :octicons-link-external-16:](https://www.percona.com/doc/percona-xtradb-cluster/5.7/intro.html). other values are allowed if the `spec.allowUnsafeConfigurations` key is set to true.
+The size of the Percona XtraDB cluster must be 3 or 5 for [High Availability :octicons-link-external-16:](https://www.percona.com/doc/percona-xtradb-cluster/5.7/intro.html). Other values are allowed if the `spec.unsafeFlags.pxcSize` key is set to true.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -931,7 +931,7 @@ Enables or disables [load balancing with HAProxy :octicons-link-external-16:](ht
 
 ### `haproxy.size`
 
-The number of the HAProxy Pods [to provide load balancing :octicons-link-external-16:](https://www.percona.com/doc/percona-xtradb-cluster/8.0/howtos/haproxy.html). It should be 2 or more unless the `spec.allowUnsafeConfigurations` key is set to true.
+The number of the HAProxy Pods [to provide load balancing :octicons-link-external-16:](https://www.percona.com/doc/percona-xtradb-cluster/8.0/howtos/haproxy.html). It should be 2 or more unless the `spec.unsafeFlags.proxySize` key is set to true.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1568,7 +1568,7 @@ Enables or disables [load balancing with ProxySQL :octicons-link-external-16:](h
 
 ### `proxysql.size`
 
-The number of the ProxySQL daemons [to provide load balancing :octicons-link-external-16:](https://www.percona.com/doc/percona-xtradb-cluster/5.7/howtos/proxysql.html). It should be 2 or more unless the `spec.allowUnsafeConfigurations` key is set to true.
+The number of the ProxySQL daemons [to provide load balancing :octicons-link-external-16:](https://www.percona.com/doc/percona-xtradb-cluster/5.7/howtos/proxysql.html). It should be 2 or more unless the `spec.unsafeFlags.proxySize` key is set to true.
 
 | Value type  | Example    |
 | ----------- | ---------- |
