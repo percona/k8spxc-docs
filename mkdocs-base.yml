@@ -116,10 +116,10 @@ plugins:
   # https://github.com/orzih/mkdocs-with-pdf
   with-pdf:
     output_path: "_pdf/percona-operator-for-mysql-pxc.pdf"
-    cover_title: "Percona Operator for MySQL based on Percona XtraDB Cluster documentation"
+    cover_title: "Operator for MySQL based on Percona XtraDB Cluster documentation"
     cover_subtitle: 1.15.0 (August 20, 2024)
     author: "Percona Technical Documentation Team"
-    cover_logo: docs/assets/images/percona_kubernetes_icon.png
+    cover_logo: docs/assets/images/PerconaLogostackedlightbackground.svg
     custom_template_path: _resource/templates
     enabled_if_env: ENABLE_PDF_EXPORT
   # Check links - but extends build time significantly
