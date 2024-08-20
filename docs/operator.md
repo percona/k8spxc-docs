@@ -138,7 +138,7 @@ The `unsafeFlags` section in the [deploy/cr.yaml  :octicons-link-external-16:](h
 
 ### `unsafeFlags.tls`
 
-Prevents users from configuring a cluster without TLS/SSL certificates (if `false`, the Operator will detect unsafe parameters, set cluster status to `error`, and print error message in logs).
+Allows users to configure a cluster without TLS/SSL certificates (if `false`, the Operator will detect unsafe parameters, set cluster status to `error`, and print error message in logs).
 
 | Value type  | Example    |
 | ----------- | ---------- |
