@@ -130,7 +130,7 @@ extra: # Used in main.html template and can't be externalized
   clusterName: 'cluster1'
   release: '1.15.0'
   apiversion: '1-15-0'
-  certmanagerversion: '1.14.2'
+  certmanagerversion: '1.15.2'
   pxc57recommended: '5.7.44-31.65'
   pxc80recommended: '8.0.35-27.1'
   pmm2recommended: '2.41.1'
