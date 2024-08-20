@@ -26,11 +26,12 @@ The toplevel spec elemets of the [deploy/cr.yaml :octicons-link-external-16:](ht
 
 ### `allowUnsafeConfigurations`
 
-Prevents users from configuring a cluster with unsafe parameters such as starting the cluster with the number of Percona XtraDB Cluster instances which is less than 3, more than 5, or is an even number, with less than 2 ProxySQL or HAProxy Pods, or without TLS/SSL certificates (if `false`, unsafe parameters will be automatically changed to safe defaults).
+Prevents users from configuring a cluster with unsafe parameters such as starting the cluster with the number of Percona XtraDB Cluster instances which is less than 3, more than 5, or is an even number, with less than 2 ProxySQL or HAProxy Pods, or without TLS/SSL certificates. **This option is deprecated and will be removed in future releases**. Use `unsafeFlags` subsection instead.
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-toggle-switch-outline: boolean     | `false` |
+
 ### `enableCRValidationWebhook`
 
 Enables or disables schema validation before applying `cr.yaml` file (works only in [cluster-wide mode](cluster-wide.md) due to [access restrictions](faq.md#which-additional-access-permissions-are-used-by-the-custom-resource-validation-webhook)).
@@ -128,6 +129,41 @@ A strategy the Operator uses for [upgrades](update.md#more-on-upgrade-strategies
 | ----------- | ---------- |
 | :material-code-string: string     | `SmartUpdate`              | 
 
+## <a name="operator-unsafeflags-section"></a>Unsafe flags section
+
+The `unsafeFlags` section in the [deploy/cr.yaml  :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains various configuration options to prevent users from configuring a cluster with unsafe parameters.
+
+### `unsafeFlags.tls`
+
+Allows users to configure a cluster without TLS/SSL certificates (if `false`, the Operator will detect unsafe parameters, set cluster status to `error`, and print error message in logs).
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-toggle-switch-outline: boolean     |`false` |
+
+### `unsafeFlags.pxcSize`
+
+Allows users to configure a cluster with less than 3 Percona XtraDB Cluster instances (if `false`, the Operator will detect unsafe parameters, set cluster status to `error`, and print error message in logs).
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-toggle-switch-outline: boolean     |`false` |
+
+### `unsafeFlags.proxySize`
+
+Allows users to configure a cluster with less than 2 ProxySQL or HAProxy Pods (if `false`, the Operator will detect unsafe parameters, set cluster status to `error`, and print error message in logs).
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-toggle-switch-outline: boolean     |`false` |
+
+### `unsafeFlags.backupIfUnhealthy`
+
+Allows running a backup even if the cluster status is not `ready`.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-toggle-switch-outline: boolean     |`false` |
 
 ## <a name="operator-initcontainer-section"></a>initContainer configuration section
 
@@ -177,6 +213,15 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 ## <a name="operator-issuerconf-section"></a>TLS (extended cert-manager configuration section)
 
 The `tls` section in the [deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains various configuration options for additional customization of the [TLS cert-manager](TLS.md#tls-certs-certmanager).
+
+### `tls.enabled`
+
+Enables or disables the [TLS encryption](TLS.md). If set to `false`,
+ it also requires setting `unsafeFlags.tls option to `true`.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-toggle-switch-outline: boolean     | `true` |
 
 ### `tls.SANs`
 
@@ -245,7 +290,7 @@ configuration options for the Percona XtraDB Cluster.
 
 ### `pxc.size`
 
-The size of the Percona XtraDB cluster must be 3 or 5 for [High Availability :octicons-link-external-16:](https://www.percona.com/doc/percona-xtradb-cluster/5.7/intro.html). other values are allowed if the `spec.allowUnsafeConfigurations` key is set to true.
+The size of the Percona XtraDB cluster must be 3 or 5 for [High Availability :octicons-link-external-16:](https://www.percona.com/doc/percona-xtradb-cluster/5.7/intro.html). Other values are allowed if the `spec.unsafeFlags.pxcSize` key is set to true.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -883,7 +928,7 @@ Enables or disables [load balancing with HAProxy :octicons-link-external-16:](ht
 
 ### `haproxy.size`
 
-The number of the HAProxy Pods [to provide load balancing :octicons-link-external-16:](https://www.percona.com/doc/percona-xtradb-cluster/8.0/howtos/haproxy.html). It should be 2 or more unless the `spec.allowUnsafeConfigurations` key is set to true.
+The number of the HAProxy Pods [to provide load balancing :octicons-link-external-16:](https://www.percona.com/doc/percona-xtradb-cluster/8.0/howtos/haproxy.html). It should be 2 or more unless the `spec.unsafeFlags.proxySize` key is set to true.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1528,7 +1573,7 @@ Enables or disables [load balancing with ProxySQL :octicons-link-external-16:](h
 
 ### `proxysql.size`
 
-The number of the ProxySQL daemons [to provide load balancing :octicons-link-external-16:](https://www.percona.com/doc/percona-xtradb-cluster/5.7/howtos/proxysql.html). It should be 2 or more unless the `spec.allowUnsafeConfigurations` key is set to true.
+The number of the ProxySQL daemons [to provide load balancing :octicons-link-external-16:](https://www.percona.com/doc/percona-xtradb-cluster/5.7/howtos/proxysql.html). It should be 2 or more unless the `spec.unsafeFlags.proxySize` key is set to true.
 
 | Value type  | Example    |
 | ----------- | ---------- |

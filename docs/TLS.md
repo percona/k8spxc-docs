@@ -320,6 +320,37 @@ Secret, certificate and issuer after the cluster deletion event.
 Omitting TLS is also possible, but we recommend that you run your cluster with
 the TLS protocol enabled.
 
-To disable TLS protocol (e.g. for demonstration purposes) edit the
-`cr.yaml/spec/allowUnsafeConfigurations` setting to `true` and make sure
-that there are no certificate secrets available.
+To have TLS protocol disabled (e.g. for demonstration purposes) set the
+`unsafeFlags.tls` key to `true` and set the `tls.enabled` key to `false` 
+in the `deploy/cr.yaml` file: 
+
+```yaml
+...
+spec:
+  ...
+  unsafeFlags
+    tls: true
+    ...
+  tls:
+    enabled: false
+```
+
+Enabling/disabling TLS is not supported on a running cluster.
+
+To disable TLS for a running cluster you need to do the following actions manually:
+
+* [pause the cluster](pause.md)
+
+* set `unsafeFlags.tls=true` and `tls.enabled=false` Custom Resource options
+
+* delete SSL secrets;
+
+* [unpause the cluster](pause.md)
+
+To enable TLS for a running cluster:
+
+* [pause the cluster](pause.md)
+
+* set `unsafeFlags.tls=false` and `tls.enabled=true` Custom Resource options
+
+* [unpause the cluster](pause.md)
