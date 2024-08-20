@@ -138,7 +138,7 @@ The `unsafeFlags` section in the [deploy/cr.yaml  :octicons-link-external-16:](h
 
 ### `unsafeFlags.tls`
 
-Prevents users from configuring a cluster without TLS/SSL certificates (if `false`, the Operator will automatically change unsafe parameters to safe defaults).
+Prevents users from configuring a cluster without TLS/SSL certificates (if `false`, the Operator will detect unsafe parameters, set cluster status to `error`, and print error message in logs).
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -146,7 +146,7 @@ Prevents users from configuring a cluster without TLS/SSL certificates (if `fals
 
 ### `unsafeFlags.pxcSize`
 
-Prevents users from configuring a cluster with unsafe parameters: starting it with less than 3 Percona XtraDB Cluster instances (if `false`, the Operator will automatically change unsafe parameters to safe defaults).
+Allows users to configure a cluster with less than 3 Percona XtraDB Cluster instances (if `false`, the Operator will detect unsafe parameters, set cluster status to `error`, and print error message in logs).
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -154,7 +154,7 @@ Prevents users from configuring a cluster with unsafe parameters: starting it wi
 
 ### `unsafeFlags.proxySize`
 
-Prevents users from configuring a cluster with less than 2 ProxySQL or HAProxy Pods, (if `false`, the Operator will automatically change unsafe parameters to safe defaults).
+Allows users to configure a cluster with less than 2 ProxySQL or HAProxy Pods (if `false`, the Operator will detect unsafe parameters, set cluster status to `error`, and print error message in logs).
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -162,7 +162,7 @@ Prevents users from configuring a cluster with less than 2 ProxySQL or HAProxy P
 
 ### `unsafeFlags.backupIfUnhealthy`
 
-Prevents running backup on a cluster with [failed health checks :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes).
+Allows running a backup even if the cluster status is not `ready`.
 
 | Value type  | Example    |
 | ----------- | ---------- |
