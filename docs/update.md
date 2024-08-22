@@ -172,7 +172,7 @@ Manual update of Percona XtraDB Cluster can be done as follows:
                "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
                "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
                "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc8.0-backup-pxb{{ pxb80recommended }}" },
-               "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluetnbitrecommended }}" },
+               "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" },
                "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
            }}'
         ```
@@ -186,7 +186,7 @@ Manual update of Percona XtraDB Cluster can be done as follows:
                "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
                "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
                "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc5.7-backup-pxb{{ pxb57recommended }}" },
-               "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluetnbitrecommended }}" },
+               "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" },
                "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
            }}'
         ```
@@ -204,7 +204,7 @@ Manual update of Percona XtraDB Cluster can be done as follows:
                    "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
                    "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
                    "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc8.0-backup-pxb{{ pxb80recommended }}" },
-                   "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluetnbitrecommended }}" }
+                   "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" }
                }}'
             ```
 
@@ -217,7 +217,7 @@ Manual update of Percona XtraDB Cluster can be done as follows:
                    "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
                    "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
                    "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc5.7-backup-pxb{{ pxb57recommended }}" },
-                   "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluetnbitrecommended }}" }
+                   "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" }
                }}'
             ```
 
