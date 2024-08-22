@@ -55,10 +55,10 @@ Semi-automatic update of Percona XtraDB Cluster can be done as follows:
            "spec": {
                "crVersion":"{{ release }}",
                "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
-               "proxysql": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-proxysql" },
-               "haproxy":  { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-haproxy" },
-               "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc8.0-backup" },
-               "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector" },
+               "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
+               "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
+               "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc8.0-backup-pxb{{ pxb80recommended }}" },
+               "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluetnbitrecommended }}" },
                "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
            }}'
         ```
@@ -69,10 +69,10 @@ Semi-automatic update of Percona XtraDB Cluster can be done as follows:
            "spec": {
                "crVersion":"{{ release }}",
                "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc57recommended }}" },
-               "proxysql": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-proxysql" },
-               "haproxy":  { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-haproxy" },
-               "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc5.7-backup" },
-               "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector" },
+               "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
+               "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
+               "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc5.7-backup-pxb{{ pxb57recommended }}" },
+               "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluetnbitrecommended }}" },
                "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
            }}'
         ```
@@ -113,10 +113,10 @@ Manual update of Percona XtraDB Cluster can be done as follows:
            "spec": {
                "crVersion":"{{ release }}",
                "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
-               "proxysql": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-proxysql" },
-               "haproxy":  { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-haproxy" },
-               "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc8.0-backup" },
-               "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector" },
+               "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
+               "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
+               "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc8.0-backup-pxb{{ pxb80recommended }}" },
+               "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluetnbitrecommended }}" },
                "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
            }}'
         ```
@@ -127,13 +127,14 @@ Manual update of Percona XtraDB Cluster can be done as follows:
            "spec": {
                "crVersion":"{{ release }}",
                "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc57recommended }}" },
-               "proxysql": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-proxysql" },
-               "haproxy":  { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-haproxy" },
-               "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc5.7-backup" },
-               "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector" },
+               "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
+               "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
+               "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc5.7-backup-pxb{{ pxb57recommended }}" },
+               "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluetnbitrecommended }}" },
                "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
            }}'
         ```
+
 
 3. The Pod with the newer Percona XtraDB Cluster image will start after you
     delete it. Delete targeted Pods manually one by one to make them restart in
