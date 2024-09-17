@@ -167,7 +167,7 @@ Upgrading database and Operator on [Red Hat Marketplace :octicons-link-external-
 
         ``` {.bash data-prompt="$" }
         $ kubectl patch pxc cluster1 --type=merge --patch '{
-            "spec": {
+            "spec": {               
                "initContainer": { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:e8c0237ace948653d8f3e297ec67276f23f4f7fb4f8018f97f246b65604d49e6" }
             }}'
         ```
