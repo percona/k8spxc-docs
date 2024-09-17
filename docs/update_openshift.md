@@ -10,8 +10,7 @@ Upgrading database and Operator on [Red Hat Marketplace :octicons-link-external-
 
     1. First of all you need to manually update `initImage` Custom Resource option with the value of an alternative initial Operator installation image. You need doing this for all database clusters managed by the Operator. Without this step the cluster will go into error state after the Operator upgrade.
 
-        1. Find the `percona-xtradb-cluster-operator` Pod name with `kubectl get pods` command. Let's say the Pod name is  `percona-xtradb-cluster-operator-7cfd666b69-tk4rq`. Now see the actual image name with 
-The value which should be assigned to this option can be found with the `kubectl describe` command:
+        1. Find the `percona-xtradb-cluster-operator` Pod name with `kubectl get pods` command. Let's say the Pod name is  `percona-xtradb-cluster-operator-7cfd666b69-tk4rq`. Now see the actual image name with the `kubectl describe` command:
 
         ``` {.bash data-prompt="$" }
         $ kubectl describe pod percona-xtradb-cluster-operator-7cfd666b69-tk4rq | grep Image:
@@ -59,8 +58,7 @@ The value which should be assigned to this option can be found with the `kubectl
 
     1. First of all you need to manually update `initContainer.image` Custom Resource option with the value of an alternative initial Operator installation image. You need doing this for all database clusters managed by the Operator. Without this step the cluster will go into error state after the Operator upgrade.
 
-        1. Find the `percona-xtradb-cluster-operator` Pod name with `kubectl get pods` command. Let's say the Pod name is  `percona-xtradb-cluster-operator-7cfd666b69-tk4rq`. Now see the actual image name with 
-The value which should be assigned to this option can be found with the `kubectl describe` command:
+        1. Find the `percona-xtradb-cluster-operator` Pod name with `kubectl get pods` command. Let's say the Pod name is  `percona-xtradb-cluster-operator-7cfd666b69-tk4rq`. Now see the actual image name with the `kubectl describe` command:
 
         ``` {.bash data-prompt="$" }
         $ kubectl describe pod percona-xtradb-cluster-operator-7cfd666b69-tk4rq | grep Image:
