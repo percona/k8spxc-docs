@@ -2,7 +2,7 @@
 
 ## Upgrading the Operator and CRD
 
-1. If the Operator version 1.14.0 or older, need to manually update `initImage` Custom Resource option with the value of an alternative initial Operator installation image. The existing value of this option should be something similar to `percona/percona-xtradb-cluster-operator:{{ release }}`. You should assign to this option the real name of the Operator image. 
+1. If the current Operator version is 1.14.0 or older, you need to manually update `initImage` Custom Resource option with the value of an alternative initial Operator installation image. The existing value of this option should be something similar to `percona/percona-xtradb-cluster-operator:{{ release }}`. You should assign to this option the real name of the Operator image. 
 
     1. Find the `percona-xtradb-cluster-operator` Pod with `kubectl get pods` command. Let's say the Pod name is  `percona-xtradb-cluster-operator-7cfd666b69-tk4rq`. Now see the actual image name with 
 The value which should be assigned to this option can be found with the `kubectl describe` command:
@@ -51,8 +51,6 @@ The value which should be assigned to this option can be found with the `kubectl
         ```
 
 ## Upgrading Percona XtraDB Cluster
-
-после этого ты можешь апдейтнуть cr и в cr тебе надо апдейтнуть инит-имидж руками и cr-version
 
 1. Make sure that `spec.updateStrategy` option in the [Custom Resource](operator.md)
     is set to `SmartUpdate`, `spec.upgradeOptions.apply` option is set to `Never`
