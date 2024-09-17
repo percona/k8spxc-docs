@@ -24,7 +24,7 @@ The value which should be assigned to this option can be found with the `kubectl
         ``` {.bash data-prompt="$" }
         $ kubectl patch pxc cluster1 --type=merge --patch '{
             "spec": {
-               "initImage":"registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:e8c0237ace948653d8f3e297ec67276f23f4f7fb4f8018f97f246b65604d49e6"
+               "initImage":"registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:3232ae01d0ff1e17922a7f1b0f3c69ada18d3a335e68ff09e25c9b931c1cd319"
             }}'
         ```
 
@@ -77,8 +77,8 @@ The value which should be assigned to this option can be found with the `kubectl
     ??? example "Expected output"
 
         ``` {.text .no-copy}
-        Image:         percona/percona-xtradb-cluster-operator:1.14.0
-        Image ID:      docker-pullable://percona/percona-xtradb-cluster-operator@sha256:3232ae01d0ff1e17922a7f1b0f3c69ada18d3a335e68ff09e25c9b931c1cd319
+        Image:         percona/percona-xtradb-cluster-operator:{{ release }}
+        Image ID:      docker-pullable://percona/percona-xtradb-cluster-operator@sha256:e8c0237ace948653d8f3e297ec67276f23f4f7fb4f8018f97f246b65604d49e6
         ```
 
 3. Now [apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your Custom Resource, setting necessary Custom Resource version and image names with a newer version tag.
