@@ -10,7 +10,7 @@ the following ones:
 
 !!! note
 
-    Upgrading on the [OpenShift :octicons-link-external-16:](https://www.redhat.com/en/technologies/cloud-computing/openshift) platform needs additional steps. See [this HOWTO](update_openshift.md) for details.
+    Additional steps are needed to upgrade database and Operator on [Red Hat Marketplace :octicons-link-external-16:](https://marketplace.redhat.com) or to upgrade Red Hat certified Operators on [OpenShift :octicons-link-external-16:](https://www.redhat.com/en/technologies/cloud-computing/openshift). See [this HOWTO](update_openshift.md) for details.
 
 The list of recommended upgrade scenarios includes two variants:
 

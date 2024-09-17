@@ -1,34 +1,110 @@
 # Upgrade Database and Operator on OpenShift
 
+{%set commandName = 'oc' %}
+
+Upgrading database and Operator on [Red Hat Marketplace :octicons-link-external-16:](https://marketplace.redhat.com) or to upgrade Red Hat certified Operators on [OpenShift :octicons-link-external-16:](https://www.redhat.com/en/technologies/cloud-computing/openshift) generally follows the [standard upgrade scenario](update.md), but includes additional steps specific for these platforms.
+
 ## Upgrading the Operator and CRD
 
-1. If the current Operator version is 1.14.0 or older, you need to manually update `initImage` Custom Resource option with the value of an alternative initial Operator installation image. The existing value of this option should be something similar to `percona/percona-xtradb-cluster-operator:{{ release }}`. You should assign to this option the real name of the Operator image. 
+=== "Operator 1.13.0 and older"
 
-    1. Find the `percona-xtradb-cluster-operator` Pod with `kubectl get pods` command. Let's say the Pod name is  `percona-xtradb-cluster-operator-7cfd666b69-tk4rq`. Now see the actual image name with 
+    1. First of all you need to manually update `initImage` Custom Resource option with the value of an alternative initial Operator installation image. You need doing this for all database clusters managed by the Operator. Without this step the cluster will go into error state after the Operator upgrade.
+
+        1. Find the `percona-xtradb-cluster-operator` Pod name with `kubectl get pods` command. Let's say the Pod name is  `percona-xtradb-cluster-operator-7cfd666b69-tk4rq`. Now see the actual image name with 
 The value which should be assigned to this option can be found with the `kubectl describe` command:
 
         ``` {.bash data-prompt="$" }
-        $ kubectl describe pod percona-xtradb-cluster-operator-7cfd666b69-tk4rq | grep Image
+        $ kubectl describe pod percona-xtradb-cluster-operator-7cfd666b69-tk4rq | grep Image:
         ```
         
         ??? example "Expected output"
 
             ``` {.text .no-copy}
-            Image:         percona/percona-xtradb-cluster-operator:1.14.0
-            Image ID:      docker-pullable://percona/percona-xtradb-cluster-operator@sha256:3232ae01d0ff1e17922a7f1b0f3c69ada18d3a335e68ff09e25c9b931c1cd319
+            Image:         registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:4edb5a53230e023bbe54c8e9e1154579668423fc3466415d5b04b8304a8e01d7
             ```
 
-    2. [Apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to update the `initImage` option of your cluster Custom Resource with this value. Supposing that your cluster name is `cluster`, the command should look as follows:
+        2. [Apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to update the `initImage` option of your cluster Custom Resource with this value. Supposing that your cluster name is `cluster1`, the command should look as follows:
 
+
+            ``` {.bash data-prompt="$" }
+            $ kubectl patch pxc cluster1 --type=merge --patch '{
+                "spec": {
+                   "initImage":"registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:4edb5a53230e023bbe54c8e9e1154579668423fc3466415d5b04b8304a8e01d7"
+                }}'
+            ```
+
+    2. Now you can actually update the Operator.
+
+        1. Update the [Custom Resource Definition :octicons-link-external-16:](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) for the Operator, taking it from the official repository on Github, and do the same for the Role-based access control:
+
+            ``` {.bash data-prompt="$" }
+            $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/crd.yaml
+            $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/rbac.yaml
+            ```
+
+        2. [Apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your deployment, supplying necessary image name with a newer version tag. You can find the proper image name for the current Operator release [in the list of certified images](images.md) (for older releases, please refer to the [old releases documentation archive :octicons-link-external-16:](https://docs.percona.com/legacy-documentation/))). For example, updating to the `{{ release }}` version should look as follows.
+
+            ``` {.bash data-prompt="$" }
+            $ kubectl patch deployment percona-xtradb-cluster-operator \
+              -p'{"spec":{"template":{"spec":{"containers":[{"name":"percona-xtradb-cluster-operator","image":"percona/percona-xtradb-cluster-operator:{{ release }}"}]}}}}'
+            ```
+
+        3. The deployment rollout will be automatically triggered by the applied patch. You can track the rollout process in real time with the `kubectl rollout status` command with the name of your cluster:
+
+            ``` {.bash data-prompt="$" }
+            $ kubectl rollout status deployments percona-xtradb-cluster-operator
+            ```
+
+=== "Operator 1.14.0"
+
+    1. First of all you need to manually update `initContainer.image` Custom Resource option with the value of an alternative initial Operator installation image. You need doing this for all database clusters managed by the Operator. Without this step the cluster will go into error state after the Operator upgrade.
+
+        1. Find the `percona-xtradb-cluster-operator` Pod name with `kubectl get pods` command. Let's say the Pod name is  `percona-xtradb-cluster-operator-7cfd666b69-tk4rq`. Now see the actual image name with 
+The value which should be assigned to this option can be found with the `kubectl describe` command:
 
         ``` {.bash data-prompt="$" }
-        $ kubectl patch pxc cluster1 --type=merge --patch '{
-            "spec": {
-               "initImage":"registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:3232ae01d0ff1e17922a7f1b0f3c69ada18d3a335e68ff09e25c9b931c1cd319"
-            }}'
+        $ kubectl describe pod percona-xtradb-cluster-operator-7cfd666b69-tk4rq | grep Image:
         ```
+        
+        ??? example "Expected output"
 
-2. When you had updated the `initImage` option (Operator 1.14.0 and older), or just skipped this step (Operator 1.15.0 and newer), you can actually update the Operator.
+            ``` {.text .no-copy}
+            Image:         registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:4edb5a53230e023bbe54c8e9e1154579668423fc3466415d5b04b8304a8e01d7
+            ```
+
+        2. [Apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to update the `initContainer.image` option of your cluster Custom Resource with this value. Supposing that your cluster name is `cluster1`, the command should look as follows:
+
+
+            ``` {.bash data-prompt="$" }
+            $ kubectl patch pxc cluster1 --type=merge --patch '{
+                "spec": {
+                   "initContainer": { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:4edb5a53230e023bbe54c8e9e1154579668423fc3466415d5b04b8304a8e01d7" }
+                }}'
+            ```
+
+    2. Now you can actually update the Operator.
+
+        1. Update the [Custom Resource Definition :octicons-link-external-16:](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) for the Operator, taking it from the official repository on Github, and do the same for the Role-based access control:
+
+            ``` {.bash data-prompt="$" }
+            $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/crd.yaml
+            $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/rbac.yaml
+            ```
+
+        2. [Apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your deployment, supplying necessary image name with a newer version tag. You can find the proper image name for the current Operator release [in the list of certified images](images.md) (for older releases, please refer to the [old releases documentation archive :octicons-link-external-16:](https://docs.percona.com/legacy-documentation/))). For example, updating to the `{{ release }}` version should look as follows.
+
+            ``` {.bash data-prompt="$" }
+            $ kubectl patch deployment percona-xtradb-cluster-operator \
+              -p'{"spec":{"template":{"spec":{"containers":[{"name":"percona-xtradb-cluster-operator","image":"percona/percona-xtradb-cluster-operator:{{ release }}"}]}}}}'
+            ```
+
+        3. The deployment rollout will be automatically triggered by the applied patch. You can track the rollout process in real time with the `kubectl rollout status` command with the name of your cluster:
+
+            ``` {.bash data-prompt="$" }
+            $ kubectl rollout status deployments percona-xtradb-cluster-operator
+            ```
+
+=== "Operator 1.15.0 and newer"
 
     1. Update the [Custom Resource Definition :octicons-link-external-16:](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) for the Operator, taking it from the official repository on Github, and do the same for the Role-based access control:
 
@@ -37,7 +113,7 @@ The value which should be assigned to this option can be found with the `kubectl
         $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/rbac.yaml
         ```
 
-    2. Now you should [apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your deployment, supplying necessary image name with a newer version tag. You can find the proper image name for the current Operator release [in the list of certified images](images.md) (for older releases, please refer to the [old releases documentation archive :octicons-link-external-16:](https://docs.percona.com/legacy-documentation/))). For example, updating to the `{{ release }}` version should look as follows.
+    2. [Apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your deployment, supplying necessary image name with a newer version tag. You can find the proper image name for the current Operator release [in the list of certified images](images.md) (for older releases, please refer to the [old releases documentation archive :octicons-link-external-16:](https://docs.percona.com/legacy-documentation/))). For example, updating to the `{{ release }}` version should look as follows.
 
         ``` {.bash data-prompt="$" }
         $ kubectl patch deployment percona-xtradb-cluster-operator \
@@ -69,26 +145,42 @@ The value which should be assigned to this option can be found with the `kubectl
 2. Find the new `percona-xtradb-cluster-operator` Pod name with `kubectl get pods` command (it had changed during the Operator upgrade). Let's say the Pod name is  `percona-xtradb-cluster-operator-7547d9cd9d-6klkl`. Now see the **new** image name:
 
     ``` {.bash data-prompt="$" }
-    $ kubectl describe pod percona-xtradb-cluster-operator-7547d9cd9d-6klkl | grep Image
+    $ kubectl describe pod percona-xtradb-cluster-operator-7547d9cd9d-6klkl | grep Image:
     ```
 
     ??? example "Expected output"
 
         ``` {.text .no-copy}
-        Image:         percona/percona-xtradb-cluster-operator:{{ release }}
-        Image ID:      docker-pullable://percona/percona-xtradb-cluster-operator@sha256:e8c0237ace948653d8f3e297ec67276f23f4f7fb4f8018f97f246b65604d49e6
+        Image:         registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:e8c0237ace948653d8f3e297ec67276f23f4f7fb4f8018f97f246b65604d49e6
         ```
 
-3. Now [apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your Custom Resource, setting necessary Custom Resource version and image names with a newer version tag.
+3. [Apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to update the init image name in your cluster Custom Resource with this value. Supposing that your cluster name is `cluster1`, the command should look as follows:
 
-    Patching Custom Resource is done with the `kubectl patch pxc` command. Actual image names can be found [in the list of certified images](images.md) (for older releases, please refer to the [old releases documentation archive :octicons-link-external-16:](https://docs.percona.com/legacy-documentation/)). For example, updating `cluster1` cluster to the `{{ release }}` version should look as follows:
+    === "Operator 1.13.0 and older"
+
+        ``` {.bash data-prompt="$" }
+        $ kubectl patch pxc cluster1 --type=merge --patch '{
+            "spec": {               
+               "initImage": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:e8c0237ace948653d8f3e297ec67276f23f4f7fb4f8018f97f246b65604d49e6"
+            }}'
+        ```
+
+    === "Operator 1.14.0 and newer"
+
+        ``` {.bash data-prompt="$" }
+        $ kubectl patch pxc cluster1 --type=merge --patch '{
+            "spec": {
+               "initContainer": { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:e8c0237ace948653d8f3e297ec67276f23f4f7fb4f8018f97f246b65604d49e6" }
+            }}'
+            ```
+
+   Now use the same way to patch your Custom Resource, setting necessary Custom Resource version and other images names with a newer version tag. Needed image names can be found [in the list of certified images](images.md) (for older releases, please refer to the [old releases documentation archive :octicons-link-external-16:](https://docs.percona.com/legacy-documentation/)). For example, updating `cluster1` cluster to the `{{ release }}` version should look as follows:
 
     === "For Percona XtraDB Cluster 8.0"
         ```bash
         $ kubectl patch pxc cluster1 --type=merge --patch '{
            "spec": {
                "crVersion":"{{ release }}",
-               "initImage":"registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:e8c0237ace948653d8f3e297ec67276f23f4f7fb4f8018f97f246b65604d49e6",
                "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
                "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
                "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
@@ -103,7 +195,6 @@ The value which should be assigned to this option can be found with the `kubectl
         $ kubectl patch pxc cluster1 --type=merge --patch '{
            "spec": {
                "crVersion":"{{ release }}",
-               "initImage":"registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:e8c0237ace948653d8f3e297ec67276f23f4f7fb4f8018f97f246b65604d49e6",
                "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc57recommended }}" },
                "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
                "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
@@ -122,7 +213,6 @@ The value which should be assigned to this option can be found with the `kubectl
             $ kubectl patch pxc cluster1 --type=merge --patch '{
                "spec": {
                    "crVersion":"{{ release }}",
-                   "initImage":"registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:e8c0237ace948653d8f3e297ec67276f23f4f7fb4f8018f97f246b65604d49e6",
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
                    "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
                    "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
@@ -136,7 +226,6 @@ The value which should be assigned to this option can be found with the `kubectl
             $ kubectl patch pxc cluster1 --type=merge --patch '{
                "spec": {
                    "crVersion":"{{ release }}",
-                   "initImage":"registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:e8c0237ace948653d8f3e297ec67276f23f4f7fb4f8018f97f246b65604d49e6",
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc57recommended }}" },
                    "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
                    "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
