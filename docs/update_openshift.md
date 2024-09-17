@@ -172,7 +172,7 @@ Upgrading database and Operator on [Red Hat Marketplace :octicons-link-external-
             }}'
         ```
 
-   Now use the same way to patch your Custom Resource, setting necessary Custom Resource version and other images names with a newer version tag. Needed image names can be found [in the list of certified images](images.md) (for older releases, please refer to the [old releases documentation archive :octicons-link-external-16:](https://docs.percona.com/legacy-documentation/)). For example, updating `cluster1` cluster to the `{{ release }}` version should look as follows:
+    Now use the same way to patch your Custom Resource, setting necessary Custom Resource version and other images names with a newer version tag. Needed image names can be found [in the list of certified images](images.md) (for older releases, please refer to the [old releases documentation archive :octicons-link-external-16:](https://docs.percona.com/legacy-documentation/)). For example, updating `cluster1` cluster to the `{{ release }}` version should look as follows:
 
     === "For Percona XtraDB Cluster 8.0"
    
