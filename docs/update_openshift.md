@@ -170,11 +170,12 @@ Upgrading database and Operator on [Red Hat Marketplace :octicons-link-external-
             "spec": {
                "initContainer": { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:e8c0237ace948653d8f3e297ec67276f23f4f7fb4f8018f97f246b65604d49e6" }
             }}'
-            ```
+        ```
 
    Now use the same way to patch your Custom Resource, setting necessary Custom Resource version and other images names with a newer version tag. Needed image names can be found [in the list of certified images](images.md) (for older releases, please refer to the [old releases documentation archive :octicons-link-external-16:](https://docs.percona.com/legacy-documentation/)). For example, updating `cluster1` cluster to the `{{ release }}` version should look as follows:
 
     === "For Percona XtraDB Cluster 8.0"
+   
         ```bash
         $ kubectl patch pxc cluster1 --type=merge --patch '{
            "spec": {
@@ -187,8 +188,9 @@ Upgrading database and Operator on [Red Hat Marketplace :octicons-link-external-
                "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
            }}'
         ```
-
+   
     === "For Percona XtraDB Cluster 5.7"
+   
         ```bash
         $ kubectl patch pxc cluster1 --type=merge --patch '{
            "spec": {
@@ -207,6 +209,7 @@ Upgrading database and Operator on [Red Hat Marketplace :octicons-link-external-
         The above command upgrades various components of the cluster including PMM Client. If you didn't follow the [official recommendation :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/how-to/upgrade.html) to upgrade PMM Server before upgrading PMM Client, you can avoid PMM Client upgrade by removing it from the list of images as follows:
 
         === "For Percona XtraDB Cluster 8.0"
+   
             ```bash
             $ kubectl patch pxc cluster1 --type=merge --patch '{
                "spec": {
@@ -220,6 +223,7 @@ Upgrading database and Operator on [Red Hat Marketplace :octicons-link-external-
             ```
 
         === "For Percona XtraDB Cluster 5.7"
+   
             ```bash
             $ kubectl patch pxc cluster1 --type=merge --patch '{
                "spec": {
@@ -232,7 +236,7 @@ Upgrading database and Operator on [Red Hat Marketplace :octicons-link-external-
                }}'
             ```
 
-4. The deployment rollout will be automatically triggered by the applied patch. You can track the rollout process in real time with the `kubectl rollout status` command with the name of your cluster:
+5. The deployment rollout will be automatically triggered by the applied patch. You can track the rollout process in real time with the `kubectl rollout status` command with the name of your cluster:
 
     ```default
     $ kubectl rollout status sts cluster1-pxc
