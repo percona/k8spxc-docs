@@ -70,32 +70,24 @@ The value which should be assigned to this option can be found with the `kubectl
 
 2. Find the `percona-xtradb-cluster-operator` Pod with `kubectl get pods` command. Let's say the Pod name is  `percona-xtradb-cluster-operator-7cfd666b69-tk4rq`. Now see the **new** image name:
 
-        ``` {.bash data-prompt="$" }
-        $ kubectl describe pod percona-xtradb-cluster-operator-7cfd666b69-tk4rq | grep Image
+    ``` {.bash data-prompt="$" }
+    $ kubectl describe pod percona-xtradb-cluster-operator-7cfd666b69-tk4rq | grep Image
+    ```
+
+    ??? example "Expected output"
+
+        ``` {.text .no-copy}
+        Image:         percona/percona-xtradb-cluster-operator:1.14.0
+        Image ID:      docker-pullable://percona/percona-xtradb-cluster-operator@sha256:3232ae01d0ff1e17922a7f1b0f3c69ada18d3a335e68ff09e25c9b931c1cd319
         ```
-        
-        ??? example "Expected output"
 
-            ``` {.text .no-copy}
-            Image:         percona/percona-xtradb-cluster-operator:1.14.0
-            Image ID:      docker-pullable://percona/percona-xtradb-cluster-operator@sha256:3232ae01d0ff1e17922a7f1b0f3c69ada18d3a335e68ff09e25c9b931c1cd319
-            ```
-
-3. Now [apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/)
-    to your Custom Resource, setting necessary Custom Resource version and image
-    names with a newer version tag.
+3. Now [apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your Custom Resource, setting necessary Custom Resource version and image names with a newer version tag.
 
     !!! note
 
-        Check the version of the Operator you have in your Kubernetes
-        environment. Please refer to the [Operator upgrade guide](update.md#upgrading-the-operator-and-crd)
-        to upgrade the Operator and CRD, if needed.
+        Check the version of the Operator you have in your Kubernetes environment. Please refer to the [Operator upgrade guide](update.md#upgrading-the-operator-and-crd) to upgrade the Operator and CRD, if needed.
 
-    Patching Custom Resource is done with the `kubectl patch pxc` command.
-    Actual image names can be found [in the list of certified images](images.md)
-    (for older releases, please refer to the [old releases documentation archive :octicons-link-external-16:](https://docs.percona.com/legacy-documentation/)).
-    For example, updating `cluster1` cluster to the `{{ release }}` version
-    should look as follows:
+    Patching Custom Resource is done with the `kubectl patch pxc` command. Actual image names can be found [in the list of certified images](images.md) (for older releases, please refer to the [old releases documentation archive :octicons-link-external-16:](https://docs.percona.com/legacy-documentation/)). For example, updating `cluster1` cluster to the `{{ release }}` version should look as follows:
 
     === "For Percona XtraDB Cluster 8.0"
         ```bash
@@ -159,9 +151,7 @@ The value which should be assigned to this option can be found with the `kubectl
                }}'
             ```
 
-4. The deployment rollout will be automatically triggered by the applied patch.
-    You can track the rollout process in real time with the
-    `kubectl rollout status` command with the name of your cluster:
+4. The deployment rollout will be automatically triggered by the applied patch. You can track the rollout process in real time with the `kubectl rollout status` command with the name of your cluster:
 
     ```default
     $ kubectl rollout status sts cluster1-pxc
