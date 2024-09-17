@@ -8,6 +8,10 @@ the following ones:
 * [Custom Resource Definition (CRD)](operator.md),
 * Database Management System (Percona XtraDB Cluster).
 
+!!! note
+
+    Upgrading on the [OpenShift :octicons-link-external-16:](https://www.redhat.com/en/technologies/cloud-computing/openshift) platform needs additional steps. See [this HOWTO](update_openshift.md) for details.
+
 The list of recommended upgrade scenarios includes two variants:
 
 * Upgrade to the new versions of the Operator *and* Percona XtraDB Cluster,
