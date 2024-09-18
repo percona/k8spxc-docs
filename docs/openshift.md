@@ -14,10 +14,33 @@ Installing Percona XtraDB Cluster on OpenShift includes two steps:
 
 ## Install the Operator
 
-You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marketplace :octicons-link-external-16:](https://marketplace.redhat.com) web interface or using the command line interface.
+You can install Percona Operator for MySQL on OpenShift using the web interface (the [Operator Lifecycle Manager :octicons-link-external-16:](https://docs.redhat.com/en/documentation/openshift_container_platform/4.2/html/operators/understanding-the-operator-lifecycle-manager-olm#olm-overview_olm-understanding-olm) or [Red Hat Marketplace :octicons-link-external-16:](https://marketplace.redhat.com), or using the command line interface.
+
+### Install the Operator via the Operator Lifecycle Manager (OLM)
+
+Operator Lifecycle Manager (OLM) is a part of the [Operator Framework :octicons-link-external-16:](https://github.com/operator-framework) that allows you to install, update, and manage the Operators lifecycle on the OpenShift platform.
+
+Following steps will allow you to deploy the Operator and Percona XtraDB Cluster on your OLM installation:
+
+1. Login to the OLM and click the needed Operator on the OperatorHub page:
+
+    ![image](assets/images/olm1.svg)
+
+    Then click "Contiune", and "Install".
+
+2. A new page will allow you to choose the Operator version and the Namespace / OpenShift project you would like to install the Operator into. 
+
+    ![image](assets/images/olm2.svg)
+
+    Click "Install" button to actually install the Operator.
+
+3. When the installation finishes, you can deploy Percona XtraDB Cluster. In the "Operator Details" you will see Provided APIs (Custom Resources, available for installation). Click "Create instance" for the `PerconaXtraDBCluster` Custom Resource. 
+
+    ![image](assets/images/olm3.svg)
+
+    You will be able to edit manifest to set needed Custom Resource options, and then click "Create" button to deploy your database cluster.
 
 ### Install the Operator via the Red Hat Marketplace
-
 
 1. login to the Red Hat Marketplace and register your cluster [following the official instructions :octicons-link-external-16:](https://marketplace.redhat.com/en-us/workspace/clusters/add/register).
 
