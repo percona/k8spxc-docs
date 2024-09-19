@@ -10,7 +10,7 @@ Upgrading database and Operator on [Red Hat Marketplace :octicons-link-external-
 
     1. First of all you need to manually update `initImage` Custom Resource option with the value of an alternative initial Operator installation image. You need doing this for all database clusters managed by the Operator. Without this step the cluster will go into error state after the Operator upgrade.
 
-        1. Find the initial Operator installation image name with `kubectl get deploy` command:
+        1. Find the initial Operator installation image with `kubectl get deploy` command:
 
             ``` {.bash data-prompt="$" }
             $ kubectl get deploy percona-xtradb-cluster-operator -o yaml
@@ -37,17 +37,17 @@ Upgrading database and Operator on [Red Hat Marketplace :octicons-link-external-
 
     2. Now you can actually update the Operator via the [Operator Lifecycle Manager (OLM) :octicons-link-external-16:](https://docs.redhat.com/en/documentation/openshift_container_platform/4.2/html/operators/understanding-the-operator-lifecycle-manager-olm#olm-overview_olm-understanding-olm) web interface.
 
-    Login to your OLM installation and list installed Operators for your Namespace to see if there are upgradable items:
+        Login to your OLM installation and list installed Operators for your Namespace to see if there are upgradable items:
 
-    ![image](assets/images/olm4.svg)
+        ![image](assets/images/olm4.svg)
 
-    Click the "Upgrade available" link to see upgrade details, then click "Preview InstallPlan" button, and finally "Approve" to upgrade the Operator.
+        Click the "Upgrade available" link to see upgrade details, then click "Preview InstallPlan" button, and finally "Approve" to upgrade the Operator.
 
 === "Operator 1.14.0"
 
     1. First of all you need to manually update `initContainer.image` Custom Resource option with the value of an alternative initial Operator installation image. You need doing this for all database clusters managed by the Operator. Without this step the cluster will go into error state after the Operator upgrade.
 
-        1. Find the initial Operator installation image name with `kubectl get deploy` command:
+        1. Find the initial Operator installation image with `kubectl get deploy` command:
 
             ``` {.bash data-prompt="$" }
             $ kubectl get deploy percona-xtradb-cluster-operator -o yaml
@@ -74,11 +74,11 @@ Upgrading database and Operator on [Red Hat Marketplace :octicons-link-external-
 
     2. Now you can actually update the Operator via the [Operator Lifecycle Manager (OLM) :octicons-link-external-16:](https://docs.redhat.com/en/documentation/openshift_container_platform/4.2/html/operators/understanding-the-operator-lifecycle-manager-olm#olm-overview_olm-understanding-olm) web interface.
 
-    Login to your OLM installation and list installed Operators for your Namespace to see if there are upgradable items:
+        Login to your OLM installation and list installed Operators for your Namespace to see if there are upgradable items:
 
-    ![image](assets/images/olm4.svg)
+        ![image](assets/images/olm4.svg)
 
-    Click the "Upgrade available" link to see upgrade details, then click "Preview InstallPlan" button, and finally "Approve" to upgrade the Operator.
+        Click the "Upgrade available" link to see upgrade details, then click "Preview InstallPlan" button, and finally "Approve" to upgrade the Operator.
 
 === "Operator 1.15.0 and newer"
 
@@ -122,7 +122,7 @@ Upgrading database and Operator on [Red Hat Marketplace :octicons-link-external-
         ...
         ```
 
-3. [Apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to update the init image name in your cluster Custom Resource with this value. Supposing that your cluster name is `cluster1`, the command should look as follows:
+3. [Apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to update the init image in your cluster Custom Resource with this value. Supposing that your cluster name is `cluster1`, the command should look as follows:
 
     === "Operator 1.13.0 and older"
 
@@ -142,7 +142,7 @@ Upgrading database and Operator on [Red Hat Marketplace :octicons-link-external-
             }}'
         ```
 
-    Now use the same way to patch your Custom Resource, setting necessary Custom Resource version and other images names with a newer version tag. Needed image names can be found in the output of the same `kubectl get deploy` command:
+    Now use the same way to patch your Custom Resource, setting necessary Custom Resource version and other images with a newer version tag. Needed images can be found in the output of the same `kubectl get deploy` command:
 
     ``` {.bash data-prompt="$" }
     $ kubectl get deploy percona-xtradb-cluster-operator -o yaml
@@ -179,7 +179,7 @@ Upgrading database and Operator on [Red Hat Marketplace :octicons-link-external-
         ...
         ```
 
-    When you found image names, [apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your Custom Resource, setting necessary Custom Resource version and image names with a newer version tag.
+    When you have found all needed images, [apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your Custom Resource, setting necessary Custom Resource version and images.
 
     ```bash
     $ kubectl patch pxc cluster1 --type=merge --patch '{
