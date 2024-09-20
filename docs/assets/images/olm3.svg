@@ -2439,7 +2439,7 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:zoom="1.1892617"
-     inkscape:cx="335.50228"
+     inkscape:cx="335.50227"
      inkscape:cy="128.65125"
      inkscape:window-width="1920"
      inkscape:window-height="1014"
@@ -2735,8 +2735,9 @@
          xml:space="preserve"
          transform="matrix(0.74999997,0,0,0.74999997,294.49999,353.74999)"
          clip-path="url(#clipPath80)"
-         id="text85"><tspan
-           style="font-variant:normal;font-weight:bold;font-size:14px;font-family:'Noto Sans';writing-mode:lr-tb;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text85"
+         style="-inkscape-font-specification:'Arial, Bold';font-family:Arial;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:14.2222px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"><tspan
+           style="font-variant:normal;font-weight:bold;font-size:14.2222228px;font-family:Arial;writing-mode:lr-tb;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;-inkscape-font-specification:'Arial, Bold';font-style:normal;font-stretch:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
            x="0 8.5539703 18.339935 28.67189"
            y="0"
            sodipodi:role="line"
@@ -2749,7 +2750,7 @@
          clip-path="url(#clipPath81)"
          id="text86"
          style="-inkscape-font-specification:'Arial, Bold';font-family:Arial;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:14.2222px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"><tspan
-           style="font-variant:normal;font-weight:bold;font-size:14.2222228px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;-inkscape-font-specification:'Arial, Bold';font-style:normal;font-stretch:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           style="font-variant:normal;font-weight:bold;font-size:14.22222194px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;-inkscape-font-specification:'Arial, Bold';font-style:normal;font-stretch:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
            x="0 9.0999603 17.303925 22.651901 29.81987 38.443832 46.745804 54.515778 63.475739 69.411713 74.899689 82.669662 93.001617 102.53558 112.58754 116.00352 124.3055 131.03947 136.90544 145.10941"
            y="0"
            sodipodi:role="line"
@@ -2822,8 +2823,9 @@
          xml:space="preserve"
          transform="matrix(0.74999997,0,0,0.74999997,534.49998,353.74999)"
          clip-path="url(#clipPath101)"
-         id="text106"><tspan
-           style="font-variant:normal;font-weight:bold;font-size:14px;font-family:'Noto Sans';writing-mode:lr-tb;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text106"
+         style="-inkscape-font-specification:'Arial, Bold';font-family:Arial;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:14.2222px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"><tspan
+           style="font-variant:normal;font-weight:bold;font-size:14.2222228px;font-family:Arial;writing-mode:lr-tb;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;-inkscape-font-specification:'Arial, Bold';font-style:normal;font-stretch:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
            x="0 8.5539703 18.339935 28.67189"
            y="0"
            sodipodi:role="line"
@@ -2836,7 +2838,7 @@
          clip-path="url(#clipPath102)"
          id="text107"
          style="-inkscape-font-specification:'Arial, Bold';font-family:Arial;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:14.2222px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"><tspan
-           style="font-variant:normal;font-weight:bold;font-size:14.2222228px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;-inkscape-font-specification:'Arial, Bold';font-style:normal;font-stretch:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           style="font-variant:normal;font-weight:bold;font-size:14.22222194px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;-inkscape-font-specification:'Arial, Bold';font-style:normal;font-stretch:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
            x="0 9.0999603 17.303925 22.651901 29.81987 38.443832 46.745804 54.515778 63.475739 69.411713 74.899689 82.669662 93.001617 102.53558 112.58754 116.00352 124.3055 131.03947 136.90544 145.10941 150.80739 160.48135 168.25133 175.6993 183.37126 191.67323"
            y="0"
            sodipodi:role="line"
@@ -2920,8 +2922,9 @@
          xml:space="preserve"
          transform="matrix(0.74999997,0,0,0.74999997,774.49997,353.74999)"
          clip-path="url(#clipPath123)"
-         id="text129"><tspan
-           style="font-variant:normal;font-weight:bold;font-size:14px;font-family:'Noto Sans';writing-mode:lr-tb;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="text129"
+         style="-inkscape-font-specification:'Arial, Bold';font-family:Arial;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:14.2222px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"><tspan
+           style="font-variant:normal;font-weight:bold;font-size:14.2222228px;font-family:Arial;writing-mode:lr-tb;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;-inkscape-font-specification:'Arial, Bold';font-style:normal;font-stretch:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
            x="0 8.5539703 18.339935 28.67189"
            y="0"
            sodipodi:role="line"
