@@ -16,7 +16,8 @@ There are no unprivileged (general purpose) user accounts created by
 default. If you need general purpose users, please run commands below:
 
 ``` {.bash data-prompt="$" data-prompt-second="mysql>"}
-$ kubectl run -it --rm percona-client --image=percona:8.0 --restart=Never -- mysql -hcluster1-pxc -uroot -proot_password
+MYPASS=`kubectl get secrets cluster1-secrets -o yaml|grep "root:"|awk -F": " '{print $2}'| base64 -d`
+$ kubectl run -it --rm percona-client --image=percona:8.0 --restart=Never -- mysql -hcluster1-pxc -uroot -p$MYPASS
 mysql> GRANT ALL PRIVILEGES ON database1.* TO 'user1'@'%' IDENTIFIED BY 'password1';
 ```
 
