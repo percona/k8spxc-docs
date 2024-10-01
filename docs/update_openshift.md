@@ -147,14 +147,14 @@ Upgrading database and Operator on [Red Hat Marketplace :octicons-link-external-
         ...
         ```
 
-3. [Apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to set the necessary Custom Resource version and update images in your cluster Custom Resource. Supposing that your cluster name is `cluster1`, the command should look as follows:
+3. [Apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to set the necessary `crVersion` value (equal to the Operator version) and update images in your cluster Custom Resource. Supposing that your cluster name is `cluster1`, the command should look as follows:
 
     === "Operator 1.13.0 and older"
 
         ``` {.bash data-prompt="$" }
         $ kubectl patch pxc cluster1 --type=merge --patch '{
             "spec": {
-               "crVersion":"{{ release }}",
+               "crVersion":"1.13.0",
                "initImage": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:e8c0237ace948653d8f3e297ec67276f23f4f7fb4f8018f97f246b65604d49e6",
                "pxc":{ "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:b526b83865ca26808aa1ef96f64319f65deba94b76c5b5b6aa181981ebd4282f" },
                "proxysql": { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:24f6d959efcf2083addf42f3b816220654133dc8a5a8a989ffd4caffe122e19c" },
@@ -190,7 +190,7 @@ Upgrading database and Operator on [Red Hat Marketplace :octicons-link-external-
             ``` {.bash data-prompt="$" }
             $ kubectl patch pxc cluster1 --type=merge --patch '{
                 "spec": {
-                   "crVersion":"{{ release }}",
+                   "crVersion":"1.13.0",
                    "initImage": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:e8c0237ace948653d8f3e297ec67276f23f4f7fb4f8018f97f246b65604d49e6",
                    "pxc":{ "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:b526b83865ca26808aa1ef96f64319f65deba94b76c5b5b6aa181981ebd4282f" },
                    "proxysql": { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:24f6d959efcf2083addf42f3b816220654133dc8a5a8a989ffd4caffe122e19c" },
