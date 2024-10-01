@@ -106,7 +106,7 @@ Upgrading database and Operator on [Red Hat Marketplace :octicons-link-external-
         ...
     ```
 
-2. Find the **new** initial Operator installation image name with `kubectl get deploy` command (it had changed during the Operator upgrade):
+2. Find the **new** initial Operator installation image name (it had changed during the Operator upgrade) and other image names for the components of your cluster with the `kubectl get deploy` command:
 
     ``` {.bash data-prompt="$" }
     $ kubectl get deploy percona-xtradb-cluster-operator -o yaml
@@ -119,38 +119,6 @@ Upgrading database and Operator on [Red Hat Marketplace :octicons-link-external-
         "initContainer" : {
           "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:e8c0237ace948653d8f3e297ec67276f23f4f7fb4f8018f97f246b65604d49e6"
         },
-        ...
-        ```
-
-3. [Apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to update the init image in your cluster Custom Resource with this value. Supposing that your cluster name is `cluster1`, the command should look as follows:
-
-    === "Operator 1.13.0 and older"
-
-        ``` {.bash data-prompt="$" }
-        $ kubectl patch pxc cluster1 --type=merge --patch '{
-            "spec": {               
-               "initImage": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:e8c0237ace948653d8f3e297ec67276f23f4f7fb4f8018f97f246b65604d49e6"
-            }}'
-        ```
-
-    === "Operator 1.14.0 and newer"
-
-        ``` {.bash data-prompt="$" }
-        $ kubectl patch pxc cluster1 --type=merge --patch '{
-            "spec": {               
-               "initContainer": { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:e8c0237ace948653d8f3e297ec67276f23f4f7fb4f8018f97f246b65604d49e6" }
-            }}'
-        ```
-
-    Now use the same way to patch your Custom Resource, setting necessary Custom Resource version and other images with a newer version tag. Needed images can be found in the output of the same `kubectl get deploy` command:
-
-    ``` {.bash data-prompt="$" }
-    $ kubectl get deploy percona-xtradb-cluster-operator -o yaml
-    ```
-
-    ??? example "Expected output"
-
-        ``` {.text .no-copy}
         ...
         "pxc": {
           "size": 3,
@@ -179,35 +147,72 @@ Upgrading database and Operator on [Red Hat Marketplace :octicons-link-external-
         ...
         ```
 
-    When you have found all needed images, [apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your Custom Resource, setting necessary Custom Resource version and images.
+3. [Apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to set the necessary Custom Resource version and update images in your cluster Custom Resource. Supposing that your cluster name is `cluster1`, the command should look as follows:
 
-    ```bash
-    $ kubectl patch pxc cluster1 --type=merge --patch '{
-       "spec": {
-           "crVersion":"{{ release }}",
-           "pxc":{ "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:b526b83865ca26808aa1ef96f64319f65deba94b76c5b5b6aa181981ebd4282f" },
-           "proxysql": { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:24f6d959efcf2083addf42f3b816220654133dc8a5a8a989ffd4caffe122e19c" },
-           "haproxy":  { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:cbd4f1791941765eb6732f2dc88bad29bf23469898bd30f02d22a95c0f2aab9b" },
-           "backup":   { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:483acaa57378ee5529479dbcabb3b8002751c1c43edd5553b52f001f323d4723" },
-           "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" },
-           "pmm":      { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:165f97cdae2b6def546b0df7f50d88d83c150578bdb9c992953ed866615016f1" }
-       }}'
-    ```
+    === "Operator 1.13.0 and older"
+
+        ``` {.bash data-prompt="$" }
+        $ kubectl patch pxc cluster1 --type=merge --patch '{
+            "spec": {
+               "crVersion":"{{ release }}",
+               "initImage": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:e8c0237ace948653d8f3e297ec67276f23f4f7fb4f8018f97f246b65604d49e6",
+               "pxc":{ "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:b526b83865ca26808aa1ef96f64319f65deba94b76c5b5b6aa181981ebd4282f" },
+               "proxysql": { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:24f6d959efcf2083addf42f3b816220654133dc8a5a8a989ffd4caffe122e19c" },
+               "haproxy":  { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:cbd4f1791941765eb6732f2dc88bad29bf23469898bd30f02d22a95c0f2aab9b" },
+               "backup":   { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:483acaa57378ee5529479dbcabb3b8002751c1c43edd5553b52f001f323d4723" },
+               "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" },
+               "pmm":      { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:165f97cdae2b6def546b0df7f50d88d83c150578bdb9c992953ed866615016f1" }
+            }}'
+        ```
+
+    === "Operator 1.14.0 and newer"
+
+        ``` {.bash data-prompt="$" }
+        $ kubectl patch pxc cluster1 --type=merge --patch '{
+            "spec": {
+               "crVersion":"{{ release }}",
+               "initContainer": { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:e8c0237ace948653d8f3e297ec67276f23f4f7fb4f8018f97f246b65604d49e6" },
+               "pxc":{ "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:b526b83865ca26808aa1ef96f64319f65deba94b76c5b5b6aa181981ebd4282f" },
+               "proxysql": { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:24f6d959efcf2083addf42f3b816220654133dc8a5a8a989ffd4caffe122e19c" },
+               "haproxy":  { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:cbd4f1791941765eb6732f2dc88bad29bf23469898bd30f02d22a95c0f2aab9b" },
+               "backup":   { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:483acaa57378ee5529479dbcabb3b8002751c1c43edd5553b52f001f323d4723" },
+               "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" },
+               "pmm":      { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:165f97cdae2b6def546b0df7f50d88d83c150578bdb9c992953ed866615016f1" }
+            }}'
+        ```
 
     !!! warning
 
         The above command upgrades various components of the cluster including PMM Client. If you didn't follow the [official recommendation :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/how-to/upgrade.html) to upgrade PMM Server before upgrading PMM Client, you can avoid PMM Client upgrade by removing it from the list of images as follows:
 
-        ```bash
-        $ kubectl patch pxc cluster1 --type=merge --patch '{
-           "spec": {
-               "crVersion":"{{ release }}",
-               "pxc":{ "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:b526b83865ca26808aa1ef96f64319f65deba94b76c5b5b6aa181981ebd4282f" },
-               "proxysql": { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:24f6d959efcf2083addf42f3b816220654133dc8a5a8a989ffd4caffe122e19c" },
-               "haproxy":  { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:cbd4f1791941765eb6732f2dc88bad29bf23469898bd30f02d22a95c0f2aab9b" },
-               "backup":   { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:483acaa57378ee5529479dbcabb3b8002751c1c43edd5553b52f001f323d4723" },
-               "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" }
-               }}'
+        === "Operator 1.13.0 and older"
+
+            ``` {.bash data-prompt="$" }
+            $ kubectl patch pxc cluster1 --type=merge --patch '{
+                "spec": {
+                   "crVersion":"{{ release }}",
+                   "initImage": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:e8c0237ace948653d8f3e297ec67276f23f4f7fb4f8018f97f246b65604d49e6",
+                   "pxc":{ "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:b526b83865ca26808aa1ef96f64319f65deba94b76c5b5b6aa181981ebd4282f" },
+                   "proxysql": { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:24f6d959efcf2083addf42f3b816220654133dc8a5a8a989ffd4caffe122e19c" },
+                   "haproxy":  { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:cbd4f1791941765eb6732f2dc88bad29bf23469898bd30f02d22a95c0f2aab9b" },
+                   "backup":   { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:483acaa57378ee5529479dbcabb3b8002751c1c43edd5553b52f001f323d4723" },
+                   "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" }
+                }}'
+            ```
+
+        === "Operator 1.14.0 and newer"
+
+            ``` {.bash data-prompt="$" }
+            $ kubectl patch pxc cluster1 --type=merge --patch '{
+                "spec": {
+                   "crVersion":"{{ release }}",
+                   "initContainer": { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:e8c0237ace948653d8f3e297ec67276f23f4f7fb4f8018f97f246b65604d49e6" },
+                   "pxc":{ "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:b526b83865ca26808aa1ef96f64319f65deba94b76c5b5b6aa181981ebd4282f" },
+                   "proxysql": { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:24f6d959efcf2083addf42f3b816220654133dc8a5a8a989ffd4caffe122e19c" },
+                   "haproxy":  { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:cbd4f1791941765eb6732f2dc88bad29bf23469898bd30f02d22a95c0f2aab9b" },
+                   "backup":   { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:483acaa57378ee5529479dbcabb3b8002751c1c43edd5553b52f001f323d4723" },
+                   "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" }
+                }}'
             ```
 
 4. The deployment rollout will be automatically triggered by the applied patch. You can track the rollout process in real time with the `kubectl rollout status` command with the name of your cluster:
