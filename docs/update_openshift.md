@@ -149,7 +149,7 @@ Upgrading database and Operator on [Red Hat Marketplace :octicons-link-external-
 
 3. [Apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to set the necessary `crVersion` value (equal to the Operator version) and update images in your cluster Custom Resource. Supposing that your cluster name is `cluster1`, the command should look as follows:
 
-    === "Operator 1.13.0 and older"
+    === "Operator 1.13.0 or older"
 
         ``` {.bash data-prompt="$" }
         $ kubectl patch pxc cluster1 --type=merge --patch '{
@@ -165,7 +165,7 @@ Upgrading database and Operator on [Red Hat Marketplace :octicons-link-external-
             }}'
         ```
 
-    === "Operator 1.14.0 and newer"
+    === "Operator 1.14.0 or newer"
 
         ``` {.bash data-prompt="$" }
         $ kubectl patch pxc cluster1 --type=merge --patch '{
@@ -185,7 +185,7 @@ Upgrading database and Operator on [Red Hat Marketplace :octicons-link-external-
 
         The above command upgrades various components of the cluster including PMM Client. If you didn't follow the [official recommendation :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/how-to/upgrade.html) to upgrade PMM Server before upgrading PMM Client, you can avoid PMM Client upgrade by removing it from the list of images as follows:
 
-        === "Operator 1.13.0 and older"
+        === "Operator 1.13.0 or older"
 
             ``` {.bash data-prompt="$" }
             $ kubectl patch pxc cluster1 --type=merge --patch '{
@@ -200,7 +200,7 @@ Upgrading database and Operator on [Red Hat Marketplace :octicons-link-external-
                 }}'
             ```
 
-        === "Operator 1.14.0 and newer"
+        === "Operator 1.14.0 or newer"
 
             ``` {.bash data-prompt="$" }
             $ kubectl patch pxc cluster1 --type=merge --patch '{
