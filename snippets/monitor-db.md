@@ -57,7 +57,7 @@ To install PMM Client as a side-car container in your Kubernetes-based environme
             $ kubectl apply -f deploy/secrets.yaml -n <namespace>
             ```
 
-2. Update the `pmm` section in the [deploy/cr.yaml](https://github.com/percona/percona-server-mongodb-operator/blob/main/deploy/cr.yaml) file:
+2. Update the `pmm` section in the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file:
 
     * Set `pmm.enabled`=`true`.
     * Specify your PMM Server hostname / an IP address for the `pmm.serverHost` option. The PMM Server IP address should be resolvable and reachable from within your cluster.
