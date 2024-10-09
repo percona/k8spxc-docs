@@ -8,6 +8,10 @@ the following ones:
 * [Custom Resource Definition (CRD)](operator.md),
 * Database Management System (Percona XtraDB Cluster).
 
+!!! note
+
+    Additional steps are needed to upgrade database and Operator on [Red Hat Marketplace :octicons-link-external-16:](https://marketplace.redhat.com) or to upgrade Red Hat certified Operators on [OpenShift :octicons-link-external-16:](https://www.redhat.com/en/technologies/cloud-computing/openshift). See [this HOWTO](update_openshift.md) for details.
+
 The list of recommended upgrade scenarios includes two variants:
 
 * Upgrade to the new versions of the Operator *and* Percona XtraDB Cluster,
@@ -103,6 +107,16 @@ Operator with the `helm upgrade` command.
 !!! note
 
     You can use `helm upgrade` to upgrade the Operator only. The Database Management System (Percona XtraDB Cluster) should be upgraded in the same way whether you used helm to install it or not.
+
+### Upgrade via Operator Lifecycle Manager (OLM)
+
+If you have [installed the Operator on the OpenShift platform using OLM](openshift.md#install-the-operator-via-the-operator-lifecycle-manager-olm), you can upgrade the Operator within it.
+
+1. List installed Operators for your Namespace to see if there are upgradable items.
+
+    ![image](assets/images/olm4.svg)
+
+2. Click the "Upgrade available" link to see upgrade details, then click "Preview InstallPlan" button, and finally "Approve" to upgrade the Operator.
 
 ## Upgrading Percona XtraDB Cluster
 

@@ -224,6 +224,7 @@ nav:
           - Install the database with customized parameters: custom-install.md 
           - "How to install Percona XtraDB Cluster in multi-namespace (cluster-wide) mode": cluster-wide.md
           - "How to upgrade Percona XtraDB Cluster manually": update_manually.md
+          - "How to upgrade Percona XtraDB Cluster on OpenShift": update_openshift.md
           - "How to use private registry": custom-registry.md
           - "How to restore backup to a new Kubernetes-based environment": backups-restore-to-new-cluster.md
           - "How to use backups and asynchronous replication to move an external database to Kubernetes": backups-move-from-external-db.md
