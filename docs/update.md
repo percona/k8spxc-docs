@@ -35,7 +35,7 @@ than one, make several incremental updates sequentially.
 
 !!! warning
 
-    The Operator versions 1.14.0 and 1.15.0 should be excluded from the incremental upgrades sequence, because of the [new Custom Resource option added](operator.md#enablevolumeexpansion) both in 1.14.1 and 1.15.1 hotfix releases. The upgrade path from the version 1.14.1 should be 1.14.1 -> 1.15.1. Direct upgrades from 1.13.0 to 1.14.1 and from 1.14.0 to 1.15.1 are also supported.
+    The Operator versions 1.14.0 and 1.15.0 should be excluded from the incremental upgrades sequence in favor of [1.14.1](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.14.1.md) and [1.15.1](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.15.1.md) hotfix releases. So, the upgrade path from the version 1.14.1 should be 1.14.1 -> 1.15.1, and direct upgrades from 1.13.0 to 1.14.1 and from 1.14.0 to 1.15.1 are also supported.
 
 ### Manual upgrade
 
