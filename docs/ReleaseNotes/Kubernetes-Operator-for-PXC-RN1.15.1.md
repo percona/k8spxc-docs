@@ -27,7 +27,7 @@ The Operator was developed and tested with Percona XtraDB Cluster versions 8.0.3
 * PMM Client 2.42.0
 
 The following platforms were tested and are officially supported by the Operator
-1.15.0:
+1.15.1:
 
 * [Google Kubernetes Engine (GKE) :octicons-link-external-16:](https://cloud.google.com/kubernetes-engine) 1.27 - 1.30
 * [Amazon Elastic Container Service for Kubernetes (EKS) :octicons-link-external-16:](https://aws.amazon.com) 1.28 - 1.30
