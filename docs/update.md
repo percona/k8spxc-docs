@@ -31,12 +31,11 @@ The list of recommended upgrade scenarios includes two variants:
 Only the incremental update to a nearest version of the
 Operator is supported (for example, update from 1.4.0 to 1.5.0). To update
 to a newer version, which differs from the current version by more
-than one, make several incremental updates sequentially, for example,
-1.12.0 -> 1.13.0 -> 1.14.0.
+than one, make several incremental updates sequentially.
 
 !!! warning
 
-    The Operator version 1.15.0 should be excluded from the incremental upgrades sequence, because of the [new Custom Resource option added](operator.md#enablevolumeexpansion) both in 1.14.1 and 1.15.1 hotfix releases. The upgrade path from the version 1.14.1 should be 1.14.1 -> 1.15.1. Direct upgrade from 1.14.0 to 1.15.1 is also supported.
+    The Operator versions 1.14.0 and 1.15.0 should be excluded from the incremental upgrades sequence, because of the [new Custom Resource option added](operator.md#enablevolumeexpansion) both in 1.14.1 and 1.15.1 hotfix releases. The upgrade path from the version 1.14.1 should be 1.14.1 -> 1.15.1. Direct upgrades from 1.13.0 to 1.14.1 and from 1.14.0 to 1.15.1 are also supported.
 
 ### Manual upgrade
 
