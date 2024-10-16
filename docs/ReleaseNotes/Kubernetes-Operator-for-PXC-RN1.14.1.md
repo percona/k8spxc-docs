@@ -2,7 +2,7 @@
 
 * **Date**
 
-   October 15, 2024
+   October 16, 2024
 
 * **Installation**
 
@@ -10,7 +10,7 @@
 
 ## Bugs Fixed
 
-* {{ k8spxcjira(1476) }}: Fix a bug where upgrade could put the cluster in non-operational state if using Storage Classes without the Volume expansion capabilities, by introducing a new `enableVolumeExpansion` Custom Resource option toggling this functionality
+* {{ k8spxcjira(1476) }}: Fix a bug where upgrade could put the cluster into a non-operational state if using Storage Classes without the Volume expansion capabilities, by introducing a new `enableVolumeExpansion` Custom Resource option toggling this functionality
 
 ## Deprecation, Change, Rename and Removal
 
