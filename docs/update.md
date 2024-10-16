@@ -33,6 +33,11 @@ Operator is supported (for example, update from 1.4.0 to 1.5.0). To update
 to a newer version, which differs from the current version by more
 than one, make several incremental updates sequentially.
 
+!!! warning
+
+    The Operator versions 1.14.0 **should be excluded** from the incremental upgrades sequence in favor of [1.14.1](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.14.1.md) release.
+    * Direct upgrades from 1.13.0 to 1.14.1 are supported.
+
 ### Manual upgrade
 
 The upgrade includes the following steps.

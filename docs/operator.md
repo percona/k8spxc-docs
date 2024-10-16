@@ -40,6 +40,14 @@ Enables or disables schema validation before applying `cr.yaml` file (works only
 | ----------- | ---------- |
 | :material-toggle-switch-outline: boolean     | `true`  |
 
+### `enableVolumeExpansion`
+
+Enables or disables [automatic storage scaling / volume expansion](scaling.md#automated-scaling-with-volume-expansion-capability).
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-toggle-switch-outline: boolean     | `false`  |
+
 ### `pause`
 
 Pause/resume: setting it to `true` gracefully stops the cluster, and setting it to `false` after shut down starts the cluster back.
