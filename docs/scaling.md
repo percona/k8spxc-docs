@@ -70,10 +70,22 @@ $ kubectl describe sc <storage class name> | grep allowVolumeExpansion
     allowVolumeExpansion: true
     ```
 
-The Operator versions 1.14.0 and higher will automatically expand such storage
-for you when you change the
-`pxc.volumeSpec.persistentVolumeClaim.resources.requests.storage` option in the
-Custom Resource.
+You can enable automated scaling with the [enableVolumeExpansion](operator.md#enablevolumeexpansion) Custom Resource option (turned off by default). When enabled, the Operator will automatically expand such storage for you when you change the `pxc.volumeSpec.persistentVolumeClaim.resources.requests.storage` option in the Custom Resource:
+
+```yaml
+spec:
+  ...
+  enableVolumeExpansion: true
+    ...
+  pxc:
+    ...
+    volumeSpec:
+      ...
+      persistentVolumeClaim:
+        resources:
+          requests:
+            storage: <NEW STORAGE SIZE>
+```
 
 !!! warning
 
