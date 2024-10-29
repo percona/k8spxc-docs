@@ -94,7 +94,7 @@ Operator with the `helm upgrade` command.
     $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/rbac.yaml
     ```
 
-2. In case if you installed the Operator with no [customized parameters :octicons-link-external-16:](https://github.com/percona/percona-helm-charts/tree/main/charts/pxc-operator#installing-the-chart), the upgrade can be done as follows: 
+2. If you installed the Operator with no [customized parameters :octicons-link-external-16:](https://github.com/percona/percona-helm-charts/tree/main/charts/pxc-operator#installing-the-chart), the upgrade can be done as follows: 
 
     ``` {.bash data-prompt="$" }
     $ helm upgrade my-op percona/pxc-operator --version {{ release }}
