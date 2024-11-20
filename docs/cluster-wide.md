@@ -1,31 +1,96 @@
-# Install Percona XtraDB Cluster in multi-namespace (cluster-wide) mode
+# Percona Operator for MySQL based on Percona XtraDB Cluster single-namespace and multi-namespace deployment
 
-## Difference between single-namespace and multi-namespace Operator deployment
+There are two design patterns that you can choose from when deploying Percona Operator for MySQL based on Percona XtraDB Cluster and database clusters in Kubernetes:
 
-By default, Percona Operator for MySQL based on Percona XtraDB Cluster functions in a specific Kubernetes
-namespace. You can create one during installation (like it is shown in the
-[installation instructions](kubernetes.md)) or just use the `default`
-namespace. This approach allows several Operators to co-exist in one
-Kubernetes-based environment, being separated in different namespaces:
+* Namespace-scope - one Operator per Kubernetes namespace,
 
-![image](assets/images/cluster-wide-1.png)
+* Cluster-wide - one Operator can manage clusters in multiple namespaces.
 
-Still, sometimes it is more convenient to have one Operator watching for
+This how-to explains how to configure Percona Operator for MySQL based on Percona XtraDB Cluster for each scenario.
+
+## Namespace-scope
+
+By default, Percona Operator for MySQL functions in a specific Kubernetes namespace. You can
+create one during the installation (like it is shown in the
+[installation instructions](kubernetes.md)) or just use the default namespace. This approach allows several Operators to co-exist in one Kubernetes-based environment, being separated in different namespaces:
+
+![image](assets/images/cluster-wide-1.svg)
+
+Normally this is a recommended approach, as isolation minimizes impact in case of various failure scenarios. This is the default configuration of our Operator.
+
+Let’s say you will use a Kubernetes Namespace called `percona-db-1`.
+
+1. Clone `percona-xtradb-cluster-operator` repository:
+
+    ``` {.bash data-prompt="$" }
+    $ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
+    $ cd percona-xtradb-cluster-operator
+    ```
+
+2. Create your `percona-db-1` Namespace (if it doesn't yet exist) as follows:
+
+    ``` {.bash data-prompt="$" }
+    $ kubectl create namespace percona-db-1
+    ```
+
+3. Deploy the Operator [using :octicons-link-external-16:](https://kubernetes.io/docs/reference/using-api/server-side-apply/)
+    the following command:
+
+    ``` {.bash data-prompt="$" }
+    $ kubectl apply --server-side -f deploy/bundle.yaml -n percona-db-1
+    ```
+
+4. Once Operator is up and running, deploy the database cluster itself:
+
+    ``` {.bash data-prompt="$" }
+    $ kubectl apply -f deploy/cr.yaml -n percona-db-1
+    ```
+
+You can deploy multiple clusters in this namespace.
+
+### Add more namespaces
+
+What if there is a need to deploy clusters in another namespace? The solution for namespace-scope deployment is to have more than one Operator. We will use the `percona-db-2` namespace as an example.
+
+1. Create your `percona-db-2` namespace (if it doesn't yet exist) as follows:
+
+    ``` {.bash data-prompt="$" }
+    $ kubectl create namespace percona-db-2
+    ```
+
+2. Deploy the Operator:
+
+    ``` {.bash data-prompt="$" }
+    $ kubectl apply --server-side -f deploy/bundle.yaml -n percona-db-2
+    ```
+
+3. Once Operator is up and running deploy the database cluster itself:
+
+    ``` {.bash data-prompt="$" }
+    $ kubectl apply -f deploy/cr.yaml -n percona-db-2
+    ```
+
+    !!! note
+
+        Cluster names may be the same in different namespaces.
+
+## Installing the Operator in cluster-wide mode
+
+Sometimes it is more convenient to have one Operator watching for
 Percona XtraDB Cluster custom resources in several namespaces.
 
 We recommend running Percona Operator for MySQL in a traditional way,
-limited to a specific namespace. But it is possible to run it in so-called
-*cluster-wide* mode, one Operator watching several namespaces, if needed:
+limited to a specific namespace, to limit the blast radius. But it is possible
+to run it in so-called *cluster-wide* mode, one Operator watching several
+namespaces, if needed:
 
-![image](assets/images/cluster-wide-2.png)
+![image](assets/images/cluster-wide-2.svg)
 
 !!! note
 
     Please take into account that if several Operators are configured to
     watch the same namespace, it is entirely unpredictable which one will get
     ownership of the Custom Resource in it, so this situation should be avoided.
-
-## Installing the Operator in cluster-wide mode
 
 To use the Operator in such *cluster-wide* mode, you should install it with a
 different set of configuration YAML files, which are available in the `deploy`
