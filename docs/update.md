@@ -251,9 +251,9 @@ Manual update of Percona XtraDB Cluster can be done as follows:
 
 ### Automated upgrade
 
-*Smart Update strategy* allows you to automate upgrades even more. In this case
+If you have [*Smart Update strategy* turned on](#more-on-upgrade-strategies), you can automate upgrades even more with the `upgradeOptions.apply` option. In this case
 the Operator can either detect the availability of the new Percona XtraDB
-Cluster version, or rely on the user's choice of the version. To check the
+Cluster version, or rely on the your choice of the version. To check the
 availability of the new version, the Operator will query a special
 *Version Service* server at scheduled times to obtain fresh information about
 version numbers and valid image paths.
