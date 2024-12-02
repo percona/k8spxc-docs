@@ -21,6 +21,7 @@ The review of generic features, such as supported MySQL versions, open source mo
 | MySQL versions         |                  5.7, 8.0                  |                    8.0                   |           5.7          |       8.0      |          8.0          |    5.7, 8.0    |
 | Kubernetes conformance |         Various versions are tested        |        Various versions are tested       |     Not guaranteed     | Not guaranteed |     Not guaranteed    | Not guaranteed |
 | Paid support           |             :white_check_mark:             |            :white_check_mark:            |     :no_entry_sign:    | :no_entry_sign:|  :white_check_mark:   | :no_entry_sign:|
+| Web-based GUI          |  [Percona Everest](https://docs.percona.com/everest/index.html) |   :no_entry_sign:   |     :no_entry_sign:    | :no_entry_sign:|    :no_entry_sign:    | :no_entry_sign:|
 
 ## MySQL Topologies
 
