@@ -10,6 +10,31 @@
 
 ## Release Highlights
 
+### Declarative user management (technical preview)
+
+Before the Operator version 1.16.0 custom MySQL users had to be created manually. Now the declarative creation of custom MongoDB users [is supported](../users.md#unprivileged-users) via the `users` subsection in the Custom Resource. You can specify a new user in `deploy/cr.yaml` manifest, setting the user’s login name and host, PasswordSecretRef (a reference to a key in a Secret resource containing user’s password) and as well as databases the user is going to have access to and the appropriate permissions:
+
+```yaml
+...
+users:
+- name: my-user
+  db:
+  - test1
+  - test2
+  hosts:
+  - %
+  - localhost
+  - 111.111.111.111
+  passwordSecretRef: 
+	 name: my-user-password 
+    key: my-user-password-key
+  withGrantOption: yes
+	grants: 
+	- REPLICATION SLAVE
+	- ALL
+```
+
+See [documentation](../users.md#unprivileged-users) to find more details about this feature with additional explanations and the list of current limitations.
 
 ## New Features 
 
@@ -48,8 +73,7 @@ The Operator was developed and tested with Percona XtraDB Cluster versions 8.0.3
 * LogCollector based on fluent-bit 3.1.4
 * PMM Client 2.42.0
 
-The following platforms were tested and are officially supported by the Operator
-1.15.0:
+Percona Operators are designed for compatibility with all [CNCF :octicons-link-external-16:](https://www.cncf.io/) certified Kubernetes distributions. Our release process includes targeted testing and validation on major cloud provider platforms and OpenShift, as detailed below for Operator version 1.16.0:
 
 * [Google Kubernetes Engine (GKE) :octicons-link-external-16:](https://cloud.google.com/kubernetes-engine) 1.27 - 1.30
 * [Amazon Elastic Container Service for Kubernetes (EKS) :octicons-link-external-16:](https://aws.amazon.com) 1.28 - 1.30
