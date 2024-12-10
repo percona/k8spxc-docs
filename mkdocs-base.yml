@@ -241,6 +241,7 @@ nav:
           - Development documentation:
               - "Building and testing the Operator": https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.14.0/e2e-tests/README.md
               - "Contributing": https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.14.0/CONTRIBUTING.md
+          - "How we use artificial intelligence": ai-docs.md
           - "Copyright and licensing information": copyright.md
           - "Trademark policy": trademark-policy.md
     - Release Notes:
