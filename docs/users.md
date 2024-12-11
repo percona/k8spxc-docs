@@ -12,8 +12,63 @@ considered separately in the following sections.
 
 ## Unprivileged users
 
-There are no unprivileged (general purpose) user accounts created by
-default. If you need general purpose users, please run commands below:
+The Operator does not create unprivileged (general purpose) user accounts by default.
+There are two ways to create general purpose users:
+
+* manual creation of custom MySQL users,
+* automated users creation via Custom Resource (Operator versions 1.16.0 and newer).
+
+### Create users in the Custom Resource
+
+Starting from the Operator version 1.16.0 declarative creation of custom MySQL users is supported via the `users` subsection in the Custom Resource.
+
+!!! warning
+
+    Declarative user management has technical preview status and is not yet recommended for production environments.
+
+You can change `users` section in the `deploy/cr.yaml` configuration file at the cluster creation time, and adjust it over time.
+You can specify a new user in `deploy/cr.yaml` configuration file, setting the user's login name, hosts this user is allowed to connect from, accessible databases, a reference to a key in some Secret resource that contains user's password, as well as MySQL privilege grants for this user. You can find detailed description of the corresponding options in the [Custom Resource reference](operator.md#operator-users-section), and here is a self-explanatory example:
+
+``` {.bash data-prompt="$"}
+...
+users:
+- name: my-user
+  dbs:
+  - db1
+  - db2
+  hosts:
+  - localhost
+  grants:
+  - SELECT
+  - DELETE
+  - INSERT
+  withGrantOption: true
+  passwordSecretRef:
+    name: my-user-pwd
+    key: my-user-pwd-key
+...
+```
+
+The Secret mentioned in the `users.passwordSecretRef.name` option should look as follows:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-user-password
+type: Opaque
+stringData:
+  password: mypassword
+```
+
+The Operator tracks password changes in the Secrtet object, and updates the user password in the database, when needed. The following specifics should be taken into account:
+
+* when a user sets an invalid grant or sets an administrative (global) grant with some value set in `spec.user.dbs`, the Operator logs error and creates the user with the default grants (`GRANT USAGE`),
+* the Operator doesn't delete users if they are removed from Custom Resource, and this can bring a number of side effects. For example, when the host is updated in the `users.hosts` array (for example, `host1` changed to `host2`), a new user `user@host2` is created in addition to already existing `user@host1`. Moreover, if the password was updated in the secret for `user@host2`, and later the host in the Custom Resource was changed back to `host1`, the `user@host1` user will continue using the old password.
+
+### Create users manually
+
+You can create unprivileged users manually. Supposing your cluster name is `cluster1`, the command should look as follows (don't forget to substitute `root_password` with the real root password):
 
 ``` {.bash data-prompt="$" data-prompt-second="mysql>"}
 $ kubectl run -it --rm percona-client --image=percona:8.0 --restart=Never -- mysql -hcluster1-pxc -uroot -proot_password
@@ -22,7 +77,7 @@ mysql> GRANT ALL PRIVILEGES ON database1.* TO 'user1'@'%' IDENTIFIED BY 'passwor
 
 !!! note
 
-    MySQL password here should not exceed 32 characters due to the [replication-specific limit introduced in MySQL 5.7.5 :octicons-link-external-16:](https://dev.mysql.com/doc/relnotes/mysql/5.7/en/news-5-7-5.html).
+    MySQL password for the user you create should not exceed 32 characters due to the [replication-specific limit introduced in MySQL 5.7.5 :octicons-link-external-16:](https://dev.mysql.com/doc/relnotes/mysql/5.7/en/news-5-7-5.html).
 
 Verify that the user was created successfully. If successful, the
 following command will let you successfully login to MySQL shell via
