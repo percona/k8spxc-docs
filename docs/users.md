@@ -27,24 +27,26 @@ Starting from the Operator version 1.16.0 declarative creation of custom MySQL u
     Declarative user management has technical preview status and is not yet recommended for production environments.
 
 You can change `users` section in the `deploy/cr.yaml` configuration file at the cluster creation time, and adjust it over time.
-You can specify a new user in `deploy/cr.yaml` configuration file, setting the user's login name and database, a reference to a key in some Secret resource that contains user's password, as well as MongoDB roles on various databases which should be assigned to this user. You can find detailed description of the corresponding options in the [Custom Resource reference](operator.md#operator-users-section), and here is a self-explanatory example:
+You can specify a new user in `deploy/cr.yaml` configuration file, setting the user's login name, hosts this user is allowed to connect from, accessible databases, a reference to a key in some Secret resource that contains user's password, as well as MySQL privilege grants for this user. You can find detailed description of the corresponding options in the [Custom Resource reference](operator.md#operator-users-section), and here is a self-explanatory example:
 
 ``` {.bash data-prompt="$"}
 ...
 users:
-  - name: my-user
-    db: 
-    - db1
-    - db2
-    hosts:
-    - localhost
-    passwordSecretRef: 
-      name: my-user-password
-      key: my-user-password-key
-    grants:
-      - SELECT
-      - DELETE
-      - INSERT
+- name: my-user
+  dbs:
+  - db1
+  - db2
+  hosts:
+  - localhost
+  grants:
+  - SELECT
+  - DELETE
+  - INSERT
+  withGrantOption: true
+  passwordSecretRef:
+    name: my-user-pwd
+    key: my-user-pwd-key
+...
 ```
 
 The Secret mentioned in the `users.passwordSecretRef.name` option should look as follows:
@@ -59,8 +61,10 @@ stringData:
   password: mypassword
 ```
 
-The Operator tracks password changes in the Secrtet object, and updates the user password in the database, when needed.
-If the `host` is changed for the user in Custom Resource (for example, from `host1` to `host2`), the user is not updated, but the Operator will create a new one (both `user@host1` and `user@host2` will co-exist).
+The Operator tracks password changes in the Secrtet object, and updates the user password in the database, when needed. The following specifics should be taken into account:
+
+* when a user sets an invalid grant or sets an administrative (global) grant with some value set in `spec.user.dbs`, the Operator logs error and creates the user with the default grants (`GRANT USAGE`),
+* the Operator doesn't delete users if they are removed from Custom Resource, and this can bring a number of side effects. For example, when the host is updated in the `users.hosts` array (for example, `host1` changed to `host2`), a new user `user@host2` is created in addition to already existing `user@host1`. Moreover, if the password was updated in the secret for `user@host2`, and later the host in the Custom Resource was changed back to `host1`, the `user@host1` user will continue using the old password.
 
 ### Create users manually
 
