@@ -18,20 +18,20 @@ Before the Operator version 1.16.0 custom MySQL users had to be created manually
 ...
 users:
 - name: my-user
-  db:
-  - test1
-  - test2
+  dbs:
+  - db1
+  - db2
   hosts:
-  - %
   - localhost
-  - 111.111.111.111
-  passwordSecretRef: 
-	 name: my-user-password 
-    key: my-user-password-key
-  withGrantOption: yes
-	grants: 
-	- REPLICATION SLAVE
-	- ALL
+  grants:
+  - SELECT
+  - DELETE
+  - INSERT
+  withGrantOption: true
+  passwordSecretRef:
+    name: my-user-pwd
+    key: my-user-pwd-key
+...
 ```
 
 See [documentation](../users.md#unprivileged-users) to find more details about this feature with additional explanations and the list of current limitations.
