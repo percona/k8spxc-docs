@@ -2122,11 +2122,11 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 
 ## <a name="operator-users-section"></a>Users section
 
-The `users` section in the [deploy/cr.yaml  :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains various configuration options [to configure custom MongoDB users via the Custom Resource](users.md#create-users-in-the-custom-resource).
+The `users` section in the [deploy/cr.yaml  :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains various configuration options [to configure custom MySQL users via the Custom Resource](users.md#create-users-in-the-custom-resource).
 
 ### `users.name`
 
-The username of the MongoDB user.
+The username of the MySQL user.
 
 | Value type | Example |
 | ---------- | ------- |
@@ -2134,19 +2134,19 @@ The username of the MongoDB user.
 
 ### `users.dbs`
 
-Databases that the user authenticates against.
+Databases that the user authenticates against. If not specified, defaults to all databases (*). If user sets a administrative grants like SHUTDOWN, this field has to be omitted because administrative privileges are set on a global level.
 
 | Value type | Example |
 | ---------- | ------- |
-| :material-text-long: subdoc | <pre>- db1<br>-db2</pre> |
+| :material-application-array-outline: array | <pre>- db1<br>-db2</pre> |
 
-### `users.dbs`
+### `users.hosts`
 
-Hosts that the users are supposed to connect from (`%` if not specified).
+Hosts that the users are supposed to connect from (if not specified, defaults to '%' - similar to what is happening in MySQL). 
 
 | Value type | Example |
 | ---------- | ------- |
-| :material-text-long: subdoc | `- localhost` |
+| :material-application-array-outline: array | `- localhost` |
 
 ### `users.passwordSecretRef.name`
 
@@ -2164,13 +2164,23 @@ Key in the secret that corresponds to the value of the user's password.
 | ---------- | ------- |
 | :material-code-string: string | `password` |
 
+
+
+### `spec.users.withGrantOption`
+
+Defines if the user has grant options.
+
+| Value type | Example |
+| ---------- | ------- |
+| :material-toggle-switch-outline: boolean  | `false` |
+
 ### `users.grants`
 
 Privileges granted to the user.
 
 | Value type | Example |
 | ---------- | ------- |
-| :material-text-long: subdoc | <pre>- SELECT<br>- DELETE<br>- INSERT</pre> |
+| :material-application-array-outline: array | <pre>- SELECT<br>- DELETE<br>- INSERT</pre> |
 
 ## <a name="operator-pmm-section"></a>PMM section
 
