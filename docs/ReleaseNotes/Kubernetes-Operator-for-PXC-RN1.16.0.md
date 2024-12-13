@@ -2,7 +2,7 @@
 
 * **Date**
 
-   December XX, 2024
+   December 18, 2024
 
 * **Installation**
 
@@ -12,7 +12,7 @@
 
 ### Declarative user management (technical preview)
 
-Before the Operator version 1.16.0 custom MySQL users had to be created manually. Now the declarative creation of custom MongoDB users [is supported](../users.md#unprivileged-users) via the `users` subsection in the Custom Resource. You can specify a new user in `deploy/cr.yaml` manifest, setting the user’s login name and host, PasswordSecretRef (a reference to a key in a Secret resource containing user’s password) and as well as databases the user is going to have access to and the appropriate permissions:
+Before the Operator version 1.16.0 custom MySQL users had to be created manually. Now the declarative creation of custom MongoDB users [is supported](../users.md#unprivileged-users) via the `users` subsection in the Custom Resource. You can specify a new user in `deploy/cr.yaml` manifest, setting the user’s login name and hosts this user is allowed to connect from, PasswordSecretRef (a reference to a key in a Secret resource containing user’s password) and as well as databases the user is going to have access to and the appropriate permissions:
 
 ```yaml
 ...
@@ -38,22 +38,21 @@ See [documentation](../users.md#unprivileged-users) to find more details about t
 
 ## New Features 
 
-* {{ k8spxcjira(1421) }}: Provide documentation how to restore from xbstream file 
-* {{ k8spxcjira(1433) }}: Explain in which situations cluster-wide/multi-namespace installation should be used over single-namespace one
-* {{ k8spxcjira(1456) }}: Custom initContainers with custom securityContext for PXC pods
+* {{ k8spxcjira(377) }}: It is now possible to create and manage users via the Custom Resource
+* {{ k8spxcjira(1456) }}: Now the user can run Percona XtraDB Cluster Pods initContainers [with a security context different](../operator.md#initcontainercontainersecuritycontext) from the Pods security context, which may be useful to make customization for tuned Kubernetes environments (Thanks to Vlad Gusev for contribution)
 
 ## Improvements
 
-* {{ k8spxcjira(1411) }}: Allow enabling/disabling TLS in a running cluster
-* {{ k8spxcjira(1451) }}: Disable PVC resize by default
-* {{ k8spxcjira(1503) }}: Fix exec in pitr and proxysql pods
+* {{ k8spxcjira(1411) }}: Enabling/disabling TLS on a running cluster [is now possible](../TLS.md#enabling-or-disabling-tls-on-a-running-cluster) simply by toggling the appropriate Custom Resource option
+* {{ k8spxcjira(1451) }}: The [automated storage scaling](../scaling.md#automated-scaling-with-volume-expansion-capability) by default and need to be explicitly enabled with the `enableVolumeExpansion` Custom Resource option
+* {{ k8spxcjira(1503) }}: Logic improvement saves logs from a number of temporary non-critical errors related to ProxySQL user sync and non-presence of point-in-time recovery files (Thanks to dcaputo-harmoni for contribution)
 
 ## Bugs Fixed
 
-* {{ k8spxcjira(1398) }}: Scheduled PXC backup job pod fails to complete the process successfully in randomly/sporadically fashion
-* {{ k8spxcjira(1413) }}: PXC operator pod segfaults when restoring a backup without backup source populated in cr.yaml
-* {{ k8spxcjira(1416) }}: allowParallel:false leads to stuck backups if there is a failed backup
-* {{ k8spxcjira(1420) }}: PITR restore hung with duplicate key error
+* {{ k8spxcjira(1398) }}: Fix a bug which sporadically prevented the scheduled backup job Pod from successfully completing the process
+* {{ k8spxcjira(1413) }}: Fix the Operator Pod segfault which was occurring when restoring a backup without backup source specified in the Custom Resource
+* {{ k8spxcjira(1416) }}: Fix a bug where disabling parallel backups in Custom Resource caused all backups to stuck in presence of any failed backup
+* {{ k8spxcjira(1420) }}: Fix a bug where HAProxy exposed at the time of point-in-time restore could make conflicting transactions, causing the PITR Pod stuck on the duplicate key error
 * {{ k8spxcjira(1422) }}: Cluster Endpoint Change when Uprgading
 * {{ k8spxcjira(1443) }}: Operator can't survive system users "Host" part change
 * {{ k8spxcjira(1444) }}: PXC cluster initial creation state changed to error if backup restore happens for too long
