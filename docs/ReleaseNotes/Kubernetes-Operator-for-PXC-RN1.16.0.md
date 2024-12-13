@@ -46,6 +46,7 @@ See [documentation](../users.md#unprivileged-users) to find more details about t
 * {{ k8spxcjira(1411) }}: Enabling/disabling TLS on a running cluster [is now possible](../TLS.md#enabling-or-disabling-tls-on-a-running-cluster) simply by toggling the appropriate Custom Resource option
 * {{ k8spxcjira(1451) }}: The [automated storage scaling](../scaling.md#automated-scaling-with-volume-expansion-capability) by default and need to be explicitly enabled with the `enableVolumeExpansion` Custom Resource option
 * {{ k8spxcjira(1503) }}: Logic improvement saves logs from a number of temporary non-critical errors related to ProxySQL user sync and non-presence of point-in-time recovery files (Thanks to dcaputo-harmoni for contribution)
+* {{ k8spxcjira(1500) }}: A new `backup.activeDeadlineSeconds` Custom Resource option was added to fail the backup job after the specified timeout (Thanks to Vlad Gusev for contribution)
 
 ## Bugs Fixed
 
@@ -57,7 +58,6 @@ See [documentation](../users.md#unprivileged-users) to find more details about t
 * {{ k8spxcjira(1443) }}: Operator can't survive system users "Host" part change **Needs checking**
 * {{ k8spxcjira(1444) }}: Fix a bug where Percona XtraDB Cluster initial creation state was changing to "error" if the backup restore was taking too long
 * {{ k8spxcjira(1454) }}: Fix a bug where the Operator erroneously generated SSL secrets when upgrading from 1.14.0 to 1.15.0 with `allowUnsafeConfigurations: true`Custom Resource option
-* {{ k8spxcjira(1500) }}: Backup job doesn't fail and garbd doesn't stop after xbcloud upload failure
 
 ## Supported Platforms
 
