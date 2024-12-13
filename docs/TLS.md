@@ -335,7 +335,7 @@ spec:
     enabled: false
 ```
 
-### Enabling/disabling TLS on a running cluster
+### Enabling or disabling TLS on a running cluster
 
 You can set `tls.enabled` Custom Resource option to `true` or `false` to enable or disable TLS. However, doing this on a running cluster results in downtime and has the following side effects.
 
