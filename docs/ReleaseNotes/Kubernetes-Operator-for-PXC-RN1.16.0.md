@@ -46,7 +46,7 @@ See [documentation](../users.md#unprivileged-users) to find more details about t
 * {{ k8spxcjira(1411) }}: Enabling/disabling TLS on a running cluster [is now possible](../TLS.md#enabling-or-disabling-tls-on-a-running-cluster) simply by toggling the appropriate Custom Resource option
 * {{ k8spxcjira(1451) }}: The [automated storage scaling](../scaling.md#automated-scaling-with-volume-expansion-capability) by default and need to be explicitly enabled with the `enableVolumeExpansion` Custom Resource option
 * {{ k8spxcjira(1503) }}: Logic improvement saves logs from a number of temporary non-critical errors related to ProxySQL user sync and non-presence of point-in-time recovery files (Thanks to dcaputo-harmoni for contribution)
-* {{ k8spxcjira(1500) }}: A new `backup.activeDeadlineSeconds` Custom Resource option was added to fail the backup job after the specified timeout (Thanks to Vlad Gusev for contribution)
+* {{ k8spxcjira(1500) }}: A new `backup.activeDeadlineSeconds` Custom Resource option was added to fail the backup job automatically after the specified timeout (Thanks to Vlad Gusev for contribution)
 
 ## Bugs Fixed
 
@@ -69,7 +69,7 @@ The Operator was developed and tested with Percona XtraDB Cluster versions 8.4.2
 * LogCollector based on fluent-bit 3.2.2
 * PMM Client 2.43.2
 
-Percona Operators are designed for compatibility with all [CNCF :octicons-link-external-16:](https://www.cncf.io/training/certification/software-conformance/) certified Kubernetes distributions. Our release process includes targeted testing and validation on major cloud provider platforms and OpenShift, as detailed below for Operator version 1.16.0:
+Percona Operators are designed for compatibility with all [CNCF-certified :octicons-link-external-16:](https://www.cncf.io/training/certification/software-conformance/) Kubernetes distributions. Our release process includes targeted testing and validation on major cloud provider platforms and OpenShift, as detailed below for Operator version 1.16.0:
 
 * [Google Kubernetes Engine (GKE) :octicons-link-external-16:](https://cloud.google.com/kubernetes-engine) 1.28 - 1.30
 * [Amazon Elastic Container Service for Kubernetes (EKS) :octicons-link-external-16:](https://aws.amazon.com) 1.28 - 1.31
