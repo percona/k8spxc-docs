@@ -53,9 +53,9 @@ See [documentation](../users.md#unprivileged-users) to find more details about t
 * {{ k8spxcjira(1413) }}: Fix the Operator Pod segfault which was occurring when restoring a backup without backup source specified in the Custom Resource
 * {{ k8spxcjira(1416) }}: Fix a bug where disabling parallel backups in Custom Resource caused all backups to stuck in presence of any failed backup
 * {{ k8spxcjira(1420) }}: Fix a bug where HAProxy exposed at the time of point-in-time restore could make conflicting transactions, causing the PITR Pod stuck on the duplicate key error
-* {{ k8spxcjira(1422) }}: Cluster Endpoint Change when Uprgading
-* {{ k8spxcjira(1443) }}: Operator can't survive system users "Host" part change
-* {{ k8spxcjira(1444) }}: PXC cluster initial creation state changed to error if backup restore happens for too long
+* {{ k8spxcjira(1422) }}: Fix the cluster endpoint change from the external IP to the service name when upgrading the Operator
+* {{ k8spxcjira(1443) }}: Operator can't survive system users "Host" part change **Needs checking**
+* {{ k8spxcjira(1444) }}: Fix a bug where Percona XtraDB Cluster initial creation state was changing to "error" if the backup restore was taking too long
 * {{ k8spxcjira(1396) }}: The `xtrabackup` user didn't have rights to grant privileges available in its own privilege level to other users, which caused the point-in-time recovery fail due to access denied
 * {{ k8spxcjira(1454) }}: Operator generate ssl secrets as soon as it was updates to v1.15.0
 * {{ k8spxcjira(1458) }}: Fix panic when getting storage type
