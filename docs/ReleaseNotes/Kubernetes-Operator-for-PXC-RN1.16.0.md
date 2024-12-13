@@ -73,7 +73,7 @@ The Operator was developed and tested with Percona XtraDB Cluster versions 8.0.3
 * LogCollector based on fluent-bit 3.1.4
 * PMM Client 2.42.0
 
-Percona Operators are designed for compatibility with all [CNCF :octicons-link-external-16:](https://www.cncf.io/) certified Kubernetes distributions. Our release process includes targeted testing and validation on major cloud provider platforms and OpenShift, as detailed below for Operator version 1.16.0:
+Percona Operators are designed for compatibility with all [CNCF :octicons-link-external-16:](https://www.cncf.io/training/certification/software-conformance/) certified Kubernetes distributions. Our release process includes targeted testing and validation on major cloud provider platforms and OpenShift, as detailed below for Operator version 1.16.0:
 
 * [Google Kubernetes Engine (GKE) :octicons-link-external-16:](https://cloud.google.com/kubernetes-engine) 1.27 - 1.30
 * [Amazon Elastic Container Service for Kubernetes (EKS) :octicons-link-external-16:](https://aws.amazon.com) 1.28 - 1.30
