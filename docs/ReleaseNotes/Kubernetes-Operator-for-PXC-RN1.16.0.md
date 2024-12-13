@@ -50,16 +50,13 @@ See [documentation](../users.md#unprivileged-users) to find more details about t
 ## Bugs Fixed
 
 * {{ k8spxcjira(1398) }}: Fix a bug which sporadically prevented the scheduled backup job Pod from successfully completing the process
-* {{ k8spxcjira(1413) }}: Fix the Operator Pod segfault which was occurring when restoring a backup without backup source specified in the Custom Resource
+* {{ k8spxcjira(1413) }} and {{ k8spxcjira(1458) }}: Fix the Operator Pod segfault which was occurring when restoring a backup without backupSource Custom Resource subsection or without storage specified in the backupSource
 * {{ k8spxcjira(1416) }}: Fix a bug where disabling parallel backups in Custom Resource caused all backups to stuck in presence of any failed backup
 * {{ k8spxcjira(1420) }}: Fix a bug where HAProxy exposed at the time of point-in-time restore could make conflicting transactions, causing the PITR Pod stuck on the duplicate key error
 * {{ k8spxcjira(1422) }}: Fix the cluster endpoint change from the external IP to the service name when upgrading the Operator
 * {{ k8spxcjira(1443) }}: Operator can't survive system users "Host" part change **Needs checking**
 * {{ k8spxcjira(1444) }}: Fix a bug where Percona XtraDB Cluster initial creation state was changing to "error" if the backup restore was taking too long
-* {{ k8spxcjira(1396) }}: The `xtrabackup` user didn't have rights to grant privileges available in its own privilege level to other users, which caused the point-in-time recovery fail due to access denied
-* {{ k8spxcjira(1454) }}: Operator generate ssl secrets as soon as it was updates to v1.15.0
-* {{ k8spxcjira(1458) }}: Fix panic when getting storage type
-* {{ k8spxcjira(1464) }}: haproxy can't start after kubelet/worker node restart
+* {{ k8spxcjira(1454) }}: Fix a bug where the Operator erroneously generated SSL secrets when upgrading from 1.14.0 to 1.15.0 with `allowUnsafeConfigurations: true`Custom Resource option
 * {{ k8spxcjira(1500) }}: Backup job doesn't fail and garbd doesn't stop after xbcloud upload failure
 
 ## Supported Platforms
