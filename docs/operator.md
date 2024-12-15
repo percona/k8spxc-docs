@@ -2226,6 +2226,14 @@ The number of retries to make a backup (by default, 10 retries are made).
 | ----------- | ---------- |
 | :material-numeric-1-box: int     | `6` |
 
+### `backup.activeDeadlineSeconds`
+
+The timeout value in seconds, after which backup job will automatically fail.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `3600` |
+
 ### `backup.imagePullSecrets.name`
 
 The [Kubernetes imagePullSecrets :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/secret/#using-imagepullsecrets) for the specified image.
