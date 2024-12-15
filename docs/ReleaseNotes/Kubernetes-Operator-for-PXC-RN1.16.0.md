@@ -12,7 +12,7 @@
 
 ### Declarative user management (technical preview)
 
-Before the Operator version 1.16.0 custom MySQL users had to be created manually. Now the declarative creation of custom MongoDB users [is supported](../users.md#unprivileged-users) via the `users` subsection in the Custom Resource. You can specify a new user in `deploy/cr.yaml` manifest, setting the user’s login name and hosts this user is allowed to connect from, PasswordSecretRef (a reference to a key in a Secret resource containing user’s password) and as well as databases the user is going to have access to and the appropriate permissions:
+Before the Operator version 1.16.0 custom MySQL users had to be created manually. Now the declarative creation of custom MySQL users [is supported](../users.md#unprivileged-users) via the `users` subsection in the Custom Resource. You can specify a new user in `deploy/cr.yaml` manifest, setting the user’s login name and hosts this user is allowed to connect from, PasswordSecretRef (a reference to a key in a Secret resource containing user’s password) and as well as databases the user is going to have access to and the appropriate permissions:
 
 ```yaml
 ...
@@ -39,7 +39,7 @@ See [documentation](../users.md#unprivileged-users) to find more details about t
 ## New Features 
 
 * {{ k8spxcjira(377) }}: It is now possible to create and manage users via the Custom Resource
-* {{ k8spxcjira(1456) }}: Now the user can run Percona XtraDB Cluster Pods initContainers [with a security context different](../operator.md#initcontainercontainersecuritycontext) from the Pods security context, which may be useful to make customization for tuned Kubernetes environments (Thanks to Vlad Gusev for contribution)
+* {{ k8spxcjira(1456) }}: Now the user can run Percona XtraDB Cluster Pods initContainers [with a security context different](../operator.md#initcontainercontainersecuritycontext) from the Pods security context, useful to customize deployment on tuned Kubernetes environments (Thanks to Vlad Gusev for contribution)
 
 ## Improvements
 
