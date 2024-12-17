@@ -46,13 +46,10 @@ the following information there:
 
 !!! note
 
-        Installing the Operator cluster-wide on OpenShift via the the Operator
-        Lifecycle Manager (OLM) requires
-        [making different selections in the OLM web-based UI](openshift.md#install-the-operator-via-the-operator-lifecycle-manager-olm)
-        instead of patching YAML files.
-
-
-    
+    Installing the Operator cluster-wide on OpenShift via the the Operator
+    Lifecycle Manager (OLM) requires
+    [making different selections in the OLM web-based UI](openshift.md#install-the-operator-via-the-operator-lifecycle-manager-olm)
+    instead of patching YAML files.
 
 The following simple example shows how to install Operator cluster-wide on
 Kubernetes.
