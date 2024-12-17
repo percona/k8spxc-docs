@@ -32,6 +32,12 @@ Following steps will allow you to deploy the Operator and Percona XtraDB Cluster
 
     ![image](assets/images/olm2.svg)
 
+    !!! note
+    
+        If you are going to install the Operator in [multi-namespace (cluster-wide) mode](cluster-wide.md), please choose values with `-cw` suffix for the update channel and version:
+        
+        ![image](assets/images/olm-cw.svg)
+
     Click "Install" button to actually install the Operator.
 
 3. When the installation finishes, you can deploy Percona XtraDB Cluster. In the "Operator Details" you will see Provided APIs (Custom Resources, available for installation). Click "Create instance" for the `PerconaXtraDBCluster` Custom Resource. 
