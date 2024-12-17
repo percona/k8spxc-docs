@@ -63,8 +63,9 @@ stringData:
 
 The Operator tracks password changes in the Secrtet object, and updates the user password in the database, when needed. The following specifics should be taken into account:
 
-* when a user sets an invalid grant or sets an administrative (global) grant with some value present in `spec.user.dbs`, the Operator logs error and creates the user with the default grants (`GRANT USAGE`),
-* the Operator doesn't delete users if they are removed from Custom Resource, and this can bring a number of side effects. For example, when the host is updated in the `users.hosts` array (for example, `host1` changed to `host2`), the new `user@host2` user is created in addition to the already existing `user@host1`. Moreover, if the password was updated in the secret for `user@host2`, the `user@host1` user will continue using the old password.
+* When a user sets an invalid grant or sets an administrative (global) grant with some value present in `spec.user.dbs`, the Operator logs error and creates the user with the default grants (`GRANT USAGE`).
+* The Operator doesn't delete users if they are removed from Custom Resource, and this can bring a number of side effects. For example, when the host is updated in the `users.hosts` array (for example, `host1` changed to `host2`), the new `user@host2` user is created in addition to the already existing `user@host1`. Moreover, if the password was updated in the secret for `user@host2`, the `user@host1` user will continue using the old password.
+* The Operator updates grants specified for the user in additive manner: it adds new grants but doesn't revoke existing ones.
 
 ### Create users manually
 
