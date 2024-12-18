@@ -2150,7 +2150,7 @@ Hosts that the users are supposed to connect from (if not specified, defaults to
 
 ### `users.passwordSecretRef.name`
 
-Name of the secret that contains the user's password.
+Name of the secret that contains the user's password. If not provided, the Operator will create the secret and generate password automatically.
 
 | Value type | Example |
 | ---------- | ------- |
@@ -2158,7 +2158,7 @@ Name of the secret that contains the user's password.
 
 ### `users.passwordSecretRef.key`
 
-Key in the secret that corresponds to the value of the user's password.
+Key in the secret that corresponds to the value of the user's password (`password` by defalut).
 
 | Value type | Example |
 | ---------- | ------- |
