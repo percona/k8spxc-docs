@@ -186,6 +186,14 @@ An alternative image for the initial Operator installation.
 | ----------- | ---------- |
 | :material-code-string: string     | `percona/percona-xtradb-cluster-operator:{{ release }}` |
 
+###`initContainer.containerSecurityContext`
+
+A custom [Kubernetes Security Context for a Container :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) for the image used for the initial Operator installation.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-text-long: subdoc     | <pre>privileged: false<br>runAsUser: 1001<br>runAsGroup: 1001</pre> |
+
 ### `initContainer.resources.requests.memory`
 
 The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for an image used while the initial Operator installation.
