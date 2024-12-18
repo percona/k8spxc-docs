@@ -8,10 +8,6 @@ This provides the foundation for the Percona Operator for MySQL, enabling simpli
 
 ---
 
-Percona Operator for MySQL Based on Percona XtraDB Cluster creates a highly available, resilient, and scalable MySQL environment tailored for containerized applications. It enables organizations to deploy MySQL clusters rapidly, reduce manual intervention, and integrate seamlessly with modern cloud-native infrastructure. With features like self-healing, dynamic scaling, and secure data handling, the Percona Operator for MySQL is a leading solution  for managing MySQL in Kubernetes environments.
-
----
-
 ## Key Features and Benefits  
 
 #### 1. **Automated Deployment and Scaling**  
