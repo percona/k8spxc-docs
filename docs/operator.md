@@ -2106,7 +2106,7 @@ Additional configuration options (see [Fluent Bit official documentation :octico
 
 ### `logcollector.resources.requests.memory`
 
-The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Log Collector container.
+The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Log Collector sidecar container in a pxc Pod.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -2114,7 +2114,7 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 
 ### `logcollector.resources.requests.cpu`
 
-[Kubernetes CPU requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Log collector container.
+[Kubernetes CPU requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Log collector sidecar container in a pxc Pod.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -2332,7 +2332,7 @@ The [Kubernetes annotations :octicons-link-external-16:](https://kubernetes.io/d
 
 ### `backup.storages.STORAGE-NAME.resources.requests.memory`
 
-The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Percona XtraDB Cluster container.
+The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Percona XtraBackup container.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -2340,7 +2340,7 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 
 ### `backup.storages.STORAGE-NAME.resources.requests.cpu`
 
-[Kubernetes CPU requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Percona XtraDB Cluster container.
+[Kubernetes CPU requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Percona XtraBackup container.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -2348,11 +2348,19 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 
 ### `backup.storages.STORAGE-NAME.resources.limits.memory`
 
-[Kubernetes memory limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Percona XtraDB Cluster container.
+[Kubernetes memory limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Percona XtraBackup container.
 
 | Value type  | Example    |
 | ----------- | ---------- |
-| :material-code-string: string     | `1G` |
+| :material-code-string: string     | `1.5G` |
+
+### `backup.storages.STORAGE-NAME.resources.limits.cpu`
+
+[Kubernetes CPU limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Percona XtraBackup container.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `700m` |
 
 ### `backup.storages.STORAGE-NAME.nodeSelector`
 
@@ -2537,6 +2545,38 @@ Timeout in seconds for the binlog to be uploaded; the  binlog uploader container
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-numeric-1-box: int     | `60` |
+
+### `backup.pitr.resources.requests.memory`
+
+The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Fluent Bit Log Collector  container.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `0.1G` |
+
+### `backup.pitr.resources.requests.cpu`
+
+[Kubernetes CPU requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Fluent Bit Log Collector container.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `100m` |
+
+### `backup.pitr.resources.limits.memory`
+
+[Kubernetes memory limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Fluent Bit Log Collector container.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `1G` |
+
+### `backup.pitr.resources.limits.cpu`
+
+[Kubernetes CPU limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Fluent Bit Log Collector container.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `700m` |
 
 ## <a name="operator-backupsource-section"></a> PerconaXtraDBClusterRestore Custom Resource options
 
