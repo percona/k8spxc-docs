@@ -2,7 +2,7 @@
 
 * **Date**
 
-   December 18, 2024
+   December 19, 2024
 
 * **Installation**
 
@@ -36,6 +36,11 @@ users:
 
 See [documentation](../users.md#unprivileged-users) to find more details about this feature with additional explanations and the list of current limitations.
 
+### Percona XtraDB Cluster 8.4 support (technical preview)
+
+Percona XtraDB Cluster based on Percona Server for MySQL 8.4 versions is now supported by the Operator in addition to 8.0 and 5.7 versions. The appropriate images for Percona XtraDB Cluster and Percona XtraBackup are included into the [list of Percona-certified images](../images.md).
+Being a technical preview, Percona XtraDB Cluster 8.4 is not yet recommended for production environments. 
+
 ## New Features 
 
 * {{ k8spxcjira(377) }}: It is now possible to create and manage users via the Custom Resource
@@ -43,10 +48,13 @@ See [documentation](../users.md#unprivileged-users) to find more details about t
 
 ## Improvements
 
+* {{ k8spxcjira(1230) }} and {{ k8spxcjira(1378) }}: Now the Operator assigns labels to all Kubernetes objects it creates (backups/restores, Secrets, Volumes, etc.) to make them clearly distinguishable
 * {{ k8spxcjira(1411) }}: Enabling/disabling TLS on a running cluster [is now possible](../TLS.md#enabling-or-disabling-tls-on-a-running-cluster) simply by toggling the appropriate Custom Resource option
 * {{ k8spxcjira(1451) }}: The [automated storage scaling](../scaling.md#automated-scaling-with-volume-expansion-capability) is now disabled by default and needs to be explicitly enabled with the `enableVolumeExpansion` Custom Resource option
+* {{ k8spxcjira(1462) }}: A restart of Percona XtraDB Cluster Pods is now triggered by the monitor user’s password change if the user secret is used within a sidecar container, which can be useful for custom monitoring solutions (Thanks to Vlad Gusev for contribution)
 * {{ k8spxcjira(1503) }}: Improved logic saves logs from the appearance of a number of temporary non-critical errors related to ProxySQL user sync and non-presence of point-in-time recovery files (Thanks to dcaputo-harmoni for contribution)
 * {{ k8spxcjira(1500) }}: A new `backup.activeDeadlineSeconds` Custom Resource option was added to fail the backup job automatically after the specified timeout (Thanks to Vlad Gusev for contribution)
+* {{ k8spxcjira(1532) }}: The peer-list tool used by the Operator was removed from standard HAProxy, ProxySQL and PXC Docker images because recent Operator versions are adding it with the initContainer approach
 
 ## Bugs Fixed
 
@@ -58,6 +66,11 @@ See [documentation](../users.md#unprivileged-users) to find more details about t
 * {{ k8spxcjira(1444) }}: Fix a bug where Percona XtraDB Cluster initial creation state was changing to "error" if the backup restore was taking too long
 * {{ k8spxcjira(1454) }}: Fix a bug where the Operator erroneously generated SSL secrets when upgrading from 1.14.0 to 1.15.0 with `allowUnsafeConfigurations: true`Custom Resource option
 
+## Deprecation, Rename and Removal
+
+Operator versions older than 1.14.1 become incompatible with new HAProxy, ProxySQL and PXC Docker images due to the absence of the peer-list tool in them. If you are still using the older Operator version, make sure to update the Operator before switching to the latest database and proxy images. You can see the [list of Percona certified images](../images.md) for the current release, and check image versions certified for previous releases in the [documentation archive :octicons-link-external-16:](https://docs.percona.com/legacy-documentation/).
+
+
 ## Supported Platforms
 
 The Operator was developed and tested with Percona XtraDB Cluster versions 8.4.2-2.1 (Tech preview), 8.0.39-30.1, and 5.7.44-31.65. Other options may also work but have not been tested. Other software components include:
@@ -66,7 +79,7 @@ The Operator was developed and tested with Percona XtraDB Cluster versions 8.4.2
 * HAProxy 2.8.11
 * ProxySQL 2.7.1
 * LogCollector based on fluent-bit 3.2.2
-* PMM Client 2.43.2
+* PMM Client 2.44.0
 
 Percona Operators are designed for compatibility with all [CNCF-certified :octicons-link-external-16:](https://www.cncf.io/training/certification/software-conformance/) Kubernetes distributions. Our release process includes targeted testing and validation on major cloud provider platforms and OpenShift, as detailed below for Operator version 1.16.0:
 
