@@ -65,12 +65,7 @@ The upgrade includes the following steps.
     ```
 
 3. The deployment rollout will be automatically triggered by the applied patch.
-    You can track the rollout process in real time with the
-    `kubectl rollout status` command with the name of your cluster:
-
-    ``` {.bash data-prompt="$" }
-    $ kubectl rollout status deployments percona-xtradb-cluster-operator
-    ```
+   The update process is successfully finished when all Pods have been restarted.
 
     !!! note
 
