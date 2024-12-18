@@ -2158,7 +2158,7 @@ Name of the secret that contains the user's password. If not provided, the Opera
 
 ### `users.passwordSecretRef.key`
 
-Key in the secret that corresponds to the value of the user's password (`password` by defalut).
+Key in the secret that corresponds to the value of the user's password (`password` by default).
 
 | Value type | Example |
 | ---------- | ------- |
