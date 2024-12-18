@@ -2134,7 +2134,7 @@ The username of the MySQL user.
 
 ### `users.dbs`
 
-Databases that the user authenticates against. If not specified, defaults to all databases (*). If user sets a administrative grants like SHUTDOWN, this field has to be omitted because administrative privileges are set on a global level.
+Databases that the user authenticates against. If the specified database is not present, the Operator will create it. When no databases specified, it defaults to all databases (*). If the user sets administrative grants like SHUTDOWN, this field has to be omitted because administrative privileges are set on a global level.
 
 | Value type | Example |
 | ---------- | ------- |
