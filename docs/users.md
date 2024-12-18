@@ -65,7 +65,7 @@ The Operator tracks password changes in the Secret object, and updates the user 
 
 * When a user sets an invalid grant or sets an administrative (global) grant with some value present in `spec.user.dbs`, the Operator logs error and creates the user with the default grants (`GRANT USAGE`).
 * The Operator doesn't delete users if they are removed from Custom Resource, to avoid affecting any pre-existing users.
-* Not deleting users can bring a number of side effects. For example, when the host is updated in the `users.hosts` array (for example, `host1` changed to `host2`), a new user `user@host2` is created in addition to already existing `user@host1`. Moreover, if the password was updated in the secret for `user@host2`, and later the host in the Custom Resource was changed back to `host1`, the `user@host1` user will continue using the old password different from what the Custom Resource contains.
+* Not deleting users can bring a number of consequences. For example, when the host is updated in the `users.hosts` array (for example, `host1` changed to `host2`), a new user `user@host2` is created in addition to already existing `user@host1`. Moreover, if the password was updated in the secret for `user@host2`, and later the host in the Custom Resource was changed back to `host1`, the `user@host1` user will continue using the old password different from what the Custom Resource contains.
 * The Operator updates grants specified for the user in additive manner: it adds new grants but doesn't revoke existing ones.
 * It is not possible to add two entries for the same user (e.g. with different grants for different databases), but sequential updates of the Custom Resource can achieve the same effect.
 
