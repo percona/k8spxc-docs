@@ -6,8 +6,8 @@ Percona Operator for MySQL based on Percona XtraDB Cluster.
 | Image                                                                  | Digest                                                           |
 |:-----------------------------------------------------------------------|:-----------------------------------------------------------------|
 | **Images released with the Operator version {{ release }}:** | |
-| percona/percona-xtradb-cluster-operator:1.16.0 (x86_64)                | a8eeb17b0d5c36f1e67cf5e117c9b03d5d7884bd5db9a47960b8e4ee92b07fb4 |
-| percona/percona-xtradb-cluster-operator:1.16.0 (ARM64)                 | 9ef03da5c52dd6f6d0c3e369f7c51a1873e8ea1554caea21d3c830f4dbb43a54 |
+| percona/percona-xtradb-cluster-operator:1.16.0 (x86_64)                | ddab83ee4610df03636bbbfb159379b96ef36593681879997d74ebe0d08e0ef9 |
+| percona/percona-xtradb-cluster-operator:1.16.0 (ARM64)                 | c0a75755218c19834e586643f75f61efd4964199147fa969d01fd3d881d03fbe |
 | percona/haproxy:2.8.11                                                 | 422a210b4170a973f8582ef3d7ddcc879c32bc48f6c66fad8b3154bce4e79b84 |
 | percona/proxysql2:2.7.1                                                | b1c5cd48b218d19386724fa823d20a8454b2de87f4ab445903e8daeb3b6b015b |
 | percona/percona-xtradb-cluster-operator:1.16.0-pxc8.4-backup-pxb8.4.0  | 500f20baa21a7df71a517c9434d1907e4cb482fdd58784975f97976a0bce699d |
