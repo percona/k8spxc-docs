@@ -105,15 +105,16 @@ the following information there:
 * `WATCH_NAMESPACE` key-value pair in the `env` section should have
     `value` equal to a  comma-separated list of the namespaces to be watched by
     the Operator (or just a blank string to make the Operator deal with
-    *all namespaces* in a Kubernetes cluster).
+    *all namespaces* in a Kubernetes cluster). Prior to the Operator version
+    1.12.0 it was necessary to mention the Operator's own namespace in the list
+    of watched namespaces, but now this limitation has gone.
 
-    !!! note
+!!! note
 
-        The list of namespaces to watch is fully supported by the Operator
-        starting from the version 1.7 (in the version 1.6 you can only use
-        cluster-wide mode with empty `WATCH_NAMESPACE` key to watch all
-        namespaces). Also, prior to the version 1.12.0 it was necessary to
-        mention the Operator's own namespace in the list of watched namespaces.
+    Installing the Operator cluster-wide on OpenShift via the the Operator
+    Lifecycle Manager (OLM) requires
+    [making different selections in the OLM web-based UI](openshift.md#install-the-operator-via-the-operator-lifecycle-manager-olm)
+    instead of patching YAML files.
 
 The following simple example shows how to install Operator cluster-wide on
 Kubernetes.
