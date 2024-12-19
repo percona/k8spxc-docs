@@ -26,3 +26,5 @@ $ xtrabackup --prepare --target-dir=/var/lib/mysql
 $ chown -R mysql:mysql /var/lib/mysql
 $ service mysqld start
 ```
+
+If needed, you can also restore the backup to a Kubernetes cluster following the instructions [in this howto](backups-move-from-external-db.md).
