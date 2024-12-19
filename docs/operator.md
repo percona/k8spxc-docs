@@ -2128,6 +2128,68 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 | ----------- | ---------- |
 | :material-code-string: string     | `200m` |
 
+## <a name="operator-users-section"></a>Users section
+
+The `users` section in the [deploy/cr.yaml  :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains various configuration options [to configure custom MySQL users via the Custom Resource](users.md#create-users-in-the-custom-resource).
+
+### `users.name`
+
+The username of the MySQL user.
+
+| Value type | Example |
+| ---------- | ------- |
+| :material-code-string: string | `my-user` |
+
+### `users.dbs`
+
+Databases that the user authenticates against. If the specified database is not present, the Operator will create it. When no databases specified, it defaults to all databases (*). If the user sets administrative grants like SHUTDOWN, this field has to be omitted because administrative privileges are set on a global level.
+
+| Value type | Example |
+| ---------- | ------- |
+| :material-application-array-outline: array | <pre>- db1<br>-db2</pre> |
+
+### `users.hosts`
+
+Hosts that the users are supposed to connect from (if not specified, defaults to '%' - similar to what is happening in MySQL). 
+
+| Value type | Example |
+| ---------- | ------- |
+| :material-application-array-outline: array | `- localhost` |
+
+### `users.passwordSecretRef.name`
+
+Name of the secret that contains the user's password. If not provided, the Operator will create the `<cluster-name>-<custom-user-name>-secret` secret and generate password automatically.
+
+| Value type | Example |
+| ---------- | ------- |
+| :material-code-string: string | `my-user-password` |
+
+### `users.passwordSecretRef.key`
+
+Key in the secret that corresponds to the value of the user's password (`password` by default).
+
+| Value type | Example |
+| ---------- | ------- |
+| :material-code-string: string | `password` |
+
+
+
+### `spec.users.withGrantOption`
+
+Defines if the user has grant options.
+
+| Value type | Example |
+| ---------- | ------- |
+| :material-toggle-switch-outline: boolean  | `false` |
+
+### `users.grants`
+
+Privileges granted to the user.
+
+| Value type | Example |
+| ---------- | ------- |
+| :material-application-array-outline: array | <pre>- SELECT<br>- DELETE<br>- INSERT</pre> |
+
 ## <a name="operator-pmm-section"></a>PMM section
 
 The `pmm` section in the [deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains configuration
