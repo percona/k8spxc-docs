@@ -50,6 +50,10 @@ The name of the required Secret (`cluster1-secrets` by default)
 should be set in the `spec.secretsName` option of the `deploy/cr.yaml`
 configuration file.
 
+!!! note
+
+    In addition to `cluster1-secrets`, the Operator will also create an internal Secrets object named `internal-cluster1`, which exists for technical purposes and should not be edited by end users.
+
 The following table shows system users’ names and purposes.
 
 !!! warning
