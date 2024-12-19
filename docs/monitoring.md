@@ -85,4 +85,4 @@ The apporach to this is to deploy your monitoring agent as a sidecar container i
 
 !!! note
 
-    You can use the [`monitor` system user](users.md#system-users) for monitoring purposes as PMM Client does. The Operator tracks the `monitor` user password update and restarts Percona XtraDB Cluster Pods in cases when PMM is enabled or when the user secret is in use within a sidecar container.
+    You can use the [`monitor` system user](users.md#system-users) for monitoring purposes as PMM Client does. The Operator tracks the `monitor` user password update in the `internal-<clustername>` Secrets object (`internal-cluster1` by default) and restarts Percona XtraDB Cluster Pods in cases when PMM is enabled or when the user secret is in use within a sidecar container.
