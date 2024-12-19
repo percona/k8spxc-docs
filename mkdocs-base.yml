@@ -117,7 +117,7 @@ plugins:
   with-pdf:
     output_path: "_pdf/percona-operator-for-mysql-pxc.pdf"
     cover_title: "Operator for MySQL based on Percona XtraDB Cluster documentation"
-    cover_subtitle: 1.15.1 (October 16, 2024)
+    cover_subtitle: 1.16.0 (December 19, 2024)
     author: "Percona Technical Documentation Team"
     cover_logo: docs/assets/images/PerconaLogostackedlightbackground.svg
     custom_template_path: _resource/templates
@@ -136,17 +136,19 @@ extra: # Used in main.html template and can't be externalized
   updated_text: '<i class="uil uil-refresh"></i> Page updated'
   commandName: 'kubectl'
   clusterName: 'cluster1'
-  release: '1.15.1'
-  apiversion: '1-15-1'
-  certmanagerversion: '1.15.2'
-  fluentbitrecommended: '3.1.4'
-  haproxyrecommended: '2.8.5'
-  proxysqlrecommended: '2.5.5'
-  pxb80recommended: '8.0.35'
+  release: '1.16.0'
+  apiversion: '1-16-0'
+  certmanagerversion: '1.16.2'
+  fluentbitrecommended: '3.2.2'
+  haproxyrecommended: '2.8.11'
+  proxysqlrecommended: '2.7.1'
+  pxb84recommended: '8.4.0-1'
+  pxb80recommended: '8.0.35-30.1'
   pxb57recommended: '2.4.29'
   pxc57recommended: '5.7.44-31.65'
-  pxc80recommended: '8.0.36-28.1'
-  pmm2recommended: '2.42.0'
+  pxc80recommended: '8.0.39-30.1'
+  pxc84recommended: '8.4.2-2.1'
+  pmm2recommended: '2.44.0'
   gkerecommended: '1.30'
   version:
     provider: mike
@@ -247,6 +249,7 @@ nav:
           - "Trademark policy": trademark-policy.md
     - Release Notes:
           - "Release notes index": ReleaseNotes/index.md
+          - "Percona Operator for MySQL based on Percona XtraDB Cluster 1.16.0 (2024-12-19)": ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.16.0.md
           - "Percona Operator for MySQL based on Percona XtraDB Cluster 1.15.1 (2024-10-16)": ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.15.1.md
           - "Percona Operator for MySQL based on Percona XtraDB Cluster 1.14.1 (2024-10-16)": ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.14.1.md
           - "Percona Operator for MySQL based on Percona XtraDB Cluster 1.15.0 (2024-08-20)": ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.15.0.md
