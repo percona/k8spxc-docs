@@ -335,22 +335,14 @@ spec:
     enabled: false
 ```
 
-Enabling/disabling TLS is not supported on a running cluster.
+### Enabling or disabling TLS on a running cluster
 
-To disable TLS for a running cluster you need to do the following actions manually:
+You can set `tls.enabled` Custom Resource option to `true` or `false` to enable or disable TLS. However, doing this on a running cluster results in downtime and has the following side effects.
 
-* [pause the cluster](pause.md)
+When the cluster is already running and the user switches `tls.enabled` to `false`, the Operator [pauses the cluster](pause.md), waits until all Pods are deleted, sets `unsafeFlags.tls` Custom Resource option to `true`, deletes TLS secrets, and [unpauses the cluster](pause.md).
 
-* set `unsafeFlags.tls=true` and `tls.enabled=false` Custom Resource options
+Similarly, when the user switches `tls.enabled` to `true`, the Operator [pauses the cluster](pause.md), waits until all Pods are deleted, sets `unsafeFlags.tls` Custom Resource option to `false`, and [unpauses the cluster](pause.md).
 
-* delete SSL secrets;
+!!! warning
 
-* [unpause the cluster](pause.md)
-
-To enable TLS for a running cluster:
-
-* [pause the cluster](pause.md)
-
-* set `unsafeFlags.tls=false` and `tls.enabled=true` Custom Resource options
-
-* [unpause the cluster](pause.md)
+    Don't change `tls.enabled` Custom Resource option when the cluster is in the process of enabling or disabling TLS: changing its value will immediately unpause the cluster even though the process has not yet completed.
