@@ -68,11 +68,7 @@ The following table shows system users’ names and purposes.
 
 !!! note
 
-    The operator does not attempt to create a user if such a login exists, 
-    regardless of the host part. For example, it creates the administrative
-    database user `operator` as `operator@'%` in MySQL, but if the MySQL user
-    `operator@'something'` already exists for some reason, the operator will act
-    as if the user `operator@'%` already exists.
+    The administrative database user `operator` is created in MySQL as `operator@'%`. Configurations with `operator@'something'` user having the host part different from `%` are not supported, and such users should not exist in the database.
 
 ### YAML Object Format
 
