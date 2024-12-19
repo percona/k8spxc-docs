@@ -2548,7 +2548,7 @@ Timeout in seconds for the binlog to be uploaded; the  binlog uploader container
 
 ### `backup.pitr.resources.requests.memory`
 
-The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Fluent Bit Log Collector  container.
+The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a binlog collector Pod.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -2556,7 +2556,7 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 
 ### `backup.pitr.resources.requests.cpu`
 
-[Kubernetes CPU requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Fluent Bit Log Collector container.
+[Kubernetes CPU requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a binlog collector Pod.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -2564,15 +2564,14 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 
 ### `backup.pitr.resources.limits.memory`
 
-[Kubernetes memory limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Fluent Bit Log Collector container.
-
+[Kubernetes memory limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a binlog collector Pod.
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-code-string: string     | `1G` |
 
 ### `backup.pitr.resources.limits.cpu`
 
-[Kubernetes CPU limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Fluent Bit Log Collector container.
+[Kubernetes CPU limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a binlog collector Pod.
 
 | Value type  | Example    |
 | ----------- | ---------- |
