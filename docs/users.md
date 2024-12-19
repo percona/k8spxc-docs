@@ -50,6 +50,12 @@ The name of the required Secret (`cluster1-secrets` by default)
 should be set in the `spec.secretsName` option of the `deploy/cr.yaml`
 configuration file.
 
+!!! note
+
+    The operator is not trying to create the user if there is such a login,
+    regardless of the host part (for example, an existing `operator@'something'`
+    user allowing to connect with the internal clustername user password).
+
 The following table shows system users’ names and purposes.
 
 !!! warning
