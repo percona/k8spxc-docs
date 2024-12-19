@@ -218,6 +218,7 @@ nav:
           - "Exec into the container": debug-shell.md
           - "Check the events": debug-events.md
           - "Check the logs": debug-logs.md
+          - "Check storage": debug-storage.md
           - "Special debug images": debug-images.md
           
     - HOWTOs:
