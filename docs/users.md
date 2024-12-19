@@ -66,6 +66,10 @@ The following table shows system users’ names and purposes.
 | Operator Admin | operator     | operator            | Database administrative user, should be used only by the Operator |
 | Replication    | replication  | replication         | Administrative user needed for [cross-site Percona XtraDB Cluster](replication.md) |
 
+!!! note
+
+    The administrative database user `operator` is created in MySQL as `operator@'%`. Configurations with `operator@'something'` user having the host part different from `%` are not supported, and such users should not exist in the database.
+
 ### YAML Object Format
 
 The default name of the Secrets object for these users is
