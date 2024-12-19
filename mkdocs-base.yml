@@ -222,7 +222,7 @@ nav:
           
     - HOWTOs:
           - Install the database with customized parameters: custom-install.md 
-          - "How to install Percona XtraDB Cluster in multi-namespace (cluster-wide) mode": cluster-wide.md
+          - "Provide Percona Operator for PostgreSQL single-namespace and multi-namespace deployment": cluster-wide.md
           - "How to upgrade Percona XtraDB Cluster manually": update_manually.md
           - "How to upgrade Percona XtraDB Cluster on OpenShift": update_openshift.md
           - "How to use private registry": custom-registry.md
