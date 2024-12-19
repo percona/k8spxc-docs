@@ -145,7 +145,9 @@ The `spec.nodeAffinity` field may influence the PV availability as well: for exa
 
 StorageClass is also a cluster-scoped object, and it indicates what type of underlying storage is used for the Volumes.
 
-Check all the storage class present in the Kubernetes cluster, and check which storage class is the default one:
+You can set StorageClass in `pxc.volumeSpec.persistentVolumeClaim.storageClassName`, `proxysql.volumeSpec.persistentVolumeClaim.storageClassName`, and `backup.storages.STORAGE-NAME.persistentVolumeClaim.storageClassName` Custom Resource options.
+
+The following command checks all the storage class present in the Kubernetes cluster, and allows to see which storage class is the default one:
 
 ``` {.bash data-prompt="$" }
 $ kubectl get sc
@@ -194,3 +196,4 @@ Important things to observe here are the following ones:
 
 * Check if the provisioner and parameters are indicating the type of storage you intend to provision.
 * Check the [volumeBindingMode :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/storage-classes/#volume-binding-mode) especially if the storage cannot be accessed across availability zones. “WaitForFirstConsumer” volumeBindingMode ensures volume is provisioned only after a Pod requesting the Volume is created.
+* If you are going to rely on the Operator [storage scaling functionality](scaling.md#automated-scaling-with-volume-expansion-capability), ensure the storage class supports PVC expansion (it should have  `allowVolumeExpansion: true` in the output of the above command).
