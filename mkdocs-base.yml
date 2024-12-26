@@ -152,6 +152,7 @@ extra: # Used in main.html template and can't be externalized
   gkerecommended: '1.30'
   version:
     provider: mike
+  k8s_monitor_tag: 'v0.1.1'
 
 # Common navigation for percona.com, render.com and PDF
 nav:
