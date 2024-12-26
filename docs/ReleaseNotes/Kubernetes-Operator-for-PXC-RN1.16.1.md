@@ -10,7 +10,7 @@
 
 ## Bugs Fixed
 
-* {{ k8spxcjira(1536) }}: Fix a bug where scheduled backups were not working due to a bug in the Operator that was creating Kubernetes resources with the names exceeding the allowed length
+* {{ k8spxcjira(1536) }}: Fix a bug where scheduled backups were not working due to a bug in the Operator that was creating Kubernetes resources with the names exceeding the allowed length (Thanks to Vlad Gusev for contribution)
 
 ## Supported Platforms
 
