@@ -1,5 +1,6 @@
 # Percona Operator for MySQL based on Percona XtraDB Cluster Release Notes
 
+* [*Percona Operator for MySQL based on Percona XtraDB Cluster* 1.16.1 (2024-12-26)](Kubernetes-Operator-for-PXC-RN1.16.1.md)
 * [*Percona Operator for MySQL based on Percona XtraDB Cluster* 1.16.0 (2024-12-19)](Kubernetes-Operator-for-PXC-RN1.16.0.md)
 * [*Percona Operator for MySQL based on Percona XtraDB Cluster* 1.15.1 (2024-10-16)](Kubernetes-Operator-for-PXC-RN1.15.1.md)
 * [*Percona Operator for MySQL based on Percona XtraDB Cluster* 1.14.1 (2024-10-16)](Kubernetes-Operator-for-PXC-RN1.14.1.md)
