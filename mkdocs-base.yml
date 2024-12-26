@@ -117,7 +117,7 @@ plugins:
   with-pdf:
     output_path: "_pdf/percona-operator-for-mysql-pxc.pdf"
     cover_title: "Operator for MySQL based on Percona XtraDB Cluster documentation"
-    cover_subtitle: 1.16.0 (December 19, 2024)
+    cover_subtitle: 1.16.1 (December 26, 2024)
     author: "Percona Technical Documentation Team"
     cover_logo: docs/assets/images/PerconaLogostackedlightbackground.svg
     custom_template_path: _resource/templates
@@ -136,8 +136,8 @@ extra: # Used in main.html template and can't be externalized
   updated_text: '<i class="uil uil-refresh"></i> Page updated'
   commandName: 'kubectl'
   clusterName: 'cluster1'
-  release: '1.16.0'
-  apiversion: '1-16-0'
+  release: '1.16.1'
+  apiversion: '1-16-1'
   certmanagerversion: '1.16.2'
   fluentbitrecommended: '3.2.2'
   haproxyrecommended: '2.8.11'
@@ -250,6 +250,7 @@ nav:
           - "Trademark policy": trademark-policy.md
     - Release Notes:
           - "Release notes index": ReleaseNotes/index.md
+          - "Percona Operator for MySQL based on Percona XtraDB Cluster 1.16.1 (2024-12-26)": ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.16.1.md
           - "Percona Operator for MySQL based on Percona XtraDB Cluster 1.16.0 (2024-12-19)": ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.16.0.md
           - "Percona Operator for MySQL based on Percona XtraDB Cluster 1.15.1 (2024-10-16)": ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.15.1.md
           - "Percona Operator for MySQL based on Percona XtraDB Cluster 1.14.1 (2024-10-16)": ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.14.1.md
