@@ -1,4 +1,4 @@
-# *Percona Operator for MySQL based on Percona XtraDB Cluster* 1.16.0
+# *Percona Operator for MySQL based on Percona XtraDB Cluster* 1.16.1
 
 * **Date**
 
