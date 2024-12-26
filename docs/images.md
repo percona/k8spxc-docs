@@ -6,14 +6,14 @@ Percona Operator for MySQL based on Percona XtraDB Cluster.
 | Image                                                                  | Digest                                                           |
 |:-----------------------------------------------------------------------|:-----------------------------------------------------------------|
 | **Images released with the Operator version {{ release }}:** | |
-| percona/percona-xtradb-cluster-operator:1.16.0 (x86_64)                | ddab83ee4610df03636bbbfb159379b96ef36593681879997d74ebe0d08e0ef9 |
-| percona/percona-xtradb-cluster-operator:1.16.0 (ARM64)                 | c0a75755218c19834e586643f75f61efd4964199147fa969d01fd3d881d03fbe |
+| percona/percona-xtradb-cluster-operator:1.16.1 (x86_64)                | 43fd8ced51adad59394d69e3a1fc8be897668d789049be8f5dd9984672223e72 |
+| percona/percona-xtradb-cluster-operator:1.16.1 (ARM64)                 | dcba85dd7a8a164498362c2d3a73af3411e894dd6c01e600a92ddd3fb12122de |
 | percona/haproxy:2.8.11                                                 | 422a210b4170a973f8582ef3d7ddcc879c32bc48f6c66fad8b3154bce4e79b84 |
 | percona/proxysql2:2.7.1                                                | b1c5cd48b218d19386724fa823d20a8454b2de87f4ab445903e8daeb3b6b015b |
-| percona/percona-xtradb-cluster-operator:1.16.0-pxc8.4-backup-pxb8.4.0  | 500f20baa21a7df71a517c9434d1907e4cb482fdd58784975f97976a0bce699d |
-| percona/percona-xtradb-cluster-operator:1.16.0-pxc8.0-backup-pxb8.0.35 | 55281c818a78162cac0c87257915d74f321a4663f3f60457da2566c64610bf49 |
-| percona/percona-xtradb-cluster-operator:1.16.0-pxc5.7-backup-pxb2.4.29 | ddcec747748dccfbf4d7a6ba9c6a34f09cb7814ab59c49e73dff239949012039 |
-| percona/percona-xtradb-cluster-operator:1.16.0-logcollector-fluentbit3.2.2 | 122a103902d27890dceaf1855f175ea706a126aac940feb1089520029937f4a9 |
+| percona/percona-xtradb-cluster-operator:1.16.1-pxc8.4-backup-pxb8.4.0  | 500f20baa21a7df71a517c9434d1907e4cb482fdd58784975f97976a0bce699d |
+| percona/percona-xtradb-cluster-operator:1.16.1-pxc8.0-backup-pxb8.0.35 | 55281c818a78162cac0c87257915d74f321a4663f3f60457da2566c64610bf49 |
+| percona/percona-xtradb-cluster-operator:1.16.1-pxc5.7-backup-pxb2.4.29 | ddcec747748dccfbf4d7a6ba9c6a34f09cb7814ab59c49e73dff239949012039 |
+| percona/percona-xtradb-cluster-operator:1.16.1-logcollector-fluentbit3.2.2 | 122a103902d27890dceaf1855f175ea706a126aac940feb1089520029937f4a9 |
 | percona/pmm-client:2.44.0                                              | 0737f73449263a14d7000fbe7cd88dfd589dfed975cbb16bd29eee06a5dbd49e |
 | percona/percona-xtradb-cluster:8.4.2-2.1                               | ee8be9e7e2ecc1fdfebb29141f5f15abcd15490213f6bdbe0a53a1e6cc942fa8 |
 | percona/percona-xtradb-cluster:8.0.39-30.1                             | 6a53a6ad4e7d2c2fb404d274d993414a22cb67beecf7228df9d5d994e7a09966 |
