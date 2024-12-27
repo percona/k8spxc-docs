@@ -58,6 +58,7 @@ Being a technical preview, Percona XtraDB Cluster 8.4 is not yet recommended for
 
 ## Bugs Fixed
 
+* {{ k8spxcjira(1222) }}: Fix a bug where upgrading a cluster with hundreds of thousands of tables would fail due to a timeout
 * {{ k8spxcjira(1398) }}: Fix a bug which sporadically prevented the scheduled backup job Pod from successfully completing the process
 * {{ k8spxcjira(1413) }} and {{ k8spxcjira(1458) }}: Fix the Operator Pod segfault which was occurring when restoring a backup without backupSource Custom Resource subsection or without storage specified in the backupSource
 * {{ k8spxcjira(1416) }}: Fix a bug where disabling parallel backups in Custom Resource caused all backups to get stuck in presence of any failed backup
