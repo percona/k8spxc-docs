@@ -1,4 +1,4 @@
-# Connect to Percona XtraDB Cluster
+#2. Connect to Percona XtraDB Cluster
 
 In this tutorial, you will connect to the Percona XtraDB Cluster you deployed previously.
 

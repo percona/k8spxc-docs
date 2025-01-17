@@ -164,13 +164,13 @@ nav:
           
     - Quickstart guides:
           - Overview: quickstart.md
-          - Quick install:
+          - 1. Quick install:
             - "Install with Helm": helm.md
             - "Install with kubectl": kubectl.md
-          - Connect to the database: connect.md
-          - Insert data: data-insert.md
-          - Make a backup: backup-tutorial.md
-          - Monitor the database with PMM: monitoring-tutorial.md
+          - 2. Connect to the database: connect.md
+          - 3. Insert data: data-insert.md
+          - 4. Make a backup: backup-tutorial.md
+          - 5. Monitor the database with PMM: monitoring-tutorial.md
           - what-next.md
           
     - Installation:
