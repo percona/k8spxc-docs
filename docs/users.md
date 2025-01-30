@@ -55,10 +55,10 @@ The Secret mentioned in the `users.passwordSecretRef.name` option should look as
 apiVersion: v1
 kind: Secret
 metadata:
-  name: my-user-password
+  name: my-user-pwd
 type: Opaque
 stringData:
-  password: mypassword
+  password: my-user-pwd-key
 ```
 
 The Operator tracks password changes in the Secret object, and updates the user password in the database, when needed. The following specifics should be taken into account:
