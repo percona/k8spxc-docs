@@ -135,7 +135,7 @@ As an alternative, the `updateStrategy` key can be set to `RollingUpdate` and
     The upgrade covers various components of the cluster including PMM Client
     and HA Proxy, which may need additional attention.
     
-    *  It is [highly recommended to upgrade PMM Server :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/how-to/upgrade.html) **before** upgrading PMM Client.
+    *  It is [highly recommended to upgrade PMM Server :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/2/how-to/upgrade.html) **before** upgrading PMM Client.
     
     * If you are using [custom configuration for HAProxy](haproxy-conf.md#passing-custom-configuration-options-to-haproxy), 
         **before upgrading**, check the HAProxy configuration file provided by
@@ -208,7 +208,7 @@ Manual update of Percona XtraDB Cluster can be done as follows:
 
     !!! warning
 
-        The above command upgrades various components of the cluster including PMM Client. If you didn't follow the [official recommendation :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/how-to/upgrade.html) to upgrade PMM Server before upgrading PMM Client, you can avoid PMM Client upgrade by removing it from the list of images as follows:
+        The above command upgrades various components of the cluster including PMM Client. If you didn't follow the [official recommendation :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/2/how-to/upgrade.html) to upgrade PMM Server before upgrading PMM Client, you can avoid PMM Client upgrade by removing it from the list of images as follows:
 
         === "For Percona XtraDB Cluster 8.0"
             ```bash
