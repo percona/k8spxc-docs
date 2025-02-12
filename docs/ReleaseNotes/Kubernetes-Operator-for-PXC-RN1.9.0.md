@@ -22,7 +22,7 @@ and operate Percona Server for MySQL and Percona XtraDB Cluster, available
 separately as [Percona Distribution for MySQL :octicons-link-external-16:](https://www.percona.com/doc/percona-distribution-mysql/8.0/index.html).
 
 
-* Now you can [see HAProxy metrics :octicons-link-external-16:](https://www.percona.com/doc/percona-monitoring-and-management/2.x/setting-up/client/haproxy.html) in your favorite Percona Monitoring and Management (PMM) dashboards automatically.
+* Now you can [see HAProxy metrics :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/2/setting-up/client/haproxy.html) in your favorite Percona Monitoring and Management (PMM) dashboards automatically.
 
 
 * The [cross-site replication](../replication.md) feature allows an

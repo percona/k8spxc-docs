@@ -2221,7 +2221,7 @@ Address of the PMM Server to collect data from the cluster.
 
 ### `pmm.serverUser`
 
-The [PMM Serve_User :octicons-link-external-16:](https://www.percona.com/doc/percona-monitoring-and-management/glossary.option.html). The PMM Server password should be configured using Secrets.
+The PMM Server User. The PMM Server password should be configured using Secrets.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -2245,7 +2245,7 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 
 ### `pmm.pxcParams`
 
-Additional parameters which will be passed to the [pmm-admin add mysql :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/setting-up/client/mysql.html) command for `pxc` Pods.
+Additional parameters which will be passed to the [pmm-admin add mysql :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/2/setting-up/client/mysql.html) command for `pxc` Pods.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -2253,7 +2253,7 @@ Additional parameters which will be passed to the [pmm-admin add mysql :octicons
 
 ### `pmm.proxysqlParams`
 
-Additional parameters which will be passed to the [pmm-admin add proxysql :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/setting-up/client/proxysql.html) command for `proxysql` Pods.
+Additional parameters which will be passed to the [pmm-admin add proxysql :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/2/setting-up/client/proxysql.html) command for `proxysql` Pods.
 
 | Value type  | Example    |
 | ----------- | ---------- |
