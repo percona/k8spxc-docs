@@ -195,6 +195,13 @@ nav:
           - "Defining environment variables": containers-conf.md
           - "Load Balancing with HAProxy": haproxy-conf.md
           - "Load Balancing with ProxySQL": proxysql-conf.md
+          - Workload transfer and disaster recovery: 
+             - "Overview": disaster-recovery.md
+             - dr-primary.md
+             - dr-replica.md
+             - dr-replication.md
+             - dr-failover.md
+             - dr-restore.md
           - "Transport Encryption (TLS/SSL)": TLS.md
           - "Data at rest encryption": encryption.md
           - "Telemetry": telemetry.md
