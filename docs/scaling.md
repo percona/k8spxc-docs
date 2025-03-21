@@ -61,13 +61,13 @@ You can run the following command to check if your storage supports the
 expansion capability:
 
 ``` {.bash data-prompt="$" }
-$ kubectl describe sc <storage class name> | grep allowVolumeExpansion
+$ kubectl describe sc <storage class name> | grep AllowVolumeExpansion
 ```
 
 ??? example "Expected output"
 
     ``` {.text .no-copy}
-    allowVolumeExpansion: true
+    AllowVolumeExpansion: true
     ```
 
 You can enable automated scaling with the [enableVolumeExpansion](operator.md#enablevolumeexpansion) Custom Resource option (turned off by default). When enabled, the Operator will automatically expand such storage for you when you change the `pxc.volumeSpec.persistentVolumeClaim.resources.requests.storage` option in the Custom Resource:
