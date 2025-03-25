@@ -1,15 +1,12 @@
-The recommended way of the database monitoring is to use
-[Percona Monitoring and Management (PMM) :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/2/index.html)
-integrated within the Operator (while custom monitoring solutions [are also possible :octicons-link-external-16:](monitoring.md#implement-custom-monitoring-solution-without-pmm), their deployment is not automated by the Operator and requires manual set up).
+We recommend to monitor the database with
+[Percona Monitoring and Management (PMM) :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/index.html)
+integrated within the Operator. You can also use [custom monitoring solutions](monitoring.md#implement-custom-monitoring-solution-without-pmm), but their deployment is not automated by the Operator and requires manual setup).
+
 In this section you will learn how to monitor Percona XtraDB Cluster with PMM.
 
-!!! note
+PMM is a client/server application. It consists of the [PMM Server :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/details/architecture.html#pmm-server) and a number of [PMM Clients :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/details/architecture.html#pmm-client). PMM Clients run on each node with the database you wish to monitor. In Kubernetes, this means that PMM Clients run as sidecar containers for the database Pods.
 
-    Only PMM 2.x versions are supported by the Operator.
-
-PMM is a client/server application. It includes the [PMM Server :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/2/details/architecture.html#pmm-server) and the number of [PMM Clients :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/2/details/architecture.html#pmm-client) running on each node with the database you wish to monitor.
-
-A PMM Client collects needed metrics and sends gathered data to the PMM Server.
+A PMM Client collects needed metrics and sends the gathered data to the PMM Server.
  As a user, you connect to the PMM Server to see database metrics on
 a number of dashboards.
 
@@ -23,7 +20,7 @@ for the installation instructions.
 
 ## Install PMM Client
 
-To install PMM Client as a side-car container in your Kubernetes-based environment, do the following:
+Install PMM Client as a side-car container in your Kubernetes-based environment:
 {.power-number}
 
 1. Authorize PMM Client within PMM Server. 
@@ -69,6 +66,7 @@ To install PMM Client as a side-car container in your Kubernetes-based environme
          image: percona/pmm-client:{{pmm2recommended}}
          serverHost: monitoring-service
      ``` 
+
 3. Apply the changes:
 
     ``` {.bash data-prompt="$"}
