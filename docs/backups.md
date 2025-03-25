@@ -8,7 +8,7 @@ A backup starts after you create a Backup object. You can create a Backup object
 * manually at any moment. This way you start an [on-demand backup](backups-ondemand.md).
 * instruct the Operator to create it automatically according to a schedule that you define for it. This is a [scheduled backup](backups-scheduled.md).
 
-The Operator does physical backups using the [Percona XtraBackup :octicons-link-external-16:](https://docs.percona.com/percona-xtrabackup/2.4/index.html) tool and the [SST :octicons-link-external-16:](https://galeracluster.com/library/documentation/sst.html) method. 
+The Operator does physical backups using the [Percona XtraBackup :octicons-link-external-16:](https://docs.percona.com/percona-xtrabackup/8.0/index.html) tool and the [SST :octicons-link-external-16:](https://galeracluster.com/library/documentation/sst.html) method. 
 
 ## Backup storage
 
