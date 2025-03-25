@@ -14,7 +14,7 @@ Installing Percona XtraDB Cluster on OpenShift includes two steps:
 
 ## Install the Operator
 
-You can install Percona Operator for MySQL on OpenShift using the web interface (the [Operator Lifecycle Manager :octicons-link-external-16:](https://docs.redhat.com/en/documentation/openshift_container_platform/4.2/html/operators/understanding-the-operator-lifecycle-manager-olm#olm-overview_olm-understanding-olm), or using the command line interface.
+You can install Percona Operator for MySQL on OpenShift using the web interface (the [Operator Lifecycle Manager :octicons-link-external-16:](https://docs.redhat.com/en/documentation/openshift_container_platform/4.2/html/operators/understanding-the-operator-lifecycle-manager-olm#olm-overview_olm-understanding-olm)), or using the command line interface.
 
 ### Install the Operator via the Operator Lifecycle Manager (OLM)
 
