@@ -56,7 +56,7 @@ After this duration expires, the Operator automatically marks this backup as "fa
 
 Otherwise, after the cluster is recovered and reports the Ready status, the Operator resumes the backup and tries to finish it. 
 
-Note that if some files were already saved on the storage when a backup was suspended, this backup will fail to be finished because the Operator doesn't support rewriting these files. If this happens, delete the failed backup and restart it. 
+Note that if some files were already saved on the storage when a backup was suspended, the Operator deletes them and reruns the backup. 
 
 If you want to run backups in an unhealthy cluster, set the `spec.unsafeFlags.backupIfUnhealthy` option in the `deply/cr.yaml` file to `true`. Use this option with caution because it can affect the cluster performance. 
 
