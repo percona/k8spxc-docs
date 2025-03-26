@@ -42,7 +42,7 @@ Several backups run in parallel by default if they happen at the same time. If t
 
 The Operator ensures the sequence by creating a lock for a running backup. It releases the lock after the backup either succeeds or fails and starts the next one from the queue. The lock is also released if you delete a running backup. 
 
-You can fine-tune the queue by assigning a waiting time for a backup to start. Use the `spec.startingDeadlineSeconds` option in the `deploy/cr.yaml` file to set this time for all backups. You can also override it for a specific backup by defining the `startingDeadlineSeconds` option within the backup configuration. This setting has a higher priority.
+You can fine-tune the queue by assigning a waiting time for a backup to start. Use the `spec.startingDeadlineSeconds` option in the `deploy/cr.yaml` file to set this time for all backups. You can also override it for a specific  on-demand backup by defining the `startingDeadlineSeconds` option within the backup configuration. This setting has a higher priority.
 
 If the backup doesn't start within the defined time, the Operator automatically marks it as "failed".
 
