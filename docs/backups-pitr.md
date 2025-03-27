@@ -49,17 +49,3 @@ backup:
 
 For how to restore a database to a specific point in time, see [Restore the cluster with point-in-time recovery](backups-restore.md#restore-the-cluster-with-point-in-time-recovery).
 
-## Monitoring binary logs
-
-The point-in-time recovery Pod collects statistics metrics for binlogs. They provide insights into the success and failure rates of binlog operations, timeliness of processing and uploads and potential gaps or inconsistencies in binlog data.
-
-The available metrics are:
-
-* `pxc_binlog_collector_success_total` - The total number of successful binlog collection cycles. It helps monitor how often the binlog collector successfully processes and uploads binary logs.
-* `pxc_binlog_collector_failure_total` - The total number of failed binlog collection cycles. Indicates issues in the binlog collection process, such as connectivity problems or errors during processing
-* `pxc_binlog_collector_gap_detected_total` - Tracks the total number of gaps detected in the binlog sequence during collection. Highlights potential issues with missing or skipped binlogs, which could impact replication or recovery.
-* `pxc_binlog_collector_last_processing_timestamp` - Records the timestamp of the last successful binlog processing operation.
-* `pxc_binlog_collector_last_upload_timestamp` - Records the timestamp of the last successful binlog upload to the storage
-* `pxc_binlog_collector_uploaded_total` - The total number of successfully uploaded binlogs
-
-You can connect to this Pod using the `<pitr-pod-service>:8080/metrics` endpoint to gather these metrics and further analyze them.
