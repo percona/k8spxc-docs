@@ -14,7 +14,7 @@ Installing Percona XtraDB Cluster on OpenShift includes two steps:
 
 ## Install the Operator
 
-You can install Percona Operator for MySQL on OpenShift using the web interface (the [Operator Lifecycle Manager :octicons-link-external-16:](https://docs.redhat.com/en/documentation/openshift_container_platform/4.2/html/operators/understanding-the-operator-lifecycle-manager-olm#olm-overview_olm-understanding-olm) or [Red Hat Marketplace :octicons-link-external-16:](https://marketplace.redhat.com), or using the command line interface.
+You can install Percona Operator for MySQL on OpenShift using the web interface (the [Operator Lifecycle Manager :octicons-link-external-16:](https://docs.redhat.com/en/documentation/openshift_container_platform/4.2/html/operators/understanding-the-operator-lifecycle-manager-olm#olm-overview_olm-understanding-olm)), or using the command line interface.
 
 ### Install the Operator via the Operator Lifecycle Manager (OLM)
 
@@ -45,22 +45,6 @@ Following steps will allow you to deploy the Operator and Percona XtraDB Cluster
     ![image](assets/images/olm3.svg)
 
     You will be able to edit manifest to set needed Custom Resource options, and then click "Create" button to deploy your database cluster.
-
-### Install the Operator via the Red Hat Marketplace
-
-1. login to the Red Hat Marketplace and register your cluster [following the official instructions :octicons-link-external-16:](https://marketplace.redhat.com/en-us/workspace/clusters/add/register).
-
-2. Go to the [Percona Operator for MySQL :octicons-link-external-16:](https://marketplace.redhat.com/en-us/products/percona-kubernetes-operator-for-percona-server-for-xtradb-cluster) page and click the Free trial button:
-
-    ![image](assets/images/marketplace-operator-page.png)
-
-    Here you can “start trial” of the Operator for 0.0 USD.
-
-3. When finished, chose `Workspace->Software` in the system menu on the top and choose the Operator:
-
-    ![image](assets/images/marketplace-operator-install.png)
-
-    Click the `Install Operator` button.
 
 ### Install the Operator via the command-line interface
 
