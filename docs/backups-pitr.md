@@ -1,7 +1,7 @@
 # Store binary logs for point-in-time recovery
 
 Point-in-time recovery allows users to roll back the cluster to a
-specific transaction or time. You can even skip a transaction if you don't need it anymore. To do so, the Operator needs a backup and binary logs (binlogs) of the server. 
+specific transaction or time. You can even skip a transaction if you don't need it anymore. To make a point-in-time recovery, the Operator needs a backup and binary logs (binlogs) of the server to. 
 
 A binary log records all changes made to the database, such as updates, inserts, and deletes. It is used to synchronize data across servers for and point-in-time recovery. 
 
@@ -15,13 +15,11 @@ After you [enable point-in-time recovery](#enable-point-in-time-recovery), the O
 
 ## Considerations
 
-1. Both binlog and full backup should use the same storage to make the point-in-time recovery work
-2. Point-in-time recovery will be done for binlogs without any
-    cluster-based filtering. Therefore it is recommended to use a separate
-    storage, bucket, or directory to store binlogs for the cluster.
-    Also, it is recommended to have empty bucket/directory which holds binlogs
-    (with no binlogs or files from previous attempts or other clusters) when
-    you enable point-in-time recovery.
+1. You must use either s3-compatible or Azure-compatible storage for both binlog and full backup to make the point-in-time recovery work
+2. The Operator saves binlogs without any
+    cluster-based filtering. Therefore, either use a separate folder per cluster on the same bucket or use different buckets for binlogs. 
+
+    Also,we recommend to have an empty bucket or a folder on a bucket for binlogs when you enable point-in-time recovery. This bucket/folder should not contain no binlogs nor files from previous attempts or other clusters. 
 3. Don't [purge binlogs :octicons-link-external-16:](https://dev.mysql.com/doc/refman/8.0/en/purge-binary-logs.html)
     before they are transferred to the backup storage. Doing so breaks point-in-time recovery
 4. Disable the [retention policy](operator.md#backupschedulekeep) as it is incompatible with the point-in-time recovery. To clean up the storage, configure the [Bucket lifecycle :octicons-link-external-16:](https://docs.aws.amazon.com/AmazonS3/latest/userguide/how-to-set-lifecycle-configuration-intro.html) on the storage
