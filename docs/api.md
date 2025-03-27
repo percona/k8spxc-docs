@@ -1,7 +1,7 @@
 # Percona Operator for MySQL API Documentation
 
-Percona Operator for MySQL based on Percona XtraDB Cluster provides an [aggregation-layer extension for the Kubernetes API](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/apiserver-aggregation/). Please refer to the
-[official Kubernetes API documentation](https://kubernetes.io/docs/reference/) on the API access and usage details.
+Percona Operator for MySQL based on Percona XtraDB Cluster provides an [aggregation-layer extension for the Kubernetes API :octicons-link-external-16:](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/apiserver-aggregation/). Please refer to the
+[official Kubernetes API documentation :octicons-link-external-16:](https://kubernetes.io/docs/reference/) on the API access and usage details.
 The following subsections describe the Percona XtraDB Cluster API provided by the Operator.
 
 ## Prerequisites
@@ -29,7 +29,7 @@ The following subsections describe the Percona XtraDB Cluster API provided by th
     API_SERVER=$(kubectl config view -o jsonpath="{.clusters[?(@.name==\"$KUBE_CLUSTER\")].cluster.server}" | sed -e 's#https://##')
 
     # create service account and get token
-    kubectl apply -f deploy/crd.yaml -f deploy/rbac.yaml -n default
+    kubectl apply --server-side -f deploy/crd.yaml -f deploy/rbac.yaml -n default
     KUBE_TOKEN=$(kubectl get secret $(kubectl get serviceaccount percona-xtradb-cluster-operator -o jsonpath='{.secrets[0].name}' -n default) -o jsonpath='{.data.token}' -n default | base64 --decode )
     ```
 
@@ -73,7 +73,7 @@ $ curl -k -v -XPOST "https://$API_SERVER/apis/pxc.percona.com/v{{ apiversion }}/
 
 ??? example
 
-    --8<-- "./docs/assets/code/api-create-cluster-request-json.txt"
+    --8<-- "cli/api-create-cluster-request-json.md"
 
 **Inputs:**
 
@@ -153,7 +153,7 @@ $ curl -k -v -XPOST "https://$API_SERVER/apis/pxc.percona.com/v{{ apiversion }}/
 
 ??? example
 
-    --8<-- "./docs/assets/code/api-create-cluster-response-json.txt"
+    --8<-- "cli/api-create-cluster-response-json.md"
 
 ## List Percona XtraDB Clusters
 
@@ -199,7 +199,7 @@ None
 
 ??? example
 
-    --8<-- "./docs/assets/code/api-list-cluster-response-json.txt"
+    --8<-- "cli/api-list-cluster-response-json.md"
 
 ## Get status of Percona XtraDB Cluster
 
@@ -245,7 +245,7 @@ None
 
 ??? example
 
-    --8<-- "./docs/assets/code/api-get-status-of-cluster-response-json.txt"
+    --8<-- "cli/api-get-status-of-cluster-response-json.md"
 
 ## Scale up/down Percona XtraDB Cluster
 
@@ -292,7 +292,7 @@ $ curl -k -v -XPATCH "https://$API_SERVER/apis/pxc.percona.com/v1/namespaces/def
 
 ??? example
 
-    --8<-- "./docs/assets/code/api-scale-cluster-request-json.txt"
+    --8<-- "cli/api-scale-cluster-request-json.md"
 
 **Input:**
 
@@ -307,7 +307,7 @@ $ curl -k -v -XPATCH "https://$API_SERVER/apis/pxc.percona.com/v1/namespaces/def
 
 ??? example
 
-    --8<-- "./docs/assets/code/api-scale-cluster-response-json.txt"
+    --8<-- "cli/api-scale-cluster-response-json.md"
 
 ## Update Percona XtraDB Cluster image
 
@@ -353,7 +353,7 @@ $ curl -k -v -XPATCH "https://$API_SERVER/apis/pxc.percona.com/v1/namespaces/def
 
 ??? example
 
-    --8<-- "./docs/assets/code/api-update-cluster-image-request-json.txt"
+    --8<-- "cli/api-update-cluster-image-request-json.md"
 
 **Input:**
 
@@ -368,7 +368,7 @@ $ curl -k -v -XPATCH "https://$API_SERVER/apis/pxc.percona.com/v1/namespaces/def
 
 ??? example
 
-    --8<-- "./docs/assets/code/api-update-cluster-image-response-json.txt"
+    --8<-- "cli/api-update-cluster-image-response-json.md"
 
 ## Pass custom my.cnf during the creation of Percona XtraDB Cluster
 
@@ -418,7 +418,7 @@ $ curl -k -v -XPOST "https://$API_SERVER/api/v1/namespaces/default/configmaps" \
 
 ??? example
 
-    --8<-- "./docs/assets/code/api-pass-config-to-cluster-request-json.txt"
+    --8<-- "cli/api-pass-config-to-cluster-request-json.md"
 
 **Input:**
 
@@ -435,7 +435,7 @@ $ curl -k -v -XPOST "https://$API_SERVER/api/v1/namespaces/default/configmaps" \
 
 ??? example
 
-    --8<-- "./docs/assets/code/api-pass-config-to-cluster-response-json.txt"
+    --8<-- "cli/api-pass-config-to-cluster-response-json.md"
 
 ## Backup Percona XtraDB Cluster
 
@@ -477,7 +477,7 @@ $ curl -k -v -XPOST "https://$API_SERVER/apis/pxc.percona.com/v1/namespaces/defa
 
 ??? example
 
-    --8<-- "./docs/assets/code/api-backup-cluster-request-json.txt"
+    --8<-- "cli/api-backup-cluster-request-json.md"
 
 **Input:**
 
@@ -499,7 +499,7 @@ $ curl -k -v -XPOST "https://$API_SERVER/apis/pxc.percona.com/v1/namespaces/defa
 
 ??? example
 
-    --8<-- "./docs/assets/code/api-backup-cluster-response-json.txt"
+    --8<-- "cli/api-backup-cluster-response-json.md"
 
 ## Restore Percona XtraDB Cluster
 
@@ -542,7 +542,7 @@ $ curl -k -v -XPOST "https://$API_SERVER/apis/pxc.percona.com/v1/namespaces/defa
 
 ??? example
 
-    --8<-- "./docs/assets/code/api-restore-cluster-request-json.txt"
+    --8<-- "cli/api-restore-cluster-request-json.md"
 
 **Input:**
 
@@ -564,4 +564,4 @@ $ curl -k -v -XPOST "https://$API_SERVER/apis/pxc.percona.com/v1/namespaces/defa
 
 ??? example
 
-    --8<-- "./docs/assets/code/api-restore-cluster-response-json.txt"
+    --8<-- "cli/api-restore-cluster-response-json.md"

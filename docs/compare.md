@@ -2,14 +2,14 @@
 
 There are multiple ways to deploy and manage MySQL in Kubernetes. Here we will focus on comparing the following open source solutions:
 
-* [KubeDB](https://github.com/kubedb)
-* [Bitpoke MySQL Operator (former Presslabs)](https://github.com/bitpoke/mysql-operator/)
-* [Oracle MySQL Operator](https://github.com/mysql/mysql-operator)
-* [Moco](https://github.com/cybozu-go/moco) by Cybozu
-* [Vitess Operator](https://github.com/planetscale/vitess-operator) by PlanetScale
+* [KubeDB :octicons-link-external-16:](https://github.com/kubedb)
+* [Bitpoke MySQL Operator (former Presslabs) :octicons-link-external-16:](https://github.com/bitpoke/mysql-operator/)
+* [Oracle MySQL Operator :octicons-link-external-16:](https://github.com/mysql/mysql-operator)
+* [Moco :octicons-link-external-16:](https://github.com/cybozu-go/moco) by Cybozu
+* [Vitess Operator :octicons-link-external-16:](https://github.com/planetscale/vitess-operator) by PlanetScale
 * Percona Operator for MySQL
-    * [based on Percona XtraDB Cluster](https://github.com/percona/percona-xtradb-cluster-operator/)
-    * [based on Percona Server for MySQL](https://github.com/percona/percona-server-mysql-operator/)
+    * [based on Percona XtraDB Cluster :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/)
+    * [based on Percona Server for MySQL :octicons-link-external-16:](https://github.com/percona/percona-server-mysql-operator/)
 
 ## Generic
 
@@ -21,6 +21,7 @@ The review of generic features, such as supported MySQL versions, open source mo
 | MySQL versions         |                  5.7, 8.0                  |                    8.0                   |           5.7          |       8.0      |          8.0          |    5.7, 8.0    |
 | Kubernetes conformance |         Various versions are tested        |        Various versions are tested       |     Not guaranteed     | Not guaranteed |     Not guaranteed    | Not guaranteed |
 | Paid support           |             :white_check_mark:             |            :white_check_mark:            |     :no_entry_sign:    | :no_entry_sign:|  :white_check_mark:   | :no_entry_sign:|
+| Web-based GUI          |  [Percona Everest](https://docs.percona.com/everest/index.html) |   :no_entry_sign:   |     :no_entry_sign:    | :no_entry_sign:| [Oracle Enterprise Manager](https://www.mysql.com/products/enterprise/em.html) | :no_entry_sign:|
 
 ## MySQL Topologies
 
@@ -39,10 +40,10 @@ Here are the backup and restore capabilities of each solution.
 
 | Feature/Product     | Percona Operator for MySQL  (based on PXC) | Percona Operator for MySQL (based on PS) | Bitpoke MySQL Operator |       Moco       | Oracle MySQL Operator |      Vitess      |
 |---------------------|:------------------------------------------:|:----------------------------------------:|:----------------------:|:----------------:|:---------------------:|:----------------:|
-| Scheduled backups   |             :white_check_mark:             |            :white_check_mark:            |   :white_check_mark:   |:white_check_mark:|     :no_entry_sign:   |:white_check_mark:|
+| Scheduled backups   |             :white_check_mark:             |            :white_check_mark:            |   :white_check_mark:   |:white_check_mark:|     :white_check_mark:     |:white_check_mark:|
 | Incremental backups |               :no_entry_sign:              |              :no_entry_sign:             |     :no_entry_sign:    |:white_check_mark:|     :no_entry_sign:   | :no_entry_sign:  |
 | PITR                |             :white_check_mark:             |              :no_entry_sign:             |     :no_entry_sign:    | :no_entry_sign:  |     :no_entry_sign:   | :no_entry_sign:  |
-| PVCs for backups    |             :white_check_mark:             |              :no_entry_sign:             |     :no_entry_sign:    | :no_entry_sign:  |     :no_entry_sign:   | :no_entry_sign:  |
+| PVCs for backups    |             :white_check_mark:             |              :no_entry_sign:             |     :no_entry_sign:    | :no_entry_sign:  |     :white_check_mark:    | :no_entry_sign:  |
 
 ## Monitoring
 

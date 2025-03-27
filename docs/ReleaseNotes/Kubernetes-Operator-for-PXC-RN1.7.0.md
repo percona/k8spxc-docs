@@ -15,21 +15,21 @@
 ## New Features
 
 
-* [K8SPXC-530](https://jira.percona.com/browse/K8SPXC-530): Add support for [point-in-time recovery](../backups.md#backups-pitr-binlog)
+* [K8SPXC-530](https://jira.percona.com/browse/K8SPXC-530): Add support for [point-in-time recovery](../backups-pitr.md)
 
 
 * [K8SPXC-564](https://jira.percona.com/browse/K8SPXC-564): PXC cluster will now recover automatically from a full crash when Pods are stuck in CrashLoopBackOff status
 
 
-* [K8SPXC-497](https://jira.percona.com/browse/K8SPXC-497): Official support for [Percona Monitoring and Management (PMM) v.2](../monitoring.md#operator-monitoring)
+* [K8SPXC-497](https://jira.percona.com/browse/K8SPXC-497): Official support for [Percona Monitoring and Management (PMM) v.2](../monitoring.md)
 
-**NOTE**: Monitoring with PMM v.1 configured according to the [unofficial instruction](https://www.percona.com/blog/2020/07/23/using-percona-kubernetes-operators-with-percona-monitoring-and-management/)
+**NOTE**: Monitoring with PMM v.1 configured according to the [unofficial instruction :octicons-link-external-16:](https://www.percona.com/blog/2020/07/23/using-percona-kubernetes-operators-with-percona-monitoring-and-management/)
 will not work after the upgrade. Please switch to PMM v.2.
 
 ## Improvements
 
 
-* [K8SPXC-485](https://jira.percona.com/browse/K8SPXC-485): [Percona XtraDB Cluster Pod logs are now stored on Persistent Volumes](../debug.md#debug-images-logs). Users can debug the issues even after the Pod restart
+* [K8SPXC-485](https://jira.percona.com/browse/K8SPXC-485): [Percona XtraDB Cluster Pod logs are now stored on Persistent Volumes](../debug-logs.md). Users can debug the issues even after the Pod restart
 
 
 * [K8SPXC-389](https://jira.percona.com/browse/K8SPXC-389): User can now change ServiceType for HAProxy replicas Kubernetes service
@@ -50,7 +50,7 @@ will not work after the upgrade. Please switch to PMM v.2.
 * [K8SPXC-312](https://jira.percona.com/browse/K8SPXC-312): Add schema validation for Custom Resource. Now `cr.yaml` is validated by a WebHook for syntax typos before being applied. It works only in cluster-wide mode due to access restrictions
 
 
-* [K8SPXC-510](https://jira.percona.com/browse/K8SPXC-510): Percona XtraDB Cluster operator can now be [deployed through RedHat Marketplace](https://marketplace.redhat.com/en-us/products/percona-kubernetes-operator-for-percona-server-for-xtradb-cluster)
+* [K8SPXC-510](https://jira.percona.com/browse/K8SPXC-510): Percona XtraDB Cluster operator can now be [deployed through RedHat Marketplace :octicons-link-external-16:](https://marketplace.redhat.com/en-us/products/percona-kubernetes-operator-for-percona-server-for-xtradb-cluster)
 
 
 * [K8SPXC-543](https://jira.percona.com/browse/K8SPXC-543): Check HAProxy custom configuration for syntax errors before applying it to avoid Pod getting stuck in CrashLoopBackOff status (Thanks to user pservit for reporting this issue)

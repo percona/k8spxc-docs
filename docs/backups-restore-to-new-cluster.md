@@ -6,12 +6,12 @@ Operator.
 
 When restoring to a new Kubernetes-based environment, make sure it has a Secrets
 object with the same **user passwords** as in the original cluster. More details
-about secrets can be found in [System Users](users.md#users-system-users).
+about secrets can be found in [System Users](users.md#system-users).
 The name of the required Secrets object can be found out from the
 `spec.secretsName` key in the `deploy/cr.yaml` (`cluster1-secrets` by default).
 
 To restore a backup, you will use the special restore configuration file. The
-example of such file is [deploy/backup/restore.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml). The list of options that can be used in it can
+example of such file is [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml). The list of options that can be used in it can
 be found in the [restore options reference](operator.md#perconaxtradbclusterrestore-custom-resource-options).
 
 You will need correct names for the **backup** and the **cluster**. If you have
@@ -39,7 +39,7 @@ restoration can be done in the following way.
 
 ## Restore the cluster without point-in-time recovery
 
-1. Set appropriate keys in the [deploy/backup/restore.yaml](https://github.com/percona/percona-server-mongodb-operator/blob/main/deploy/backup/restore.yaml) file.
+1. Set appropriate keys in the [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-server-mongodb-operator/blob/main/deploy/backup/restore.yaml) file.
 
     * set `spec.pxcCluster` key to the name of the target cluster to restore
         the backup on,
@@ -63,7 +63,7 @@ restoration can be done in the following way.
 
             !!! note
             
-                <a name="backups-headless-service"> If you need a [headless Service](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services) for the restore Pod (i.e. restoring from a Persistent Volume in a tenant network), mention this in the `metadata.annotations` as follows:
+                <a name="backups-headless-service"> If you need a [headless Service :octicons-link-external-16:](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services) for the restore Pod (i.e. restoring from a Persistent Volume in a tenant network), mention this in the `metadata.annotations` as follows:
 
                 ```yaml
                 annotations:
@@ -74,7 +74,7 @@ restoration can be done in the following way.
         === "S3-compatible storage"
 
             The `destination` key should have value composed of three parts:
-            the `s3://` prefix, the S3 [bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingBucket.html),
+            the `s3://` prefix, the S3 [bucket :octicons-link-external-16:](https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingBucket.html),
             and the backup name, which you have already found out using the
             `kubectl get pxc-backup` command. Also you should add necessary
             S3 configuration keys, [same](backups-storage.md) as those used
@@ -96,7 +96,7 @@ restoration can be done in the following way.
         === "Azure Blob storage"
 
             The `destination` key should have value composed of three parts:
-            the `azure://` prefix, the Azure Blob [container](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction#containers),
+            the `azure://` prefix, the Azure Blob [container :octicons-link-external-16:](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction#containers),
             and the backup name, which you have already found out using the
             `kubectl get pxc-backup` command. Also you should add necessary
             Azure configuration keys, [same](backups-storage.md) as those
@@ -127,7 +127,7 @@ restoration can be done in the following way.
     restoring a backup on it, regardless of whether the backup was made
     with point-in-time recovery or without it.
 
-1. Set appropriate keys in the [deploy/backup/restore.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml) file.
+1. Set appropriate keys in the [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml) file.
 
     * set `spec.pxcCluster` key to the name of the target cluster to restore
         the backup on,

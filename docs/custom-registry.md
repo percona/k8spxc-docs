@@ -58,7 +58,7 @@ in the OpenShift environment.
     ```
 
     You can find correct names and SHA digests in the
-    [current list of the Operator-related images officially certified by Percona](images.md#custom-registry-images).
+    [current list of the Operator-related images officially certified by Percona](images.md).
 
 5. The following way is used to push an image to the custom registry
     (into the OpenShift pxc project):
@@ -88,8 +88,8 @@ in the OpenShift environment.
 
     !!! note
 
-        Don’t forget to set [upgradeoptions.apply](operator.md#upgradeoptions-apply)
-        option to `Disabled`. Otherwise [Smart Upgrade functionality](update.md#operator-update-smartupdates)
+        Don’t forget to set [upgradeoptions.apply](operator.md#upgradeoptionsapply)
+        option to `Disabled`. Otherwise [Smart Upgrade functionality](update.md#automated-upgrade)
         will try using the image recommended by the Version Service instead of the
         custom one.
 

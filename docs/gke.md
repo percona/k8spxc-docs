@@ -1,6 +1,6 @@
 # Install Percona XtraDB Cluster on Google Kubernetes Engine (GKE)
 
-This quickstart shows you how to configure the Percona Operator for MySQL based on Percona XtraDB Cluster with the Google Kubernetes Engine. The document assumes some experience with Google Kubernetes Engine (GKE). For more information on the GKE, see the [Kubernetes Engine Quickstart](https://cloud.google.com/kubernetes-engine/docs/quickstart).
+This quickstart shows you how to configure the Percona Operator for MySQL based on Percona XtraDB Cluster with the Google Kubernetes Engine. The document assumes some experience with Google Kubernetes Engine (GKE). For more information on the GKE, see the [Kubernetes Engine Quickstart :octicons-link-external-16:](https://cloud.google.com/kubernetes-engine/docs/quickstart).
 
 ## Prerequisites
 
@@ -10,9 +10,9 @@ To use *Google Cloud shell*, you need nothing but a modern web browser.
 
 If you would like to use *your local shell*, install the following:
 
-1. [gcloud](https://cloud.google.com/sdk/docs/quickstarts). This tool is part of the Google Cloud SDK. To install it, select your operating system on the [official Google Cloud SDK documentation page](https://cloud.google.com/sdk/docs) and then follow the instructions.
+1. [gcloud :octicons-link-external-16:](https://cloud.google.com/sdk/docs/quickstarts). This tool is part of the Google Cloud SDK. To install it, select your operating system on the [official Google Cloud SDK documentation page :octicons-link-external-16:](https://cloud.google.com/sdk/docs) and then follow the instructions.
 
-2. [kubectl](https://cloud.google.com/kubernetes-engine/docs/quickstart#choosing_a_shell). It is the Kubernetes command-line tool you will use to manage and deploy applications. To install the tool, run the following command:
+2. [kubectl :octicons-link-external-16:](https://cloud.google.com/kubernetes-engine/docs/quickstart#choosing_a_shell). It is the Kubernetes command-line tool you will use to manage and deploy applications. To install the tool, run the following command:
 
     ``` {.bash data-prompt="$" }
     $ gcloud auth login
@@ -21,15 +21,15 @@ If you would like to use *your local shell*, install the following:
 
 ## Configuring default settings for the cluster
 
-You can configure the settings using the `gcloud` tool. You can run it either in the [Cloud Shell](https://cloud.google.com/shell/docs/quickstart) or in your local shell (if you have installed Google Cloud SDK locally on the previous step). The following command will create a cluster named `my-cluster-1`:
+You can configure the settings using the `gcloud` tool. You can run it either in the [Cloud Shell :octicons-link-external-16:](https://cloud.google.com/shell/docs/quickstart) or in your local shell (if you have installed Google Cloud SDK locally on the previous step). The following command will create a cluster named `my-cluster-1`:
 
 ``` {.bash data-prompt="$" }
-$ gcloud container clusters create my-cluster-1 --project <project name> --zone us-central1-a --cluster-version {{ gkerecommended }} --machine-type n1-standard-4 --num-nodes=3
+$ gcloud container clusters create my-cluster-1 --project <project ID> --zone us-central1-a --cluster-version {{ gkerecommended }} --machine-type n1-standard-4 --num-nodes=3
 ```
 
 !!! note
 
-    You must edit the following command and other command-line statements to replace the `<project name>` placeholder with your project name. You may also be required to edit the *zone location*, which is set to `us-central1` in the above example. Other parameters specify that we are creating a cluster with 3 nodes and with machine type of 4 vCPUs and 45 GB memory.
+    You must edit the above command and other command-line statements to replace the `<project ID>` placeholder with your project ID (see available projects with `gcloud projects list` command). You may also be required to edit the *zone location*, which is set to `us-central1-a` in the above example. Other parameters specify that we are creating a cluster with 3 nodes and with machine type of 4 vCPUs.
 
 You may wait a few minutes for the cluster to be generated, and then you will see it listed in the Google Cloud console (select *Kubernetes Engine* → *Clusters* in the left menu panel):
 
@@ -45,7 +45,7 @@ $ gcloud container clusters get-credentials my-cluster-1 --zone us-central1-a --
 
 ## Installing the Operator
 
-1. First of all, use your [Cloud Identity and Access Management (Cloud IAM)](https://cloud.google.com/iam) to control access to the cluster. The following command will give you the ability to create Roles and RoleBindings:
+1. First of all, use your [Cloud Identity and Access Management (Cloud IAM) :octicons-link-external-16:](https://cloud.google.com/iam) to control access to the cluster. The following command will give you the ability to create Roles and RoleBindings:
 
     ``` {.bash data-prompt="$" }
     $ kubectl create clusterrolebinding cluster-admin-binding --clusterrole cluster-admin --user $(gcloud config get-value core/account)
@@ -71,7 +71,7 @@ $ gcloud container clusters get-credentials my-cluster-1 --zone us-central1-a --
     Deploy the Operator using the following command:
 
     ``` {.bash data-prompt="$" }
-    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/bundle.yaml
+    $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/bundle.yaml
     ```
 
     ??? example "Expected output"
@@ -103,7 +103,7 @@ $ gcloud container clusters get-credentials my-cluster-1 --zone us-central1-a --
 
         This deploys default Percona XtraDB Cluster configuration with three
         HAProxy and three XtraDB Cluster instances. Please see
-        [deploy/cr.yaml](https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cr.yaml)
+        [deploy/cr.yaml :octicons-link-external-16:](https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cr.yaml)
         and [Custom Resource Options](operator.md) for the configuration
         options. You can clone the repository with all manifests and source code
         by executing the following command:
@@ -152,7 +152,7 @@ $ kubectl get pods
 
 ??? example "Expected output"
 
-    --8<-- "./docs/assets/code/kubectl-get-pods-response.txt"
+    --8<-- "cli/kubectl-get-pods-response.md"
 
 Also, you can see the same information when browsing Pods of your cluster in Google Cloud console via the *Object Browser*:
 
@@ -182,13 +182,22 @@ Clicking the problematic Pod will bring you to the details page with the same wa
 
 There are several ways that you can delete the cluster.
 
-You can clean up the cluster with the `gcloud` command as follows:
+You can clean up the cluster with the `gcloud container clusters delete <cluster name> --zone <zone location>` command. The return statement requests your confirmation of the deletion. Type `y` to confirm.
 
 ``` {.bash data-prompt="$" }
-$ gcloud container clusters delete <cluster name>
+$ gcloud container clusters delete my-cluster-1 --zone us-central1-a --project <project ID>
 ```
 
-The return statement requests your confirmation of the deletion. Type `y` to confirm.
+??? example "Expected output"
+
+    ``` {.text .no-copy}
+    The following clusters will be deleted.
+     - [my-cluster-1] in [us-central1-a]
+
+    Do you want to continue (Y/n)?  y
+
+    Deleting cluster my-cluster-1...⠧
+    ```
 
 Also, you can delete your cluster via the GKE console. Just click the appropriate trashcan icon in the clusters list:
 

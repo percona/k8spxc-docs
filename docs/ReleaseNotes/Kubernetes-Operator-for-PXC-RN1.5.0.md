@@ -35,10 +35,10 @@
 * [K8SPXC-290](https://jira.percona.com/browse/K8SPXC-290): Extend usable backup schedule syntax to include lists of values
 
 
-* [K8SPXC-309](https://jira.percona.com/browse/K8SPXC-309): Quickstart Guide on Google Kubernetes Engine (GKE) - [link](https://www.percona.com/doc/kubernetes-operator-for-pxc/gke.html)
+* [K8SPXC-309](https://jira.percona.com/browse/K8SPXC-309): Quickstart Guide on Google Kubernetes Engine (GKE) - [link](../gke.md)
 
 
-* [K8SPXC-288](https://jira.percona.com/browse/K8SPXC-288): Quickstart Guide on Amazon Elastic Kubernetes Service (EKS) - [link](https://www.percona.com/doc/kubernetes-operator-for-pxc/eks.html)
+* [K8SPXC-288](https://jira.percona.com/browse/K8SPXC-288): Quickstart Guide on Amazon Elastic Kubernetes Service (EKS) - [link](../eks.md)
 
 
 * [K8SPXC-280](https://jira.percona.com/browse/K8SPXC-280): Support XtraBackup compression

@@ -10,9 +10,10 @@ Security (TLS) cryptographic protocol for the following types of communication:
 
 The internal certificate is also used as an authorization method.
 
-TLS security can be configured in several ways. By default, the Operator
-generates long-term certificates automatically if there are no certificate
-secrets available. Other options are the following ones:
+TLS security can be configured in several ways:
+
+* The Operator generates long-term certificates automatically if there are no
+certificate secrets available (default option, and requires you renew them manually),
 
 * The Operator can use a specifically installed *cert-manager*, which will
 automatically generate and renew short-term TLS certificates,
@@ -30,7 +31,7 @@ Operator yourself, as well as how to temporarily disable it if needed.
 
 ### <a name="tls-certs-certmanager"></a>About the *cert-manager*
 
-A [cert-manager](https://cert-manager.io/docs/) is a Kubernetes certificate
+A [cert-manager :octicons-link-external-16:](https://cert-manager.io/docs/) is a Kubernetes certificate
 management controller which is widely used to automate the management and
 issuance of TLS certificates. It is community-driven, and open source.
 
@@ -59,7 +60,7 @@ The following commands perform all the needed actions:
 ``` {.bash data-prompt="$" }
 $ kubectl create namespace cert-manager
 $ kubectl label namespace cert-manager certmanager.k8s.io/disable-validation=true
-$ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v{{ certmanagerversion }}/cert-manager.yaml
+$ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v{{ certmanagerversion }}/cert-manager.yaml
 ```
 
 After the installation, you can verify the *cert-manager* by running the following command:
@@ -92,7 +93,7 @@ The set of commands generate certificates with the following attributes:
 
 You should generate certificates twice: one set is for external communications,
 and another set is for internal ones. A secret created for the external use must
-be added to `cr.yaml/spec/secretsName`. A certificate generated for internal
+be added to `cr.yaml/spec/sslSecretName`. A certificate generated for internal
 communications must be added to the `cr.yaml/spec/sslInternalSecretName`.
 
 ``` {.bash data-prompt="$" }
@@ -141,7 +142,7 @@ automatically on schedule and without downtime.
 
 Versions of the Operator prior 1.9.0 have used 3 month root certificate, which
 caused issues with the automatic TLS certificates update. If that’s your case,
-you can make the Operator update along with the [official instruction](update.md#operator-update).
+you can make the Operator update along with the [official instruction](update.md).
 
 !!! note
 
@@ -282,7 +283,7 @@ If your certificates have been already expired (or if you continue to use the
 Operator version prior to 1.9.0), you should move through the
 *pause - update Secrets - unpause* route as follows.
 
-1. Pause the cluster [in a standard way](pause.md#operator-pause), and make
+1. Pause the cluster [in a standard way](pause.md), and make
     sure it has reached its paused state.
 
 2. If cert-manager is used, delete issuer
@@ -303,7 +304,7 @@ Operator version prior to 1.9.0), you should move through the
 
 4. Check certificates to make sure reconciliation have succeeded.
 
-5. Unpause the cluster [in a standard way](pause.md#operator-pause), and make
+5. Unpause the cluster [in a standard way](pause.md), and make
     sure it has reached its running state.
 
 ### Keep certificates after deleting the cluster
@@ -320,6 +321,29 @@ Secret, certificate and issuer after the cluster deletion event.
 Omitting TLS is also possible, but we recommend that you run your cluster with
 the TLS protocol enabled.
 
-To disable TLS protocol (e.g. for demonstration purposes) edit the
-`cr.yaml/spec/allowUnsafeConfigurations` setting to `true` and make sure
-that there are no certificate secrets available.
+To have TLS protocol disabled (e.g. for demonstration purposes) set the
+`unsafeFlags.tls` key to `true` and set the `tls.enabled` key to `false` 
+in the `deploy/cr.yaml` file: 
+
+```yaml
+...
+spec:
+  ...
+  unsafeFlags
+    tls: true
+    ...
+  tls:
+    enabled: false
+```
+
+### Enabling or disabling TLS on a running cluster
+
+You can set `tls.enabled` Custom Resource option to `true` or `false` to enable or disable TLS. However, doing this on a running cluster results in downtime and has the following side effects.
+
+When the cluster is already running and the user switches `tls.enabled` to `false`, the Operator [pauses the cluster](pause.md), waits until all Pods are deleted, sets `unsafeFlags.tls` Custom Resource option to `true`, deletes TLS secrets, and [unpauses the cluster](pause.md).
+
+Similarly, when the user switches `tls.enabled` to `true`, the Operator [pauses the cluster](pause.md), waits until all Pods are deleted, sets `unsafeFlags.tls` Custom Resource option to `false`, and [unpauses the cluster](pause.md).
+
+!!! warning
+
+    Don't change `tls.enabled` Custom Resource option when the cluster is in the process of enabling or disabling TLS: changing its value will immediately unpause the cluster even though the process has not yet completed.

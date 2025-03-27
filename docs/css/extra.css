@@ -4,4 +4,19 @@
       top: 0.6rem;
       left: 0.6rem;
     }
-  } 
+  }
+
+/* Type override due to large titles used in the version switcher */
+
+#versionSelect {
+    font-size: 0.5625rem;
+    vertical-align: 0.0625em;
+}
+.version-select::after {
+    font-size: 0.8em;
+}
+
+.md-sidebar__inner {
+  font-size: 0.65rem;   /* Font size */
+  line-height: 1.6;
+}

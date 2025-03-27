@@ -1,17 +1,17 @@
-# Make a backup
+# 4. Make a backup
 
 In this tutorial, you will learn how to make a logical backup of your data manually. To learn more about backups, see the [Backup and restore](backups.md) section.
 
 ## Considerations and prerequisites
 
-In this tutorial, we use the [AWS S3](https://aws.amazon.com/s3/) as the backup storage. You need the following S3-related information:
+In this tutorial, we use the [AWS S3 :octicons-link-external-16:](https://aws.amazon.com/s3/) as the backup storage. You need the following S3-related information:
    
 * the name of the S3 storage
 * the name of the S3 bucket
 * the region - the location of the bucket
 * the S3 credentials to be used to access the storage. 
 
-If you don’t have access to AWS, you can use any S3-compatible storage like [MinIO](https://min.io/docs/minio/linux/index.html). Also [check the list of supported storages](backups.md#backup-storage).
+If you don’t have access to AWS, you can use any S3-compatible storage like [MinIO :octicons-link-external-16:](https://min.io/docs/minio/linux/index.html). Also [check the list of supported storages](backups-storage.md).
 
 Also, we will use some files from the Operator repository for setting up
 backups. So, clone the percona-xtradb-cluster-operator repository:
@@ -44,7 +44,7 @@ $ cd percona-xtradb-cluster-operator
         $ echo -n 'AWS_SECRET_ACCESS_KEY' | base64 
         ```
 
-2. Edit the [`deploy/backup-secret-s3.yaml`](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/backup-secret-s3.yaml) example Secrets configuration file and specify the following:
+2. Edit the [`deploy/backup-secret-s3.yaml` :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/backup-secret-s3.yaml) example Secrets configuration file and specify the following:
 
     * the `metadata.name` key is the name which you use to refer your Kubernetes Secret
     * the base64-encoded S3 credentials
@@ -107,7 +107,7 @@ Now when your have the [configured storage](#configure-backup-storage) in your
 Custom Resource, you can make your first backup.
 {.power-number}
 
-1. To make a backup, you need the configuration file. Edit the sample [`deploy/backup/backup.yaml`](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/backup.yaml) configuration file and specify the following:
+1. To make a backup, you need the configuration file. Edit the sample [`deploy/backup/backup.yaml` :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/backup.yaml) configuration file and specify the following:
 
     * `metadata.name` - specify the backup name. You will use this name to restore from this backup
     * `spec.pxcCluster` - specify the name of your cluster. This is the name you specified when deploying Percona XtraDB Cluster.

@@ -15,7 +15,7 @@
 ## New Features
 
 
-* [K8SPXC-172](https://jira.percona.com/browse/K8SPXC-172): Full data-at-rest encryption available in PXC 8.0 is now supported by the Operator. This feature is implemented with the help of the `keyring_vault` plugin which ships with PXC 8.0.  By utilizing [Vault](https://www.vaultproject.io) we enable our customers to follow best practices with encryption in their environment.
+* [K8SPXC-172](https://jira.percona.com/browse/K8SPXC-172): Full data-at-rest encryption available in PXC 8.0 is now supported by the Operator. This feature is implemented with the help of the `keyring_vault` plugin which ships with PXC 8.0.  By utilizing [Vault :octicons-link-external-16:](https://www.vaultproject.io) we enable our customers to follow best practices with encryption in their environment.
 
 
 * [K8SPXC-125](https://jira.percona.com/browse/K8SPXC-125): Percona XtraDB Cluster 8.0 is now supported
@@ -36,7 +36,7 @@ was added to the list of the officially supported platforms
 * [K8SPXC-221](https://jira.percona.com/browse/K8SPXC-221): The Operator now updates observedGeneration status message to allow better monitoring of the cluster rollout or backup/restore process
 
 
-* [K8SPXC-213](https://jira.percona.com/browse/K8SPXC-213): A special [PXC debug image](../debug.md#debug-images) is now available. It avoids restarting on fail and contains additional tools useful for debugging
+* [K8SPXC-213](https://jira.percona.com/browse/K8SPXC-213): A special [PXC debug image](../debug-images.md) is now available. It avoids restarting on fail and contains additional tools useful for debugging
 
 
 * [K8SPXC-100](https://jira.percona.com/browse/K8SPXC-100): The Operator now implements the crash tolerance on the one member crash. The implementation is based on starting Pods with `mysqld --wsrep_recover` command if there was no graceful shutdown

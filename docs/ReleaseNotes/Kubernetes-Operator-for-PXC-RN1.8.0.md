@@ -15,35 +15,35 @@
 ## Release Highlights
 
 
-* It is now [possible](https://www.percona.com/doc/kubernetes-operator-for-pxc/scaling.html)
+* It is now [possible](../scaling.md)
 to use `kubectl scale` command to scale Percona XtraDB Cluster horizontally
 (add or remove Replica Set instances). You can also use  [Horizontal Pod
-Autoscaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/)
+Autoscaler :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/)
 which will scale your database cluster based on various metrics, such as CPU utilization.
 
 
-* Support for [custom sidecar containers](../faq.md#faq-sidecar). The Operator makes
+* Support for [custom sidecar containers](../sidecar.md). The Operator makes
 it possible now to deploy additional (sidecar) containers to the Pod. This
 feature can be useful to run debugging tools or some specific monitoring
 solutions, etc. Sidecar containers can be added to
-[pxc](../operator.md#pxc-sidecars-image),
-[haproxy](../operator.md#haproxy-sidecars-image), and
-[proxysql](../operator.md#proxysql-image) sections of the `deploy/cr.yaml`
+[pxc](../operator.md#pxcsidecarsimage),
+[haproxy](../operator.md#haproxysidecarsimage), and
+[proxysql](../operator.md#proxysqlimage) sections of the `deploy/cr.yaml`
 configuration file.
 
 ## New Features
 
 
-* [K8SPXC-528](https://jira.percona.com/browse/K8SPXC-528): Support for [custom sidecar containers](../faq.md#faq-sidecar)
+* [K8SPXC-528](https://jira.percona.com/browse/K8SPXC-528): Support for [custom sidecar containers](../sidecar.md)
 to extend the Operator capabilities
 
 
-* [K8SPXC-647](https://jira.percona.com/browse/K8SPXC-647): Allow the cluster [scale in and scale out](../scaling.md#operator-scale)
+* [K8SPXC-647](https://jira.percona.com/browse/K8SPXC-647): Allow the cluster [scale in and scale out](../scaling.md)
 with the `kubectl scale` command or Horizontal Pod Autoscaler
 
 
 * [K8SPXC-643](https://jira.percona.com/browse/K8SPXC-643): Operator can now automatically recover Percona XtraDB
-Cluster after the [network partitioning](https://en.wikipedia.org/wiki/Network_partition)
+Cluster after the [network partitioning :octicons-link-external-16:](https://en.wikipedia.org/wiki/Network_partition)
 
 ## Improvements
 
@@ -54,7 +54,7 @@ for reporting this issue)
 
 
 * [K8SPXC-697](https://jira.percona.com/browse/K8SPXC-697): Add namespace support in the
-[script used to copy backups](../backups.md#backups-copy) from remote storage to a
+[script used to copy backups](../backups-copy.md) from remote storage to a
 local machine
 
 
@@ -62,13 +62,13 @@ local machine
 with the oldest binary log in the cluster to ensure log consistency
 
 
-* [K8SPXC-618](https://jira.percona.com/browse/K8SPXC-618): Add debug symbols from the [percona-xtradb-cluster-server-debuginfo](https://www.percona.com/doc/percona-server/8.0/installation/yum_repo.html#what-s-in-each-rpm-package)
+* [K8SPXC-618](https://jira.percona.com/browse/K8SPXC-618): Add debug symbols from the [percona-xtradb-cluster-server-debuginfo :octicons-link-external-16:](https://www.percona.com/doc/percona-server/8.0/installation/yum_repo.html#what-s-in-each-rpm-package)
 package to the Percona XtraDB Cluster debug docker image to simplify
 troubleshooting
 
 
 * [K8SPXC-599](https://jira.percona.com/browse/K8SPXC-599): It is now possible to
-[recover](../backups.md#backups-pitr-restore) databases up to a specific transaction
+[recover](../backups-restore.md#restore-the-cluster-with-point-in-time-recovery) databases up to a specific transaction
 with the Point-in-time Recovery feature. Previously the user could only
 recover to specific date and time
 

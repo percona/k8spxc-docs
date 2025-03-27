@@ -8,7 +8,7 @@ default and is supported by the Operator only with Percona XtraDB Cluster
 versions starting from 8.0.21-12.1.
 
 To be used, it requires setting a number of keys in the `pitr` subsection
-under the `backup` section of the [deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file:
+under the `backup` section of the [deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file:
 
 * `backup.pitr.enabled` key should be set to `true`
 
@@ -44,5 +44,5 @@ backup:
 
 !!! note
 
-    [Purging binlogs](https://dev.mysql.com/doc/refman/8.0/en/purge-binary-logs.html)
+    [Purging binlogs :octicons-link-external-16:](https://dev.mysql.com/doc/refman/8.0/en/purge-binary-logs.html)
     before they are transferred to backup storage will break point-in-time recovery.

@@ -13,11 +13,11 @@ To delete the database cluster means to delete the Custom Resource associated wi
 
 !!! note
 
-    There are 3 [finalizers](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#finalizers) defined in the Custom Resource, which define whether to delete or preserve  TLS-related objects and data volumes when the cluster is deleted.
+    There are 3 [finalizers :octicons-link-external-16:](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#finalizers) defined in the Custom Resource, which define whether to delete or preserve  TLS-related objects and data volumes when the cluster is deleted.
 
     * `finalizers.percona.com/delete-ssl`: if present, objects, created for SSL (Secret, certificate, and issuer) are deleted along with the cluster deletion.
-    * `finalizers.percona.com/delete-pxc-pvc`: if present, [Persistent Volume Claims](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) for the database cluster Pods are deleted along with the cluster deletion.
-    * `finalizers.percona.com/delete-proxysql-pvc`: if present, [Persistent Volume Claims](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) for ProxySQL Pods are deleted along with the cluster deletion.
+    * `finalizers.percona.com/delete-pxc-pvc`: if present, [Persistent Volume Claims :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) for the database cluster Pods are deleted along with the cluster deletion.
+    * `finalizers.percona.com/delete-proxysql-pvc`: if present, [Persistent Volume Claims :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) for ProxySQL Pods are deleted along with the cluster deletion.
 
     All 3 finalizers are off by default in the `deploy/cr.yaml` configuration file, and this allows you to recreate the cluster without losing data, credentials for the system users, etc. You can always [delete TLS-related objects and PVCs manually](#clean-up-resources), if needed. 
 
@@ -62,7 +62,7 @@ Choose the instructions relevant to the way you installed the Operator.
 
 === "kubectl"
 
-    To uninstall the Operator, delete the [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) related to it.
+    To uninstall the Operator, delete the [Deployments :octicons-link-external-16:](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) related to it.
     {.power-number}
 
     1. List the deployments. Replace the `<namespace>` placeholder with your namespace.
@@ -95,7 +95,7 @@ Choose the instructions relevant to the way you installed the Operator.
         No resources found in <namespace> namespace.
         ```
 
-    4. If you are not just deleting the Operator and XtraDB Cluster from a specific namespace, but want to clean up your entire Kubernetes environment, you can also delete the [CustomRecourceDefinitions (CRDs)](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#customresourcedefinitions).
+    4. If you are not just deleting the Operator and XtraDB Cluster from a specific namespace, but want to clean up your entire Kubernetes environment, you can also delete the [CustomRecourceDefinitions (CRDs) :octicons-link-external-16:](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#customresourcedefinitions).
 
         <i warning>:material-alert: Warning:</i> CRDs in Kubernetes are non-namespaced but are available to the whole environment. This means that you shouldn’t delete CRDs if you still have the Operator and database cluster in some namespace.
 
@@ -137,13 +137,13 @@ Choose the instructions relevant to the way you installed the Operator.
             my-op       <namespace>         1           2023-10-31 10:15:18.41444 +0100 CET     deployed    pxc-operator-{{release}}   {{release}}
             ```
 
-    2. Delete the [release object](https://helm.sh/docs/intro/using_helm/#three-big-concepts) for Percona XtraDB Cluster 
+    2. Delete the [release object :octicons-link-external-16:](https://helm.sh/docs/intro/using_helm/#three-big-concepts) for Percona XtraDB Cluster 
 
         ```{.bash data-prompt="$"}
         $ helm uninstall cluster1 --namespace <namespace>
         ```
 
-    3. Delete the [release object](https://helm.sh/docs/intro/using_helm/#three-big-concepts) for the Operator 
+    3. Delete the [release object :octicons-link-external-16:](https://helm.sh/docs/intro/using_helm/#three-big-concepts) for the Operator 
 
         ```{.bash data-prompt="$"}
         $ helm uninstall my-op --namespace <namespace>

@@ -10,9 +10,9 @@ This feature can be useful in several cases: for example, it can simplify migrat
 
 !!! note
 
-    Cross-site replication is based on [Automatic Asynchronous Replication Connection Failover](https://dev.mysql.com/doc/refman/8.0/en/replication-asynchronous-connection-failover.html). Therefore it requires  MySQL 8.0.22+ (Percona XtraDB Cluster 8.0.22+) to work.
+    Cross-site replication is based on [Automatic Asynchronous Replication Connection Failover :octicons-link-external-16:](https://dev.mysql.com/doc/refman/8.0/en/replication-asynchronous-connection-failover.html). Therefore it requires  MySQL 8.0.22+ (Percona XtraDB Cluster 8.0.22+) to work.
 
-Setting up MySQL for asynchronous replication without the Operator is out of the scope for this document, but it is described [here](https://www.percona.com/blog/2021/04/14/what-you-can-do-with-auto-failover-and-percona-distribution-for-mysql-8-0-x/) and is also covered by [this HowTo](backups-move-from-external-db.md).
+Setting up MySQL for asynchronous replication without the Operator is out of the scope for this document, but it is described [here :octicons-link-external-16:](https://www.percona.com/blog/2021/04/14/what-you-can-do-with-auto-failover-and-percona-distribution-for-mysql-8-0-x/) and is also covered by [this HowTo](backups-move-from-external-db.md).
 
 Configuring the cross-site replication for the cluster controlled by the Operator is explained in the following subsections.
 
@@ -118,7 +118,7 @@ $ kubectl apply -f deploy/cr.yaml
 
 !!! note
 
-    You can also [configure SSL channel for replication](https://dev.mysql.com/doc/refman/8.0/en/replication-encrypted-connections.html). Following 
+    You can also [configure SSL channel for replication :octicons-link-external-16:](https://dev.mysql.com/doc/refman/8.0/en/replication-encrypted-connections.html). Following 
     options allow you using replication over an encrypted channel.
     Set the `replicationChannels.configuration.ssl` key to true, optionally
     enable host name identity verification with the
@@ -142,14 +142,14 @@ $ kubectl apply -f deploy/cr.yaml
 
 ## System user for replication
 
-Replication channel demands a special [system user](users.md#users-system-users) with same credentials on both *Source* and *Replica*.
+Replication channel demands a special [system user](users.md#system-users) with same credentials on both *Source* and *Replica*.
 
 The Operator creates a system-level Percona XtraDB Cluster user named `replication` for this purpose, with
-credentials stored in a Secret object [along with other system users](users.md#users-system-users).
+credentials stored in a Secret object [along with other system users](users.md#system-users).
 
 !!! note
 
-    If the Replica cluster is not a clone of the original one (for example, it's outside of Kubernetes and is not under the Operator’s control) [the appropriate user with necessary permissions](https://dev.mysql.com/doc/refman/8.0/en/replication-asynchronous-connection-failover.html) should be created manually.
+    If the Replica cluster is not a clone of the original one (for example, it's outside of Kubernetes and is not under the Operator’s control) [the appropriate user with necessary permissions :octicons-link-external-16:](https://dev.mysql.com/doc/refman/8.0/en/replication-asynchronous-connection-failover.html) should be created manually.
 
 If you need you can change a password for this user as follows:
 
@@ -179,7 +179,7 @@ Fixing this involves the following steps.
     $ kubectl get pods --selector percona.com/replicationPod=true
     ```
 
-2. Get the shell access to this Pod and login to the MySQL monitor as a [root user](users.md#users-system-users):
+2. Get the shell access to this Pod and login to the MySQL monitor as a [root user](users.md#system-users):
 
     ``` {.bash data-prompt="$" }
     $ kubectl exec -c pxc --stdin --tty <pod_name> -- /bin/bash

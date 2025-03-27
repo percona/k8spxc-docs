@@ -8,7 +8,7 @@ equipped machine, or to reduce costs choosing nodes in a same
 availability zone.
 
 Appropriate sections of the
-[deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
+[deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
 file (such as `pxc`, `haproxy`, and `proxysql`) contain keys which can be used to do this, depending on what is the
 best for a particular situation.
 
@@ -49,10 +49,10 @@ may have one of the following values:
 
 * `kubernetes.io/hostname` - Pods will avoid residing within the same host,
 
-* `failure-domain.beta.kubernetes.io/zone` - Pods will avoid residing
+* `topology.kubernetes.io/zone` - Pods will avoid residing
     within the same zone,
 
-* `failure-domain.beta.kubernetes.io/region` - Pods will avoid
+* `topology.kubernetes.io/region` - Pods will avoid
     residing within the same region,
 
 * `none` - no constraints are applied.
@@ -70,7 +70,7 @@ affinity:
 Previous way can be used with no special knowledge of the Kubernetes way
 of assigning Pods to specific nodes. Still in some cases more complex
 tuning may be needed. In this case `advanced` option placed in the
-[deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
+[deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
 file turns off the effect of the `topologyKey` and allows to use
 standard Kubernetes affinity constraints of any complexity:
 
@@ -85,7 +85,7 @@ affinity:
              operator: In
              values:
              - S1
-         topologyKey: failure-domain.beta.kubernetes.io/zone
+         topologyKey: topology.kubernetes.io/zone
      podAntiAffinity:
        preferredDuringSchedulingIgnoredDuringExecution:
        - weight: 100
@@ -117,7 +117,7 @@ affinity:
 ```
 
 See explanation of the advanced affinity options [in Kubernetes
-documentation](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#inter-pod-affinity-and-anti-affinity-beta-feature).
+documentation :octicons-link-external-16:](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity).
 
 ## Tolerations
 
@@ -141,7 +141,7 @@ tolerations:
 ```
 
 The [Kubernetes Taints and
-Toleratins](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/)
+Toleratins :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/)
 contains more examples on this topic.
 
 ## Priority Classes
@@ -151,7 +151,7 @@ distinguish more and less important Pods to resolve the situation when
 some higher priority Pod cannot be scheduled without evicting a lower
 priority one. This can be done adding one or more PriorityClasses in
 your Kubernetes cluster, and specifying the `PriorityClassName` in the
-[deploy/cr.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
+[deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
 file:
 
 ```default
@@ -159,7 +159,7 @@ priorityClassName: high-priority
 ```
 
 See the [Kubernetes Pods Priority and Preemption
-documentation](https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption)
+documentation :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption)
 to find out how to define and use priority classes in your cluster.
 
 ## Pod Disruption Budgets
@@ -174,5 +174,5 @@ availability while maintenance and other administrative activities.
 We recommend to apply Pod Disruption Budgets manually to avoid situation
 when Kubernetes stopped all your database Pods. See [the official
 Kubernetes
-documentation](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/)
+documentation :octicons-link-external-16:](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/)
 for details.

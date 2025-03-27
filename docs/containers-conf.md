@@ -5,7 +5,7 @@ configuration for the components of your cluster. For example, you can use it to
 customize the configuration of HAProxy, or to add additional options for PMM
 Client.
 
-The Operator can store environment variables in [Kubernetes Secrets](https://kubernetes.io/docs/concepts/configuration/secret/). Here is an example with several options related to HAProxy:
+The Operator can store environment variables in [Kubernetes Secrets :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/secret/). Here is an example with several options related to HAProxy:
 
 ```yaml
 apiVersion: v1
@@ -25,7 +25,7 @@ data:
      
      * `HA_CONNECTION_TIMEOUT` allows to set custom timeout for health checks done by HAProxy (it repeatedly executes a simple status query on XtraDB Cluster instances). The default 10 seconds timeout is good for most workloads, but increase should be helpful in case of unstable Kubernetes network or soft lockups happening on Kubernetes nodes.
      * `OK_IF_DONOR` allows application connections to XtraDB Cluster donors. The backup is running on the donor node, and SQL queries combined with it could run slower than usual. Enable the option to grant application access when there is only one XtraDB Cluster node alive, and a second XtraDB Cluster node is joining the cluster via SST.
-     * `HA_SERVER_OPTIONS` allows to set the [custom options](https://docs.haproxy.org/2.6/configuration.html#5) for the server in the HAProxy configuration file. You can start with the default `check inter 30000 rise 1 fall 5 weight 1` set, and add required options [referenced in the upstream documentation](https://docs.haproxy.org/2.6/configuration.html#5.2).
+     * `HA_SERVER_OPTIONS` allows to set the [custom options :octicons-link-external-16:](https://docs.haproxy.org/2.6/configuration.html#5) for the server in the HAProxy configuration file. You can start with the default `check inter 30000 rise 1 fall 5 weight 1` set, and add required options [referenced in the upstream documentation :octicons-link-external-16:](https://docs.haproxy.org/2.6/configuration.html#5.2).
 
 As you can see, environment variables are stored as `data` - i.e.,
 base64-encoded strings, so you’ll need to encode the value of each variable.

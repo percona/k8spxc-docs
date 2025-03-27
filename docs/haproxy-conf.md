@@ -1,7 +1,7 @@
 # Configuring Load Balancing with HAProxy
 
 Percona Operator for MySQL based on Percona XtraDB Cluster provides a choice of two cluster components to
-provide load balancing and proxy service: you can use either [HAProxy](https://haproxy.org) or [ProxySQL](https://proxysql.com/).
+provide load balancing and proxy service: you can use either [HAProxy :octicons-link-external-16:](https://haproxy.org) or [ProxySQL :octicons-link-external-16:](https://proxysql.com/).
 You can control which one to use, if any, by enabling or disabling via the
 `haproxy.enabled` and `proxysql.enabled` options in the `deploy/cr.yaml`
 configuration file.
@@ -25,9 +25,9 @@ $ kubectl patch pxc cluster1 --type=merge --patch '{
     restart. Switching from HAProxy to ProxySQL is not possible, and if you need
     ProxySQL, this should be configured at cluster creation time.
 
-The resulting HAPproxy setup will contain two services:
+The resulting HAPproxy setup normally contains two services:
 
-* `cluster1-haproxy` service listening on ports 3306 (MySQL) and 3309 (the [proxy protocol](https://www.haproxy.com/blog/haproxy/proxy-protocol/)).
+* `cluster1-haproxy` service listening on ports 3306 (MySQL) and 3309 (the [proxy protocol :octicons-link-external-16:](https://www.haproxy.com/blog/haproxy/proxy-protocol/) useful for operations such as asynchronous calls).
     This service is pointing to the number zero Percona XtraDB Cluster member
     (`cluster1-pxc-0`) by default when this member is available. If a zero
     member is not available, members are selected in descending order of their
@@ -35,14 +35,22 @@ The resulting HAPproxy setup will contain two services:
     can be used for both read and write load, or it can also be used just for
     write load (single writer mode) in setups with split write and read loads.
 
+    [haproxy.exposePrimary.enabled](operator.md#haproxyexposeprimaryenabled)
+    Custom Resource option enables or disables `cluster1-haproxy` service.
+
 * `cluster1-haproxy-replicas` listening on port 3306 (MySQL).
     This service selects Percona XtraDB Cluster members to serve queries following
     the Round Robin load balancing algorithm.
+    It **should not be used for write requests**.
+
+    [haproxy.exposeReplicas.enabled](operator.md#haproxyexposereplicasenabled)
+    Custom Resource option enables or disables `cluster1-haproxy-replicas`
+    service (on by default).
 
 !!! note
 
     <a name="headless-service"> If you need to configure `cluster1-haproxy` and
-    `cluster1-haproxy-replicas` as a [headless Service](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services)
+    `cluster1-haproxy-replicas` as a [headless Service :octicons-link-external-16:](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services)
     (e.g. to use on the tenant network), add the following [annotation](annotations.md)
     in the Custom Resource metadata section of the `deploy/cr.yaml`:
 
@@ -75,12 +83,17 @@ You can pass custom configuration to HAProxy in one of the following ways:
 !!! note
 
     If you specify a custom HAProxy configuration in this way, the
-    Operator doesn’t provide its own HAProxy configuration file. That’s why you
+    Operator doesn’t provide its own HAProxy configuration file except [several hardcoded options :octicons-link-external-16:](https://github.com/percona/percona-docker/blob/pxc-operator-{{ release }}/haproxy/dockerdir/etc/haproxy/haproxy.cfg) (which therefore can't be overwritten). That’s why you
     should specify either a full set of configuration options or nothing.
+    Additionally, when [upgrading Percona XtraDB Cluster](update.md#upgrading-percona-xtradb-cluster)
+    it would be wise to check the
+    [HAProxy configuration file :octicons-link-external-16:](https://github.com/percona/percona-docker/blob/pxc-operator-{{ release }}/haproxy/dockerdir/etc/haproxy/haproxy-global.cfg)
+    provided by the Operator and make sure that your custom config is still
+    compatible with the new variant.
 
 ### Edit the `deploy/cr.yaml` file
 
-You can add options from the [haproxy.cfg](https://www.haproxy.com/blog/the-four-essential-sections-of-an-haproxy-configuration/)
+You can add options from the [haproxy.cfg :octicons-link-external-16:](https://www.haproxy.com/blog/the-four-essential-sections-of-an-haproxy-configuration/)
 configuration file by editing  `haproxy.configuration` key in the
 `deploy/cr.yaml` file. Here is an example:
 
@@ -124,7 +137,7 @@ data inside a containerized application.
 
 Use the `kubectl` command to create the configmap from external
 resources, for more information see [Configure a Pod to use a
-ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-a-configmap).
+ConfigMap :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-a-configmap).
 
 For example, you define a `haproxy.cfg` configuration file with the following
 setting:
@@ -187,7 +200,7 @@ $ kubectl describe configmaps cluster1-haproxy
 
 ### Use a Secret Object
 
-The Operator can also store configuration options in [Kubernetes Secrets](https://kubernetes.io/docs/concepts/configuration/secret/).
+The Operator can also store configuration options in [Kubernetes Secrets :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/secret/).
 This can be useful if you need additional protection for some sensitive data.
 
 You should create a Secret object with a specific name, composed of your cluster
@@ -204,7 +217,7 @@ name and the `haproxy` suffix.
 Configuration options should be put inside a specific key inside of the `data`
 section. The name of this key is `haproxy.cfg` for ProxySQL Pods.
 
-Actual options should be encoded with [Base64](https://en.wikipedia.org/wiki/Base64).
+Actual options should be encoded with [Base64 :octicons-link-external-16:](https://en.wikipedia.org/wiki/Base64).
 
 For example, let’s define a `haproxy.cfg` configuration file and put there
 options we used in the previous example:
@@ -299,7 +312,7 @@ $ kubectl create -f deploy/my-haproxy-secret.yaml
 
 ## Enabling the Proxy protocol
 
-The Proxy protocol [allows](https://docs.percona.com/percona-server/innovation-release/proxy-protocol-support.html)
+The Proxy protocol [allows :octicons-link-external-16:](https://docs.percona.com/percona-server/innovation-release/proxy-protocol-support.html)
 HAProxy to provide a real client address to Percona XtraDB Cluster.
 
 !!! note
@@ -314,13 +327,13 @@ XtraDB Cluster is important: e.g. it allows to have privilege grants based on
 client/application address, and significantly enhance auditing.
 
 You can enable Proxy protocol on Percona XtraDB Cluster by adding
-[proxy_protocol_networks](https://docs.percona.com/percona-server/innovation-release/proxy-protocol-support.html#proxy_protocol_networks)
-option to [pxc.configuration](operator.md#pxc-configuration) key in the `deploy/cr.yaml` configuration
+[proxy_protocol_networks :octicons-link-external-16:](https://docs.percona.com/percona-server/innovation-release/proxy-protocol-support.html#proxy_protocol_networks)
+option to [pxc.configuration](operator.md#pxcconfiguration) key in the `deploy/cr.yaml` configuration
 file.
 
 !!! note
 
     Depending on the load balancer of your cloud provider, you may also
-    need setting [haproxy.externaltrafficpolicy](operator.md#haproxy-externaltrafficpolicy) option in `deploy/cr.yaml`.
+    need setting [haproxy.externaltrafficpolicy](operator.md#haproxyexternaltrafficpolicy) option in `deploy/cr.yaml`.
 
-More information about Proxy protocol can be found in the [official HAProxy documentation](https://www.haproxy.com/blog/using-haproxy-with-the-proxy-protocol-to-better-secure-your-database/).
+More information about Proxy protocol can be found in the [official HAProxy documentation :octicons-link-external-16:](https://www.haproxy.com/blog/using-haproxy-with-the-proxy-protocol-to-better-secure-your-database/).

@@ -1,4 +1,4 @@
-# Connect to Percona XtraDB Cluster
+# 2. Connect to Percona XtraDB Cluster
 
 In this tutorial, you will connect to the Percona XtraDB Cluster you deployed previously.
 
@@ -41,10 +41,13 @@ Here's how to get it:
 
 4. Connect to Percona XtraDB Cluster. To do this, run `mysql` tool in the
     percona-client command shell using your cluster name and the password
-    obtained from the secret instead of the `<root_password>` placeholder.
-    The command will look different depending on whether your cluster provides
-    load balancing with [HAProxy](haproxy-conf.md) (the default choice) or
-    [ProxySQL](proxysql-conf.md):
+    obtained from the secret. The command will look different depending on
+    whether your cluster provides load balancing with [HAProxy](haproxy-conf.md)
+    (the default choice) or [ProxySQL](proxysql-conf.md).
+    If your password contains special characters, they may be interpreted
+    by the shell, and you may get "Permission denied" messages,so put the
+    password in single quotes (single quotes also avoid variable expansion in
+    scripts):
 
     === "with HAProxy (default)"
         ```{.bash data-prompt="$"}

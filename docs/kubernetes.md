@@ -21,7 +21,7 @@
     with the next Operator deployments, etc.
 
     ``` {.bash data-prompt="$" }
-    $ kubectl apply -f deploy/crd.yaml
+    $ kubectl apply --server-side -f deploy/crd.yaml
     ```
 
 3. The next thing to do is to add the `pxc` namespace to Kubernetes,
@@ -36,7 +36,7 @@
     up from the `deploy/rbac.yaml` file. Briefly speaking, role-based access is
     based on specifically defined roles and actions corresponding to
     them, allowed to be done on specific Kubernetes resources (details
-    about users and roles can be found in [Kubernetes documentation](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#default-roles-and-role-bindings)).
+    about users and roles can be found in [Kubernetes documentation :octicons-link-external-16:](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#default-roles-and-role-bindings)).
 
     ``` {.bash data-prompt="$" }
     $ kubectl apply -f deploy/rbac.yaml
@@ -63,13 +63,13 @@
         2 and 4:
         
         ``` {.bash data-prompt="$" }
-        $ kubectl apply -f deploy/bundle.yaml
+        $ kubectl apply --server-side -f deploy/bundle.yaml
         ```
         
         This will automatically create Custom Resource Definition, set up
         role-based access control and install the Operator as one single action.
 
-5. Now that’s time to add the Percona XtraDB Cluster users [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
+5. Now that’s time to add the Percona XtraDB Cluster users [Secrets :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/secret/)
     with logins and passwords to Kubernetes. By default, the Operator generates
     users Secrets automatically, and *no actions are required at this step*.
     
@@ -87,7 +87,7 @@
 6. Now certificates should be generated. By default, the Operator generates
     certificates automatically, and *no actions are required at this step*.
     Still, you can generate and apply your own certificates as secrets according
-    to the [TLS instructions](TLS.md#tls).
+    to the [TLS instructions](TLS.md).
 
 7. After the operator is started and user secrets are added, Percona
     XtraDB Cluster can be created at any time with the following command:
@@ -96,41 +96,25 @@
     $ kubectl apply -f deploy/cr.yaml
     ```
 
-    Creation process will take some time. The process is over when both
-    operator and replica set pod have reached their Running status:
-
-    ``` {.text .no-copy}
-    NAME                                               READY   STATUS    RESTARTS   AGE
-    cluster1-haproxy-0                                 2/2     Running   0          6m17s
-    cluster1-haproxy-1                                 2/2     Running   0          4m59s
-    cluster1-haproxy-2                                 2/2     Running   0          4m36s
-    cluster1-pxc-0                                     3/3     Running   0          6m17s
-    cluster1-pxc-1                                     3/3     Running   0          5m3s
-    cluster1-pxc-2                                     3/3     Running   0          3m56s
-    percona-xtradb-cluster-operator-79966668bd-rswbk   1/1     Running   0          9m54s
-    ```
-
-8. Check connectivity to newly created cluster
+    Creation process will take some time. When the process is over your
+    cluster will obtain the `ready` status. You can check it with the following
+    command:
 
     ``` {.bash data-prompt="$" }
-    $ kubectl run -i --rm --tty percona-client --image=percona:8.0 --restart=Never -- bash -il
-    percona-client:/$ mysql -h cluster1-haproxy -uroot -proot_password
+    $ kubectl get pxc
     ```
 
-    This command will connect you to the MySQL monitor.
+    ??? example "Expected output"
 
-    ``` {.text .no-copy}
-    mysql: [Warning] Using a password on the command line interface can be insecure.
-    Welcome to the MySQL monitor.  Commands end with ; or \g.
-    Your MySQL connection id is 1976
-    Server version: 8.0.19-10 Percona XtraDB Cluster (GPL), Release rel10, Revision 727f180, WSREP version 26.4.3
+        ``` {.text .no-copy}
+        NAME       ENDPOINT                   STATUS   PXC   PROXYSQL   HAPROXY   AGE
+        cluster1   cluster1-haproxy.default   ready    3                3         5m51s
+        ```
 
-    Copyright (c) 2009-2020 Percona LLC and/or its affiliates
-    Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+## Verify the cluster operation
 
-    Oracle is a registered trademark of Oracle Corporation and/or its
-    affiliates. Other names may be trademarks of their respective
-    owners.
+It may take ten minutes to get the cluster started. When `kubectl get pxc`
+command finally shows you the cluster status as `ready`, you can try to connect
+to the cluster.
 
-    Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-    ```
+{% include 'assets/fragments/connectivity.txt' %}

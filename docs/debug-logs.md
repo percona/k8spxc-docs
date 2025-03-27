@@ -38,7 +38,7 @@ In the following examples we will access containers of the `cluster1-pxc-0` Pod.
     $ kubectl logs cluster1-pxc-0 -c pxc --previous
     ```
 
-* Check logs of the `pxc` container, parsing the output with [jq JSON processor](https://stedolan.github.io/jq/):
+* Check logs of the `pxc` container, parsing the output with [jq JSON processor :octicons-link-external-16:](https://stedolan.github.io/jq/):
 
     ``` {.bash data-prompt="$" }
     $ kubectl logs cluster1-pxc-0 -c pxc -f | jq -R 'fromjson?'
@@ -55,7 +55,7 @@ available for later review.
 Log collector is turned on by the `logcollector.enabled` key in the
 `deploy/cr.yaml` configuration file (`true` by default).
 
-The Operator collects logs using [Fluent Bit Log Processor](https://fluentbit.io/),
+The Operator collects logs using [Fluent Bit Log Processor :octicons-link-external-16:](https://fluentbit.io/),
 which supports many output plugins and has broad forwarding capabilities.
 If necessary, Fluent Bit filtering and advanced features can be configured via
 the `logcollector.configuration` key in the `deploy/cr.yaml` configuration

@@ -1,8 +1,8 @@
-# Insert sample data 
+# 3. Insert sample data 
 
 In this tutorial you will learn to insert sample data to Percona Server for MySQL.
 
-We will enter SQL statements via the same MySQL shell we used to [connect to the database](https://github.com/percona/k8spxc-docs/).
+We will enter SQL statements via the same MySQL shell we used to [connect to the database :octicons-link-external-16:](https://github.com/percona/k8spxc-docs/).
 {.power-number}
 
 1. Let's create a separate database for our experiments:

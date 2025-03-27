@@ -1,27 +1,48 @@
 # Percona certified images
 
 Following table presents Percona’s certified docker images to be used with the
-Percona Operator for MySQL based on Percona XtraDB Cluster:
+Percona Operator for MySQL based on Percona XtraDB Cluster.
 
 | Image                                                                  | Digest                                                           |
 |:-----------------------------------------------------------------------|:-----------------------------------------------------------------|
-| percona/percona-xtradb-cluster-operator:1.13.0                         | c674d63242f1af521edfbaffae2ae02fb8d010c0557a67a9c42d2b4a50db5243 |
-| percona/percona-xtradb-cluster-operator:1.13.0-haproxy                 | f04e4fea548bfc7cb0bfc73c75c7f2c64d299cf04125a07a8101a55f0f734fed |
-| percona/percona-xtradb-cluster-operator:1.13.0-proxysql                | de0c551717adc6a610dd70379a6b8c9cfd413e7a6b8151873e8b967f9ae662e5 |
-| percona/percona-xtradb-cluster-operator:1.13.0-pxc8.0-backup-pxb8.0.32 | 45ad618f9a76acc1ffaf0a72ba2dc6cb32a44ee2d6e0e493dd7d30603fd06e38 |
-| percona/percona-xtradb-cluster-operator:1.13.0-pxc5.7-backup-pxb2.4.28 | 649deeb5db75fb653b0e771286a5a7c3639543c6b737b39214c092bbf25b2e40 |
-| percona/percona-xtradb-cluster-operator:1.13.0-logcollector            | cf9bdfb046852895fb11cf505c8379367d716e25c0d52ba85c7b03cf4b6ed94e |
-| percona/pmm-client:2.38.0                                              | e034bf7ea7ce20bce5898f60db01c5703d555149dd5b208ce8e82103e1f0b12a |
+| **Images released with the Operator version {{ release }}:** | |
+| percona/percona-xtradb-cluster-operator:1.16.1 (x86_64)                | 43fd8ced51adad59394d69e3a1fc8be897668d789049be8f5dd9984672223e72 |
+| percona/percona-xtradb-cluster-operator:1.16.1 (ARM64)                 | dcba85dd7a8a164498362c2d3a73af3411e894dd6c01e600a92ddd3fb12122de |
+| percona/haproxy:2.8.11                                                 | 422a210b4170a973f8582ef3d7ddcc879c32bc48f6c66fad8b3154bce4e79b84 |
+| percona/proxysql2:2.7.1                                                | b1c5cd48b218d19386724fa823d20a8454b2de87f4ab445903e8daeb3b6b015b |
+| percona/percona-xtradb-cluster-operator:1.16.1-pxc8.4-backup-pxb8.4.0  | 500f20baa21a7df71a517c9434d1907e4cb482fdd58784975f97976a0bce699d |
+| percona/percona-xtradb-cluster-operator:1.16.1-pxc8.0-backup-pxb8.0.35 | 55281c818a78162cac0c87257915d74f321a4663f3f60457da2566c64610bf49 |
+| percona/percona-xtradb-cluster-operator:1.16.1-pxc5.7-backup-pxb2.4.29 | ddcec747748dccfbf4d7a6ba9c6a34f09cb7814ab59c49e73dff239949012039 |
+| percona/percona-xtradb-cluster-operator:1.16.1-logcollector-fluentbit3.2.2 | 122a103902d27890dceaf1855f175ea706a126aac940feb1089520029937f4a9 |
+| percona/pmm-client:2.44.0                                              | 0737f73449263a14d7000fbe7cd88dfd589dfed975cbb16bd29eee06a5dbd49e |
+| percona/percona-xtradb-cluster:8.4.2-2.1                               | ee8be9e7e2ecc1fdfebb29141f5f15abcd15490213f6bdbe0a53a1e6cc942fa8 |
+| percona/percona-xtradb-cluster:8.0.39-30.1                             | 6a53a6ad4e7d2c2fb404d274d993414a22cb67beecf7228df9d5d994e7a09966 |
+| percona/percona-xtradb-cluster:8.0.36-28.1                             | b5cc4034ccfb0186d6a734cb749ae17f013b027e9e64746b2c876e8beef379b3 |
+| percona/percona-xtradb-cluster:8.0.35-27.1                             | 1ef24953591ef1c1ce39576843d5615d4060fd09458c7a39ebc3e2eda7ef486b |
 | percona/percona-xtradb-cluster:8.0.32-24.2                             | 1f978ab8912e1b5fc66570529cb7e7a4ec6a38adbfce1ece78159b0fcfa7d47a |
-| percona/percona-xtradb-cluster:8.0.31-23.2                             | e47110307e9733fbcc55e5587652e41bbcf794063b021533d5e705062da97927 |
-| percona/percona-xtradb-cluster:8.0.29-21.1                             | 96c6bb8189280aeb773e74ed46aa41c01781b62947ed70c89efeb9f41c367ee7 |
-| percona/percona-xtradb-cluster:8.0.27-18.1                             | a0fced75ecd2cd164dd9937917440911aed972476d48a2b8a84fe832bc67e43a |
-| percona/percona-xtradb-cluster:8.0.25-15.1                             | 529e979c86442429e6feabef9a2d9fc362f4626146f208fbfac704e145a492dd |
-| percona/percona-xtradb-cluster:8.0.23-14.1                             | 8109f7ca4fc465ba862c08021df12e77b65d384395078e31e270d14b77810d79 |
-| percona/percona-xtradb-cluster:8.0.19-10.1                             | 1058ae8eded735ebdf664807aad7187942fc9a1170b3fd0369574cb61206b63a |
+| percona/percona-xtradb-cluster:8.0.31-23.2                             | ed1ceea0b594ae34a92c891b4e42bc543d24999c82e47382cf53e33be4ae1d71 |
+| percona/percona-xtradb-cluster:5.7.44-31.65                            | 36fafdef46485839d4ff7c6dc73b4542b07031644c0152e911acb9734ff2be85 |
 | percona/percona-xtradb-cluster:5.7.42-31.65                            | 9dab86780f86ec9caf8e1032a563c131904b75a37edeaec159a93f7d0c16c603 |
 | percona/percona-xtradb-cluster:5.7.39-31.61                            | 9013170a71559bbac92ba9c2e986db9bda3a8a9e39ee1ee350e0ee94488bb6d7 |
 | percona/percona-xtradb-cluster:5.7.36-31.55                            | c7bad990fc7ca0fde89240e921052f49da08b67c7c6dc54239593d61710be504 |
 | percona/percona-xtradb-cluster:5.7.34-31.51                            | f8d51d7932b9bb1a5a896c7ae440256230eb69b55798ff37397aabfd58b80ccb |
-| percona/percona-xtradb-cluster:5.7.33-31.49                            | f0a4bbb0ec5adff2a2d3e88194b3dcac479266ca29da028f0dfb22f55449ac17 |
+
+Image tags are starting with the Operator's version and include a number of
+optional fields: the Percona XtraDB Cluster version ("pxc8.0.36"), name of the
+actual component in the image ("haproxy", "backup", etc.), and the version of
+this component ("pxb8.0.35"):
+
+`operator_version-[pxc_version]-[component_name]-[component_version]`
+
+An example looks as follows: `1.16.0-pxc8.0-backup-pxb8.0.35`
+
+Percona XtraDB Cluster versions may have different
+detalization ("pxc" prefix with major and minor numbers, like "pxc8.0", or
+with minor, major, and patch numbers, like "pxc8.0.36", or the full XtraDB
+Cluster version without prefix: major, minor, and patch numbers followed by
+a dash and the version of Percona Server this XtraDB Cluster version is based
+on, like "8.0.36-28.1").
+
+Note, that PMM Client images have their own tags, just containing the version
+of PMM.
 

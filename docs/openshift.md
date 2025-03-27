@@ -1,6 +1,8 @@
 # Install Percona XtraDB Cluster on OpenShift
 
-Percona Operator for Percona XtrabDB Cluster is a [Red Hat Certified Operator](https://connect.redhat.com/en/partner-with-us/red-hat-openshift-certification). This means that Percona Operator is portable across hybrid clouds and fully supports the Red Hat OpenShift lifecycle.
+{%set commandName = 'oc' %}
+
+Percona Operator for Percona XtrabDB Cluster is a [Red Hat Certified Operator :octicons-link-external-16:](https://connect.redhat.com/en/partner-with-us/red-hat-openshift-certification). This means that Percona Operator is portable across hybrid clouds and fully supports the Red Hat OpenShift lifecycle.
 
 Installing Percona XtraDB Cluster on OpenShift includes two steps:
 
@@ -12,14 +14,43 @@ Installing Percona XtraDB Cluster on OpenShift includes two steps:
 
 ## Install the Operator
 
-You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marketplace](https://marketplace.redhat.com) web interface or using the command line interface.
+You can install Percona Operator for MySQL on OpenShift using the web interface (the [Operator Lifecycle Manager :octicons-link-external-16:](https://docs.redhat.com/en/documentation/openshift_container_platform/4.2/html/operators/understanding-the-operator-lifecycle-manager-olm#olm-overview_olm-understanding-olm) or [Red Hat Marketplace :octicons-link-external-16:](https://marketplace.redhat.com), or using the command line interface.
+
+### Install the Operator via the Operator Lifecycle Manager (OLM)
+
+Operator Lifecycle Manager (OLM) is a part of the [Operator Framework :octicons-link-external-16:](https://github.com/operator-framework) that allows you to install, update, and manage the Operators lifecycle on the OpenShift platform.
+
+Following steps will allow you to deploy the Operator and Percona XtraDB Cluster on your OLM installation:
+
+1. Login to the OLM and click the needed Operator on the OperatorHub page:
+
+    ![image](assets/images/olm1.svg)
+
+    Then click "Contiune", and "Install".
+
+2. A new page will allow you to choose the Operator version and the Namespace / OpenShift project you would like to install the Operator into. 
+
+    ![image](assets/images/olm2.svg)
+
+    !!! note
+    
+        If you are going to install the Operator in [multi-namespace (cluster-wide) mode](cluster-wide.md), please choose values with `-cw` suffix for the update channel and version, and select the "All namespaces on the cluster" radio button for the installation mode instead of chosing a specific Namespace:
+        
+        ![image](assets/images/olm-cw.svg)
+
+    Click "Install" button to actually install the Operator.
+
+3. When the installation finishes, you can deploy Percona XtraDB Cluster. In the "Operator Details" you will see Provided APIs (Custom Resources, available for installation). Click "Create instance" for the `PerconaXtraDBCluster` Custom Resource. 
+
+    ![image](assets/images/olm3.svg)
+
+    You will be able to edit manifest to set needed Custom Resource options, and then click "Create" button to deploy your database cluster.
 
 ### Install the Operator via the Red Hat Marketplace
 
+1. login to the Red Hat Marketplace and register your cluster [following the official instructions :octicons-link-external-16:](https://marketplace.redhat.com/en-us/workspace/clusters/add/register).
 
-1. login to the Red Hat Marketplace and register your cluster [following the official instructions](https://marketplace.redhat.com/en-us/workspace/clusters/add/register).
-
-2. Go to the [Percona Operator for MySQL](https://marketplace.redhat.com/en-us/products/percona-kubernetes-operator-for-percona-server-for-xtradb-cluster) page and click the Free trial button:
+2. Go to the [Percona Operator for MySQL :octicons-link-external-16:](https://marketplace.redhat.com/en-us/products/percona-kubernetes-operator-for-percona-server-for-xtradb-cluster) page and click the Free trial button:
 
     ![image](assets/images/marketplace-operator-page.png)
 
@@ -54,7 +85,7 @@ You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marke
     with the next Operator deployments, etc.
 
     ``` {.bash data-prompt="$" }
-    $ oc apply -f deploy/crd.yaml
+    $ oc apply --server-side -f deploy/crd.yaml
     ```
 
     !!! note
@@ -70,7 +101,7 @@ You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marke
     $ oc adm policy add-cluster-role-to-user pxc-admin <some-user>
     ```
 
-    If you have a [cert-manager](https://docs.cert-manager.io/en/release-0.8/getting-started/install/openshift.html) installed, then you have to execute two more commands to be able to     manage certificates with a non-privileged user:
+    If you have a [cert-manager :octicons-link-external-16:](https://docs.cert-manager.io/en/release-0.8/getting-started/install/openshift.html) installed, then you have to execute two more commands to be able to     manage certificates with a non-privileged user:
 
     ``` {.bash data-prompt="$" }
     $ oc create clusterrole cert-admin --verb="*" --resource=issuers.certmanager.k8s.io,certificates.certmanager.k8s.io
@@ -87,7 +118,7 @@ You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marke
     up from the `deploy/rbac.yaml` file. Briefly speaking, role-based access is
     based on specifically defined roles and actions corresponding to
     them, allowed to be done on specific Kubernetes resources (details
-    about users and roles can be found in [OpenShift documentation](https://docs.openshift.com/enterprise/3.0/architecture/additional_concepts/authorization.html)).
+    about users and roles can be found in [OpenShift documentation :octicons-link-external-16:](https://docs.openshift.com/enterprise/3.0/architecture/additional_concepts/authorization.html)).
 
     ``` {.bash data-prompt="$" }
     $ oc apply -f deploy/rbac.yaml
@@ -106,7 +137,7 @@ You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marke
         2 and 4:
         
         ``` {.bash data-prompt="$" }
-        $ oc apply -f deploy/bundle.yaml
+        $ oc apply --server-side -f deploy/bundle.yaml
         ```
         
         This will automatically create Custom Resource Definition, set up
@@ -114,7 +145,7 @@ You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marke
 
 ## Install Percona XtraDB Cluster
 
-1. Now that’s time to add the Percona XtraDB Cluster users [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
+1. Now that’s time to add the Percona XtraDB Cluster users [Secrets :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/secret/)
     with logins and passwords to Kubernetes. By default, the Operator generates
     users Secrets automatically, and *no actions are required at this step*.
     
@@ -127,12 +158,12 @@ You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marke
     $ oc create -f deploy/secrets.yaml
     ```
 
-    More details about secrets can be found in [Users](users.md#users).
+    More details about secrets can be found in [Users](users.md).
 
 2. Now certificates should be generated. By default, the Operator generates
     certificates automatically, and no actions are required at this step. Still,
     you can generate and apply your own certificates as secrets according
-    to the [TLS instructions](TLS.md#tls).
+    to the [TLS instructions](TLS.md).
 
 3. After the operator is started and user secrets are added, Percona
     XtraDB Cluster can be created at any time with the following command:
@@ -141,44 +172,25 @@ You can install Percona Operator for MySQL on OpenShift using the [Red Hat Marke
     $ oc apply -f deploy/cr.yaml
     ```
 
-    Creation process will take some time. The process is over when both
-    operator and replica set pod have reached their Running status:
-
-    ``` {.text .no-copy}
-    NAME                                               READY   STATUS    RESTARTS   AGE
-    cluster1-haproxy-0                                 2/2     Running   0          6m17s
-    cluster1-haproxy-1                                 2/2     Running   0          4m59s
-    cluster1-haproxy-2                                 2/2     Running   0          4m36s
-    cluster1-pxc-0                                     3/3     Running   0          6m17s
-    cluster1-pxc-1                                     3/3     Running   0          5m3s
-    cluster1-pxc-2                                     3/3     Running   0          3m56s
-    percona-xtradb-cluster-operator-79966668bd-rswbk   1/1     Running   0          9m54s
-    ```
-
-4. Check connectivity to newly created cluster. Run a container with MySQL 
-    monitor and connect its console output to your
-    terminal. The following command will do this, naming the new Pod
-    `percona-client`:
+    The creation process may take some time. When the process is over your
+    cluster will obtain the `ready` status. You can check it with the following
+    command:
 
     ``` {.bash data-prompt="$" }
-    $ oc run -i --rm --tty percona-client --image=percona:8.0 --restart=Never -- bash -il
-    percona-client:/$ mysql -h cluster1-haproxy -uroot -proot_password
+    $ oc get pxc
     ```
 
-    This command will connect you to the MySQL monitor.
+    ??? example "Expected output"
 
-    ``` {.text .no-copy}
-    mysql: [Warning] Using a password on the command line interface can be insecure.
-    Welcome to the MySQL monitor.  Commands end with ; or \g.
-    Your MySQL connection id is 1976
-    Server version: 8.0.19-10 Percona XtraDB Cluster (GPL), Release rel10, Revision 727f180, WSREP version 26.4.3
+        ``` {.text .no-copy}
+        NAME       ENDPOINT                   STATUS   PXC   PROXYSQL   HAPROXY   AGE
+        cluster1   cluster1-haproxy.default   ready    3                3         5m51s
+        ```
 
-    Copyright (c) 2009-2020 Percona LLC and/or its affiliates
-    Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+## Verify the cluster operation
 
-    Oracle is a registered trademark of Oracle Corporation and/or its
-    affiliates. Other names may be trademarks of their respective
-    owners.
+It may take ten minutes to get the cluster started. When the `oc get pxc`
+command output shows you the cluster status as `ready`, you can try to connect
+to the cluster.
 
-    Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-    ```
+{% include 'assets/fragments/connectivity.txt' %}

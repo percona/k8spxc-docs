@@ -8,6 +8,10 @@ the following ones:
 * [Custom Resource Definition (CRD)](operator.md),
 * Database Management System (Percona XtraDB Cluster).
 
+!!! note
+
+    Additional steps are needed to upgrade database and Operator on [Red Hat Marketplace :octicons-link-external-16:](https://marketplace.redhat.com) or to upgrade Red Hat certified Operators on [OpenShift :octicons-link-external-16:](https://www.redhat.com/en/technologies/cloud-computing/openshift). See [this HOWTO](update_openshift.md) for details.
+
 The list of recommended upgrade scenarios includes two variants:
 
 * Upgrade to the new versions of the Operator *and* Percona XtraDB Cluster,
@@ -29,23 +33,29 @@ Operator is supported (for example, update from 1.4.0 to 1.5.0). To update
 to a newer version, which differs from the current version by more
 than one, make several incremental updates sequentially.
 
+!!! warning
+
+    The Operator versions 1.14.0 and 1.15.0 **should be excluded** from the incremental upgrades sequence in favor of [1.14.1](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.14.1.md) and [1.15.1](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.15.1.md) releases.
+    * The upgrade path from the version 1.14.1 should be 1.14.1 -> 1.15.1. 
+    * Direct upgrades from 1.13.0 to 1.14.1 and from 1.14.0 to 1.15.1 are supported.
+
 ### Manual upgrade
 
 The upgrade includes the following steps.
 
-1. Update the [Custom Resource Definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
+1. Update the [Custom Resource Definition :octicons-link-external-16:](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
     for the Operator, taking it from the official repository on Github, and do
     the same for the Role-based access control:
 
     ``` {.bash data-prompt="$" }
-    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/crd.yaml
-    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/rbac.yaml
+    $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/crd.yaml
+    $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/rbac.yaml
     ```
 
-2. Now you should [apply a patch](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your
+2. Now you should [apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your
     deployment, supplying necessary image name with a newer version tag. You can find the proper
-    image name for the current Operator release [in the list of certified images](images.md#custom-registry-images)
-    (for older releases, please refer to the [old releases documentation archive](archive.md)).
+    image name for the current Operator release [in the list of certified images](images.md)
+    (for older releases, please refer to the [old releases documentation archive :octicons-link-external-16:](https://docs.percona.com/legacy-documentation/))).
     For example, updating to the `{{ release }}` version should look as
     follows.
 
@@ -55,12 +65,7 @@ The upgrade includes the following steps.
     ```
 
 3. The deployment rollout will be automatically triggered by the applied patch.
-    You can track the rollout process in real time with the
-    `kubectl rollout status` command with the name of your cluster:
-
-    ``` {.bash data-prompt="$" }
-    $ kubectl rollout status deployments percona-xtradb-cluster-operator
-    ```
+   The update process is successfully finished when all Pods have been restarted.
 
     !!! note
 
@@ -71,16 +76,29 @@ The upgrade includes the following steps.
 If you have [installed the Operator using Helm](helm.md), you can upgrade the
 Operator with the `helm upgrade` command.
 
-1. In case if you installed the Operator with no [customized parameters](https://github.com/percona/percona-helm-charts/tree/main/charts/pxc-operator#installing-the-chart), the upgrade can be done as follows: 
+!!! note
+
+    You can use `helm upgrade` to upgrade the Operator only. The Database Management System (Percona XtraDB Cluster) should be upgraded in the same way whether you used helm to install it or not.
+
+1. Update the [Custom Resource Definition :octicons-link-external-16:](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
+    for the Operator, taking it from the official repository on Github, and do
+    the same for the Role-based access control:
+
+    ``` {.bash data-prompt="$" }
+    $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/crd.yaml
+    $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/rbac.yaml
+    ```
+
+2. If you installed the Operator with no [customized parameters :octicons-link-external-16:](https://github.com/percona/percona-helm-charts/tree/main/charts/pxc-operator#installing-the-chart), the upgrade can be done as follows: 
 
     ``` {.bash data-prompt="$" }
     $ helm upgrade my-op percona/pxc-operator --version {{ release }}
     ```
 
-    The `my-op` parameter in the above example is the name of a [release object](https://helm.sh/docs/intro/using_helm/#three-big-concepts)
+    The `my-op` parameter in the above example is the name of a [release object :octicons-link-external-16:](https://helm.sh/docs/intro/using_helm/#three-big-concepts)
     which which you have chosen for the Operator when installing its Helm chart.
 
-    If the Operator was installed with some [customized parameters](https://github.com/percona/percona-helm-charts/tree/main/charts/pxc-operator#installing-the-chart), you should list these options in the upgrade command.
+    If the Operator was installed with some [customized parameters :octicons-link-external-16:](https://github.com/percona/percona-helm-charts/tree/main/charts/pxc-operator#installing-the-chart), you should list these options in the upgrade command.
     
     
     !!! note
@@ -91,18 +109,15 @@ Operator with the `helm upgrade` command.
         $ helm upgrade my-op percona/pxc-operator --version {{ release }} -f my-values.yaml
         ```
 
-2. Update the [Custom Resource Definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
-    for the Operator, taking it from the official repository on Github, and do
-    the same for the Role-based access control:
+### Upgrade via Operator Lifecycle Manager (OLM)
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/crd.yaml
-    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/rbac.yaml
-    ```
+If you have [installed the Operator on the OpenShift platform using OLM](openshift.md#install-the-operator-via-the-operator-lifecycle-manager-olm), you can upgrade the Operator within it.
 
-!!! note
+1. List installed Operators for your Namespace to see if there are upgradable items.
 
-    You can use `helm upgrade` to upgrade the Operator only. The Database Management System (Percona XtraDB Cluster) should be upgraded in the same way whether you used helm to install it or not.
+    ![image](assets/images/olm4.svg)
+
+2. Click the "Upgrade available" link to see upgrade details, then click "Preview InstallPlan" button, and finally "Approve" to upgrade the Operator.
 
 ## Upgrading Percona XtraDB Cluster
 
@@ -112,11 +127,22 @@ are updated. Smart Update strategy is on when the `updateStrategy` key in the
 [Custom Resource](operator.md) configuration file is set to `SmartUpdate`
 (this is the default value and the recommended way for upgrades).
 
-!!! note
+As an alternative, the `updateStrategy` key can be set to `RollingUpdate` and
+`OnDelete`. You can find out more about it in the [appropriate section](update.md#more-on-upgrade-strategies).
 
-    As an alternative, the `updateStrategy` key can be set to `RollingUpdate` 
-    and `OnDelete`. You can find out more about it in the
-    [appropriate section](update.md#more-on-upgrade-strategies).
+!!! warning
+
+    The upgrade covers various components of the cluster including PMM Client
+    and HA Proxy, which may need additional attention.
+    
+    *  It is [highly recommended to upgrade PMM Server :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/2/how-to/upgrade.html) **before** upgrading PMM Client.
+    
+    * If you are using [custom configuration for HAProxy](haproxy-conf.md#passing-custom-configuration-options-to-haproxy), 
+        **before upgrading**, check the HAProxy configuration file provided by
+        the Operator (for example, `haproxy-global.cfg` for the Operator version
+        {{ release }} can be found [here :octicons-link-external-16:](https://github.com/percona/percona-docker/blob/pxc-operator-{{ release }}/haproxy/dockerdir/etc/haproxy/haproxy-global.cfg)).
+        Make sure that your custom config is still compatible with the new
+        variant, and make necessary additions, if needed.
 
 ### Manual upgrade
 
@@ -136,19 +162,19 @@ Manual update of Percona XtraDB Cluster can be done as follows:
         ...
     ```
 
-2. Now [apply a patch](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/)
+2. Now [apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/)
     to your Custom Resource, setting necessary Custom Resource version and image
     names with a newer version tag.
 
     !!! note
 
         Check the version of the Operator you have in your Kubernetes
-        environment. Please refer to the [Operator upgrade guide](update.md#upgrading-the-operator)
+        environment. Please refer to the [Operator upgrade guide](update.md#upgrading-the-operator-and-crd)
         to upgrade the Operator and CRD, if needed.
 
     Patching Custom Resource is done with the `kubectl patch pxc` command.
-    Actual image names can be found [in the list of certified images](images.md#custom-registry-images)
-    (for older releases, please refer to the [old releases documentation archive](archive.md)).
+    Actual image names can be found [in the list of certified images](images.md)
+    (for older releases, please refer to the [old releases documentation archive :octicons-link-external-16:](https://docs.percona.com/legacy-documentation/)).
     For example, updating `cluster1` cluster to the `{{ release }}` version
     should look as follows:
 
@@ -158,10 +184,10 @@ Manual update of Percona XtraDB Cluster can be done as follows:
            "spec": {
                "crVersion":"{{ release }}",
                "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
-               "proxysql": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-proxysql" },
-               "haproxy":  { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-haproxy" },
-               "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc8.0-backup" },
-               "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector" },
+               "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
+               "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
+               "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc8.0-backup-pxb{{ pxb80recommended }}" },
+               "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" },
                "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
            }}'
         ```
@@ -172,29 +198,28 @@ Manual update of Percona XtraDB Cluster can be done as follows:
            "spec": {
                "crVersion":"{{ release }}",
                "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc57recommended }}" },
-               "proxysql": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-proxysql" },
-               "haproxy":  { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-haproxy" },
-               "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc5.7-backup" },
-               "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector" },
+               "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
+               "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
+               "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc5.7-backup-pxb{{ pxb57recommended }}" },
+               "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" },
                "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
            }}'
         ```
 
     !!! warning
 
-        The above command upgrades various components of the cluster including PMM Client. It is [highly recommended](https://docs.percona.com/percona-monitoring-and-management/how-to/upgrade.html) to upgrade PMM Server **before** upgrading PMM Client. If it wasn't done and you would like to avoid PMM Client upgrade, remove it from the list of images, reducing the last of two patch commands as follows:
-        
-        
+        The above command upgrades various components of the cluster including PMM Client. If you didn't follow the [official recommendation :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/2/how-to/upgrade.html) to upgrade PMM Server before upgrading PMM Client, you can avoid PMM Client upgrade by removing it from the list of images as follows:
+
         === "For Percona XtraDB Cluster 8.0"
             ```bash
             $ kubectl patch pxc cluster1 --type=merge --patch '{
                "spec": {
                    "crVersion":"{{ release }}",
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
-                   "proxysql": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-proxysql" },
-                   "haproxy":  { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-haproxy" },
-                   "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc8.0-backup" },
-                   "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector" }
+                   "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
+                   "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
+                   "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc8.0-backup-pxb{{ pxb80recommended }}" },
+                   "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" }
                }}'
             ```
 
@@ -204,10 +229,10 @@ Manual update of Percona XtraDB Cluster can be done as follows:
                "spec": {
                    "crVersion":"{{ release }}",
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc57recommended }}" },
-                   "proxysql": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-proxysql" },
-                   "haproxy":  { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-haproxy" },
-                   "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc5.7-backup" },
-                   "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector" }
+                   "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
+                   "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
+                   "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc5.7-backup-pxb{{ pxb57recommended }}" },
+                   "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" }
                }}'
             ```
 
@@ -221,9 +246,9 @@ Manual update of Percona XtraDB Cluster can be done as follows:
 
 ### Automated upgrade
 
-*Smart Update strategy* allows you to automate upgrades even more. In this case
+If you have [*Smart Update strategy* turned on](#more-on-upgrade-strategies), you can automate upgrades even more with the `upgradeOptions.apply` option. In this case
 the Operator can either detect the availability of the new Percona XtraDB
-Cluster version, or rely on the user's choice of the version. To check the
+Cluster version, or rely on the your choice of the version. To check the
 availability of the new version, the Operator will query a special
 *Version Service* server at scheduled times to obtain fresh information about
 version numbers and valid image paths.
@@ -256,7 +281,7 @@ configuration file as follows:
 3. Change the `upgradeOptions.apply`  option from `Disabled` to one of the
     following values:
 
-    * `Recommended` - [scheduled](operator.md#upgradeoptions-schedule) upgrades
+    * `Recommended` - [scheduled](operator.md#upgradeoptionsschedule) upgrades
         will choose the most recent version of software flagged as "Recommended"
         (for clusters created from scratch, the Percona XtraDB Cluster 8.0
         version will be selected instead of the Percona XtraDB Cluster 5.7 one
@@ -277,9 +302,9 @@ configuration file as follows:
     * *version number* - specify the desired version explicitly
         (version numbers are specified as `{{ pxc80recommended }}`,
         `{{ pxc57recommended }}`, etc.). Actual versions can be found
-        [in the list of certified images](images.md#custom-registry-images)
+        [in the list of certified images](images.md)
         (for older releases, please refer to the
-        [old releases documentation archive](archive.md)).
+        [old releases documentation archive :octicons-link-external-16:](https://docs.percona.com/legacy-documentation/)).
 
 4. Make sure the `upgradeOptions.versionServiceEndpoint` key is set to a valid
     Version Server URL (otherwise upgrades will not occur).

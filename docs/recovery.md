@@ -14,7 +14,7 @@ To force cluster bootstrap with this node, edit the grastate.dat file manually a
 !!! note
 
     To avoid this, shutdown your cluster correctly
-    as it is written in [Pause/resume Percona XtraDB Cluster](pause.md#operator-pause).
+    as it is written in [Pause/resume Percona XtraDB Cluster](pause.md).
 
 The Percona Operator for MySQL based on Percona XtraDB Cluster provides two ways of recovery
 after a full cluster crash.
@@ -72,7 +72,7 @@ $ kubectl exec cluster1-pxc-2 -c pxc -- sh -c 'kill -s USR1 1'
 This method involves the following steps:
 
 * swap the original Percona XtraDB Cluster image with the
-    [debug image](debug.md#debug-images), which does not reboot after the crash, and
+    [debug image](debug-images.md), which does not reboot after the crash, and
     force all Pods to run it,
 
 * find the Pod with the most recent Percona XtraDB Cluster data, run recovery
@@ -90,7 +90,7 @@ which is based on three Percona XtraDB Cluster Pods.
     indicated otherwise.
 
 1. Check the current Update Strategy with the following command to make sure
-    [Smart Updates](update.md#operator-update-smartupdates) are turned off during the
+    [Smart Updates](update.md#more-on-upgrade-strategies) are turned off during the
     recovery:
 
     ``` {.bash data-prompt="$" }
@@ -149,7 +149,7 @@ which is based on three Percona XtraDB Cluster Pods.
 
 6. Wait for all Percona XtraDB Cluster Pods to start, then find the Percona
     XtraDB Cluster instance with the most recent data - i.e. the one with the
-    highest [sequence number (seqno)](https://www.percona.com/blog/2017/12/14/sequence-numbers-seqno-percona-xtradb-cluster/):
+    highest [sequence number (seqno) :octicons-link-external-16:](https://www.percona.com/blog/2017/12/14/sequence-numbers-seqno-percona-xtradb-cluster/):
 
     ``` {.bash data-prompt="$" }
     $ for i in $(seq 0 $(($(kubectl get pxc cluster1 -o jsonpath='{.spec.pxc.size}')-1))); do echo "###############cluster1-pxc-$i##############"; kubectl exec cluster1-pxc-$i -- cat /var/lib/mysql/grastate.dat; done
