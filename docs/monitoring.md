@@ -4,14 +4,14 @@
 
 ## Specify additional PMM parameters
 
-You can use Custom Resource `pmm.pxcParams` and `pmm.proxysqlParams` keys to
-specify additional parameters for [pmm-admin add mysql :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/2/details/commands/pmm-admin.html#mysql) and
-[pmm-admin add proxysql :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/2/details/commands/pmm-admin.html#proxysql)
-commands respectively, if needed.
+You can 
+specify additional parameters for [pmm-admin add mysql :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/details/commands/pmm-admin.html#mysql) and
+[pmm-admin add proxysql :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/details/commands/pmm-admin.html#proxysql)
+commands, if needed. Use the `pmm.pxcParams` and `pmm.proxysqlParams` Custom Resource options for that.
 
-Please take into account that Operator automatically manages common Percona
-XtraDB Cluster Service Monitoring parameters mentioned in the officiall PMM
-documentation, such like username, password, service-name, host, etc. Assigning
+The Operator automatically manages common Percona
+XtraDB Cluster Service Monitoring parameters mentioned in the official PMM
+documentation, such as username, password, service-name, host, etc. Assigning
 values to these parameters is not recommended and can negatively affect the
 functionality of the PMM setup carried out by the Operator.
 
@@ -51,6 +51,17 @@ object, do the following:
     ```{.bash data-prompt="$"}
     $ kubectl patch secret/cluster1-secrets -p '{"data":{"pmmserverkey": "'$(echo -n new_key | base64)'"}}'
     ```
+
+## Check PMM Client health and status
+
+A probe is a diagnostic mechanism in Kubernetes which helps determine whether a container is functioning correctly and whether it should continue to run, accept traffic, or be restarted.
+
+PMM Client has the following probes:
+
+* **Readiness probe** determines when a PMM Client is available and ready to accept traffic
+* **Liveness probe** determines when to restart a PMM Client
+
+To configure probes, use the `spec.pmm.readinessProbes` and `spec.pmm.livenessProbes` Custom Resource options.
 
 ## Add custom PMM prefix to the cluster name
 
