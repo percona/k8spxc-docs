@@ -38,7 +38,8 @@ See [documentation](../users.md#unprivileged-users) to find more details about t
 
 ### Percona XtraDB Cluster 8.4 support (technical preview)
 
-Percona XtraDB Cluster based on Percona Server for MySQL 8.4 versions is now supported by the Operator in addition to 8.0 and 5.7 versions. The appropriate images for Percona XtraDB Cluster and Percona XtraBackup are included into the [list of Percona-certified images](../images.md).
+Percona XtraDB Cluster based on Percona Server for MySQL 8.4 versions is now supported by the Operator in addition to 8.0 and 5.7 versions. The appropriate images for Percona XtraDB Cluster and Percona XtraBackup are included into the [list of Percona-certified images](../images.md). 
+Being a technical preview, Percona XtraDB Cluster 8.4 is not yet recommended for production environments.
 
 ## New Features 
 
@@ -72,7 +73,7 @@ Operator versions older than 1.14.1 become incompatible with new HAProxy, ProxyS
 
 ## Known limitations
 
-Being a technical preview, Percona XtraDB Cluster 8.4 is not yet recommended for production environments, and doesn't support a full set of features available within 8.0. Percona XtraDB Cluster 8.4 support has following limitations in this Operator release:
+Being a technical preview, Percona XtraDB Cluster 8.4 doesn't support the full set of features available within 8.0. Percona XtraDB Cluster 8.4 support has following limitations in this Operator release:
 
 * {{ k8spxcjira(1529) }}: Cross-site replication is not yet supported,
 * {{ k8spxcjira(1512) }}: Point-in-time recovery doesn't work yet,
