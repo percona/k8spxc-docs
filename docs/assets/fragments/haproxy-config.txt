@@ -1,0 +1,38 @@
+```default
+global
+  maxconn 2048
+  external-check
+  stats socket /var/run/haproxy.sock mode 600 expose-fd listeners level user
+defaults
+  log global
+  mode tcp
+  retries 10
+  timeout client 10000
+  timeout connect 100500
+  timeout server 10000
+frontend galera-in
+  bind *:3309 accept-proxy
+  bind *:3306
+  mode tcp
+  option clitcpka
+  default_backend galera-nodes
+frontend galera-admin-in
+  bind *:33062
+  mode tcp
+  option clitcpka
+  default_backend galera-admin-nodes
+frontend galera-replica-in
+  bind *:3307
+  mode tcp
+  option clitcpka
+  default_backend galera-replica-nodes
+frontend galera-mysqlx-in
+  bind *:33060
+  mode tcp
+  option clitcpka
+  default_backend galera-mysqlx-nodes
+frontend stats
+  bind *:8404
+  mode http
+  http-request use-service prometheus-exporter if { path /metrics }
+```
