@@ -2706,7 +2706,9 @@ configuration file. This Custom Resource contains the following options:
 | credentialsSecret| string            | The Secret name for the azure blob storage     | true     |
 | container        | string            | The container name of the azure blob storage   | true     |
 | endpointUrl      | string            | A valid endpoint URL                           | false    |
-| storageClass     | string            | The storage class name of the azure storage    | false    |
+| storageClass     | string            | The storage class name of the azure blob storage    | false    |
+| blockSize        | integer           | The size of a block of data to save and retrieve from the azure blob storage 
+| concurrency      | integer           | The number of writers to the same blob
 
 ### <a name="operator-restore-pitr-options-section"></a>pitr subsection
 
