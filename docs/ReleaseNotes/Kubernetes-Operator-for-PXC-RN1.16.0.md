@@ -39,12 +39,6 @@ See [documentation](../users.md#unprivileged-users) to find more details about t
 ### Percona XtraDB Cluster 8.4 support (technical preview)
 
 Percona XtraDB Cluster based on Percona Server for MySQL 8.4 versions is now supported by the Operator in addition to 8.0 and 5.7 versions. The appropriate images for Percona XtraDB Cluster and Percona XtraBackup are included into the [list of Percona-certified images](../images.md).
-Being a technical preview, Percona XtraDB Cluster 8.4 is not yet recommended for production environments, and doesn't support a full set of features available within 8.0. Particularly, Percona XtraDB Cluster 8.4 support has following limitation in this Operator release:
-
-* {{ k8spxcjira(1529) }}: Cross-site replication is not yet supported,
-* {{ k8spxcjira(1512) }}: Point-in-time recovery doesn't work yet,
-* {{ k8spxcjira(1511) }}: Encryption is not yet supported,
-* {{ k8spxcjira(1513) }}: Version service does not support XtraDB Cluster 8.4 yet as well.
 
 ## New Features 
 
@@ -76,6 +70,14 @@ Being a technical preview, Percona XtraDB Cluster 8.4 is not yet recommended for
 
 Operator versions older than 1.14.1 become incompatible with new HAProxy, ProxySQL and PXC Docker images due to the absence of the peer-list tool in them. If you are still using the older Operator version, make sure to update the Operator before switching to the latest database and proxy images. You can see the [list of Percona certified images](../images.md) for the current release, and check image versions certified for previous releases in the [documentation archive :octicons-link-external-16:](https://docs.percona.com/legacy-documentation/).
 
+## Known limitations
+
+Being a technical preview, Percona XtraDB Cluster 8.4 is not yet recommended for production environments, and doesn't support a full set of features available within 8.0. Percona XtraDB Cluster 8.4 support has following limitations in this Operator release:
+
+* {{ k8spxcjira(1529) }}: Cross-site replication is not yet supported,
+* {{ k8spxcjira(1512) }}: Point-in-time recovery doesn't work yet,
+* {{ k8spxcjira(1511) }}: Encryption is not yet supported,
+* {{ k8spxcjira(1513) }}: Version service does not support XtraDB Cluster 8.4 yet as well.
 
 ## Supported Platforms
 
