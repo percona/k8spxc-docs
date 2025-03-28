@@ -216,6 +216,7 @@ nav:
           - "Add sidecar containers": sidecar.md
           - "Restart or pause the cluster": pause.md
           - "Crash recovery": recovery.md
+          - data-source.md
           
     - Troubleshooting:
           - "Initial troubleshooting": debug.md
