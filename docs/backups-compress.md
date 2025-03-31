@@ -1,7 +1,7 @@
 # Enable compression for backups
 
 You can enable [LZ4 compression :octicons-link-external-16:](https://en.wikipedia.org/wiki/LZ4_(compression_algorithm))
-for backups if you run Percona XtraDB Cluster 8.0.
+for backups if you run Percona XtraDB Cluster 8.0 and higher.
 
 To enable compression, use the [pxc.configuration](operator.md#pxcconfiguration)
 key in the `deploy/cr.yaml` configuration file. Specify the following options from the `my.cnf` configuration file in the `[sst]` and `[xtrabackup]` sections:
