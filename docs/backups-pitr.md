@@ -57,7 +57,7 @@ The available metrics are:
 
 * `pxc_binlog_collector_success_total` - The total number of successful binlog collection cycles. It helps monitor how often the binlog collector successfully processes and uploads binary logs.
 * `pxc_binlog_collector_gap_detected_total` - Tracks the total number of gaps detected in the binlog sequence during collection. Highlights potential issues with missing or skipped binlogs, which could impact replication or recovery.
-* `pxc_binlog_collector_last_processing_timestamp` - Records the timestamp of the last successful binlog processing operation.
+* `pxc_binlog_collector_last_processing_timestamp` - Records the timestamp of the last successful binlog collection operation.
 * `pxc_binlog_collector_last_upload_timestamp` - Records the timestamp of the last successful binlog upload to the storage
 * `pxc_binlog_collector_uploaded_total` - The total number of successfully uploaded binlogs
 
