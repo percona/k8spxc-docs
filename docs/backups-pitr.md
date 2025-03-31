@@ -62,3 +62,5 @@ The available metrics are:
 * `pxc_binlog_collector_uploaded_total` - The total number of successfully uploaded binlogs
 
 You can connect to this Pod using the `<pitr-pod-service>:8080/metrics` endpoint to gather these metrics and further analyze them.
+
+Note that the statistics data is not kept when the point-in-time recovery Pod restarts. This means that the counters like `pxc_binlog_collector_success_total` are reset.
