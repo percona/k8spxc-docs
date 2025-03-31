@@ -24,7 +24,7 @@ Let's create `cluster2` on the replica site.
 
 2. Create the Secrets object with the user credentials for the replica site. The Operator uses this Secret object when installing Percona XtraDB Cluster. As a result, the users in both sites have the same credentials. This is required to restore the backup from the main site on the replica.
 
-    Edit the `pxcsecret.yaml` file that you exported from the primary site. Remove the `annotations`, `creationTimestamp`, `resourceVersion`, `selfLink`, and `uid` metadata fields. 
+    Edit the `pxcsecret.yaml` file that you exported from the primary site, if you haven't done it before. Remove the `annotations`, `creationTimestamp`, `resourceVersion`, `selfLink`, and `uid` metadata fields. 
 
     You can create the replica site with the same name as the primary. In our setup we differentiate the clusters and must change the name in the Secret.
 

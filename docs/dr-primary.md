@@ -50,13 +50,7 @@ While on the primary site, export the Secrets object with the user credentials. 
 	$ kubectl get secret cluster1-secrets -n <namespace> -o yaml > pxcsecret.yaml
 	```
 
-3. The passwords in the exported file are base64-encoded. Use the following command to decode each password:
-
-	```{.bash data-prompt="$" }
-	$ echo -n '<encoded_password>' | base64 --decode
-	```
-
-	Replace the encoded passwords in the `pxcsecret.yaml` file with the decoded ones.
+3. Edit the exported `pxcsecret.yaml` file: remove the `annotations`, `creationTimestamp`, `resourceVersion`, `selfLink`, and `uid` metadata fields.  
 
 
 ## Create a backup from the primary site

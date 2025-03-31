@@ -12,7 +12,7 @@ The steps are the following:
 2. If you deleted the Operator, install it. Use the [Quickstart](kubectl.md) for the steps.
 3. Prepare the Secrets file with the user credentials for `cluster1`. The users on both sites must have the same credentials. 
 
-    You can reuse the `pxcsecret.yaml` secrets file or create a new one. Make sure that the passwords in this file match the **decoded** passwords from the `cluster2-secrets` Secrets object. Check the [Export the database secrets](dr-primary.md#export-the-database-secrets) section to refresh your memory how to find the required Secrets object and decode the passwords.
+    You can reuse the `pxcsecret.yaml` secrets file or create a new one. Make sure that the passwords in this file match the passwords from the `cluster2-secrets` Secrets object. Check the [Export the database secrets](dr-primary.md#export-the-database-secrets) section to refresh your memory how to find the required Secrets object.
 
     Edit the `pxcsecret.yaml` file and change the name of the cluster to `cluster1`. 
 
