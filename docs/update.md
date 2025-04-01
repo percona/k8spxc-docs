@@ -1,50 +1,74 @@
 # Upgrade Database and Operator
 
-Starting from the version 1.1.0, Percona Operator for MySQL based on Percona XtraDB Cluster
-allows upgrades to newer versions. The upgradable components of the cluster are
-the following ones:
+You can upgrade Percona Operator for MySQL based on Percona XtraDB Cluster starting from the version 1.1.0.
 
-* the Operator;
-* [Custom Resource Definition (CRD)](operator.md),
-* Database Management System (Percona XtraDB Cluster).
+The upgrade process consists of these steps:
+
+* Upgrade the [Custom Resource Definition (CRD)](operator.md) and the Operator  
+* Upgrade the database (Percona XtraDB Cluster).
 
 !!! note
 
-    Additional steps are needed to upgrade database and Operator on [Red Hat Marketplace :octicons-link-external-16:](https://marketplace.redhat.com) or to upgrade Red Hat certified Operators on [OpenShift :octicons-link-external-16:](https://www.redhat.com/en/technologies/cloud-computing/openshift). See [this HOWTO](update_openshift.md) for details.
+    If you run the Operator on [Red Hat Marketplace :octicons-link-external-16:](https://marketplace.redhat.com) or you run Red Hat certified Operators on [OpenShift :octicons-link-external-16:](https://www.redhat.com/en/technologies/cloud-computing/openshift), you need to do additional steps during the upgrade. See [this HOWTO](update_openshift.md) for details.
 
 The list of recommended upgrade scenarios includes two variants:
 
 * Upgrade to the new versions of the Operator *and* Percona XtraDB Cluster,
 * Minor Percona XtraDB Cluster version upgrade *without* the Operator upgrade.
 
-## Upgrading the Operator and CRD
+## Upgrade the Operator and CRD
 
-!!! note
+### Considerations
 
-    The Operator supports **last 3 versions of the CRD**, so it is technically
-    possible to skip upgrading the CRD and just upgrade the Operator. If the CRD
-    is older than the new Operator version *by no more than three releases*, you
-    will be able to continue using the old CRD and even carry on Percona XtraDB
-    Cluster minor version upgrades with it. But the recommended way is to update
-    the Operator *and* CRD.
+1. The Operator version has three digits separated by a dot (`.`) in the format `major.minor.patch`. Here's how you can understand the version `1.17.0`:
 
-Only the incremental update to a nearest version of the
-Operator is supported (for example, update from 1.4.0 to 1.5.0). To update
-to a newer version, which differs from the current version by more
-than one, make several incremental updates sequentially.
+    * `1` is the major version 
+    * `17` is the minor version
+    * `0` is the patch version.     
 
-!!! warning
+    You can only upgrade the Operator to the nearest `major.minor` version (for example, from `1.16.x` to `1.17.x`).     
 
-    The Operator versions 1.14.0 and 1.15.0 **should be excluded** from the incremental upgrades sequence in favor of [1.14.1](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.14.1.md) and [1.15.1](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.15.1.md) releases.
+    If the your current Operator version and the version you want to upgrade to differ by more than one minor version, you need to upgrade step by step. For example, if your current version is `1.15.x` and you want to move to `1.17.x`, first upgrade to `1.16.x`, then to `1.17.x`.    
+
+    Patch versions don't influence the upgrade, so you can safely move from `1.16.1` to `1.17.0`. 
+
+    Check the [Release notes index](ReleaseNotes/index.md) for the list of the Operator versions.
+
+2. CRD supports the **last 3 minor versions of the Operator**. This means it is
+compatible with the newest Operator version and the two older minor versions.
+If the Operator is older than the CRD *by no more than two versions*, you
+should be able to continue using the old Operator version.
+But updating the CRD *and* Operator is the **recommended path**. 
+
+3. Starting with version 1.12.0, the Operator no longer has a separate API version for each release in CRD. Instead, the CRD has the API version `v1`. Therefore, if you run the Operator **older than 1.12.0**, you must update the API version in the CRD manually to run the upgrade. 
+
+4. The Operator versions 1.14.0 and 1.15.0 **should be excluded** from the incremental upgrades sequence in favor of [1.14.1](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.14.1.md) and [1.15.1](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.15.1.md) releases.
+
     * The upgrade path from the version 1.14.1 should be 1.14.1 -> 1.15.1. 
     * Direct upgrades from 1.13.0 to 1.14.1 and from 1.14.0 to 1.15.1 are supported.
 
+
+* To upgrade multiple [single-namespace Operator deployments](cluster-wide.md#namespace-scope) 
+in one Kubernetes cluster, where each Operator controls a database cluster in
+its own namespace, do the following:
+
+    * upgrade the CRD (not 3 minor versions far from the oldest Operator
+       installation in the Kubernetes cluster) first 
+    * upgrade the Operators in each namespace incrementally to the
+       latest minor version (e.g. from 1.15.1 to 1.16.1, then to 1.17.0) 
+
+    
 ### Manual upgrade
 
 The upgrade includes the following steps.
 
-1. Update the [Custom Resource Definition :octicons-link-external-16:](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
-    for the Operator, taking it from the official repository on Github, and do
+1. **For Operators older than v1.12.0**: Update the API version in the [Custom Resource Definition :octicons-link-external-16:](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/):
+
+    ```{.bash data-prompt="$"}
+    $ kubectl patch customresourcedefinitions perconaxtradbclusters.pxc.percona.com --subresource='status' --type='merge' -p '{"status":{"storedVersions":["v1"]}}'
+    ```
+
+2. Update the Custom Resource Definition for the Operator, taking it from the official repository on Github, and do
     the same for the Role-based access control:
 
     ``` {.bash data-prompt="$" }
@@ -52,7 +76,7 @@ The upgrade includes the following steps.
     $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/rbac.yaml
     ```
 
-2. Now you should [apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your
+3. Now you should [apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your
     deployment, supplying necessary image name with a newer version tag. You can find the proper
     image name for the current Operator release [in the list of certified images](images.md)
     (for older releases, please refer to the [old releases documentation archive :octicons-link-external-16:](https://docs.percona.com/legacy-documentation/))).
@@ -64,7 +88,7 @@ The upgrade includes the following steps.
       -p'{"spec":{"template":{"spec":{"containers":[{"name":"percona-xtradb-cluster-operator","image":"percona/percona-xtradb-cluster-operator:{{ release }}"}]}}}}'
     ```
 
-3. The deployment rollout will be automatically triggered by the applied patch.
+4. The deployment rollout will be automatically triggered by the applied patch.
    The update process is successfully finished when all Pods have been restarted.
 
     !!! note
