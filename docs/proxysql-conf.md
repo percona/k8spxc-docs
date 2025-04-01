@@ -1,22 +1,29 @@
 # Configuring Load Balancing with ProxySQL
 
-Percona Operator for MySQL based on Percona XtraDB Cluster provides a choice of two cluster components to
-provide load balancing and proxy service: you can use either [HAProxy :octicons-link-external-16:](https://haproxy.org) or [ProxySQL :octicons-link-external-16:](https://proxysql.com/).
-You can choose which one to use, if any, by enabling or disabling via the
+You can use either [HAProxy :octicons-link-external-16:](https://haproxy.org) or [ProxySQL :octicons-link-external-16:](https://proxysql.com/) for load balancing and proxy services.
+
+You can control which one to use: enable or disable the
 `haproxy.enabled` and `proxysql.enabled` options in the `deploy/cr.yaml`
 configuration file.
 
 !!! warning 
 
-    You can enable ProxySQL only at cluster creation time. Otherwise you will be
-    able to use HAProxy only, and the switch from HAProxy to ProxySQL is not
+    You can enable ProxySQL only when you create a cluster. For a running cluster you can enable only HAProxy. Also note, if you have already enabled HAProxy, the switch from it to ProxySQL is not
     possible.
 
-The resulting setup will use the number zero Percona XtraDB Cluster member
-(`cluster1-pxc-0` by default) as writer.
+## `cluster1-proxysql` service
+
+The `cluster1-proxysql` service listens on the following ports:
+
+* `3306` is the default MySQL port. It is used by the mysql client, MySQL Connectors, and utilities such as mysqldump and mysqlpump
+* `33062` is the port to connect to the MySQL Administrative Interface
+* `6070` is the port to connect to the built-in Prometheus exporter to gather ProxySQL statistics and manage the ProxySQL observability stack
+
+The `cluster1-proxysql` service uses the number zero Percona XtraDB Cluster member
+(`cluster1-pxc-0` by default) as the writer.
 
 [proxysql.expose.enabled](operator.md#proxysqlexposeenabled) Custom Resource
-option enables or disables the apropriate `cluster1-proxysql` service.
+option enables or disables the `cluster1-proxysql` service.
 
 !!! note
 
@@ -25,7 +32,7 @@ option enables or disables the apropriate `cluster1-proxysql` service.
     (e.g. to use on the tenant network), add the following [annotation](annotations.md)
     in the Custom Resource metadata section of the `deploy/cr.yaml`:
 
-     ```yaml
+    ```yaml
     apiVersion: pxc.percona.com/v1
     kind: PerconaXtraDBCluster
     metadata:
@@ -84,6 +91,8 @@ proxysql:
       admin_credentials="proxyadmin:admin_password"
       mysql_ifaces="0.0.0.0:6032"
       refresh_interval=2000
+      restapi_enabled=true
+      restapi_port=6070
 
       cluster_username="proxyadmin"
       cluster_password="admin_password"
@@ -139,55 +148,7 @@ ConfigMap :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configur
 For example, you define a `proxysql.cnf` configuration file with the following
 setting:
 
-```default
-datadir="/var/lib/proxysql"
-
-admin_variables =
-{
-  admin_credentials="proxyadmin:admin_password"
-  mysql_ifaces="0.0.0.0:6032"
-  refresh_interval=2000
-
-  cluster_username="proxyadmin"
-  cluster_password="admin_password"
-  cluster_check_interval_ms=200
-  cluster_check_status_frequency=100
-  cluster_mysql_query_rules_save_to_disk=true
-  cluster_mysql_servers_save_to_disk=true
-  cluster_mysql_users_save_to_disk=true
-  cluster_proxysql_servers_save_to_disk=true
-  cluster_mysql_query_rules_diffs_before_sync=1
-  cluster_mysql_servers_diffs_before_sync=1
-  cluster_mysql_users_diffs_before_sync=1
-  cluster_proxysql_servers_diffs_before_sync=1
-}
-
-mysql_variables=
-{
-  monitor_password="monitor"
-  monitor_galera_healthcheck_interval=1000
-  threads=2
-  max_connections=2048
-  default_query_delay=0
-  default_query_timeout=10000
-  poll_timeout=2000
-  interfaces="0.0.0.0:3306"
-  default_schema="information_schema"
-  stacksize=1048576
-  connect_timeout_server=10000
-  monitor_history=60000
-  monitor_connect_interval=20000
-  monitor_ping_interval=10000
-  ping_timeout_server=200
-  commands_stats=true
-  sessions_sort=true
-  have_ssl=true
-  ssl_p2s_ca="/etc/proxysql/ssl-internal/ca.crt"
-  ssl_p2s_cert="/etc/proxysql/ssl-internal/tls.crt"
-  ssl_p2s_key="/etc/proxysql/ssl-internal/tls.key"
-  ssl_p2s_cipher="ECDHE-RSA-AES128-GCM-SHA256"
-}
-```
+--8<-- "proxysql-config.txt"
 
 You can create a configmap from the `proxysql.cnf` file with the
 `kubectl create configmap` command.
@@ -243,55 +204,8 @@ Actual options should be encoded with [Base64 :octicons-link-external-16:](https
 For example, let’s define a `proxysql.cnf` configuration file and put there
 options we used in the previous example:
 
-```default
-datadir="/var/lib/proxysql"
+--8<-- "proxysql-config.txt"
 
-admin_variables =
-{
-  admin_credentials="proxyadmin:admin_password"
-  mysql_ifaces="0.0.0.0:6032"
-  refresh_interval=2000
-
-  cluster_username="proxyadmin"
-  cluster_password="admin_password"
-  cluster_check_interval_ms=200
-  cluster_check_status_frequency=100
-  cluster_mysql_query_rules_save_to_disk=true
-  cluster_mysql_servers_save_to_disk=true
-  cluster_mysql_users_save_to_disk=true
-  cluster_proxysql_servers_save_to_disk=true
-  cluster_mysql_query_rules_diffs_before_sync=1
-  cluster_mysql_servers_diffs_before_sync=1
-  cluster_mysql_users_diffs_before_sync=1
-  cluster_proxysql_servers_diffs_before_sync=1
-}
-
-mysql_variables=
-{
-  monitor_password="monitor"
-  monitor_galera_healthcheck_interval=1000
-  threads=2
-  max_connections=2048
-  default_query_delay=0
-  default_query_timeout=10000
-  poll_timeout=2000
-  interfaces="0.0.0.0:3306"
-  default_schema="information_schema"
-  stacksize=1048576
-  connect_timeout_server=10000
-  monitor_history=60000
-  monitor_connect_interval=20000
-  monitor_ping_interval=10000
-  ping_timeout_server=200
-  commands_stats=true
-  sessions_sort=true
-  have_ssl=true
-  ssl_p2s_ca="/etc/proxysql/ssl-internal/ca.crt"
-  ssl_p2s_cert="/etc/proxysql/ssl-internal/tls.crt"
-  ssl_p2s_key="/etc/proxysql/ssl-internal/tls.key"
-  ssl_p2s_cipher="ECDHE-RSA-AES128-GCM-SHA256"
-}
-```
 
 You can get a Base64 encoded string from your options via the command line as
 follows:
