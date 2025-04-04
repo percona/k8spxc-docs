@@ -1,11 +1,12 @@
 # Percona certified images
 
-Following table presents Percona’s certified docker images to be used with the
-Percona Operator for MySQL based on Percona XtraDB Cluster.
+Find Percona's certified Docker images that you can use with the
+Percona Operator for MySQL based on Percona XtraDB Cluster in the following table.
+
+**Images released with the Operator version {{ release }}:** 
 
 | Image                                                                  | Digest                                                           |
 |:-----------------------------------------------------------------------|:-----------------------------------------------------------------|
-| **Images released with the Operator version {{ release }}:** | |
 | percona/percona-xtradb-cluster-operator:1.16.1 (x86_64)                | 43fd8ced51adad59394d69e3a1fc8be897668d789049be8f5dd9984672223e72 |
 | percona/percona-xtradb-cluster-operator:1.16.1 (ARM64)                 | dcba85dd7a8a164498362c2d3a73af3411e894dd6c01e600a92ddd3fb12122de |
 | percona/haproxy:2.8.11                                                 | 422a210b4170a973f8582ef3d7ddcc879c32bc48f6c66fad8b3154bce4e79b84 |
