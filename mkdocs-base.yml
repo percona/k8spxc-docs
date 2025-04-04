@@ -84,8 +84,9 @@ markdown_extensions:
         - snippets
         - docs/assets/code
         - docs/assets/fragments
-      auto_append:
-        - services-banner.md
+        - docs/ReleaseNotes
+      #auto_append:
+#        - services-banner.md
   pymdownx.highlight:
     linenums: false
   pymdownx.emoji:

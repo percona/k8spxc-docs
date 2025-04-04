@@ -18,7 +18,7 @@ Another improvement is for the case when your database cluster becomes unhealthy
  
 ### Monitor PMM Client health and status
 
-Percona Monitoring and Management (PMM) is a great tool to [monitor the health of your database cluster](../monitoring.md). However, you may also want to know if PMM itself is healthy. Now you can do it using probes - a Kubernetes diagnostics mechanism to check the health and status of containers. Use the[ `spec.pmm.readinessProbes.*`](../operator.md#pmmreadinessprobesinitialdelayseconds) and [`spec.pmm.livenessProbes.*`](../operator.md#pmmlivenessprobesinitialdelayseconds) Custom Resource options to enable Readiness and Liveness probes for PMM Client.
+Percona Monitoring and Management (PMM) is a great tool to [monitor the health of your database cluster](../monitoring.md). Now you can also learn if PMM itself is healthy using probes - a Kubernetes diagnostics mechanism to check the health and status of containers. Use the [`spec.pmm.readinessProbes.*`](../operator.md#pmmreadinessprobesinitialdelayseconds) and [`spec.pmm.livenessProbes.*`](../operator.md#pmmlivenessprobesinitialdelayseconds) Custom Resource options to fine-tune Readiness and Liveness probes for PMM Client.
 
 ### Improved observability of binary log backups
 
@@ -46,6 +46,8 @@ Get insights into the success and failure rates of binlog operations, timeliness
 * [K8SPXC-1475](https://perconadev.atlassian.net/browse/K8SPXC-1475) - Update the backup image to use AWS CLI instead of MinIO CLI due to the license change
 
 * [K8SPXC-1510](https://perconadev.atlassian.net/browse/K8SPXC-1510) - Add the ability to suppress messages about the use of deprecated features in MySQL Error Log by adding the `log_error_suppression_list` key from the `my.cnf` configuration file and defining the message number in the `spec.pxc.configuration` subsection of the Custom Resource manifest. See [how to change MySQL options](../options.md) for steps. This improves readability for MySQL error log.
+
+* [K8SPXC-1512](https://perconadev.atlassian.net/browse/K8SPXC-1512) - For Percona XtraDB Cluster version 8.4 and above, binary log user defined functions for point-in-time recovery (`binlog_utils_udf`) are now installed as a component instead of a plugin. This improves their compatibility across platforms and provides automatic dependency handling.
 
 * [K8SPXC-1513](https://perconadev.atlassian.net/browse/K8SPXC-1513) - Add PXC 8.4 support for version service
 
@@ -77,7 +79,9 @@ Get insights into the success and failure rates of binlog operations, timeliness
 * [K8SPXC-1546](https://perconadev.atlassian.net/browse/K8SPXC-1546), [K8SPXC-1549](https://perconadev.atlassian.net/browse/K8SPXC-1549) -  Fixed the issue with the PITR pod crashing on attempt to assign a GTID
 set to each binlog if the database cluster has a large number of binlogs by caching the `binlog->gtid` set pairs
 
-* [K8SPXC-1547](https://perconadev.atlassian.net/browse/K8SPXC-1547) Remove the outdated example from the `backup.yaml` manifest and update the documentation how to track backup progress 
+* [K8SPXC-1547](https://perconadev.atlassian.net/browse/K8SPXC-1547) - Removed the outdated example from the `backup.yaml` manifest and update the documentation how to track backup progress 
+
+* [K8SPXC-1616](https://perconadev.atlassian.net/browse/K8SPXC-1616) - Fixed a bug where the ProxySQL fails to be configured if the password for a `proxysqladmin` user starts with a star (`*`) character by reporting an error and making the Operator regenerate a new password that doesn't start with a star (Thank you Chris Fidao for reporting this issue and contribution)
 
 
 
@@ -86,22 +90,62 @@ set to each binlog if the database cluster has a large number of binlogs by cach
 
 
 
+## Supported Software
+
+The Operator was developed and tested with the following software:
+
+* Percona XtraDB Cluster versions 8.4.3-3.1 (Tech preview), 8.0.41-32.1, and 5.7.44-31.65  
+* Percona XtraBackup versions 8.4.0-2, 8.0.35-32, and 2.4.29  
+* HAProxy 2.8.14  
+* ProxySQL 2.7.1-1  
+* LogCollector based on fluent-bit 4.0.0  
+* PMM Client 2.44.0  
+
+Other options may also work but have not been tested.
+
 ## Supported Platforms
-
-The Operator was developed and tested with Percona XtraDB Cluster versions 8.4.2-2.1 (Tech preview), 8.0.39-30.1, and 5.7.44-31.65. Other options may also work but have not been tested. Other software components include:
-
-* Percona XtraBackup versions 8.4.0-1, 8.0.35-30.1 and 2.4.29
-* HAProxy 2.8.11
-* ProxySQL 2.7.1
-* LogCollector based on fluent-bit 3.2.2
-* PMM Client 2.44.0
 
 Percona Operators are designed for compatibility with all [CNCF-certified :octicons-link-external-16:](https://www.cncf.io/training/certification/software-conformance/) Kubernetes distributions. Our release process includes targeted testing and validation on major cloud provider platforms and OpenShift, as detailed below for Operator version 1.16.0:
 
-* [Google Kubernetes Engine (GKE) :octicons-link-external-16:](https://cloud.google.com/kubernetes-engine) 1.28 - 1.30
-* [Amazon Elastic Container Service for Kubernetes (EKS) :octicons-link-external-16:](https://aws.amazon.com) 1.28 - 1.31
-* [Azure Kubernetes Service (AKS) :octicons-link-external-16:](https://azure.microsoft.com/en-us/services/kubernetes-service/) 1.28 - 1.31
-* [OpenShift :octicons-link-external-16:](https://www.redhat.com/en/technologies/cloud-computing/openshift) 4.14.42 - 4.17.8
-* [Minikube :octicons-link-external-16:](https://minikube.sigs.k8s.io/docs/) 1.34.0 based on Kubernetes 1.31.0
+* [Google Kubernetes Engine (GKE) :octicons-link-external-16:](https://cloud.google.com/kubernetes-engine) 1.29 - 1.32  
+* [Amazon Elastic Container Service for Kubernetes (EKS) :octicons-link-external-16:](https://aws.amazon.com) 1.30 - 1.32  
+* [Azure Kubernetes Service (AKS) :octicons-link-external-16:](https://azure.microsoft.com/en-us/services/kubernetes-service/) 1.30 - 1.32  
+* [OpenShift :octicons-link-external-16:](https://www.redhat.com/en/technologies/cloud-computing/openshift) 4.14.50 - 4.18.8  
+* [Minikube :octicons-link-external-16:](https://minikube.sigs.k8s.io/docs/) 1.35.0 based on Kubernetes 1.32.0  
+
 
 This list only includes the platforms that the Percona Operators are specifically tested on as part of the release process. Other Kubernetes flavors and versions depend on the backward compatibility offered by Kubernetes itself.
+
+
+## Percona certified images
+
+Find Percona's certified Docker images that you can use with the
+Percona Operator for MySQL based on Percona XtraDB Cluster in the following table.
+
+**Images released with the Operator version {{ release }}:** 
+
+
+| Image                                                                  | Digest                                                           |
+|:-----------------------------------------------------------------------|:-----------------------------------------------------------------|
+| percona/percona-xtradb-cluster-operator:1.16.1 (x86_64)                | 43fd8ced51adad59394d69e3a1fc8be897668d789049be8f5dd9984672223e72 |
+| percona/percona-xtradb-cluster-operator:1.16.1 (ARM64)                 | dcba85dd7a8a164498362c2d3a73af3411e894dd6c01e600a92ddd3fb12122de |
+| percona/haproxy:2.8.11                                                 | 422a210b4170a973f8582ef3d7ddcc879c32bc48f6c66fad8b3154bce4e79b84 |
+| percona/proxysql2:2.7.1                                                | b1c5cd48b218d19386724fa823d20a8454b2de87f4ab445903e8daeb3b6b015b |
+| percona/percona-xtradb-cluster-operator:1.16.1-pxc8.4-backup-pxb8.4.0  | 500f20baa21a7df71a517c9434d1907e4cb482fdd58784975f97976a0bce699d |
+| percona/percona-xtradb-cluster-operator:1.16.1-pxc8.0-backup-pxb8.0.35 | 55281c818a78162cac0c87257915d74f321a4663f3f60457da2566c64610bf49 |
+| percona/percona-xtradb-cluster-operator:1.16.1-pxc5.7-backup-pxb2.4.29 | ddcec747748dccfbf4d7a6ba9c6a34f09cb7814ab59c49e73dff239949012039 |
+| percona/percona-xtradb-cluster-operator:1.16.1-logcollector-fluentbit3.2.2 | 122a103902d27890dceaf1855f175ea706a126aac940feb1089520029937f4a9 |
+| percona/pmm-client:2.44.0                                              | 0737f73449263a14d7000fbe7cd88dfd589dfed975cbb16bd29eee06a5dbd49e |
+| percona/percona-xtradb-cluster:8.4.2-2.1                               | ee8be9e7e2ecc1fdfebb29141f5f15abcd15490213f6bdbe0a53a1e6cc942fa8 |
+| percona/percona-xtradb-cluster:8.0.39-30.1                             | 6a53a6ad4e7d2c2fb404d274d993414a22cb67beecf7228df9d5d994e7a09966 |
+| percona/percona-xtradb-cluster:8.0.36-28.1                             | b5cc4034ccfb0186d6a734cb749ae17f013b027e9e64746b2c876e8beef379b3 |
+| percona/percona-xtradb-cluster:8.0.35-27.1                             | 1ef24953591ef1c1ce39576843d5615d4060fd09458c7a39ebc3e2eda7ef486b |
+| percona/percona-xtradb-cluster:8.0.32-24.2                             | 1f978ab8912e1b5fc66570529cb7e7a4ec6a38adbfce1ece78159b0fcfa7d47a |
+| percona/percona-xtradb-cluster:8.0.31-23.2                             | ed1ceea0b594ae34a92c891b4e42bc543d24999c82e47382cf53e33be4ae1d71 |
+| percona/percona-xtradb-cluster:5.7.44-31.65                            | 36fafdef46485839d4ff7c6dc73b4542b07031644c0152e911acb9734ff2be85 |
+| percona/percona-xtradb-cluster:5.7.42-31.65                            | 9dab86780f86ec9caf8e1032a563c131904b75a37edeaec159a93f7d0c16c603 |
+| percona/percona-xtradb-cluster:5.7.39-31.61                            | 9013170a71559bbac92ba9c2e986db9bda3a8a9e39ee1ee350e0ee94488bb6d7 |
+| percona/percona-xtradb-cluster:5.7.36-31.55                            | c7bad990fc7ca0fde89240e921052f49da08b67c7c6dc54239593d61710be504 |
+| percona/percona-xtradb-cluster:5.7.34-31.51                            | f8d51d7932b9bb1a5a896c7ae440256230eb69b55798ff37397aabfd58b80ccb |
+
+
