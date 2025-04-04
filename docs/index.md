@@ -6,6 +6,8 @@ The **[Percona Operator for MySQL :octicons-link-external-16:](https://github.co
 
 This provides the foundation for the Percona Operator for MySQL, enabling simplified deployment and management of Percona XtraDB Cluster within Kubernetes environments.
 
+[What's new in version {{release}}](ReleaseNotes/Kubernetes-Operator-for-PXC-RN{{release}}.md){.md-button}
+
 ---
 
 ## Key Features and Benefits  
