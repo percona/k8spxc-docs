@@ -8,7 +8,7 @@ plugins:
 
 theme:
   name: material
-  custom_dir: _resource/overrides
+  custom_dir: _resourcepdf/overrides
 # Theme features
   features:
     - search.highlight
@@ -19,8 +19,3 @@ theme:
     - content.action.view
     - content.code.copy
 
-#Google Analytics configuration 
-extra:
-  analytics:
-    provider: google
-    property: UA-343802-3
