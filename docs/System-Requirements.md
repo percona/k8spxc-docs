@@ -1,17 +1,16 @@
 # System requirements
 
-The Operator was developed and tested with Percona XtraDB Cluster versions 8.4.2-2.1 (Tech preview), 8.0.39-30.1, and 5.7.44-31.65 Other options may also work but have not been tested.
+The Operator was developed and tested with Percona XtraDB Cluster versions {{pxc84recommended}} (Tech preview), {{pxc80recommended}}, and {{pxc57recommended}}.
+
+Other options may also work but have not been tested.
 
 ## Supported platforms
 
 The following platforms were tested and are officially supported by the Operator
 {{ release }}:
 
-* [Google Kubernetes Engine (GKE) :octicons-link-external-16:](https://cloud.google.com/kubernetes-engine) 1.29 - 1.32  
-* [Amazon Elastic Container Service for Kubernetes (EKS) :octicons-link-external-16:](https://aws.amazon.com) 1.30 - 1.32  
-* [Azure Kubernetes Service (AKS) :octicons-link-external-16:](https://azure.microsoft.com/en-us/services/kubernetes-service/) 1.30 - 1.32  
-* [OpenShift :octicons-link-external-16:](https://www.redhat.com/en/technologies/cloud-computing/openshift) 4.14.50 - 4.18.8  
-* [Minikube :octicons-link-external-16:](https://minikube.sigs.k8s.io/docs/) 1.35.0 based on Kubernetes 1.32.0  
+--8<-- "Kubernetes-Operator-for-PXC-RN{{release}}.md:platforms"
+
 
 Other Kubernetes platforms may also work but have not been tested.
 

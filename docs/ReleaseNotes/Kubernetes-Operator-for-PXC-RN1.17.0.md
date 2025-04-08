@@ -84,12 +84,6 @@ set to each binlog if the database cluster has a large number of binlogs by cach
 * [K8SPXC-1616](https://perconadev.atlassian.net/browse/K8SPXC-1616) - Fixed a bug where the ProxySQL fails to be configured if the password for a `proxysqladmin` user starts with a star (`*`) character by reporting an error and making the Operator regenerate a new password that doesn't start with a star (Thank you Chris Fidao for reporting this issue and contribution)
 
 
-
-## Deprecation, Rename and Removal
-
-
-
-
 ## Supported Software
 
 The Operator was developed and tested with the following software:
@@ -107,12 +101,15 @@ Other options may also work but have not been tested.
 
 Percona Operators are designed for compatibility with all [CNCF-certified :octicons-link-external-16:](https://www.cncf.io/training/certification/software-conformance/) Kubernetes distributions. Our release process includes targeted testing and validation on major cloud provider platforms and OpenShift, as detailed below for Operator version 1.16.0:
 
+--8<-- [start:platforms]
+
 * [Google Kubernetes Engine (GKE) :octicons-link-external-16:](https://cloud.google.com/kubernetes-engine) 1.29 - 1.32  
 * [Amazon Elastic Container Service for Kubernetes (EKS) :octicons-link-external-16:](https://aws.amazon.com) 1.30 - 1.32  
 * [Azure Kubernetes Service (AKS) :octicons-link-external-16:](https://azure.microsoft.com/en-us/services/kubernetes-service/) 1.30 - 1.32  
-* [OpenShift :octicons-link-external-16:](https://www.redhat.com/en/technologies/cloud-computing/openshift) 4.14.50 - 4.18.8  
+* [OpenShift :octicons-link-external-16:](https://www.redhat.com/en/technologies/cloud-computing/openshift) 4.14 - 4.18  
 * [Minikube :octicons-link-external-16:](https://minikube.sigs.k8s.io/docs/) 1.35.0 based on Kubernetes 1.32.0  
 
+--8<-- [end:platforms]
 
 This list only includes the platforms that the Percona Operators are specifically tested on as part of the release process. Other Kubernetes flavors and versions depend on the backward compatibility offered by Kubernetes itself.
 
@@ -124,6 +121,7 @@ Percona Operator for MySQL based on Percona XtraDB Cluster in the following tabl
 
 **Images released with the Operator version {{ release }}:** 
 
+--8<-- [start:images]
 
 | Image                                                                  | Digest                                                           |
 |:-----------------------------------------------------------------------|:-----------------------------------------------------------------|
@@ -148,4 +146,4 @@ Percona Operator for MySQL based on Percona XtraDB Cluster in the following tabl
 | percona/percona-xtradb-cluster:5.7.36-31.55                            | c7bad990fc7ca0fde89240e921052f49da08b67c7c6dc54239593d61710be504 |
 | percona/percona-xtradb-cluster:5.7.34-31.51                            | f8d51d7932b9bb1a5a896c7ae440256230eb69b55798ff37397aabfd58b80ccb |
 
-
+--8<-- [end:images]
