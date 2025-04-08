@@ -20,17 +20,17 @@ The list of recommended upgrade scenarios includes two variants:
 
 ### Considerations
 
-1. The Operator version has three digits separated by a dot (`.`) in the format `major.minor.patch`. Here's how you can understand the version `1.17.0`:
+1. The Operator version has three digits separated by a dot (`.`) in the format `major.minor.patch`. Here's how you can understand the version `1.16.1`:
 
     * `1` is the major version 
-    * `17` is the minor version
-    * `0` is the patch version.     
+    * `16` is the minor version
+    * `1` is the patch version.     
 
-    You can only upgrade the Operator to the nearest `major.minor` version (for example, from `1.16.x` to `1.17.x`).     
+    You can only upgrade the Operator to the nearest `major.minor` version (for example, from `1.15.1` to `1.16.1`).     
 
-    If the your current Operator version and the version you want to upgrade to differ by more than one minor version, you need to upgrade step by step. For example, if your current version is `1.15.x` and you want to move to `1.17.x`, first upgrade to `1.16.x`, then to `1.17.x`.    
+    If the your current Operator version and the version you want to upgrade to differ by more than one minor version, you need to upgrade step by step. For example, if your current version is `1.14.x` and you want to move to `1.16.x`, first upgrade to `1.15.x`, then to `1.16.x`.    
 
-    Patch versions don't influence the upgrade, so you can safely move from `1.16.1` to `1.17.0`. 
+    Patch versions don't influence the upgrade, so you can safely move from `1.15.1` to `1.16.1`. 
 
     Check the [Release notes index](ReleaseNotes/index.md) for the list of the Operator versions.
 
@@ -40,7 +40,17 @@ If the Operator is older than the CRD *by no more than two versions*, you
 should be able to continue using the old Operator version.
 But updating the CRD *and* Operator is the **recommended path**. 
 
-3. Starting with version 1.12.0, the Operator no longer has a separate API version for each release in CRD. Instead, the CRD has the API version `v1`. Therefore, if you run the Operator **older than 1.12.0**, you must update the API version in the CRD manually to run the upgrade. 
+3. Starting with version 1.12.0, the Operator no longer has a separate API version for each release in CRD. Instead, the CRD has the API version `v1`. Therefore, if you installed the CRD when the Operator version was **older than 1.12.0**, you must update the API version in the CRD manually to run the upgrade. To check your CRD version, use the following command:
+
+    ```{.bash data-prompt="$"}
+    $ kubectl get crd perconaxtradbclusters.pxc.percona.com -o yaml | yq .status.storedVersions
+    ```
+
+    ??? example "Expected output"
+
+        ```{.text .no-copy}
+        - v1-11-0
+        ```
 
 4. The Operator versions 1.14.0 and 1.15.0 **should be excluded** from the incremental upgrades sequence in favor of [1.14.1](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.14.1.md) and [1.15.1](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.15.1.md) releases.
 
@@ -64,9 +74,41 @@ The upgrade includes the following steps.
 
 1. **For Operators older than v1.12.0**: Update the API version in the [Custom Resource Definition :octicons-link-external-16:](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/):
 
-    ```{.bash data-prompt="$"}
-    $ kubectl patch customresourcedefinitions perconaxtradbclusters.pxc.percona.com --subresource='status' --type='merge' -p '{"status":{"storedVersions":["v1"]}}'
-    ```
+    === "Manually"
+
+        ```{.bash data-prompt="$"}
+        $ kubectl proxy &  \
+        $ curl \
+               --header "Content-Type: application/json-patch+json" \
+               --request PATCH \
+               --data '[{"op": "replace", "path": "/status/storedVersions", "value":["v1"]}]' http://localhost:8001/apis/apiextensions.k8s.io/v1/customresourcedefinitions/perconaxtradbclusters.pxc.percona.com/status
+        ```
+
+        ??? example "Expected output"
+
+            ```{.text .no-copy}
+            {
+             {...},
+              "status": {
+                "storedVersions": [
+                  "v1"
+                ]
+              }
+            }
+            ```
+
+    === "Via `kubectl patch`"
+
+        ```{.bash data-prompt="$"}
+        $ kubectl patch customresourcedefinitions perconaxtradbclusters.pxc.percona.com --subresource='status' --type='merge' -p '{"status":{"storedVersions":["v1"]}}'
+        ```
+
+        ??? example "Expected output"
+
+            ```{.text .no-copy}
+            customresourcedefinition.apiextensions.k8s.io/perconaxtradbclusters.pxc.percona.com patched
+            ```
+
 
 2. Update the Custom Resource Definition for the Operator, taking it from the official repository on Github, and do
     the same for the Role-based access control:
