@@ -4,7 +4,7 @@ integrated within the Operator. You can also use [custom monitoring solutions](m
 
 In this section you will learn how to monitor Percona XtraDB Cluster with PMM.
 
-PMM is a client/server application. It consists of the [PMM Server :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/details/architecture.html#pmm-server) and a number of [PMM Clients :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/details/architecture.html#pmm-client). PMM Clients run on each node with the database you wish to monitor. In Kubernetes, this means that PMM Clients run as sidecar containers for the database Pods.
+PMM is a client/server application. It consists of the [PMM Server :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/2/details/architecture.html#pmm-server) and a number of [PMM Clients :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/2/details/architecture.html#pmm-client). PMM Clients run on each node with the database you wish to monitor. In Kubernetes, this means that PMM Clients run as sidecar containers for the database Pods.
 
 A PMM Client collects needed metrics and sends the gathered data to the PMM Server.
  As a user, you connect to the PMM Server to see database metrics on
