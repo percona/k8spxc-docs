@@ -74,7 +74,9 @@ the readers, then the writer Percona XtraDB Cluster member is finally upgraded.
 
 ## Exposing HAProxy
 
-You can expose HAProxy, so that clients can connect to your database cluster from the outside. To do so, you need to set the service type `LoadBalancer` for the `haproxy-primary` service. Additionally, list the client IP addresses from which the load balancer should be reachable in the `loadBalancerSourceRanges` option. 
+You can expose HAProxy, so that clients can connect to your database cluster from the outside. To do so, you need to set the service type `LoadBalancer` for the `haproxy-primary` service. 
+
+By default, the HAProxy is available for all clients. If you need to restrict the client IP addresses from which the load balancer should be reachable, list these IP addresses in the `loadBalancerSourceRanges` option. 
 
 Edit the `deploy/cr.yaml` Custom Resource manifest and specify the following configuration:
 
