@@ -89,7 +89,7 @@ set to each binlog if the database cluster has a large number of binlogs by cach
 The Operator was developed and tested with the following software:
 
 * Percona XtraDB Cluster versions 8.4.3-3.1 (Tech preview), 8.0.41-32.1, and 5.7.44-31.65  
-* Percona XtraBackup versions 8.4.0-2, 8.0.35-32, and 2.4.29  
+* Percona XtraBackup versions 8.4.0-1, 8.0.35-32, and 2.4.29  
 * HAProxy 2.8.14  
 * ProxySQL 2.7.1-1  
 * LogCollector based on fluent-bit 4.0.0  
