@@ -52,8 +52,6 @@ The `spec.haproxy.exposePrimary.enabled` field is deprecated. If enabled via the
 
 * [K8SPXC-1512](https://perconadev.atlassian.net/browse/K8SPXC-1512) - For Percona XtraDB Cluster version 8.4 and above, binary log user defined functions for point-in-time recovery (`binlog_utils_udf`) are now installed as a component instead of a plugin. This improves their compatibility across platforms and provides automatic dependency handling.
 
-* [K8SPXC-1513](https://perconadev.atlassian.net/browse/K8SPXC-1513) - Add PXC 8.4 support for version service
-
 * [K8SPXC-1542](https://perconadev.atlassian.net/browse/K8SPXC-1542) - Improve binlog upload for large files to Azure blob storage with the ability to define the block size and the number of concurrent writers for the upload (Thanks to user dcaputo-harmoni for contribution)
 
 * [K8SPXC-1543](https://perconadev.atlassian.net/browse/K8SPXC-1543) - Set PITR controller reference for binlog-collector deployment the same way as it's set for PXC and proxy StatefulSets. This creates a connection between PITR deployment and cluster resource (Thank you Vlad Gusev for the contribution)
@@ -63,6 +61,8 @@ The `spec.haproxy.exposePrimary.enabled` field is deprecated. If enabled via the
 * [K8SPXC-1567](https://perconadev.atlassian.net/browse/K8SPXC-1567) - Normalize duplicate slashes if the bucket path for binlog collector ends with a slash (`/`) (Thank you Vlad Gusev for the contribution)
 
 * [K8SPXC-1596](https://perconadev.atlassian.net/browse/K8SPXC-1596) - Assign a correct status to a backup if data upload fails due to incomplete backup
+
+* [K8SPXC-1620](https://perconadev.atlassian.net/browse/K8SPXC-1620) - Fixed the issue with a failing backup by adding a retry logic to the cloud storage cleanup task to check for uploaded files and clean them up before uploading new files
 
 
 ## Bugs Fixed
