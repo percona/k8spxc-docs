@@ -83,10 +83,10 @@ Edit the `deploy/cr.yaml` Custom Resource manifest and specify the following con
 ```yaml
 spec:
   haproxy:
-    enabled: true
-    type: LoadBalancer
-    loadBalancerSourceRanges:
-      - 10.0.0.0/8
+    exposePrimary:
+      type: LoadBalancer
+      loadBalancerSourceRanges:
+        - 10.0.0.0/8
 ```
 
 Note that the `haproxy-replica` service inherits this setup. You can override it for the `haproxy-replica` service by setting the IP ranges to access the cluster for read requests. The configuration for the `haproxy-replica` service will be as follows:
@@ -97,7 +97,6 @@ spec:
     enabled: true
     exposeReplicas:
       enabled: true
-      onlyReaders: false
       type: LoadBalancer
 ```
 
