@@ -34,7 +34,7 @@ Following steps will allow you to deploy the Operator and Percona XtraDB Cluster
 
     !!! note
     
-        To install the Operator in [multi-namespace (cluster-wide) mode](cluster-wide.md), use the one with one the Certified label. Choose values with `-cw` suffix for the update channel and version, and select the "All namespaces on the cluster" radio button for the installation mode instead of chosing a specific Namespace:
+        To install the Operator in [multi-namespace (cluster-wide) mode](cluster-wide.md), use the one from the certified catalog. It has the Certified label. Choose values with `-cw` suffix for the update channel and version, and select the "All namespaces on the cluster" radio button for the installation mode instead of chosing a specific Namespace:
         
         ![image](assets/images/olm-cw.svg)
 
