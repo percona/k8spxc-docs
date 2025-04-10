@@ -1272,7 +1272,7 @@ The [Kubernetes grace period when terminating a Pod :octicons-link-external-16:]
 
 ### `haproxy.exposePrimary.enabled`
 
-Enables or disables the HAProxy primary instance Service.
+Enables or disables the HAProxy primary instance Service. This field is deprecated starting with the Operator version 1.17.0.
 
 | Value type  | Example    |
 | ----------- | ---------- |

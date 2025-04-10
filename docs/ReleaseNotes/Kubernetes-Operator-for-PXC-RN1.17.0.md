@@ -24,6 +24,9 @@ Percona Monitoring and Management (PMM) is a great tool to [monitor the health o
 
 Get insights into the success and failure rates of binlog operations, timeliness of processing and uploads and potential gaps or inconsistencies in binlog data with the Prometheus metrics added for the Operator. Gather this data by connecting to the `<pitr-pod-service>:8080/metrics` endpoint. Learn more about the available metrics in the [documentation](../backups-pitr.md#binary-logs-statistics).
 
+## Deprecation, Rename and Removal
+
+The `spec.haproxy.exposePrimary.enabled` field is deprecated. If enabled via the `spec.haproxy.enabled`, the HAProxy primary service is already exposed. 
 
 ## New Features 
 
