@@ -138,6 +138,11 @@ extra: # Used in main.html template and can't be externalized
   version:
     provider: mike
 
+# Pages excluded from navigation
+
+not_in_nav: |
+  404.md
+
 # Common navigation for percona.com, render.com and PDF
 nav:
 
