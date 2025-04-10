@@ -35,7 +35,7 @@ The resulting HAProxy setup normally contains two services:
     can be used for both read and write load, or it can also be used just for
     write load (single writer mode) in setups with split write and read loads.
 
-    [haproxy.exposePrimary.enabled](operator.md#haproxyexposeprimaryenabled)
+    [haproxy.enabled](operator.md#haproxyexposeprimaryenabled)
     Custom Resource option enables or disables `cluster1-haproxy` service.
 
 * `cluster1-haproxy-replicas` listening on port 3306 (MySQL).
@@ -83,14 +83,23 @@ Edit the `deploy/cr.yaml` Custom Resource manifest and specify the following con
 ```yaml
 spec:
   haproxy:
-    exposePrimary:
-      enabled: true
-      type: LoadBalancer
-      loadBalancerSourceRanges:
+    enabled: true
+    type: LoadBalancer
+    loadBalancerSourceRanges:
       - 10.0.0.0/8
 ```
 
-Note that the `haproxy-replica` service inherits this setup. You can override it for the `haproxy-replica` service by setting the IP ranges to access the cluster for read requests.
+Note that the `haproxy-replica` service inherits this setup. You can override it for the `haproxy-replica` service by setting the IP ranges to access the cluster for read requests. The configuration for the `haproxy-replica` service will be as follows:
+
+```yaml
+spec:
+  haproxy:
+    enabled: true
+    exposeReplicas:
+      enabled: true
+      onlyReaders: false
+      type: LoadBalancer
+```
 
 ## Passing custom configuration options to HAProxy
 
