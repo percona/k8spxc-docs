@@ -46,12 +46,14 @@ But updating the CRD *and* Operator is the **recommended path**.
     $ kubectl get crd perconaxtradbclusters.pxc.percona.com -o yaml | yq .status.storedVersions
     ```
 
-    ??? example "Expected output"
+    ??? example "Sample output"
 
         ```{.text .no-copy}
         - v1-11-0
         - v1
         ```
+
+    If the CRD version is other than `v1` or has multiple entries, run the manual update.
 
 4. The Operator versions 1.14.0 and 1.15.0 **should be excluded** from the incremental upgrades sequence in favor of [1.14.1](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.14.1.md) and [1.15.1](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.15.1.md) releases.
 
