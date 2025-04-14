@@ -25,7 +25,7 @@ $ kubectl patch pxc cluster1 --type=merge --patch '{
     restart. Switching from HAProxy to ProxySQL is not possible, and if you need
     ProxySQL, this should be configured at cluster creation time.
 
-The resulting HAPproxy setup normally contains two services:
+The resulting HAProxy setup normally contains two services:
 
 * `cluster1-haproxy` service listening on ports 3306 (MySQL) and 3309 (the [proxy protocol :octicons-link-external-16:](https://www.haproxy.com/blog/haproxy/proxy-protocol/) useful for operations such as asynchronous calls).
     This service is pointing to the number zero Percona XtraDB Cluster member
@@ -35,7 +35,7 @@ The resulting HAPproxy setup normally contains two services:
     can be used for both read and write load, or it can also be used just for
     write load (single writer mode) in setups with split write and read loads.
 
-    [haproxy.exposePrimary.enabled](operator.md#haproxyexposeprimaryenabled)
+    [haproxy.enabled](operator.md#haproxyexposeprimaryenabled)
     Custom Resource option enables or disables `cluster1-haproxy` service.
 
 * `cluster1-haproxy-replicas` listening on port 3306 (MySQL).
@@ -71,6 +71,34 @@ take place. First, reader members are upgraded one by one: the Operator waits
 until the upgraded Percona XtraDB Cluster member becomes synced, and then
 proceeds to upgrade the next member. When the upgrade is finished for all
 the readers, then the writer Percona XtraDB Cluster member is finally upgraded.
+
+## Exposing HAProxy
+
+You can expose HAProxy, so that clients can connect to your database cluster from the outside. To do so, you need to set the service type `LoadBalancer` for the `haproxy-primary` service. 
+
+By default, the HAProxy is available for all clients. If you need to restrict the client IP addresses from which the load balancer should be reachable, list these IP addresses in the `loadBalancerSourceRanges` option. 
+
+Edit the `deploy/cr.yaml` Custom Resource manifest and specify the following configuration:
+
+```yaml
+spec:
+  haproxy:
+    exposePrimary:
+      type: LoadBalancer
+      loadBalancerSourceRanges:
+        - 10.0.0.0/8
+```
+
+Note that the `haproxy-replica` service inherits this setup. You can override it for the `haproxy-replica` service by setting the IP ranges to access the cluster for read requests. The configuration for the `haproxy-replica` service will be as follows:
+
+```yaml
+spec:
+  haproxy:
+    enabled: true
+    exposeReplicas:
+      enabled: true
+      type: LoadBalancer
+```
 
 ## Passing custom configuration options to HAProxy
 
