@@ -1,7 +1,7 @@
 # Configuring Load Balancing with HAProxy
 
-Percona Operator for MySQL based on Percona XtraDB Cluster provides a choice of two cluster components to
-provide load balancing and proxy service: you can use either [HAProxy :octicons-link-external-16:](https://haproxy.org) or [ProxySQL :octicons-link-external-16:](https://proxysql.com/).
+You can use either [HAProxy :octicons-link-external-16:](https://haproxy.org) or [ProxySQL :octicons-link-external-16:](https://proxysql.com/) for load balancing and proxy services.
+
 You can control which one to use, if any, by enabling or disabling via the
 `haproxy.enabled` and `proxysql.enabled` options in the `deploy/cr.yaml`
 configuration file.
@@ -25,27 +25,46 @@ $ kubectl patch pxc cluster1 --type=merge --patch '{
     restart. Switching from HAProxy to ProxySQL is not possible, and if you need
     ProxySQL, this should be configured at cluster creation time.
 
-The resulting HAProxy setup normally contains two services:
+## HAProxy services
 
-* `cluster1-haproxy` service listening on ports 3306 (MySQL) and 3309 (the [proxy protocol :octicons-link-external-16:](https://www.haproxy.com/blog/haproxy/proxy-protocol/) useful for operations such as asynchronous calls).
-    This service is pointing to the number zero Percona XtraDB Cluster member
-    (`cluster1-pxc-0`) by default when this member is available. If a zero
-    member is not available, members are selected in descending order of their
-    numbers (e.g. `cluster1-pxc-2`, then `cluster1-pxc-1`, etc.). This service
-    can be used for both read and write load, or it can also be used just for
-    write load (single writer mode) in setups with split write and read loads.
+The Operator creates two services for HAProxy:
 
-    [haproxy.enabled](operator.md#haproxyexposeprimaryenabled)
+### `cluster1-haproxy` service 
+
+The `cluster1-haproxy` service listens on the following ports:
+
+* `3306` is the default MySQL port. It is used by the mysql client, MySQL Connectors, and utilities such as mysqldump and mysqlpump
+
+* `3309` is the [proxy protocol :octicons-link-external-16:](https://www.haproxy.com/blog/haproxy/proxy-protocol/) port. Proxy protocol is used to store the client's IP address
+
+* `33062` is the port to connect to the MySQL Administrative Interface
+
+* `33060` is the port for the [MySQLX protocol :octicons-link-external-16:](https://dev.mysql.com/doc/dev/mysql-server/8.4.3/PAGE_PROTOCOL.html). It is supported by clients such as MySQL Shell, MySQL Connectors and MySQL Router
+
+* `8404` is the port to connect to the [HAProxy statistics page :octicons-link-external-16:](https://www.haproxy.com/blog/exploring-the-haproxy-stats-page)
+
+   The [haproxy.enabled](operator.md#haproxyexposeprimaryenabled)
     Custom Resource option enables or disables `cluster1-haproxy` service.
 
-* `cluster1-haproxy-replicas` listening on port 3306 (MySQL).
-    This service selects Percona XtraDB Cluster members to serve queries following
-    the Round Robin load balancing algorithm.
-    It **should not be used for write requests**.
+By default, the `cluster1-haproxy` service points to the number zero Percona XtraDB Cluster member (`cluster1-pxc-0`), when this member is available. If a zero member is not available, members are selected in descending order of their
+numbers: `cluster1-pxc-2`, then `cluster1-pxc-1`. This service
+can be used for both read and write load, or it can also be used just for
+write load (single writer mode) in setups with split write and read loads.
 
-    [haproxy.exposeReplicas.enabled](operator.md#haproxyexposereplicasenabled)
-    Custom Resource option enables or disables `cluster1-haproxy-replicas`
-    service (on by default).
+The [haproxy.exposePrimary.enabled](operator.md#haproxyexposeprimaryenabled)
+Custom Resource option enables or disables the `cluster1-haproxy` service.
+
+### `cluster1-haproxy-replicas` service
+
+The `cluster1-haproxy-replicas` service listens on port 3306 (MySQL).
+    
+This service selects Percona XtraDB Cluster members to serve queries following
+the Round Robin load balancing algorithm.
+
+**Don't use it for write requests**.
+
+The [haproxy.exposeReplicas.enabled](operator.md#haproxyexposereplicasenabled)
+Custom Resource option enables or disables `cluster1-haproxy-replicas`   service (on by default).
 
 !!! note
 
@@ -149,12 +168,29 @@ haproxy:
         mode tcp
         option clitcpka
         default_backend galera-nodes
+
+      frontend galera-admin-in
+        bind *:33062
+        mode tcp
+        option clitcpka
+        default_backend galera-admin-nodes
+
       frontend galera-replica-in
-        bind *:3309 accept-proxy
         bind *:3307
         mode tcp
         option clitcpka
         default_backend galera-replica-nodes
+
+      frontend galera-mysqlx-in
+        bind *:33060
+        mode tcp
+        option clitcpka
+        default_backend galera-mysqlx-nodes
+
+      frontend stats
+        bind *:8404
+        mode http
+        http-request use-service prometheus-exporter if { path /metrics }
 ```
 
 ### Use a ConfigMap
@@ -170,31 +206,7 @@ ConfigMap :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configur
 For example, you define a `haproxy.cfg` configuration file with the following
 setting:
 
-```default
-global
-  maxconn 2048
-  external-check
-  stats socket /var/run/haproxy.sock mode 600 expose-fd listeners level user
-defaults
-  log global
-  mode tcp
-  retries 10
-  timeout client 10000
-  timeout connect 100500
-  timeout server 10000
-frontend galera-in
-  bind *:3309 accept-proxy
-  bind *:3306
-  mode tcp
-  option clitcpka
-  default_backend galera-nodes
-frontend galera-replica-in
-  bind *:3309 accept-proxy
-  bind *:3307
-  mode tcp
-  option clitcpka
-  default_backend galera-replica-nodes
-```
+--8<-- "haproxy-config.txt"
 
 You can create a configmap from the `haproxy.cfg` file with the
 `kubectl create configmap` command.
@@ -250,31 +262,7 @@ Actual options should be encoded with [Base64 :octicons-link-external-16:](https
 For example, let’s define a `haproxy.cfg` configuration file and put there
 options we used in the previous example:
 
-```default
-global
-  maxconn 2048
-  external-check
-  stats socket /var/run/haproxy.sock mode 600 expose-fd listeners level user
-defaults
-  log global
-  mode tcp
-  retries 10
-  timeout client 10000
-  timeout connect 100500
-  timeout server 10000
-frontend galera-in
-  bind *:3309 accept-proxy
-  bind *:3306
-  mode tcp
-  option clitcpka
-  default_backend galera-nodes
-frontend galera-replica-in
-  bind *:3309 accept-proxy
-  bind *:3307
-  mode tcp
-  option clitcpka
-  default_backend galera-replica-nodes
-```
+--8<-- "haproxy-config.txt"
 
 You can get a Base64 encoded string from your options via the command line as
 follows:
