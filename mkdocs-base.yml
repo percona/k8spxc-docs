@@ -84,8 +84,9 @@ markdown_extensions:
         - snippets
         - docs/assets/code
         - docs/assets/fragments
-      auto_append:
-        - services-banner.md
+        - docs/ReleaseNotes
+      #auto_append:
+#        - services-banner.md
   pymdownx.highlight:
     linenums: false
   pymdownx.emoji:
@@ -134,25 +135,13 @@ plugins:
 extra: # Used in main.html template and can't be externalized
   edit_page_text: '<i class="uil uil-pen"></i> <b>Edit this page</b>'
   updated_text: '<i class="uil uil-refresh"></i> Page updated'
-  commandName: 'kubectl'
-  clusterName: 'cluster1'
-  release: '1.16.1'
-  apiversion: '1-16-1'
-  certmanagerversion: '1.16.2'
-  fluentbitrecommended: '3.2.2'
-  haproxyrecommended: '2.8.11'
-  proxysqlrecommended: '2.7.1'
-  pxb84recommended: '8.4.0-1'
-  pxb80recommended: '8.0.35-30.1'
-  pxb57recommended: '2.4.29'
-  pxc57recommended: '5.7.44-31.65'
-  pxc80recommended: '8.0.39-30.1'
-  pxc84recommended: '8.4.2-2.1'
-  pmm2recommended: '2.44.0'
-  gkerecommended: '1.30'
   version:
     provider: mike
-  k8s_monitor_tag: 'v0.1.1'
+
+# Pages excluded from navigation
+
+not_in_nav: |
+  404.md
 
 # Common navigation for percona.com, render.com and PDF
 nav:
@@ -252,6 +241,7 @@ nav:
           - "Trademark policy": trademark-policy.md
     - Release Notes:
           - "Release notes index": ReleaseNotes/index.md
+          - ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.17.0.md
           - "Percona Operator for MySQL based on Percona XtraDB Cluster 1.16.1 (2024-12-26)": ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.16.1.md
           - "Percona Operator for MySQL based on Percona XtraDB Cluster 1.16.0 (2024-12-19)": ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.16.0.md
           - "Percona Operator for MySQL based on Percona XtraDB Cluster 1.15.1 (2024-10-16)": ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.15.1.md
