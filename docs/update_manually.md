@@ -41,7 +41,7 @@ Semi-automatic update of Percona XtraDB Cluster can be done as follows:
     !!! note
 
         Check the version of the Operator you have in your Kubernetes
-        environment. Please refer to the [Operator upgrade guide](update.md#upgrading-the-operator-and-crd)
+        environment. Please refer to the [Operator upgrade guide](update.md#upgrade-the-operator-and-crd)
         to upgrade the Operator and CRD, if needed.
 
     Patching Custom Resource is done with the `kubectl patch pxc` command.
@@ -98,7 +98,7 @@ Manual update of Percona XtraDB Cluster can be done as follows:
     !!! note
 
         Check the version of the Operator you have in your Kubernetes
-        environment. Please refer to the [Operator upgrade guide](update.md#upgrading-the-operator-and-crd)
+        environment. Please refer to the [Operator upgrade guide](update.md#upgrade-the-operator-and-crd)
         to upgrade the Operator and CRD, if needed.
 
     Patching Custom Resource is done with the `kubectl patch pxc` command.
