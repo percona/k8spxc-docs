@@ -2245,7 +2245,7 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 
 ### `pmm.pxcParams`
 
-Additional parameters which will be passed to the [pmm-admin add mysql :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/2/setting-up/client/mysql.html) command for `pxc` Pods.
+Additional parameters which will be passed to the [pmm-admin add mysql :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/setting-up/client/mysql.html) command for `pxc` Pods.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -2253,7 +2253,7 @@ Additional parameters which will be passed to the [pmm-admin add mysql :octicons
 
 ### `pmm.proxysqlParams`
 
-Additional parameters which will be passed to the [pmm-admin add proxysql :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/2/setting-up/client/proxysql.html) command for `proxysql` Pods.
+Additional parameters which will be passed to the [pmm-admin add proxysql :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/setting-up/client/proxysql.html) command for `proxysql` Pods.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -2266,6 +2266,87 @@ A custom [Kubernetes Security Context for a Container :octicons-link-external-16
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-text-long: subdoc     | `privileged: false` |
+
+### `pmm.readinessProbes.initialDelaySeconds`
+
+The number of seconds to wait before performing the first [readiness probe :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/).
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `15` |
+
+### `pmm.readinessProbes.timeoutSeconds`
+
+The number of seconds after which the [readiness probe :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) times out.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `15` |
+
+### `pmm.readinessProbes.periodSeconds`
+
+How often to perform the [readiness probe :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/). Measured in seconds.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `30` |
+
+### `pmm.readinessProbes.successThreshold`
+
+The number of successful probes required to mark the container successful.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `1` |
+
+### `pmm.readinessProbes.failureThreshold`
+
+The number of failed probes required to mark the container unready.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `5` |
+
+### `pmm.livenessProbes.initialDelaySeconds`
+
+The number of seconds to wait before performing the first [liveness probe :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/).
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `300` |
+
+### `pmm.livenessProbes.timeoutSeconds`
+
+The number of seconds after which the [liveness probe :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) times out.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `5` |
+
+### `pmm.livenessProbes.periodSeconds`
+
+How often to perform the [liveness probe :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/). Measured in seconds.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `10` |
+
+### `pmm.livenessProbes.successThreshold`
+
+The number of successful probes required to mark the container successful.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `1` |
+
+
+### `pmm.livenessProbes.failureThreshold`
+
+The number of failed probes required to mark the container unhealthy.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `3` |
 
 ## <a name="operator-backup-section"></a>Backup section
 
@@ -2303,6 +2384,27 @@ The timeout value in seconds, after which backup job will automatically fail.
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-numeric-1-box: int     | `3600` |
+
+### backup.startingDeadlineSeconds
+
+The maximum time in seconds for a backup to start. The Operator compares the timestamp of the backup object against the current time. If the backup is not started within the set time, the Operator automatically marks it as "failed". 
+
+You can override this setting for a specific backup in the `deploy/backup/backup.yaml` configuration file.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `300` |
+
+### backup.suspendedDeadlineSeconds
+
+The maximum time in seconds for a backup to remain in a suspended state. The Operator compares the timestamp when the backup job was suspended against the current time. After the defined suspension time expires, the backup is automatically marked as "failed".  
+
+You can override this setting for a specific backup in the `deploy/backup/backup.yaml` configuration file.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `1200` |
+
 
 ### `backup.imagePullSecrets.name`
 
@@ -2706,7 +2808,9 @@ configuration file. This Custom Resource contains the following options:
 | credentialsSecret| string            | The Secret name for the azure blob storage     | true     |
 | container        | string            | The container name of the azure blob storage   | true     |
 | endpointUrl      | string            | A valid endpoint URL                           | false    |
-| storageClass     | string            | The storage class name of the azure storage    | false    |
+| storageClass     | string            | The storage class name of the azure blob storage    | false    |
+| blockSize        | integer           | The size of a block of data to save and retrieve from the azure blob storage 
+| concurrency      | integer           | The number of writers to the same blob
 
 ### <a name="operator-restore-pitr-options-section"></a>pitr subsection
 
