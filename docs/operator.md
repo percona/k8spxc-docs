@@ -2385,6 +2385,27 @@ The timeout value in seconds, after which backup job will automatically fail.
 | ----------- | ---------- |
 | :material-numeric-1-box: int     | `3600` |
 
+### backup.startingDeadlineSeconds
+
+The maximum time in seconds for a backup to start. The Operator compares the timestamp of the backup object against the current time. If the backup is not started within the set time, the Operator automatically marks it as "failed". 
+
+You can override this setting for a specific backup in the `deploy/backup/backup.yaml` configuration file.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `300` |
+
+### backup.suspendedDeadlineSeconds
+
+The maximum time in seconds for a backup to remain in a suspended state. The Operator compares the timestamp when the backup job was suspended against the current time. After the defined suspension time expires, the backup is automatically marked as "failed".  
+
+You can override this setting for a specific backup in the `deploy/backup/backup.yaml` configuration file.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `1200` |
+
+
 ### `backup.imagePullSecrets.name`
 
 The [Kubernetes imagePullSecrets :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/secret/#using-imagepullsecrets) for the specified image.
