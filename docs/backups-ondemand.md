@@ -12,7 +12,7 @@
     keys:
 
     * `metadata.name` key should be set to the **backup name**
-        (this name will be needed later to [restore the bakup](backups-restore.md)),
+        (this name will be needed later to [restore the backup](backups-restore.md)),
 
     * `spec.pxcCluster` key should be set to the name of your cluster,
 
@@ -44,3 +44,10 @@
     $ kubectl apply -f deploy/backup/backup.yaml
     ```
 
+4. Track the backup process by checking the status of the Backup object:
+
+    ``` {.bash data-prompt="$" }
+    $ kubectl get pxc-backup -w
+    ```
+
+    The `-w` flag instructs the Operator to provide real-time updates about the backup progress. The Succeeded status indicates that a backup is completed. 
