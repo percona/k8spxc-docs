@@ -43,6 +43,8 @@ The `cluster1-haproxy` service listens on the following ports:
 
 * `8404` is the port to connect to the [HAProxy statistics page :octicons-link-external-16:](https://www.haproxy.com/blog/exploring-the-haproxy-stats-page)
 
+   The [haproxy.enabled](operator.md#haproxyexposeprimaryenabled)
+    Custom Resource option enables or disables `cluster1-haproxy` service.
 
 By default, the `cluster1-haproxy` service points to the number zero Percona XtraDB Cluster member (`cluster1-pxc-0`), when this member is available. If a zero member is not available, members are selected in descending order of their
 numbers: `cluster1-pxc-2`, then `cluster1-pxc-1`. This service
@@ -88,6 +90,34 @@ take place. First, reader members are upgraded one by one: the Operator waits
 until the upgraded Percona XtraDB Cluster member becomes synced, and then
 proceeds to upgrade the next member. When the upgrade is finished for all
 the readers, then the writer Percona XtraDB Cluster member is finally upgraded.
+
+## Exposing HAProxy
+
+You can expose HAProxy, so that clients can connect to your database cluster from the outside. To do so, you need to set the service type `LoadBalancer` for the `haproxy-primary` service. 
+
+By default, the HAProxy is available for all clients. If you need to restrict the client IP addresses from which the load balancer should be reachable, list these IP addresses in the `loadBalancerSourceRanges` option. 
+
+Edit the `deploy/cr.yaml` Custom Resource manifest and specify the following configuration:
+
+```yaml
+spec:
+  haproxy:
+    exposePrimary:
+      type: LoadBalancer
+      loadBalancerSourceRanges:
+        - 10.0.0.0/8
+```
+
+Note that the `haproxy-replica` service inherits this setup. You can override it for the `haproxy-replica` service by setting the IP ranges to access the cluster for read requests. The configuration for the `haproxy-replica` service will be as follows:
+
+```yaml
+spec:
+  haproxy:
+    enabled: true
+    exposeReplicas:
+      enabled: true
+      type: LoadBalancer
+```
 
 ## Passing custom configuration options to HAProxy
 

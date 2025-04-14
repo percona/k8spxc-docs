@@ -10,9 +10,10 @@ Security (TLS) cryptographic protocol for the following types of communication:
 
 The internal certificate is also used as an authorization method.
 
-TLS security can be configured in several ways. By default, the Operator
-generates long-term certificates automatically if there are no certificate
-secrets available. Other options are the following ones:
+TLS security can be configured in several ways:
+
+* The Operator generates long-term certificates automatically if there are no
+certificate secrets available (default option, and requires you renew them manually),
 
 * The Operator can use a specifically installed *cert-manager*, which will
 automatically generate and renew short-term TLS certificates,
@@ -92,7 +93,7 @@ The set of commands generate certificates with the following attributes:
 
 You should generate certificates twice: one set is for external communications,
 and another set is for internal ones. A secret created for the external use must
-be added to `cr.yaml/spec/secretsName`. A certificate generated for internal
+be added to `cr.yaml/spec/sslSecretName`. A certificate generated for internal
 communications must be added to the `cr.yaml/spec/sslInternalSecretName`.
 
 ``` {.bash data-prompt="$" }
