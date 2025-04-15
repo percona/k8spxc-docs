@@ -84,7 +84,8 @@ The upgrade includes the following steps.
         $ curl \
                --header "Content-Type: application/json-patch+json" \
                --request PATCH \
-               --data '[{"op": "replace", "path": "/status/storedVersions", "value":["v1"]}]' http://localhost:8001/apis/apiextensions.k8s.io/v1/customresourcedefinitions/perconaxtradbclusters.pxc.percona.com/status
+               --data '[{"op": "replace", "path": "/status/storedVersions", "value":["v1"]}]' \
+               --url "http://localhost:8001/apis/apiextensions.k8s.io/v1/customresourcedefinitions/perconaxtradbclusters.pxc.percona.com/status"
         ```
 
         ??? example "Expected output"
