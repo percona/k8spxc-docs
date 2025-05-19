@@ -49,7 +49,7 @@ $ cd percona-xtradb-cluster-operator
     * the `metadata.name` key is the name which you use to refer your Kubernetes Secret
     * the base64-encoded S3 credentials
 
-    ```yaml title="deploy/backup-secret-s3.yaml"
+    ```yaml title="deploy/backup/backup-secret-s3.yaml"
     apiVersion: v1
     kind: Secret
     metadata:
@@ -63,7 +63,7 @@ $ cd percona-xtradb-cluster-operator
 3. Create the Secrets object from this yaml file. Specify your namespace instead of the `<namespace>` placeholder:
 
 	```{.bash data-prompt="$"}
-	$ kubectl apply -f deploy/backup-secret-s3.yaml -n <namespace>
+	$ kubectl apply -f deploy/backup/backup-secret-s3.yaml -n <namespace>
 	```
 
 4. Update your `deploy/cr.yaml` configuration. Specify the following parameters in the `backup` section:
