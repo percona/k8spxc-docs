@@ -58,7 +58,7 @@ The steps are the following:
 
 ## Make a backup on the current primary site
 
-1. Make a backup on the current primary `cluster2`. See the [Create a backup from the primary site](dr-priary.md#create-a-backup-from-the-primary-site) section for the steps.
+1. Make a backup on the current primary `cluster2`. See the [Create a backup from the primary site](dr-primary.md#create-a-backup-from-the-primary-site) section for the steps.
 
     ??? example "Expected output"
 
