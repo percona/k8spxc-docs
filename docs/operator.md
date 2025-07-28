@@ -370,7 +370,7 @@ Specifies whether Service for Percona XtraDB Cluster should [route internal traf
 
 ### `pxc.expose.loadBalancerSourceRanges`
 
-The range of client IP addresses from which the load balancer should be reachable (if not set, there is no limitations).
+The range of client IP addresses from which the load balancer should be reachable (if not set, there is no limitations). 
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -378,7 +378,11 @@ The range of client IP addresses from which the load balancer should be reachabl
 
 ### `pxc.expose.loadBalancerIP`
 
-The static IP-address for the load balancer.
+The static IP-address for the load balancer. **This field is deprecated and scheduled for removal in version 1.21.0.**. 
+
+`loadBalancerIP` has been officially deprecated upstream in Kubernetes due to its inconsistent behavior across cloud providers and lack of dual-stack support. As a result, its usage is strongly discouraged.
+
+We recommend using cloud provider-specific annotations instead, as they offer more predictable and portable behavior for managing load balancer IP assignments.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1312,7 +1316,11 @@ The range of client IP addresses from which the load balancer should be reachabl
 
 ### `haproxy.exposePrimary.loadBalancerIP`
 
-The static IP-address for the load balancer.
+The static IP-address for the load balancer. **This field is deprecated and scheduled for removal in version 1.21.0.**.
+
+`loadBalancerIP` has been officially deprecated upstream in Kubernetes due to its inconsistent behavior across cloud providers and lack of dual-stack support. As a result, its usage is strongly discouraged.
+
+We recommend using cloud provider-specific annotations instead, as they offer more predictable and portable behavior for managing load balancer IP assignments.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1390,17 +1398,13 @@ The range of client IP addresses from which the load balancer should be reachabl
 | ----------- | ---------- |
 | :material-code-string: string     | `10.0.0.0/8` |
 
-### `haproxy.replicasLoadBalancerIP`
-
-The static IP-address for the replicas load balancer. **This option is deprecated and will be removed in future releases**. Use `haproxy.exposeReplicas.loadBalancerIP` instead.
-
-| Value type  | Example    |
-| ----------- | ---------- |
-| :material-code-string: string     | `127.0.0.1` |
-
 ### `haproxy.exposeReplicas.loadBalancerIP`
 
-The static IP-address for the replicas load balancer.
+The static IP-address for the replicas load balancer. **This field is deprecated and scheduled for removal in version 1.21.0.**.
+
+`loadBalancerIP` has been officially deprecated upstream in Kubernetes due to its inconsistent behavior across cloud providers and lack of dual-stack support. As a result, its usage is strongly discouraged.
+
+We recommend using cloud provider-specific annotations instead, as they offer more predictable and portable behavior for managing load balancer IP assignments.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1773,7 +1777,11 @@ The range of client IP addresses from which the load balancer should be reachabl
 
 ### `proxysql.expose.loadBalancerIP`
 
-The static IP-address for the load balancer.
+The static IP-address for the load balancer. **This field is deprecated and scheduled for removal in version 1.21.0.**.
+
+`loadBalancerIP` has been officially deprecated upstream in Kubernetes due to its inconsistent behavior across cloud providers and lack of dual-stack support. As a result, its usage is strongly discouraged.
+
+We recommend using cloud provider-specific annotations instead, as they offer more predictable and portable behavior for managing load balancer IP assignments.
 
 | Value type  | Example    |
 | ----------- | ---------- |
