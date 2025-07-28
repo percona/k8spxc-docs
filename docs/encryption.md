@@ -1,6 +1,6 @@
 # Data at Rest Encryption
 
-[Full data at rest encryption in Percona XtraDB Cluster :octicons-link-external-16:](https://www.percona.com/doc/percona-xtradb-cluster/LATEST/management/data_at_rest_encryption.html) is supported by the Operator since version 1.4.0.
+[Full data at rest encryption in Percona XtraDB Cluster :octicons-link-external-16:](https://docs.percona.com/percona-xtradb-cluster/LATEST/data-at-rest-encryption.html) is supported by the Operator since version 1.4.0.
 
 !!! note
 
