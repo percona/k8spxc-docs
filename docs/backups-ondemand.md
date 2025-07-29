@@ -24,7 +24,7 @@
         corresponding backup object).
 
     You can find the example of such file in
-    [deploy/backup/backup.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/backup.yaml):
+    [deploy/backup/backup.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/backup/backup.yaml):
 
     ```yaml
     apiVersion: pxc.percona.com/v1

@@ -8,7 +8,7 @@ There are multiple ways to deploy and manage MySQL in Kubernetes. Here we will f
 * [Moco :octicons-link-external-16:](https://github.com/cybozu-go/moco) by Cybozu
 * [Vitess Operator :octicons-link-external-16:](https://github.com/planetscale/vitess-operator) by PlanetScale
 * Percona Operator for MySQL
-    * [based on Percona XtraDB Cluster :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/)
+    * [based on Percona XtraDB Cluster :octicons-link-external-16:](https:///)
     * [based on Percona Server for MySQL :octicons-link-external-16:](https://github.com/percona/percona-server-mysql-operator/)
 
 ## Generic

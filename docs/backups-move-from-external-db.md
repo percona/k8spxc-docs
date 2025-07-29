@@ -26,7 +26,7 @@ This document provides the steps how to migrate Percona Server for MySQL 8.0 dep
         keys should contain proper values to make the access possible).
 
     Create the Secrets file with these base64-encoded keys following the
-    [deploy/backup-s3.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/backup-secret-s3.yaml)
+    [deploy/backup-s3.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/backup/backup-secret-s3.yaml)
     example:
 
     ```yaml
@@ -147,7 +147,7 @@ This document provides the steps how to migrate Percona Server for MySQL 8.0 dep
 If your source database didn't have any data, skip this step and proceed with the [asyncronous replication configuration](#configure-asyncronous-replication-in-the-kubernetes-cluster). Otherwise, restore the database in the target environment.
 
 1. To restore a backup, you will use the special restore configuration file.
-   The example of such file is [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml).
+   The example of such file is [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/{{release}}/deploy/backup/restore.yaml).
    For example. your `restore.yaml` file may have the following contents:
 
     ```yaml title='restore.yaml'
