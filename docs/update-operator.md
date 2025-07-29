@@ -143,7 +143,7 @@ The upgrade includes the following steps.
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
                    "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
                    "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
-                   "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc8.0-backup-pxb{{ pxb80recommended }}" },
+                   "backup":   { "image": "percona/percona-xtrabackup-{{ pxb80recommended }}" },
                    "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" },
                    "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
                }}'
@@ -158,7 +158,7 @@ The upgrade includes the following steps.
                        "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc57recommended }}" },
                        "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
                        "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
-                       "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc5.7-backup-pxb{{ pxb57recommended }}" },
+                       "backup":   { "image": "percona/percona-xtrabackup-{{ pxb57recommended }}" },
                        "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" },
                        "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
                    }}'
@@ -175,7 +175,7 @@ The upgrade includes the following steps.
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
                    "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
                    "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
-                   "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc8.0-backup-pxb{{ pxb80recommended }}" },
+                   "backup":   { "image": "percona/percona-xtrabackup-{{ pxb80recommended }}" },
                    "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" }
                }}'
             ```
@@ -189,7 +189,7 @@ The upgrade includes the following steps.
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc57recommended }}" },
                    "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
                    "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
-                   "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc5.7-backup-pxb{{ pxb57recommended }}" },
+                   "backup":   { "image": "percona/percona-xtrabackup-{{ pxb57recommended }}" },
                    "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" }
                }}'
             ```
