@@ -16,6 +16,7 @@ After you [enable point-in-time recovery](#enable-point-in-time-recovery), the O
 ## Considerations
 
 1. You must use either s3-compatible or Azure-compatible storage for both binlog and full backup to make the point-in-time recovery work
+
 2. The Operator saves binlogs without any
     cluster-based filtering. Therefore, either use a separate folder per cluster on the same bucket or use different buckets for binlogs. 
 
@@ -62,6 +63,55 @@ The available metrics are:
 * `pxc_binlog_collector_last_upload_timestamp` - Records the timestamp of the last successful binlog upload to the storage
 * `pxc_binlog_collector_uploaded_total` - The total number of successfully uploaded binlogs
 
-You can connect to this Pod using the `<pitr-pod-service>:8080/metrics` endpoint to gather these metrics and further analyze them.
+### Gather metrics data
+
+You can connect to the point-in-time recovery Pod using the `<pitr-pod-service>:8080/metrics` endpoint to gather these metrics and further analyze them.
+
+List services to get the point-in-time-recovery service name:
+
+```{.bash data-prompt="$"}
+$ kubectl get services | grep 'pitr'
+```
+
+??? example "Expected output"
+
+    ```{.text .no-copy}
+    cluster1-pitr                         ClusterIP   34.118.225.138   <none>        8080/TCP
+    ```
+
+#### Access locally via port forwarding
+
+Use this method to access the metrics from your local machine.
+
+1. Forward the Kubernetes service's port:
+
+    ```{.bash data-prompt="$"}
+    $ kubectl port-forward svc/cluster1-pitr 8080:8080
+    ```
+
+2. Open your browser and visit `<http://localhost:8080/metrics>`
+
+    --8<-- "cli/pitr-metrics-sample.md"
+
+#### Access directly from a Pod
+
+You can gather the metrics from inside a database cluster. 
+
+1. Connect to the cluster as follows, replacing the `<namespace>` placeholder with your value:
+
+    ```{.bash data-prompt="$"}
+    $ kubectl run -n <namespace> -i --rm --tty percona-client --image=percona:8.0 --restart=Never -- bash -il
+    ```
+
+2. Connect to the point-in-time recovery port using `curl`:
+
+    ```{.bash data-prompt="$"}
+    $ curl cluster1-pitr:8080/metrics
+    ```
+
+    --8<-- "cli/pitr-metrics-sample.md"
+
+
+
 
 Note that the statistics data is not kept when the point-in-time recovery Pod restarts. This means that the counters like `pxc_binlog_collector_success_total` are reset.
