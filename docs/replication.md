@@ -142,7 +142,7 @@ $ kubectl apply -f deploy/cr.yaml
 
 ## System user for replication
 
-Replication channel demands a special [system user](users.md#system-users) with same credentials on both *Source* and *Replica*.
+Replication channel demands a special [system user](users.md#system-users) with the same credentials on both *Source* and *Replica*.
 
 The Operator creates a system-level Percona XtraDB Cluster user named `replication` for this purpose, with
 credentials stored in a Secret object [along with other system users](users.md#system-users).
