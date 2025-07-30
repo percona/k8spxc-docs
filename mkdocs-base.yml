@@ -85,6 +85,7 @@ markdown_extensions:
         - docs/assets/code
         - docs/assets/fragments
         - docs/ReleaseNotes
+        - docs
       #auto_append:
 #        - services-banner.md
   pymdownx.highlight:
@@ -222,12 +223,15 @@ nav:
           - Backup and restore:
               - "About backups": backups.md
               - "Configure storage for backups": backups-storage.md
-              - "Make scheduled backups": backups-scheduled.md
-              - "Make on-demand backup": backups-ondemand.md
               - "Store binary logs for point-in-time recovery": backups-pitr.md
+              - Make a backup:
+                  - "Scheduled backup": backups-scheduled.md
+                  - "On-demand backup": backups-ondemand.md
               - "Enable compression for backups": backups-compress.md
-              - "Restore from a previously saved backup": backups-restore.md
               - "Copy backup to a local machine": backups-copy.md
+              - Restore from a backup:
+                  - "On the same cluster": backups-restore.md
+                  - "On a new cluster": backups-restore-to-new-cluster.md
               - "Delete the unneeded backup": backups-delete.md
           - "Upgrade Database and Operator": update.md
           - "Horizontal and vertical scaling": scaling.md
@@ -251,7 +255,6 @@ nav:
           - "How to upgrade Percona XtraDB Cluster manually": update_manually.md
           - "How to upgrade Percona XtraDB Cluster on OpenShift": update_openshift.md
           - "How to use private registry": custom-registry.md
-          - "How to restore backup to a new Kubernetes-based environment": backups-restore-to-new-cluster.md
           - "How to use backups and asynchronous replication to move an external database to Kubernetes": backups-move-from-external-db.md
           - "Monitor Kubernetes": monitor-kubernetes.md
           - "Delete the Operator": delete.md
