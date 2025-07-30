@@ -25,7 +25,7 @@ Please refer to the [official PMM documentation :octicons-link-external-16:](htt
 
 ## Install PMM Client
 
-PMM Client is installed as a side-car container in the database Pods in your Kubernetes-based environment. To install PMM Client, do the following:
+PMM Client is installed as a side-car container in the database, HAProxy and ProxySQL Pods in your Kubernetes-based environment. To install PMM Client, do the following:
 {.power-number}
 
 ### Configure authentication
