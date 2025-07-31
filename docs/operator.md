@@ -2680,11 +2680,35 @@ Scheduled time to make a backup specified in the [crontab format :octicons-link-
 
 ### `backup.schedule.keep`
 
-The amount of most recent backups to store. Older backups are automatically deleted. Set `keep` to zero or completely remove it to disable automatic deletion of backups.
+The amount of most recent backups to store. Older backups are automatically deleted. Set `keep` to zero or completely remove it to disable automatic deletion of backups. **This option is deprecated and will be removed in version 1.21.0**.
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-numeric-1-box: int     | `3` |
+
+### `backup.schedule.retention.type`
+
+Defines how to retain backups. The type of retention defaukts to `count`.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `count` |
+
+### `backup.schedule.retention.count`
+
+Defines the number of backups to store. Older backups are automatically deleted from the cluster.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `count` |
+
+### `backup.schedule.retention.deleteFromStorage`
+
+Defines if the backups are deleted from the cloud storage too. Supported only for AWS and Azure storage. Does not apply to backups made to Persistent Volume.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-toggle-switch-outline: boolean     | `true` |
 
 ### `backup.schedule.storageName`
 
