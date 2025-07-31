@@ -1,11 +1,12 @@
-# Define environment variables
+# Configure environment variables
 
-Sometimes you need to define new environment variables to provide additional
-configuration for the components of your cluster. For example, you can use it to
-customize the configuration of HAProxy, or to add additional options for PMM
-Client.
+You can define custom environment variables to configure components in your Percona XtraDB Cluster. This is useful for customizing HAProxy settings, adding PMM Client options, or configuring other cluster components.
 
-The Operator can store environment variables in [Kubernetes Secrets :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/secret/). Here is an example with several options related to HAProxy:
+The Operator stores environment variables in [Kubernetes Secrets :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/secret/). You can then reference these Secrets in your cluster configuration.
+
+## Configure HAProxy environment variables
+
+This example shows how to set up environment variables for HAProxy configuration:
 
 ```yaml
 apiVersion: v1
@@ -17,65 +18,80 @@ data:
   HA_CONNECTION_TIMEOUT: MTAwMA==
   OK_IF_DONOR: MQ==
   HA_SERVER_OPTIONS: Y2hlY2sgaW50ZXIgMzAwMDAgcmlzZSAxIGZhbGwgNSB3ZWlnaHQgMQ==
+  PEER_LIST_SRV_PROTOCOL: dGNw
 ```
 
 !!! note
 
-     <a name="haproxy-options"> Variables used in this example have the following effect:
-     
-     * `HA_CONNECTION_TIMEOUT` allows to set custom timeout for health checks done by HAProxy (it repeatedly executes a simple status query on XtraDB Cluster instances). The default 10 seconds timeout is good for most workloads, but increase should be helpful in case of unstable Kubernetes network or soft lockups happening on Kubernetes nodes.
-     * `OK_IF_DONOR` allows application connections to XtraDB Cluster donors. The backup is running on the donor node, and SQL queries combined with it could run slower than usual. Enable the option to grant application access when there is only one XtraDB Cluster node alive, and a second XtraDB Cluster node is joining the cluster via SST.
-     * `HA_SERVER_OPTIONS` allows to set the [custom options :octicons-link-external-16:](https://docs.haproxy.org/2.6/configuration.html#5) for the server in the HAProxy configuration file. You can start with the default `check inter 30000 rise 1 fall 5 weight 1` set, and add required options [referenced in the upstream documentation :octicons-link-external-16:](https://docs.haproxy.org/2.6/configuration.html#5.2).
+    The variables in this example have the following effects:
+    
+    * `HA_CONNECTION_TIMEOUT` sets a custom timeout for HAProxy health checks. HAProxy repeatedly executes status queries on XtraDB Cluster instances. The default 10-second timeout works for most workloads, but you may need to increase it for unstable Kubernetes networks or when soft lockups occur on Kubernetes nodes.
+    
+    * `OK_IF_DONOR` allows application connections to XtraDB Cluster donor nodes. Donor nodes run backups, which can slow down SQL queries. Enable this option when only one XtraDB Cluster node is available and a second node is joining the cluster via SST.
+    
+    * `HA_SERVER_OPTIONS` sets [custom options :octicons-link-external-16:](https://docs.haproxy.org/2.6/configuration.html#5) for servers in the HAProxy configuration file. The default is `check inter 30000 rise 1 fall 5 weight 1`. You can add additional options [referenced in the HAProxy documentation :octicons-link-external-16:](https://docs.haproxy.org/2.6/configuration.html#5.2).
+    
+    * `PEER_LIST_SRV_PROTOCOL` enables the Operator to use TCP protocol when performing peer-list SRV lookups. This may be required in environments where DNS SRV lookups need to use TCP instead of UDP, such as when dealing with large DNS responses or when UDP DNS queries are blocked by network policies.
 
-As you can see, environment variables are stored as `data` - i.e.,
-base64-encoded strings, so you’ll need to encode the value of each variable.
-For example, To have `HA_CONNECTION_TIMEOUT` variable equal to `1000`, you
-can run `echo -n "1000" | base64 --wrap=0` (or just `echo -n "1000" | base64`
-in case of Apple macOS) in your local shell and get `MTAwMA==`.
+### Create the Secret
+
+Environment variables are stored as base64-encoded strings in the `data` section. You need to encode each variable value.
+
+For example, to set `HA_CONNECTION_TIMEOUT` to `1000`, run this command:
+
+```{.bash data-prompt="$" }
+$ echo -n "1000" | base64 --wrap=0
+```
 
 !!! note
 
-    Similarly, you can read the list of options from a Base64-encoded string:
+    On Apple macOS, use this command instead:
 
-    ``` {.bash data-prompt="$" }
-    $ echo "MTAwMA==" | base64 --decode
+    ```{.bash data-prompt="$" }
+    $ echo -n "1000" | base64
     ```
 
-When ready, apply the YAML file with the following command:
+You can also decode base64-encoded values to verify them:
 
-``` {.bash data-prompt="$" }
-$ kubectl create -f deploy/my-env-secret.yaml
+```{.bash data-prompt="$" }
+$ echo "MTAwMA==" | base64 --decode
+1000
 ```
 
-Put the name of this Secret to the `envVarsSecret` key either in `pxc`,
-`haproxy` or `proxysql` section of the deploy/cr.yaml\` configuration file:
+### Apply the configuration
 
-```yaml
-haproxy:
-  ....
-  envVarsSecret: my-env-var-secrets
-  ....
-```
+1. Create the Secret with the following command:
 
-Now apply the `deploy/cr.yaml` file with the following command:
+    ```{.bash data-prompt="$" }
+    $ kubectl create -f deploy/my-env-secret.yaml
+    ```
 
-``` {.bash data-prompt="$" }
-$ kubectl apply -f deploy/cr.yaml
-```
+2. Add the Secret name to your cluster configuration. Edit the `deploy/cr.yaml` file and add the `envVarsSecret` key to the appropriate section: `pxc`, `haproxy` or `proxysql`. The sample configuration for HAproxy is:
 
-Another example shows how to pass `LD_PRELOAD` environment variable with the
-alternative memory allocator library name to mysqld. It’s often a recommended
-practice to try using an alternative allocator library for mysqld in case the
-memory usage is suspected to be higher than expected, and you can use jemalloc
-allocator already present in Percona XtraDB Cluster Pods with the following
-environment variable:
+    ```yaml
+    haproxy:
+      envVarsSecret: my-env-var-secrets
+    ```
+
+3. Apply the updated configuration:
+
+    ```{.bash data-prompt="$" }
+    $ kubectl apply -f deploy/cr.yaml
+    ```
+
+## Configure alternative memory allocator
+
+You can use an alternative memory allocator library for `mysqld` to optimize memory usage. This is often recommended when memory usage is higher than expected.
+
+The Percona XtraDB Cluster Pods include the jemalloc allocator. You can enable it with the `LD_PRELOAD` environment variable:
 
 ```bash
 LD_PRELOAD=/usr/lib64/libjemalloc.so.1
 ```
 
-Create a new YAML file with the contents similar to the previous example, but
-with `LD_PRELOAD` variable, stored as base64-encoded strings:
+Here's how:
+
+1. Create a Secret with the encoded value. This is the example of the Secret's YAML manifest:
 
 ```yaml
 apiVersion: v1
@@ -87,25 +103,21 @@ data:
   LD_PRELOAD: L3Vzci9saWI2NC9saWJqZW1hbGxvYy5zby4x
 ```
 
-If this YAML file was named `deploy/my-new-env-var-secret`, the command
-to apply it will be the following one:
+2. Create the Secret object:
 
-``` {.bash data-prompt="$" }
-$ kubectl create -f deploy/my-new-env-secret.yaml
-```
+    ```{.bash data-prompt="$" }
+    $ kubectl create -f deploy/my-new-env-var-secret.yaml
+    ```
 
-Now put the name of this new Secret to the `envVarsSecret` key in `pxc`
-section of the deploy/cr.yaml\` configuration file:
+3. Add the Secret to the PXC section in your `deploy/cr.yaml` file:
 
-```yaml
-pxc:
-  ....
-  envVarsSecret: my-new-env-var-secrets
-  ....
-```
+    ```yaml
+    pxc:
+      envVarsSecret: my-new-env-var-secrets
+    ```
 
-Don’t forget to apply the `deploy/cr.yaml` file, as usual:
+4. Apply the configuration:
 
-``` {.bash data-prompt="$" }
-$ kubectl apply -f deploy/cr.yaml
-```
+    ```{.bash data-prompt="$" }
+    $ kubectl apply -f deploy/cr.yaml
+    ```
