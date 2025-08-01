@@ -2688,7 +2688,7 @@ The amount of most recent backups to store. Older backups are automatically dele
 
 ### `backup.schedule.retention.type`
 
-Defines how to retain backups. The type of retention defaukts to `count`.
+Defines how to retain backups. The type of retention defaults to `count`.
 
 | Value type  | Example    |
 | ----------- | ---------- |
