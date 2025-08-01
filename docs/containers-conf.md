@@ -31,7 +31,7 @@ data:
     
     * `HA_SERVER_OPTIONS` sets [custom options :octicons-link-external-16:](https://docs.haproxy.org/2.6/configuration.html#5) for servers in the HAProxy configuration file. The default is `check inter 30000 rise 1 fall 5 weight 1`. You can add additional options [referenced in the HAProxy documentation :octicons-link-external-16:](https://docs.haproxy.org/2.6/configuration.html#5.2).
     
-    * `PEER_LIST_SRV_PROTOCOL` enables the Operator to use TCP protocol when performing peer-list SRV lookups. This may be required in environments where DNS SRV lookups need to use TCP instead of UDP, such as when dealing with large DNS responses or when UDP DNS queries are blocked by network policies.
+    * `PEER_LIST_SRV_PROTOCOL` enables you define what protocol (UDP or TCP) the Operator uses when performing peer-list SRV lookups. The use of TCP may be required for large database clusters with many nodes where peer-list SRV lookup returns large DNS responses or when UDP DNS queries are blocked by network policies. You can configure the protocol for HAProxy or ProxySQL. 
 
 ### Create the Secret
 
