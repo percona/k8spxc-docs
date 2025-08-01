@@ -279,6 +279,7 @@ nav:
           - "Trademark policy": trademark-policy.md
     - Release Notes:
           - "Release notes index": ReleaseNotes/index.md
+          - ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.18.0.md
           - ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.17.0.md
           - "Percona Operator for MySQL based on Percona XtraDB Cluster 1.16.1 (2024-12-26)": ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.16.1.md
           - "Percona Operator for MySQL based on Percona XtraDB Cluster 1.16.0 (2024-12-19)": ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.16.0.md

@@ -1,6 +1,6 @@
 # Multi-data center setup for disaster recovery
 
-Disaster can happen at any moment. To keep your services running smoothly, you can set up two Percona XtraDB Clusters in different locations (called "sites"). You then configure multi-site replication between them. You then configure them to replicate data between each other. This makes sure both clusters have the same data and stay in sync. One site works as the primary site, and the other is a replica. It is usually in a standby mode.
+Disaster can happen at any moment. To keep your services running smoothly, you can set up two Percona XtraDB Clusters in different locations (called "sites"). You then configure them to replicate data between each other. This makes sure both clusters have the same data and stay in sync. One site works as the primary site, and the other is a replica. It is usually in a standby mode.
 
 If the primary site goes down, you need a way to move the workload to the backup site so that users won't notice anything. 
 
