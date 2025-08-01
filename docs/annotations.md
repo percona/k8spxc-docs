@@ -86,7 +86,7 @@ Use **Annotations** when:
 
 ## Setting labels and annotations in the Custom Resource
 
-YYou can define both Labels and Annotations as `key-value` pairs in the metadata section of a YAML manifest for a specific resource. For example, specifying labels and annotations in the `deploy/cr.yaml` Custom Resource looks as follows:
+You can define both Labels and Annotations as `key-value` pairs in the metadata section of a YAML manifest for a specific resource. For example, specifying labels and annotations in the `deploy/cr.yaml` Custom Resource looks as follows:
 
 ```yaml
 apiVersion: pxc.percona.com/v1
