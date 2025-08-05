@@ -125,9 +125,7 @@ due to its inconsistent behavior across cloud providers and lack of dual-stack s
 
 * [K8SPXC-1560](https://perconadev.atlassian.net/browse/K8SPXC-1560) - Added the warning about CRDs not being upgraded automatically after helm upgrade to the output
 
-??? [K8SPXC-1562](https://perconadev.atlassian.net/browse/K8SPXC-1562) No need to maintain GTID set cache for 8.4 (has a comment of won't do)
-
-[K8SPXC-1566](https://perconadev.atlassian.net/browse/K8SPXC-1566) - Improved reconciliation of replicationChannels without proxy Pods by starting the database Pod bypassing the proxy (Thank you Justin Reasoner for contributing to this issue)
+* [K8SPXC-1566](https://perconadev.atlassian.net/browse/K8SPXC-1566) - Improved reconciliation of replicationChannels without proxy Pods by starting the database Pod bypassing the proxy (Thank you Justin Reasoner for contributing to this issue)
 
 * [K8SPXC-1569](https://perconadev.atlassian.net/browse/K8SPXC-1569) - Added Labels for Custom Resource Definitions (CRD) to identify the Operator version attached to them
 
@@ -151,8 +149,6 @@ due to its inconsistent behavior across cloud providers and lack of dual-stack s
 
 * [K8SPXC-1382](https://perconadev.atlassian.net/browse/K8SPXC-1382) - Fixed the issue with backup failing on AWS if using IAM profile without credentialsSecret by using credentialsSecret only when explicitly specified and relying on IAM roles instead (Thank you Itiel Olenick for reporting this issue)
 
-??? [K8SPXC-1444](https://perconadev.atlassian.net/browse/K8SPXC-1444) PXC cluster initial creation state changed to error if backup restore happens for too long (no pr, set can't reproduce)
-
 * [K8SPXC-1541](https://perconadev.atlassian.net/browse/K8SPXC-1541) - Fixed Telemetry module to to consider both empty string "" and comma separated namespaces in cluster-wide mode
 
 * [K8SPXC-1548](https://perconadev.atlassian.net/browse/K8SPXC-1548) Fixed the issue with deleting old backups on Google Cloud Storage by url-decoding the object path before deleting it (Thank you Mateusz Gruszkiewicz for reporting this issue)
@@ -160,8 +156,6 @@ due to its inconsistent behavior across cloud providers and lack of dual-stack s
 * [K8SPXC-1631](https://perconadev.atlassian.net/browse/K8SPXC-1631) - Fixed the issue with the Operator restarting pod-0 after the cluster is ready. The issue is caused by ConfigMap and StatefulSet being created too close to each other and Kubernetes API can't return the newly created ConfigMap before creating the StatefulSet. The issue is fixed by reconciling the StatefulSet after the reconciliation of ConfigMap is completed.
 
 * [K8SPXC-1664](https://perconadev.atlassian.net/browse/K8SPXC-1664) - Fixed the use of the proper script to check PXC nodes when adding them by HAProxy
-
-??? [K8SPXC-1667](https://perconadev.atlassian.net/browse/K8SPXC-1667) Warning: watch ended with error (status Open)
 
 
 ## Supported Software
