@@ -87,9 +87,9 @@ due to its inconsistent behavior across cloud providers and lack of dual-stack s
         storageName: s3-us-west
     ```
 
-* New repositories for Percona XtraBackup
+* New repositories for Percona XtraBackup and Logcollector
 
-   Now the Operator uses the official Percona Docker images for the `percona-xtrabackup` component. Pay attention to the new image repositories when you upgrade the Operator and the database. Check the [Percona certified images](../images.md) for exact image names.
+   Now the Operator uses the official Percona Docker images for the `percona-xtrabackup` and `logcollector` components. Pay attention to the new image repositories when you upgrade the Operator and the database. Check the [Percona certified images](../images.md) for exact image names.
 
 ## Changleog
 
