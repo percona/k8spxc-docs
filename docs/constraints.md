@@ -8,7 +8,7 @@ equipped machine, or to reduce costs choosing nodes in a same
 availability zone.
 
 Appropriate sections of the
-[deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
+[deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/cr.yaml)
 file (such as `pxc`, `haproxy`, and `proxysql`) contain keys which can be used to do this, depending on what is the
 best for a particular situation.
 
@@ -70,7 +70,7 @@ affinity:
 Previous way can be used with no special knowledge of the Kubernetes way
 of assigning Pods to specific nodes. Still in some cases more complex
 tuning may be needed. In this case `advanced` option placed in the
-[deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
+[deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/cr.yaml)
 file turns off the effect of the `topologyKey` and allows to use
 standard Kubernetes affinity constraints of any complexity:
 
@@ -151,7 +151,7 @@ distinguish more and less important Pods to resolve the situation when
 some higher priority Pod cannot be scheduled without evicting a lower
 priority one. This can be done adding one or more PriorityClasses in
 your Kubernetes cluster, and specifying the `PriorityClassName` in the
-[deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
+[deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/cr.yaml)
 file:
 
 ```default

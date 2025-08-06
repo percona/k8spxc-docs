@@ -11,7 +11,7 @@ The name of the required Secrets object can be found out from the
 `spec.secretsName` key in the `deploy/cr.yaml` (`cluster1-secrets` by default).
 
 To restore a backup, you will use the special restore configuration file. The
-example of such file is [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml). The list of options that can be used in it can
+example of such file is [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/backup/restore.yaml). The list of options that can be used in it can
 be found in the [restore options reference](operator.md#perconaxtradbclusterrestore-custom-resource-options).
 
 You will need correct names for the **backup** and the **cluster**. If you have
@@ -39,7 +39,7 @@ restoration can be done in the following way.
 
 ## Restore the cluster without point-in-time recovery
 
-1. Set appropriate keys in the [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-server-mongodb-operator/blob/main/deploy/backup/restore.yaml) file.
+1. Set appropriate keys in the [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/backup/restore.yaml) file.
 
     * set `spec.pxcCluster` key to the name of the target cluster to restore
         the backup on,
@@ -127,7 +127,7 @@ restoration can be done in the following way.
     restoring a backup on it, regardless of whether the backup was made
     with point-in-time recovery or without it.
 
-1. Set appropriate keys in the [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml) file.
+1. Set appropriate keys in the [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/backup/restore.yaml) file.
 
     * set `spec.pxcCluster` key to the name of the target cluster to restore
         the backup on,

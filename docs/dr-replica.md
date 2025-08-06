@@ -89,7 +89,7 @@ Let's create `cluster2` on the replica site.
 	$ kubectl apply -f deploy/backup/backup-s3-secret.yaml -n <namespace>
 	```
 
-2. To restore from a backup, create a special restore configuration file. Edit the sample [`deploy/backup/restore.yaml`](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml) file. 
+2. To restore from a backup, create a special restore configuration file. Edit the sample [`deploy/backup/restore.yaml`](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/backup/restore.yaml) file.
     
     Specify the following information:
 

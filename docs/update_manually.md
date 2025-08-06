@@ -1,140 +1,56 @@
 # How to carry on low-level manual upgrades of Percona XtraDB Cluster
 
-Percona Operator for MySQL based on Percona XtraDB Cluster supports upgrades 
-of the database management system (Percona XtraDB Cluster) starting from the
-Operator version 1.1.0. The Operator 1.5.0 had automated such upgrades with a
-new upgrade strategy called [Smart Update](update.md#more-on-upgrade-strategies).
-Smart Update automates the upgrade process while giving the user full control
-over updates, so it is the most convenient upgrade strategy.
+The default and recommended way to upgrade the database cluster is using the Smart Update strategy. The Operator controls how objects are updated and restarts the Pods in a proper order during the database upgrade or for other events that require the cluster update. To these events belong ConfigMap updates, password rotation or changing resource values.
 
-Still there may be use cases when automatic upgrade of Percona XtraDB Cluster
-is not an option (for example, you may be using Percona XtraDB Cluster with the
-Operator version 1.5.0 or earlier), and you have to carry on upgrades manually.
+In some cases running an automatic upgrade of Percona XtraDB Cluster
+is not an option. For example, if the database upgrade impacts your application, you may want to have a full control over the upgrade process.
 
-Percona XtraDB Cluster can be upgraded manually using one of the following
+Running a manual database upgrade allows you to do just that. You can use one of the following
 *upgrade strategies*:
 
-* *Rolling Update*, initiated manually and [controlled by Kubernetes :octicons-link-external-16:](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies),
-* *On Delete*, [done by Kubernetes on per-Pod basis :octicons-link-external-16:](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies) when Pods are deleted.
+* *Rolling Update*, initiated manually and [controlled by Kubernetes  :octicons-link-external-16:](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies). Note that the order of Pods restart may not be optimal from the Percona Server for
+    MongoDB point of view.
 
-!!! warning
+* *On Delete*, [done by Kubernetes on per-Pod basis  :octicons-link-external-16:](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies) when Pods are manually deleted.
 
-    In case of [Smart Updates](update.md#automated-upgrade), the Operator can
-    either detect the availability of the Percona XtraDB Cluster version or rely
-    on the user's choice of the version. In both cases Pods are restarted by the
-    Operator automatically in the order, which assures the primary instance to
-    be updated last, preventing possible connection issues until the whole
-    cluster is updated to the new settings. Kubernetes-controlled Rolling Update
-    can't guarantee that Pods update order is optimal from the Percona XtraDB
-    Cluster point of view.
+## Before you start
+
+1. We recommend to [update PMM Server :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/2/how-to/upgrade.html) **before** upgrading PMM Client.
+
+2. If you are using [custom configuration for HAProxy](haproxy-conf.md#passing-custom-configuration-options-to-haproxy), check the HAProxy configuration file provided by the Operator **before the upgrade**. Find the `haproxy-global.cfg` for the Operator version   {{ release }} [here :octicons-link-external-16:](https://github.com/percona/percona-docker/blob/pxc-operator-{{ release }}/haproxy/dockerdir/etc/haproxy/haproxy-global.cfg)).
+
+    Make sure that your custom config is still compatible with the new variant, and make necessary additions, if needed.
 
 ## Rolling Update strategy and semi-automatic updates
 
-Semi-automatic update of Percona XtraDB Cluster can be done as follows:
+To run a semi-automatic update of Percona XtraDB Cluster, do the following:
+{.power-number}
 
-1. Edit the `deploy/cr.yaml` file, setting `updateStrategy` key to 
+1. Check the version of the Operator you have in your Kubernetes environment. If you need to update it, refer to the [Operator upgrade guide](update-operator.md).
+
+2. Edit the `deploy/cr.yaml` file and set the `updateStrategy` key to 
     `RollingUpdate`.
 
-2. Now you should [apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your
-    Custom Resource, setting necessary image names with a newer version tag.
+   {% include 'assets/fragments/patch-update-db.txt' %}
 
-    !!! note
-
-        Check the version of the Operator you have in your Kubernetes
-        environment. Please refer to the [Operator upgrade guide](update.md#upgrade-the-operator-and-crd)
-        to upgrade the Operator and CRD, if needed.
-
-    Patching Custom Resource is done with the `kubectl patch pxc` command.
-    Actual image names can be found [in the list of certified images](images.md)
-    (for older releases, please refer to the [old releases documentation archive :octicons-link-external-16:](https://docs.percona.com/legacy-documentation/)).
-    For example, updating to the `{{ release }}` version should look as follows:
-
-    === "For Percona XtraDB Cluster 8.0"
-        ```bash
-        $ kubectl patch pxc cluster1 --type=merge --patch '{
-           "spec": {
-               "crVersion":"{{ release }}",
-               "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
-               "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
-               "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
-               "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc8.0-backup-pxb{{ pxb80recommended }}" },
-               "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" },
-               "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
-           }}'
-        ```
-
-    === "For Percona XtraDB Cluster 5.7"
-        ```bash
-        $ kubectl patch pxc cluster1 --type=merge --patch '{
-           "spec": {
-               "crVersion":"{{ release }}",
-               "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc57recommended }}" },
-               "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
-               "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
-               "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc5.7-backup-pxb{{ pxb57recommended }}" },
-               "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" },
-               "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
-           }}'
-        ```
-
-3. The deployment rollout will be automatically triggered by the applied patch.
-    You can track the rollout process in real time with the
+3. After you applied the patch, the deployment rollout will be triggered automatically.
+    You can track the rollout process in real time using the
     `kubectl rollout status` command with the name of your cluster:
 
-    ```default
+    ```{.bash data-prompt="$"}
     $ kubectl rollout status sts cluster1-pxc
     ```
 
 ## Manual upgrade (the On Delete strategy)
 
-Manual update of Percona XtraDB Cluster can be done as follows:
+To update Percona XtraDB Cluster manually, do the following:
+{.power-number}
 
-1. Edit the `deploy/cr.yaml` file, setting `updateStrategy` key to
-    `OnDelete`.
+1. Check the version of the Operator you have in your Kubernetes environment. If you need to update it, refer to the [Operator upgrade guide](update-db.md).
 
-2. Now you should [apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your
-    Custom Resource, setting necessary image names with a newer version tag.
+2. Edit the `deploy/cr.yaml` file and set the `updateStrategy` key to `OnDelete`.
 
-    !!! note
-
-        Check the version of the Operator you have in your Kubernetes
-        environment. Please refer to the [Operator upgrade guide](update.md#upgrade-the-operator-and-crd)
-        to upgrade the Operator and CRD, if needed.
-
-    Patching Custom Resource is done with the `kubectl patch pxc` command.
-    Actual image names can be found [in the list of certified images](images.md)
-    (for older releases, please refer to the [old releases documentation archive :octicons-link-external-16:](https://docs.percona.com/legacy-documentation/)).
-    For example, updating to the `{{ release }}` version should look as
-    follows, depending on whether you are using Percona XtraDB Cluster 5.7 or 8.0.
-
-    === "For Percona XtraDB Cluster 8.0"
-        ```bash
-        $ kubectl patch pxc cluster1 --type=merge --patch '{
-           "spec": {
-               "crVersion":"{{ release }}",
-               "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
-               "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
-               "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
-               "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc8.0-backup-pxb{{ pxb80recommended }}" },
-               "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" },
-               "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
-           }}'
-        ```
-
-    === "For Percona XtraDB Cluster 5.7"
-        ```bash
-        $ kubectl patch pxc cluster1 --type=merge --patch '{
-           "spec": {
-               "crVersion":"{{ release }}",
-               "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc57recommended }}" },
-               "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
-               "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
-               "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc5.7-backup-pxb{{ pxb57recommended }}" },
-               "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" },
-               "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
-           }}'
-        ```
-
+   {% include 'assets/fragments/patch-update-db.txt' %}
 
 3. The Pod with the newer Percona XtraDB Cluster image will start after you
     delete it. Delete targeted Pods manually one by one to make them restart in
@@ -142,23 +58,23 @@ Manual update of Percona XtraDB Cluster can be done as follows:
 
     1. Delete the Pod using its name with the command like the following one:
 
-        ```default
+        ```{.bash data-prompt="$"}
         $ kubectl delete pod cluster1-pxc-2
         ```
 
     2. Wait until Pod becomes ready:
 
-        ```default
+        ```{.bash data-prompt="$"}
         $ kubectl get pod cluster1-pxc-2
         ```
 
         The output should be like this:
 
-        ```default
+        ```{.text .no-copy}
         NAME             READY   STATUS    RESTARTS   AGE
         cluster1-pxc-2   1/1     Running   0          3m33s
         ```
 
-4. The update process is successfully finished when all Pods have been
+The update process is successfully finished when all Pods have been
     restarted.
 
