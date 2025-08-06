@@ -85,6 +85,7 @@ markdown_extensions:
         - docs/assets/code
         - docs/assets/fragments
         - docs/ReleaseNotes
+        - docs
       #auto_append:
 #        - services-banner.md
   pymdownx.highlight:
@@ -196,7 +197,17 @@ nav:
           - "Install on OpenShift": openshift.md
           - "Generic Kubernetes installation": kubernetes.md
           - "Multi-cluster and multi-region deployment": replication.md
-          
+
+    - Upgrade:
+          - "About upgrades": update.md
+          - "Upgrade CRD and the Operator": update-operator.md
+          - "Database upgrade overview": update-db.md
+          - Minor upgrade: 
+            - "To a specific version": update-minor-set-version.md
+            - "Automatic minor upgrades": update-automatic.md
+            - "Manual upgrade": update_manually.md
+          - "Upgrade Percona XtraDB Cluster on OpenShift": update_openshift.md
+
     - Configuration:
           - "Application and system users": users.md
           - "Exposing the cluster": expose.md
@@ -229,7 +240,6 @@ nav:
               - "Restore from a previously saved backup": backups-restore.md
               - "Copy backup to a local machine": backups-copy.md
               - "Delete the unneeded backup": backups-delete.md
-          - "Upgrade Database and Operator": update.md
           - "Horizontal and vertical scaling": scaling.md
           - "Monitor with Percona Monitoring and Management (PMM)": monitoring.md
           - "Add sidecar containers": sidecar.md
@@ -248,8 +258,6 @@ nav:
     - HOWTOs:
           - Install the database with customized parameters: custom-install.md 
           - "Provide Percona Operator for MySQL single-namespace and multi-namespace deployment": cluster-wide.md
-          - "How to upgrade Percona XtraDB Cluster manually": update_manually.md
-          - "How to upgrade Percona XtraDB Cluster on OpenShift": update_openshift.md
           - "How to use private registry": custom-registry.md
           - "How to restore backup to a new Kubernetes-based environment": backups-restore-to-new-cluster.md
           - "How to use backups and asynchronous replication to move an external database to Kubernetes": backups-move-from-external-db.md
