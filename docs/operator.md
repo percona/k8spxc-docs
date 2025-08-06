@@ -131,7 +131,7 @@ An alternative image for the initial Operator installation. **This option is dep
 
 ### `updateStrategy`
 
-A strategy the Operator uses for [upgrades](update.md#more-on-upgrade-strategies).
+A strategy the Operator uses for [upgrades](update.md#update-strategies).
 
 | Value type  | Example    |
 | ----------- | ---------- |

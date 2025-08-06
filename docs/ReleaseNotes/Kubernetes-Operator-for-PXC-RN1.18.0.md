@@ -91,6 +91,93 @@ due to its inconsistent behavior across cloud providers and lack of dual-stack s
 
    Now the Operator uses the official Percona Docker images for the `percona-xtrabackup` and `logcollector` components. Pay attention to the new image repositories when you upgrade the Operator and the database. Check the [Percona certified images](../images.md) for exact image names.
 
+## Known limitations
+
+### Considerations for using OpenShift 4.19
+
+Starting with OpenShift 4.19, the way images with not fully qualified names are pulled has changed for repositories that share the same repository name on DockerHub and Red Hat Marketplace. By default the tags are pulled from Red Hat Marketplace. Specifying not fully qualified image names may result in the `ImagePullBackOff` error.
+
+* **OLM installation:** Images are provided with the fully qualified names and are pulled from the Red Hat Marketplace/Dockerhub registry.
+* **Manual install/update with default manifests:** Images must use the `docker.io` registry prefix to guarantee successful download from the Dockerhub `percona-xtradb-cluster` repository.
+
+For manual installation or update, follow the instructions below:
+
+=== "Install on OpenShift 4.19"
+
+    1. Clone the Operator repository:
+
+       ```{.bash data-prompt="$"}
+       $ git clone -b v1.18.0 https://github.com/percona/percona-xtradb-cluster-operator
+       $ cd percona-xtradb-cluster-operator
+       ```
+    
+    2. Edit the `deploy/bundle.yaml` file. 
+    
+        - Locate the Deployment custom resource for the Operator.
+        - Update the `spec.image` field to 
+           
+           ```
+           docker.io/percona/percona-xtradb-cluster-operator:{{release}}
+           ```
+
+    3. Apply the updated `deploy/bundle.yaml` file
+
+        ```{.bash data-prompt="$"}
+        $ oc apply --server-side -f deploy/crd.yaml
+        ```
+
+    4. Install Percona XtraDB Cluster:
+
+        ``` {.bash data-prompt="$" }
+        $ oc create -f deploy/secrets.yaml
+        ```
+
+=== "Update the Operator to {{release}}"
+
+    1. Check all clusters managed by the Operator to see if `initContainer.image` is set.
+
+        * If defined: skip the next step.
+        * If undefined: proceed to step 2.
+    
+    2. Apply a patch to the clusters with undefined `initContainer.image` to define this image with the `docker.io` registry in the image path:
+
+        ```{.bash data-prompt="$" }
+        $ kubectl patch pxc cluster1 --type=merge --patch '{
+          "spec": {
+            "initcontainer": {
+              "image": "docker.io/percona/percona-xtradb-cluster-operator:1.17.0"
+            }
+          }
+        }'
+        ```
+
+       **Important!** This command triggers the restart of your clusters. Wait till they restart and report the Ready status
+
+    3. Update the Operator deployment and specify the `docker.io` registry name in the image path:
+
+        ```{.bash data-prompt="$" }
+        $ kubectl patch deployment percona-xtradb-cluster-operator \
+        -p'{"spec":{"template":{"spec":{"containers":[{"name":"percona-xtradb-cluster-operator","image":"docker.io/percona/percona-xtradb-cluster-operator:{{release}}"}]}}}}'
+        ```
+    
+    4. Update the Custom Resource version and the database cluster. Specify the `initContainer` image with the `docker.io` registry name in the path. Pay attention to the changed repositories for PXB and logcollector:
+
+        ```{.bash data-prompt="$" }
+        $ kubectl patch pxc cluster1 --type=merge --patch '{
+          "spec": {
+            "crVersion": "{{release}}",
+            "initContainer": "docker.io/percona/percona-xtradb-cluster-operator:{{release}}",
+            "pxc":{ "image": "docker.io/percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
+            "proxysql": { "image": "docker.io/percona/proxysql2:{{ proxysqlrecommended }}" },
+            "haproxy":  { "image": "docker.io/percona/haproxy:{{ haproxyrecommended }}" },
+            "backup":   { "image": "docker.io/percona/percona-xtrabackup-{{ pxb80recommended }}" },
+            "logcollector": { "image": "docker.io/percona/fluentbit{{ fluentbitrecommended }}" },
+            "pmm":      { "image": "docker.io/percona/pmm-client:{{ pmm2recommended }}" }
+               }}'
+          }
+        }'
+        ```
+
 ## Changleog
 
 ### New Features 

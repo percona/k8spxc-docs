@@ -25,7 +25,7 @@
 
 * {{ k8spxcjira(1104) }}: Starting from now, the Operator changed its API version to v1 instead of having a separate API version for each release. Three last API version are supported in addition to `v1`, which substantially reduces the size of Custom Resource Definition to prevent reaching the etcd limit
 * {{ k8spxcjira(955) }}: Add Custom Resource options to set static IP-address for the [HAProxy](../operator.md#haproxyexposeprimaryloadbalancerip) and [ProxySQL](../operator.md#proxysqlexposeloadbalancerip) LoadBalancers
-* {{ k8spxcjira(1032) }}: Disable [automated upgrade](../update.md#automated-upgrade) by default to prevent an unplanned downtime for user applications and to provide defaults more focused on strict user’s control over the cluster
+* {{ k8spxcjira(1032) }}: Disable automated upgrade by default to prevent an unplanned downtime for user applications and to provide defaults more focused on strict user’s control over the cluster
 * {{ k8spxcjira(1095) }}: Process the SIGTERM signal to avoid unneeded lags in case of Percona XtraDB Cluster recovery or using the debug image to start up
 * {{ k8spxcjira(1113) }}: Utilize dual password feature of MySQL 8 to avoid cluster restart when changing password of the `monitor` user
 * {{ k8spxcjira(1125) }}: The Operator now does not attempt to start Percona Monitoring and Management (PMM) client sidecar if the corresponding secret does not contain the `pmmserver` or `pmmserverkey` key
