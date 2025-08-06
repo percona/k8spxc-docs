@@ -132,7 +132,7 @@ You can pass custom configuration to HAProxy in one of the following ways:
     If you specify a custom HAProxy configuration in this way, the
     Operator doesn’t provide its own HAProxy configuration file except [several hardcoded options :octicons-link-external-16:](https://github.com/percona/percona-docker/blob/pxc-operator-{{ release }}/haproxy/dockerdir/etc/haproxy/haproxy.cfg) (which therefore can't be overwritten). That’s why you
     should specify either a full set of configuration options or nothing.
-    Additionally, when [upgrading Percona XtraDB Cluster](update.md#upgrading-percona-xtradb-cluster)
+    Additionally, when [upgrading Percona XtraDB Cluster](update-db.md)
     it would be wise to check the
     [HAProxy configuration file :octicons-link-external-16:](https://github.com/percona/percona-docker/blob/pxc-operator-{{ release }}/haproxy/dockerdir/etc/haproxy/haproxy-global.cfg)
     provided by the Operator and make sure that your custom config is still

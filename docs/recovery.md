@@ -90,7 +90,7 @@ which is based on three Percona XtraDB Cluster Pods.
     indicated otherwise.
 
 1. Check the current Update Strategy with the following command to make sure
-    [Smart Updates](update.md#more-on-upgrade-strategies) are turned off during the
+    [Smart Updates](update.md#update-strategies) are turned off during the
     recovery:
 
     ``` {.bash data-prompt="$" }
