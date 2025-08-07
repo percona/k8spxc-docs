@@ -24,8 +24,8 @@
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
                    "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
                    "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
-                   "backup":   { "image": "percona/percona-xtrabackup-{{ pxb80recommended }}" },
-                   "logcollector": { "image": "percona/fluentbit{{ fluentbitrecommended }}" },
+                   "backup":   { "image": "percona/percona-xtrabackup:{{ pxb80recommended }}" },
+                   "logcollector": { "image": "percona/fluentbit:{{ fluentbitrecommended }}" },
                    "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
                }}'
             ```
@@ -39,8 +39,8 @@
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc57recommended }}" },
                    "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
                    "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
-                   "backup":   { "image": "percona/percona-xtrabackup-{{ pxb57recommended }}" },
-                   "logcollector": { "image": "percona/fluentbit{{ fluentbitrecommended }}" },
+                   "backup":   { "image": "percona/percona-xtrabackup:{{ pxb57recommended }}" },
+                   "logcollector": { "image": "percona/fluentbit:{{ fluentbitrecommended }}" },
                    "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
                }}'
             ```
@@ -56,8 +56,8 @@
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
                    "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
                    "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
-                   "backup":   { "image": "percona/percona-xtrabackup-{{ pxb80recommended }}" },
-                   "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" }
+                   "backup":   { "image": "percona/percona-xtrabackup:{{ pxb80recommended }}" },
+                   "logcollector": { "image": "percona/fluentbit:{{ fluentbitrecommended }}" }
                }}'
             ```
 
@@ -70,7 +70,7 @@
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc57recommended }}" },
                    "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
                    "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
-                   "backup":   { "image": "percona/percona-xtrabackup-{{ pxb57recommended }}" },
-                   "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" }
+                   "backup":   { "image": "percona/percona-xtrabackup:{{ pxb57recommended }}" },
+                   "logcollector": { "image": "percona/fluentbit:{{ fluentbitrecommended }}" }
                }}'
             ```
