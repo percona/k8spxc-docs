@@ -49,7 +49,7 @@ backup:
     timeBetweenUploads: 60
 ```
 
-For how to restore a database to a specific point in time, see [Restore the cluster with point-in-time recovery](backups-restore.md#restore-the-cluster-with-point-in-time-recovery).
+For how to restore a database to a specific point in time, see [Restore the cluster with point-in-time recovery](backups-restore.md#restore-with-point-in-time-recovery).
 
 ## Binary logs statistics
 
