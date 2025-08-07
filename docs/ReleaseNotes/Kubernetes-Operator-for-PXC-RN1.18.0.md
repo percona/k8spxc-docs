@@ -170,8 +170,8 @@ For manual installation or update, follow the instructions below:
             "pxc":{ "image": "docker.io/percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
             "proxysql": { "image": "docker.io/percona/proxysql2:{{ proxysqlrecommended }}" },
             "haproxy":  { "image": "docker.io/percona/haproxy:{{ haproxyrecommended }}" },
-            "backup":   { "image": "docker.io/percona/percona-xtrabackup-{{ pxb80recommended }}" },
-            "logcollector": { "image": "docker.io/percona/fluentbit{{ fluentbitrecommended }}" },
+            "backup":   { "image": "docker.io/percona/percona-xtrabackup:{{ pxb80recommended }}" },
+            "logcollector": { "image": "docker.io/percona/fluentbit:{{ fluentbitrecommended }}" },
             "pmm":      { "image": "docker.io/percona/pmm-client:{{ pmm2recommended }}" }
                }}'
           }
@@ -284,28 +284,30 @@ Percona Operator for MySQL based on Percona XtraDB Cluster in the following tabl
 
 --8<-- [start:images]
 
-| Image                                                                  | Digest                                                           |
-|:-----------------------------------------------------------------------|:-----------------------------------------------------------------|
-| percona/percona-xtradb-cluster-operator:1.18.0 (x86_64)                | da9aa5c7cb546c60624b927bdd273fc3646bc5a027bcc6f138291bad4da9b7b8 |
-| percona/percona-xtradb-cluster-operator:1.18.0 (ARM64)         | 2b61ed62848521071bea18988461e99123ea5d5a92465ab046d0f179b5c0b8ac         |
-| percona/haproxy:2.8.14                                         | 6de8c402d83b88dae7403c05183fd75100774defa887c05a57ec04bc25be2305         |
-| percona/proxysql2:2.7.1                                        | 975d5c8cc7b5714a0df4dfd2111391a7a79cfa3a217f1dd6de77a83550812fc4         |
-| percona/percona-xtradb-cluster-operator:1.18.0-pxc8.4-backup-pxb8.4.0  |3a7a8a47ad12ce783feb089e7035d50f6d5b803cec97a16067f476a426f6fda8 |
-| percona/percona-xtradb-cluster-operator:1.18.0-pxc8.0-backup-pxb8.0.35 | 2f28c09027a249426b2f4393aa8b76971583d80e0c56be37f77dad49cb5cd5c4 |
-| percona/percona-xtradb-cluster-operator:1.18.0-pxc5.7-backup-pxb2.4.29 | bf494243d9784a016bb4c98bd2690b0fc5fbba1aa7d45d98502dff353fb68bee |
-| percona/percona-xtradb-cluster-operator:1.18.0-logcollector-fluentbit4.0.0 | 9fc0b4097c93f6dba8441d9bcb2803dc62dd8328b84288294444fbadb347f6d7 |
-| percona/pmm-client:2.44.0                                      | 19a07dfa8c12a0554308cd11d7d38494ea02a14cfac6c051ce8ff254b7d0a4a7 |
-| percona/percona-xtradb-cluster:8.4.3-3.1                              |b7b198133e70cb1bd9d5cd1730373a62e976fd2b9bb9ca5a696fd970c1ac09bf |
-| percona/percona-xtradb-cluster:8.0.41-32.1                                 | 8a6799cbded5524c6979442f8d7097831c8c6481f5106a856b44b2791ccaf0fb        |
-| percona/percona-xtradb-cluster:8.0.39-30.1                             | 6a53a6ad4e7d2c2fb404d274d993414a22cb67beecf7228df9d5d994e7a09966 |
-| percona/percona-xtradb-cluster:8.0.36-28.1                                 | b5cc4034ccfb0186d6a734cb749ae17f013b027e9e64746b2c876e8beef379b3        |
-| percona/percona-xtradb-cluster:8.0.35-27.1                                 | 1ef24953591ef1c1ce39576843d5615d4060fd09458c7a39ebc3e2eda7ef486b        |
-| percona/percona-xtradb-cluster:8.0.32-24.2                                 | 1f978ab8912e1b5fc66570529cb7e7a4ec6a38adbfce1ece78159b0fcfa7d47a |
-| percona/percona-xtradb-cluster:5.7.44-31.65                                | 36fafdef46485839d4ff7c6dc73b4542b07031644c0152e911acb9734ff2be85        |
-| percona/percona-xtradb-cluster:5.7.42-31.65                                | 9dab86780f86ec9caf8e1032a563c131904b75a37edeaec159a93f7d0c16c603        |
-| percona/percona-xtradb-cluster:5.7.39-31.61                                | 9013170a71559bbac92ba9c2e986db9bda3a8a9e39ee1ee350e0ee94488bb6d7        |
-| percona/percona-xtradb-cluster:5.7.36-31.55                                | c7bad990fc7ca0fde89240e921052f49da08b67c7c6dc54239593d61710be504        |
-| percona/percona-xtradb-cluster:5.7.34-31.51                                | f8d51d7932b9bb1a5a896c7ae440256230eb69b55798ff37397aabfd58b80ccb |
+| Image                                                  | Digest                                                           |
+|:-------------------------------------------------------|:-----------------------------------------------------------------|
+| percona/percona-xtradb-cluster-operator:1.18.0 (x86_64)| 29e49020c2f58d634dde4e648d2f850733b4166de4c8a1c1ae63849d893c7da6 |
+| percona/percona-xtradb-cluster-operator:1.18.0 (ARM64) | 4e5c2c3a31f52a1d170adb45c871647cbccc9ef48c454758587a08f7f82f31c2 |
+| percona/haproxy:2.8.15                                 | 49e6987a1c8b27e9111ae1f1168dd51f2840eb6d939ffc157358f0f259819006 |
+| percona/proxysql2:2.7.3                                | 51fedf9de05e4f130d5b08388511536fb1e1050a24ffc21bedb0f0b61a236567 |
+| percona/percona-xtrabackup:8.4.0-3.1                   | 01071522753ad94e11a897859bba4713316d08e493e23555c0094d68da223730 |
+| percona/percona-xtrabackup:8.0.35-33.1                 | ae56852f0343726409633268cf8c6af92754ea2b5aacbecbec93fa980f8e724d |
+| percona/percona-xtrabackup:2.4.29                      | 11b92a7f7362379fc6b0de92382706153f2ac007ebf0d7ca25bac2c7303fdf10 |
+| percona/fluentbit:4.0.1                                | a4ab7dd10379ccf74607f6b05225c4996eeff53b628bda94e615781a1f58b779 |
+| percona/pmm-client:3.3.1                               | 29a9bb1c69fef8bedc4d4a9ed0ae8224a8623fd3eb8676ef40b13fd044188cb4 |
+| percona/pmm-client:2.44.1-1                            | 52a8fb5e8f912eef1ff8a117ea323c401e278908ce29928dafc23fac1db4f1e3 |
+| percona/percona-xtradb-cluster:8.4.5-5.1               | 918c54c11c96bf61bb3f32315ef6b344b7b1d68a0457a47a3804eca3932b2b17 |
+| percona/percona-xtradb-cluster:8.0.42-33.1             | 476851339090e44bb72760ae718fc36beb73a6028a29459e849271649018d546 |
+| percona/percona-xtradb-cluster:8.0.41-32.1 |                   |
+| percona/percona-xtradb-cluster:8.0.39-30.1             | 6a53a6ad4e7d2c2fb404d274d993414a22cb67beecf7228df9d5d994e7a09966 |
+| percona/percona-xtradb-cluster:8.0.36-28.1             | b5cc4034ccfb0186d6a734cb749ae17f013b027e9e64746b2c876e8beef379b3 |
+| percona/percona-xtradb-cluster:8.0.35-27.1             | 1ef24953591ef1c1ce39576843d5615d4060fd09458c7a39ebc3e2eda7ef486b |
+| percona/percona-xtradb-cluster:5.7.44-31.65            | 36fafdef46485839d4ff7c6dc73b4542b07031644c0152e911acb9734ff2be85 |
+| percona/percona-xtradb-cluster:5.7.42-31.65            | 9dab86780f86ec9caf8e1032a563c131904b75a37edeaec159a93f7d0c16c603 |
+| percona/percona-xtradb-cluster:5.7.39-31.61            | 9013170a71559bbac92ba9c2e986db9bda3a8a9e39ee1ee350e0ee94488bb6d7 |
+| percona/percona-xtradb-cluster:5.7.36-31.55            | c7bad990fc7ca0fde89240e921052f49da08b67c7c6dc54239593d61710be504 |
+| percona/percona-xtradb-cluster:5.7.34-31.51            | f8d51d7932b9bb1a5a896c7ae440256230eb69b55798ff37397aabfd58b80ccb |
+
 
 --8<-- [end:images]
 

@@ -6,6 +6,7 @@ Versions of the cluster components and platforms tested with different Operator 
 
 | Operator | [MySQL :octicons-link-external-16:](https://www.percona.com/software/mysql-database/percona-server) | [Percona XtraBackup :octicons-link-external-16:](https://www.percona.com/software/mysql-database/percona-xtrabackup) | [HA Proxy :octicons-link-external-16:](https://www.haproxy.org/) | [ProxySQL :octicons-link-external-16:](https://proxysql.com/) |
 |:--------|:--------|:-----|:-------|:-------|
+|[1.18.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.18.0.md)  | 8.4 (Tech preview), 8.0, 5.7      | 8.4.0-3 for MySQL 8.4, 8.0.35-33 for MySQL 8.0, 2.4.29 for MySQL 5.7 | 2.8.15-1    | 2.7.3    |
 | [1.17.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.17.0.md)  | 8.4 (Tech preview), 8.0, 5.7      | 8.4.0-1 for MySQL 8.4, 8.0.35-32 for MySQL 8.0, 2.4.29 for MySQL 5.7 | 2.8.14    | 2.7.1-1    |
 | [1.16.1](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.16.1.md) | 8.4 (Tech preview), 8.0, 5.7 | 8.4.0-1 for MySQL 8.4, 8.0.35-30.1 for MySQL 8.0, 2.4.29 for MySQL 5.7 | 2.8.11 | 2.7.1 |
 | [1.16.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.16.0.md) | 8.4 (Tech preview), 8.0, 5.7 | 8.4.0-1 for MySQL 8.4, 8.0.35-30.1 for MySQL 8.0, 2.4.29 for MySQL 5.7 | 2.8.11 | 2.7.1 |
@@ -31,6 +32,7 @@ Versions of the cluster components and platforms tested with different Operator 
 
 | Operator | [GKE :octicons-link-external-16:](https://cloud.google.com/kubernetes-engine)         | [EKS :octicons-link-external-16:](https://aws.amazon.com)         | [Openshift :octicons-link-external-16:](https://www.redhat.com/en/technologies/cloud-computing/openshift) | [AKS :octicons-link-external-16:](https://azure.microsoft.com/en-us/services/kubernetes-service/) | [Minikube :octicons-link-external-16:](https://github.com/kubernetes/minikube)                          |
 |:--------|:------------|:------------|:------------|:--------------|:--------------------|
+| [1.18.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.18.0.md)   | 1.30 - 1.33 | 1.30 - 1.33 | 4.15 - 4.19   | 1.30 - 1.33 | 1.36.0 |
 | [1.17.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.17.0.md)   | 1.29 - 1.32 | 1.30 - 1.32 | 4.14 - 4.18   | 1.30 - 1.32 | 1.35.0 |
 | [1.16.1](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.16.1.md) | 1.28 - 1.30 | 1.28 - 1.31 | 4.15.42 - 4.17.8 | 1.28 - 1.31 | 1.34.0 |
 | [1.16.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.16.0.md) | 1.28 - 1.30 | 1.28 - 1.31 | 4.15.42 - 4.17.8 | 1.28 - 1.31 | 1.34.0 |
