@@ -99,6 +99,8 @@ Starting with OpenShift 4.19, the way images with not fully qualified names are 
 
 ### Update via the command-line interface
 
+The following steps apply if you plan to use OpenShift 4.19. See the [Considerations for using OpenShift 4.19](#considerations-for-using-openshift-419).
+
 1. Check all clusters managed by the Operator to see if `initContainer.image` is set.
 
         * If defined: skip the next step.
