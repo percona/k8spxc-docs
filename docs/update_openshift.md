@@ -135,12 +135,11 @@ The following steps apply if you plan to use OpenShift 4.19. See the [Considerat
             "crVersion": "{{release}}",
             "initContainer": "docker.io/percona/percona-xtradb-cluster-operator:{{release}}",
             "pxc":{ "image": "docker.io/percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
-            "proxysql": { "image": "docker.io/percona/proxysql2:{{ proxysqlrecommended }}" },
-            "haproxy":  { "image": "docker.io/percona/haproxy:{{ haproxyrecommended }}" },
-            "backup":   { "image": "docker.io/percona/percona-xtrabackup-{{ pxb80recommended }}" },
-            "logcollector": { "image": "docker.io/percona/fluentbit{{ fluentbitrecommended }}" },
-            "pmm":      { "image": "docker.io/percona/pmm-client:{{ pmm2recommended }}" }
-               }}'
+            "proxysql":{ "image": "docker.io/percona/proxysql2:{{ proxysqlrecommended }}" },
+            "haproxy":{ "image": "docker.io/percona/haproxy:{{ haproxyrecommended }}" },
+            "backup":{ "image": "docker.io/percona/percona-xtrabackup:{{ pxb80recommended }}" },
+            "logcollector":{ "image": "docker.io/percona/fluentbit:{{ fluentbitrecommended }}" },
+            "pmm":{ "image": "docker.io/percona/pmm-client:{{ pmm2recommended }}" }
           }
         }'
         ```
@@ -177,28 +176,34 @@ The following steps apply if you plan to use OpenShift 4.19. See the [Considerat
         ...
         "pxc": {
           "size": 3,
-          "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:b526b83865ca26808aa1ef96f64319f65deba94b76c5b5b6aa181981ebd4282f",
+          "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:b526b83865ca26808aa1ef96f64319f65deba94b76c5b5b6aa181981ebd4282f"
+        },
         ...
         "haproxy": {
           "enabled": true,
           "size": 3,
-          "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:cbd4f1791941765eb6732f2dc88bad29bf23469898bd30f02d22a95c0f2aab9b",
+          "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:cbd4f1791941765eb6732f2dc88bad29bf23469898bd30f02d22a95c0f2aab9b"
+        },
         ...
         "proxysql": {
           "enabled": false,
           "size": 3,
-          "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:24f6d959efcf2083addf42f3b816220654133dc8a5a8a989ffd4caffe122e19c",
+          "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:24f6d959efcf2083addf42f3b816220654133dc8a5a8a989ffd4caffe122e19c"
+        },
         ...
         "logcollector": {
           "enabled": true,
-          "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:cb6ccda7839b3205ffaf5cb8016d1f91ed3be4438334d2122beb38791a32c015",
+          "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:cb6ccda7839b3205ffaf5cb8016d1f91ed3be4438334d2122beb38791a32c015"
+        },
         ...
         "pmm": {
           "enabled": false,
-          "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:165f97cdae2b6def546b0df7f50d88d83c150578bdb9c992953ed866615016f1",
+          "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:165f97cdae2b6def546b0df7f50d88d83c150578bdb9c992953ed866615016f1"
+        },
         ...
         "backup": {
-          "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:483acaa57378ee5529479dbcabb3b8002751c1c43edd5553b52f001f323d4723",
+          "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator-containers@sha256:483acaa57378ee5529479dbcabb3b8002751c1c43edd5553b52f001f323d4723"
+        },
         ...
         ```
 
