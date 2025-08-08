@@ -298,7 +298,7 @@ Percona Operator for MySQL based on Percona XtraDB Cluster in the following tabl
 | percona/pmm-client:2.44.1-1                            | 52a8fb5e8f912eef1ff8a117ea323c401e278908ce29928dafc23fac1db4f1e3 |
 | percona/percona-xtradb-cluster:8.4.5-5.1               | 918c54c11c96bf61bb3f32315ef6b344b7b1d68a0457a47a3804eca3932b2b17 |
 | percona/percona-xtradb-cluster:8.0.42-33.1             | 476851339090e44bb72760ae718fc36beb73a6028a29459e849271649018d546 |
-| percona/percona-xtradb-cluster:8.0.41-32.1 |                   |
+| percona/percona-xtradb-cluster:8.0.41-32.1             | d9c84884a12631306d5a33a079e30bf7b65d3d380b07b397d7b1b6a642cc6bff |
 | percona/percona-xtradb-cluster:8.0.39-30.1             | 6a53a6ad4e7d2c2fb404d274d993414a22cb67beecf7228df9d5d994e7a09966 |
 | percona/percona-xtradb-cluster:8.0.36-28.1             | b5cc4034ccfb0186d6a734cb749ae17f013b027e9e64746b2c876e8beef379b3 |
 | percona/percona-xtradb-cluster:8.0.35-27.1             | 1ef24953591ef1c1ce39576843d5615d4060fd09458c7a39ebc3e2eda7ef486b |
