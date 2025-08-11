@@ -11,7 +11,7 @@ fluentbitrecommended: '4.0.1'
 haproxyrecommended: '2.8.15-1'
 proxysqlrecommended: '2.7.3'
 pxb84recommended: '8.4.0-3'
-pxb80recommended: '8.0.35-33'
+pxb80recommended: '8.0.35'
 pxb57recommended: '2.4.29'
 pxc57recommended: '5.7.44-31.65'
 pxc80recommended: '8.0.42-33.1'
@@ -23,5 +23,5 @@ k8s_monitor_tag: 'v0.1.1'
 
 
 date:
-  1_18_0: "2025-08-12"
+  1_18_0: "2025-08-13"
   1_17_0: "2025-04-14"

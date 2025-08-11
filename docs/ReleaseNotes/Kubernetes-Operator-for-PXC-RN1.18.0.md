@@ -90,6 +90,12 @@ due to its inconsistent behavior across cloud providers and lack of dual-stack s
 * New repositories for Percona XtraBackup and Logcollector
 
    Now the Operator uses the official Percona Docker images for the `percona-xtrabackup` and `logcollector` components. Pay attention to the new image repositories when you upgrade the Operator and the database. Check the [Percona certified images](../images.md) for exact image names.
+  
+* Changes for Helm charts:
+
+  * PMM3 is now the default. To keep using PMM2, set the `pmm.tag: 2.44.1`
+  * If you install or upgrade the Operator with default manifests using Helm charts on Openshift 4.19, you must use the `docker.io` registry prefix to guarantee successful download from the DockerHub `percona-xtradb-cluster` repository. Read the [Considerations for using OpenShift 4.19](#considerations-for-using-openshift-419) section for more information.
+
 
 ## Known limitations
 
@@ -97,7 +103,7 @@ due to its inconsistent behavior across cloud providers and lack of dual-stack s
 
 Starting with OpenShift 4.19, the way images with not fully qualified names are pulled has changed for repositories that share the same repository name on DockerHub and Red Hat Marketplace. By default the tags are pulled from Red Hat Marketplace. Specifying not fully qualified image names may result in the `ImagePullBackOff` error.
 
-* **OLM installation:** Images are provided with the fully qualified names and are pulled from the Red Hat Marketplace/Dockerhub registry.
+* **OLM installation:** Images are provided with the fully qualified names and are pulled from the Red Hat Marketplace/DockerHub registry.
 * **Manual install/update with default manifests:** Images must use the `docker.io` registry prefix to guarantee successful download from the Dockerhub `percona-xtradb-cluster` repository.
 
 For manual installation or update, follow the instructions below:
@@ -250,7 +256,7 @@ For manual installation or update, follow the instructions below:
 The Operator was developed and tested with the following software:
 
 * Percona XtraDB Cluster versions 8.4.5-5.1 (Tech preview), 8.0.42-33.1, and 5.7.44-31.65  
-* Percona XtraBackup versions 8.4.0-3, 8.0.35-33, and 2.4.29  
+* Percona XtraBackup versions 8.4.0-3, 8.0.35-34.1, and 2.4.29  
 * HAProxy 2.8.15-1  
 * ProxySQL 2.7.3  
 * LogCollector based on fluent-bit 4.0.1  
@@ -286,12 +292,12 @@ Percona Operator for MySQL based on Percona XtraDB Cluster in the following tabl
 
 | Image                                                  | Digest                                                           |
 |:-------------------------------------------------------|:-----------------------------------------------------------------|
-| percona/percona-xtradb-cluster-operator:1.18.0 (x86_64)| 29e49020c2f58d634dde4e648d2f850733b4166de4c8a1c1ae63849d893c7da6 |
-| percona/percona-xtradb-cluster-operator:1.18.0 (ARM64) | 4e5c2c3a31f52a1d170adb45c871647cbccc9ef48c454758587a08f7f82f31c2 |
+| percona/percona-xtradb-cluster-operator:1.18.0 (x86_64)| 0eca0b096482c7d09792c15fee00dbdcd0fbf3cd487dab60eb2774b025681e85 |
+| percona/percona-xtradb-cluster-operator:1.18.0 (ARM64) | bdb7a0ff6b78e98b16f8b521e91682202b6d404202283b34b8168013d5c06356 |
 | percona/haproxy:2.8.15                                 | 49e6987a1c8b27e9111ae1f1168dd51f2840eb6d939ffc157358f0f259819006 |
 | percona/proxysql2:2.7.3                                | 51fedf9de05e4f130d5b08388511536fb1e1050a24ffc21bedb0f0b61a236567 |
 | percona/percona-xtrabackup:8.4.0-3.1                   | 01071522753ad94e11a897859bba4713316d08e493e23555c0094d68da223730 |
-| percona/percona-xtrabackup:8.0.35-33.1                 | ae56852f0343726409633268cf8c6af92754ea2b5aacbecbec93fa980f8e724d |
+| percona/percona-xtrabackup:8.0.35-34.1                 | 2dc127b08971051296d421b22aa861bb0330cf702b4b0246ae31053b0f01911e |
 | percona/percona-xtrabackup:2.4.29                      | 11b92a7f7362379fc6b0de92382706153f2ac007ebf0d7ca25bac2c7303fdf10 |
 | percona/fluentbit:4.0.1                                | a4ab7dd10379ccf74607f6b05225c4996eeff53b628bda94e615781a1f58b779 |
 | percona/pmm-client:3.3.1                               | 29a9bb1c69fef8bedc4d4a9ed0ae8224a8623fd3eb8676ef40b13fd044188cb4 |
