@@ -129,7 +129,7 @@ For manual installation or update, follow the instructions below:
     3. Apply the updated `deploy/bundle.yaml` file
 
         ```{.bash data-prompt="$"}
-        $ oc apply --server-side -f deploy/crd.yaml
+        $ oc apply --server-side -f deploy/bundle.yaml
         ```
 
     4. Install Percona XtraDB Cluster:
