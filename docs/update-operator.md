@@ -149,7 +149,7 @@ The upgrade includes the following steps.
                }}'
             ```
 
-        ==== "For Percona XtraDB Cluster 5.7"
+        === "For Percona XtraDB Cluster 5.7"
 
                 ```{.bash data-prompt="$"}
                 $ kubectl patch pxc cluster1 --type=merge --patch '{
