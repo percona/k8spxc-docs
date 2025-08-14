@@ -4,7 +4,24 @@ To update the Operator, you need to update the Custom Resource Definition (CRD) 
 
 The database cluster upgrade process is similar for all installation methods, including Helm and OLM.
 
-## Considerations
+## Considerations for Kubernetes Cluster versions and upgrades
+
+1. Before upgrading the Kubernetes cluster, have a disaster recovery plan in place. Ensure that a backup is taken prior to the upgrade, and that point-in-time recovery is enabled to meet your Recovery Point Objective (RPO).
+
+2. Plan your Kubernetes cluster or Operator upgrades with version compatibility in mind.
+
+    The Operator is supported and tested on specific Kubernetes versions. Always refer to the Operator's [release notes](ReleaseNotes/index.md) to verify the supported Kubernetes platforms.
+
+    Note that while the Operator might run on unsupported or untested Kubernetes versions, this is not recommended. Doing so can cause various issues, and in some cases, the Operator may fail if deprecated API versions have been removed.
+
+3. During a Kubernetes cluster upgrade, you must also upgrade the `kubelet`. It is advisable to drain the nodes hosting the database Pods during the upgrade process.
+
+4. During the `kubelet` upgrade, nodes transition between `Ready` and `NotReady` states. Also in some scenarios, older nodes may be replaced entirely with new nodes. Ensure that nodes hosting database or proxy pods are functioning correctly and remain in a stable state after the upgrade.
+
+5. Regardless of the upgrade approach, pods will be rescheduled or recycled. Plan your Kubernetes cluster upgrade accordingly to minimize downtime and service disruption.
+
+
+## Considerations for Operator upgrades
 
 1. The Operator version has three digits separated by a dot (`.`) in the format `major.minor.patch`. Here's how you can understand the version `1.16.1`:
 
@@ -56,6 +73,7 @@ its own namespace, do the following:
     * upgrade the Operators in each namespace incrementally to the
        latest minor version (e.g. from 1.15.1 to 1.16.1, then to 1.17.0) 
 
+5. Starting with version 1.18.0, the Operator supports PMM2 and PMM3. If you are using PMM server version 2, use a PMM client image compatible with PMM 2. If you are using PMM server version 3, use a PMM client image compatible with PMM 3. See [PMM upgrade documentation :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/pmm-upgrade/migrating_from_pmm_2.html) for how to migrate from version 2 to version 3.
     
 ## Upgrade manually
 
@@ -128,7 +146,11 @@ The upgrade includes the following steps.
 
     Check your custom HAProxy configuration **before** the upgrade to be compatible with the one available with the Operator version you're upgrading to. Find the `haproxy-global.cfg` for the Operator version {{ release }} [here :octicons-link-external-16:](https://github.com/percona/percona-docker/blob/pxc-operator-{{ release }}/haproxy/dockerdir/etc/haproxy/haproxy-global.cfg). Adjust your configuration, if needed.
 
-    We recommend to update the PMM Server **before** the upgrade of PMM Client. If you haven't done it yet, exclude PMM Client from the list of images to update.
+    We recommend to update the PMM Server **before** the upgrade of PMM Client. In order to use PMM3, [upgrade your PMM Server to version 3 :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/pmm-upgrade/migrating_from_pmm_2.html). 
+
+    <!-- To keep using PMM2, specify the PMM Client version compatible with PMM Server 2. -->
+    
+    If you haven't updated your PMM Server yet, exclude PMM Client from the list of images to update.
 
     Since this is a working cluster, the way to update the Custom Resource is to [apply a patch  :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) with the `kubectl patch pxc` command.
 
@@ -143,8 +165,8 @@ The upgrade includes the following steps.
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
                    "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
                    "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
-                   "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc8.0-backup-pxb{{ pxb80recommended }}" },
-                   "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" },
+                   "backup":   { "image": "percona/percona-xtrabackup-{{ pxb80recommended }}" },
+                   "logcollector": { "image": "percona/fluentbit:{{ fluentbitrecommended }}" },
                    "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
                }}'
             ```
@@ -158,8 +180,8 @@ The upgrade includes the following steps.
                        "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc57recommended }}" },
                        "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
                        "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
-                       "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc5.7-backup-pxb{{ pxb57recommended }}" },
-                       "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" },
+                       "backup":   { "image": "percona/percona-xtrabackup-{{ pxb57recommended }}" },
+                       "logcollector": { "image": "percona/fluentbit:{{ fluentbitrecommended }}" },
                        "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
                    }}'
                 ```
@@ -175,8 +197,8 @@ The upgrade includes the following steps.
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
                    "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
                    "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
-                   "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc8.0-backup-pxb{{ pxb80recommended }}" },
-                   "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" }
+                   "backup":   { "image": "percona/percona-xtrabackup-{{ pxb80recommended }}" },
+                   "logcollector": { "image": "percona/fluentbit:{{ fluentbitrecommended }}" }
                }}'
             ```
 
@@ -189,8 +211,8 @@ The upgrade includes the following steps.
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc57recommended }}" },
                    "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
                    "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
-                   "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc5.7-backup-pxb{{ pxb57recommended }}" },
-                   "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" }
+                   "backup":   { "image": "percona/percona-xtrabackup-{{ pxb57recommended }}" },
+                   "logcollector": { "image": "percona/fluentbit:{{ fluentbitrecommended }}" }
                }}'
             ```
 

@@ -29,7 +29,7 @@ After you [enable point-in-time recovery](#enable-point-in-time-recovery), the O
 ## Enable point-in-time recovery
 
 To use point-in-time recovery, set the following keys in the `pitr` subsection
-under the `backup` section of the [deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) manifest:
+under the `backup` section of the [deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/cr.yaml) manifest:
 
 * `backup.pitr.enabled` - set it to `true`
 
@@ -49,7 +49,7 @@ backup:
     timeBetweenUploads: 60
 ```
 
-For how to restore a database to a specific point in time, see [Restore the cluster with point-in-time recovery](backups-restore.md#restore-the-cluster-with-point-in-time-recovery).
+For how to restore a database to a specific point in time, see [Restore the cluster with point-in-time recovery](backups-restore.md#restore-with-point-in-time-recovery).
 
 ## Binary logs statistics
 

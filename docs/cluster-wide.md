@@ -23,7 +23,7 @@ Let’s say you will use a Kubernetes Namespace called `percona-db-1`.
 1. Clone `percona-xtradb-cluster-operator` repository:
 
     ``` {.bash data-prompt="$" }
-    $ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
+    $ git clone -b v{{ release }} git@github.com:percona/percona-xtradb-cluster-operator.git
     $ cd percona-xtradb-cluster-operator
     ```
 

@@ -23,7 +23,7 @@ Make sure to clone the correct branch. The branch name is the same as the Operat
     You now have the `cluster1` database cluster up and running.
 
 
-## Export the database secrets
+## Export the database secrets (for Operator 1.17.0 and earlier)
 
 While on the primary site, export the Secrets object with the user credentials. Both the primary and the replica sites must have the same user credentials. This enables the Operator to restore the backup from the primary on the replica site.
 
