@@ -1,35 +1,18 @@
 # Changing MySQL Options
 
-You may require a configuration change for your application. MySQL
-allows the option to configure the database with a configuration file.
-You can pass options from the
-[my.cnf :octicons-link-external-16:](https://dev.mysql.com/doc/refman/8.0/en/option-files.html)
-configuration file to be included in the MySQL configuration in one of the
-following ways:
+You may need to change the MySQL configuration for your application. MySQL lets you customize its settings using a configuration file. You can include options from the [my.cnf :octicons-link-external-16:](https://dev.mysql.com/doc/refman/8.0/en/option-files.html) configuration file in one of these ways:
 
-* edit the `deploy/cr.yaml` file,
+- Edit the `deploy/cr.yaml` file
+- Use a ConfigMap
+- Use a Secret object
 
-* use a ConfigMap,
+In most cases, you don’t need to add custom options because the Operator already provides sensible defaults for MySQL.
 
-* use a Secret object.
+If you supply custom configuration in more than one way, the Operator will only use one method. It follows this order of preference:
 
-Often there's no need to add custom options, as the Operator takes care of
-providing MySQL with reasonable defaults. Also, some MySQL options can not
-be changed: you shouldn't change `require_secure_transport` option to `ON`, as
-it would break the behavior of the Operator.
-
-!!! note
-
-    If you still need something equal to `require_secure_transport=ON` to force
-    encrypted connections between client and server, the most convenient
-    workaround would be [creating MySQL users](users.md) with `REQUIRE SSL`
-    option.
-
-If you provide custom configuration to the Operator with several different ways
-at once, it will choose only one. First, it looks for a Secret object. If
-no matching Secrets are found, it looks for a custom configuration
-specified in the Custom Resource (the one provided via the `deploy/cr.yaml`
-file). If it wasn't found either, the Operator searches for a ConfigMap.
+1. First, it checks for a Secret object.
+2. If it doesn’t find a matching Secret, it looks for custom configuration in the Custom Resource (the `deploy/cr.yaml` file).
+3. If neither of those exist, the Operator searches for a ConfigMap.
 
 ## Edit the `deploy/cr.yaml` file
 
