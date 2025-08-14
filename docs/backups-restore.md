@@ -1,54 +1,70 @@
 # Restore the cluster from a previously saved backup
 
-The backup is normally restored on the Kubernetes cluster where it was made,
-but [restoring it on a different Kubernetes-based environment with the installed Operator is also possible](backups-restore-to-new-cluster.md).
+You can restore from a backup as follows:
 
-Backups **cannot be restored** to [emptyDir and hostPath volumes](storage.md),
-but it is possible to make a backup from such storage (i. e., from
+* On the same cluster where you made a backup
+* On [a new cluster deployed in a different Kubernetes-based environment](backups-restore-to-new-cluster.md).
+
+This document focuses on the restore to the same cluster.
+
+## Restore scenarios
+
+This document covers the following restore scenarios:
+
+* [Restore from a full backup](#restore-from-a-full-backup) - the restore from a backup without point-in-time
+* [Point-in-time recovery](#restore-with-point-in-time-recovery) - restore to a specific time, a specific or  latest transaction or skip a specific transaction during a restore. This ability requires that you [configure storing binlogs for point-in-time recovery](backups-pitr.md)
+* [Restore when a backup has different passwords](#restore-the-cluster-when-backup-has-different-passwords)
+
+To restore from a backup, you create a special Restore object using a special restore configuration file. The
+example of such file is [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml).
+
+You can check available options in the [restore options reference](operator.md#perconaxtradbclusterrestore-custom-resource-options).
+
+Note that you **cannot restore** to [emptyDir and hostPath volumes](storage.md),
+but you can make a backup from such storage (i. e., from
 emptyDir/hostPath to S3), and later restore it to a [Persistent Volume :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/persistent-volumes/).
 
-To restore a backup, you will use the special restore configuration file. The
-example of such file is [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/backup/restore.yaml). The list of options that can be used in it can
-be found in the [restore options reference](operator.md#perconaxtradbclusterrestore-custom-resource-options).
+--8<-- [start:backup-prepare]
 
-Following things are needed to restore a previously saved backup:
+## Before you start
 
-* Make sure that the cluster is running.
-* Find out correct names for the **backup** and the **cluster**. Available
-    backups can be listed with the following command:
+1. Make sure that the cluster is running.
+2. List the cluster to find the correct cluster name. Replace the `<namespace>` with your value:
 
     ``` {.bash data-prompt="$" }
-    $ kubectl get pxc-backup
+    $ kubectl get pxc -n <namespace>
     ```
 
-    And the following command will list available clusters:
+3. List backups to retrieve the desired backup name. Replace the `<namespace>` with your value:
 
     ``` {.bash data-prompt="$" }
-    $ kubectl get pxc
+    $ kubectl get pxc-backup -n <namespace>
     ```
 
-!!! note
+4. For point-in-time recovery, disable storing binlogs point-in-time functionality on the existing cluster. You must do it regardless of whether you made the backup with point-in-time recovery or without it. Use the following command and replace the cluster name and the `<namespace>` with your values:
 
-     If you have [configured storing binlogs for point-in-time recovery](backups-pitr.md),
-     you will have possibility to roll back the cluster to a specific
-     transaction, time (or even skip a transaction in some cases). Otherwise, 
-     restoring backups without point-in-time recovery is the only option.
+    ```{.bash data-prompt="$" }
+    $ kubectl patch pxc cluster1 \
+      -n <namespace> \
+      --type merge \
+      -p '{"spec":{"backup":{"pitr":{"enabled":false}}}}'
+    ```
 
-When the correct names for the backup and the cluster are known, backup
-restoration can be done in the following way.
+--8<-- [end:backup-prepare]
 
-## Restore the cluster without point-in-time recovery
+## Restore from a full backup
 
-1. Set appropriate keys in the [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/backup/restore.yaml) file.
+To restore your Percona XtraDB cluster from a backup, define a `PerconaXtraDBClusterRestore` custom resource. Set the following keys:
 
-    * set `spec.pxcCluster` key to the name of the target cluster to restore
-        the backup on,
+* `spec.pxcCluster`: the name of the target cluster 
+* `spec.backupName`: the name of your backup,
+* (optional) `storageName`: the exact name of the storage. Note that you must have [already defined the storage](backups-storage.md) in the `backup.storages` subsection of the `deploy/cr.yaml` file.
 
-    * set `spec.backupName` key to the name of your backup,
+Pass this configuration to the Operator: 
 
-    * you can also use a `storageName` key to specify the exact name of the
-        storage (the actual storage should be [already defined](backups-storage.md)
-        in the `backup.storages` subsection of the `deploy/cr.yaml` file):
+=== "via the YAML manifest"
+
+    1. Edit the [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml) file and specify the following keys:
 
         ```yaml
         apiVersion: pxc.percona.com/v1
@@ -61,101 +77,90 @@ restoration can be done in the following way.
           storageName: s3-us-west
         ```
 
-2. After that, the actual restoration process can be started as follows:
-
-    ``` {.bash data-prompt="$" }
-    $ kubectl apply -f deploy/backup/restore.yaml
-    ```
-
-    !!! note
-
-        Storing backup settings in a separate file can be replaced by
-        passing its content to the `kubectl apply` command as follows:
+    2. Start the restore with this command:
 
         ``` {.bash data-prompt="$" }
-        $ cat <<EOF | kubectl apply -f-
-        apiVersion: "pxc.percona.com/v1"
-        kind: "PerconaXtraDBClusterRestore"
-        metadata:
-          name: "restore1"
-        spec:
-          pxcCluster: "cluster1"
-          backupName: "backup1"
-        EOF
+        $ kubectl apply -f deploy/backup/restore.yaml -n <namespace>
         ```
 
-## Restore the cluster with point-in-time recovery
+=== "via the command line"
 
-!!! note
+    You can skip creating a separate file by passing YAML content directly:
 
-    Disable the point-in-time functionality on the existing cluster before
-    restoring a backup on it, regardless of whether the backup was made
-    with point-in-time recovery or without it.
-
-1. Set appropriate keys in the [deploy/backup/restore.yaml :octicons-link-external-16:]<https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/backup/restore.yaml>) file.
-
-    * set `spec.pxcCluster` key to the name of the target cluster to restore
-        the backup on,
-
-    * set `spec.backupName` key to the name of your backup,
-
-    * put additional restoration parameters to the `pitr` section:
-
-        * `type` key can be equal to one of the following options,
-
-            * `date` - roll back to specific date,
-            * `transaction` - roll back to a specific transaction (available since Operator 1.8.0),
-            * `latest` - recover to the latest possible transaction,
-            * `skip` - skip a specific transaction (available since Operator 1.7.0).
-
-        * `date` key is used with `type=date` option and contains value in
-            datetime format,
-        * `gtid` key (available since the Operator 1.8.0) is used with `type=transaction` option and contains exact
-            GTID of a transaction **which follows** the last transaction included into the recovery
-
-    * use `backupSource.storageName` key to specify the exact name of the
-        storage (the actual storage should be [already defined](backups-storage.md)
-        in the `backup.storages` subsection of the `deploy/cr.yaml` file).
-
-    The resulting `restore.yaml` file may look as follows:
-
-    ```yaml
-    apiVersion: pxc.percona.com/v1
-    kind: PerconaXtraDBClusterRestore
+    ``` {.bash data-prompt="$" }
+    $ cat <<EOF | kubectl apply -f-
+    apiVersion: "pxc.percona.com/v1"
+    kind: "PerconaXtraDBClusterRestore"
     metadata:
-      name: restore1
+      name: "restore1"
     spec:
-      pxcCluster: cluster1
-      backupName: backup1
-      pitr:
-        type: date
-        date: "2020-12-31 09:37:13"
-        backupSource:
-          storageName: "s3-us-west"
+      pxcCluster: "cluster1"
+      backupName: "backup1"
+    EOF
     ```
 
-    !!! note
-    
-        Full backup objects available with the `kubectl get pxc-backup` command
-        have a "Latest restorable time" information field handy when selecting
-        a backup to restore. You can easily
-        query the backup for this information as follows:
-       
-        ``` {.bash data-prompt="$" }
-        $ kubectl get pxc-backup <backup_name> -o jsonpath='{.status.latestRestorableTime}'
-        ```
+## Restore with point-in-time recovery
 
-2. Run the actual restoration process:
+1. Check a time to restore for a backup. Use the command below to find the latest restorable timestamp:
 
     ``` {.bash data-prompt="$" }
-    $ kubectl apply -f deploy/backup/restore.yaml
+    $ kubectl get pxc-backup <backup_name> -o jsonpath='{.status.latestRestorableTime}'
     ```
 
-    !!! note
+2. Set the following keys for the `PerconaXtraDBClusterRestore` custom resource:
 
-        Storing backup settings in a separate file can be replaced by
-        passing its content to the `kubectl apply` command as follows:
+    * `spec.pxcCluster`: the name of the target cluster
 
+    * `spec.backupName`: the name of your backup
+
+    * for the `pitr` section:
+
+       * `type`: one of the following values:
+
+          * `date` - roll back to specific date,
+          * `transaction` - roll back to a specific transaction (available since Operator 1.8.0),
+          * `latest` - recover most recent transaction,
+          * `skip` - skip a specific transaction (available since Operator 1.7.0).
+
+       * `date`: is used with `type=date` option and contains the value in the datetime format,
+       * `gtid`: is used with `type=transaction` option and contains exact
+                GTID of a transaction **which follows** the last transaction included into the recovery (available since the Operator 1.8.0)
+
+      * (optional) `storageName`: the exact name of the storage. Note that you must have [already defined the storage](backups-storage.md) in the `backup.storages` subsection of the `deploy/cr.yaml` file.
+
+3. Pass this configuration to the Operator:
+
+    === "via the YAML manifest"
+
+        1. Edit the [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml) file.
+
+            The sample configuration may look as follows:
+
+            ```yaml
+            apiVersion: pxc.percona.com/v1
+            kind: PerconaXtraDBClusterRestore
+            metadata:
+              name: restore1
+            spec:
+              pxcCluster: cluster1
+              backupName: backup1
+              pitr:
+                type: date
+                date: "2020-12-31 09:37:13"
+                backupSource:
+                  storageName: s3-us-west
+            ```
+   
+        2. Start the restore:
+
+            ``` {.bash data-prompt="$" }
+            $ kubectl apply -f deploy/backup/restore.yaml
+            ```
+
+    === "via the command line"
+
+        You can skip editing the YAML file and pass its contents to the Operator via the command line. For example:
+        
         ``` {.bash data-prompt="$" }
         $ cat <<EOF | kubectl apply -f-
         apiVersion: "pxc.percona.com/v1"
@@ -172,10 +177,11 @@ restoration can be done in the following way.
               storageName: "s3-us-west"
         EOF
         ```
-<a name="backup-pitr-binlog-gaps"></a>
 
-Take into account, that Operator monitors the binlog gaps detected by
-binlog collector, if any. If backup contains such gaps, the Operator will mark
+### Binlog gaps
+
+The Operator monitors the binlog gaps detected by
+binlog collector, if any. If a backup contains such gaps, the Operator will mark
 the status of the latest successful backup with a new condition field that
 indicates backup can't guarantee consistent point-in-time recovery. This
 condition looks as follows:
@@ -199,14 +205,13 @@ status:
   state: Succeeded
 ```
 
-Trying to restore from such backup (with the condition value "False") with
-point-in-time recovery will result in the following error: 
+Trying a point-in-time restore from such backup (with the condition value "False") results in the following error: 
 
 ```text
 Backup doesn't guarantee consistent recovery with PITR. Annotate PerconaXtraDBClusterRestore with percona.com/unsafe-pitr to force it.
 ```
 
-You can disable this check and force the restore by annotating it with
+You can bypass this check and force the restore by annotating it with
 `pxc.percona.com/unsafe-pitr` as follows:
 
 ```yaml
@@ -226,6 +231,12 @@ spec:
 ```
 
 ## Restore the cluster when backup has different passwords
+
+User passwords on the target cluster may have changed and now differ from the ones in a backup.
+
+Starting with version 1.18.0, the Operator no longer requires matching secrets between the backup and the target cluster. After the restore, it changes user passwords using the local Secret as a source. It also creates missing system users and adds missing grants. So you can [restore from a full backup](#restore-from-a-full-backup) or run a [point-in-time restore](#restore-with-point-in-time-recovery) as usual.
+
+**For the Operator versions 1.17.0 and earlier**, read on.
 
 If the cluster is restored to a backup which has different user passwords,
 the Operator will be unable connect to database using the passwords in Secrets,

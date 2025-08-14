@@ -77,10 +77,7 @@ object with credentials needed to access the storage.
             the last example).
 
         * `storages.<NAME>.s3.bucket` and `storages.<NAME>.s3.region` should
-           contain the S3 bucket and region. Also you can specify the path
-           (sub-folder) to the backups inside the S3 bucket, like
-           `bucket: operator-testing/binlogs`. If prefix is not set, backups
-           are stored in the root directory.
+           contain the S3 bucket and region. 
 
         * if you use some S3-compatible storage instead of the original Amazon
             S3, add the [endpointURL :octicons-link-external-16:](https://docs.min.io/docs/aws-cli-with-minio.html)

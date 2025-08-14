@@ -1,16 +1,16 @@
 # Set up Percona XtraDB Cluster cross-site replication
 
-The cross-site replication involves configuring one Percona XtraDB Cluster as *Source*, and another Percona XtraDB Cluster as *Replica* to allow an asynchronous replication between them:
+The cross-site replication involves configuring one Percona XtraDB Cluster as *Source*, and another Percona XtraDB Cluster as *Replica* to allow asynchronous replication between them:
 
 ![image](assets/images/pxc-replication.svg)
 
-The Operator automates configuration of *Source* and *Replica* Percona XtraDB Clusters, but the feature itself is not bound to Kubernetes. Either *Source* or *Replica* can run outside of Kubernetes, be regular MySQL and be out of the Operators’ control.
+The Operator automates configuration of *Source* and *Replica* Percona XtraDB Clusters, but the feature itself is not bound to Kubernetes. Either *Source* or *Replica* can run outside of Kubernetes, be regular MySQL instances and be out of the Operator's control.
 
 This feature can be useful in several cases: for example, it can simplify migration from on-premises to the cloud with replication, and it can be really helpful in case of the disaster recovery too.
 
 !!! note
 
-    Cross-site replication is based on [Automatic Asynchronous Replication Connection Failover :octicons-link-external-16:](https://dev.mysql.com/doc/refman/8.0/en/replication-asynchronous-connection-failover.html). Therefore it requires  MySQL 8.0.22+ (Percona XtraDB Cluster 8.0.22+) to work.
+    Cross-site replication is based on [Automatic Asynchronous Replication Connection Failover :octicons-link-external-16:](https://dev.mysql.com/doc/refman/8.0/en/replication-asynchronous-connection-failover.html). Therefore it requires Percona XtraDB Cluster 8.0.22+ (MySQL 8.0.22+ ) to work.
 
 Setting up MySQL for asynchronous replication without the Operator is out of the scope for this document, but it is described [here :octicons-link-external-16:](https://www.percona.com/blog/2021/04/14/what-you-can-do-with-auto-failover-and-percona-distribution-for-mysql-8-0-x/) and is also covered by [this HowTo](backups-move-from-external-db.md).
 
@@ -142,7 +142,7 @@ $ kubectl apply -f deploy/cr.yaml
 
 ## System user for replication
 
-Replication channel demands a special [system user](users.md#system-users) with same credentials on both *Source* and *Replica*.
+Replication channel demands a special [system user](users.md#system-users) with the same credentials on both *Source* and *Replica*.
 
 The Operator creates a system-level Percona XtraDB Cluster user named `replication` for this purpose, with
 credentials stored in a Secret object [along with other system users](users.md#system-users).
@@ -165,13 +165,13 @@ If you need you can change a password for this user as follows:
     $ kubectl patch secret/cluster1-secrets -p '{"data":{"replication": "'$(echo -n new_password | base64)'"}}'
     ```
 
-If you have changed the `replication` user’s password on the Source cluster, and you use the Operator version 1.9.0, you can have a *replication is not running* error message in log, similar to the following one:
+If you have changed the `replication` user’s password on the Source cluster, you can have a *replication is not running* error message in log, similar to the following one:
 
 ``` {.text .no-copy}
 {"level":"info","ts":1629715578.2569592,"caller":"zapr/zapr.go 69","msg":"Replication for channel is not running. Please, check the replication status","channel":"pxc2_to_pxc1"}
 ```
 
-Fixing this involves the following steps.
+To fix this error, do the following:
 
 1. Find the Replica Pod which was chosen by the Operator for replication, using the following command:
 
@@ -188,8 +188,19 @@ Fixing this involves the following steps.
 
 3. Execute the following three SQL commands to propagate the `replication` user password from the Source cluster to Replica:
 
-    ```sql
-    STOP REPLICA IO_THREAD FOR CHANNEL '$REPLICATION_CHANNEL_NAME';
-    CHANGE MASTER TO MASTER_PASSWORD='$NEW_REPLICATION_PASSWORD' FOR CHANNEL '$REPLICATION_CHANNEL_NAME';
-    START REPLICA IO_THREAD FOR CHANNEL '$REPLICATION_CHANNEL_NAME';
-    ```
+    === "For Percona XtraDB Cluster 8.0.x and 8.4.x"
+
+        ```sql
+        STOP REPLICA IO_THREAD FOR CHANNEL '$REPLICATION_CHANNEL_NAME';
+        CHANGE REPLICATION SOURCE TO MASTER_PASSWORD='$NEW_REPLICATION_PASSWORD' FOR CHANNEL     '$REPLICATION_CHANNEL_NAME';
+        START REPLICA IO_THREAD FOR CHANNEL '$REPLICATION_CHANNEL_NAME';
+        ```
+
+
+    === "For Percona XtraDB Cluster 5.7.x"
+
+        ```sql
+        STOP REPLICA IO_THREAD FOR CHANNEL '$REPLICATION_CHANNEL_NAME';
+        CHANGE MASTER TO MASTER_PASSWORD='$NEW_REPLICATION_PASSWORD' FOR CHANNEL     '$REPLICATION_CHANNEL_NAME';
+        START REPLICA IO_THREAD FOR CHANNEL '$REPLICATION_CHANNEL_NAME';
+        ```

@@ -2,6 +2,7 @@
 
 {% include 'assets/fragments/update-assumptions.txt' %}
 
+
 ## Procedure
 
 To update Percona XtraDB Cluster to a specific version, do the following:

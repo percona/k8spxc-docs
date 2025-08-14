@@ -1,41 +1,37 @@
 # How to restore backup to a new Kubernetes-based environment
 
-The Operator allows restoring a backup not only on the Kubernetes cluster where
-it was made, but also on any Kubernetes-based environment with the installed
-Operator.
+You can restore from a backup as follows:
 
-When restoring to a new Kubernetes-based environment, make sure it has a Secrets
-object with the same **user passwords** as in the original cluster. More details
-about secrets can be found in [System Users](users.md#system-users).
-The name of the required Secrets object can be found out from the
-`spec.secretsName` key in the `deploy/cr.yaml` (`cluster1-secrets` by default).
+* [On the same cluster where you made a backup](backups-restore.md)
+* On a new cluster deployed in a different Kubernetes-based environment.
 
 To restore a backup, you will use the special restore configuration file. The
 example of such file is [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/backup/restore.yaml). The list of options that can be used in it can
 be found in the [restore options reference](operator.md#perconaxtradbclusterrestore-custom-resource-options).
 
-You will need correct names for the **backup** and the **cluster**. If you have
-access to the original cluster, available backups can be listed with the
-following command:
+This document focuses on the restore on a new cluster deployed in a different Kubernetes environment.
 
-``` {.bash data-prompt="$" }
-$ kubectl get pxc-backup
-```
+??? admonition "For Operator version 1.17.0 and earlier"
 
-And the following command will list available clusters:
+    When restoring to a new Kubernetes-based environment, make sure it has a Secrets
+    object with the same **user passwords** as in the original cluster. More details
+    about secrets can be found in [System Users](users.md#system-users).
+    The name of the required Secrets object can be found out from the
+    `spec.secretsName` key in the `deploy/cr.yaml` (`cluster1-secrets` by default).
 
-``` {.bash data-prompt="$" }
-$ kubectl get pxc
-```
-!!! note
+## Restore scenarios
 
-     If you have [configured storing binlogs for point-in-time recovery](backups-pitr.md),
-     you will have possibility to roll back the cluster to a specific
-     transaction, time (or even skip a transaction in some cases). Otherwise, 
-     restoring backups without point-in-time recovery is the only option.
+This document covers the following restore scenarios:
 
-When the correct names for the backup and the cluster are known, backup
-restoration can be done in the following way.
+* [Restore from a full backup](#restore-from-a-full-backup) - the restore from a backup without point-in-time
+* [Point-in-time recovery](#restore-with-point-in-time-recovery) - restore to a specific time, a specific or  latest transaction or skip a specific transaction during a restore. This ability requires that you [configure storing binlogs for point-in-time recovery](backups-pitr.md)
+
+To restore from a backup, you create a special Restore object using a special restore configuration file. The
+example of such file is [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml).
+
+You can check available options in the [restore options reference](operator.md#perconaxtradbclusterrestore-custom-resource-options).
+
+--8<-- "backups-restore.md:backup-prepare"
 
 ## Restore the cluster without point-in-time recovery
 
