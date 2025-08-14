@@ -234,6 +234,8 @@ For manual installation or update, follow the instructions below:
 
 * [K8SPXC-1669](https://perconadev.atlassian.net/browse/K8SPXC-1669) - Improve the backup flow by generating a default endpoint URL for a storage from a region if it is not provided (Thank you Bernard Grymonpon for reporting this issue)
 
+* [K8SPXC-1677](https://perconadev.atlassian.net/browse/K8SPXC-1677) - Document the changed behavior with pulling images for default manifests on OpenShift 4.19 and update install and update instructions
+
 ### Bugs Fixed
 
 * [K8SPXC-1312](https://perconadev.atlassian.net/browse/K8SPXC-1312) - Fixed the issue with labels not being updated automatically for point-in-time recovery deployment upon Custom Resource changes 
