@@ -16,7 +16,7 @@ file.
 
     * set the `backup.schedule.storageName` key to the name of your [already configured storage](backups-storage.md).
 
-    * you can optionally set the `backup.schedule.keep` key to the number of
+    * you can optionally define the retention policy for backups: how many 
        backups which should be kept in the storage.
 
 Here is an example of the `deploy/cr.yaml` with a scheduled Saturday night
@@ -35,7 +35,10 @@ backup:
   schedule:
    - name: "sat-night-backup"
      schedule: "0 0 * * 6"
-     keep: 3
+     retention:
+        count: 3
+        type: count
+        deleteFromStorage: true
      storageName: s3-us-west
   ...
 ```
