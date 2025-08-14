@@ -344,6 +344,14 @@ The [Kubernetes Service Type :octicons-link-external-16:](https://kubernetes.io/
 | ----------- | ---------- |
 | :material-code-string: string     | `LoadBalancer` |
 
+### `pxc.expose.loadbalancerClass`
+
+Define the implementation of the load balancer you want to use. This setting enables you to select a custom or specific load balancer class instead of the default one provided by the cloud provider.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `"eks.amazonaws.com/nlb"` |
+
 ### `pxc.expose.trafficPolicy`
 
 Specifies whether Service should [route external traffic to cluster-wide or node-local endpoints :octicons-link-external-16:](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip) (it can influence the load balancing effectiveness) **This option is deprecated and will be removed in future releases**. Use `pxc.expose.externalTrafficPolicy` instead.
@@ -1118,13 +1126,6 @@ Minimum consecutive successes for the [liveness probe :octicons-link-external-16
 | ----------- | ---------- |
 | :material-numeric-1-box: int     | `1` |
 
-### `haproxy.readinessProbes.failureThreshold`
-
-When the [liveness probe :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) fails, Kubernetes will try this number of times before marking the Pod Unready.
-
-| Value type  | Example    |
-| ----------- | ---------- |
-| :material-numeric-1-box: int     | `4` |
 
 ### `haproxy.resources.requests.memory`
 
@@ -1286,6 +1287,14 @@ Specifies the type of [Kubernetes Service :octicons-link-external-16:](https://k
 | ----------- | ---------- |
 | :material-code-string: string     | `ClusterIP` |
 
+### `haproxy.exposePrimary.loadBalancerClass`
+
+Define the implementation of the load balancer you want to use. This setting enables you to select a custom or specific load balancer class instead of the default one provided by the cloud provider.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `"eks.amazonaws.com/nlb"` |
+
 ### `haproxy.exposePrimary.externalTrafficPolicy`
 
 Specifies whether Service for HAProxy should [route external traffic to cluster-wide or to node-local endpoints :octicons-link-external-16:](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip) (it can influence the load balancing effectiveness).
@@ -1374,14 +1383,6 @@ Setting it to `true` excludes current MySQL primary instance (writer) from the l
 | ----------- | ---------- |
 | :material-toggle-switch-outline: boolean     | `false` |
 
-### `haproxy.replicasLoadBalancerSourceRanges`
-
-The range of client IP addresses from which the load balancer should be reachable (if not set, no limitations). **This option is deprecated and will be removed in future releases**. Use `haproxy.exposeReplicas.loadBalancerSourceRanges` instead.
-
-| Value type  | Example    |
-| ----------- | ---------- |
-| :material-code-string: string     | `10.0.0.0/8` |
-
 ### `haproxy.exposeReplicas.loadBalancerSourceRanges`
 
 The range of client IP addresses from which the load balancer should be reachable (if not set, no limitations).
@@ -1389,14 +1390,6 @@ The range of client IP addresses from which the load balancer should be reachabl
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-code-string: string     | `10.0.0.0/8` |
-
-### `haproxy.replicasLoadBalancerIP`
-
-The static IP-address for the replicas load balancer. **This option is deprecated and will be removed in future releases**. Use `haproxy.exposeReplicas.loadBalancerIP` instead.
-
-| Value type  | Example    |
-| ----------- | ---------- |
-| :material-code-string: string     | `127.0.0.1` |
 
 ### `haproxy.exposeReplicas.loadBalancerIP`
 
@@ -1406,21 +1399,21 @@ The static IP-address for the replicas load balancer.
 | ----------- | ---------- |
 | :material-code-string: string     | `127.0.0.1` |
 
-### `haproxy.replicasServiceType`
-
-Specifies the type of [Kubernetes Service :octicons-link-external-16:](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) to be used for HAProxy replicas. **This option is deprecated and will be removed in future releases**. Use `haproxy.exposeReplicas.serviceType` instead.
-
-| Value type  | Example    |
-| ----------- | ---------- |
-| :material-code-string: string     | `ClusterIP` |
-
-### `haproxy.exposeReplicas.serviceType`
+### `haproxy.exposeReplicas.type`
 
 Specifies the type of [Kubernetes Service :octicons-link-external-16:](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) to be used for HAProxy replicas.
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-code-string: string     | `ClusterIP` |
+
+### `haproxy.exposeReplicas.loadBalancerClass`
+
+Define the implementation of the load balancer you want to use. This setting enables you to select a custom or specific load balancer class instead of the default one provided by the cloud provider.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `"eks.amazonaws.com/nlb"` |
 
 ### `haproxy.replicasExternalTrafficPolicy`
 
@@ -1446,14 +1439,6 @@ Specifies whether Service for HAProxy replicas should [route internal traffic to
 | ----------- | ---------- |
 | :material-code-string: string     | `Cluster` |
 
-### `haproxy.replicasServiceLabels`
-
-The [Kubernetes labels :octicons-link-external-16:](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) for the `haproxy-replicas` Service. **This option is deprecated and will be removed in future releases**. Use `haproxy.exposeReplicas.labels` instead.
-
-| Value type  | Example    |
-| ----------- | ---------- |
-| :material-label-outline: label     | `rack: rack-22` |
-
 ### `haproxy.exposeReplicas.labels`
 
 The [Kubernetes labels :octicons-link-external-16:](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) for the `haproxy-replicas` Service.
@@ -1461,14 +1446,6 @@ The [Kubernetes labels :octicons-link-external-16:](https://kubernetes.io/docs/c
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-label-outline: label     | `rack: rack-22` |
-
-### `haproxy.replicasServiceAnnotations`
-
-The [Kubernetes annotations :octicons-link-external-16:](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) metadata for the `haproxy-replicas` Service. **This option is deprecated and will be removed in future releases**. Use `haproxy.exposeReplicas.annotations` instead.
-
-| Value type  | Example    |
-| ----------- | ---------- |
-| :material-code-string: string     | `service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp` |
 
 ### `haproxy.exposeReplicas.annotations`
 
@@ -1683,14 +1660,6 @@ Enable or disable exposing ProxySQL nodes with dedicated IP addresses.
 | ----------- | ---------- |
 | :material-toggle-switch-outline: boolean     | `false` |
 
-### `proxysql.serviceType`
-
-Specifies the type of [Kubernetes Service :octicons-link-external-16:](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) to be used. **This option is deprecated and will be removed in future releases**. Use `proxysql.expose.type` instead.
-
-| Value type  | Example    |
-| ----------- | ---------- |
-| :material-code-string: string     | `ClusterIP` |
-
 ### `proxysql.expose.type`
 
 Specifies the type of [Kubernetes Service :octicons-link-external-16:](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) to be used.
@@ -1698,6 +1667,14 @@ Specifies the type of [Kubernetes Service :octicons-link-external-16:](https://k
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-code-string: string     | `ClusterIP` |
+
+### `proxysql.expose.loadBalancerClass`
+
+Define the implementation of the load balancer you want to use. This setting enables you to select a custom or specific load balancer class instead of the default one provided by the cloud provider.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `"eks.amazonaws.com/nlb"` |
 
 ### `proxysql.externalTrafficPolicy`
 
