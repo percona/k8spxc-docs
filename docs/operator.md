@@ -131,7 +131,7 @@ An alternative image for the initial Operator installation. **This option is dep
 
 ### `updateStrategy`
 
-A strategy the Operator uses for [upgrades](update.md#more-on-upgrade-strategies).
+A strategy the Operator uses for [upgrades](update.md#update-strategies).
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -285,7 +285,7 @@ The Version Service URL used to check versions compatibility for upgrade.
 
 ### `upgradeOptions.apply`
 
-Specifies how [updates are processed](update.md#automated-upgrade) by the Operator. `Never` or `Disabled` will completely disable automatic upgrades, otherwise it can be set to `Latest` or `Recommended` or to a specific version string of Percona XtraDB Cluster (e.g. `8.0.19-10.1`) that is wished to be version-locked (so that the user can control the version running, but use automatic upgrades to move between them).
+Specifies how [updates are processed](update-automatic.md) by the Operator. `Never` or `Disabled` will completely disable automatic upgrades, otherwise it can be set to `Latest` or `Recommended` or to a specific version string of Percona XtraDB Cluster (e.g. `8.0.19-10.1`) that is wished to be version-locked (so that the user can control the version running, but use automatic upgrades to move between them).
 
 | Value type  | Example    |
 | ----------- | ---------- |

@@ -2,7 +2,7 @@
 
 You can decide how to run the database upgrades:
 
-* [Automatically](update-minor-automatic.md) - the Operator periodically checks for new versions of the database images and for valid image paths and automatically updates your deployment with the latest, recommended or a specific version of the database and other components included. To do so, the Operator queries a special
+* [Automatically](update-automatic.md) - the Operator periodically checks for new versions of the database images and for valid image paths and automatically updates your deployment with the latest, recommended or a specific version of the database and other components included. To do so, the Operator queries a special
 *Version Service* server at scheduled times. If the current version should be upgraded, the Operator updates the Custom
 Resource to reflect the new image paths and sequentially deletes Pods,
 allowing StatefulSet to redeploy the cluster Pods with the new image.

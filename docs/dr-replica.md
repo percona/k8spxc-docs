@@ -100,7 +100,7 @@ Let's create `cluster2` on the replica site.
 
     * `spec.backupSource.s3.bucket` - the name of the bucket where the backup is stored
     * `spec.backupSource.s3.credentialsSecret` - the name of the Secrets object with the credentials from the backup storage that you created in step 1.
-    * `spec.backupSource.s3.region` - the region where the bucket is located. It must match the region that you defined in the `deploy/cr.yaml` file on when you [made a backup](#create-a-backup-from-the-primary-site).
+    * `spec.backupSource.s3.region` - the region where the bucket is located. It must match the region that you defined in the `deploy/cr.yaml` file on when you [made a backup](dr-primary.md#create-a-backup-from-the-primary-site).
 
 	```yaml
 	apiVersion: pxc.percona.com/v1
