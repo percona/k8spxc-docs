@@ -1,7 +1,7 @@
 # Configure storage for backups
 
 You can configure storage for backups in the `backup.storages` subsection of the
-Custom Resource, using the [deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
+Custom Resource, using the [deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/cr.yaml)
 configuration file.
 
 You should also create the [Kubernetes Secret :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/secret/)
@@ -19,7 +19,7 @@ object with credentials needed to access the storage.
             keys should contain proper values to make the access possible).
 
         Create the Secrets file with these base64-encoded keys following the
-        [deploy/backup/backup-secret-s3.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/backup-secret-s3.yaml)
+        [deploy/backup/backup-secret-s3.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/backup/backup-secret-s3.yaml)
         example:
 
         ```yaml
@@ -93,7 +93,7 @@ object with credentials needed to access the storage.
         The options within the `storages.<NAME>.s3` subsection are further
         explained in the [Operator Custom Resource options](operator.md#operator-backup-section).
 
-        Here is an example of the [deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
+        Here is an example of the [deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/cr.yaml)
         configuration file which configures Amazon S3 storage for backups:
 
         ```yaml
@@ -123,7 +123,7 @@ object with credentials needed to access the storage.
             possible).
 
         Create the Secrets file with these base64-encoded keys following the
-        [deploy/backup/backup-secret-azure.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/backup-secret-azure.yaml) example:
+        [deploy/backup/backup-secret-azure.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/backup/backup-secret-azure.yaml) example:
 
         ```yaml
         apiVersion: v1

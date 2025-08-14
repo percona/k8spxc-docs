@@ -1,7 +1,7 @@
 # Making scheduled backups
 
 Backups schedule is defined in the `backup` section of the Custom
-Resource and can be configured via the [deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml)
+Resource and can be configured via the [deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/cr.yaml)
 file.
 
 1. The `backup.storages` subsection should contain at least one [configured storage](backups-storage.md).

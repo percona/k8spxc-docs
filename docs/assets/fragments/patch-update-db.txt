@@ -9,7 +9,9 @@
 
 4. Update the Custom Resource, the database, backup, proxy and PMM Client image names with a newer version tag. Find the image names [in the list of certified images](images.md).
 
-    We recommend to update the PMM Server **before** the upgrade of PMM Client. If you haven't done it yet, exclude PMM Client from the list of images to update.
+    We recommend to update the PMM Server **before** the upgrade of PMM Client. In order to use PMM3, [upgrade your PMM Server to version 3 :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/pmm-upgrade/migrating_from_pmm_2.html). 
+    
+    If you haven't updated your PMM Server yet, exclude PMM Client from the list of images to update.
 
     Since this is a working cluster, the way to update the Custom Resource is to [apply a patch  :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) with the `kubectl patch pxc` command.
 
@@ -24,8 +26,8 @@
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
                    "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
                    "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
-                   "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc8.0-backup-pxb{{ pxb80recommended }}" },
-                   "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" },
+                   "backup":   { "image": "percona/percona-xtrabackup:{{ pxb80recommended }}" },
+                   "logcollector": { "image": "percona/fluentbit:{{ fluentbitrecommended }}" },
                    "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
                }}'
             ```
@@ -39,8 +41,8 @@
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc57recommended }}" },
                    "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
                    "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
-                   "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc5.7-backup-pxb{{ pxb57recommended }}" },
-                   "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" },
+                   "backup":   { "image": "percona/percona-xtrabackup:{{ pxb57recommended }}" },
+                   "logcollector": { "image": "percona/fluentbit:{{ fluentbitrecommended }}" },
                    "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
                }}'
             ```
@@ -56,8 +58,9 @@
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
                    "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
                    "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
-                   "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc8.0-backup-pxb{{ pxb80recommended }}" },
-                   "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" }
+                   "backup":   { "image": "percona/percona-xtrabackup:{{ pxb80recommended }}" },
+                   "logcollector": { "image": "percona/fluentbit:{{ fluentbitrecommended }}" }
+
                }}'
             ```
 
@@ -70,7 +73,8 @@
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc57recommended }}" },
                    "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
                    "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
-                   "backup":   { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-pxc5.7-backup-pxb{{ pxb57recommended }}" },
-                   "logcollector": { "image": "percona/percona-xtradb-cluster-operator:{{ release }}-logcollector-fluentbit{{ fluentbitrecommended }}" }
+                   "backup":   { "image": "percona/percona-xtrabackup:{{ pxb57recommended }}" },
+                   "logcollector": { "image": "percona/fluentbit:{{ fluentbitrecommended }}" }
+
                }}'
             ```

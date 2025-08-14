@@ -1,6 +1,7 @@
 ## Upgrading Percona XtraDB Cluster to a specific version
 
---8<-- "update-assumptions.md"
+{% include 'assets/fragments/update-assumptions.txt' %}
+
 
 ## Procedure
 
