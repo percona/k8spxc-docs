@@ -2219,6 +2219,15 @@ Address of the PMM Server to collect data from the cluster.
 | ----------- | ---------- |
 | :material-code-string: string     | `monitoring-service` |
 
+### pmm.customClusterName
+
+A custom name to define for a cluster. PMM Server uses this name to properly parse the metrics and display them on dashboards. Using a custom name is useful for clusters deployed in different data centers - PMM Server connects them and monitors them as one deployment. Another use case is for clusters deployed with the same name in different namespaces - PMM treats each cluster separately.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `testClusterName` |
+
+
 ### `pmm.serverUser`
 
 The PMM Server User. The PMM Server password should be configured using Secrets.
