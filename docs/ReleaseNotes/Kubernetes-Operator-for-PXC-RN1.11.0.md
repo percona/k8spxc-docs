@@ -39,7 +39,7 @@
 
 * [K8SPXC-920](https://jira.percona.com/browse/K8SPXC-920): Using the new [Percona XtraBackup Exponential Backoff feature :octicons-link-external-16:](https://docs.percona.com/percona-xtrabackup/8.0/xbcloud/xbcloud_exbackoff.html) decreases the number of occasional unsuccessful backups due to more effective retries timing (Thanks to Dustin Falgout for reporting this issue)
 
-* [K8SPXC-823](https://jira.percona.com/browse/K8SPXC-823): Make it possible [to use API Key](../monitoring.md#operator-monitoring-client-token) to authorize within Percona Monitoring and Management Server
+* [K8SPXC-823](https://jira.percona.com/browse/K8SPXC-823): Make it possible [to use API Key](../monitoring.md#configure-authentication) to authorize within Percona Monitoring and Management Server
 
 ## Bugs Fixed
 
@@ -78,7 +78,7 @@ due to incorrect binlog filtering logic
 
 ## Deprecation, Rename and Removal
 
-* [K8SPXC-823](https://jira.percona.com/browse/K8SPXC-823):  Password-based authorization to Percona Monitoring and Management Server is now deprecated and will be removed in future releases in favor of a token-based one. Password-based authorization was used by the Operator before this release to provide MySQL monitoring, but now using the API Key [is the recommended authorization method](../monitoring.md#operator-monitoring-client-token)
+* [K8SPXC-823](https://jira.percona.com/browse/K8SPXC-823):  Password-based authorization to Percona Monitoring and Management Server is now deprecated and will be removed in future releases in favor of a token-based one. Password-based authorization was used by the Operator before this release to provide MySQL monitoring, but now using the API Key [is the recommended authorization method](../monitoring.md#configure-authentication)
 
 ## Supported Platforms
 

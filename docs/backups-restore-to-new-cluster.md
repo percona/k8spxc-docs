@@ -24,7 +24,7 @@ This document focuses on the restore on a new cluster deployed in a different Ku
 This document covers the following restore scenarios:
 
 * [Restore from a full backup](#restore-from-a-full-backup) - the restore from a backup without point-in-time
-* [Point-in-time recovery](#restore-with-point-in-time-recovery) - restore to a specific time, a specific or  latest transaction or skip a specific transaction during a restore. This ability requires that you [configure storing binlogs for point-in-time recovery](backups-pitr.md)
+* [Point-in-time recovery](#restore-the-cluster-with-point-in-time-recovery) - restore to a specific time, a specific or  latest transaction or skip a specific transaction during a restore. This ability requires that you [configure storing binlogs for point-in-time recovery](backups-pitr.md)
 
 To restore from a backup, you create a special Restore object using a special restore configuration file. The
 example of such file is [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml).
@@ -33,7 +33,7 @@ You can check available options in the [restore options reference](operator.md#p
 
 --8<-- "backups-restore.md:backup-prepare"
 
-## Restore the cluster without point-in-time recovery
+## Restore from a full backup
 
 1. Set appropriate keys in the [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/backup/restore.yaml) file.
 

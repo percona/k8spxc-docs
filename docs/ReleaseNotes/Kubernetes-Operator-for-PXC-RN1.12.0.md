@@ -42,7 +42,7 @@
 * {{ k8spxcjira(1059) }}: Fix a bug due to which `pxc-monit` and `proxysql-monit` containers were printing passwords in their logs (thanks to zlcnju for contribution)
 * {{ k8spxcjira(1099) }}: Fix CrashLoopBackOff error caused by incorrect (non-atomic) multi-user password change
 * {{ k8spxcjira(1100) }}: Fix a bug that made it impossible to use slash characters in the monitor user’s password
-* {{ k8spxcjira(1118) }}: Fix a bug due to which the point-in-time recovery collector only reported  warnings in logs when the gaps in binlogs were found. Starting from now, such backups are marked as not suitable for consistent PITR, and [restoring them with point-in-time recovery fails](../backups-restore.md#backup-pitr-binlog-gaps) without manual user’s intervention
+* {{ k8spxcjira(1118) }}: Fix a bug due to which the point-in-time recovery collector only reported  warnings in logs when the gaps in binlogs were found. Starting from now, such backups are marked as not suitable for consistent PITR, and [restoring them with point-in-time recovery fails](../backups-restore.md#restore-with-point-in-time-recovery) without manual user’s intervention
 * {{ k8spxcjira(1137) }}: Fix a bug that prevented adding, deleting or updating ProxySQL Service labels/annotations except at the Service creation time
 * {{ k8spxcjira(1138) }}: Fix a bug due to which not enough responsive scripts for readiness and liveness Probes could be the reason of killing the overloaded database Pods
 

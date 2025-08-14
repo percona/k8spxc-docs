@@ -68,7 +68,7 @@ troubleshooting
 
 
 * [K8SPXC-599](https://jira.percona.com/browse/K8SPXC-599): It is now possible to
-[recover](../backups-restore.md#restore-the-cluster-with-point-in-time-recovery) databases up to a specific transaction
+[recover](../backups-restore.md#restore-with-point-in-time-recovery) databases up to a specific transaction
 with the Point-in-time Recovery feature. Previously the user could only
 recover to specific date and time
 
