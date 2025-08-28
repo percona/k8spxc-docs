@@ -76,7 +76,8 @@ The only necessary field to create new user is `users.name`, everything else can
 You can create unprivileged users manually. Supposing your cluster name is `cluster1`, the command should look as follows (don't forget to substitute `root_password` with the real root password):
 
 ``` {.bash data-prompt="$" data-prompt-second="mysql>"}
-$ kubectl run -it --rm percona-client --image=percona:8.0 --restart=Never -- mysql -hcluster1-pxc -uroot -proot_password
+MYPASS=`kubectl get secrets cluster1-secrets -o yaml|grep "root:"|awk -F": " '{print $2}'| base64 -d`
+$ kubectl run -it --rm percona-client --image=percona:8.0 --restart=Never -- mysql -hcluster1-pxc -uroot -p$MYPASS
 mysql> GRANT ALL PRIVILEGES ON database1.* TO 'user1'@'%' IDENTIFIED BY 'password1';
 ```
 
