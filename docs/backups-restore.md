@@ -74,7 +74,6 @@ Pass this configuration to the Operator:
         spec:
           pxcCluster: cluster1
           backupName: backup1
-          storageName: s3-us-west
         ```
 
     2. Start the restore with this command:
