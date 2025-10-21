@@ -102,7 +102,6 @@
 
     /* Code */
     --md-code-bg-color: var(--stone800);
-    --md-code-bg-color: var(--stone50);
 
     /* Tables */
     --md-typeset-table-color: hsla(var(--md-hue),17%,21%,0.25)
@@ -136,7 +135,6 @@
     --md-footer-bg-color--dark: var(--stone800);
 
     /* Code */
-    --md-code-bg-color: var(--stone50);
     --md-code-bg-color: var(--stone800);
 }
 
