@@ -11,7 +11,7 @@ be briefly described with the following diagram.
 ![image](assets/images/replication.svg)
 
 Being a regular MySQL Server instance, each node contains the same set
-of data synchronized accross nodes. The recommended configuration is to
+of data synchronized across nodes. The recommended configuration is to
 have at least 3 nodes. In a basic setup with this amount of nodes,
 Percona XtraDB Cluster provides high availability, continuing to
 function if you take any of the nodes down. Additionally load balancing

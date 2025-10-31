@@ -1,12 +1,12 @@
 # How to use backups and asynchronous replication to move an external database to Kubernetes
 
-The Operator enables you to restore a database from a backup made outside of Kubernetes environment to the target Kubernetes cluster using [Percona XtraBackup :octicons-link-external-16:](https://docs.percona.com/percona-xtrabackup/8.0/index.html). In such a way you can migrate your external database to Kubernetes. Using [asyncronous replication :octicons-link-external-16:](replication.md) between source and target environments enables you to reduce downtime and prevent data loss for your application.
+The Operator enables you to restore a database from a backup made outside of Kubernetes environment to the target Kubernetes cluster using [Percona XtraBackup :octicons-link-external-16:](https://docs.percona.com/percona-xtrabackup/8.0/index.html). In such a way you can migrate your external database to Kubernetes. Using [asynchronous replication :octicons-link-external-16:](replication.md) between source and target environments enables you to reduce downtime and prevent data loss for your application.
 
-This document provides the steps how to migrate Percona Server for MySQL 8.0 deployed on premises to the Kubernetes cluster managed by the Operator using [asyncronous replication :octicons-link-external-16:](replication.md). We recommend testing this migration in a non-production environment first, before applying it in production.
+This document provides the steps how to migrate Percona Server for MySQL 8.0 deployed on premises to the Kubernetes cluster managed by the Operator using [asynchronous replication :octicons-link-external-16:](replication.md). We recommend testing this migration in a non-production environment first, before applying it in production.
 
 ## Requirements
 
-1. The MySQL version for source and target environments must be 8.0.22 and higher since asyncronous replication is available starting with MySQL version 8.0.22. 
+1. The MySQL version for source and target environments must be 8.0.22 and higher since asynchronous replication is available starting with MySQL version 8.0.22. 
 2. You must be running [Percona XtraBackup :octicons-link-external-16:](https://docs.percona.com/percona-xtrabackup/8.0/index.html) as the backup tool on source environment. For how to install Percona XtraBackup, see the [installation instructions :octicons-link-external-16:](https://docs.percona.com/percona-xtrabackup/8.0/installation.html)
 3. The storage used to save the backup should be one of the [supported cloud storages](backups-storage.md): AWS S3 or compatible storage, or Azure Blob Storage.
 
@@ -66,7 +66,7 @@ This document provides the steps how to migrate Percona Server for MySQL 8.0 dep
     `replication` system users created by the Operator.
     Use `kubectl get secrets` command to see the list of Secrets objects (by
     default the Secrets object you are interested in has `cluster1-secrets`
-    name). When you know the Secrets name, you can get password for a specfic
+    name). When you know the Secrets name, you can get password for a specific
     user as follows:
 
     ``` {.bash data-prompt="$" }
@@ -144,7 +144,7 @@ This document provides the steps how to migrate Percona Server for MySQL 8.0 dep
 
 ## Restore from a backup in the target environment
 
-If your source database didn't have any data, skip this step and proceed with the [asyncronous replication configuration](#configure-asyncronous-replication-in-the-kubernetes-cluster). Otherwise, restore the database in the target environment.
+If your source database didn't have any data, skip this step and proceed with the [asynchronous replication configuration](#configure-asynchronous-replication-in-the-kubernetes-cluster). Otherwise, restore the database in the target environment.
 
 1. To restore a backup, you will use the special restore configuration file.
    The example of such file is [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/{{release}}/deploy/backup/restore.yaml).
@@ -176,10 +176,10 @@ If your source database didn't have any data, skip this step and proceed with th
 You can find more information on restoring backup to a new Kubernetes-based
 environment and see more examples [in a dedicated HowTo](backups-restore-to-new-cluster.md).
 
-## Configure asyncronous replication in the Kubernetes cluster
+## Configure asynchronous replication in the Kubernetes cluster
 
 This step will allow you to avoid data loss for your application, configuring
-the asyncronous replication between the source database and the target cluster.
+the asynchronous replication between the source database and the target cluster.
 
 1. Edit the Custom Resource manifest `deploy/cr.yaml` in your target environment
     to configure the `spec.pxc.replicationChannels` section.

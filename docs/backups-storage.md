@@ -115,7 +115,7 @@ object with credentials needed to access the storage.
     1. To store backups on the Azure Blob storage, you need to create a
         Secret with the following values:
 
-        * the `metadata.name` key is the name which you wll further use to refer
+        * the `metadata.name` key is the name which you will further use to refer
             your Kubernetes Secret,
         * the `data.AZURE_STORAGE_ACCOUNT_NAME` and `data.AZURE_STORAGE_ACCOUNT_KEY`
             keys are base64-encoded credentials used to access the storage
