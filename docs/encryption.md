@@ -133,7 +133,7 @@ The following steps will deploy Vault on Kubernetes with the [Helm 3 package man
 
         !!! note
 
-            For techincal reasons the `vault_ca` key should either exist
+            For technical reasons the `vault_ca` key should either exist
             or not exist in the YAML file; commented option like
             `#vault_ca = ...` is not acceptable.
 

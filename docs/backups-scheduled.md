@@ -8,8 +8,8 @@ file.
 
 2. The `backup.schedule` subsection allows to actually schedule backups:
 
-    * set the `backup.schedule.name` key to some arbitray backup name (this name
-        will be needed later to [restore the bakup](backups-restore.md)).
+    * set the `backup.schedule.name` key to some arbitrary backup name (this name
+        will be needed later to [restore the backup](backups-restore.md)).
 
     * specify the `backup.schedule.schedule` option with the desired backup
         schedule in [crontab format :octicons-link-external-16:](https://en.wikipedia.org/wiki/Cron).

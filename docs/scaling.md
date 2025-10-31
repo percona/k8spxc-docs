@@ -239,7 +239,7 @@ Pod Autoscaler (HPA) :octicons-link-external-16:](https://kubernetes.io/docs/tas
 It will scale the Custom Resource itself, letting Operator to deal 
 with everything else.
 
-It is also possible to use [Kuvernetes Event-driven Autoscaling (KEDA) :octicons-link-external-16:](https://keda.sh/), 
+It is also possible to use [Kubernetes Event-driven Autoscaling (KEDA) :octicons-link-external-16:](https://keda.sh/), 
 where you can apply more sophisticated logic for decision making on scaling.
 
 For now it is not possible to use Vertical Pod Autoscaler (VPA) with 

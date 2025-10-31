@@ -94,7 +94,7 @@ Secret for environment variables and adding them to the Custom Resource.
 ## Implement custom monitoring solution without PMM
 
 You can deploy your own monitoring solution instead of PMM, but since the Operator will know nothing about it, it will not gain the same level of deployment automation from the Operator side, and there will be no configuration via the Custom Resource.
-The apporach to this is to deploy your monitoring agent as a sidecar container in Percona XtraDB Cluster Pods. See [sidecar containers documentation](sidecar.md) for details.
+The approach to this is to deploy your monitoring agent as a sidecar container in Percona XtraDB Cluster Pods. See [sidecar containers documentation](sidecar.md) for details.
 
 !!! note
 
