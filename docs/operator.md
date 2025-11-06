@@ -344,7 +344,7 @@ The [Kubernetes Service Type :octicons-link-external-16:](https://kubernetes.io/
 | ----------- | ---------- |
 | :material-code-string: string     | `LoadBalancer` |
 
-### `pxc.expose.loadbalancerClass`
+### `pxc.expose.loadBalancerClass`
 
 Define the implementation of the load balancer you want to use. This setting enables you to select a custom or specific load balancer class instead of the default one provided by the cloud provider.
 
