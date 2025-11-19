@@ -72,7 +72,7 @@ $ cd percona-xtradb-cluster-operator
     * set the `storages.<NAME>.s3.credentialsSecret` to the name you used to refer your Kubernetes Secret (`my-cluster-name-backup-s3` in the previous step).
     * specify the S3 bucket name for the `storages.<NAME>.s3.bucket` option
       
-    * specify the  region in the `storages.<NAME>.s3.region` option. 
+    * specify the region in the `storages.<NAME>.s3.region` option. 
     
     <!-- Also you can use the `storages.<NAME>.s3.prefix` option to specify the path (a sub-folder) to the backups inside the S3 bucket. If prefix is not set, backups are stored in the root directory.
       -->
