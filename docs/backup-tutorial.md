@@ -132,8 +132,8 @@ Custom Resource, you can make your first backup.
 
 2. Apply the configuration. This instructs the Operator to start a backup. Specify your namespace instead of the `<namespace>` placeholder:
 
-    ```
-    kubectl apply -f deploy/backup/backup.yaml -n <namespace>
+    ```{.bash data-prompt="$"}
+    $ kubectl apply -f deploy/backup/backup.yaml -n <namespace>
     ```
 
 3. Track the backup progress. 
