@@ -71,7 +71,11 @@ $ cd percona-xtradb-cluster-operator
     * set the `storages.<NAME>.type` to `s3`. Substitute the `<NAME>` part with some arbitrary name that you will later use to refer this storage when making backups and restores.
     * set the `storages.<NAME>.s3.credentialsSecret` to the name you used to refer your Kubernetes Secret (`my-cluster-name-backup-s3` in the previous step).
     * specify the S3 bucket name for the `storages.<NAME>.s3.bucket` option
-    * specify the  region in the `storages.<NAME>.s3.region` option. Also you can use the `storages.<NAME>.s3.prefix` option to specify the path (a sub-folder) to the backups inside the S3 bucket. If prefix is not set, backups are stored in the root directory.
+      
+    * specify the region in the `storages.<NAME>.s3.region` option. 
+    
+    <!-- Also you can use the `storages.<NAME>.s3.prefix` option to specify the path (a sub-folder) to the backups inside the S3 bucket. If prefix is not set, backups are stored in the root directory.
+      -->
 
    	```yaml
    	...
@@ -101,7 +105,7 @@ $ cd percona-xtradb-cluster-operator
 	$ kubectl apply -f deploy/cr.yaml -n <namespace>
 	```
  
-## Make a logical backup
+## Make a physical backup
 
 Now when your have the [configured storage](#configure-backup-storage) in your
 Custom Resource, you can make your first backup.
@@ -129,23 +133,24 @@ Custom Resource, you can make your first backup.
 2. Apply the configuration. This instructs the Operator to start a backup. Specify your namespace instead of the `<namespace>` placeholder:
 
     ```{.bash data-prompt="$"}
-	$ kubectl apply -f deploy/backup/backup.yaml -n <namespace>
-	```
+    $ kubectl apply -f deploy/backup/backup.yaml -n <namespace>
+    ```
 
 3. Track the backup progress. 
 
-    ```{.bash data-prompt="$"}
-	$ kubectl get pxc-backup -n <namespace>
-	```
+    ```
+    kubectl get pxc-backup -n <namespace>
+    ```
 
-	??? example "Output"
+    ??? example "Output"
 
-	    ```{.text .no-copy}
-	    NAME      CLUSTER       STORAGE      DESTINATION                                      STATUS    COMPLETED   AGE
-	    backup1   cluster1      s3-us-west   s3://pxc-operator-testing/2023-10-10T16:36:46Z   Running               43s
-	    ```
+        ```{.text .no-copy}
+        NAME      CLUSTER       STORAGE      DESTINATION                                      STATUS    COMPLETED   AGE
+        backup1   cluster1      s3-us-west   s3://pxc-my-bucket/2023-10-10T16:36:46Z   Running               43s
+        ```
 
-	When the status changes to `Succeeded`, backup is made.
+    When the status changes to `Succeeded`, backup is made.
+
 
 ## Troubleshooting 
 
