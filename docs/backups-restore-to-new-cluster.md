@@ -5,10 +5,6 @@ You can restore from a backup as follows:
 * [On the same cluster where you made a backup](backups-restore.md)
 * On a new cluster deployed in a different Kubernetes-based environment.
 
-To restore a backup, you will use the special restore configuration file. The
-example of such file is [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/backup/restore.yaml). The list of options that can be used in it can
-be found in the [restore options reference](operator.md#perconaxtradbclusterrestore-custom-resource-options).
-
 This document focuses on the restore on a new cluster deployed in a different Kubernetes environment.
 
 ??? admonition "For Operator version 1.17.0 and earlier"
@@ -35,19 +31,19 @@ You can check available options in the [restore options reference](operator.md#p
 
 ## Restore from a full backup
 
-1. Set appropriate keys in the [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/backup/restore.yaml) file.
+Configure the `PerconaXtraDBClusterRestore` Custom Resource. Specify the following keys in the [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/backup/restore.yaml) file:
 
-    * set `spec.pxcCluster` key to the name of the target cluster to restore
-        the backup on,
+* set `spec.pxcCluster` key to the name of the target cluster to restore the backup on,
 
-    * set `spec.backupSource` subsection to point on the appropriate PVC, or
-        cloud storage:
+* configure the `spec.backupSource` subsection to point to the PVC or the cloud storage where the backup is stored. 
+
+    === "PVC volume"
+
+        The `spec.backupSource` subsection should include:
         
-        === "PVC volume"
-
-            The `storageName` key should contain the storage name (which
-            should be configured in the main CR), and the `destination` key
-            should be equal to the PVC Name:
+        * `storageName` - the storage name, which
+            should be configured in the main CR
+        * `destination` key should be equal to the PVC Name:
 
             ```yaml
             ...
@@ -69,24 +65,27 @@ You can check available options in the [restore options reference](operator.md#p
 
         === "S3-compatible storage"
 
-            The `destination` key should have value composed of three parts:
-            the `s3://` prefix, the S3 [bucket :octicons-link-external-16:](https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingBucket.html),
-            and the backup name, which you have already found out using the
-            `kubectl get pxc-backup` command. Also you should add necessary
-            S3 configuration keys, [same](backups-storage.md) as those used
-            to configure S3-compatible storage for backups in the
-            `deploy/cr.yaml` file:
+            The `spec.backupSource` subsection should include:
+            
+            * a destination key. Take it from the output of the `kubectl get pxc-backup` command. The destination consists of the `s3://` prefix, the S3 bucket name
+            and the backup name.
+            * the necessary [storage configuration keys](backups-storage.md#configure-storage-for-backups), just like in the `deploy/cr.yaml` file of the source cluster.
+            * `verifyTLS` to verify the storage server TLS certificate
+            * the custom TLS configuration if you use it for backups. Refer to the [backups-storage.md#configure-tls-verification-with-custom-certificates-for-s3-storage] section for more information.
 
             ```yaml
             ...
             backupSource:
+              verifyTLS: true
               destination: s3://S3-BUCKET-NAME/BACKUP-NAME
               s3:
                 bucket: S3-BUCKET-NAME
                 credentialsSecret: my-cluster-name-backup-s3
                 region: us-west-2
                 endpointUrl: https://URL-OF-THE-S3-COMPATIBLE-STORAGE
-                ...
+                caBundle: #If you use custom TLS certificates for S3 storage
+                  name: minio-ca-bundle
+                  key: ca.crt
             ```
 
         === "Azure Blob storage"

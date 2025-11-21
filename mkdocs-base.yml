@@ -44,6 +44,7 @@ theme:
     - search.highlight
     - navigation.top
     - content.tabs.link
+    - content.code.copy
 
 extra_css:
   - https://unicons.iconscout.com/release/v3.0.3/css/line.css
@@ -148,9 +149,9 @@ plugins:
     enabled: true
 
 # Google Analytics configuration
-  analytics:
-    provider: google
-    property: G-J4J70BNH0G
+analytics:
+  provider: google
+  property: G-J4J70BNH0G
 
 
 extra: # Used in main.html template and can't be externalized
@@ -224,7 +225,12 @@ nav:
              - dr-replication.md
              - dr-failover.md
              - dr-restore.md
-          - "Transport Encryption (TLS/SSL)": TLS.md
+          - "Transport Encryption (TLS/SSL)": 
+             - "About TLS / SSL security": TLS.md
+             - "Install and use the cert-manager": tls-cert-manager.md
+             - "Generate certificates manually": tls-manual.md
+             - "Update certificates": tls-update.md
+             - "Run Percona XtraDB Cluster without TLS": tls-disable.md
           - "Data at rest encryption": encryption.md
           - "Telemetry": telemetry.md
           
