@@ -2842,7 +2842,7 @@ configuration file. This Custom Resource contains the following options:
 | credentialsSecret| string            | The Secret name for the backup                 | true     |
 | endpointUrl      | string            | A valid endpoint URL                           | false    |
 | region           | string            | The region corresponding to the S3 bucket      | false    |
-| caBundle         | subdoc   | Configuration for custom self-issued TLS certificcates | false
+| caBundle         | subdoc   | Configuration for custom self-issued TLS certificates | false
 
 #### backupSource.s3.caBundle subsection
 
