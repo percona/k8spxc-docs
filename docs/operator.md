@@ -2060,6 +2060,14 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 | ----------- | ---------- |
 | :material-code-string: string     | `600m` |
 
+### `proxysql.sidecars.securityContext`
+
+A custom [Kubernetes Security Context :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container) for a sidecar container to be used instead of the default one.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-text-long: subdoc     | privileged: false |
+
 ### `proxysql.lifecycle.preStop.exec.command`
 
 Command for the [preStop lifecycle hook :octicons-link-external-16:](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/) for ProxySQL Pods.
