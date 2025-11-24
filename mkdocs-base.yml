@@ -148,6 +148,7 @@ plugins:
     enabled: true
 
 # Google Analytics configuration
+extra:
   analytics:
     provider: google
     property: G-J4J70BNH0G
