@@ -72,7 +72,7 @@ The Operator tracks password changes in the Secret object and automatically upda
 
 #### Customize password generation by the Operator
 
-By default, the Operator generates user passwords using alphanumeric characters plus a set of special symbols. The password length is randomly chosen in the range of 16 to 22 characters.
+By default, the Operator generates user passwords using alphanumeric characters plus a set of special symbols. The password length is randomly chosen in the range of 16 to 20 characters.
 
 To ensure compatibility with tools that may not support certain special symbols or require a different password length, you can customize password generation using the `passwordGenerationOptions` subsection in the Custom Resource:
 
