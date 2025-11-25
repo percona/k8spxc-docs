@@ -79,45 +79,132 @@ $ echo "MTAwMA==" | base64 --decode
     $ kubectl apply -f deploy/cr.yaml
     ```
 
-## Configure alternative memory allocator
+## Configure memory allocator
 
-You can use an alternative memory allocator library for `mysqld` to optimize memory usage. This is often recommended when memory usage is higher than expected.
+You can use an alternative memory allocator library for `mysqld` to optimize memory usage. This is often recommended when memory usage is higher than expected or when you need better memory fragmentation handling.
 
-The Percona XtraDB Cluster Pods include the jemalloc allocator. You can enable it with the `LD_PRELOAD` environment variable:
+Percona XtraDB Cluster supports two alternative memory allocators:
 
-```bash
-LD_PRELOAD=/usr/lib64/libjemalloc.so.1
-```
+* **jemalloc** - A general-purpose memory allocator that emphasizes fragmentation avoidance and scalable concurrency support
+* **tcmalloc** - Google's memory allocator optimized for performance
 
-Here's how:
+By default, Percona XtraDB Cluster uses the standard libc allocator. You can switch to an alternative allocator using the `mysqlAllocator` option in your Custom Resource.
 
-1. Create a Secret with the encoded value. This is the example of the Secret's YAML manifest:
+!!! note
+
+    The `mysqlAllocator` option is available only for Percona XtraDB Cluster 8.0 and later. For PXC 5.7, you must use the legacy method with environment variables. See the [Legacy method using environment variables](#legacy-method-using-environment-variables) section.
+
+### Configure using mysqlAllocator option
+
+The recommended way to configure the memory allocator is using the `mysqlAllocator` option in the Custom Resource. This method is simpler and doesn't require creating Secrets.
+
+Edit your `deploy/cr.yaml` file and add the `mysqlAllocator` option to the `pxc` section:
 
 ```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: my-new-env-var-secrets
-type: Opaque
-data:
-  LD_PRELOAD: L3Vzci9saWI2NC9saWJqZW1hbGxvYy5zby4x
+spec:
+  pxc:
+    mysqlAllocator: jemalloc
 ```
 
-2. Create the Secret object:
+Valid values are:
 
-    ```{.bash data-prompt="$" }
-    $ kubectl create -f deploy/my-new-env-var-secret.yaml
+* `jemalloc` - Use jemalloc memory allocator
+* `tcmalloc` - Use tcmalloc memory allocator
+* Empty or omitted - Use the default libc allocator
+
+**Example configuration for jemalloc:**
+
+```yaml
+spec:
+  pxc:
+    mysqlAllocator: jemalloc
+```
+
+**Example configuration for tcmalloc:**
+
+```yaml
+spec:
+  pxc:
+    mysqlAllocator: tcmalloc
+```
+
+Apply the configuration:
+
+```{.bash data-prompt="$" }
+$ kubectl apply -f deploy/cr.yaml
+```
+
+### Legacy method using environment variables
+
+If you're using Percona XtraDB Cluster 5.7, or if you need to set a custom allocator path, you can use environment variables via Kubernetes Secrets.
+
+!!! note
+
+    This setup takes precedence over the `mysqlAllocator` option in the Custom Resource. The Operator checks for `LD_PRELOAD` in the Secret first, and if found, uses that value regardless of the `mysqlAllocator` setting.
+
+1. Encode the allocator library path. For jemalloc:
+
+    === "On Linux"
+
+        ```{.bash data-prompt="$" }
+        $ echo -n "/usr/lib64/libjemalloc.so.1" | base64 --wrap=0
+        ```
+
+    === "On macOS"
+
+        ```{.bash data-prompt="$" }
+        $ echo -n "/usr/lib64/libjemalloc.so.1" | base64
+        ```
+
+2. Create a Secret with the encoded value:
+
+    ```yaml
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: my-allocator-secret
+    type: Opaque
+    data:
+      LD_PRELOAD: L3Vzci9saWI2NC9saWJqZW1hbGxvYy5zby4x
     ```
 
-3. Add the Secret to the PXC section in your `deploy/cr.yaml` file:
+3. Create the Secret:
+
+    ```{.bash data-prompt="$" }
+    $ kubectl create -f deploy/my-allocator-secret.yaml
+    ```
+
+4. Add the Secret to the PXC section in your `deploy/cr.yaml` file:
 
     ```yaml
     pxc:
-      envVarsSecret: my-new-env-var-secrets
+      envVarsSecret: my-allocator-secret
     ```
 
-4. Apply the configuration:
+5. Apply the configuration:
 
     ```{.bash data-prompt="$" }
     $ kubectl apply -f deploy/cr.yaml
     ```
+
+### Verify the memory allocator
+
+To verify which memory allocator is being used, exec into a PXC Pod and check the linked libraries:
+
+```{.bash data-prompt="$" }
+$ kubectl exec -it cluster1-pxc-0 -- ldd /usr/bin/mysqld | grep -E "jemalloc|tcmalloc|malloc"
+```
+
+If jemalloc is active, you'll see output like:
+
+```
+libjemalloc.so.1 => /usr/lib64/libjemalloc.so.1 (0x...)
+```
+
+If tcmalloc is active, you'll see:
+
+```
+libtcmalloc_minimal.so.4 => /usr/lib64/libtcmalloc_minimal.so.4 (0x...)
+```
+
+If neither appears, the standard libc allocator is being used.
