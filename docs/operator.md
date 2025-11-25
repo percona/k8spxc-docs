@@ -2783,6 +2783,34 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 | ----------- | ---------- |
 | :material-code-string: string     | `700m` |
 
+## Password generation section
+
+This section contains the options to customize password generation for user Secrets
+
+### `passwordGenerationOptions.symbols`
+
+Specify what special symbols to use when generating user passwords
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `"!#$%&()*+,-.<=>?@[]^_{}~"` |
+
+### `passwordGenerationOptions.maxLength`
+
+Specify the max password length for user passwords
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int | `20` | 
+
+### `passwordGenerationOptions.minLength`
+
+Specify the min password length for user passwords
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int | `16` |
+
 ## <a name="operator-backupsource-section"></a> PerconaXtraDBClusterRestore Custom Resource options
 
 [Percona XtraDB Cluster Restore](backups-restore.md) options are managed by the Operator via the 
