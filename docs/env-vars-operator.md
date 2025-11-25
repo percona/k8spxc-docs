@@ -151,12 +151,36 @@ The following environment variables are automatically set by Kubernetes and shou
 
 #### Using kubectl patch
 
-You can update environment variables in an existing Operator Deployment:
+You can update environment variables in an existing Operator Deployment by applying a patch. To keep existing environment variables, you must specify the full list of them.
 
-``` {.bash data-prompt="$" }
-$ kubectl patch deployment percona-xtradb-cluster-operator \
-  -p '{"spec":{"template":{"spec":{"containers":[{"name":"percona-xtradb-cluster-operator","env":[{"name":"S3_WORKERS_LIMIT","value":"20"}]}]}}}}'
+Here's how to do it:
+
+1. Get the current environment variables:
+
+    ```bash
+    kubectl get deployment percona-xtradb-cluster-operator -o jsonpath='{.spec.template.spec.containers[?(@.name=="percona-xtradb-cluster-operator")].env}'
+    ```
+
+2. Edit the output to add or update your variable (e.g., `S3_WORKERS_LIMIT`), then use the full list in your patch:
+
+    ```bash
+    kubectl patch deployment percona-xtradb-cluster-operator \
+      -p '{"spec":{"template":{"spec":{"containers":[{"name":"percona-xtradb-cluster-operator","env":[
+        {"name":"POD_NAME","valueFrom":{"fieldRef":{"fieldPath":"metadata.name"}}},
+        {"name":"OPERATOR_NAME","value":"percona-xtradb-cluster-operator"},
+        {"name":"S3_WORKERS_LIMIT","value":"20"}
+      ]}}]}}}'
+    ```
+
+#### Using kubectl edit
+
+You can also edit the Deployment directly:
+
+```{.bash data-prompt="$" }
+$ kubectl edit deployment percona-xtradb-cluster-operator
 ```
+
+Then modify the `env` section in the container specification.
 
 #### Using Helm
 
