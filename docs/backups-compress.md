@@ -8,7 +8,7 @@ key in the `deploy/cr.yaml` configuration file. Specify the following options fr
 
 ```yaml
 pxc:
-  image: percona/percona-xtradb-cluster:{{pxb84recommended}}
+  image: percona/percona-xtradb-cluster:{{pxb80recommended}}
   configuration: |
     ...
     [sst]
