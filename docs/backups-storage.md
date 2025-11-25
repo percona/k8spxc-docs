@@ -81,9 +81,6 @@ Before configuring the storage, you need to create a [Kubernetes Secret :octicon
                 bucket: S3-BACKUP-BUCKET-NAME-HERE
                 region: us-west-2
                 credentialsSecret: my-cluster-name-backup-s3
-                caBundle:
-                  name: minio-ca-bundle
-                  key: tls.cert
           ...
         ```
         
@@ -109,7 +106,7 @@ Before configuring the storage, you need to create a [Kubernetes Secret :octicon
         2. Modify the S3 storage configuration in the Custom Resource and specify the following information:
 
             * `storages.<NAME>.s3.caBundle.name` is the name of the Secret object you created previously
-            * `storages.<NAME>.s3.caBundle.key` is the CA certificate. 
+            * `storages.<NAME>.s3.caBundle.key` is the CA certificate to use. 
            
             Here's the example configuration:
 
