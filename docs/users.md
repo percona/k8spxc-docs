@@ -153,7 +153,7 @@ The following table shows system user names and purposes.
 | ProxySQLAdmin  | proxyadmin   | proxyadmin          | ProxySQL administrative user, can be used to [add general-purpose ProxySQL users :octicons-link-external-16:](https://github.com/sysown/proxysql/wiki/Users-configuration) |
 | Backup         | xtrabackup   | xtrabackup          | The [user to run backups :octicons-link-external-16:](https://www.percona.com/doc/percona-xtrabackup/2.4/using_xtrabackup/privileges.html), granted `all` privileges for the [point-in-time recovery](backups-pitr.md) needs |
 | Monitoring     | monitor      | monitor             | User for internal monitoring purposes like liveness/readiness checks and [PMM agent :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/install-pmm/install-pmm-server/index.html) |
-| PMM Server token  | should be set through the [operator options](operator.md) | pmmservertoken | [The service token used to access PMM server version 3](monitoring.md#configure-authentication). For PMM 2, use API key. |
+| PMM Server token  | Should be set through the [operator options](operator.md) | pmmservertoken | [The service token used to access PMM server version 3](monitoring.md#configure-authentication). For PMM 2, use API key. |
 | Operator Admin | operator     | operator            | Database administrative user, should be used only by the Operator |
 | Replication    | replication  | replication         | Administrative user needed for [cross-site Percona XtraDB Cluster](replication.md) |
 
