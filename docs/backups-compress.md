@@ -18,6 +18,6 @@ pxc:
     ...
 ```
 
-When enabled, compression will be used for both backups and [SST :octicons-link-external-16:](https://docs.percona.com/percona-xtradb-cluster/8.4/state-snapshot-transfer.html).
+When enabled, compression will be used for both backups and [SST :octicons-link-external-16:](https://docs.percona.com/percona-xtradb-cluster/8.0/state-snapshot-transfer.html).
 
 
