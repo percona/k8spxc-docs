@@ -108,7 +108,7 @@ as follows.
     --from-file=tls.crt=server.pem.old \
     --from-file=tls.key=server-key.pem.old \
     --from-file=ca.crt=ca.pem.combined \
-    --type=kubernetes.io/tls -o yaml --dry-run=client | kubectl apply -f -
+    --type=Opague -o yaml --dry-run=client | kubectl apply -f -
     ```
 
 5. The cluster will go through a rolling restart. This process will not cause issues, because every node has the old TLS certificate/key, and both new
@@ -121,7 +121,7 @@ as follows.
     --from-file=tls.crt=server.pem \
     --from-file=tls.key=server-key.pem \
     --from-file=ca.crt=ca.pem.combined \
-    --type=kubernetes.io/tls -o yaml --dry-run=client | kubectl apply -f -
+    --type=Opague -o yaml --dry-run=client | kubectl apply -f -
     ```
 
 7. The cluster will go through a rolling restart. This process will not cause issues, because every node already has a new CA certificate (as a part
@@ -137,7 +137,7 @@ as follows.
     --from-file=tls.crt=server.pem \
     --from-file=tls.key=server-key.pem \
     --from-file=ca.crt=ca.pem \
-    --type=kubernetes.io/tls -o yaml --dry-run=client | kubectl apply -f -
+    --type=Opague -o yaml --dry-run=client | kubectl apply -f -
     ```
 
 9. The cluster will go through a rolling restart, but it will do it

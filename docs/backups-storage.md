@@ -102,7 +102,7 @@ Before configuring the storage, you need to create a [Kubernetes Secret :octicon
 
         To configure TLS verification with custom certificates, do the following:
 
-        1. Create the Secret object that contains the TLS certificate to access the S3 storage, the certificate's private key and the CA certificate.
+        1. Create the Secret object that contains the CA certificate used for authentication to S3 storage
         2. Modify the S3 storage configuration in the Custom Resource and specify the following information:
 
             * `storages.<NAME>.s3.caBundle.name` is the name of the Secret object you created previously
