@@ -92,7 +92,7 @@ By default, Percona XtraDB Cluster uses the standard libc allocator. You can swi
 
 !!! note
 
-    The `mysqlAllocator` option is available for both Percona XtraDB Cluster 8.0 and 5.7. However, official PXC 5.7 images do not include the `jemalloc` or `tcmalloc` libraries by default, so setting `mysqlAllocator` in 5.7 will have no effect.
+    The `mysqlAllocator` option is available for Percona XtraDB Cluster 8.0 and above. Official PXC 5.7 images do not include the `jemalloc` or `tcmalloc` libraries by default, so setting `mysqlAllocator` in 5.7 will have no effect.
 
 ### Configure using `mysqlAllocator` option
 
