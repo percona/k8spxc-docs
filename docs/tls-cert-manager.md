@@ -65,4 +65,48 @@ The steps to install the *cert-manager* are the following:
         cert-manager-webhook-58f4cff74d-th4pp      1/1     Running   0          65s
         ```
 
-Once you create the database with the Operator, it will automatically trigger the cert-manager to create certificates. Whenever you check certificates for expiration, you will find that they are valid and short-term.
+At this point, you can move on to [deploying the Operator and your database cluster](kubectl.md).
+
+## Customize certificate duration for cert-manager
+
+When you deploy the cluster using the default configuration, the Operator triggers the cert-manager to create certificates
+with default duration of 90 days. 
+
+You can also customize the certificate duration. For example, to align certificate lifetimes with your organization’s security and compliance policies.
+
+### Rules and limitations
+
+Check the following rules and limitations for setting up the certificate duration:
+
+1. You can set the duration **only when you create a new cluster**. Updating it in a running cluster is not supported.
+2. The TLS certificate duration is subject to the following requirements:
+
+    - The minimum accepted value is 1 hour. Durations below 1 hour are rejected.
+    - Do **not** set the duration to exactly 1 hour; the Operator will fail to generate the correct certificate object if you do.
+    - By default, cert-manager starts the renewal process when a certificate has one-third of its lifetime remaining, ensuring renewal before expiration. For example, if a certificate is valid for 1 hour, renewal will begin after approximately 40 minutes.
+
+3. Minimum CA certificate duration is 730 hours (approximately 30 days)
+
+### Configuration
+
+To set the custom duration, specify the following options in the Custom Resource:
+
+* `.spec.tls.certValidityDuration` – validity period for TLS certificates
+* `.spec.tls.caValidityDuration` – validity period for the Certificate Authority (CA)
+
+Here's the example configuration:
+
+```yaml
+  tls:
+    enabled: true
+    certValidityDuration: 2160h
+    caValidityDuration: 26280h
+```
+
+Create a new cluster with this configuration:
+
+```bash
+kubectl -f deploy/cr.yaml -n <namespace>
+```
+
+To verify the durations, you can [check certificates for expiration](tls-update.md#check-your-certificates-for-expiration) at any time. This ensures your certificates are valid and helps you plan for renewals before they expire.

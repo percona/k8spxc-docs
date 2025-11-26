@@ -239,6 +239,22 @@ Enables or disables the [TLS encryption](TLS.md). If set to `false`,
 | ----------- | ---------- |
 | :material-toggle-switch-outline: boolean     | `true` |
 
+### `tls.certValidityDuration`
+
+Validity period for TLS certificates. Minimum required validity is 1 hour. Durations lower than 1 hour are rejected. Setting the duration to exactly 1 hour prevents the Operator from generating the correct certificate object.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `2160h` |
+
+### `tls.caValidityDuration`
+
+Validity period for CA certificate. Minimum accepted duration is 730 hours (approximately 30 days).
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `26280h` |
+
 ### `tls.SANs`
 
 Additional domains (SAN) to be added to the TLS certificate within the extended cert-manager configuration.
