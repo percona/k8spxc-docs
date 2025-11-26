@@ -94,7 +94,7 @@ See [Telemetry](telemetry.md) for more information about what data is collected.
 
 ### `S3_WORKERS_LIMIT`
 
-This variable limits the number of parallel workers used for both backup uploads and deletions to S3-compatible storage (AWS S3, MinIO, etc.). The same worker pool is used for both operations. Available since Operator version 1.8.0.
+This variable limits the number of parallel workers used for both backup deletion from the S3-compatible storage (AWS S3, MinIO, etc.). The same worker pool is used for both operations. Available since Operator version 1.8.0.
 
 **When to use:**
 
