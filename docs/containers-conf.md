@@ -92,9 +92,9 @@ By default, Percona XtraDB Cluster uses the standard libc allocator. You can swi
 
 !!! note
 
-    The `mysqlAllocator` option is available only for Percona XtraDB Cluster 8.0 and later. For PXC 5.7, you must use the legacy method with environment variables. See the [Legacy method using environment variables](#legacy-method-using-environment-variables) section.
+    The `mysqlAllocator` option is available for both Percona XtraDB Cluster 8.0 and 5.7. However, official PXC 5.7 images do not include the `jemalloc` or `tcmalloc` libraries by default, so setting `mysqlAllocator` in 5.7 will have no effect.
 
-### Configure using mysqlAllocator option
+### Configure using `mysqlAllocator` option
 
 The recommended way to configure the memory allocator is using the `mysqlAllocator` option in the Custom Resource. This method is simpler and doesn't require creating Secrets.
 
@@ -134,9 +134,11 @@ Apply the configuration:
 $ kubectl apply -f deploy/cr.yaml
 ```
 
+Be aware that this triggers a rolling restart of your cluster Pods.
+
 ### Legacy method using environment variables
 
-If you're using Percona XtraDB Cluster 5.7, or if you need to set a custom allocator path, you can use environment variables via Kubernetes Secrets.
+If you need to set a custom allocator path, you can use environment variables via Kubernetes Secrets.
 
 !!! note
 
@@ -186,6 +188,8 @@ If you're using Percona XtraDB Cluster 5.7, or if you need to set a custom alloc
     ```{.bash data-prompt="$" }
     $ kubectl apply -f deploy/cr.yaml
     ```
+
+Be aware that this triggers a rolling restart of your cluster Pods.
 
 ### Verify the memory allocator
 
