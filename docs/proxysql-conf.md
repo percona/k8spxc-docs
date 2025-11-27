@@ -314,7 +314,7 @@ You should see queries distributed across multiple nodes instead of all going to
 
 ## Scheduler behavior
 
-After you enabled the scheduler, it works as follows:
+After you enable the scheduler, it works as follows:
 
 * **Writer node**: The scheduler sets `pod-0` (the first PXC Pod) as the writer node by default. The scheduler ensures only one writer exists at any time. As long as `pod-0` is available, it remains the writer.
 
