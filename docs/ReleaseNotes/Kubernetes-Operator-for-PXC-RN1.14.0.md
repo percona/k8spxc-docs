@@ -18,6 +18,8 @@ Within this release, a [Quickstart guide](../quickstart.md) was added to the Ope
 
 Kubernetes supports the Persistent Volume expansion as a stable feature since v1.24. Using it with the Operator previously involved manual operations. Now this is automated, and users can resize their PVCs [by just changing the value](../scaling.md#scale-storage) of the `resources.requests.storage` option in the PerconaXtraDBCluster custom resource. This feature is in a technical preview stage and is not recommended for production environments.
 
+*Update from  November 24, 2025* Though the Operator automates the storage resizing, the users must still trigger the process by modifying the Custom Resource and applying the new configuration.  
+
 ## New Features 
 
 

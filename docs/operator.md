@@ -637,6 +637,20 @@ A secret with environment variables, see [Define environment variables](containe
 | ----------- | ---------- |
 | :material-code-string: string     | `my-env-var-secrets` |
 
+### `pxc.mysqlAllocator`
+
+Specifies which memory allocator to use for the MySQL process. Available since Operator version 1.19.0 for Percona XtraDB Cluster 8.0 and later. 
+
+Supported values: `jemalloc`, `tcmalloc`. When left empty or omitted, the default `libc` allocator is used.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `jemalloc` |
+
+!!! warning
+
+    If you have `LD_PRELOAD` set in a Secret referenced by `pxc.envVarsSecret`, that value takes precedence over the `mysqlAllocator` option. The Operator checks for `LD_PRELOAD` in the Secret first, and if found, uses that value regardless of the `mysqlAllocator` setting.
+
 ### `pxc.resources.requests.memory`
 
 The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Percona XtraDB Cluster container.
@@ -2059,6 +2073,14 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-code-string: string     | `600m` |
+
+### `proxysql.sidecars.securityContext`
+
+A custom [Kubernetes Security Context :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container) for a sidecar container to be used instead of the default one.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-text-long: subdoc     | privileged: false |
 
 ### `proxysql.lifecycle.preStop.exec.command`
 
