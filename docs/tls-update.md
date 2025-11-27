@@ -17,7 +17,7 @@ If you [use cert-manager](tls-cert-manager.md):
 1. Check the necessary secrets names (`cluster1-ssl` and
     `cluster1-ssl-internal` by default):
 
-    ``` {.bash data-prompt="$" }
+    ```bash
     kubectl get certificate
     ```
 
@@ -90,9 +90,9 @@ as follows.
    and the TLS certificate key (`tls.key.old`):
 
     ```bash
-    kubectl get secret/ps-cluster1-ssl -o jsonpath='{.data.ca\.crt}' | base64 --decode > ca.pem.old
-    kubectl get secret/ps-cluster1-ssl -o jsonpath='{.data.tls\.crt}' | base64 --decode > tls.pem.old
-    kubectl get secret/ps-cluster1-ssl -o jsonpath='{.data.tls\.key}' | base64 --decode > tls.key.old
+    kubectl get secret/cluster1-ssl -o jsonpath='{.data.ca\.crt}' | base64 --decode > ca.pem.old
+    kubectl get secret/cluster1-ssl -o jsonpath='{.data.tls\.crt}' | base64 --decode > tls.pem.old
+    kubectl get secret/cluster1-ssl -o jsonpath='{.data.tls\.key}' | base64 --decode > tls.key.old
     ```
 
 3. Combine new and current `ca.pem` into a `ca.pem.combined` file:
@@ -104,7 +104,7 @@ as follows.
 4. Create a new Secrets object with the *old* TLS certificate (`tls.pem.old`) and key (`tls.key.old`), but a *new combined* `ca.pem` (`ca.pem.combined`):
 
     ``` bash
-    kubectl create secret generic ps-cluster1-ssl \
+    kubectl create secret generic cluster1-ssl \
     --from-file=tls.crt=server.pem.old \
     --from-file=tls.key=server-key.pem.old \
     --from-file=ca.crt=ca.pem.combined \
@@ -117,7 +117,7 @@ as follows.
 6. Create a new Secrets object again. This time use a new TLS certificate (`server.pem` in the example) and a new TLS key (`server-key.pem`), and again the combined CA certificate (`ca.pem.combined`):
 
     ``` bash
-    kubectl create secret generic ps-cluster1-ssl \
+    kubectl create secret generic cluster1-ssl \
     --from-file=tls.crt=server.pem \
     --from-file=tls.key=server-key.pem \
     --from-file=ca.crt=ca.pem.combined \
@@ -133,7 +133,7 @@ as follows.
    its key (`server-key.pem`), and only the new CA certificate (`ca.pem`):
 
     ``` bash
-    kubectl create secret generic ps-cluster1-ssl \
+    kubectl create secret generic cluster1-ssl \
     --from-file=tls.crt=server.pem \
     --from-file=tls.key=server-key.pem \
     --from-file=ca.crt=ca.pem \
