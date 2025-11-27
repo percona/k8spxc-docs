@@ -115,6 +115,7 @@ plugins:
     enabled: !ENV [CI, false]
     repository: percona/k8spxc-docs
     branch: "main"
+  open-in-new-tab: {}
   meta-descriptions:
     export_csv: false
     quiet: false
