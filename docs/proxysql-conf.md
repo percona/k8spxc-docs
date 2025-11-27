@@ -326,7 +326,7 @@ After you enable the scheduler, it works as follows:
 
     When the scheduler is enabled, ProxySQL clustering is disabled. Each ProxySQL instance manages its own server configuration independently. This ensures proper read/write splitting but means ProxySQL instances do not share configuration.
 
-By default, ProxySQL scheduler will distribute read requests evenly across all your cluster nodes. You can exclude the primary from processing reads and reserve it only for accepting write requests by setting the `writerIsAlsoReader` option to `false`.
+By default, the ProxySQL scheduler distributes read requests evenly across all your cluster nodes. You can exclude the primary from processing reads and reserve it only for accepting write requests by setting the `writerIsAlsoReader` option to `false`.
 
 You can additionally fine-tune the scheduler's behavior for your workload and deployment scenario. See the [Custom resource](operator.md#proxysqlschedulerenabled) reference for a complete list of available options.
 
