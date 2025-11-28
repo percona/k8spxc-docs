@@ -22,8 +22,7 @@ $ kubectl patch pxc cluster1 --type=merge --patch '{
 !!! warning
 
     Switching from ProxySQL to HAProxy will cause Percona XtraDB Cluster Pods
-    restart. Switching from HAProxy to ProxySQL is not possible, and if you need
-    ProxySQL, this should be configured at cluster creation time.
+    restart. 
 
 ## HAProxy services
 
@@ -46,7 +45,7 @@ The `cluster1-haproxy` service listens on the following ports:
    The [haproxy.enabled](operator.md#haproxyexposeprimaryenabled)
     Custom Resource option enables or disables `cluster1-haproxy` service.
 
-By default, the `cluster1-haproxy` service points to the number zero Percona XtraDB Cluster member (`cluster1-pxc-0`), when this member is available. If a zero member is not available, members are selected in descending order of their
+By default, the `cluster1-haproxy` service points to the first Percona XtraDB Cluster member (`cluster1-pxc-0`), when this member is available. If it is not available, members are selected in descending order of their
 numbers: `cluster1-pxc-2`, then `cluster1-pxc-1`. This service
 can be used for both read and write load, or it can also be used just for
 write load (single writer mode) in setups with split write and read loads.
@@ -64,26 +63,32 @@ the Round Robin load balancing algorithm.
 **Don't use it for write requests**.
 
 The [haproxy.exposeReplicas.enabled](operator.md#haproxyexposereplicasenabled)
-Custom Resource option enables or disables `cluster1-haproxy-replicas`   service (on by default).
+Custom Resource option enables or disables `cluster1-haproxy-replicas` service (on by default).
 
-!!! note
+### Expose HAProxy as a headless service
 
-    <a name="headless-service"> If you need to configure `cluster1-haproxy` and
-    `cluster1-haproxy-replicas` as a [headless Service :octicons-link-external-16:](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services)
-    (e.g. to use on the tenant network), add the following [annotation](annotations.md)
-    in the Custom Resource metadata section of the `deploy/cr.yaml`:
+You may want to configure the HAProxy service as a [headless Service :octicons-link-external-16:](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services). For example, if you have applications that need direct DNS access to individual HAProxy pods, such as when running in a multi-tenant setup or when handling advanced networking scenarios.
 
-     ```yaml
-    apiVersion: pxc.percona.com/v1
-    kind: PerconaXtraDBCluster
-    metadata:
-      name: cluster1
-      annotations:
-        percona.com/headless-service: true
-      ...
+To enable HAProxy as a headless service, add the `percona.com/headless-service: true` [annotation](annotations.md) to the following options in the Custom Resource:
+
+* `haproxy.exposePrimary.annotations` key to expose the primary HAProxy Pod
+* `haproxy.exposeReplicas.annotations` key to expose the HAProxy replica Pods
+
+    ```yaml
+    spec:
+      haproxy:
+         exposePrimary:
+           enabled: true
+           annotations: percona.com/headless-service: true  
+           ....
+         exposeReplicas:
+           enabled: true
+           annotations: percona.com/headless-service: true 
     ```
 
-    This annotation works only at service creation time and can't be added later.
+This annotation works only at service creation time and can't be added later.
+
+### Upgrade behavior
 
 When the cluster with HAProxy is upgraded, the following steps
 take place. First, reader members are upgraded one by one: the Operator waits

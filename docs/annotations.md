@@ -83,6 +83,7 @@ Use **Annotations** when:
 |`percona.com/issue-vault-token: "true"`|
 | `service.beta.kubernetes.io/aws-load-balancer-backend-protocol` | Services | Specifies the protocol for AWS load balancers | http, http-test             |
 | `service.beta.kubernetes.io/aws-load-balancer-backend`         | Services | Specifies the backend type for AWS load balancers | test-type                  |
+| `percona.com/headless-service` | Services | Exposes ProxySQL or HAProxy as a headless service | true | 
 
 ## Setting labels and annotations in the Custom Resource
 
