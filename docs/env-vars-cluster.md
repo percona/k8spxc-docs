@@ -6,7 +6,7 @@ Cluster component environment variables let you customize the behavior of Percon
 
 The following environment variables are available for HAProxy:
 
-* `HA_CONNECTION_TIMEOUT`: Sets the timeout (in milliseconds) for HAProxy health checks on XtraDB Cluster nodes. The default is 10 seconds, but you can increase this value for unstable Kubernetes networking or if you experience soft lockups on nodes.
+* `HA_CONNECTION_TIMEOUT`: Sets the timeout (in milliseconds) for HAProxy health checks on XtraDB Cluster nodes. The default is 10000 milliseconds (10 seconds), but you can increase this value for unstable Kubernetes networking or if you experience soft lockups on nodes.
 
 * `OK_IF_DONOR`: Allows applications to connect to XtraDB Cluster donor nodes (nodes running backups). Enable if only one node is available and a second node is joining the cluster via SST.
 
