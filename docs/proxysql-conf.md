@@ -2,15 +2,11 @@
 
 You can use either [HAProxy :octicons-link-external-16:](https://haproxy.org) or [ProxySQL :octicons-link-external-16:](https://proxysql.com/) for load balancing and proxy services. Control which one to use via the `haproxy.enabled` and `proxysql.enabled` options in the `deploy/cr.yaml` configuration file.
 
-!!! warning
-
-    You can enable ProxySQL only during cluster creation. For existing clusters, you can enable only HAProxy. If HAProxy is already enabled, you cannot switch to ProxySQL later.
-
 ## `cluster1-proxysql` service
 
 The `cluster1-proxysql` service listens on the following ports:
 
-* `3306` is the default MySQL port. It is used by the mysql client, MySQL Connectors, and utilities such as mysqldump and mysqlpump
+* `3306` is the default MySQL port. It is used by the mysql client, MySQL Connectors, and utilities such as `mysqldump` and `mysqlpump`
 * `33062` is the port to connect to the MySQL Administrative Interface
 * `6070` is the port to connect to the built-in Prometheus exporter to gather ProxySQL statistics and manage the ProxySQL observability stack
 
@@ -20,15 +16,15 @@ The `cluster1-proxysql` service uses the first Percona XtraDB Cluster member (`c
 
 You may want to configure the ProxySQL service as a [headless Service :octicons-link-external-16:](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services). For example, if you have applications that need direct DNS access to individual ProxySQL pods, such as when running in a multi-tenant setup or when handling advanced networking scenarios. 
 
-To enable a headless ProxySQL service, add the `percona.com/headless-service: true` [annotation](annotations.md) in the Custom Resource metadata section of the `deploy/cr.yaml` file. Note that this annotation takes effect only at service creation time, so you need to set it when first creating the cluster.
+To enable a headless ProxySQL service, add the `percona.com/headless-service: true` [annotation](annotations.md) in the `proxysql.expose.annotations` key of the `deploy/cr.yaml` file. Note that this annotation takes effect only at service creation time, so you need to set it when first creating the cluster.
 
 ```yaml
-apiVersion: pxc.percona.com/v1
-kind: PerconaXtraDBCluster
-metadata:
-  name: cluster1
-  annotations:
-    percona.com/headless-service: true
+spec:
+  proxysql:
+    expose:
+      enabled: true
+      annotations:
+        percona.com/headless-service: true
   ...
 ```
 
