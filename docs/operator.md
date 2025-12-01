@@ -249,7 +249,7 @@ Validity period for TLS certificates. Minimum required validity is 1 hour. Durat
 
 ### `tls.caValidityDuration`
 
-Validity period for CA certificate. Minimum accepted duration is 730 hours (approximately 30 days).
+Validity period for CA certificate. Minimum accepted duration is 730 hours (approximately 30 days). Setting this value to exactly 730 hours prevents the Operator from generating the correct certificate object. Recommended value is to be greater than 730 hours.
 
 | Value type  | Example    |
 | ----------- | ---------- |

@@ -85,7 +85,7 @@ Check the following rules and limitations for setting up the certificate duratio
     - Do **not** set the duration to exactly 1 hour; the Operator will fail to generate the correct certificate object if you do.
     - By default, cert-manager starts the renewal process when a certificate has one-third of its lifetime remaining, ensuring renewal before expiration. For example, if a certificate is valid for 1 hour, renewal will begin after approximately 40 minutes.
 
-3. Minimum CA certificate duration is 730 hours (approximately 30 days)
+3. Minimum CA certificate duration is 730 hours (approximately 30 days). Do not set the duration to exactly 730 hours; the Operator will fail to generate the correct certificate object if you do.
 
 ### Configuration
 
