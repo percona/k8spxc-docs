@@ -21,8 +21,7 @@ $ kubectl patch pxc cluster1 --type=merge --patch '{
 
 !!! warning
 
-    Switching from ProxySQL to HAProxy will cause Percona XtraDB Cluster Pods
-    restart. 
+    Switching from ProxySQL to HAProxy will cause the downtime because the Operator needs to reconfigure the proxy Pods.
 
 ## HAProxy services
 
