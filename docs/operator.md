@@ -2502,7 +2502,7 @@ The custom CA certificate for TLS communication with S3 storage. See [Configure 
 | ----------- | ---------- |
 | :material-code-string: string     | `ca.crt` |
 
-### `backup.storages.STORAGE-NAME.persistentVolumeClaim.type`
+### `backup.storages.STORAGE-NAME.volume.persistentVolumeClaim.type`
 
 The persistent volume claim storage type.
 
@@ -2510,7 +2510,7 @@ The persistent volume claim storage type.
 | ----------- | ---------- |
 | :material-code-string: string     | `filesystem` |
 
-### `backup.storages.STORAGE-NAME.persistentVolumeClaim.storageClassName`
+### `backup.storages.STORAGE-NAME.volume.persistentVolumeClaim.storageClassName`
 
 Set the [Kubernetes Storage Class :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/storage-classes/) to use with the Percona XtraDB Cluster backups [PersistentVolumeClaims :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims) for the `filesystem` storage type.
 
@@ -2849,77 +2849,5 @@ Specify the min password length for user passwords
 | ----------- | ---------- |
 | :material-numeric-1-box: int | `16` |
 
-## <a name="operator-backupsource-section"></a> PerconaXtraDBClusterRestore Custom Resource options
 
-[Percona XtraDB Cluster Restore](backups-restore.md) options are managed by the Operator via the 
-`PerconaXtraDBClusterRestore` [Custom Resource :octicons-link-external-16:](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) and can be configured via the
-[deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml)
-configuration file. This Custom Resource contains the following options:
-
-| Key              | Value type        | Description                                    | Required |
-| ---------------- | ----------------- | ---------------------------------------------- | -------- |
-| metadata.name    | string            | The name of the restore                        | true     |
-| spec.pxcCluster  | string            | Percona XtraDB Cluster name (the name of your running cluster) | true |
-| spec.backupName  | string            | The name of the backup which should be restored| false    |
-| spec.resources   | [subdoc](operator.md#operator-restore-resources-options-section)| Defines resources limits for the restore job | false |
-| spec.backupSource| [subdoc](operator.md#operator-restore-backupsource-options-section)| Defines configuration for different restore sources | false |
-| spec.pitr        | [subdoc](operator.md#operator-restore-pitr-options-section) | Defines configuration for PITR restore | false |
-
-### <a name="operator-restore-resources-options-section"></a>resources section
-
-| Key              | Value type        | Description                                    | Required |
-| ---------------- | ----------------- | ---------------------------------------------- | -------- |
-| requests.memory  | string            | The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the restore job (the specified value is used if memory limits are not set)   | false    |
-| requests.cpu     | string            | [Kubernetes CPU requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the restore job (the specified value is used if CPU limits are not set)                | false    |
-| limits.memory    | string            | The [Kubernetes memory limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the restore job (if set, the value will be used for memory requests as well) | false    |
-| limits.cpu       | string            | [Kubernetes CPU limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the restore job (if set, the value will be used for CPU requests as well)              | false    |
-
-### <a name="operator-restore-backupsource-options-section"></a>backupSource section
-
-| Key              | Value type        | Description                                    | Required |
-| ---------------- | ----------------- | ---------------------------------------------- | -------- |
-| destination      | string            | Path to the backup                             | false    |
-| storageName      | string            | The storage name from CR `spec.backup.storages`| false    |
-| verifyTLS        | boolean           | Enable or disable verification of the storage server TLS certificate. Disabling it may be useful e.g. to skip TLS verification for private S3-compatible storage with a self-issued certificate | true |
-| s3               | [subdoc](operator.md#operator-restore-s3-options-section)    | Define configuration for S3 compatible storages | false |
-| azure            | [subdoc](operator.md#operator-restore-azure-options-section) | Define configuration for azure blob storage     | false |
-
-### <a name="operator-restore-s3-options-section"></a>backupSource.s3 subsection
-
-| Key              | Value type        | Description                                    | Required |
-| ---------------- | ----------------- | ---------------------------------------------- | -------- |
-| bucket           | string            | The bucket with a backup                       | true     |
-| credentialsSecret| string            | The Secret name for the backup                 | true     |
-| endpointUrl      | string            | A valid endpoint URL                           | false    |
-| region           | string            | The region corresponding to the S3 bucket      | false    |
-| caBundle         | subdoc   | Configuration for custom self-issued TLS certificcates | false
-
-#### backupSource.s3.caBundle subsection
-
-| Key              | Value type        | Description                                    | Required |
-| ---------------- | ----------------- | ---------------------------------------------- | -------- |
-| name | string | The name of the Secret object that stores custom TLS certificates | true |
-| key | string | The custom CA certificate file used to sign TLS certificates | true |
-
-### <a name="operator-restore-azure-options-section"></a>backupSource.azure subsection
-
-| Key              | Value type        | Description                                    | Required |
-| ---------------- | ----------------- | ---------------------------------------------- | -------- |
-| credentialsSecret| string            | The Secret name for the azure blob storage     | true     |
-| container        | string            | The container name of the azure blob storage   | true     |
-| endpointUrl      | string            | A valid endpoint URL                           | false    |
-| storageClass     | string            | The storage class name of the azure blob storage    | false    |
-| blockSize        | integer           | The size of a block of data to save and retrieve from the azure blob storage 
-| concurrency      | integer           | The number of writers to the same blob
-
-### <a name="operator-restore-pitr-options-section"></a>pitr subsection
-
-| Key              | Value type        | Description                                    | Required |
-| ---------------- | ----------------- | ---------------------------------------------- | -------- |
-| type             | string            | The type of PITR recover                       | true     |
-| date             | string            | The exact date of recovery                     | true     |
-| gtid             | string            | The exact GTID for PITR recover                | true     |
-| spec.backupSource| [subdoc](operator.md#operator-restore-backupsource-options-section)| Percona XtraDB Cluster backups section     | true  |
-| s3               | [subdoc](operator.md#operator-restore-s3-options-section)    | Defines configuration for S3 compatible storages | false |
-| azure            | [subdoc](operator.md#operator-restore-azure-options-section) | Defines configuration for azure blob storage     | false |
 
