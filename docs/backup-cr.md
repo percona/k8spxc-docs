@@ -23,7 +23,7 @@ The metadata part contains the following keys:
 * <a name="backup-metadata-name"></a> `name` sets the name of your backup resource;
 * `finalizers` subsection:
 
-    * `percona.com/delete-backup` if present, enables deletion of backup files from a backup storage when the backup object is removed (manually or by schedule).
+    * `percona.com/delete-backup` if present, enables deletion of backup files from a backup storage when the backup object is removed (manually or by schedule). When used with the Persistent Volume as the backup storage, the finalizer deletes the PVC. 
 
 ## `spec` section
 
@@ -87,7 +87,7 @@ The [environment variables set as key-value pairs :octicons-link-external-16:](h
 
 ### `containerOptions.args.xbcloud`
 
-Custom [command line options :octicons-link-external-16:](https://docs.percona.com/percona-xtrabackup/latest/xbcloud-options.html) for the `xbcloud` Percona XtraBackup tool.
+Custom [command line options :octicons-link-external-16:](https://docs.percona.com/percona-xtrabackup/8.0/xbcloud-options.html) for the `xbcloud` Percona XtraBackup tool.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -95,7 +95,7 @@ Custom [command line options :octicons-link-external-16:](https://docs.percona.c
 
 ### `containerOptions.args.xbstream`
 
-Custom [command line options :octicons-link-external-16:](https://docs.percona.com/percona-xtrabackup/latest/xbstream-options.html) for the `xbstream` Percona XtraBackup tool.
+Custom [command line options :octicons-link-external-16:](https://docs.percona.com/percona-xtrabackup/8.0/xbstream-options.html) for the `xbstream` Percona XtraBackup tool.
 
 | Value type  | Example    |
 | ----------- | ---------- |

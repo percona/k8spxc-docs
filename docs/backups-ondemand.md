@@ -5,7 +5,7 @@
 1. Export the namespace as an environment variable. Replace the `<namespace>` placeholder with your value:
 
     ```bash
-    export NAMESPACE = <namespace>
+    export NAMESPACE=<namespace>
     ```
 
 2. Check the configuration of the `PerconaXtraDBCluster` Custom Resource. Verify that you have [configured backup storage](backups-storage.md) and specified its configuration in the `backup.storages` subsection of the Custom Resource.
