@@ -637,6 +637,20 @@ A secret with environment variables, see [Define environment variables](containe
 | ----------- | ---------- |
 | :material-code-string: string     | `my-env-var-secrets` |
 
+### `pxc.mysqlAllocator`
+
+Specifies which memory allocator to use for the MySQL process. Available since Operator version 1.19.0 for Percona XtraDB Cluster 8.0 and later.
+
+Supported values: `jemalloc`, `tcmalloc`. When left empty or omitted, the default `libc` allocator is used.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `jemalloc` |
+
+!!! warning
+
+    If you have `LD_PRELOAD` set in a Secret referenced by `pxc.envVarsSecret`, that value takes precedence over the `mysqlAllocator` option. The Operator checks for `LD_PRELOAD` in the Secret first, and if found, uses that value regardless of the `mysqlAllocator` setting.
+
 ### `pxc.resources.requests.memory`
 
 The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for a Percona XtraDB Cluster container.
@@ -2602,6 +2616,22 @@ The endpoint URL of the S3-compatible storage to be used (not needed for the ori
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-code-string: string     | |
+
+### `backup.storages.STORAGE-NAME.s3.caBundle.name`
+
+The name of the Secret that stores custom TLS certificates for TLS communication with S3 storage. See [Configure TLS verification with custom certificates for S3 storage](backups-storage.md#configure-storage-for-backups) for more information.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `s3-ca-bundle-secret` |
+
+### `backup.storages.STORAGE-NAME.s3.caBundle.key`
+
+The custom CA certificate for TLS communication with S3 storage. See [Configure TLS verification with custom certificates for S3 storage](backups-storage.md#configure-storage-for-backups) for more information.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `ca.crt` |
 
 ### `backup.storages.STORAGE-NAME.persistentVolumeClaim.type`
 
