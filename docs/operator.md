@@ -239,6 +239,22 @@ Enables or disables the [TLS encryption](TLS.md). If set to `false`,
 | ----------- | ---------- |
 | :material-toggle-switch-outline: boolean     | `true` |
 
+### `tls.certValidityDuration`
+
+Validity period for TLS certificates. Minimum required validity is 1 hour. Durations lower than 1 hour are rejected. Setting the duration to exactly 1 hour prevents the Operator from generating the correct certificate object.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `2160h` |
+
+### `tls.caValidityDuration`
+
+Validity period for CA certificate. Minimum accepted duration is 730 hours (approximately 30 days). Setting this value to exactly 730 hours prevents the Operator from generating the correct certificate object. You must set this value greater than 730 hours.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `26280h` |
+
 ### `tls.SANs`
 
 Additional domains (SAN) to be added to the TLS certificate within the extended cert-manager configuration.
@@ -2540,7 +2556,7 @@ The timeout value in seconds, after which backup job will automatically fail.
 | ----------- | ---------- |
 | :material-numeric-1-box: int     | `3600` |
 
-### backup.startingDeadlineSeconds
+### `backup.startingDeadlineSeconds`
 
 The maximum time in seconds for a backup to start. The Operator compares the timestamp of the backup object against the current time. If the backup is not started within the set time, the Operator automatically marks it as "failed". 
 
@@ -3023,6 +3039,14 @@ configuration file. This Custom Resource contains the following options:
 | credentialsSecret| string            | The Secret name for the backup                 | true     |
 | endpointUrl      | string            | A valid endpoint URL                           | false    |
 | region           | string            | The region corresponding to the S3 bucket      | false    |
+| caBundle         | subdoc   | Configuration for custom self-issued TLS certificates | false
+
+#### backupSource.s3.caBundle subsection
+
+| Key              | Value type        | Description                                    | Required |
+| ---------------- | ----------------- | ---------------------------------------------- | -------- |
+| name | string | The name of the Secret object that stores custom TLS certificates | true |
+| key | string | The custom CA certificate file used to sign TLS certificates | true |
 
 ### <a name="operator-restore-azure-options-section"></a>backupSource.azure subsection
 

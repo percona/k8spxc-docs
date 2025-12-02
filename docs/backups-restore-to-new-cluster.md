@@ -71,7 +71,7 @@ Configure the `PerconaXtraDBClusterRestore` Custom Resource. Specify the followi
             and the backup name.
             * the necessary [storage configuration keys](backups-storage.md#configure-storage-for-backups), just like in the `deploy/cr.yaml` file of the source cluster.
             * `verifyTLS` to verify the storage server TLS certificate
-            * the custom TLS configuration if you use it for backups. Refer to the [backups-storage.md#configure-tls-verification-with-custom-certificates-for-s3-storage] section for more information.
+            * the custom TLS configuration if you use it for backups. Refer to the [Configure TLS verification with custom certificates for S3 storage](backups-storage.md#configure-tls-verification-with-custom-certificates-for-s3-storage) section for more information.
 
             ```yaml
             ...
