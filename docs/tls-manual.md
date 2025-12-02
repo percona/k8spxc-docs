@@ -88,7 +88,7 @@ Replace `cluster1` and `my-namespace` with your actual cluster name and namespac
       --from-file=tls.crt=server.pem \
       --from-file=tls.key=server-key.pem \
       --from-file=ca.crt=ca.pem \
-      --type=kubernetes.io/tls -n $NAMESPACE
+      --type=Opague -n $NAMESPACE
     ```
 
 5. Generate the server certificate for internal communication
@@ -121,7 +121,7 @@ Replace `cluster1` and `my-namespace` with your actual cluster name and namespac
       --from-file=tls.crt=server-internal.pem \
       --from-file=tls.key=server-internal-key.pem \
       --from-file=ca.crt=ca.pem \
-      --type=kubernetes.io/tls -n $NAMESPACE
+      --type=Opague -n $NAMESPACE
     ```
 
 ### Configure your cluster

@@ -115,6 +115,7 @@ plugins:
     enabled: !ENV [CI, false]
     repository: percona/k8spxc-docs
     branch: "main"
+  open-in-new-tab: {}
   meta-descriptions:
     export_csv: false
     quiet: false
@@ -211,7 +212,10 @@ nav:
           - "Anti-affinity and tolerations": constraints.md
           - "Labels and annotations": annotations.md
           - "Local Storage support": storage.md
-          - "Defining environment variables": containers-conf.md
+          - Define environment variables:
+            - "Overview": containers-conf.md
+            - env-vars-operator.md
+            - env-vars-cluster.md
           - "Load Balancing with HAProxy": haproxy-conf.md
           - "Load Balancing with ProxySQL": proxysql-conf.md
           - Workload transfer and disaster recovery: 
