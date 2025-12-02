@@ -1513,6 +1513,30 @@ The [Kubernetes annotations :octicons-link-external-16:](https://kubernetes.io/d
 | ----------- | ---------- |
 | :material-code-string: string     | `service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp` |
 
+### `haproxy.healthCheck.interval`
+
+Interval in milliseconds between HAProxy health checks. The minimum value is 1000 milliseconds.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `10000` | 
+
+### `haproxy.healthCheck.fall`
+
+Number of consecutive failed health checks before HAProxy marks a server as down. The minimum value is 1.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `2` | 
+
+### `haproxy.healthCheck.rise`
+
+Number of consecutive successful health checks before HAProxy marks a server as up and running. The minimum value is 1.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `1` |
+
 ### `haproxy.containerSecurityContext`
 
 A custom [Kubernetes Security Context for a Container :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) to be used instead of the default one.
