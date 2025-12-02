@@ -55,7 +55,7 @@ The timeout value in seconds, after which backup job will automatically fail.
 
 ### `startingDeadlineSeconds`
 
-The maximum time in seconds for a backup to start. The Operator compares the timestamp of the backup object against the current time. If the backup is not started within the set time, the Operator automatically marks it as "failed".
+The maximum time in seconds for a backup to reach the Starting state. The Operator compares the timestamp of the backup object against the current time. If the backup is not started within the set time, the Operator automatically marks it as "failed".
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -71,7 +71,7 @@ The maximum time in seconds for a backup to remain in a suspended state. The Ope
 
 ### `runningDeadlineSeconds`
 
-The maximum time in seconds for a backup job to run. The Operator compares the timestamp when the backup job started running against the current time. After the defined running time expires, the backup is automatically marked as "failed".
+The maximum time in seconds for a backup job to reach the Running state. The Operator compares the timestamp when the backup job started running against the current time. After the defined running time expires, the backup is automatically marked as "failed".
 
 | Value type  | Example    |
 | ----------- | ---------- |
