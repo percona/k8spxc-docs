@@ -22,7 +22,7 @@ Telemetry is enabled by default and is sent to the [Version Service server](upda
 
 The landing page for this service, [check.percona.com :octicons-link-external-16:](https://check.percona.com/), explains what this service is.
 
-You can disable telemetry with a special option when installing the Operator:
+You can disable telemetry by setting the `DISABLE_TELEMETRY` environment variable in the Operator Deployment.
 
 * if you [install the Operator with helm](helm.md), use the following installation command:
 
@@ -30,16 +30,7 @@ You can disable telemetry with a special option when installing the Operator:
   $ helm install my-db percona/pxc-db --version {{ release }} --namespace my-namespace --set disable_telemetry="true"
   ```
 
-* if you don't use helm for installation, you have to edit the `operator.yaml`
-  before applying it with the `kubectl apply -f deploy/operator.yaml` command.
-  Open the `operator.yaml` file with your text editor, find the value of the
-  `DISABLE_TELEMETRY` environment variable and set it to `true`:
+* if you don't use Helm for installation, configure the `DISABLE_TELEMETRY` environment variable in the Operator Deployment. 
 
-  ```yaml
-  env:
-    ...
-    - name: DISABLE_TELEMETRY
-      value: "true"
-    ...
-  ```
+See [Operator environment variables](env-vars-operator.md#configure-operator-environment-variables) for detailed instructions.
 

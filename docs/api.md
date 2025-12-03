@@ -13,7 +13,7 @@ The following subsections describe the Percona XtraDB Cluster API provided by th
     ```
 
     Trying to create an already-existing namespace will show you a
-    self-explanatory error message. Also, you can use the `defalut` namespace.
+    self-explanatory error message. Also, you can use the `default` namespace.
 
     !!! note
 
@@ -121,7 +121,7 @@ $ curl -k -v -XPOST "https://$API_SERVER/apis/pxc.percona.com/v{{ apiversion }}/
 > pmm:
 
 
-> 1. serverHost (String, min-length: 1) : `serivce name for monitoring`
+> 1. serverHost (String, min-length: 1) : `service name for monitoring`
 
 
 > 2. serverUser (String, min-length: 1) : `name of pmm user`
@@ -301,7 +301,7 @@ $ curl -k -v -XPATCH "https://$API_SERVER/apis/pxc.percona.com/v1/namespaces/def
 > pxc
 
 
-> 1. size (Int or String, Defaults: 3): `Specifiy the size of the Percona XtraDB Cluster to scale up or down to`
+> 1. size (Int or String, Defaults: 3): `Specify the size of the Percona XtraDB Cluster to scale up or down to`
 
 **Response:**
 

@@ -52,7 +52,7 @@ Find exact details about
 PVCs and the supported volume types in [Kubernetes
 documentation  :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#expanding-persistent-volumes-claims).
 
-#### Automated scaling with Volume Expansion capability
+#### Storage resizing with Volume Expansion capability
 
 Certain volume types support PVCs expansion. You can run the following command to check if your storage supports the expansion capability:
 
@@ -66,7 +66,7 @@ $ kubectl describe sc <storage class name> | grep AllowVolumeExpansion
     AllowVolumeExpansion: true
     ```
 
-To enable automated scaling, set the [enableVolumeExpansion](operator.md#enablevolumeexpansion) Custom Resource option to `true` ( it is turned off by default). When enabled, the Operator will automatically expand such storage for you when you change the
+To enable storage resizing via volume expansion, set the [enableVolumeExpansion](operator.md#enablevolumeexpansion) Custom Resource option to `true` ( it is turned off by default). When enabled, the Operator will automatically expand such storage for you when you change the
 `pxc.volumeSpec.persistentVolumeClaim.resources.requests.storage` option in the Custom Resource.
 
 For example, you can do it by editing and applying the `deploy/cr.yaml` file:
@@ -99,9 +99,9 @@ The storage size change takes some time. When it starts, the Operator automatica
     If the new storage size can't be reached because there is a resource quota in place and the PVC storage limits are reached, this will be detected, there will be no scaling attempts, and the Operator will revert the value in the Custom Resource option back. If resize isn't successful (for example, no quota is set, but the new storage size turns out to be just too large), the Operator will detect Kubernetes failure on scaling, and revert the Custom Resource option. Still, Kubernetes will continue attempts to fulfill the scaling request until the problem is [fixed manually by the Kubernetes administrator](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#recovering-from-failure-when-expanding-volumes).
 
 
-#### Manual scaling without Volume Expansion capability
+#### Manual resizing without Volume Expansion capability
 
-Manual scaling is the way to go if:
+Manual resizing is the way to go if:
 
 * your version of the Operator is older than 1.14.0,
 * your volumes have a type that does not support Volume Expansion, or
@@ -239,7 +239,7 @@ Pod Autoscaler (HPA) :octicons-link-external-16:](https://kubernetes.io/docs/tas
 It will scale the Custom Resource itself, letting Operator to deal 
 with everything else.
 
-It is also possible to use [Kuvernetes Event-driven Autoscaling (KEDA) :octicons-link-external-16:](https://keda.sh/), 
+It is also possible to use [Kubernetes Event-driven Autoscaling (KEDA) :octicons-link-external-16:](https://keda.sh/), 
 where you can apply more sophisticated logic for decision making on scaling.
 
 For now it is not possible to use Vertical Pod Autoscaler (VPA) with 

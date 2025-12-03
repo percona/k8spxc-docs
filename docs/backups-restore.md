@@ -58,7 +58,6 @@ To restore your Percona XtraDB cluster from a backup, define a `PerconaXtraDBClu
 
 * `spec.pxcCluster`: the name of the target cluster 
 * `spec.backupName`: the name of your backup,
-* (optional) `storageName`: the exact name of the storage. Note that you must have [already defined the storage](backups-storage.md) in the `backup.storages` subsection of the `deploy/cr.yaml` file.
 
 Pass this configuration to the Operator: 
 
@@ -74,7 +73,6 @@ Pass this configuration to the Operator:
         spec:
           pxcCluster: cluster1
           backupName: backup1
-          storageName: s3-us-west
         ```
 
     2. Start the restore with this command:

@@ -24,14 +24,14 @@ theme:
         icon: material/brightness-auto
         name: Color theme set to Automatic. Click to change
     - media: "(prefers-color-scheme: light)"
-      scheme: percona-light
+      scheme: default
       primary: custom
       accent: custom
       toggle:
         icon: material/brightness-7
         name: Color theme set to Light Mode. Click to change
     - media: "(prefers-color-scheme: dark)"
-      scheme: percona-dark
+      scheme: slate
       primary: custom
       accent: custom
       toggle:
@@ -44,6 +44,7 @@ theme:
     - search.highlight
     - navigation.top
     - content.tabs.link
+    - content.code.copy
 
 extra_css:
   - https://unicons.iconscout.com/release/v3.0.3/css/line.css
@@ -54,11 +55,13 @@ extra_css:
   - css/osano.css
   - css/operators.css
   - css/extra.css
+  - css/rating.css
 
 extra_javascript:
    - js/promptremover.js
    - js/consent.js
    - js/percona-select.js
+   - js/rating.js
 #   - js/version-select.js
 #  - js/toctree.js
 #  - js/lightgallery.min.js
@@ -105,7 +108,14 @@ plugins:
   section-index: {}
   search: 
     separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
-  git-revision-date: {}
+  git-revision-date-localized:
+    enable_creation_date: true
+    enabled: !ENV [ENABLED_GIT_REVISION_DATE, True]
+  git-committers: 
+    enabled: !ENV [CI, false]
+    repository: percona/k8spxc-docs
+    branch: "main"
+  open-in-new-tab: {}
   meta-descriptions:
     export_csv: false
     quiet: false
@@ -139,32 +149,16 @@ plugins:
     include_css: true
     enabled: true
 
-extra: # Used in main.html template and can't be externalized
-  edit_page_text: '<i class="uil uil-pen"></i> <b>Edit this page</b>'
-  updated_text: '<i class="uil uil-refresh"></i> Page updated'
+# Google Analytics configuration
+extra:
+  analytics:
+    provider: google
+    property: G-J4J70BNH0G
+
   version:
     provider: mike
 
   
-  # Google Analytics configuration
-  analytics:
-    provider: google
-    property: G-J4J70BNH0G
-    feedback:
-      title: Was this page helpful?
-      ratings:
-        - icon: material/emoticon-happy-outline
-          name: This page was helpful
-          data: 1
-          note: >-
-            Thanks for your feedback!
-        - icon: material/emoticon-sad-outline
-          name: This page could be improved
-          data: 0
-          note: >- 
-            Thank you for your feedback! Help us improve by using our 
-            <a href="https://docs.google.com/forms/d/1bkWACehjqlwA0AKf-qTJcXvYbOSYgze8iTPXjntqmNo/edit" target="_blank" rel="noopener">
-            feedback form</a>.
 
 # Pages excluded from navigation
 
@@ -173,7 +167,6 @@ not_in_nav: |
 
 # Common navigation for percona.com, render.com and PDF
 nav:
-
     - Welcome: index.md
     - get-help.md
     - Features:
@@ -219,7 +212,10 @@ nav:
           - "Anti-affinity and tolerations": constraints.md
           - "Labels and annotations": annotations.md
           - "Local Storage support": storage.md
-          - "Defining environment variables": containers-conf.md
+          - Define environment variables:
+            - "Overview": containers-conf.md
+            - env-vars-operator.md
+            - env-vars-cluster.md
           - "Load Balancing with HAProxy": haproxy-conf.md
           - "Load Balancing with ProxySQL": proxysql-conf.md
           - Workload transfer and disaster recovery: 
@@ -229,9 +225,15 @@ nav:
              - dr-replication.md
              - dr-failover.md
              - dr-restore.md
-          - "Transport Encryption (TLS/SSL)": TLS.md
+          - "Transport Encryption (TLS/SSL)": 
+             - "About TLS / SSL security": TLS.md
+             - "Install and use the cert-manager": tls-cert-manager.md
+             - "Generate certificates manually": tls-manual.md
+             - "Update certificates": tls-update.md
+             - "Run Percona XtraDB Cluster without TLS": tls-disable.md
           - "Data at rest encryption": encryption.md
           - "Telemetry": telemetry.md
+          - reconciliation-concurrency.md
           
     - Management:
           - Backup and restore:
