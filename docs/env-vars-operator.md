@@ -132,6 +132,8 @@ Controls the maximum number of concurrent reconciliation operations the Operator
 
 This variable limits how many Custom Resources the Operator reconciles simultaneously. Increasing this value can improve performance in environments with many clusters, but may also increase resource usage.
 
+Read more about concurrent reconciling in [Configure concurrency for a cluster reconciliation](reconciliation-concurrency.md) chapter.
+
 **Example configuration:**
 
 ```yaml

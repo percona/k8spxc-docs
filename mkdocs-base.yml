@@ -233,6 +233,7 @@ nav:
              - "Run Percona XtraDB Cluster without TLS": tls-disable.md
           - "Data at rest encryption": encryption.md
           - "Telemetry": telemetry.md
+          - reconciliation-concurrency.md
           
     - Management:
           - Backup and restore:
