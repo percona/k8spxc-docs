@@ -26,7 +26,18 @@ The toplevel spec elements of the [deploy/cr.yaml :octicons-link-external-16:](h
 
 ### `allowUnsafeConfigurations`
 
-Prevents users from configuring a cluster with unsafe parameters such as starting the cluster with the number of Percona XtraDB Cluster instances which is less than 3, more than 5, or is an even number, with less than 2 ProxySQL or HAProxy Pods, or without TLS/SSL certificates. **This option is deprecated and will be removed in future releases**. Use `unsafeFlags` subsection instead.
+Prevents users from configuring a cluster with unsafe parameters such as:
+
+* using an invalid number of Percona XtraDB Cluster nodes, which is:
+
+   * less than 3 
+   * more than 5 
+   * an even number (for production use, we recommend a minimum of 3 nodes and a maximum of 5 nodes), 
+   
+* deploying less than 2 ProxySQL or HAProxy Pods, 
+* starting the cluster without TLS/SSL certificates. 
+
+**This option is deprecated and will be removed in future releases**. Use `unsafeFlags` subsection instead.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -151,7 +162,17 @@ Allows users to configure a cluster without TLS/SSL certificates (if `false`, th
 
 ### `unsafeFlags.pxcSize`
 
-Allows users to configure a cluster with less than 3 Percona XtraDB Cluster instances (if `false`, the Operator will detect unsafe parameters, set cluster status to `error`, and print error message in logs).
+Allows users to configure a cluster with unsafe node counts. For production use, we recommend a minimum of 3 nodes and a maximum of 5 nodes. Even numbers of nodes are not recommended due to quorum voting issues in Galera replication. Higher numbers of nodes (for example, 7) are not recommended due to increased latency from synchronous replication overhead.
+
+Setting this to `true` allows configurations such as:
+
+- Less than 3 nodes 
+- More than 5 nodes
+- Even numbers of nodes
+
+If the option is set to `false`, the Operator detects unsafe parameters, set clusters status to `error`, and prints error message in logs. 
+
+**Note:** Using unsafe configurations may result in reduced availability, split-brain scenarios, or performance degradation. We cannot guarantee proper operation of the cluster with unsafe node counts.
 
 | Value type  | Example    |
 | ----------- | ---------- |
