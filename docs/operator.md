@@ -170,7 +170,7 @@ Setting this to `true` allows configurations such as:
 - More than 5 nodes
 - Even numbers of nodes
 
-If the option is set to `false`, the Operator detects unsafe parameters, set clusters status to `error`, and prints error message in logs. 
+If the option is set to `false`, the Operator detects unsafe parameters, sets clusters status to `error`, and prints error message in logs. 
 
 **Note:** Using unsafe configurations may result in reduced availability, split-brain scenarios, or performance degradation. We cannot guarantee proper operation of the cluster with unsafe node counts.
 
