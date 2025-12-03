@@ -1,7 +1,6 @@
 # Control Pod scheduling on specific Kubernetes nodes with affinity, anti‑affinity and tolerations
 
-The Operator automatically assigns Pods to nodes with sufficient resources for balanced distribution across the cluster. You can configure Pods to be scheduled on specific nodes. For example, for improved performance on the SSD
-equipped machine or for cost optimization by choosing the nodes in the same availability zone.
+The Operator automatically assigns Pods to nodes with sufficient resources for balanced distribution across the cluster. You can configure Pods to be scheduled on specific nodes. For example, for improved performance on the SSD equipped machine or for cost optimization by choosing the nodes in the same availability zone.
 
 Using the [deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/cr.yaml) Custom Resource manifest, you can configure the following:
 
@@ -156,7 +155,7 @@ See [Kubernetes Pod Priority documentation :octicons-link-external-16:](https://
 
 A Pod Disruption Budget (PDB) in Kubernetes helps keep your applications available during voluntary disruptions, such as deleting a deployment or draining a node for maintenance by a cluster administrator. A Pod Disruption Budget sets a limit on how many Pods can be unavailable at the same time due to these voluntary actions. 
 
-You can configure Pod disruption budget for Percona XtraDB Cluster, ProxySQL and HAProxy nodes using the `podDisruptionBudget` option in the Custom Resource.
+You can configure Pod disruption budget for Percona XtraDB Cluster, ProxySQL and HAProxy Pods using the `podDisruptionBudget` option in the Custom Resource.
 
 This is the example configuration for Percona XtraDB Cluster Pods:
 
