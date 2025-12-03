@@ -144,7 +144,7 @@ See [Kubernetes Taints and Tolerations :octicons-link-external-16:](https://kube
 Pods may belong to some *priority classes*. Priority classes help the scheduler distinguish important Pods when eviction is needed. To use priority classes:
 
 1. Create PriorityClasses in your Kubernetes cluster
-Specify `PriorityClassName` in the [deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/cr.yaml) file:
+2. Specify `PriorityClassName` in the [deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/cr.yaml) file:
 
 ```yaml
 priorityClassName: high-priority
