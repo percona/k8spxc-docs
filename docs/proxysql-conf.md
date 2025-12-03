@@ -251,7 +251,7 @@ Use the [ProxySQL admin interface :octicons-link-external-16:](https://www.perco
     $ kubectl exec -it cluster1-proxysql-0 -- mysql -h127.0.0.1 -P6032 -uproxyadmin -padmin_password
     ```
 
-## ProxySQL scheduler
+## ProxySQL scheduler (tech preview)
 
 By default, the Operator uses the internal ProxySQL scheduler for load balancing. In some cases, this scheduler may not fully recognize the cluster topology, directing both read and write traffic to the primary Pod. This can reduce scalability and efficiency and may increase the risk of overload and downtime.
 
