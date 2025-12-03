@@ -1,80 +1,64 @@
-# Binding Percona XtraDB Cluster components to Specific Kubernetes/OpenShift Nodes
+# Control Pod scheduling on specific Kubernetes nodes with affinity, anti‑affinity and tolerations
 
-The operator does good job automatically assigning new Pods to nodes
-with sufficient to achieve balanced distribution across the cluster.
-Still there are situations when it worth to ensure that pods will land
-on specific nodes: for example, to get speed advantages of the SSD
-equipped machine, or to reduce costs choosing nodes in a same
-availability zone.
+The Operator automatically assigns Pods to nodes with sufficient resources for balanced distribution across the cluster. You can configure Pods to be scheduled on specific nodes. For example, for improved performance on the SSD
+equipped machine or for cost optimization by choosing the nodes in the same availability zone.
 
-Appropriate sections of the
-[deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/cr.yaml)
-file (such as `pxc`, `haproxy`, and `proxysql`) contain keys which can be used to do this, depending on what is the
-best for a particular situation.
+Using the [deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/cr.yaml) Custom Resource manifest, you can configure the following:
+
+* Node selection rules to ensure that Pods are scheduled only on Kubernetes nodes that have specific labels.
+* Affinity and anti-affinity rules to bind Pods to specific Kubernetes nodes
+* Taints and tolerations to ensure that Pods are not scheduled onto inappropriate nodes
 
 ## Node selector
 
-`nodeSelector` contains one or more key-value pairs. If the node is
-not labeled with each key-value pair from the Pod’s `nodeSelector`,
-the Pod will not be able to land on it.
+The `nodeSelector` field lets you specify a list of key-value labels that a node must have in order for a Pod to be scheduled on it. For example, to ensure Pods land on nodes with SSD storage or in specific availability zones.
 
-The following example binds the Pod to any node having a
-self-explanatory `disktype: ssd` label:
+If a node doesn't have all the labels you specify in `nodeSelector`, your Pod won't run on that node. In other words, `nodeSelector` acts like a filter so that only nodes with the right labels are eligible to host your Pod.
 
-```default
+The following example binds the Pod to any node having a `disktype: ssd` label:
+
+```yaml
 nodeSelector:
   disktype: ssd
 ```
 
-## Affinity and anti-affinity
+## Affinity and Anti-affinity
 
-Affinity makes Pod eligible (or not eligible - so called
-“anti-affinity”) to be scheduled on the node which already has Pods with
-specific labels. Particularly this approach is good to to reduce costs
-making sure several Pods with intensive data exchange will occupy the
-same availability zone or even the same node - or, on the contrary, to
-make them land on different nodes or even different availability zones
-for the high availability and balancing purposes.
+Affinity controls Pod placement based on nodes which already have Pods with specific labels. Use affinity to:
 
-Percona Operator for MySQL provides two approaches for doing this:
+* Reduce costs by placing Pods in the same availability zone
+* Improve high availability by distributing Pods across different nodes or zones
 
-* simple way to set anti-affinity for Pods, built-in into the Operator,
+The Operator provides two approaches:
 
-* more advanced approach based on using standard Kubernetes constraints.
+* Simple - set anti-affinity for Pods using built-in options. You can set anti-affinity for `pxc`, `haproxy`, and `proxysql` Pods, and for the backup storage of the S3 and PVC
+* Advanced - using Kubernetes constraints
 
-### Simple approach - use topologyKey of the Percona Operator for MySQL
+### Simple Anti-affinity
 
-Percona Operator for MySQL provides a `topologyKey` option, which
-may have one of the following values:
+This approach does not require the knowledge of how Kubernetes assigns Pods to specific nodes.
 
-* `kubernetes.io/hostname` - Pods will avoid residing within the same host,
+Use the `antiAffinityTopologyKey` option with these values:
 
-* `topology.kubernetes.io/zone` - Pods will avoid residing
-    within the same zone,
+* `kubernetes.io/hostname` - Pods avoid the same host
+* `topology.kubernetes.io/zone` - Pods avoid the same zone  
+* `topology.kubernetes.io/region` - Pods avoid the same region
+* `none` - No constraints applied
 
-* `topology.kubernetes.io/region` - Pods will avoid
-    residing within the same region,
+**Example**
 
-* `none` - no constraints are applied.
+This configuration ensures that Percona XtraDB Cluster Pods are not placed on the same node:
 
-The following example forces Percona XtraDB Cluster Pods to avoid
-occupying the same node:
-
-```default
+```yaml
 affinity:
-  topologyKey: "kubernetes.io/hostname"
+  antiAffinityTopologyKey: "kubernetes.io/hostname"
 ```
 
-### Advanced approach - use standard Kubernetes constraints
+### Advanced anti-affinity via Kubernetes constraints
 
-Previous way can be used with no special knowledge of the Kubernetes way
-of assigning Pods to specific nodes. Still in some cases more complex
-tuning may be needed. In this case `advanced` option placed in the
-[deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/cr.yaml)
-file turns off the effect of the `topologyKey` and allows to use
-standard Kubernetes affinity constraints of any complexity:
+For complex scheduling requirements, use the `advanced` option. This disables the `antiAffinityTopologyKey` effect and allows the use of standard Kubernetes affinity constraints:
 
-```default
+```yaml
 affinity:
    advanced:
      podAffinity:
@@ -116,23 +100,28 @@ affinity:
              - another-node-label-value
 ```
 
-See explanation of the advanced affinity options [in Kubernetes
-documentation :octicons-link-external-16:](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity).
+See [Kubernetes affinity documentation :octicons-link-external-16:](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity) for detailed explanations of these options.
 
 ## Tolerations
 
-*Tolerations* allow Pods having them to be able to land onto nodes with
-matching *taints*. Toleration is expressed as a `key` with and
-`operator`, which is either `exists` or `equal` (the latter
-variant also requires a `value` the key is equal to). Moreover,
-toleration should have a specified `effect`, which may be a
-self-explanatory `NoSchedule`, less strict `PreferNoSchedule`, or
-`NoExecute`. The last variant means that if a *taint* with
-`NoExecute` is assigned to node, then any Pod not tolerating this
-*taint* will be removed from the node, immediately or after the
-`tolerationSeconds` interval, like in the following example:
+Tolerations allow Pods to run on nodes with matching taints. A taint is a key-value pair associated with a node that marks the node to repel certain Pods.
 
-```default
+Taints and tolerations work together to ensure Pods are not scheduled onto inappropriate nodes.
+
+A toleration includes these fields:
+
+* `key` - The taint key to match
+* `operator` - Either `exists` (matches any value) or `equal` (requires exact value match)
+* `value` - Required when `operator` is `equal`
+* `effect` - The taint effect to tolerate:
+
+  * `NoSchedule` - Pods cannot be scheduled on the node
+  * `PreferNoSchedule` - Pods are discouraged from scheduling on the node
+  * `NoExecute` - Pods are evicted from the node (with optional `tolerationSeconds`)
+
+This is the example configuration of a toleration:
+
+```yaml
 tolerations:
 - key: "node.alpha.kubernetes.io/unreachable"
   operator: "Exists"
@@ -140,39 +129,45 @@ tolerations:
   tolerationSeconds: 6000
 ```
 
-The [Kubernetes Taints and
-Toleratins :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/)
-contains more examples on this topic.
+### Common use cases
 
-## Priority Classes
+* **Dedicated nodes**: Reserve nodes for specific workloads by tainting them and adding corresponding tolerations to authorized Pods.
 
-Pods may belong to some *priority classes*. This allows scheduler to
-distinguish more and less important Pods to resolve the situation when
-some higher priority Pod cannot be scheduled without evicting a lower
-priority one. This can be done adding one or more PriorityClasses in
-your Kubernetes cluster, and specifying the `PriorityClassName` in the
-[deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/cr.yaml)
-file:
+* **Special hardware**: Keep Pods that don't need specialized hardware (like GPUs) off dedicated nodes by tainting those nodes.
 
-```default
+* **Node problems**: Handle node failures gracefully with automatic taints and tolerations.
+
+See [Kubernetes Taints and Tolerations :octicons-link-external-16:](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/) for detailed examples and use cases.
+
+## Priority classes
+
+Pods may belong to some *priority classes*. Priority classes help the scheduler distinguish important Pods when eviction is needed. To use priority classes:
+
+1. Create PriorityClasses in your Kubernetes cluster
+Specify `PriorityClassName` in the [deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/cr.yaml) file:
+
+```yaml
 priorityClassName: high-priority
 ```
 
-See the [Kubernetes Pods Priority and Preemption
-documentation :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption)
-to find out how to define and use priority classes in your cluster.
+See [Kubernetes Pod Priority documentation :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption) for more information on how to define and use priority classes in your cluster.
 
 ## Pod Disruption Budgets
 
-Creating the *Pod Disruption Budget* is the Kubernetes style to limits
-the number of Pods of an application that can go down simultaneously due
-to such *voluntary disruptions* as cluster administrator’s actions
-during the update of deployments or nodes, etc. By such a way
-Distribution Budgets allow large applications to retain their high
-availability while maintenance and other administrative activities.
+A Pod Disruption Budget (PDB) in Kubernetes helps keep your applications available during voluntary disruptions, such as deleting a deployment or draining a node for maintenance by a cluster administrator. A Pod Disruption Budget sets a limit on how many Pods can be unavailable at the same time due to these voluntary actions. 
 
-We recommend to apply Pod Disruption Budgets manually to avoid situation
-when Kubernetes stopped all your database Pods. See [the official
+You can configure Pod disruption budget for Percona XtraDB Cluster, ProxySQL and HAProxy nodes using the `podDisruptionBudget` option in the Custom Resource.
+
+This is the example configuration for Percona XtraDB Cluster Pods:
+
+```yaml
+pxc:
+  podDisruptionBudget:
+      maxUnavailable: 1
+      minAvailable: 0
+```
+
+Refer to [the official
 Kubernetes
 documentation :octicons-link-external-16:](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/)
-for details.
+for more information about Pod disruption budgets and [considerations how to protect your application :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/configure-pdb/#protecting-an-application-with-a-poddisruptionbudget).

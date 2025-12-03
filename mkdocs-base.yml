@@ -209,7 +209,7 @@ nav:
           - "Application and system users": users.md
           - "Exposing the cluster": expose.md
           - "Changing MySQL Options": options.md
-          - "Anti-affinity and tolerations": constraints.md
+          - "Control Pod scheduling": constraints.md
           - "Labels and annotations": annotations.md
           - "Local Storage support": storage.md
           - Define environment variables:
