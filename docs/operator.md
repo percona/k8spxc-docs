@@ -505,13 +505,17 @@ For the [cross-site replication](replication.md) Replica cluster, this key shoul
 
 Adds a delay before a run check to verify the application is ready to process traffic.
 
+This field is deprecated and will be removed in version 1.22.0. Use the [`pxc.readynessProbes.initialDelaySeconds`](#pxcreadinessprobesinitialdelayseconds) option instead.
+
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-numeric-1-box: int     | `15` |
 
 ### `pxc.livenessDelaySec`
 
-Adds a delay before the run check ensures the application is healthy and capable of processing requests.
+Adds a delay before the run check ensures the application is healthy and capable of processing requests. 
+
+This field is deprecated and will be removed in version 1.22.0. Use the [`pxc.livenessProbes.initialDelaySeconds`](#pxclivenessprobesinitialdelayseconds) option instead.
 
 | Value type  | Example    |
 | ----------- | ---------- |
