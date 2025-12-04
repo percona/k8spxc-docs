@@ -2571,7 +2571,7 @@ The time for a backup or restore job to live after it finishes. After this time 
 
 Applies to both on-demand/scheduled backups and restores.
 
-When the value is too low, the Operator applies the the internal.percona.com/keep-job finalizer to allow the operation to finish. After the operation completes with the Succeeded or Failed status, the finalizer is removed and the Job is cleaned up.
+When the value is too low, the Operator applies the internal.percona.com/keep-job finalizer to allow the operation to finish. After the operation completes with the Succeeded or Failed status, the finalizer is removed and the Job is cleaned up.
 
 | Value type  | Example    |
 | ----------- | ---------- |
