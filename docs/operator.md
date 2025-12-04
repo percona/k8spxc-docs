@@ -2565,6 +2565,18 @@ The Percona XtraDB cluster Docker image to use for the backup.
 | ----------- | ---------- |
 | :material-code-string: string     | `percona/percona-xtradb-cluster-operator:{{ release }}-backup` |
 
+### `backup.ttlSecondsAfterFinished`
+
+The time for a backup or restore job to live after it finishes. After this time expires, the Operator removes the backup/restore Job and associated Pod.
+
+Applies to both on-demand/scheduled backups and restores.
+
+When the value is too low, the Operator applies the the internal.percona.com/keep-job finalizer to allow the operation to finish. After the operation completes with the Succeeded or Failed status, the finalizer is removed and the Job is cleaned up.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `3600` |
+
 ### `backup.backoffLimit`
 
 The number of retries to make a backup (by default, 10 retries are made).
