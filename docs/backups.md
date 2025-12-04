@@ -25,9 +25,9 @@ If you're running a Kubernetes cluster on premises, you can  store backups insid
 
 ## Workflow
 
-After you create a Backup object, the Operator sets up a backup Pod that runs Percona XtraBackup inside. It also creates a path in the storage to save the backup data.
+After you create a Backup object, the Operator sets up a backup Pod that runs Percona XtraBackup inside and create a backup Job. It also creates a path in the storage to save the backup data.
 
-The backup Pod starts copying the data files from the Percona XtraDB Cluster  to the backup storage. The Percona XtraDB Cluster Pod that serves the data enters the Donor state and stops receiving all requests.
+The backup Job within the backup Pod starts copying the data files from the Percona XtraDB Cluster to the backup storage. The Percona XtraDB Cluster Pod that serves the data enters the Donor state and stops receiving all requests.
 
 The backup task is resource-consuming and can affect performance. That's why the Operator uses one of the secondary Percona XtraDB Cluster Pods for backups. The exception is a one-pod deployment, where the same Pod is used for all tasks.
 
@@ -45,6 +45,14 @@ The Operator ensures the sequence by creating a lock for a running backup. It re
 You can fine-tune the queue by assigning a waiting time for a backup to start. Use the `spec.startingDeadlineSeconds` option in the `deploy/cr.yaml` file to set this time for all backups. You can also override it for a specific  on-demand backup by defining the `startingDeadlineSeconds` option within the backup configuration. This setting has a higher priority.
 
 If the backup doesn't start within the defined time, the Operator automatically marks it as "failed".
+
+## Configure automatic cleanup of backup Jobs and Pods
+
+You can specify the time to live for a backup Job after the backup operation finishes. When the TTL expires, the Operator automatically deletes the Job and its associated Pod.
+
+Use the `backup.ttlSecondsAfterFinished` setting in the `deploy/cr.yaml` file to set this time for all backups, both on-demand and scheduled. This setting also applies for restores.
+
+If it takes longer to finish a backup than the defined `backup.ttlSecondsAfterFinished` value, the Operator applies the `internal.percona.com/keep-job` finalizer to allow the operation to finish. After the operation completes with the Succeeded or Failed status, the finalizer is removed and the Job is cleaned up.
 
 ## Backup suspension for an unhealthy database cluster
 

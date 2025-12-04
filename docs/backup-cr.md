@@ -24,6 +24,7 @@ The metadata part contains the following keys:
 * `finalizers` subsection:
 
     * `percona.com/delete-backup` if present, enables deletion of backup files from a backup storage when the backup object is removed (manually or by schedule). When used with the Persistent Volume as the backup storage, the finalizer deletes the PVC. 
+    * `internal.percona.com/keep-job` ensures the backup Job is not cleaned up due to expired TTL until the backup operation finishes. After the operation completes with the Succeeded or Failed status, the finalizer is removed and the Job is cleaned up.
 
 ## `spec` section
 
