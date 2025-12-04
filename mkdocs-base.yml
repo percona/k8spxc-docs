@@ -274,6 +274,8 @@ nav:
 
     - Reference:
           - "Custom Resource options": operator.md
+          - "Backup Custom Resource options": backup-cr.md
+          - "Restore Custom Resource options": restore-cr.md
           - "Percona certified images": images.md
           - "Versions compatibility": versions.md
           - "Operator API": api.md
