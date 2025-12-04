@@ -11,9 +11,13 @@ be briefly described with the following diagram.
 ![image](assets/images/replication.svg)
 
 Being a regular MySQL Server instance, each node contains the same set
-of data synchronized across nodes. The recommended configuration is to
-have at least 3 nodes. In a basic setup with this amount of nodes,
-Percona XtraDB Cluster provides high availability, continuing to
+of data synchronized across nodes. For production use, the recommended configuration is a minimum of 3 nodes and a maximum of 5 nodes. 
+
+Having a higher number of nodes (for example, 7) is not recommended because Percona XtraDB Cluster uses synchronous replication (Galera). Every write must be confirmed by all nodes. With 7 nodes, each transaction involves more network hops and acknowledgments, which increases latency and resource usage. 
+
+Even numbers of nodes are not recommended because Galera replication relies on quorum voting. With an even number of nodes, a network partition can split the cluster into two equal halves, leaving no majority. Without quorum, both sides stop serving queries to avoid data inconsistency, which reduces availability.
+
+In a basic setup with 3 nodes, Percona XtraDB Cluster provides high availability, continuing to
 function if you take any of the nodes down. Additionally load balancing
 can be achieved with the HAProxy router, which accepts incoming traffic
 from MySQL clients and forwards it to backend MySQL servers.
