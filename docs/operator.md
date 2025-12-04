@@ -526,7 +526,7 @@ For the [cross-site replication](replication.md) Replica cluster, this key shoul
 
 Adds a delay before a run check to verify the application is ready to process traffic.
 
-This field is deprecated and will be removed in version 1.22.0. Use the [`pxc.readynessProbes.initialDelaySeconds`](#pxcreadinessprobesinitialdelayseconds) option instead.
+This field is deprecated and will be removed in version 1.22.0. Use the [`pxc.readinessProbes.initialDelaySeconds`](#pxcreadinessprobesinitialdelayseconds) option instead.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1059,7 +1059,9 @@ The [Kubernetes imagePullSecrets :octicons-link-external-16:](https://kubernetes
 
 ### `haproxy.readinessDelaySec`
 
-Adds a delay before a run check to verify the application is ready to process traffic.
+Adds a delay before a run check to verify the application is ready to process traffic. 
+
+This field is deprecated and will be removed in version 1.22.0. Use the [`haproxy.readinessProbes.initialDelaySeconds`](#haproxyreadinessprobesinitialdelayseconds) option instead.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1068,6 +1070,8 @@ Adds a delay before a run check to verify the application is ready to process tr
 ### `haproxy.livenessDelaySec`
 
 Adds a delay before the run check ensures the application is healthy and capable of processing requests.
+
+This field is deprecated and will be removed in version 1.22.0. Use the [`haproxy.livenessProbes.initialDelaySeconds`](#haproxylivenessprobesinitialdelayseconds) option instead.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1710,22 +1714,6 @@ The [Kubernetes imagePullSecrets :octicons-link-external-16:](https://kubernetes
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-code-string: string     | `private-registry-credentials` |
-
-### `proxysql.readinessDelaySec`
-
-Adds a delay before a run check to verify the application is ready to process traffic.
-
-| Value type  | Example    |
-| ----------- | ---------- |
-| :material-numeric-1-box: int     | `15` |
-
-### `proxysql.livenessDelaySec`
-
-Adds a delay before the run check ensures the application is healthy and capable of processing requests.
-
-| Value type  | Example    |
-| ----------- | ---------- |
-| :material-numeric-1-box: int     | `300` |
 
 ### `proxysql.configuration`
 
