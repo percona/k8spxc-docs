@@ -48,7 +48,7 @@ If the backup doesn't start within the defined time, the Operator automatically 
 
 ## Configure automatic cleanup of backup Jobs and Pods
 
-You can specify the time to live for a backup Jod after the backup operation finishes. When the TTL expires, the Operator automatically deletes the Job and its associated Pod.
+You can specify the time to live for a backup Job after the backup operation finishes. When the TTL expires, the Operator automatically deletes the Job and its associated Pod.
 
 Use the `backup.ttlSecondsAfterFinished` setting in the `deploy/cr.yaml` file to set this time for all backups, both on-demand and scheduled. This setting also applies for restores.
 
