@@ -167,7 +167,6 @@ not_in_nav: |
 
 # Common navigation for percona.com, render.com and PDF
 nav:
-
     - Welcome: index.md
     - get-help.md
     - Features:
@@ -234,6 +233,7 @@ nav:
              - "Run Percona XtraDB Cluster without TLS": tls-disable.md
           - "Data at rest encryption": encryption.md
           - "Telemetry": telemetry.md
+          - reconciliation-concurrency.md
           
     - Management:
           - Backup and restore:

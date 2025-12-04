@@ -18,7 +18,7 @@ not exceed 22 characters, start with an alphabetic character, and end with an
 alphanumeric character;
 * `finalizers` subsection:
     * `percona.com/delete-pods-in-order` if present, activates the [Finalizer :octicons-link-external-16:](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#finalizers) which controls the proper Pods deletion order in case of the cluster deletion event (on by default).
-    * `percona.com/delete-pxc-pvc` if present, activates the [Finalizer :octicons-link-external-16:](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#finalizers) which deletes [Persistent Volume Claims :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) for Percona XtraDB Cluster Pods after the cluster deletion event (off by default).
+    * `percona.com/delete-pxc-pvc` if present, activates the [Finalizer :octicons-link-external-16:](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#finalizers) which deletes [Persistent Volume Claims :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) for Percona XtraDB Cluster Pods after the cluster deletion event (off by default). It also deletes user Secrets.
     * `percona.com/delete-proxysql-pvc` if present, activates the [Finalizer :octicons-link-external-16:](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#finalizers) which deletes [Persistent Volume Claim :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) for ProxySQL Pod after the cluster deletion event (off by default).
     * <a name="finalizers-delete-ssl"></a> `percona.com/delete-ssl` if present, activates the [Finalizer :octicons-link-external-16:](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#finalizers) which deletes [objects, created for SSL](TLS.md) (Secret, certificate, and issuer) after the cluster deletion event (off by default).
 
@@ -26,7 +26,18 @@ The toplevel spec elements of the [deploy/cr.yaml :octicons-link-external-16:](h
 
 ### `allowUnsafeConfigurations`
 
-Prevents users from configuring a cluster with unsafe parameters such as starting the cluster with the number of Percona XtraDB Cluster instances which is less than 3, more than 5, or is an even number, with less than 2 ProxySQL or HAProxy Pods, or without TLS/SSL certificates. **This option is deprecated and will be removed in future releases**. Use `unsafeFlags` subsection instead.
+Prevents users from configuring a cluster with unsafe parameters such as:
+
+* using an invalid number of Percona XtraDB Cluster nodes, which is:
+
+   * less than 3 
+   * more than 5 
+   * an even number (for production use, we recommend a minimum of 3 nodes and a maximum of 5 nodes), 
+   
+* deploying less than 2 ProxySQL or HAProxy Pods, 
+* starting the cluster without TLS/SSL certificates. 
+
+**This option is deprecated and will be removed in future releases**. Use `unsafeFlags` subsection instead.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -151,7 +162,17 @@ Allows users to configure a cluster without TLS/SSL certificates (if `false`, th
 
 ### `unsafeFlags.pxcSize`
 
-Allows users to configure a cluster with less than 3 Percona XtraDB Cluster instances (if `false`, the Operator will detect unsafe parameters, set cluster status to `error`, and print error message in logs).
+Allows users to configure a cluster with unsafe node counts. For production use, we recommend a minimum of 3 nodes and a maximum of 5 nodes. Even numbers of nodes are not recommended due to quorum voting issues in Galera replication. Higher numbers of nodes (for example, 7) are not recommended due to increased latency from synchronous replication overhead.
+
+Setting this to `true` allows configurations such as:
+
+- Less than 3 nodes 
+- More than 5 nodes
+- Even numbers of nodes
+
+If the option is set to `false`, the Operator detects unsafe parameters, sets clusters status to `error`, and prints error message in logs. 
+
+**Note:** Using unsafe configurations may result in reduced availability, split-brain scenarios, or performance degradation. We cannot guarantee proper operation of the cluster with unsafe node counts.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -238,6 +259,22 @@ Enables or disables the [TLS encryption](TLS.md). If set to `false`,
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-toggle-switch-outline: boolean     | `true` |
+
+### `tls.certValidityDuration`
+
+Validity period for TLS certificates. Minimum required validity is 1 hour. Durations lower than 1 hour are rejected. Setting the duration to exactly 1 hour prevents the Operator from generating the correct certificate object.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `2160h` |
+
+### `tls.caValidityDuration`
+
+Validity period for CA certificate. Minimum accepted duration is 730 hours (approximately 30 days). Setting this value to exactly 730 hours prevents the Operator from generating the correct certificate object. You must set this value greater than 730 hours.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `26280h` |
 
 ### `tls.SANs`
 
@@ -489,13 +526,17 @@ For the [cross-site replication](replication.md) Replica cluster, this key shoul
 
 Adds a delay before a run check to verify the application is ready to process traffic.
 
+This field is deprecated and will be removed in version 1.22.0. Use the [`pxc.readynessProbes.initialDelaySeconds`](#pxcreadinessprobesinitialdelayseconds) option instead.
+
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-numeric-1-box: int     | `15` |
 
 ### `pxc.livenessDelaySec`
 
-Adds a delay before the run check ensures the application is healthy and capable of processing requests.
+Adds a delay before the run check ensures the application is healthy and capable of processing requests. 
+
+This field is deprecated and will be removed in version 1.22.0. Use the [`pxc.livenessProbes.initialDelaySeconds`](#pxclivenessprobesinitialdelayseconds) option instead.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -639,7 +680,7 @@ A secret with environment variables, see [Define environment variables](containe
 
 ### `pxc.mysqlAllocator`
 
-Specifies which memory allocator to use for the MySQL process. Available since Operator version 1.19.0 for Percona XtraDB Cluster 8.0 and later. 
+Specifies which memory allocator to use for the MySQL process. Available since Operator version 1.19.0 for Percona XtraDB Cluster 8.0 and later.
 
 Supported values: `jemalloc`, `tcmalloc`. When left empty or omitted, the default `libc` allocator is used.
 
@@ -1209,6 +1250,38 @@ The [Kubernetes Scheduler :octicons-link-external-16:](https://kubernetes.io/doc
 | ----------- | ---------- |
 | :material-label-outline: label     | `disktype: ssd` |
 
+### `haproxy.sidecarResources.requests.memory`
+
+The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for default sidecar containers such as `haproxy-monit` running inside HAProxy Pods.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `1G` |
+
+### `haproxy.sidecarResources.requests.cpu`
+
+[Kubernetes CPU requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for default sidecar containers such as `haproxy-monit` running inside HAProxy Pods.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `500m` |
+
+### `haproxy.sidecarResources.limits.memory`
+
+[Kubernetes memory limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for default sidecar containers such as `haproxy-monit` running inside HAProxy Pods.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `2G` |
+
+### `haproxy.sidecarResources.limits.cpu`
+
+[Kubernetes CPU limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for default sidecar containers such as `haproxy-monit` running inside HAProxy Pods.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `600m` |
+
 ### `haproxy.topologySpreadConstraints.labelSelector.matchLabels`
 
 The Label selector for the [Kubernetes Pod Topology Spread Constraints :octicons-link-external-16:](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/).
@@ -1547,7 +1620,7 @@ Name of the [custom sidecar container](sidecar.md) for the HAProxy Pod.
 
 ### `haproxy.sidecars.resources.requests.memory`
 
-The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the sidecar HAProxy containers.
+The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for custom sidecar containers running inside the HAProxy Pod.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1555,7 +1628,7 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 
 ### `haproxy.sidecars.resources.requests.cpu`
 
-[Kubernetes CPU requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the sidecar HAProxy containers.
+[Kubernetes CPU requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for custom sidecar containers running inside the HAProxy Pod.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1563,7 +1636,7 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 
 ### `haproxy.sidecars.resources.limits.memory`
 
-[Kubernetes memory limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the sidecar HAProxy containers.
+[Kubernetes memory limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for custom sidecar containers running inside the HAProxy Pod.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1571,7 +1644,7 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 
 ### `haproxy.sidecars.resources.limits.cpu`
 
-[Kubernetes CPU limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the sidecar HAProxy containers.
+[Kubernetes CPU limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for custom sidecar containers running inside the HAProxy Pod.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1826,6 +1899,73 @@ A secret with environment variables, see [Define environment variables](containe
 | ----------- | ---------- |
 | :material-code-string: string     | `my-env-var-secrets` |
 
+### `proxysql.scheduler.enabled`
+
+Enables the external ProxySQL scheduler for even distribution of read/write traffic across Percona XtraDB Cluster nodes. Available since Operator version 1.19.0
+
+See [ProxySQL scheduler](proxysql-conf.md#proxysql-scheduler) for more information.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-toggle-switch-outline: boolean     | `true` |
+
+
+### `proxysql.scheduler.writerIsAlsoReader`
+
+Controls whether the writer node is included in the read pool. When set to `false`, the writer node is excluded from receiving read queries. If the cluster loses its last reader, the writer is automatically elected as a reader regardless of this setting. Available since Operator version 1.19.0
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-toggle-switch-outline: boolean     | `true` |
+
+### `proxysql.scheduler.checkTimeoutMilliseconds`
+
+The maximum time (in milliseconds) allowed for checking a backend PXC node. If checking a node exceeds this timeout, it is not processed. Available since Operator version 1.19.0
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `2000` |
+
+### `proxysql.scheduler.successThreshold`
+
+The number of successful checks required before a failed node is restored to the pool. Available since Operator version 1.19.0
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `1` |
+
+### `proxysql.scheduler.failureThreshold`
+
+The number of failed checks required before a node is marked as DOWN and removed from the pool. Available since Operator version 1.19.0
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `3` |
+
+### `proxysql.scheduler.pingTimeoutMilliseconds`
+
+The connection timeout (in milliseconds) used to test the connection to a PXC server. Available since Operator version 1.19.0
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `1000` |
+
+### `proxysql.scheduler.nodeCheckIntervalMilliseconds`
+
+How frequently (in milliseconds) the scheduler runs to check node health and update the server configuration. Available since Operator version 1.19.0
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `2000` |
+
+### `proxysql.scheduler.maxConnections`
+
+The maximum number of connections from ProxySQL to each backend PXC server. Available since Operator version 1.19.0
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `1000` |
+
 ### `proxysql.priorityClassName`
 
 The [Kubernetes Pod Priority class :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass) for ProxySQL.
@@ -1849,6 +1989,38 @@ The [Kubernetes Scheduler :octicons-link-external-16:](https://kubernetes.io/doc
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-label-outline: label     | `disktype: ssd` |
+
+### `proxysql.sidecarResources.requests.memory`
+
+The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for default sidecar containers such as `proxysql-monit` running inside ProxySQL Pods.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `1G` |
+
+### `proxysql.sidecarResources.requests.cpu`
+
+[Kubernetes CPU requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for default sidecar containers such as `proxysql-monit` running inside ProxySQL Pods.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `500m` |
+
+### `proxysql.sidecarResources.limits.memory`
+
+[Kubernetes memory limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for default sidecar containers such as `proxysql-monit` running inside ProxySQL Pods.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `2G` |
+
+### `proxysql.sidecarResources.limits.cpu`
+
+[Kubernetes CPU limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for default sidecar containers such as `proxysql-monit` running inside ProxySQL Pods.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `600m` |
 
 ### `proxysql.topologySpreadConstraints.labelSelector.matchLabels`
 
@@ -2044,7 +2216,7 @@ Name of the [custom sidecar container](sidecar.md) for the ProxySQL Pod.
 
 ### `proxysql.sidecars.resources.requests.memory`
 
-The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the sidecar ProxySQL containers.
+The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the custom sidecar containers deployed in ProxySQL Pods.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -2052,7 +2224,7 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 
 ### `proxysql.sidecars.resources.requests.cpu`
 
-[Kubernetes CPU requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the sidecar ProxySQL containers.
+[Kubernetes CPU requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the custom sidecar containers deployed in ProxySQL Pods.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -2060,7 +2232,7 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 
 ### `proxysql.sidecars.resources.limits.memory`
 
-[Kubernetes memory limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the sidecar ProxySQL containers.
+[Kubernetes memory limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the custom sidecar containers deployed in ProxySQL Pods.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -2068,7 +2240,7 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 
 ### `proxysql.sidecars.resources.limits.cpu`
 
-[Kubernetes CPU limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the sidecar ProxySQL containers.
+[Kubernetes CPU limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the custom sidecar containers deployed in ProxySQL Pods.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -2839,7 +3011,7 @@ Specify the max password length for user passwords
 
 | Value type  | Example    |
 | ----------- | ---------- |
-| :material-numeric-1-box: int | `20` | 
+| :material-numeric-1-box: int | `20` |
 
 ### `passwordGenerationOptions.minLength`
 

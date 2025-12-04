@@ -7,7 +7,7 @@ You can generate TLS certificates manually instead of using the Operator's autom
 
 When you follow the steps from this guide, you'll generate these certificate files:
 
-* `server.pem` - Server certificate for MongoDB nodes
+* `server.pem` - Server certificate for Percona XtraDB Cluster nodes
 * `server-key.pem` - Private key for the server certificate  
 * `client.pem` - Client certificate for external connections
 * `client-key.pem` - Private key for the client certificate
