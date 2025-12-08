@@ -2211,7 +2211,7 @@ The [Kubernetes PersistentVolumeClaim :octicons-link-external-16:](https://kuber
 
 ### `proxysql.extraPVCs.name`
 
-The name of the volume provisioned for the external PersistentVolumeClaim that you mount to ProxySQL pods. In such a way you can attach pre-existing storage volumes to your database instances for use cases such as importing data, sharing configuration files, or accessing external datasets. For more information, see [Add external PersistentVolumeClaims to the Operator](external-pvc.md). You can configure external PVCs for both new and running clusters..
+The name of the volume provisioned for the external PersistentVolumeClaim that you mount to ProxySQL pods. In such a way you can attach pre-existing storage volumes to your database instances for use cases such as importing data, sharing configuration files, or accessing external datasets. For more information, see [Add external PersistentVolumeClaims to the Operator](external-pvc.md). You can configure external PVCs for both new and running clusters.
 
 | Value type  | Example    |
 | ----------- | ---------- |
