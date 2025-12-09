@@ -13,13 +13,14 @@ To delete the database cluster means to delete the Custom Resource associated wi
 
 !!! note
 
-    There are 3 [finalizers :octicons-link-external-16:](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#finalizers) defined in the Custom Resource, which define whether to delete or preserve  TLS-related objects and data volumes when the cluster is deleted.
+    There are 4 [finalizers :octicons-link-external-16:](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#finalizers) defined in the Custom Resource, which define whether to delete or preserve  TLS-related objects and data volumes when the cluster is deleted.
 
-    * `finalizers.percona.com/delete-ssl`: if present, objects, created for SSL (Secret, certificate, and issuer) are deleted along with the cluster deletion.
+    * `finalizers.percona.com/delete-pxc-pods-in-order`: if present, PXC pods are deleted in order on cluster deletion. PVC is not deleted.
+    * `finalizers.percona.com/delete-ssl`: if present, objects, created for SSL (Secret, certificate, and issuer) are deleted along with the cluster deletion (will not delete PVC).
     * `finalizers.percona.com/delete-pxc-pvc`: if present, [Persistent Volume Claims :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) for the database cluster Pods are deleted along with the cluster deletion.
     * `finalizers.percona.com/delete-proxysql-pvc`: if present, [Persistent Volume Claims :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) for ProxySQL Pods are deleted along with the cluster deletion.
 
-    All 3 finalizers are off by default in the `deploy/cr.yaml` configuration file, and this allows you to recreate the cluster without losing data, credentials for the system users, etc. You can always [delete TLS-related objects and PVCs manually](#clean-up-resources), if needed. 
+    The default finalizer in `deploy/cr.yaml` configuration file is `finalizers.percona.com/delete-pxc-pods-in-order`, this allows you to recreate the cluster without losing data, credentials for the system users, etc. You can always [delete TLS-related objects and PVCs manually](#clean-up-resources), if needed. 
 
 The steps are the following:
 {.power-number}
@@ -151,7 +152,11 @@ Choose the instructions relevant to the way you installed the Operator.
 
 ## Clean up resources
  
-By default, TLS-related objects and data volumes remain in Kubernetes environment after you delete the cluster to allow you to recreate it without losing the data. If you wish to delete them, do the following:
+By default, TLS-related objects and data volumes remain in Kubernetes environment after you delete the cluster to allow you to recreate it without losing the data. 
+
+You can automate resource cleanup by turning on `percona.com/delete-pxc-pvc` and/or `percona.com/delete-ssl` [finalizers](operator.md#metadata-name)). You can also delete TLS-related objects and PVCs manually.
+
+To manually clean up resources, do the following:
 {.power-number}
 
 1. Delete Persistent Volume Claims.
@@ -184,6 +189,8 @@ By default, TLS-related objects and data volumes remain in Kubernetes environmen
             persistentvolumeclaim "datadir-cluster1-pxc-1" deleted
             persistentvolumeclaim "datadir-cluster1-pxc-2" deleted
             ```    
+        
+        Note that it also deletes user secrets if you have enabled the `percona.com/delete-pxc-pvc` finalizer. To prevent it from happening, disable the finalizer.
 
 2. Delete the Secrets
 
