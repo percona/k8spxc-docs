@@ -11,7 +11,7 @@ You can control which proxy to use by enabling or disabling the `haproxy.enabled
 HAProxy serves as a TCP-level load balancer in Percona Operator for MySQL. 
 It sits in front of your Percona XtraDB Cluster, accepts incoming MySQL connections and distributes them evenly across available cluster nodes.
 
-HAProxy is lightweight and efficient and introduces very little overhead. It has a minimal and straightforwatd configuration which makes it fast and stable.
+HAProxy is lightweight and efficient and introduces very little overhead. It has a minimal and straightforward configuration which makes it fast and stable.
 
 HAProxy is not SQL-aware. This means it does not inspect or interpret SQL queries, so it cannot differentiate between reads (SELECT) and writes (INSERT, UPDATE, etc.). 
 All traffic is routed based only on network and health status.
