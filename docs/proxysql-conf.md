@@ -1,15 +1,6 @@
 # Configuring Load Balancing with ProxySQL
 
-You can use either [HAProxy :octicons-link-external-16:](https://haproxy.org) or [ProxySQL :octicons-link-external-16:](https://proxysql.com/) for load balancing and proxy services.
-
-You can control which one to use: enable or disable the
-`haproxy.enabled` and `proxysql.enabled` options in the `deploy/cr.yaml`
-configuration file.
-
-!!! warning 
-
-    You can enable ProxySQL only when you create a cluster. For a running cluster you can enable only HAProxy. Also note, if you have already enabled HAProxy, the switch from it to ProxySQL is not
-    possible.
+This page describes how to configure and customize ProxySQL for your Percona XtraDB Cluster, including the advanced scheduler feature. For information about choosing between HAProxy and ProxySQL, see [Configure load balancing](load-balancing.md).
 
 ## `cluster1-proxysql` service
 

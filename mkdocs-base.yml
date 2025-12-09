@@ -216,8 +216,11 @@ nav:
           - "Labels and annotations": annotations.md
           - "Local Storage support": storage.md
           - "Defining environment variables": containers-conf.md
-          - "Load Balancing with HAProxy": haproxy-conf.md
-          - "Load Balancing with ProxySQL": proxysql-conf.md
+          - Configure load balancing:
+              - "Overview": load-balancing.md
+              - "HAProxy": haproxy-conf.md
+              - "ProxySQL": proxysql-conf.md
+              - proxy-switching.md
           - Workload transfer and disaster recovery: 
              - "Overview": dr.md
              - dr-primary.md
