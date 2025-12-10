@@ -24,7 +24,7 @@ Switching to HAProxy enables you to simplify your deployment and reduce operatio
 
 !!! warning
 
-    Switching from ProxySQL to HAProxy will cause Percona XtraDB Cluster Pods to restart.
+    Switching from ProxySQL to HAProxy will cause the downtime because the Operator needs to reconfigure the proxy Pods.
 
 You can switch from proxy to another on an existing cluster:
 
