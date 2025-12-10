@@ -4,6 +4,11 @@ This guide walks you through deploying and configuring HashiCorp Vault with TLS 
 
 By default, Percona XtraDB Cluster (PXC) and Vault communicate over an unencrypted HTTP protocol. You can enable encrypted HTTPS protocol with TLS as an additional security layer to protect the data transmitted between Vault and your PXC nodes. HTTPS ensures that sensitive information, such as encryption keys and secrets, cannot be intercepted or tampered with on the network.
 
+## Assumptions
+
+1. This guide is provided as a best effort and builds upon procedures described in the official Vault documentation. Since Vault's setup steps may change in future releases, this document may become outdated; we cannot guarantee ongoing accuracy or responsibility for such changes. For the most up-to-date and reliable information, please always refer to [the official Vault documentation](https://developer.hashicorp.com/vault/tutorials/kubernetes/kubernetes-minikube-tls#expose-the-vault-service-and-retrieve-the-secret-via-the-api).
+2. For this setup we deploy the Vault server on Kubernetes via Helm and generate certificates recognized by Kubernetes. Using Helm is not mandatory. Any supported Vault deployment (on-premises, in the cloud, or a managed Vault service) works as long as the Operator can reach it.
+
 ## Prerequisites
 
 Before you begin, ensure you have the following tools installed:
@@ -34,10 +39,10 @@ Export the namespace and other variables as environment variables to simplify fu
 ```bash
 export NAMESPACE="vault"
 export SERVICE="vault"
-export K8S_CLUSTER_NAME="cluster.local"
-export WORKDIR=/tmp/vault
+export SECRET_NAME="vault-secret"
+export CSR_NAME="vault-csr"
+export WORKDIR="/tmp/vault"
 ```
-
 
 ## Generate certificates
 
@@ -59,62 +64,77 @@ openssl genrsa -out ${WORKDIR}/vault.key 2048
 
 ### Create the Certificate Signing Request (CSR)
 
-1. Create the CSR configuration file:
+A Certificate Signing Request (CSR) is a file that contains information about your server and the certificate you need. You create it using your private key, and then submit it to Kubernetes to get a certificate signed by the Kubernetes Certificate Authority (CA). The signed certificate proves your server's identity and enables secure TLS connections.
+
+1. Create the Certificate Signing Request configuration file:
+
+    Specify the certificate details that Kubernetes needs to sign your certificate:
+
+    * **Request settings** (`[req]`): References the sections for certificate extensions and distinguished name. The distinguished name section is left empty as Kubernetes will populate it automatically.
+    * **Certificate extensions** (`[v3_req]`): Defines how the certificate can be used. `serverAuth` allows the certificate for server authentication, while `keyUsage` specifies the cryptographic operations the certificate supports (non-repudiation, digital signature, and key encipherment).
+    * **Subject Alternative Names** (`[alt_names]`): Lists all DNS names and IP addresses where your Vault service can be accessed. This includes the service name, fully qualified domain names (FQDNs) for different Kubernetes DNS contexts (namespace-scoped, cluster-scoped with `.svc`, and fully qualified with `.svc.cluster.local`), and the localhost IP address.
 
     ```bash
-    cat > ${WORKDIR}/vault-csr.conf <<EOF
+    cat > $WORKDIR/csr.conf <<EOF
     [req]
-    default_bits = 2048
-    prompt = no
-    encrypt_key = yes
-    default_md = sha256
-    distinguished_name = kubelet_serving
     req_extensions = v3_req
-    [ kubelet_serving ]
-    O = system:nodes
-    CN = system:node:*.${NAMESPACE}.svc.${K8S_CLUSTER_NAME}
-    [ v3_req ]
+    distinguished_name = req_distinguished_name
+    [req_distinguished_name]
+    [v3_req]
     basicConstraints = CA:FALSE
-    keyUsage = nonRepudiation, digitalSignature, keyEncipherment, dataEncipherment
-    extendedKeyUsage = serverAuth, clientAuth
+    keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+    extendedKeyUsage = serverAuth
     subjectAltName = @alt_names
     [alt_names]
     DNS.1 = ${SERVICE}
     DNS.2 = ${SERVICE}.${NAMESPACE}
     DNS.3 = ${SERVICE}.${NAMESPACE}.svc
-    DNS.4 = ${SERVICE}.${NAMESPACE}.svc.${K8S_CLUSTER_NAME}
+    DNS.4 = ${SERVICE}.${NAMESPACE}.svc.cluster.local
     IP.1 = 127.0.0.1
     EOF
     ```
 
-2. Generate the CSR:
+2. Generate the CSR. The following command creates the Certificate Signing Request file using your private key and the configuration file.
+
+    The `-subj` parameter specifies the distinguished name directly: the Common Name (CN) identifies your Vault service using the Kubernetes node naming convention (`system:node:${SERVICE}.${NAMESPACE}.svc`), and the Organization (O) field is set to `system:nodes`, which Kubernetes requires to recognize and sign the certificate. The command combines these subject fields with the certificate extensions defined in the configuration file to produce the complete CSR.
 
     ```bash
-    openssl req -new -key ${WORKDIR}/vault.key -out ${WORKDIR}/vault.csr -config ${WORKDIR}/vault-csr.conf
+    openssl req -new -key $WORKDIR/vault.key \
+      -subj "/CN=system:node:${SERVICE}.${NAMESPACE}.svc;/O=system:nodes" \
+      -out $WORKDIR/server.csr -config $WORKDIR/csr.conf
     ```
 
 ### Issue the certificate
 
+To get your certificate signed by Kubernetes, you need to submit the CSR through the Kubernetes API. The CSR file you generated with OpenSSL must be wrapped in a Kubernetes CertificateSigningRequest resource.
+
 1. Create the CSR YAML file to send it to Kubernetes:
 
+    This YAML file creates a Kubernetes CertificateSigningRequest object that contains your CSR. The file embeds the base64-encoded CSR content and specifies:
+
+    * The signer name (`kubernetes.io/kubelet-serving`) that tells Kubernetes which CA should sign the certificate
+    * The groups field (`system:authenticated`) that identifies who can approve this CSR
+    * The certificate usages that define how the certificate can be used (digital signature, key encipherment, and server authentication)
+
     ```bash
-    cat > ${WORKDIR}/csr.yaml <<EOF
+    cat > $WORKDIR/csr.yaml <<EOF
     apiVersion: certificates.k8s.io/v1
     kind: CertificateSigningRequest
     metadata:
-       name: vault.svc
+      name: ${CSR_NAME}
     spec:
-       signerName: kubernetes.io/kubelet-serving
-       expirationSeconds: 8640000
-       request: $(cat ${WORKDIR}/vault.csr|base64|tr -d '\n')
-       usages:
-       - digital signature
-       - key encipherment
-       - server auth
+      groups:
+      - system:authenticated
+      request: $(cat $WORKDIR/server.csr | base64 | tr -d '\n')
+      signerName: kubernetes.io/kubelet-serving
+      usages:
+      - digital signature
+      - key encipherment
+      - server auth
     EOF
     ```
 
-2. Send the CSR to Kubernetes:
+2. Create the CertificateSigningRequest (CSR) object:
 
     ```bash
     kubectl create -f ${WORKDIR}/csr.yaml
@@ -123,31 +143,35 @@ openssl genrsa -out ${WORKDIR}/vault.key 2048
 3. Approve the CSR in Kubernetes:
 
     ```bash
-    kubectl certificate approve vault.svc
+    kubectl certificate approve ${CSR_NAME}
     ```
 
 4. Confirm the certificate was issued:
 
     ```bash
-    kubectl get csr vault.svc
+    kubectl get csr ${CSR_NAME}
     ```
 
     ??? example "Sample output"
 
         ```{.text .no-copy}
         NAME        AGE   SIGNERNAME                      REQUESTOR       REQUESTEDDURATION   CONDITION
-        vault.svc   16s   kubernetes.io/kubelet-serving   minikube-user   100d                Approved,Issued
+        vault-csr   16s   kubernetes.io/kubelet-serving   minikube-user   <none>              Approved,Issued
         ```
 
 ### Retrieve the certificates
 
-1. Retrieve the certificate:
+After Kubernetes approves and signs your CSR, you need to retrieve the signed certificate and the Kubernetes CA certificate. These certificates are required to configure TLS for your Vault server.
+
+1. Retrieve the signed certificate from the CertificateSigningRequest object. The certificate is base64-encoded in Kubernetes, so you decode it and save it to a file.
 
     ```bash
-    kubectl get csr vault.svc -o jsonpath='{.status.certificate}' | openssl base64 -d -A -out ${WORKDIR}/vault.crt
+    kubectl get csr ${CSR_NAME} -o jsonpath='{.status.certificate}' | base64 -d > $WORKDIR/vault.crt
     ```
 
 2. Retrieve Kubernetes CA certificate:
+
+    This command retrieves the Kubernetes cluster's Certificate Authority (CA) certificate from your kubeconfig file. The CA certificate is needed to verify that the signed certificate is valid and was issued by the Kubernetes CA. The command uses `kubectl config view` with flags to get the raw, flattened configuration and extract the CA certificate data, which is also base64-encoded.
 
     ```bash
     kubectl config view \
@@ -163,11 +187,11 @@ openssl genrsa -out ${WORKDIR}/vault.key 2048
 Create a TLS secret in Kubernetes to store the certificates and key:
 
 ```bash
-kubectl create secret generic vault-secret \
-   -n $NAMESPACE \
-   --from-file=vault.key=${WORKDIR}/vault.key \
-   --from-file=vault.crt=${WORKDIR}/vault.crt \
-   --from-file=vault.ca=${WORKDIR}/vault.ca
+kubectl create secret generic ${SECRET_NAME} \
+  --namespace ${NAMESPACE} \
+  --from-file=vault.key=$WORKDIR/vault.key \
+  --from-file=vault.crt=$WORKDIR/vault.crt \
+  --from-file=vault.ca=$WORKDIR/vault.ca
 ```
 
 ## Install Vault with TLS
@@ -181,51 +205,36 @@ For this setup, we install Vault in Kubernetes using the [Helm 3 package manager
     helm repo update
     ```
 
-2. Create the Helm overrides file to configure Vault with TLS:
+2. Install Vault with TLS enabled:
 
     ```bash
-    cat > ${WORKDIR}/overrides.yaml <<EOF
-    global:
-       enabled: true
-       tlsDisable: false
-    injector:
-       enabled: true
-    server:
-       extraEnvironmentVars:
-          VAULT_CACERT: /vault/userconfig/vault-secret/vault.ca
-          VAULT_TLSCERT: /vault/userconfig/vault-secret/vault.crt
-          VAULT_TLSKEY: /vault/userconfig/vault-secret/vault.key
-       volumes:
-          - name: userconfig-vault-secret
-            secret:
-             defaultMode: 420
-             secretName: vault-secret
-       volumeMounts:
-          - mountPath: /vault/userconfig/vault-secret
-            name: userconfig-vault-secret
-            readOnly: true
-       standalone:
-          enabled: true
-          config: |
-             ui = true
-             listener "tcp" {
-                tls_disable = 0
-                address = "[::]:8200"
-                tls_cert_file = "/vault/userconfig/vault-secret/vault.crt"
-                tls_key_file  = "/vault/userconfig/vault-secret/vault.key"
-                tls_client_ca_file = "/vault/userconfig/vault-secret/vault.ca"
-             }
-             storage "file" {
-                path = "/vault/data"
-             }
-             disable_mlock = true
-    EOF
+    helm upgrade --install ${SERVICE} hashicorp/vault \
+      --disable-openapi-validation \
+      --version 0.30.0 \
+      --namespace ${NAMESPACE} \
+      --set dataStorage.enabled=false \
+      --set global.tlsDisable=false \
+      --set global.platform=kubernetes \
+      --set "server.extraVolumes[0].type=secret" \
+      --set "server.extraVolumes[0].name=${SECRET_NAME}" \
+      --set server.extraEnvironmentVars.VAULT_CACERT=/vault/userconfig/${SECRET_NAME}/vault.ca \
+      --set "server.standalone.config= listener \"tcp\" { \
+        address = \"[::]:8200\" \
+        cluster_address = \"[::]:8201\" \
+        tls_cert_file = \"/vault/userconfig/${SECRET_NAME}/vault.crt\" \
+        tls_key_file  = \"/vault/userconfig/${SECRET_NAME}/vault.key\" \
+        tls_client_ca_file = \"/vault/userconfig/${SECRET_NAME}/vault.ca\" \
+      } \
+      storage \"file\" { \
+        path = \"/vault/data\" \
+      }"
     ```
-
-3. Install Vault with TLS enabled:
-
-    ```bash
-    helm upgrade --install vault hashicorp/vault --namespace $NAMESPACE -f ${WORKDIR}/overrides.yaml
+    
+    This command does the following:
+    
+    * installs HashiCorp Vault in your Kubernetes cluster with TLS enabled.
+    * sets up secret-based volume mounts for your TLS certs and customizes the Vault configuration for secure communication.
+    * the passed parameters ensure storage is disabled (for demo purposes unless a persistent volume is specified), enforce TLS, link the secret containing certificates, and configure the Vault listener and storage settings.
     ```
 
     ??? example "Sample output"
@@ -248,7 +257,7 @@ For this setup, we install Vault in Kubernetes using the [Helm 3 package manager
 4. Retrieve the Pod name where Vault is running:
 
     ```bash
-    kubectl -n $NAMESPACE get pod -l app.kubernetes.io/name=vault -o jsonpath='{.items[0].metadata.name}'
+    kubectl -n $NAMESPACE get pod -l app.kubernetes.io/name=${SERVICE} -o jsonpath='{.items[0].metadata.name}'
     ```
 
     ??? example "Sample output"
@@ -341,7 +350,7 @@ When you started Vault, it generates and starts with a [root token :octicons-lin
 4. Enable the secrets engine at the mount path. The following command enables KV secrets engine v2 at the `secret` mount-path:
 
     ```bash
-    vault secrets enable --version=2 -path=secret kv
+    vault secrets enable --version=2 -tls-skip-verify -path=secret kv
     ```
 
     ??? example "Sample output"
@@ -350,7 +359,13 @@ When you started Vault, it generates and starts with a [root token :octicons-lin
         Success! Enabled the kv secrets engine at: secret/
         ```
 
-5. Exit the Vault Pod:
+5. Optionally, enable audit logs for vault:
+
+    ```bash
+    vault audit enable file file_path=/vault/vault-audit.log
+    ```
+
+6. Exit the Vault Pod:
 
     ```bash
     exit
@@ -382,7 +397,7 @@ You can modify the example configuration file:
       name: keyring-secret-vault
     type: Opaque
     stringData:
-      keyring_vault.cnf: |-
+      keyring_vault.conf: |-
         token = hvs.********************Jg9r
         vault_url = https://vault.vault.svc.cluster.local:8200
         secret_mount_point = secret
@@ -406,7 +421,7 @@ You can modify the example configuration file:
       name: keyring-secret-vault-84
     type: Opaque
     stringData:
-      keyring_vault.cnf: |-
+      keyring_vault.conf: |-
         {
           "token": "hvs.********************Jg9r",
           "vault_url": "https://vault.vault.svc.cluster.local:8200",

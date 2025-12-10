@@ -186,7 +186,7 @@ You can modify the example configuration file:
       name: keyring-secret-vault
     type: Opaque
     stringData:
-      keyring_vault.cnf: |-
+      keyring_vault.conf: |-
         token = hvs.********************Jg9r
         vault_url = http://vault.vault.svc.cluster.local:8200
         secret_mount_point = secret
@@ -201,7 +201,7 @@ You can modify the example configuration file:
       name: keyring-secret-vault-84
     type: Opaque
     stringData:
-      keyring_vault.cnf: |-
+      keyring_vault.conf: |-
         {
           "token": "hvs.********************Jg9r",
           "vault_url": "http://vault.vault.svc.cluster.local:8200",
