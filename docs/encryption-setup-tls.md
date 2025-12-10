@@ -13,6 +13,14 @@ Before you begin, ensure you have the following tools installed:
 * `openssl` - OpenSSL toolkit for generating certificates
 * `jq` - JSON processor
 
+## Create a working directory
+
+Create a directory where for certificate files:
+
+```bash
+mkdir -p /tmp/vault
+```
+
 ## Create the namespace
 
 It is a good practice to isolate workloads in Kubernetes using namespaces. Create a namespace with the following command:
@@ -25,16 +33,11 @@ Export the namespace and other variables as environment variables to simplify fu
 
 ```bash
 export NAMESPACE="vault"
-export VAULT_SERVICE_NAME="vault"
+export SERVICE="vault"
 export K8S_CLUSTER_NAME="cluster.local"
 export WORKDIR=/tmp/vault
 ```
 
-Create a working directory for certificate files:
-
-```bash
-mkdir -p /tmp/vault
-```
 
 ## Generate certificates
 
@@ -76,9 +79,10 @@ openssl genrsa -out ${WORKDIR}/vault.key 2048
     extendedKeyUsage = serverAuth, clientAuth
     subjectAltName = @alt_names
     [alt_names]
-    DNS.1 = *.${VAULT_SERVICE_NAME}
-    DNS.2 = *.${VAULT_SERVICE_NAME}.${NAMESPACE}.svc.${K8S_CLUSTER_NAME}
-    DNS.3 = *.${NAMESPACE}
+    DNS.1 = ${SERVICE}
+    DNS.2 = ${SERVICE}.${NAMESPACE}
+    DNS.3 = ${SERVICE}.${NAMESPACE}.svc
+    DNS.4 = ${SERVICE}.${NAMESPACE}.svc.${K8S_CLUSTER_NAME}
     IP.1 = 127.0.0.1
     EOF
     ```
@@ -188,17 +192,17 @@ For this setup, we install Vault in Kubernetes using the [Helm 3 package manager
        enabled: true
     server:
        extraEnvironmentVars:
-          VAULT_CACERT: /vault/userconfig/vault-ha-tls/vault.ca
-          VAULT_TLSCERT: /vault/userconfig/vault-ha-tls/vault.crt
-          VAULT_TLSKEY: /vault/userconfig/vault-ha-tls/vault.key
+          VAULT_CACERT: /vault/userconfig/vault-secret/vault.ca
+          VAULT_TLSCERT: /vault/userconfig/vault-secret/vault.crt
+          VAULT_TLSKEY: /vault/userconfig/vault-secret/vault.key
        volumes:
-          - name: userconfig-vault-ha-tls
+          - name: userconfig-vault-secret
             secret:
              defaultMode: 420
-             secretName: vault-ha-tls
+             secretName: vault-secret
        volumeMounts:
-          - mountPath: /vault/userconfig/vault-ha-tls
-            name: userconfig-vault-ha-tls
+          - mountPath: /vault/userconfig/vault-secret
+            name: userconfig-vault-secret
             readOnly: true
        standalone:
           enabled: true
@@ -207,9 +211,9 @@ For this setup, we install Vault in Kubernetes using the [Helm 3 package manager
              listener "tcp" {
                 tls_disable = 0
                 address = "[::]:8200"
-                tls_cert_file = "/vault/userconfig/vault-ha-tls/vault.crt"
-                tls_key_file  = "/vault/userconfig/vault-ha-tls/vault.key"
-                tls_client_ca_file = "/vault/userconfig/vault-ha-tls/vault.ca"
+                tls_cert_file = "/vault/userconfig/vault-secret/vault.crt"
+                tls_key_file  = "/vault/userconfig/vault-secret/vault.key"
+                tls_client_ca_file = "/vault/userconfig/vault-secret/vault.ca"
              }
              storage "file" {
                 path = "/vault/data"
@@ -331,8 +335,6 @@ When you started Vault, it generates and starts with a [root token :octicons-lin
 3. Authenticate in Vault with this token:
 
     ```bash
-    export VAULT_ADDR=https://127.0.0.1:8200
-    export VAULT_SKIP_VERIFY=true
     vault login hvs.*************Jg9r
     ```
 
