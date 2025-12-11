@@ -2,32 +2,48 @@
 
 This guide walks you through deploying and configuring HashiCorp Vault to work with Percona Operator for MySQL based on Percona XtraDB Cluster to enable [data-at-rest encryption](encryption.md) using HTTP protocol.
 
+## Assumptions
+
+1. This guide is provided as a best effort and builds upon procedures described in the official Vault documentation. Since Vault's setup steps may change in future releases, this document may become outdated; we cannot guarantee ongoing accuracy or responsibility for such changes. For the most up-to-date and reliable information, please always refer to [the official Vault documentation](https://developer.hashicorp.com/vault/docs).
+2. For this setup we deploy the Vault server in High Availability (HA) mode on Kubernetes via Helm without TLS. The HA setup uses Raft storage backend and consists of 3 replicas for redundancy. Using Helm is not mandatory. Any supported Vault deployment (on-premises, in the cloud, or a managed Vault service) works as long as the Operator can reach it.
+3. This guide uses Vault Helm chart version 0.28.0. You may want to change it to the required version by setting the `VAULT_HELM_VERSION` variable.
+
 ## Prerequisites
 
 Before you begin, ensure you have the following tools installed:
 
 * `kubectl` - Kubernetes command-line interface
 * `helm` - Helm package manager
-
 * `jq` - JSON processor
 
-## Create the namespace
+## Prepare your environment
 
-It is a good practice to isolate workloads in Kubernetes using namespaces. Create a namespace with the following command:
+1. Export the namespace and other variables as environment variables to simplify further configuration:
 
-```bash
-kubectl create namespace vault
-```
+    ```bash
+    export NAMESPACE="vault"
+    export VAULT_HELM_VERSION="0.28.0"
+    export SERVICE="vault"
+    export SECRET_NAME="vault-secret"
+    export POLICY_NAME="mysql-policy"
+    export WORKDIR="/tmp/vault"
+    ```
 
-Export the namespace as an environment variable to simplify further configuration and management:
+2. Create a working directory for configuration files:
 
-```bash
-export NAMESPACE="vault"
-```
+    ```bash
+    mkdir -p $WORKDIR
+    ```
+
+3. It is a good practice to isolate workloads in Kubernetes using namespaces. Create a namespace with the following command:
+
+    ```bash
+    kubectl create namespace vault
+    ```
 
 ## Install Vault
 
-For this setup, we install Vault in Kubernetes using the [Helm 3 package manager :octicons-link-external-16:](https://helm.sh/). However, Helm is not required — any supported Vault deployment (on-premises, in the cloud, or a managed Vault service) works as long as the Operator can reach it.
+For this setup, we install Vault in Kubernetes using the [Helm 3 package manager :octicons-link-external-16:](https://helm.sh/) in High Availability (HA) mode with Raft storage backend.
 
 1. Add and update the Vault Helm repository:
 
@@ -36,11 +52,38 @@ For this setup, we install Vault in Kubernetes using the [Helm 3 package manager
     helm repo update
     ```
 
-2. Install Vault:
+2. Install Vault in HA mode:
 
     ```bash
-    helm upgrade --install vault hashicorp/vault --namespace $NAMESPACE
+    helm upgrade --install ${SERVICE} hashicorp/vault \
+      --disable-openapi-validation \
+      --version ${VAULT_HELM_VERSION} \
+      --namespace ${NAMESPACE} \
+      --set "global.enabled=true" \
+      --set "global.tlsDisable=true" \
+      --set "global.platform=kubernetes" \
+      --set "server.ha.enabled=true" \
+      --set "server.ha.replicas=3" \
+      --set "server.ha.raft.enabled=true" \
+      --set "server.ha.raft.setNodeId=true" \
+      --set-string "server.ha.raft.config=cluster_name = \"vault-integrated-storage\"
+    ui = true
+    listener \"tcp\" {
+      address = \"[::]:8200\"
+      cluster_address = \"[::]:8201\"
+    }
+    storage \"raft\" {
+      path = \"/vault/data\"
+    }
+    disable_mlock = true
+    service_registration \"kubernetes\" {}"
     ```
+
+    This command does the following:
+
+    * Installs HashiCorp Vault in High Availability (HA) mode without TLS in your Kubernetes cluster
+    * Sets up Raft as the backend storage with three replicas for fault tolerance
+    * Configures the Vault TCP listener for HTTP communication (port 8200)
 
     ??? example "Sample output"
 
@@ -59,22 +102,32 @@ For this setup, we install Vault in Kubernetes using the [Helm 3 package manager
         https://developer.hashicorp.com/vault/docs
         ```
 
-3. Retrieve the Pod name where Vault is running:
+3. Wait for all Vault pods to be running:
 
     ```bash
-    kubectl -n $NAMESPACE get pod -l app.kubernetes.io/name=vault -o jsonpath='{.items[0].metadata.name}'
+    kubectl wait --for=condition=Ready pod -l app.kubernetes.io/name=${SERVICE} -n $NAMESPACE --timeout=300s
+    ```
+
+4. Retrieve the Pod names where Vault is running:
+
+    ```bash
+    kubectl -n $NAMESPACE get pod -l app.kubernetes.io/name=${SERVICE} -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}'
     ```
 
     ??? example "Sample output"
 
         ```{.text .no-copy}
         vault-0
+        vault-1
+        vault-2
         ```
 
-4. After Vault is installed, you need to initialize it. Run the following command:
+## Initialize and unseal Vault
+
+1. After Vault is installed, you need to initialize it. Run the following command to initialize the first pod:
 
     ```bash
-    kubectl exec -it pod/vault-0 -n $NAMESPACE -- vault operator init -key-shares=1 -key-threshold=1 -format=json > /tmp/vault-init
+    kubectl exec -it pod/vault-0 -n $NAMESPACE -- vault operator init -key-shares=1 -key-threshold=1 -format=json > ${WORKDIR}/vault-init
     ```
 
     The command does the following:
@@ -82,17 +135,17 @@ For this setup, we install Vault in Kubernetes using the [Helm 3 package manager
     * Connects to the Vault Pod
     * Initializes Vault server
     * Creates 1 unseal key share which is required to unseal the server
-    * Outputs the init response in JSON format to a local file `/tmp/vault-init`. It includes unseal keys and root token.
+    * Outputs the init response to a local file. The file includes unseal keys and a root token.
 
-5. Vault is started in a sealed state. In this state Vault can access the storage but it cannot decrypt data. In order to use Vault, you need to unseal it.
+2. Vault is started in a sealed state. In this state Vault can access the storage but it cannot decrypt data. In order to use Vault, you need to unseal it.
 
     Retrieve the unseal key from the file:
 
     ```bash
-    unsealKey=$(jq -r ".unseal_keys_b64[]" < /tmp/vault-init)
+    unsealKey=$(jq -r ".unseal_keys_b64[]" < ${WORKDIR}/vault-init)
     ```
 
-    Now, unseal Vault. Run the following command on every Pod where Vault is running:
+    Now, unseal the first Vault pod:
 
     ```bash
     kubectl exec -it pod/vault-0 -n $NAMESPACE -- vault operator unseal "$unsealKey"
@@ -107,13 +160,64 @@ For this setup, we install Vault in Kubernetes using the [Helm 3 package manager
         Initialized     true
         Sealed          false
         Total Shares    1
-        Threshold       1
+        Threshold      1
         Version         1.20.1
         Build Date      2025-07-24T13:33:51Z
-        Storage Type    file
+        Storage Type    raft
         Cluster Name    vault-cluster-55062a37
         Cluster ID      37d0c2e4-8f47-14f7-ca49-905b66a1804d
-        HA Enabled      false
+        HA Enabled      true
+        ```
+
+3. Add the remaining Pods to the Vault cluster. Run the following for loop:
+
+    ```bash
+    for POD in vault-1 vault-2; do
+      kubectl -n "$NAMESPACE" exec $POD -- sh -c '
+        vault operator raft join http://vault-0.vault-internal:8200
+      '
+    done
+    ```
+
+    The command connects to each Vault Pod (`vault-1` and `vault-2`) and issues the `vault operator raft join` command, which:
+
+    * Joins the Pods to the Vault Raft cluster, enabling HA mode
+    * Connects to the cluster leader (`vault-0`) over HTTP
+    * Ensures all nodes participate in the Raft consensus and share storage responsibilities
+
+    ??? example "Sample output"
+
+        ```{.text .no-copy}
+        Key                     Value
+        ---                     -----
+        Joined Raft cluster     true
+        Leader Address          http://vault-0.vault-internal:8200
+        ```
+
+4. Unseal the remaining Pods. Use this for loop:
+
+    ```bash
+    for POD in vault-1 vault-2; do
+        kubectl -n "$NAMESPACE" exec $POD -- sh -c "
+            vault operator unseal \"$unsealKey\"
+        "
+    done
+    ```
+
+    ??? example "Expected output"
+
+        ```{.text .no-copy}
+        Key                Value
+        ---                -----
+        Seal Type          shamir
+        Initialized        true
+        Sealed             false
+        Total Shares       1
+        Threshold          1
+        Version            1.20.1
+        Build Date         2025-07-24T13:33:51Z
+        Storage Type       raft
+        HA Enabled         true
         ```
 
 ## Configure Vault
@@ -122,14 +226,12 @@ At this step you need to configure Vault and enable secrets within it. To do so 
 
 When you started Vault, it generates and starts with a [root token :octicons-link-external-16:](https://developer.hashicorp.com/vault/docs/concepts/tokens) that provides full access to Vault. Use this token to authenticate.
 
-!!! note
-
-    For the purposes of this tutorial we use the root token in further sections. For security considerations, the use of root token is not recommended. Refer to the [Create token :octicons-link-external-16:](https://developer.hashicorp.com/vault/docs/commands/token/create) in Vault documentation how to create user tokens.
+Run the following commands on a leader node. The remaining ones will synchronize from the leader.
 
 1. Extract the Vault root token from the file where you saved the init response output:
 
     ```bash
-    cat /tmp/vault-init | jq -r ".root_token"
+    cat ${WORKDIR}/vault-init | jq -r ".root_token"
     ```
 
     ??? example "Sample output"
@@ -162,6 +264,54 @@ When you started Vault, it generates and starts with a [root token :octicons-lin
         Success! Enabled the kv secrets engine at: secret/
         ```
 
+5. Optionally, enable audit logs for vault:
+
+    ```bash
+    vault audit enable file file_path=/vault/vault-audit.log
+    ```
+
+6. Exit the Vault Pod:
+
+    ```bash
+    exit
+    ```
+
+## Create a non-root token
+
+Using the root token for authentication is not recommended, as it poses significant security risks. Instead, you should create a dedicated, non-root token for the Operator to use when accessing Vault. The permissions for this token are controlled by an access policy. Before you create a token you must first create the access policy.
+
+1. Create a policy for accessing the kv engine path and define the required permissions in the `capabilities` parameter:
+
+    ```bash
+    kubectl -n "$NAMESPACE" exec vault-0 -- sh -c "
+      vault policy write $POLICY_NAME - <<EOF
+    path \"secret/data/*\" {
+      capabilities = [\"create\", \"read\", \"update\", \"delete\", \"list\"]
+    }
+    EOF
+    "
+    ```
+
+2. Now create a token and export it as an environment variable:
+
+    ```bash
+    NEW_TOKEN=$(kubectl -n "$NAMESPACE" exec vault-0 -- sh -c "
+      vault token create -policy=\"$POLICY_NAME\" -field=token
+    ")
+    ```
+
+3. Verify the token:
+
+    ```bash
+    echo "New Vault Token: $NEW_TOKEN"
+    ```
+
+    ??? example "Sample output"
+
+        ```{.text .no-copy}
+        hvs.CAESINO******************************************T2Y
+        ```
+
 ## Create a Secret for Vault
 
 To enable Vault for the Operator, create a Secret object for it. To do so, create a YAML configuration file and specify the following information:
@@ -187,7 +337,7 @@ You can modify the example configuration file:
     type: Opaque
     stringData:
       keyring_vault.conf: |-
-        token = hvs.********************Jg9r
+        token = hvs.CAESINO******************************************T2Y
         vault_url = http://vault.vault.svc.cluster.local:8200
         secret_mount_point = secret
     ```
@@ -203,7 +353,7 @@ You can modify the example configuration file:
     stringData:
       keyring_vault.conf: |-
         {
-          "token": "hvs.********************Jg9r",
+          "token": "hvs.CAESINO******************************************T2Y",
           "vault_url": "http://vault.vault.svc.cluster.local:8200",
           "secret_mount_point": "secret"
         }
@@ -236,6 +386,8 @@ Now, reference the Vault Secret in the Operator Custom Resource manifest. Note t
       --patch '{"spec":{"vaultSecretName":"keyring-secret-vault"}}'
     ```
 
+This triggers cluster Pods to restart.
+
 ## Use data-at-rest encryption
 
 To use encryption, you can:
@@ -263,4 +415,5 @@ See the following chapters of Percona Server for MySQL documentation in how to u
 
 ## Verify encryption
 
-Refer to the [Percona Server for MySQL documentation :octicons-link-external-16:](https://docs.percona.com/percona-server/latest/verifying-encryption.html) for guidelines how to verify encryption in your database.
+Refer to the [Percona Server for MySQL documentation :octicons-link-external-16:](https://docs.percona.com/percona-server/latest/verify-encryption.html) for guidelines how to verify encryption in your database.
+

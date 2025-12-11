@@ -7,7 +7,8 @@ By default, Percona XtraDB Cluster (PXC) and Vault communicate over an unencrypt
 ## Assumptions
 
 1. This guide is provided as a best effort and builds upon procedures described in the official Vault documentation. Since Vault's setup steps may change in future releases, this document may become outdated; we cannot guarantee ongoing accuracy or responsibility for such changes. For the most up-to-date and reliable information, please always refer to [the official Vault documentation](https://developer.hashicorp.com/vault/tutorials/kubernetes/kubernetes-minikube-tls#expose-the-vault-service-and-retrieve-the-secret-via-the-api).
-2. For this setup we deploy the Vault server on Kubernetes via Helm and generate certificates recognized by Kubernetes. Using Helm is not mandatory. Any supported Vault deployment (on-premises, in the cloud, or a managed Vault service) works as long as the Operator can reach it.
+2. For this setup we deploy the Vault server in High Availability (HA) mode on Kubernetes via Helm with TLS enabled. The HA setup uses Raft storage backend and consists of 3 replicas for redundancy. Using Helm is not mandatory. Any supported Vault deployment (on-premises, in the cloud, or a managed Vault service) works as long as the Operator can reach it.
+3. This guide uses Vault Helm chart version 0.28.0. You may want to change it to the required version by setting the `VAULT_HELM_VERSION` variable.
 
 ## Prerequisites
 
@@ -18,31 +19,31 @@ Before you begin, ensure you have the following tools installed:
 * `openssl` - OpenSSL toolkit for generating certificates
 * `jq` - JSON processor
 
-## Create a working directory
+## Prepare your environment
 
-Create a directory where for certificate files:
+1. Export the namespace and other variables as environment variables to simplify further configuration:
 
-```bash
-mkdir -p /tmp/vault
-```
+    ```bash
+    export NAMESPACE="vault"
+    export VAULT_HELM_VERSION="0.28.0"
+    export SERVICE="vault"
+    export CSR_NAME="vault-csr"
+    export SECRET_NAME="keyring-secret-vault-84"
+    export POLICY_NAME="mysql-policy"
+    export WORKDIR="/tmp/vault"
+    ```
 
-## Create the namespace
+2. Create a working directory where for certificate and configuration files:
 
-It is a good practice to isolate workloads in Kubernetes using namespaces. Create a namespace with the following command:
+    ```bash
+    mkdir -p /tmp/vault
+    ```
 
-```bash
-kubectl create namespace vault
-```
+3. It is a good practice to isolate workloads in Kubernetes using namespaces. Create a namespace with the following command:
 
-Export the namespace and other variables as environment variables to simplify further configuration:
-
-```bash
-export NAMESPACE="vault"
-export SERVICE="vault"
-export SECRET_NAME="vault-secret"
-export CSR_NAME="vault-csr"
-export WORKDIR="/tmp/vault"
-```
+    ```bash
+    kubectl create namespace vault
+    ```
 
 ## Generate certificates
 
@@ -90,6 +91,9 @@ A Certificate Signing Request (CSR) is a file that contains information about yo
     DNS.2 = ${SERVICE}.${NAMESPACE}
     DNS.3 = ${SERVICE}.${NAMESPACE}.svc
     DNS.4 = ${SERVICE}.${NAMESPACE}.svc.cluster.local
+    DNS.5 = vault-0.vault-internal
+    DNS.6 = vault-1.vault-internal
+    DNS.7 = vault-2.vault-internal
     IP.1 = 127.0.0.1
     EOF
     ```
@@ -171,7 +175,7 @@ After Kubernetes approves and signs your CSR, you need to retrieve the signed ce
 
 2. Retrieve Kubernetes CA certificate:
 
-    This command retrieves the Kubernetes cluster's Certificate Authority (CA) certificate from your kubeconfig file. The CA certificate is needed to verify that the signed certificate is valid and was issued by the Kubernetes CA. The command uses `kubectl config view` with flags to get the raw, flattened configuration and extract the CA certificate data, which is also base64-encoded.
+    This command retrieves the Kubernetes cluster's Certificate Authority (CA) certificate from your `kubeconfig` file. The CA certificate is needed to verify that the signed certificate is valid and was issued by the Kubernetes CA. The command uses `kubectl config view` with flags to get the raw, flattened configuration and extract the CA certificate data, which is also base64-encoded.
 
     ```bash
     kubectl config view \
@@ -196,7 +200,7 @@ kubectl create secret generic ${SECRET_NAME} \
 
 ## Install Vault with TLS
 
-For this setup, we install Vault in Kubernetes using the [Helm 3 package manager :octicons-link-external-16:](https://helm.sh/) with TLS enabled.
+For this setup, we install Vault in Kubernetes using the [Helm 3 package manager :octicons-link-external-16:](https://helm.sh/) in High Availability (HA) mode with Raft storage backend and with TLS enabled.
 
 1. Add and update the Vault Helm repository:
 
@@ -210,32 +214,47 @@ For this setup, we install Vault in Kubernetes using the [Helm 3 package manager
     ```bash
     helm upgrade --install ${SERVICE} hashicorp/vault \
       --disable-openapi-validation \
-      --version 0.30.0 \
+      --version ${VAULT_HELM_VERSION} \
       --namespace ${NAMESPACE} \
-      --set dataStorage.enabled=false \
-      --set global.tlsDisable=false \
-      --set global.platform=kubernetes \
-      --set "server.extraVolumes[0].type=secret" \
-      --set "server.extraVolumes[0].name=${SECRET_NAME}" \
+      --set "global.enabled=true" \
+      --set "global.tlsDisable=false" \
+      --set "global.platform=kubernetes" \
       --set server.extraEnvironmentVars.VAULT_CACERT=/vault/userconfig/${SECRET_NAME}/vault.ca \
-      --set "server.standalone.config= listener \"tcp\" { \
-        address = \"[::]:8200\" \
-        cluster_address = \"[::]:8201\" \
-        tls_cert_file = \"/vault/userconfig/${SECRET_NAME}/vault.crt\" \
-        tls_key_file  = \"/vault/userconfig/${SECRET_NAME}/vault.key\" \
-        tls_client_ca_file = \"/vault/userconfig/${SECRET_NAME}/vault.ca\" \
-      } \
-      storage \"file\" { \
-        path = \"/vault/data\" \
-      }"
+      --set "server.extraEnvironmentVars.VAULT_TLSCERT=/vault/userconfig/${SECRET_NAME}/vault.crt" \
+      --set "server.extraEnvironmentVars.VAULT_TLSKEY=/vault/userconfig/${SECRET_NAME}/vault.key" \
+      --set "server.volumes[0].name=userconfig-${SECRET_NAME}" \
+      --set "server.volumes[0].secret.secretName=${SECRET_NAME}" \
+      --set "server.volumes[0].secret.defaultMode=420" \
+      --set "server.volumeMounts[0].mountPath=/vault/userconfig/${SECRET_NAME}" \
+      --set "server.volumeMounts[0].name=userconfig-${SECRET_NAME}" \
+      --set "server.volumeMounts[0].readOnly=true" \
+      --set "server.ha.enabled=true" \
+      --set "server.ha.replicas=3" \
+      --set "server.ha.raft.enabled=true" \
+      --set "server.ha.raft.setNodeId=true" \
+      --set-string "server.ha.raft.config=cluster_name = \"vault-integrated-storage\"
+    ui = true
+    listener \"tcp\" {
+      tls_disable = 0
+      address = \"[::]:8200\"
+      cluster_address = \"[::]:8201\"
+      tls_cert_file = \"/vault/userconfig/${SECRET_NAME}/vault.crt\"
+      tls_key_file  = \"/vault/userconfig/${SECRET_NAME}/vault.key\"
+      tls_client_ca_file = \"/vault/userconfig/${SECRET_NAME}/ca.crt\"
+    }
+    storage \"raft\" {
+      path = \"/vault/data\"
+    }
+    disable_mlock = true
+    service_registration \"kubernetes\" {}"
     ```
     
     This command does the following:
     
-    * installs HashiCorp Vault in your Kubernetes cluster with TLS enabled.
-    * sets up secret-based volume mounts for your TLS certs and customizes the Vault configuration for secure communication.
-    * the passed parameters ensure storage is disabled (for demo purposes unless a persistent volume is specified), enforce TLS, link the secret containing certificates, and configure the Vault listener and storage settings.
-    ```
+    * Installs HashiCorp Vault in High Availability (HA) mode with secure TLS enabled in your Kubernetes cluster.
+    * Configures Vault pods to use certificates from a Kubernetes Secret via volume mounts for secure HTTPS communication between Vault and clients.
+    * Sets up Raft as the backend storage with three replicas for fault tolerance, and configures the Vault TCP listener to enforce TLS with your specified certificate files.
+    
 
     ??? example "Sample output"
 
@@ -268,10 +287,10 @@ For this setup, we install Vault in Kubernetes using the [Helm 3 package manager
 
 ## Initialize and unseal Vault
 
-1. After Vault is installed, you need to initialize it. Run the following command:
+1. After Vault is installed, you need to initialize it. Run the following command to initialize the first pod:
 
     ```bash
-    kubectl exec -it pod/vault-0 -n $NAMESPACE -- vault operator init -tls-skip-verify -key-shares=1 -key-threshold=1 -format=json > ${WORKDIR}/vault-init
+    kubectl exec -it pod/vault-0 -n $NAMESPACE -- vault operator init -key-shares=1 -key-threshold=1 -format=json > ${WORKDIR}/vault-init
     ```
 
     The command does the following:
@@ -279,7 +298,7 @@ For this setup, we install Vault in Kubernetes using the [Helm 3 package manager
     * Connects to the Vault Pod
     * Initializes Vault server with TLS enabled
     * Creates 1 unseal key share which is required to unseal the server
-    * Outputs the init response in JSON format to a local file. It includes unseal keys and root token.
+    * Outputs the init response to a local file. The file includes unseal keys and root token.
 
 2. Vault is started in a sealed state. In this state Vault can access the storage but it cannot decrypt data. In order to use Vault, you need to unseal it.
 
@@ -292,7 +311,7 @@ For this setup, we install Vault in Kubernetes using the [Helm 3 package manager
     Now, unseal Vault. Run the following command:
 
     ```bash
-    kubectl exec -it pod/vault-0 -n $NAMESPACE -- vault operator unseal -tls-skip-verify "$unsealKey"
+    kubectl exec -it pod/vault-0 -n $NAMESPACE -- vault operator unseal "$unsealKey"
     ```
 
     ??? example "Sample output"
@@ -313,15 +332,69 @@ For this setup, we install Vault in Kubernetes using the [Helm 3 package manager
         HA Enabled      false
         ```
 
+3. Add the remaining Pods to the Vault cluster. Run the following for loop:
+
+    ```bash
+    for POD in vault-1 vault-2; do
+      kubectl -n "$NAMESPACE" exec $POD -- sh -c '
+        vault operator raft join -address=https://${HOSTNAME}.vault-internal:8200 \
+          -leader-ca-cert="$(cat /vault/userconfig/vault-secret/vault.ca)" \
+          -leader-client-cert="$(cat /vault/userconfig/vault-secret/vault.crt)" \
+          -leader-client-key="$(cat /vault/userconfig/vault-secret/vault.key)" \
+          https://vault-0.vault-internal:8200
+      '
+    done
+    ```
+
+    The command connects to each Vault Pod (`vault-1` and `vault-2`) and issues the `vault operator raft join` command, which:
+    * Joins the Pods to the Vault Raft cluster, enabling HA mode.
+    * Uses the necessary TLS certificates to securely connect to the cluster leader (`vault-0`).
+    * Ensures all nodes participate in the Raft consensus and share storage responsibilities.
+
+    ??? example "Sample output"
+
+        ```{.text .no-copy}
+        Key                     Value
+        ---                     -----
+        Joined Raft cluster     true
+        Leader Address          https://vault-0.vault-internal:8200
+        ```
+
+4. Unseal the remaining Pods. Use this for loop:
+
+    ```bash
+    for POD in vault-1 vault-2; do
+        kubectl -n "$NAMESPACE" exec $POD -- sh -c "
+            vault operator unseal \"$unsealKey\"
+        "
+    done
+    ```
+    
+    ??? example "Expected output"
+
+        ```{.text .no-copy}
+        Key                Value
+        ---                -----
+        Seal Type          shamir
+        Initialized        true
+        Sealed             true
+        Total Shares       1
+        Threshold          1
+        Unseal Progress    0/1
+        Unseal Nonce       n/a
+        Version            1.16.1
+        Build Date         2024-04-03T12:35:53Z
+        Storage Type       raft
+        HA Enabled         true
+        ```
+
 ## Configure Vault
 
 At this step you need to configure Vault and enable secrets within it. To do so you must first authenticate in Vault.
 
 When you started Vault, it generates and starts with a [root token :octicons-link-external-16:](https://developer.hashicorp.com/vault/docs/concepts/tokens) that provides full access to Vault. Use this token to authenticate.
 
-!!! note
-
-    For the purposes of this tutorial we use the root token in further sections. For security considerations, the use of root token is not recommended. Refer to the [Create token :octicons-link-external-16:](https://developer.hashicorp.com/vault/docs/commands/token/create) in Vault documentation how to create user tokens.
+Run the following command on a leader node. The remaining ones will synchronize from the leader.
 
 1. Extract the Vault root token from the file where you saved the init response output:
 
@@ -350,7 +423,7 @@ When you started Vault, it generates and starts with a [root token :octicons-lin
 4. Enable the secrets engine at the mount path. The following command enables KV secrets engine v2 at the `secret` mount-path:
 
     ```bash
-    vault secrets enable --version=2 -tls-skip-verify -path=secret kv
+    vault secrets enable --version=2 -path=secret kv
     ```
 
     ??? example "Sample output"
@@ -371,6 +444,42 @@ When you started Vault, it generates and starts with a [root token :octicons-lin
     exit
     ```
 
+## Create a non-root token
+
+Using the root token for authentication is not recommended, as it poses significant security risks. Instead, you should create a dedicated, non-root token for the Operator to use when accessing Vault. The permissions for this token are controlled by an access policy. Before you create a token you must first create the access policy.
+
+1. Create a policy for accessing the kv engine path and define the required permissions in the `capabilities` parameter:
+
+    ```bash
+    kubectl -n "$NAMESPACE" exec vault-0 -- sh -c "
+      vault policy write $POLICY_NAME - <<EOF
+    path \"secret/data/*\" {
+      capabilities = [\"create\", \"read\", \"update\", \"delete\", \"list\"]
+    }
+    EOF
+    "
+    ```
+
+2. Now create a token and export it as an environment variable:
+
+    ```bash
+    NEW_TOKEN=$(kubectl -n "$NAMESPACE" exec vault-0 -- sh -c "
+      vault token create -policy=\"$POLICY_NAME\" -field=token
+    ")
+    ```
+
+3. Verify the token:
+
+    ```bash
+    echo "New Vault Token: $NEW_TOKEN"
+    ```
+
+    ??? example "Sample output"
+
+        ```{.text .no-copy}
+        hvs.CAESINO******************************************T2Y
+        ```
+
 ## Create a Secret for Vault
 
 To enable Vault for the Operator, create a Secret object for it. To do so, create a YAML configuration file and specify the following information:
@@ -379,7 +488,7 @@ To enable Vault for the Operator, create a Secret object for it. To do so, creat
 * A Vault server URL (using HTTPS)
 * The secrets mount path
 * Path to TLS certificates
-* Contents of the `ca.cert` certificate file
+* Contents of the `ca.cert` certificate file. This is the `vault.ca` file in our example.
 
 Depending on Percona XtraDB Cluster version, you must specify the Vault configuration as follows:
 
@@ -398,7 +507,7 @@ You can modify the example configuration file:
     type: Opaque
     stringData:
       keyring_vault.conf: |-
-        token = hvs.********************Jg9r
+        token = hvs.CAESINO******************************************T2Y
         vault_url = https://vault.vault.svc.cluster.local:8200
         secret_mount_point = secret
         vault_ca = /etc/mysql/vault-keyring-secret/ca.cert
@@ -423,7 +532,7 @@ You can modify the example configuration file:
     stringData:
       keyring_vault.conf: |-
         {
-          "token": "hvs.********************Jg9r",
+          "token": "hvs.CAESINO******************************************T2Y",
           "vault_url": "https://vault.vault.svc.cluster.local:8200",
           "secret_mount_point": "secret",
           "vault_ca": "/etc/mysql/vault-keyring-secret/ca.cert"
@@ -469,6 +578,8 @@ Now, reference the Vault Secret in the Operator Custom Resource manifest. Note t
       --patch '{"spec":{"vaultSecretName":"keyring-secret-vault"}}'
     ```
 
+This triggers cluster Pods to restart.
+
 ## Use data-at-rest encryption
 
 To use encryption, you can:
@@ -496,7 +607,7 @@ See the following chapters of Percona Server for MySQL documentation in how to u
 
 ## Verify encryption
 
-Refer to the [Percona Server for MySQL documentation :octicons-link-external-16:](https://docs.percona.com/percona-server/latest/verifying-encryption.html) for guidelines how to verify encryption in your database.
+Refer to the [Percona Server for MySQL documentation :octicons-link-external-16:](https://docs.percona.com/percona-server/latest/verify-encryption.html) for guidelines how to verify encryption in your database.
 
 ## Clean up
 
