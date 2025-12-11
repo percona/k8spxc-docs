@@ -33,7 +33,7 @@ When switching proxies, adjust your resource requests and limits accordingly:
 
 * **Switching from HAProxy to ProxySQL**: Increase memory and CPU allocations. Start with at least 1G memory and 600m CPU per ProxySQL pod, then monitor and adjust based on your workload. ProxySQL benefits from more memory for query caching and connection pooling.
 
-* **Switching from ProxySQL to HAProxy**: You can reduce resource allocations since HAProxy is more lightweight. Start with 256Mi memory and 100m CPU per HAProxy pod, then adjust based on your connection load.
+* **Switching from ProxySQL to HAProxy**: You can reduce resource allocations since HAProxy is more lightweight. Start with 500Mi memory and 400m CPU per HAProxy pod, then adjust based on your connection load.
 
 * **Monitor and adjust**: After switching, monitor resource usage using `kubectl top pods` and adjust requests and limits based on actual consumption patterns. Consider setting resource requests to match your typical usage and limits to handle peak loads.
 
