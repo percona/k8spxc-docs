@@ -326,10 +326,10 @@ For this setup, we install Vault in Kubernetes using the [Helm 3 package manager
         Threshold       1
         Version         1.20.1
         Build Date      2025-07-24T13:33:51Z
-        Storage Type    file
+        Storage Type    raft
         Cluster Name    vault-cluster-55062a37
         Cluster ID      37d0c2e4-8f47-14f7-ca49-905b66a1804d
-        HA Enabled      false
+        HA Enabled      true
         ```
 
 3. Add the remaining Pods to the Vault cluster. Run the following for loop:
@@ -590,6 +590,8 @@ To use encryption, you can:
    CREATE TABLE t1 (c1 INT, PRIMARY KEY pk(c1)) ENCRYPTION='Y';
    CREATE TABLESPACE foo ADD DATAFILE 'foo.ibd' ENCRYPTION='Y';
    ```
+
+   Existing tables will not be encrypted unless you specifically enable it via the `ALTER TABLE .... ENCRYPTION='Y';` statement.
 
 * turn on default encryption of a schema or a general tablespace. Then all tables you create will have encryption enabled. To turn on default encryption, use the following SQL statement:
 

@@ -398,6 +398,8 @@ To use encryption, you can:
    CREATE TABLE t1 (c1 INT, PRIMARY KEY pk(c1)) ENCRYPTION='Y';
    CREATE TABLESPACE foo ADD DATAFILE 'foo.ibd' ENCRYPTION='Y';
    ```
+   
+   Existing tables will not be encrypted unless you specifically enable it via the `ALTER TABLE .... ENCRYPTION='Y';` statement.
 
 * turn on default encryption of a schema or a general tablespace. Then all tables you create will have encryption enabled. To turn on default encryption, use the following SQL statement:
 
