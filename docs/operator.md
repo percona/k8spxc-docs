@@ -3011,7 +3011,7 @@ This section contains the options to customize password generation for user Secr
 
 ### `passwordGenerationOptions.symbols`
 
-Specify what special symbols to use when generating user passwords
+Specify what special symbols to use when generating user passwords. The passwords must contain only ASCII characters to ensure authentication to MySQL.
 
 | Value type  | Example    |
 | ----------- | ---------- |
