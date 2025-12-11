@@ -8,7 +8,7 @@ By default, Percona XtraDB Cluster (PXC) and Vault communicate over an unencrypt
 
 1. This guide is provided as a best effort and builds upon procedures described in the official Vault documentation. Since Vault's setup steps may change in future releases, this document may become outdated; we cannot guarantee ongoing accuracy or responsibility for such changes. For the most up-to-date and reliable information, please always refer to [the official Vault documentation](https://developer.hashicorp.com/vault/tutorials/kubernetes/kubernetes-minikube-tls#expose-the-vault-service-and-retrieve-the-secret-via-the-api).
 2. For this setup we deploy the Vault server in High Availability (HA) mode on Kubernetes via Helm with TLS enabled. The HA setup uses Raft storage backend and consists of 3 replicas for redundancy. Using Helm is not mandatory. Any supported Vault deployment (on-premises, in the cloud, or a managed Vault service) works as long as the Operator can reach it.
-3. This guide uses Vault Helm chart version 0.28.0. You may want to change it to the required version by setting the `VAULT_HELM_VERSION` variable.
+3. This guide uses Vault Helm chart version 0.30.0. You may want to change it to the required version by setting the `VAULT_HELM_VERSION` variable.
 
 ## Prerequisites
 
@@ -454,6 +454,12 @@ Using the root token for authentication is not recommended, as it poses signific
     kubectl -n "$NAMESPACE" exec vault-0 -- sh -c "
       vault policy write $POLICY_NAME - <<EOF
     path \"secret/data/*\" {
+      capabilities = [\"create\", \"read\", \"update\", \"delete\", \"list\"]
+    }
+    path \"secret/metadata/*\" {
+      capabilities = [\"create\", \"read\", \"update\", \"delete\", \"list\"]
+    }
+    path \"secret/*\" {
       capabilities = [\"create\", \"read\", \"update\", \"delete\", \"list\"]
     }
     EOF
