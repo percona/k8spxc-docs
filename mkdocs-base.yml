@@ -231,7 +231,10 @@ nav:
              - "Generate certificates manually": tls-manual.md
              - "Update certificates": tls-update.md
              - "Run Percona XtraDB Cluster without TLS": tls-disable.md
-          - "Data at rest encryption": encryption.md
+          - Data at rest encryption:
+            - "About data at rest encryption": encryption.md
+            - "Configure data at rest encryption without TLS": encryption-setup.md
+            - "Configure data at rest encryption with TLS": encryption-setup-tls.md
           - "Telemetry": telemetry.md
           - reconciliation-concurrency.md
           
