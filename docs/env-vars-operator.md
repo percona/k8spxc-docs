@@ -143,7 +143,7 @@ env:
 
 ### `PXCO_FEATURE_GATES`
 
-Enables you to turn on specific feature for the Operator using the [feature gate system](https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/). 
+Enables you to turn on specific features for the Operator using the [feature gate system](https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/). 
 
 | Value type | Default | Example |
 | ---------- | ------- | ------- |
