@@ -31,7 +31,7 @@ The Operator supports two backup methods:
 
 ### SST method (default)
 
-The default backup method uses State Snapshot Transfer (SST). When you create a Backup object, the Operator:
+This backup method uses State Snapshot Transfer (SST). When you create a Backup object, the Operator:
 
 1. Sets up a backup Pod that runs Percona XtraBackup inside and creates a backup Job
 2. Creates a path in the storage to save the backup data
