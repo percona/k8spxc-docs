@@ -113,7 +113,6 @@ This variable limits the number of parallel workers used for backup deletion fro
 | ---------- | ------- | ------- |
 | string     | `"10"` | `"20"` |
 
-
 **Example configuration:**
 
 ```yaml
@@ -141,6 +140,44 @@ env:
  - name: MAX_CONCURRENT_RECONCILES
    value: "3"
 ```
+
+### `PXCO_FEATURE_GATES`
+
+Enables you to turn on specific feature for the Operator using the [feature gate system](https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/). 
+
+| Value type | Default | Example |
+| ---------- | ------- | ------- |
+| string     | `""` (empty) | `"XtrabackupSidecar=true"` |
+
+**Available feature gates:**
+
+* `XtrabackupSidecar` - Enables the XtraBackup sidecar method for backups instead of the default SST (State Snapshot Transfer) method. Read more about [backup methods the Operator uses](backups.md#backup-methods).
+
+**When to use:**
+
+Using the XtraBackup sidecar method is an alternative backup approach with different characteristics. You might want to use it if:
+
+* You need better performance for large databases. The XtraBackup sidecar accesses data files directly without network overhead
+* You want to reduce the number of Pods created during backups
+* You require native encryption support for backups 
+* You prefer direct cloud storage uploads
+
+**Example configuration:**
+
+Set the `PXCO_FEATURE_GATES` environment variable in the Operator Deployment:
+
+```yaml
+env:
+ - name: PXCO_FEATURE_GATES
+   value: "XtrabackupSidecar=true"
+```
+
+**Important considerations:**
+
+* When `XtrabackupSidecar` is enabled, PVC (Persistent Volume Claim) backups are not supported. Only cloud storage backups (S3, Azure, GCP) are available.
+* The feature gate affects all clusters managed by the Operator. You cannot enable it for specific clusters only.
+* After enabling the feature gate, the Operator injects an XtraBackup sidecar container into each PXC Pod.
+* The sidecar runs an HTTP server on port 6450 that handles backup requests.
 
 ### Automatic environment variables
 
