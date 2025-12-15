@@ -25,10 +25,10 @@ Before you begin, ensure you have the following tools installed:
 
     ```bash
     export NAMESPACE="vault"
-    export VAULT_HELM_VERSION="0.28.0"
+    export VAULT_HELM_VERSION="0.30.0"
     export SERVICE="vault"
     export CSR_NAME="vault-csr"
-    export SECRET_NAME="keyring-secret-vault-84"
+    export SECRET_NAME_VAULT="vault-secret"
     export POLICY_NAME="mysql-policy"
     export WORKDIR="/tmp/vault"
     ```
@@ -76,24 +76,29 @@ A Certificate Signing Request (CSR) is a file that contains information about yo
     * **Subject Alternative Names** (`[alt_names]`): Lists all DNS names and IP addresses where your Vault service can be accessed. This includes the service name, fully qualified domain names (FQDNs) for different Kubernetes DNS contexts (namespace-scoped, cluster-scoped with `.svc`, and fully qualified with `.svc.cluster.local`), and the localhost IP address.
 
     ```bash
-    cat > $WORKDIR/csr.conf <<EOF
+    cat > "${WORKDIR}/csr.conf" <<'EOF'
     [req]
+    default_bits = 2048
+    prompt = no
+    encrypt_key = yes
+    default_md = sha256
+    distinguished_name = kubelet_serving
     req_extensions = v3_req
-    distinguished_name = req_distinguished_name
-    [req_distinguished_name]
-    [v3_req]
+    [ kubelet_serving ]
+    O = system:nodes
+    CN = system:node:*.vault.svc.cluster.local
+    [ v3_req ]
     basicConstraints = CA:FALSE
-    keyUsage = nonRepudiation, digitalSignature, keyEncipherment
-    extendedKeyUsage = serverAuth
+    keyUsage = nonRepudiation, digitalSignature, keyEncipherment, dataEncipherment
+    extendedKeyUsage = serverAuth, clientAuth
     subjectAltName = @alt_names
     [alt_names]
-    DNS.1 = ${SERVICE}
-    DNS.2 = ${SERVICE}.${NAMESPACE}
-    DNS.3 = ${SERVICE}.${NAMESPACE}.svc
-    DNS.4 = ${SERVICE}.${NAMESPACE}.svc.cluster.local
-    DNS.5 = vault-0.vault-internal
-    DNS.6 = vault-1.vault-internal
-    DNS.7 = vault-2.vault-internal
+    DNS.1 =*.vault-internal
+    DNS.2 = *.vault-standby
+    DNS.3 =*.vault-internal.vault.svc.cluster.local
+    DNS.4 = *.vault-standby.vault.svc.cluster.local
+    DNS.5 =*.vault
+    DNS.6 = vault.vault.svc.cluster.local
     IP.1 = 127.0.0.1
     EOF
     ```
@@ -191,7 +196,7 @@ After Kubernetes approves and signs your CSR, you need to retrieve the signed ce
 Create a TLS secret in Kubernetes to store the certificates and key:
 
 ```bash
-kubectl create secret generic ${SECRET_NAME} \
+kubectl create secret generic ${SECRET_NAME_VAULT} \
   --namespace ${NAMESPACE} \
   --from-file=vault.key=$WORKDIR/vault.key \
   --from-file=vault.crt=$WORKDIR/vault.crt \
@@ -219,14 +224,14 @@ For this setup, we install Vault in Kubernetes using the [Helm 3 package manager
       --set "global.enabled=true" \
       --set "global.tlsDisable=false" \
       --set "global.platform=kubernetes" \
-      --set server.extraEnvironmentVars.VAULT_CACERT=/vault/userconfig/${SECRET_NAME}/vault.ca \
-      --set "server.extraEnvironmentVars.VAULT_TLSCERT=/vault/userconfig/${SECRET_NAME}/vault.crt" \
-      --set "server.extraEnvironmentVars.VAULT_TLSKEY=/vault/userconfig/${SECRET_NAME}/vault.key" \
-      --set "server.volumes[0].name=userconfig-${SECRET_NAME}" \
-      --set "server.volumes[0].secret.secretName=${SECRET_NAME}" \
+      --set server.extraEnvironmentVars.VAULT_CACERT=/vault/userconfig/${SECRET_NAME_VAULT}/vault.ca \
+      --set "server.extraEnvironmentVars.VAULT_TLSCERT=/vault/userconfig/${SECRET_NAME_VAULT}/vault.crt" \
+      --set "server.extraEnvironmentVars.VAULT_TLSKEY=/vault/userconfig/${SECRET_NAME_VAULT}/vault.key" \
+      --set "server.volumes[0].name=userconfig-${SECRET_NAME_VAULT}" \
+      --set "server.volumes[0].secret.secretName=${SECRET_NAME_VAULT}" \
       --set "server.volumes[0].secret.defaultMode=420" \
-      --set "server.volumeMounts[0].mountPath=/vault/userconfig/${SECRET_NAME}" \
-      --set "server.volumeMounts[0].name=userconfig-${SECRET_NAME}" \
+      --set "server.volumeMounts[0].mountPath=/vault/userconfig/${SECRET_NAME_VAULT}" \
+      --set "server.volumeMounts[0].name=userconfig-${SECRET_NAME_VAULT}" \
       --set "server.volumeMounts[0].readOnly=true" \
       --set "server.ha.enabled=true" \
       --set "server.ha.replicas=3" \
@@ -238,9 +243,9 @@ For this setup, we install Vault in Kubernetes using the [Helm 3 package manager
       tls_disable = 0
       address = \"[::]:8200\"
       cluster_address = \"[::]:8201\"
-      tls_cert_file = \"/vault/userconfig/${SECRET_NAME}/vault.crt\"
-      tls_key_file  = \"/vault/userconfig/${SECRET_NAME}/vault.key\"
-      tls_client_ca_file = \"/vault/userconfig/${SECRET_NAME}/ca.crt\"
+      tls_cert_file = \"/vault/userconfig/${SECRET_NAME_VAULT}/vault.crt\"
+      tls_key_file  = \"/vault/userconfig/${SECRET_NAME_VAULT}/vault.key\"
+      tls_client_ca_file = \"/vault/userconfig/${SECRET_NAME_VAULT}/vault.ca\"
     }
     storage \"raft\" {
       path = \"/vault/data\"
@@ -276,13 +281,15 @@ For this setup, we install Vault in Kubernetes using the [Helm 3 package manager
 4. Retrieve the Pod name where Vault is running:
 
     ```bash
-    kubectl -n $NAMESPACE get pod -l app.kubernetes.io/name=${SERVICE} -o jsonpath='{.items[0].metadata.name}'
+    kubectl -n $NAMESPACE get pod -l app.kubernetes.io/name=${SERVICE} -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}'
     ```
 
     ??? example "Sample output"
 
         ```{.text .no-copy}
         vault-0
+        vault-1
+        vault-2
         ```
 
 ## Initialize and unseal Vault
@@ -317,22 +324,28 @@ For this setup, we install Vault in Kubernetes using the [Helm 3 package manager
     ??? example "Sample output"
 
         ```{.text .no-copy}
-        Key             Value
-        ---             -----
-        Seal Type       shamir
-        Initialized     true
-        Sealed          false
-        Total Shares    1
-        Threshold       1
-        Version         1.20.1
-        Build Date      2025-07-24T13:33:51Z
-        Storage Type    raft
-        Cluster Name    vault-cluster-55062a37
-        Cluster ID      37d0c2e4-8f47-14f7-ca49-905b66a1804d
-        HA Enabled      true
+        Key                     Value
+        ---                     -----
+        Seal Type               shamir
+        Initialized             true
+        Sealed                  false
+        Total Shares            1
+        Threshold               1
+        Version                 1.19.0
+        Build Date              2025-03-04T12:36:40Z
+        Storage Type            raft
+        Cluster Name            vault-integrated-storage
+        Cluster ID              ed275c91-e227-681b-5aaa-f7a9fc19e37e
+        Removed From Cluster    false
+        HA Enabled              true
+        HA Cluster              <https://vault-0.vault-internal:8201>
+        HA Mode                 active
+        Active Since            2025-12-15T13:36:42.542059059Z
+        Raft Committed Index    37
+        Raft Applied Index      37
         ```
 
-3. Add the remaining Pods to the Vault cluster. Run the following for loop:
+3. Add the remaining Pods to the Vault cluster. If you have another secret name, replace the `vault-secret` with your value in the following for loop:
 
     ```bash
     for POD in vault-1 vault-2; do
@@ -341,7 +354,7 @@ For this setup, we install Vault in Kubernetes using the [Helm 3 package manager
           -leader-ca-cert="$(cat /vault/userconfig/vault-secret/vault.ca)" \
           -leader-client-cert="$(cat /vault/userconfig/vault-secret/vault.crt)" \
           -leader-client-key="$(cat /vault/userconfig/vault-secret/vault.key)" \
-          https://vault-0.vault-internal:8200
+          https://vault-0.vault-internal:8200;
       '
     done
     ```
@@ -354,10 +367,9 @@ For this setup, we install Vault in Kubernetes using the [Helm 3 package manager
     ??? example "Sample output"
 
         ```{.text .no-copy}
-        Key                     Value
-        ---                     -----
-        Joined Raft cluster     true
-        Leader Address          https://vault-0.vault-internal:8200
+        Key       Value
+        ---       -----
+        Joined    true
         ```
 
 4. Unseal the remaining Pods. Use this for loop:
@@ -372,20 +384,21 @@ For this setup, we install Vault in Kubernetes using the [Helm 3 package manager
     
     ??? example "Expected output"
 
-        ```{.text .no-copy}
-        Key                Value
-        ---                -----
-        Seal Type          shamir
-        Initialized        true
-        Sealed             true
-        Total Shares       1
-        Threshold          1
-        Unseal Progress    0/1
-        Unseal Nonce       n/a
-        Version            1.16.1
-        Build Date         2024-04-03T12:35:53Z
-        Storage Type       raft
-        HA Enabled         true
+        ```{.text .no-value}
+        Key                     Value
+        ---                     -----
+        Seal Type               shamir
+        Initialized             true
+        Sealed                  true
+        Total Shares            1
+        Threshold               1
+        Unseal Progress         0/1
+        Unseal Nonce            n/a
+        Version                 1.19.0
+        Build Date              2025-03-04T12:36:40Z
+        Storage Type            raft
+        Removed From Cluster    false
+        HA Enabled              true
         ```
 
 ## Configure Vault
@@ -423,7 +436,7 @@ Run the following command on a leader node. The remaining ones will synchronize 
 4. Enable the secrets engine at the mount path. The following command enables KV secrets engine v2 at the `secret` mount-path:
 
     ```bash
-    vault secrets enable --version=2 -path=secret kv
+    vault secrets enable --version=2 -path=pxc-secret kv
     ```
 
     ??? example "Sample output"
@@ -453,28 +466,32 @@ Using the root token for authentication is not recommended, as it poses signific
     ```bash
     kubectl -n "$NAMESPACE" exec vault-0 -- sh -c "
       vault policy write $POLICY_NAME - <<EOF
-    path \"secret/data/*\" {
+    path \"pxc-secret/data/*\" {
       capabilities = [\"create\", \"read\", \"update\", \"delete\", \"list\"]
     }
-    path \"secret/metadata/*\" {
+    path \"pxc-secret/metadata/*\" {
       capabilities = [\"create\", \"read\", \"update\", \"delete\", \"list\"]
     }
-    path \"secret/*\" {
+    path \"pxc-secret/*\" {
       capabilities = [\"create\", \"read\", \"update\", \"delete\", \"list\"]
     }
     EOF
     "
     ```
 
-2. Now create a token and export it as an environment variable:
+2. Now create a token with a policy.
 
     ```bash
-    NEW_TOKEN=$(kubectl -n "$NAMESPACE" exec vault-0 -- sh -c "
-      vault token create -policy=\"$POLICY_NAME\" -field=token
-    ")
+    kubectl -n "${NAMESPACE}" exec pod/vault-0 -- vault token create -policy="${POLICY_NAME}" -format=json > "${WORKDIR}/vault-token.json
     ```
 
-3. Verify the token:
+3. Export the non-root token as an environment variable:
+
+    ```bash
+    export NEW_TOKEN=$(jq -r '.auth.client_token' "${WORKDIR}/vault-token.json")
+    ```
+
+4. Verify the token:
 
     ```bash
     echo "New Vault Token: $NEW_TOKEN"
@@ -557,7 +574,7 @@ You can modify the example configuration file:
 
     You must either specify the certificate value or don't declare it at all. Having a commented `#ca.cert` field in the Secret configuration file is not allowed.
 
-Now create a Secret object. Replace the `<cluster-namespace>` placeholder with the namespace where your database cluster is deployed:
+Now create a Secret object for your database cluster. Replace the `<cluster-namespace>` placeholder with the namespace where your database cluster is deployed:
 
 ```bash
 kubectl apply -f deploy/vault-secret.yaml -n <cluster-namespace>
@@ -567,10 +584,11 @@ kubectl apply -f deploy/vault-secret.yaml -n <cluster-namespace>
 
 Now, reference the Vault Secret in the Operator Custom Resource manifest. Note that the Secret name is the one you specified in the `metadata.name` field when you created a Secret.
 
-1. Export the namespace where the cluster is deployed as an environment variable:
+1. Export the namespace where the cluster is deployed and the secret name as  environment variables:
 
     ```bash
     export CLUSTER_NAMESPACE=<cluster-namespace>
+    export SECRET_NAME_PXC="keyring-secret-vault-84"
     ```
 
 2. Update the cluster configuration. Since this is a running cluster, we will apply a patch referencing your Secret.
@@ -581,7 +599,7 @@ Now, reference the Vault Secret in the Operator Custom Resource manifest. Note t
     kubectl patch pxc cluster1 \
       --namespace $CLUSTER_NAMESPACE \
       --type=merge \
-      --patch '{"spec":{"vaultSecretName":"keyring-secret-vault"}}'
+      --patch "{\"spec\":{\"vaultSecretName\":\"${SECRET_NAME_PXC}\"}}"
     ```
 
 This triggers cluster Pods to restart.
@@ -616,6 +634,39 @@ See the following chapters of Percona Server for MySQL documentation in how to u
 ## Verify encryption
 
 Refer to the [Percona Server for MySQL documentation :octicons-link-external-16:](https://docs.percona.com/percona-server/latest/verify-encryption.html) for guidelines how to verify encryption in your database.
+
+## Troubleshooting
+
+If you encounter issues during the setup, use the following troubleshooting tips:
+
+1. **Certificate Signing Request (CSR) issues**: If you have problems with the CSR, manually delete it and recreate it:
+
+    ```bash
+    kubectl delete csr vault-csr || true
+    ```
+
+    Then recreate and re-approve it in Kubernetes following the steps in the [Issue the certificate](#issue-the-certificate) section.
+
+2. **Vault policy issues**: Check the mount points and permissions. Ensure that:
+
+    * The mount path in your policy matches the path where you enabled the secrets engine
+    * The policy has the required capabilities (`create`, `read`, `update`, `delete`, `list`) for the paths your application needs
+
+3. **Mount point conflicts**: If you encounter issues with a mount point in Vault, you cannot reuse it. You need to:
+
+    * Provide a new mount path when enabling the secrets engine
+    * Update your access policy to include the new mount path
+    * Update the `secret_mount_point` value in your Secret configuration to match the new mount path
+
+4. **Secret format mismatch**: Check the MySQL version in your cluster and ensure you apply the correct format of the secret:
+
+    * For Percona XtraDB Cluster 8.0 and 5.7 - use key=value pairs format
+    * For Percona XtraDB Cluster 8.4 - use JSON object format
+
+    Verify that the secret is created in the same namespace as your database cluster. 
+    
+5. Verify that you reference the correct secret name in your Custom Resource.
+
 
 ## Clean up
 

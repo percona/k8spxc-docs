@@ -22,9 +22,9 @@ Before you begin, ensure you have the following tools installed:
 
     ```bash
     export NAMESPACE="vault"
-    export VAULT_HELM_VERSION="0.28.0"
+    export VAULT_HELM_VERSION="0.30.0"
     export SERVICE="vault"
-    export SECRET_NAME="vault-secret"
+    export SECRET_NAME_VAULT="vault-secret"
     export POLICY_NAME="mysql-policy"
     export WORKDIR="/tmp/vault"
     ```
@@ -252,16 +252,16 @@ Run the following commands on a leader node. The remaining ones will synchronize
     vault login hvs.*************Jg9r
     ```
 
-4. Enable the secrets engine at the mount path. The following command enables KV secrets engine v2 at the `secret` mount-path:
+4. Enable the secrets engine at the mount path. The following command enables KV secrets engine v2 at the `pxc-secret` mount-path:
 
     ```bash
-    vault secrets enable --version=2 -path=secret kv
+    vault secrets enable --version=2 -path=pxc-secret kv
     ```
 
     ??? example "Sample output"
 
         ```{.text .no-copy}
-        Success! Enabled the kv secrets engine at: secret/
+        Success! Enabled the kv secrets engine at: pxc-secret/
         ```
 
 5. Optionally, enable audit logs for vault:
@@ -285,28 +285,32 @@ Using the root token for authentication is not recommended, as it poses signific
     ```bash
     kubectl -n "$NAMESPACE" exec vault-0 -- sh -c "
       vault policy write $POLICY_NAME - <<EOF
-    path \"secret/data/*\" {
+    path \"pxc-secret/data/*\" {
       capabilities = [\"create\", \"read\", \"update\", \"delete\", \"list\"]
     }
-    path \"secret/metadata/*\" {
+    path \"pxc-secret/metadata/*\" {
       capabilities = [\"create\", \"read\", \"update\", \"delete\", \"list\"]
     }
-    path \"secret/*\" {
+    path \"pxc-secret/*\" {
       capabilities = [\"create\", \"read\", \"update\", \"delete\", \"list\"]
     }
     EOF
     "
     ```
 
-2. Now create a token and export it as an environment variable:
+2. Now create a token with a policy.
 
     ```bash
-    NEW_TOKEN=$(kubectl -n "$NAMESPACE" exec vault-0 -- sh -c "
-      vault token create -policy=\"$POLICY_NAME\" -field=token
-    ")
+    kubectl -n "${NAMESPACE}" exec pod/vault-0 -- vault token create -policy="${POLICY_NAME}" -format=json > "${WORKDIR}/vault-token.json"
     ```
 
-3. Verify the token:
+3. Export the non-root token as an environment variable:
+
+    ```bash
+    export NEW_TOKEN=$(jq -r '.auth.client_token' "${WORKDIR}/vault-token.json")
+    ```
+
+4. Verify the token:
 
     ```bash
     echo "New Vault Token: $NEW_TOKEN"
@@ -345,7 +349,7 @@ You can modify the example configuration file:
       keyring_vault.conf: |-
         token = hvs.CAESINO******************************************T2Y
         vault_url = http://vault.vault.svc.cluster.local:8200
-        secret_mount_point = secret
+        secret_mount_point = pxc-secret
     ```
 
 === "Percona XtraDB Cluster 8.4"
@@ -361,7 +365,7 @@ You can modify the example configuration file:
         {
           "token": "hvs.CAESINO******************************************T2Y",
           "vault_url": "http://vault.vault.svc.cluster.local:8200",
-          "secret_mount_point": "secret"
+          "secret_mount_point": "pxc-secret"
         }
     ```
 
@@ -375,10 +379,11 @@ kubectl apply -f deploy/vault-secret.yaml -n <cluster-namespace>
 
 Now, reference the Vault Secret in the Operator Custom Resource manifest. Note that the Secret name is the one you specified in the `metadata.name` field when you created a Secret.
 
-1. Export the namespace where the cluster is deployed as an environment variable:
+1. Export the namespace where the cluster is deployed and the secret name as environment variables:
 
     ```bash
     export CLUSTER_NAMESPACE=<cluster-namespace>
+    export SECRET_NAME_PXC="keyring-secret-vault-84"
     ```
 
 2. Update the cluster configuration. Since this is a running cluster, we will apply a patch referencing your Secret.
@@ -389,7 +394,7 @@ Now, reference the Vault Secret in the Operator Custom Resource manifest. Note t
     kubectl patch pxc cluster1 \
       --namespace $CLUSTER_NAMESPACE \
       --type=merge \
-      --patch '{"spec":{"vaultSecretName":"keyring-secret-vault"}}'
+      --patch "{\"spec\":{\"vaultSecretName\":\"${SECRET_NAME_PXC}\"}}"
     ```
 
 This triggers cluster Pods to restart.
@@ -424,4 +429,5 @@ See the following chapters of Percona Server for MySQL documentation in how to u
 ## Verify encryption
 
 Refer to the [Percona Server for MySQL documentation :octicons-link-external-16:](https://docs.percona.com/percona-server/latest/verify-encryption.html) for guidelines how to verify encryption in your database.
+
 
