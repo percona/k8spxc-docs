@@ -186,3 +186,4 @@ Configure the `PerconaXtraDBClusterRestore` Custom Resource. Specify the followi
     $ kubectl apply -f deploy/backup/restore.yaml
     ```
 
+3. Make a new full backup after the restore, because your restored database is now the new baseline for future recoveries.

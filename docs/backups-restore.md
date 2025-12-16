@@ -176,6 +176,8 @@ Pass this configuration to the Operator:
         EOF
         ```
 
+4. Make a new full backup after the restore, because your restored database is now the new baseline for future recoveries
+
 ### Binlog gaps
 
 The Operator monitors the binlog gaps detected by
