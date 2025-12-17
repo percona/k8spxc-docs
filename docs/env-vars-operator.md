@@ -158,9 +158,8 @@ Enables you to turn on specific feature for the Operator using the [feature gate
 Using the XtraBackup sidecar method is an alternative backup approach with different characteristics. You might want to use it if:
 
 * You need better performance for large databases. The XtraBackup sidecar accesses data files directly without network overhead
-* You want to reduce the number of Pods created during backups
-* You require native encryption support for backups 
-* You prefer direct cloud storage uploads
+* You require native encryption support for backups. This functionality is not yet available in version 1.19.0 but will be added in future releases.
+* You prefer direct cloud storage uploads.
 
 **Example configuration:**
 

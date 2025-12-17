@@ -40,7 +40,7 @@ The default backup method uses State Snapshot Transfer (SST). When you create a 
 
 The backup task is resource-consuming and can affect performance. That's why the Operator uses one of the secondary Percona XtraDB Cluster Pods for backups. The exception is a one-pod deployment, where the same Pod is used for all tasks.
 
-After the data files are copied, the Operator marks the backup Pod as 'Completed' and deletes it. The Operator also updates the status of the Backup object.
+After the data files are copied and uploaded to the [remote backup storage](backups-storage.md), the Operator marks the backup Pod as 'Completed' and deletes it. The Operator also updates the status of the Backup object.
 
 ### XtraBackup sidecar method
 
@@ -54,8 +54,8 @@ When you enable the `XtrabackupSidecar` feature gate, the Operator uses a differ
 
 * **Reduced overhead**: No separate backup Pods are created
 * **Better performance**: Direct access to data files without network overhead
-* **Native encryption**: Built-in support for encrypted backups with proper key management
-* **Cloud storage integration**: Direct upload to cloud storage via xbcloud
+* **Easier troubleshooting**: The sidecar container runs continuously in the Percona XtraDB Cluster Pod, so you can check backup logs and status at any time. With the SST method, backup Pods are deleted after completion, making it harder to investigate issues. The sidecar also exposes an HTTP server interface on port 6450 that provides status endpoints and log access.
+* **Native encryption**: Built-in support for encrypted backups with proper key management. This functionality is not yet available in version 1.19.0 but will be added in future releases.
 
 **Limitations:**
 
