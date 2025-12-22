@@ -1,176 +1,47 @@
-# Data at Rest Encryption
+# Data at rest encryption
 
-[Full data at rest encryption in Percona XtraDB Cluster :octicons-link-external-16:](https://docs.percona.com/percona-xtradb-cluster/LATEST/data-at-rest-encryption.html) is supported by the Operator since version 1.4.0.
+Data-at-rest encryption ensures that data stored on disk remains protected even if the underlying storage is compromised. This process is transparent to your applications, meaning you don't need to change your application code. If an unauthorized user gains access to the storage, they can't read the data files.
 
-!!! note
+The Operator supports [data at rest encryption in Percona XtraDB Cluster :octicons-link-external-16:](https://docs.percona.com/percona-xtradb-cluster/LATEST/data-at-rest-encryption.html) since version 1.4.0.
 
-    [Data at rest :octicons-link-external-16:](https://en.wikipedia.org/wiki/Data_at_rest) means inactive data stored as files, database records, etc.
+To encrypt tablespaces, schemas, backups and binlogs, the Operator uses the following tools:
 
-To implement these features, the Operator uses `keyring_vault` plugin,
-which ships with Percona XtraDB Cluster, and utilizes [HashiCorp Vault :octicons-link-external-16:](https://www.vaultproject.io/) storage for encryption keys.
+* The `keyring_vault` **component** shipped with Percona XtraDB Cluster 8.4 and 5.7
+* The `keyring_vault` **plugin** shipped with Percona XtraDB Cluster 8.0
 
-## Installing Vault
+   For more information about keyring plugins and components, see [Compare keyring components and keyring plugins :octicons-link-external-16:](https://docs.percona.com/percona-server/8.0/components-keyrings-comparison.html) chapter in Percona   Server for MySQL documentation.
 
-The following steps will deploy Vault on Kubernetes with the [Helm 3 package manager :octicons-link-external-16:](https://helm.sh/). Other Vault installation methods should also work, so the instruction placed here is not obligatory and is for illustration purposes. Read more about installation in Vault’s [documentation :octicons-link-external-16:](https://www.vaultproject.io/docs/platform/k8s).
+* [HashiCorp Vault :octicons-link-external-16:](https://www.vaultproject.io/) to securely store and manage master encryption keys, perform automatic key rotation, and enable audit logging.
 
+This setup enhances the overall security posture of your Percona XtraDB cluster on Kubernetes.
 
-1. Add helm repo and install:
+## Encryption flow
 
-    ``` {.bash data-prompt="$" }
-    $ helm repo add hashicorp https://helm.releases.hashicorp.com
-    "hashicorp" has been added to your repositories
+The encryption mechanism uses a two-tiered key architecture to secure your data:
 
-    $ helm install vault hashicorp/vault
-    ```
+* Each database instance has a master encryption key to encrypt tablespaces and binlogs. Master encryption key is stored separately from tablespace keys, in an external key management service like HashiCorp Vault.
+* Each tablespace has a unique tablespace key to encrypt the data files (tables and indexes).
 
-2. After the installation, Vault should be first initialized and then unsealed.
-    Initializing Vault is done with the following commands:
+The data is encrypted before being written to disk. When you need to read the data, it's decrypted in memory for use and then re-encrypted before being written back to disk.
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl exec -it pod/vault-0 -- vault operator init -key-shares=1 -key-threshold=1 -format=json > /tmp/vault-init
-    $ unsealKey=$(jq -r ".unseal_keys_b64[]" < /tmp/vault-init)
-    ```
+## Key rotation
 
-    To unseal Vault, execute the following command **for each Pod** of Vault
-    running:
+Key rotation is replacing the old master encryption key with the new one. When a new master encryption key is created, it is stored in Vault and tablespace keys are re-encrypted with it. The entire dataset is not re-encrypted and this makes the key rotation a fast and lightweight operation.
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl exec -it pod/vault-0 -- vault operator unseal "$unsealKey"
-    ```
+Read more about key rotation in the [Rotate the master key :octicons-link-external-16:](https://docs.percona.com/percona-server/latest/rotating-master-key.html).
 
-## Configuring Vault
+## Backups and encryption
 
-1. First, you should enable secrets within Vault. For this you will need a [Vault token :octicons-link-external-16:](https://www.vaultproject.io/docs/concepts/tokens).
-    Percona XtraDB Cluster can use any regular token which allows all operations
-    inside the secrets mount point. In the following example we are using the
-    *root token* to be sure the permissions requirement is met, but actually
-    there is no need in root permissions. We don’t recommend using the root token
-    on the production system.
+Percona Operator for MySQL uses [Percona XtraBackup :octicons-link-external-16::](https://docs.percona.com/percona-xtrabackup/latest/index.html) for backups and fully supports backing up encrypted data. The backups remain encrypted, ensuring your data is secure both on your live cluster and in your backup storage.
 
-    ``` {.bash data-prompt="$" }
-    $ cat /tmp/vault-init | jq -r ".root_token"
-    ```
+!!! warning "Keep your encryption keys safe"
 
-    The output will be like follows:
+    To restore from an encrypted backup, you **must have the original master encryption key**. If the encryption key is lost, your backups will be irrecoverable. Always ensure you have a secure and reliable process for managing and backing up your master encryption keys separately from your database backups.
 
-    ``` {.text .no-copy}
-    s.VgQvaXl8xGFO1RUxAPbPbsfN
-    ```
+## Next steps
 
-    Now login to Vault with this token and enable the “pxc-secret” secrets path:
+Choose a setup guide based on your security requirements:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl exec -it vault-0 -- /bin/sh
-    $ vault login s.VgQvaXl8xGFO1RUxAPbPbsfN
-    $ vault secrets enable --version=1 -path=pxc-secret kv
-    ```
+* [Configure data-at-rest encryption without TLS](encryption-setup.md) - For development and testing environments
+* [Configure data-at-rest encryption with TLS](encryption-setup-tls.md) - For production environments requiring encrypted communication
 
-    !!! note
-
-        You can also enable audit, which is not mandatory, but useful:
-
-        ``` {.bash data-prompt="$" }
-        $ vault audit enable file file_path=/vault/vault-audit.log
-        ```
-
-
-2. To enable Vault secret within Kubernetes, create and apply the YAML file,
-    as described further.
-
-    1. To access the Vault server via HTTP, follow the next YAML file example:
-
-        ```yaml
-        apiVersion: v1
-        kind: Secret
-        metadata:
-          name: some-name-vault
-        type: Opaque
-        stringData:
-          keyring_vault.conf: |-
-             token = s.VgQvaXl8xGFO1RUxAPbPbsfN
-             vault_url = http://vault-service.vault-service.svc.cluster.local:8200
-             secret_mount_point = pxc-secret
-        ```
-
-        !!! note
-
-            the `name` key in the above file should be equal to the
-            `spec.vaultSecretName` key from the `deploy/cr.yaml` configuration
-            file.
-
-    2. To turn on TLS and access the Vault server via HTTPS, you should do two more things:
-
-        * add one more item to the secret: the contents of the `ca.cert` file
-            with your certificate,
-
-        * store the path to this file in the `vault_ca` key.
-
-        ```yaml
-        apiVersion: v1
-        kind: Secret
-        metadata:
-          name: some-name-vault
-        type: Opaque
-        stringData:
-          keyring_vault.conf: |-
-            token = = s.VgQvaXl8xGFO1RUxAPbPbsfN
-            vault_url = https://vault-service.vault-service.svc.cluster.local:8200
-            secret_mount_point = pxc-secret
-            vault_ca = /etc/mysql/vault-keyring-secret/ca.cert
-          ca.cert: |-
-            -----BEGIN CERTIFICATE-----
-            MIIEczCCA1ugAwIBAgIBADANBgkqhkiG9w0BAQQFAD..AkGA1UEBhMCR0Ix
-            EzARBgNVBAgTClNvbWUtU3RhdGUxFDASBgNVBAoTC0..0EgTHRkMTcwNQYD
-            7vQMfXdGsRrXNGRGnX+vWDZ3/zWI0joDtCkNnqEpVn..HoX
-            -----END CERTIFICATE-----
-        ```
-
-        !!! note
-
-            the `name` key in the above file should be equal to the
-            `spec.vaultSecretName` key from the `deploy/cr.yaml` configuration
-            file.
-
-        !!! note
-
-            For technical reasons the `vault_ca` key should either exist
-            or not exist in the YAML file; commented option like
-            `#vault_ca = ...` is not acceptable.
-
-More details on how to install and configure Vault can be found [in the official documentation :octicons-link-external-16:](https://learn.hashicorp.com/vault?track=getting-started-k8s#getting-started-k8s).
-
-## Using the encryption
-
-If using *Percona XtraDB Cluster* 5.7, you should turn encryption on explicitly
-when you create a table or a tablespace. This can be done by adding the
-`ENCRYPTION='Y'` part to your SQL statement, like in the following example:
-
-```sql
-CREATE TABLE t1 (c1 INT, PRIMARY KEY pk(c1)) ENCRYPTION='Y';
-CREATE TABLESPACE foo ADD DATAFILE 'foo.ibd' ENCRYPTION='Y';
-```
-
-!!! note
-
-    See more details on encryption in Percona XtraDB Cluster 5.7 [here :octicons-link-external-16:](https://www.percona.com/doc/percona-xtradb-cluster/5.7/management/data_at_rest_encryption.html).
-
-If using *Percona XtraDB Cluster* 8.0, the encryption is turned on by default
-(in case if Vault is configured).
-
-The following table presents the default values of the [correspondent my.cnf
-configuration options :octicons-link-external-16:](https://www.percona.com/doc/percona-server/LATEST/security/data-at-rest-encryption.html):
-
-| Option                             | Default value                                        |
-|:-----------------------------------|:-----------------------------------------------------|
-| `early-plugin-load`                | `keyring_vault.so`                                   |
-| `keyring_vault_config`             | `/etc/mysql/vault-keyring-secret/keyring_vault.conf` |
-| `default_table_encryption`         | `ON`                                                 |
-| `table_encryption_privilege_check` | `ON`                                                 |
-| `innodb_undo_log_encrypt`          | `ON`                                                 |
-| `innodb_redo_log_encrypt`          | `ON`                                                 |
-| `binlog_encryption`                | `ON`                                                 |
-| `binlog_rotate_encryption_master_key_at_startup` | `ON`                                   |
-| `innodb_temp_tablespace_encrypt`   | `ON`                                                 |
-| `innodb_parallel_dblwr_encrypt`    | `ON`                                                 |
-| `innodb_encrypt_online_alter_logs` | `ON`                                                 |
-| `encrypt_tmp_files`                | `ON`                                                 |
