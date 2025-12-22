@@ -10,6 +10,16 @@ For example, your application is growing and read traffic increases significantl
 * Implement intelligent SQL-aware routing and caching
 * Reduce overhead on the primary node by reserving it only for writes.
 
+You can switch from HAProxy to ProxySQL starting with Operator version 1.19.0. 
+
+!!! important
+
+    If your MySQL client uses the `mysql_native_password` authentication plugin (for example, MySQL 5.7 client), but your database user is configured with the `caching_sha2_password` plugin, you must pass the `--default-auth=caching_sha2_password` option to the client for successful authentication as follows:
+
+    ```bash
+    mysql -u<user> -p'<password>' -hcluster1-proxysql --default-auth=caching_sha2_password
+    ```
+
 ## Switching from ProxySQL to HAProxy
 
 You may want to switch from ProxySQL to HAProxy if:
@@ -33,7 +43,7 @@ When switching proxies, adjust your resource requests and limits accordingly:
 
 * **Switching from HAProxy to ProxySQL**: Increase memory and CPU allocations. Start with at least 1G memory and 600m CPU per ProxySQL pod, then monitor and adjust based on your workload. ProxySQL benefits from more memory for query caching and connection pooling.
 
-* **Switching from ProxySQL to HAProxy**: You can reduce resource allocations since HAProxy is more lightweight. Start with 256Mi memory and 100m CPU per HAProxy pod, then adjust based on your connection load.
+* **Switching from ProxySQL to HAProxy**: You can reduce resource allocations since HAProxy is more lightweight. Start with 500Mi memory and 400m CPU per HAProxy pod, then adjust based on your connection load.
 
 * **Monitor and adjust**: After switching, monitor resource usage using `kubectl top pods` and adjust requests and limits based on actual consumption patterns. Consider setting resource requests to match your typical usage and limits to handle peak loads.
 
@@ -49,8 +59,6 @@ You can switch from proxy to another on an existing cluster:
 
 === "From ProxySQL to HAProxy"
 
-    You must be running the Operator version 1.19.0 and higher.
-
     ``` {.bash data-prompt="$" }
     $ kubectl patch pxc cluster1 --type=merge --patch '{
       "spec": {
@@ -63,6 +71,8 @@ You can switch from proxy to another on an existing cluster:
     ```
 
 === "From HAProxy to ProxySQL"
+
+    You must be running the Operator version 1.19.0 and higher.
 
     ``` {.bash data-prompt="$" }
     $ kubectl patch pxc cluster1 --type=merge --patch '{
