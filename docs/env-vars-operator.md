@@ -143,23 +143,22 @@ env:
 
 ### `PXCO_FEATURE_GATES`
 
-Enables you to turn on specific feature for the Operator using the [feature gate system](https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/). 
+Enables you to turn on specific features for the Operator. 
 
 | Value type | Default | Example |
 | ---------- | ------- | ------- |
-| string     | `""` (empty) | `"XtrabackupSidecar=true"` |
+| string     | `""` (empty) | `"XtrabackupSidecar=false"` |
 
-**Available feature gates:**
+**Supported values:**
 
-* `XtrabackupSidecar` - Enables the XtraBackup sidecar method for backups instead of the default SST (State Snapshot Transfer) method. Read more about [backup methods the Operator uses](backups.md#backup-methods).
+* `XtrabackupSidecar` - Enables the XtraBackup sidecar method for backups instead of the default SST (State Snapshot Transfer) method. Read more about [backup methods the Operator uses](backups.md#backup-methods). Disabled by default.
 
 **When to use:**
 
 Using the XtraBackup sidecar method is an alternative backup approach with different characteristics. You might want to use it if:
 
 * You need better performance for large databases. The XtraBackup sidecar accesses data files directly without network overhead
-* You require native encryption support for backups. This functionality is not yet available in version 1.19.0 but will be added in future releases.
-* You prefer direct cloud storage uploads.
+* You require native encryption support for backups and/or incremental backups. These functionalities are not yet available in version 1.19.0 and will be added in future releases.
 
 **Example configuration:**
 
@@ -171,12 +170,12 @@ env:
    value: "XtrabackupSidecar=true"
 ```
 
-**Important considerations:**
+**Important considerations for enabling the `XtrabackupSidecar`:**
 
-* When `XtrabackupSidecar` is enabled, PVC (Persistent Volume Claim) backups are not supported. Only cloud storage backups (S3, Azure, GCP) are available.
-* The feature gate affects all clusters managed by the Operator. You cannot enable it for specific clusters only.
-* After enabling the feature gate, the Operator injects an XtraBackup sidecar container into each PXC Pod.
-* The sidecar runs an HTTP server on port 6450 that handles backup requests.
+* PVC (Persistent Volume Claim) backups are not supported. Only cloud storage backups (S3, Azure, GCP) are available. PVC support will be added in future releases.
+* This functionality affects all clusters managed by the Operator. You cannot enable it for specific clusters only.
+* The Operator injects an XtraBackup sidecar container into each PXC Pod.
+* The sidecar exposes a gRPC interface on port 6450 that handles backup requests.
 
 ### Automatic environment variables
 
