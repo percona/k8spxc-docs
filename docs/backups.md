@@ -46,7 +46,9 @@ After the data files are copied and uploaded to the [remote backup storage](back
 
 When you enable the `XtrabackupSidecar` feature gate, the Operator uses a different backup approach:
 
-An XtraBackup sidecar container runs in each Percona XtraDB Cluster Pod, providing an gRPC server interface for making backups. When you create a Backup object, the Operator create a Job that acts like a client and sends requests directly to the sidecar. The sidecar performs the backup and uploads it to the cloud storage (S3, Azure, or GCP).
+1. An XtraBackup sidecar container runs in each Percona XtraDB Cluster Pod, providing an gRPC server interface for making backups. 
+2. When you create a Backup object, the Operator create a Job that acts like a client and sends requests directly to the sidecar. 
+3. The sidecar performs the backup and uploads it to the cloud storage (S3, Azure, or GCP). The database Pod doesn't change its state to Donor and continues processing all requests.
 
 As with the SST method, the Operator uses one of the secondary Percona XtraDB Cluster Pods for backups to not overload the primary Pod. 
 
