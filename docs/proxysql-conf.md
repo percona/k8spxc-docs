@@ -292,23 +292,25 @@ The scheduler is disabled by default to maintain backward compatibility. You can
 
 When the scheduler is enabled, you should see:
 
-* **Hostgroup 10** (readers): All PXC nodes with equal or weighted distribution
+* **Hostgroup 10** (readers): All PXC nodes with weighted distribution
 * **Hostgroup 11** (writer): Only the current writer node (typically `pod-0`) with a high weight (1000000)
 
-You can also test read load balancing by running multiple `SELECT` queries and checking which node they hit:
+To verify that ProxySQL is properly balancing read traffic across your Percona XtraDB Cluster nodes, you can run the following command. This script sends multiple `SELECT` queries through ProxySQL and then shows how the queries are distributed among cluster nodes. 
+
+Replace the `<user>` and `<password>` placeholders with the valid credentials of a MySQL user that has permissions to connect through ProxySQL and can execute simple `SELECT` statements on the cluster.
 
 ```{.bash data-prompt="$" }
 $ for i in $(seq 100); do 
-    kubectl exec -i cluster1-pxc-0 -c pxc -- mysql -uroot -proot_password \
+    kubectl exec -i cluster1-pxc-0 -c pxc -- mysql -u<user> -p<password> \
       --host cluster1-proxysql -Ne "SELECT VARIABLE_VALUE FROM \
       performance_schema.global_variables WHERE VARIABLE_NAME = 'wsrep_node_name' LIMIT 1" \
       2>/dev/null
   done | sort -n | uniq -c
 ```
 
-You should see queries distributed across multiple nodes instead of all going to `cluster1-pxc-0`.
+You should see queries reported from multiple node names, indicating that read load is being balanced across different Percona XtraDB Cluster nodes (not just one node). 
 
-## Scheduler behavior
+### Scheduler behavior
 
 After you enable the scheduler, it works as follows:
 
