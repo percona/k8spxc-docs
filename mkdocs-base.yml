@@ -255,6 +255,7 @@ nav:
           - "Horizontal and vertical scaling": scaling.md
           - "Monitor with Percona Monitoring and Management (PMM)": monitoring.md
           - "Add sidecar containers": sidecar.md
+          - "Add external PersistentVolumeClaims to the Operator": external-pvc.md
           - "Restart or pause the cluster": pause.md
           - "Crash recovery": recovery.md
           - data-source.md
