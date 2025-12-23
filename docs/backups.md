@@ -42,12 +42,12 @@ The backup task is resource-consuming and can affect performance. That's why the
 
 After the data files are copied and uploaded to the [remote backup storage](backups-storage.md), the Operator marks the backup Pod as 'Completed' and deletes it. The Operator also updates the status of the Backup object.
 
-### XtraBackup sidecar method
+### XtraBackup sidecar method (tech preview)
 
 When you enable the `XtrabackupSidecar` feature gate, the Operator uses a different backup approach:
 
-1. An XtraBackup sidecar container runs in each Percona XtraDB Cluster Pod, providing an gRPC server interface for making backups. 
-2. When you create a Backup object, the Operator create a Job that acts like a client and sends requests directly to the sidecar. 
+1. An XtraBackup sidecar container runs in each Percona XtraDB Cluster Pod, providing a gRPC server interface for making backups. 
+2. When you create a Backup object, the Operator creates a Job that acts like a client and sends requests directly to the sidecar. 
 3. The sidecar performs the backup and uploads it to the cloud storage (S3, Azure, or GCP). The database Pod doesn't change its state to Donor and continues processing all requests.
 
 As with the SST method, the Operator uses one of the secondary Percona XtraDB Cluster Pods for backups to not overload the primary Pod. 
