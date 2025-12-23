@@ -170,12 +170,17 @@ env:
    value: "XtrabackupSidecar=true"
 ```
 
+!!! warning
+
+    If you set the environment variable during runtime, this causes the rolling restart of all database clusters managed by the Operator.
+
 **Important considerations for enabling the `XtrabackupSidecar`:**
 
 * PVC (Persistent Volume Claim) backups are not supported. Only cloud storage backups (S3, Azure, GCP) are available. PVC support will be added in future releases.
 * This functionality affects all clusters managed by the Operator. You cannot enable it for specific clusters only.
 * The Operator injects an XtraBackup sidecar container into each PXC Pod.
 * The sidecar exposes a gRPC interface on port 6450 that handles backup requests.
+
 
 ### Automatic environment variables
 
