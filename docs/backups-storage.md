@@ -97,41 +97,6 @@ Before configuring the storage, you need to create a [Kubernetes Secret :octicon
         
         For more configuration options, see the [Operator Custom Resource options](operator.md#operator-backup-section).
 
-        ## Configure TLS verification with custom certificates for S3 storage
-
-        !!! note "Version added: 1.19.0"
-
-        You can use your organization's custom TLS / SSL certificates and instruct the Operator to securely verify TLS communication with S3 storage. 
-
-        To configure TLS verification with custom certificates, do the following:
-
-        1. Create the Secret object that contains the TLS certificate to access the S3 storage, the certificate's private key and the CA certificate.
-        2. Modify the S3 storage configuration in the Custom Resource and specify the following information:
-
-            * `storages.<NAME>.s3.caBundle.name` is the name of the Secret object you created previously
-            * `storages.<NAME>.s3.caBundle.key` is the CA certificate. 
-           
-            Here's the example configuration:
-
-            ```yaml
-            ...
-            backup:
-              ...
-              storages:
-                s3-us-west:
-                  type: s3
-                  s3:
-                    bucket: S3-BACKUP-BUCKET-NAME-HERE
-                    region: us-west-2
-                    credentialsSecret: my-cluster-name-backup-s3
-                    caBundle:
-                      name: minio-ca-bundle
-                      key: ca.crt
-              ...
-            ```
-            
-            The Operator will use this configuration to securely verify TLS communication with S3 storage during backups and restores.
-
 === "Microsoft Azure Blob storage"
 
     1. To store backups on the Azure Blob storage, you need to create a
@@ -256,3 +221,38 @@ Before configuring the storage, you need to create a [Kubernetes Secret :octicon
     [backup.storages.STORAGE_NAME.containerOptions.args.xbstream](operator.md#backupstoragesstorage-namecontaineroptionsargsxbstream).
     Also, you can set environment variables for the XtraBackup container with
     [backup.storages.STORAGE_NAME.containerOptions.env](operator.md#backupstoragesstorage-namecontaineroptionsenv).
+
+## Configure TLS verification with custom certificates for S3 storage
+
+!!! note "Version added: 1.19.0"
+
+You can use your organization's custom TLS / SSL certificates and instruct the Operator to securely verify TLS communication with S3 storage. 
+
+To configure TLS verification with custom certificates, do the following:
+
+1. Create the Secret object that contains the TLS certificate to access the S3 storage, the certificate's private key and the CA certificate.
+2. Modify the S3 storage configuration in the Custom Resource and specify the following information:
+
+    * `storages.<NAME>.s3.caBundle.name` is the name of the Secret object you created previously
+    * `storages.<NAME>.s3.caBundle.key` is the CA certificate. 
+   
+    Here's the example configuration:
+
+    ```yaml
+    ...
+    backup:
+      ...
+      storages:
+        s3-us-west:
+          type: s3
+          s3:
+            bucket: S3-BACKUP-BUCKET-NAME-HERE
+            region: us-west-2
+            credentialsSecret: my-cluster-name-backup-s3
+            caBundle:
+              name: minio-ca-bundle
+              key: ca.crt
+      ...
+    ```
+    
+    The Operator will use this configuration to securely verify TLS communication with S3 storage during backups and restores.

@@ -1,6 +1,6 @@
 # Variables used across the documentation
 
-release: '1.18.0'
+release: '1.19.0'
 commandName: 'kubectl'
 clusterName: 'cluster1'
 
@@ -21,7 +21,9 @@ pmm3recommended: '3.3.1'
 gkerecommended: '1.33'
 k8s_monitor_tag: 'v0.1.1'
 
+year: "2026"
 
 date:
+  1_19_0: "2026-01-02"
   1_18_0: "2025-08-14"
   1_17_0: "2025-04-14"
