@@ -320,6 +320,8 @@ After you enable the scheduler, it works as follows:
 
 * **ProxySQL clustering**: When the scheduler is enabled, ProxySQL clustering is automatically disabled. This is because the scheduler and ProxySQL clustering do not work well together. The `proxysql-monit` sidecar container is removed from ProxySQL Pods, and each ProxySQL instance manages its own `mysql_servers` configuration independently.
 
+* **Scaling considerations**: When scaling down the Percona XtraDB Cluster with the scheduler enabled and `writerIsAlsoReader=false`, you may encounter weight inconsistencies in the `runtime_mysql_servers` table. If weights do not update correctly after scaling (for example, a weight remains at 1000 instead of updating to 999), restart the ProxySQL pods to refresh the configuration. This limitation is planned to be addressed in future releases.
+
 !!! warning
 
     When the scheduler is enabled, ProxySQL clustering is disabled. Each ProxySQL instance manages its own server configuration independently. This ensures proper read/write splitting but means ProxySQL instances do not share configuration.
@@ -327,4 +329,25 @@ After you enable the scheduler, it works as follows:
 By default, the ProxySQL scheduler distributes read requests evenly across all your cluster nodes. You can exclude the primary from processing reads and reserve it only for accepting write requests by setting the `writerIsAlsoReader` option to `false`.
 
 You can additionally fine-tune the scheduler's behavior for your workload and deployment scenario. See the [Custom resource](operator.md#proxysqlschedulerenabled) reference for a complete list of available options.
+
+### Disabling the scheduler
+
+If you need to disable the scheduler after it has been enabled, be aware of the following limitations:
+
+* **Hostgroup leftovers**: After disabling the scheduler, ProxySQL pod-0 may retain 80XX hostgroups in the `runtime_mysql_servers` table. Restart the Pod to clear these leftovers.
+
+    ```{.bash data-prompt="$" }
+    kubectl delete pod <proxysql-pod-name> -n <namespace>
+    ```
+
+    The Operator will automatically recreate the pod with the correct configuration.
+
+* **Incomplete configuration**: One or more ProxySQL Pods may not contain all Percona XtraDB Cluster nodes in their `mysql_servers` and `runtime_mysql_servers` table after disabling. Verify the configuration and restart affected Pods if needed.
+
+To disable the scheduler, remove or set `proxysql.scheduler.enabled=false` in your Custom Resource and restart the ProxySQL pods to ensure a clean configuration state:
+
+```bash
+kubectl delete pod <proxysql-pod-name> -n <namespace>
+```
+
 

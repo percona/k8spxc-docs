@@ -78,11 +78,13 @@ To enable HAProxy as a headless service, add the `percona.com/headless-service: 
       haproxy:
          exposePrimary:
            enabled: true
-           annotations: percona.com/headless-service: true  
+           annotations: 
+             percona.com/headless-service: true  
            ....
          exposeReplicas:
            enabled: true
-           annotations: percona.com/headless-service: true 
+           annotations: 
+             percona.com/headless-service: true 
     ```
 
 This annotation works only at service creation time and can't be added later.
