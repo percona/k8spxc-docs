@@ -344,10 +344,6 @@ If you need to disable the scheduler after it has been enabled, be aware of the 
 
 * **Incomplete configuration**: One or more ProxySQL Pods may not contain all Percona XtraDB Cluster nodes in their `mysql_servers` and `runtime_mysql_servers` table after disabling. Verify the configuration and restart affected Pods if needed.
 
-To disable the scheduler, remove or set `proxysql.scheduler.enabled=false` in your Custom Resource and restart the ProxySQL pods to ensure a clean configuration state:
-
-```bash
-kubectl delete pod <proxysql-pod-name> -n <namespace>
-```
+To disable the scheduler, remove or set `proxysql.scheduler.enabled=false` in your Custom Resource. This causes the restart of ProxySQL pods.
 
 
