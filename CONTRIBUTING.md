@@ -28,7 +28,7 @@ If you've spotted a doc issue (a typo, broken links, inaccurate instructions, et
 
 We'd like to hear from you. Click **Rate this page** and leave your feedback. We will appreciate your leaving your email so that we can reach out to you with clarifications or updates, if needed.
 
-1. **[Contribute to documentation yourself](#contribute-to-documentation-yourself)**
+**3. Contribute to documentation yourself**
 
 ## Contribute to documentation yourself
 
