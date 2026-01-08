@@ -147,7 +147,7 @@ By adjusting how often checks run and how many failures or successes mark a node
 
 ### Switch from HAProxy to ProxySQL at runtime
 
-You can now switch from HAProxy to ProxySQL without redeploying your Percona XtraDB Cluster. Previously, you had to choose ProxySQL only at startup. Now you have the flexibility to start with HAProxy and migrate to ProxySQL later as your needs evolve.
+You can now switch from HAProxy to ProxySQL without redeploying your Percona XtraDB Cluster. Previously, you had to choose ProxySQL only at startup. Now ProxySQL has the `caching_sha2_password` as the default authentication plugin, which gives you the flexibility to start with HAProxy and migrate to ProxySQL later as your needs evolve.
 
 With this release, ProxySQL also includes a new [scheduler](#improved-load-balancing-with-proxysql-scheduler-tech-preview) that enhances SQL awareness, automates read/write splitting, and handles failovers more intelligently. This leads to faster queries, increased reliability, and more efficient cluster resource usage.
 
@@ -161,6 +161,16 @@ Each proxy brings its own resource requirements and advantages. We offer [additi
 To switch between proxies, update your Custom Resource to set `haproxy.enabled` to `false` and `proxysql.enabled` to `true`. Apply the changes, and the Operator will handle the transition for you by restarting the relevant proxy Pods.
 
 With this improvement you now control your proxy choice at runtime, and ProxySQL brings smarter routing and resilience right into the Operator.
+
+### ProxySQL 3 support
+
+You can now deploy ProxySQL 3 with Percona Operator for MySQL. This gives you more flexibility and control over how your applications connect to MySQL inside Kubernetes. Here’s what you get:
+
+- Dual‑password support enables you to introduce a new password while the old one is still valid. As a result, you can rotate passwords without downtime
+- Enhanced event and query logging gives you real‑time visibility into query behavior and application traffic.
+- ProxySQL now logs the actual values bound to prepared statements. This helps you debug queries more effectively, since you see what data was passed instead of just placeholders
+- Event logs now include metadata about ProxySQL version and format. This makes it easier to track and audit logs across upgrades in your Operator‑managed deployments.
+
 
 ### Keep your cluster online while running backups (tech preview)
 
