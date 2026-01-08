@@ -1,80 +1,51 @@
-# Configuring Load Balancing with ProxySQL
+# Configuring load balancing with ProxySQL
 
-You can use either [HAProxy :octicons-link-external-16:](https://haproxy.org) or [ProxySQL :octicons-link-external-16:](https://proxysql.com/) for load balancing and proxy services.
-
-You can control which one to use: enable or disable the
-`haproxy.enabled` and `proxysql.enabled` options in the `deploy/cr.yaml`
-configuration file.
-
-!!! warning 
-
-    You can enable ProxySQL only when you create a cluster. For a running cluster you can enable only HAProxy. Also note, if you have already enabled HAProxy, the switch from it to ProxySQL is not
-    possible.
+You can use either [HAProxy :octicons-link-external-16:](https://haproxy.org) or [ProxySQL :octicons-link-external-16:](https://proxysql.com/) for load balancing and proxy services. Control which one to use via the `haproxy.enabled` and `proxysql.enabled` options in the `deploy/cr.yaml` configuration file.
 
 ## `cluster1-proxysql` service
 
 The `cluster1-proxysql` service listens on the following ports:
 
-* `3306` is the default MySQL port. It is used by the mysql client, MySQL Connectors, and utilities such as mysqldump and mysqlpump
+* `3306` is the default MySQL port. It is used by the mysql client, MySQL Connectors, and utilities such as `mysqldump` and `mysqlpump`
 * `33062` is the port to connect to the MySQL Administrative Interface
 * `6070` is the port to connect to the built-in Prometheus exporter to gather ProxySQL statistics and manage the ProxySQL observability stack
 
-The `cluster1-proxysql` service uses the number zero Percona XtraDB Cluster member
-(`cluster1-pxc-0` by default) as the writer.
+The `cluster1-proxysql` service uses the first Percona XtraDB Cluster member (`cluster1-pxc-0` by default) as the writer. Use the [proxysql.expose.enabled](operator.md#proxysqlexposeenabled) Custom Resource option to enable or disable this service.
 
-[proxysql.expose.enabled](operator.md#proxysqlexposeenabled) Custom Resource
-option enables or disables the `cluster1-proxysql` service.
+### Headless ProxySQL service
 
-!!! note
+You may want to configure the ProxySQL service as a [headless Service :octicons-link-external-16:](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services). For example, if you have applications that need direct DNS access to individual ProxySQL pods, such as when running in a multi-tenant setup or when handling advanced networking scenarios. 
 
-    <a name="headless-service"> If you need to configure ProxySQL service as a
-    [headless Service :octicons-link-external-16:](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services)
-    (e.g. to use on the tenant network), add the following [annotation](annotations.md)
-    in the Custom Resource metadata section of the `deploy/cr.yaml`:
+To enable a headless ProxySQL service, add the `percona.com/headless-service: true` [annotation](annotations.md) in the `proxysql.expose.annotations` key of the `deploy/cr.yaml` file. Note that this annotation takes effect only at service creation time, so you need to set it when first creating the cluster.
 
-    ```yaml
-    apiVersion: pxc.percona.com/v1
-    kind: PerconaXtraDBCluster
-    metadata:
-      name: cluster1
+```yaml
+spec:
+  proxysql:
+    expose:
+      enabled: true
       annotations:
         percona.com/headless-service: true
-      ...
-    ```
+  ...
+```
 
-    This annotation works only at service creation time and can't be added later.
+### Upgrade behavior
 
-When a cluster with ProxySQL is upgraded, the following steps
-take place. First, reader members are upgraded one by one: the Operator waits
-until the upgraded member shows up in ProxySQL with online status, and then
-proceeds to upgrade the next member. When the upgrade is finished for all
-the readers, then the writer Percona XtraDB Cluster member is finally upgraded.
-
-!!! note
-
-    when both ProxySQL and Percona XtraDB Cluster are upgraded, they are
-    upgraded in parallel.
+During cluster upgrades with ProxySQL, the Operator upgrades reader members one by one, waiting for each to show as online in ProxySQL before proceeding. After all readers are upgraded, the writer member is upgraded last. When both ProxySQL and Percona XtraDB Cluster are upgraded, they are upgraded in parallel.
 
 ## Passing custom configuration options to ProxySQL
 
-You can pass custom configuration to ProxySQL
+You can pass custom configuration to ProxySQL in these ways:
 
-* edit the `deploy/cr.yaml` file,
+* by editing the `deploy/cr.yaml` file, 
+* by using a ConfigMap, 
+* by using a Secret object. 
 
-* use a ConfigMap,
-
-* use a Secret object.
-
-!!! note
-
-    If you specify a custom ProxySQL configuration in this way, ProxySQL
-    will try to merge the passed parameters with the previously set
-    configuration parameters, if any. If ProxySQL fails to merge some option,
-    you will see a warning in its log.
+Regardless of which method you use, you must supply the full ProxySQL configuration, even if you are only modifying a single option.
 
 ### Edit the `deploy/cr.yaml` file
 
-You can add options from the [proxysql.cnf :octicons-link-external-16:](https://proxysql.com/documentation/configuring-proxysql/) configuration file by editing the `proxysql.configuration` key in the `deploy/cr.yaml` file.
+Add options from the [proxysql.cnf :octicons-link-external-16:](https://proxysql.com/documentation/configuring-proxysql/) configuration file by editing the `proxysql.configuration` key in `deploy/cr.yaml`. 
+
 Here is an example:
 
 ```yaml
@@ -88,250 +59,295 @@ proxysql:
 
     admin_variables =
     {
-      admin_credentials="proxyadmin:admin_password"
-      mysql_ifaces="0.0.0.0:6032"
-      refresh_interval=2000
-      restapi_enabled=true
-      restapi_port=6070
+        admin_credentials="admin:admin"
+        mysql_ifaces="0.0.0.0:6032"
+        refresh_interval=2000
+        restapi_enabled=true
+        restapi_port=6070
 
-      cluster_username="proxyadmin"
-      cluster_password="admin_password"
-      cluster_check_interval_ms=200
-      cluster_check_status_frequency=100
-      cluster_mysql_query_rules_save_to_disk=true
-      cluster_mysql_servers_save_to_disk=true
-      cluster_mysql_users_save_to_disk=true
-      cluster_proxysql_servers_save_to_disk=true
-      cluster_mysql_query_rules_diffs_before_sync=1
-      cluster_mysql_servers_diffs_before_sync=1
-      cluster_mysql_users_diffs_before_sync=1
-      cluster_proxysql_servers_diffs_before_sync=1
+        cluster_username="admin"
+        cluster_password="admin"
+        checksum_admin_variables=false
+        checksum_ldap_variables=false
+        checksum_mysql_variables=false
+        cluster_check_interval_ms=200
+        cluster_check_status_frequency=100
+        cluster_mysql_query_rules_save_to_disk=true
+        cluster_mysql_servers_save_to_disk=true
+        cluster_mysql_users_save_to_disk=true
+        cluster_proxysql_servers_save_to_disk=true
+        cluster_mysql_query_rules_diffs_before_sync=1
+        cluster_mysql_servers_diffs_before_sync=1
+        cluster_mysql_users_diffs_before_sync=1
+        cluster_proxysql_servers_diffs_before_sync=1
     }
 
     mysql_variables=
     {
-      monitor_password="monitor"
-      monitor_galera_healthcheck_interval=1000
-      threads=2
-      max_connections=2048
-      default_query_delay=0
-      default_query_timeout=10000
-      poll_timeout=2000
-      interfaces="0.0.0.0:3306"
-      default_schema="information_schema"
-      stacksize=1048576
-      connect_timeout_server=10000
-      monitor_history=60000
-      monitor_connect_interval=20000
-      monitor_ping_interval=10000
-      ping_timeout_server=200
-      commands_stats=true
-      sessions_sort=true
-      have_ssl=true
-      ssl_p2s_ca="/etc/proxysql/ssl-internal/ca.crt"
-      ssl_p2s_cert="/etc/proxysql/ssl-internal/tls.crt"
-      ssl_p2s_key="/etc/proxysql/ssl-internal/tls.key"
-      ssl_p2s_cipher="ECDHE-RSA-AES128-GCM-SHA256"
+        monitor_password="monitor"
+        monitor_galera_healthcheck_interval=1000
+        threads=2
+        max_connections=2048
+        default_query_delay=0
+        default_query_timeout=10000
+        poll_timeout=2000
+        interfaces="0.0.0.0:3306"
+        default_schema="information_schema"
+        stacksize=1048576
+        connect_timeout_server=10000
+        monitor_history=60000
+        monitor_connect_interval=20000
+        monitor_ping_interval=10000
+        ping_timeout_server=200
+        commands_stats=true
+        sessions_sort=true
+        have_ssl=false
+        ssl_p2s_ca=""
+        ssl_p2s_cert=""
+        ssl_p2s_key=""
+        ssl_p2s_cipher="ECDHE-RSA-AES128-GCM-SHA256"
+        default_authentication_plugin="caching_sha2_password"
     }
 ```
 
 ### Use a ConfigMap
 
-You can use a configmap and the cluster restart to reset configuration
-options. A configmap allows Kubernetes to pass or update configuration
-data inside a containerized application.
+A configmap allows Kubernetes to pass or update configuration
+data inside a containerized application. When you apply a ConfigMap, the cluster restarts.
 
-Use the `kubectl` command to create the configmap from external
-resources, for more information see [Configure a Pod to use a
-ConfigMap :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-a-configmap).
+See [Configure a Pod to use a
+ConfigMap :octicons-link-external-16:](<https://kubernetes.io/docs/>
+tasks/configure-pod-container/configure-pod-configmap/#create-a-configmap) for information how to create a ConfigMap.
 
-For example, you define a `proxysql.cnf` configuration file with the following
-setting:
 
---8<-- "proxysql-config.txt"
+Here's the example configuration.
 
-You can create a configmap from the `proxysql.cnf` file with the
-`kubectl create configmap` command.
+1. Create a `proxysql.cnf` configuration file:
 
-You should use the combination of the cluster name with the `-proxysql`
-suffix as the naming convention for the configmap. To find the cluster
-name, you can use the following command:
+    --8<-- "proxysql-config.txt"
 
-``` {.bash data-prompt="$" }
-$ kubectl get pxc
-```
-
-The syntax for `kubectl create configmap` command is:
-
-```default
-$ kubectl create configmap <cluster-name>-proxysql <resource-type=resource-name>
-```
-
-The following example defines `cluster1-proxysql` as the configmap name and
-the `proxysql.cnf` file as the data source:
-
-``` {.bash data-prompt="$" }
-$ kubectl create configmap cluster1-proxysql --from-file=proxysql.cnf
-```
-
-To view the created configmap, use the following command:
-
-``` {.bash data-prompt="$" }
-$ kubectl describe configmaps cluster1-proxysql
-```
-
-### Use a Secret Object
-
-The Operator can also store configuration options in [Kubernetes Secrets :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/secret/).
-This can be useful if you need additional protection for some sensitive data.
-
-You should create a Secret object with a specific name, composed of your cluster
-name and the `proxysql` suffix.
-
-!!! note
-
-    To find the cluster name, you can use the following command:
+2. Find your cluster name:
 
     ``` {.bash data-prompt="$" }
     $ kubectl get pxc
     ```
 
-Configuration options should be put inside a specific key inside of the `data`
-section. The name of this key is `proxysql.cnf` for ProxySQL Pods.
-
-Actual options should be encoded with [Base64 :octicons-link-external-16:](https://en.wikipedia.org/wiki/Base64).
-
-For example, let’s define a `proxysql.cnf` configuration file and put there
-options we used in the previous example:
-
---8<-- "proxysql-config.txt"
-
-
-You can get a Base64 encoded string from your options via the command line as
-follows:
-
-=== "in Linux"
+3. Create the ConfigMap using the cluster name with the `-proxysql` suffix:
 
     ``` {.bash data-prompt="$" }
-    $ cat proxysql.cnf | base64 --wrap=0
+    $ kubectl create configmap cluster1-proxysql --from-file=proxysql.cnf
     ```
 
-=== "in macOS"
+4. Verify the ConfigMap:
 
     ``` {.bash data-prompt="$" }
-    $ cat proxysql.cnf | base64
+    $ kubectl describe configmaps cluster1-proxysql
     ```
 
-!!! note
+### Use a Secret object
 
-    Similarly, you can read the list of options from a Base64 encoded
-    string:
+Store configuration options in [Kubernetes Secrets :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/secret/) for additional protection of sensitive data.
+
+The Secret name must be composed of your cluster
+name and the `proxysql` suffix.
+
+1. Find your cluster name:
 
     ``` {.bash data-prompt="$" }
-    $ echo "ZGF0YWRpcj0iL3Zhci9saWIvcHJveHlzcWwiCgphZG1pbl92YXJpYWJsZXMgPQp7CiBhZG1pbl9j\
-      cmVkZW50aWFscz0icHJveHlhZG1pbjphZG1pbl9wYXNzd29yZCIKIG15c3FsX2lmYWNlcz0iMC4w\
-      LjAuMDo2MDMyIgogcmVmcmVzaF9pbnRlcnZhbD0yMDAwCgogY2x1c3Rlcl91c2VybmFtZT0icHJv\
-      eHlhZG1pbiIKIGNsdXN0ZXJfcGFzc3dvcmQ9ImFkbWluX3Bhc3N3b3JkIgogY2x1c3Rlcl9jaGVj\
-      a19pbnRlcnZhbF9tcz0yMDAKIGNsdXN0ZXJfY2hlY2tfc3RhdHVzX2ZyZXF1ZW5jeT0xMDAKIGNs\
-      dXN0ZXJfbXlzcWxfcXVlcnlfcnVsZXNfc2F2ZV90b19kaXNrPXRydWUKIGNsdXN0ZXJfbXlzcWxf\
-      c2VydmVyc19zYXZlX3RvX2Rpc2s9dHJ1ZQogY2x1c3Rlcl9teXNxbF91c2Vyc19zYXZlX3RvX2Rp\
-      c2s9dHJ1ZQogY2x1c3Rlcl9wcm94eXNxbF9zZXJ2ZXJzX3NhdmVfdG9fZGlzaz10cnVlCiBjbHVz\
-      dGVyX215c3FsX3F1ZXJ5X3J1bGVzX2RpZmZzX2JlZm9yZV9zeW5jPTEKIGNsdXN0ZXJfbXlzcWxf\
-      c2VydmVyc19kaWZmc19iZWZvcmVfc3luYz0xCiBjbHVzdGVyX215c3FsX3VzZXJzX2RpZmZzX2Jl\
-      Zm9yZV9zeW5jPTEKIGNsdXN0ZXJfcHJveHlzcWxfc2VydmVyc19kaWZmc19iZWZvcmVfc3luYz0x\
-      Cn0KCm15c3FsX3ZhcmlhYmxlcz0KewogbW9uaXRvcl9wYXNzd29yZD0ibW9uaXRvciIKIG1vbml0\
-      b3JfZ2FsZXJhX2hlYWx0aGNoZWNrX2ludGVydmFsPTEwMDAKIHRocmVhZHM9MgogbWF4X2Nvbm5l\
-      Y3Rpb25zPTIwNDgKIGRlZmF1bHRfcXVlcnlfZGVsYXk9MAogZGVmYXVsdF9xdWVyeV90aW1lb3V0\
-      PTEwMDAwCiBwb2xsX3RpbWVvdXQ9MjAwMAogaW50ZXJmYWNlcz0iMC4wLjAuMDozMzA2IgogZGVm\
-      YXVsdF9zY2hlbWE9ImluZm9ybWF0aW9uX3NjaGVtYSIKIHN0YWNrc2l6ZT0xMDQ4NTc2CiBjb25u\
-      ZWN0X3RpbWVvdXRfc2VydmVyPTEwMDAwCiBtb25pdG9yX2hpc3Rvcnk9NjAwMDAKIG1vbml0b3Jf\
-      Y29ubmVjdF9pbnRlcnZhbD0yMDAwMAogbW9uaXRvcl9waW5nX2ludGVydmFsPTEwMDAwCiBwaW5n\
-      X3RpbWVvdXRfc2VydmVyPTIwMAogY29tbWFuZHNfc3RhdHM9dHJ1ZQogc2Vzc2lvbnNfc29ydD10\
-      cnVlCiBoYXZlX3NzbD10cnVlCiBzc2xfcDJzX2NhPSIvZXRjL3Byb3h5c3FsL3NzbC1pbnRlcm5h\
-      bC9jYS5jcnQiCiBzc2xfcDJzX2NlcnQ9Ii9ldGMvcHJveHlzcWwvc3NsLWludGVybmFsL3Rscy5j\
-      cnQiCiBzc2xfcDJzX2tleT0iL2V0Yy9wcm94eXNxbC9zc2wtaW50ZXJuYWwvdGxzLmtleSIKIHNz\
-      bF9wMnNfY2lwaGVyPSJFQ0RIRS1SU0EtQUVTMTI4LUdDTS1TSEEyNTYiCn0K" | base64 --decode
+    $ kubectl get pxc
     ```
 
-Finally, use a yaml file to create the Secret object. For example, you can
-create a `deploy/my-proxysql-secret.yaml` file with the following contents:
+2. Create a `proxysql.cnf` configuration file with your options:
 
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: cluster1-proxysql
-data:
-  proxysql.cnf: "ZGF0YWRpcj0iL3Zhci9saWIvcHJveHlzcWwiCgphZG1pbl92YXJpYWJsZXMgPQp7CiBhZG1pbl9j\
-     cmVkZW50aWFscz0icHJveHlhZG1pbjphZG1pbl9wYXNzd29yZCIKIG15c3FsX2lmYWNlcz0iMC4w\
-     LjAuMDo2MDMyIgogcmVmcmVzaF9pbnRlcnZhbD0yMDAwCgogY2x1c3Rlcl91c2VybmFtZT0icHJv\
-     eHlhZG1pbiIKIGNsdXN0ZXJfcGFzc3dvcmQ9ImFkbWluX3Bhc3N3b3JkIgogY2x1c3Rlcl9jaGVj\
-     a19pbnRlcnZhbF9tcz0yMDAKIGNsdXN0ZXJfY2hlY2tfc3RhdHVzX2ZyZXF1ZW5jeT0xMDAKIGNs\
-     dXN0ZXJfbXlzcWxfcXVlcnlfcnVsZXNfc2F2ZV90b19kaXNrPXRydWUKIGNsdXN0ZXJfbXlzcWxf\
-     c2VydmVyc19zYXZlX3RvX2Rpc2s9dHJ1ZQogY2x1c3Rlcl9teXNxbF91c2Vyc19zYXZlX3RvX2Rp\
-     c2s9dHJ1ZQogY2x1c3Rlcl9wcm94eXNxbF9zZXJ2ZXJzX3NhdmVfdG9fZGlzaz10cnVlCiBjbHVz\
-     dGVyX215c3FsX3F1ZXJ5X3J1bGVzX2RpZmZzX2JlZm9yZV9zeW5jPTEKIGNsdXN0ZXJfbXlzcWxf\
-     c2VydmVyc19kaWZmc19iZWZvcmVfc3luYz0xCiBjbHVzdGVyX215c3FsX3VzZXJzX2RpZmZzX2Jl\
-     Zm9yZV9zeW5jPTEKIGNsdXN0ZXJfcHJveHlzcWxfc2VydmVyc19kaWZmc19iZWZvcmVfc3luYz0x\
-     Cn0KCm15c3FsX3ZhcmlhYmxlcz0KewogbW9uaXRvcl9wYXNzd29yZD0ibW9uaXRvciIKIG1vbml0\
-     b3JfZ2FsZXJhX2hlYWx0aGNoZWNrX2ludGVydmFsPTEwMDAKIHRocmVhZHM9MgogbWF4X2Nvbm5l\
-     Y3Rpb25zPTIwNDgKIGRlZmF1bHRfcXVlcnlfZGVsYXk9MAogZGVmYXVsdF9xdWVyeV90aW1lb3V0\
-     PTEwMDAwCiBwb2xsX3RpbWVvdXQ9MjAwMAogaW50ZXJmYWNlcz0iMC4wLjAuMDozMzA2IgogZGVm\
-     YXVsdF9zY2hlbWE9ImluZm9ybWF0aW9uX3NjaGVtYSIKIHN0YWNrc2l6ZT0xMDQ4NTc2CiBjb25u\
-     ZWN0X3RpbWVvdXRfc2VydmVyPTEwMDAwCiBtb25pdG9yX2hpc3Rvcnk9NjAwMDAKIG1vbml0b3Jf\
-     Y29ubmVjdF9pbnRlcnZhbD0yMDAwMAogbW9uaXRvcl9waW5nX2ludGVydmFsPTEwMDAwCiBwaW5n\
-     X3RpbWVvdXRfc2VydmVyPTIwMAogY29tbWFuZHNfc3RhdHM9dHJ1ZQogc2Vzc2lvbnNfc29ydD10\
-     cnVlCiBoYXZlX3NzbD10cnVlCiBzc2xfcDJzX2NhPSIvZXRjL3Byb3h5c3FsL3NzbC1pbnRlcm5h\
-     bC9jYS5jcnQiCiBzc2xfcDJzX2NlcnQ9Ii9ldGMvcHJveHlzcWwvc3NsLWludGVybmFsL3Rscy5j\
-     cnQiCiBzc2xfcDJzX2tleT0iL2V0Yy9wcm94eXNxbC9zc2wtaW50ZXJuYWwvdGxzLmtleSIKIHNz\
-     bF9wMnNfY2lwaGVyPSJFQ0RIRS1SU0EtQUVTMTI4LUdDTS1TSEEyNTYiCn0K"
-```
+    --8<-- "proxysql-config.txt"
 
-When ready, apply it with the following command:
+3. Encode the configuration file with [Base64 :octicons-link-external-16:](https://en.wikipedia.org/wiki/Base64):
 
-``` {.bash data-prompt="$" }
-$ kubectl create -f deploy/my-proxysql-secret.yaml
-```
+    === "in Linux"
 
-!!! note
+        ``` {.bash data-prompt="$" }
+        $ cat proxysql.cnf | base64 --wrap=0
+        ```
 
-    Do not forget to restart Percona XtraDB Cluster to ensure the
-    cluster has updated the configuration.
+    === "in macOS"
+
+        ``` {.bash data-prompt="$" }
+        $ cat proxysql.cnf | base64
+        ```
+
+4. Create a Secret object with a name composed of your cluster name and the `proxysql` suffix. Put the Base64-encoded configuration in the `data` section under the `proxysql.cnf` key. Example `deploy/my-proxysql-secret.yaml`:
+
+    ```yaml
+    apiVersion: v1
+    kind: Secret
+    metadata:
+        name: cluster1-proxysql
+    data:
+        proxysql.cnf: "ZGF0YWRpcj0iL3Zhci9saWIvcHJveHlzcWwiCgphZG1pbl92YXJpYWJsZXMgPQp7CiBhZG1pbl9j\
+         cmVkZW50aWFscz0icHJveHlhZG1pbjphZG1pbl9wYXNzd29yZCIKIG15c3FsX2lmYWNlcz0iMC4w\
+         LjAuMDo2MDMyIgogcmVmcmVzaF9pbnRlcnZhbD0yMDAwCgogY2x1c3Rlcl91c2VybmFtZT0icHJv\
+         eHlhZG1pbiIKIGNsdXN0ZXJfcGFzc3dvcmQ9ImFkbWluX3Bhc3N3b3JkIgogY2x1c3Rlcl9jaGVj\
+         a19pbnRlcnZhbF9tcz0yMDAKIGNsdXN0ZXJfY2hlY2tfc3RhdHVzX2ZyZXF1ZW5jeT0xMDAKIGNs\
+         dXN0ZXJfbXlzcWxfcXVlcnlfcnVsZXNfc2F2ZV90b19kaXNrPXRydWUKIGNsdXN0ZXJfbXlzcWxf\
+         c2VydmVyc19zYXZlX3RvX2Rpc2s9dHJ1ZQogY2x1c3Rlcl9teXNxbF91c2Vyc19zYXZlX3RvX2Rp\
+         c2s9dHJ1ZQogY2x1c3Rlcl9wcm94eXNxbF9zZXJ2ZXJzX3NhdmVfdG9fZGlzaz10cnVlCiBjbHVz\
+         dGVyX215c3FsX3F1ZXJ5X3J1bGVzX2RpZmZzX2JlZm9yZV9zeW5jPTEKIGNsdXN0ZXJfbXlzcWxf\
+         c2VydmVyc19kaWZmc19iZWZvcmVfc3luYz0xCiBjbHVzdGVyX215c3FsX3VzZXJzX2RpZmZzX2Jl\
+         Zm9yZV9zeW5jPTEKIGNsdXN0ZXJfcHJveHlzcWxfc2VydmVyc19kaWZmc19iZWZvcmVfc3luYz0x\
+         Cn0KCm15c3FsX3ZhcmlhYmxlcz0KewogbW9uaXRvcl9wYXNzd29yZD0ibW9uaXRvciIKIG1vbml0\
+         b3JfZ2FsZXJhX2hlYWx0aGNoZWNrX2ludGVydmFsPTEwMDAKIHRocmVhZHM9MgogbWF4X2Nvbm5l\
+         Y3Rpb25zPTIwNDgKIGRlZmF1bHRfcXVlcnlfZGVsYXk9MAogZGVmYXVsdF9xdWVyeV90aW1lb3V0\
+         PTEwMDAwCiBwb2xsX3RpbWVvdXQ9MjAwMAogaW50ZXJmYWNlcz0iMC4wLjAuMDozMzA2IgogZGVm\
+         YXVsdF9zY2hlbWE9ImluZm9ybWF0aW9uX3NjaGVtYSIKIHN0YWNrc2l6ZT0xMDQ4NTc2CiBjb25u\
+         ZWN0X3RpbWVvdXRfc2VydmVyPTEwMDAwCiBtb25pdG9yX2hpc3Rvcnk9NjAwMDAKIG1vbml0b3Jf\
+         Y29ubmVjdF9pbnRlcnZhbD0yMDAwMAogbW9uaXRvcl9waW5nX2ludGVydmFsPTEwMDAwCiBwaW5n\
+         X3RpbWVvdXRfc2VydmVyPTIwMAogY29tbWFuZHNfc3RhdHM9dHJ1ZQogc2Vzc2lvbnNfc29ydD10\
+         cnVlCiBoYXZlX3NzbD10cnVlCiBzc2xfcDJzX2NhPSIvZXRjL3Byb3h5c3FsL3NzbC1pbnRlcm5h\
+         bC9jYS5jcnQiCiBzc2xfcDJzX2NlcnQ9Ii9ldGMvcHJveHlzcWwvc3NsLWludGVybmFsL3Rscy5j\
+         cnQiCiBzc2xfcDJzX2tleT0iL2V0Yy9wcm94eXNxbC9zc2wtaW50ZXJuYWwvdGxzLmtleSIKIHNz\
+         bF9wMnNfY2lwaGVyPSJFQ0RIRS1SU0EtQUVTMTI4LUdDTS1TSEEyNTYiCn0K"
+    ```
+
+5. Apply the Secret:
+
+    ``` {.bash data-prompt="$" }
+    $ kubectl create -f deploy/my-proxysql-secret.yaml
+    ```
+
+6. Restart Percona XtraDB Cluster to apply the configuration changes.
 
 ## Accessing the ProxySQL Admin Interface
 
-You can use [ProxySQL admin interface :octicons-link-external-16:](https://www.percona.com/blog/2017/06/07/proxysql-admin-interface-not-typical-mysql-server/) to  configure its settings.
+Use the [ProxySQL admin interface :octicons-link-external-16:](https://www.percona.com/blog/2017/06/07/proxysql-admin-interface-not-typical-mysql-server/) to configure ProxySQL settings by connecting via the MySQL protocol.
 
-Configuring ProxySQL in this way means connecting to it using the MySQL
-protocol, and two things are needed to do it:
+1. Find the ProxySQL Pod name:
 
-* the ProxySQL Pod name
+    ``` {.bash data-prompt="$" }
+    $ kubectl get pods
+    ```
 
-* the ProxySQL admin password
+    ??? example "Sample output"
 
-You can find out ProxySQL Pod name with the `kubectl get pods` command,
-which will have the following output:
+        ```{.text .no-copy}
+        NAME                                              READY   STATUS    
+        RESTARTS   AGE
+        cluster1-pxc-node-0                               1/1     Running
+        0          5m
+        cluster1-pxc-node-1                               1/1     Running
+        0          4m
+        cluster1-pxc-node-2                               1/1     Running
+        0          2m
+        cluster1-proxysql-0                               1/1     Running
+        0          5m
+        percona-xtradb-cluster-operator-dc67778fd-qtspz   1/1     Running
+        0          6m
+        ```
 
-```default
-$ kubectl get pods
-NAME                                              READY   STATUS    RESTARTS   AGE
-cluster1-pxc-node-0                               1/1     Running   0          5m
-cluster1-pxc-node-1                               1/1     Running   0          4m
-cluster1-pxc-node-2                               1/1     Running   0          2m
-cluster1-proxysql-0                               1/1     Running   0          5m
-percona-xtradb-cluster-operator-dc67778fd-qtspz   1/1     Running   0          6m
+2. Get the admin password:
+
+    ``` {.bash data-prompt="$" }
+    $ kubectl get secrets $(kubectl get pxc -o jsonpath='{.items[].spec.secretsName}') -o template='{{'{{'}} .data.proxyadmin | base64decode {{'}}'}}'
+    ```
+
+3. Connect to ProxySQL. Replace `cluster1-proxysql-0` with your Pod name and `admin_password` with the retrieved password:
+
+    ``` {.bash data-prompt="$" }
+    $ kubectl exec -it cluster1-proxysql-0 -- mysql -h127.0.0.1 -P6032 -uproxyadmin -padmin_password
+    ```
+
+## ProxySQL scheduler (tech preview)
+
+By default, the Operator uses the internal ProxySQL scheduler for load balancing. In some cases, this scheduler may not fully recognize the cluster topology, directing both read and write traffic to the primary Pod. This can reduce scalability and efficiency and may increase the risk of overload and downtime.
+
+To address this limitation, the Operator is integrated with the [`pxc_scheduler_handler` :octicons-link-external-16:](https://docs.percona.com/proxysql/psh-overview.html) tool starting with version 1.19.0. This external ProxySQL scheduler ensures the read/write splitting is distributed as follows:
+
+* **SELECT queries** (without `FOR UPDATE`) are sent evenly to all PXC nodes or to all nodes except the primary, depending on your configuration
+* **Non-SELECT queries** and **SELECT FOR UPDATE** queries are sent to the primary node
+* The scheduler automatically manages the primary node, ensuring only one primary exists at a time
+
+As a result, you achieve:
+
+* Better performance through faster query processing and increased throughput
+* Higher reliability by preventing single-node bottlenecks and points of failure
+* Healthier cluster through early detection of replication lag and node issues
+* Efficient resource utilization
+* Improved user experience with consistent, predictable response times
+
+### Enable the scheduler
+
+The scheduler is disabled by default to maintain backward compatibility. You can enable it by setting `proxysql.scheduler.enabled=true` in your Custom Resource.
+
+1. Edit the `deploy/cr.yaml` file and add the scheduler configuration:
+
+    ```yaml
+    proxysql:
+      enabled: true
+      size: 3
+      image: percona/percona-xtradb-cluster-operator:{{ release }}-proxysql
+      scheduler:
+        enabled: true
+    ```
+
+2. Apply the configuration:
+
+    ```{.bash data-prompt="$" }
+    $ kubectl apply -f deploy/cr.yaml -n <namespace>
+    ```
+
+When the scheduler is enabled, you should see:
+
+* **Hostgroup 10** (readers): All PXC nodes with weighted distribution
+* **Hostgroup 11** (writer): Only the current writer node (typically `pod-0`) with a high weight (1000000)
+
+To verify that ProxySQL is properly balancing read traffic across your Percona XtraDB Cluster nodes, you can run the following command. This script sends multiple `SELECT` queries through ProxySQL and then shows how the queries are distributed among cluster nodes. 
+
+Replace the `<user>` and `<password>` placeholders with the valid credentials of a MySQL user that has permissions to connect through ProxySQL and can execute simple `SELECT` statements on the cluster.
+
+```{.bash data-prompt="$" }
+$ for i in $(seq 100); do 
+    kubectl exec -i cluster1-pxc-0 -c pxc -- mysql -u<user> -p<password> \
+      --host cluster1-proxysql -Ne "SELECT VARIABLE_VALUE FROM \
+      performance_schema.global_variables WHERE VARIABLE_NAME = 'wsrep_node_name' LIMIT 1" \
+      2>/dev/null
+  done | sort -n | uniq -c
 ```
 
-The next command will print you the needed admin password:
+You should see queries reported from multiple node names, indicating that read load is being balanced across different Percona XtraDB Cluster nodes (not just one node). 
 
-```default
-$ kubectl get secrets $(kubectl get pxc -o jsonpath='{.items[].spec.secretsName}') -o template='{{'{{'}} .data.proxyadmin | base64decode {{'}}'}}'
-```
+### Scheduler behavior
 
-When both Pod name and admin password are known, connect to the ProxySQL as
-follows, substituting `cluster1-proxysql-0` with the actual Pod name and
-`admin_password` with the actual password:
+After you enable the scheduler, it works as follows:
 
-```default
-$ kubectl exec -it cluster1-proxysql-0 -- mysql -h127.0.0.1 -P6032 -uproxyadmin -padmin_password
-```
+* **Writer node**: The scheduler sets `pod-0` (the first PXC Pod) as the writer node by default. The scheduler ensures only one writer exists at any time. As long as `pod-0` is available, it remains the writer.
+
+* **Failover**: If `pod-0` becomes unavailable, the scheduler automatically promotes another Pod to be the writer. The scheduler uses weighted hostgroups to ensure all ProxySQL instances promote the same Pod during failover, preventing split-brain scenarios.
+
+* **ProxySQL clustering**: When the scheduler is enabled, ProxySQL clustering is automatically disabled. This is because the scheduler and ProxySQL clustering do not work well together. The `proxysql-monit` sidecar container is removed from ProxySQL Pods, and each ProxySQL instance manages its own `mysql_servers` configuration independently.
+
+* **Scaling considerations**: When scaling down the Percona XtraDB Cluster with the scheduler enabled and `writerIsAlsoReader=false`, you may encounter weight inconsistencies in the `runtime_mysql_servers` table. If weights do not update correctly after scaling (for example, a weight remains at 1000 instead of updating to 999), restart the ProxySQL pods to refresh the configuration. This limitation is planned to be addressed in future releases.
+
+!!! warning
+
+    When the scheduler is enabled, ProxySQL clustering is disabled. Each ProxySQL instance manages its own server configuration independently. This ensures proper read/write splitting but means ProxySQL instances do not share configuration.
+
+By default, the ProxySQL scheduler distributes read requests evenly across all your cluster nodes. You can exclude the primary from processing reads and reserve it only for accepting write requests by setting the `writerIsAlsoReader` option to `false`.
+
+You can additionally fine-tune the scheduler's behavior for your workload and deployment scenario. See the [Custom resource](operator.md#proxysqlschedulerenabled) reference for a complete list of available options.
+
+### Disabling the scheduler
+
+If you need to disable the scheduler after it has been enabled, be aware of the following limitations:
+
+* **Hostgroup leftovers**: After disabling the scheduler, ProxySQL pod-0 may retain 80XX hostgroups in the `runtime_mysql_servers` table. Restart the Pod to clear these leftovers.
+
+    ```{.bash data-prompt="$" }
+    kubectl delete pod <proxysql-pod-name> -n <namespace>
+    ```
+
+    The Operator will automatically recreate the pod with the correct configuration.
+
+* **Incomplete configuration**: One or more ProxySQL Pods may not contain all Percona XtraDB Cluster nodes in their `mysql_servers` and `runtime_mysql_servers` table after disabling. Verify the configuration and restart affected Pods if needed.
+
+To disable the scheduler, remove or set `proxysql.scheduler.enabled=false` in your Custom Resource. This causes the restart of ProxySQL pods.
+
+

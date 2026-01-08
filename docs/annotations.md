@@ -82,6 +82,7 @@ Use **Annotations** when:
 | `percona.com/issue-vault-token`| Custom Resource  | Signals the Operator to pause a cluster startup until a Vault token has been issued. Once the annotation is removed, the Operator restarts the cluster to apply the new Vault configuration and activate encryption |`percona.com/issue-vault-token: "true"`|
 | `service.beta.kubernetes.io/aws-load-balancer-backend-protocol` | Services | Specifies the protocol for AWS load balancers | http, http-test             |
 | `service.beta.kubernetes.io/aws-load-balancer-backend`         | Services | Specifies the backend type for AWS load balancers | test-type                  |
+| `percona.com/headless-service` | Services | Exposes ProxySQL or HAProxy as a headless service | true | 
 | `percona.com/unsafe-pitr` | Restore object | Forces a restore from a backup marked as not appropriate for point-in-time recovery. This is unsafe configuration so you should use it when you are absolutely sure in your actions. | 
 
 ## Setting labels and annotations in the Custom Resource
