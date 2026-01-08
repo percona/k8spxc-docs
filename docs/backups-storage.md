@@ -230,11 +230,11 @@ You can use your organization's custom TLS / SSL certificates and instruct the O
 
 To configure TLS verification with custom certificates, do the following:
 
-1. Create the Secret object that contains the TLS certificate to access the S3 storage, the certificate's private key and the CA certificate.
+1. Create the Secret object that contains the CA bundle needed to verify the S3 endpoint's TLS certificate.
 2. Modify the S3 storage configuration in the Custom Resource and specify the following information:
 
     * `storages.<NAME>.s3.caBundle.name` is the name of the Secret object you created previously
-    * `storages.<NAME>.s3.caBundle.key` is the CA certificate. 
+    * `storages.<NAME>.s3.caBundle.key` is the name of the file in the Secret containing the CA bundle.
    
     Here's the example configuration:
 
