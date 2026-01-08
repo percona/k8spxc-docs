@@ -884,6 +884,48 @@ The [Kubernetes API group :octicons-link-external-16:](https://kubernetes.io/doc
 | ----------- | ---------- |
 | :material-code-string: string     | `snapshot.storage.k8s.io` |
 
+
+### `pxc.extraPVCs.name`
+
+The name of the volume provisioned for the external PersistentVolumeClaim that you mount to Percona XtraDB Cluster pods. In such a way you can attach pre-existing storage volumes to your database instances for use cases such as importing data, sharing configuration files, or accessing external datasets. For more information, see [Add external PersistentVolumeClaims to the Operator](external-pvc.md). You can configure external PVCs for both new and running clusters.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `shared-data` |
+
+### `pxc.extraPVCs.claimName`
+
+The name of the existing PersistentVolumeClaim to mount. This PVC must exist in the same namespace as your cluster before you apply the configuration. The Operator will mount the existing
+    PVC to all PXC pods.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `my-existing-pvc` |
+
+### `pxc.extraPVCs.mountPath`
+
+The path inside the container where the volume will be mounted.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `/mnt/shared-data` |
+
+### `pxc.extraPVCs.subPath`
+
+An optional folder within the volume to mount. If not specified, the volume's root is mounted.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `config` |
+
+### `pxc.extraPVCs.readOnly`
+
+Optional read-only flag. If set to `true`, the volume will be mounted as read-only. Defaults to `false`.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-toggle-switch-outline: boolean     | `false` |
+
 ### `pxc.gracePeriod`
 
 The [Kubernetes grace period when terminating a Pod :octicons-link-external-16:](https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods).
@@ -1341,6 +1383,47 @@ If available it makes a [topologyKey :octicons-link-external-16:](https://kubern
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-text-long: subdoc     | `node.alpha.kubernetes.io/unreachable` |
+
+### `haproxy.extraPVCs.name`
+
+The name of the volume provisioned for the external PersistentVolumeClaim that you mount to HAProxy pods. In such a way you can attach pre-existing storage volumes to your database instances for use cases such as importing data, sharing configuration files, or accessing external datasets. For more information, see [Add external PersistentVolumeClaims to the Operator](external-pvc.md). You can configure external PVCs for both new and running clusters.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `shared-data` |
+
+### `haproxy.extraPVCs.claimName`
+
+The name of the existing PersistentVolumeClaim to mount. This PVC must exist in the same namespace as your cluster before you apply the configuration. The Operator will mount the existing PVC to all HAProxy pods.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `my-existing-pvc` |
+
+### `haproxy.extraPVCs.mountPath`
+
+The path inside the container where the volume will be mounted.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `/mnt/shared-data` |
+
+### `haproxy.extraPVCs.subPath`
+
+An optional folder within the volume to mount. If not specified, the volume's root is mounted.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `config` |
+
+### `haproxy.extraPVCs.readOnly`
+
+Optional read-only flag. If set to `true`, the volume will be mounted as read-only. Defaults to `false`.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-toggle-switch-outline: boolean     | `false` |
+
 
 ### `haproxy.podDisruptionBudget.maxUnavailable`
 
@@ -2137,6 +2220,46 @@ The [Kubernetes PersistentVolumeClaim :octicons-link-external-16:](https://kuber
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-code-string: string     | `6Gi` |
+
+### `proxysql.extraPVCs.name`
+
+The name of the volume provisioned for the external PersistentVolumeClaim that you mount to ProxySQL pods. In such a way you can attach pre-existing storage volumes to your database instances for use cases such as importing data, sharing configuration files, or accessing external datasets. For more information, see [Add external PersistentVolumeClaims to the Operator](external-pvc.md). You can configure external PVCs for both new and running clusters.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `shared-data` |
+
+### `proxysql.extraPVCs.claimName`
+
+The name of the existing PersistentVolumeClaim to mount. This PVC must exist in the same namespace as your cluster before you apply the configuration. The Operator will mount the existing PVC to all ProxySQL pods.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `my-existing-pvc` |
+
+### `proxysql.extraPVCs.mountPath`
+
+The path inside the container where the volume will be mounted.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `/mnt/shared-data` |
+
+### `proxysql.extraPVCs.subPath`
+
+An optional folder within the volume to mount. If not specified, the volume's root is mounted.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `config` |
+
+### `proxysql.extraPVCs.readOnly`
+
+Optional read-only flag. If set to `true`, the volume will be mounted as read-only. Defaults to `false`.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-toggle-switch-outline: boolean     | `false` |
 
 ### `proxysql.podDisruptionBudget.maxUnavailable`
 
