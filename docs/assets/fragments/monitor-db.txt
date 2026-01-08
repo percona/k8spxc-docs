@@ -63,6 +63,10 @@ PMM Client is installed as a side-car container in the database, HAProxy and Pro
 
 Now you must pass the credentials to the Operator. To do so, create a Secret object.
 
+!!! warning
+
+    PMM3 Client only works with PMM Server tokens. Make sure to use the  `pmmservertoken` option for PMM3 Client. Otherwise you may face issues with the setup. 
+
 1. Create a Secret configuration file. You can use the [deploy/secrets.yaml :octicons-link-external-16:](https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/secrets.yaml) secrets file.
 
     === "PMM 3"

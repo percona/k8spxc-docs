@@ -44,6 +44,7 @@ theme:
     - search.highlight
     - navigation.top
     - content.tabs.link
+    - content.code.copy
 
 extra_css:
   - https://unicons.iconscout.com/release/v3.0.3/css/line.css
@@ -114,6 +115,7 @@ plugins:
     enabled: !ENV [CI, false]
     repository: percona/k8spxc-docs
     branch: "main"
+  open-in-new-tab: {}
   meta-descriptions:
     export_csv: false
     quiet: false
@@ -153,10 +155,6 @@ extra:
     provider: google
     property: G-J4J70BNH0G
 
-
-extra: # Used in main.html template and can't be externalized
-  edit_page_text: '<i class="uil uil-pen"></i> <b>Edit this page</b>'
-  updated_text: '<i class="uil uil-refresh"></i> Page updated'
   version:
     provider: mike
 
@@ -169,7 +167,6 @@ not_in_nav: |
 
 # Common navigation for percona.com, render.com and PDF
 nav:
-
     - Welcome: index.md
     - get-help.md
     - Features:
@@ -212,10 +209,13 @@ nav:
           - "Application and system users": users.md
           - "Exposing the cluster": expose.md
           - "Changing MySQL Options": options.md
-          - "Anti-affinity and tolerations": constraints.md
+          - "Control Pod scheduling": constraints.md
           - "Labels and annotations": annotations.md
           - "Local Storage support": storage.md
-          - "Defining environment variables": containers-conf.md
+          - Define environment variables:
+            - "Overview": containers-conf.md
+            - env-vars-operator.md
+            - env-vars-cluster.md
           - "Load Balancing with HAProxy": haproxy-conf.md
           - "Load Balancing with ProxySQL": proxysql-conf.md
           - Workload transfer and disaster recovery: 
@@ -225,9 +225,18 @@ nav:
              - dr-replication.md
              - dr-failover.md
              - dr-restore.md
-          - "Transport Encryption (TLS/SSL)": TLS.md
-          - "Data at rest encryption": encryption.md
+          - "Transport Encryption (TLS/SSL)": 
+             - "About TLS / SSL security": TLS.md
+             - "Install and use the cert-manager": tls-cert-manager.md
+             - "Generate certificates manually": tls-manual.md
+             - "Update certificates": tls-update.md
+             - "Run Percona XtraDB Cluster without TLS": tls-disable.md
+          - Data at rest encryption:
+            - "About data at rest encryption": encryption.md
+            - "Configure data at rest encryption without TLS": encryption-setup.md
+            - "Configure data at rest encryption with TLS": encryption-setup-tls.md
           - "Telemetry": telemetry.md
+          - reconciliation-concurrency.md
           
     - Management:
           - Backup and restore:
@@ -246,6 +255,7 @@ nav:
           - "Horizontal and vertical scaling": scaling.md
           - "Monitor with Percona Monitoring and Management (PMM)": monitoring.md
           - "Add sidecar containers": sidecar.md
+          - "Add external PersistentVolumeClaims to the Operator": external-pvc.md
           - "Restart or pause the cluster": pause.md
           - "Crash recovery": recovery.md
           - data-source.md
@@ -268,6 +278,8 @@ nav:
 
     - Reference:
           - "Custom Resource options": operator.md
+          - "Backup Custom Resource options": backup-cr.md
+          - "Restore Custom Resource options": restore-cr.md
           - "Percona certified images": images.md
           - "Versions compatibility": versions.md
           - "Operator API": api.md
