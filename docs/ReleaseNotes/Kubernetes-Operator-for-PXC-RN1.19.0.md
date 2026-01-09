@@ -15,7 +15,7 @@
 
 - [ProxySQL scheduler](#improved-load-balancing-with-proxysql-scheduler-tech-preview) (tech preview) - improved query routing
 - [Faster HAProxy failover](#customize-haproxy-backend-health-check-intervals-and-failover-behavior) (seconds instead of 20s)
-- [Online backups](#keep-your-cluster-online-while-running-backups-tech-preview) - keep cluster serving during backups
+- [Direct-access backups via sidecar](#direct-access-backups-improved-performance-and-reliability-with-sidecars-tech-preview)
 - [Memory allocator configuration](#configure-memory-allocator-in-the-operator)
 
 **Operational excellence**
@@ -172,7 +172,7 @@ You can now deploy ProxySQL 3 with Percona Operator for MySQL. This gives you mo
 - Event logs now include metadata about ProxySQL version and format. This makes it easier to track and audit logs across upgrades in your Operator‑managed deployments.
 
 
-### Keep your cluster online while running backups (tech preview)
+### Direct-access backups: Improved performance and reliability with sidecars (tech preview)
 
 By default, the Operator makes backups using the SST method. This creates a separate backup Pod with Percona XtraBackup, while the database node enters Donor state and stops serving client requests. SST backups can also fail with cryptic network errors, making root cause analysis and recovery difficult.
 
@@ -332,7 +332,7 @@ This enhancement lets you fine-tune memory management for your cluster while kee
 * [K8SPXC-1632](https://perconadev.atlassian.net/browse/K8SPXC-1632) - Added missing SecurityContext configurations for ProxySQL sidecar containers to enhance pod security. This change ensures that all sidecars follow the defined security standards of the cluster.
 * [K8SPXC-1655](https://perconadev.atlassian.net/browse/K8SPXC-1655) - Fixed a failure in xtrabackup when using LZ4 compression on RHEL9-based Percona XtraDB Cluster images. The fix addresses compatibility issues with the latest compression libraries in the operating system environment.
 * [K8SPXC-1686](https://perconadev.atlassian.net/browse/K8SPXC-1686) - Improved backup error handling to ensure that providing an invalid Percona XtraBackup image results in a failed status. A new timeout field was introduced to prevent backup objects from hanging indefinitely in a starting state.
-??? Seems internal improvement * [K8SPXC-1687](https://perconadev.atlassian.net/browse/K8SPXC-1687) - Fixed the `copy-backup.sh` script to correctly handle and copy cloud-based backups stored in S3 or Azure. This ensures that the utility script works consistently across all supported storage types.
+* [K8SPXC-1687](https://perconadev.atlassian.net/browse/K8SPXC-1687) - Fixed the `copy-backup.sh` script to correctly handle and copy cloud-based backups stored in S3 or Azure. This ensures that the utility script works consistently across all supported storage types.
 * [K8SPXC-1701](https://perconadev.atlassian.net/browse/K8SPXC-1701) - Ensured that MySQL configurations are correctly mounted to the restore prepare job. This fix allows the restore process to use custom MySQL settings defined in the cluster (Thank you Emin AKTAS for reporting and contributing to this issue).
 * [K8SPXC-1702](https://perconadev.atlassian.net/browse/K8SPXC-1702) - Added the ability to override time zones for backup jobs. This resolves issues where time-dependent operations could fail due to missing timezone definitions (Thank you Emin AKTAS for reporting and contributing to this issue).
 * [K8SPXC-1721](https://perconadev.atlassian.net/browse/K8SPXC-1721) - Added a sleep interval to the recovery loop to prevent high CPU usage spikes when containers restart. 
@@ -349,17 +349,31 @@ Antonio Falzarano for reporting and contributing to this issue).
 * [K8SPXC-1661](https://perconadev.atlassian.net/browse/K8SPXC-1661) - Updated the operator documentation to reflect that PMM 3 uses service accounts instead of API keys. This ensures that users can correctly configure monitoring integration with the latest versions of PMM.
 * [K8SPXC-1663](https://perconadev.atlassian.net/browse/K8SPXC-1663) - Improved documentation for Point-in-Time Recovery steps. The updated documentation properly separates and sequences the recovery instructions for improved readability.
 
+## Supported Software
+
+The Operator was developed and tested with the following software:
+
+- Percona XtraDB Cluster versions 8.4.6-6.1, 8.0.44-35.1, and 5.7.44-31.65 
+- Percona XtraBackup versions 8.4.0-5.1, 8.0.35-34.1, and 2.4.29  
+- HAProxy 2.8.17  
+- ProxySQL 2.7.3-1.2  
+- LogCollector based on fluent-bit 4.0.1  
+- PMM Client 2.44.1-1 and 3.5.0  
+
+Other options may also work but have not been tested.
+
+
 ## Supported Platforms
 
-Percona Operators are designed for compatibility with all [CNCF-certified :octicons-link-external-16:](https://www.cncf.io/training/certification/software-conformance/) Kubernetes distributions. Our release process includes targeted testing and validation on major cloud provider platforms and OpenShift, as detailed below for Operator version 1.16.0:
+Percona Operators are designed for compatibility with all [CNCF-certified :octicons-link-external-16:](https://www.cncf.io/training/certification/software-conformance/) Kubernetes distributions. Our release process includes targeted testing and validation on major cloud provider platforms and OpenShift, as detailed below:
 
 --8<-- [start:platforms]
 
-- [Google Kubernetes Engine (GKE) :octicons-link-external-16:](https://cloud.google.com/kubernetes-engine) 1.30 - 1.33  
-- [Amazon Elastic Container Service for Kubernetes (EKS) :octicons-link-external-16:](https://aws.amazon.com) 1.30 - 1.33  
-- [Azure Kubernetes Service (AKS) :octicons-link-external-16:](https://azure.microsoft.com/en-us/services/kubernetes-service/) 1.30 - 1.33  
-- [OpenShift :octicons-link-external-16:](https://www.redhat.com/en/technologies/cloud-computing/openshift) 4.15 - 4.19  
-- [Minikube :octicons-link-external-16:](https://minikube.sigs.k8s.io/docs/) 1.36.0 based on Kubernetes 1.33.1  
+- [Google Kubernetes Engine (GKE) :octicons-link-external-16:](https://cloud.google.com/kubernetes-engine) 1.31 - 1.33  
+- [Amazon Elastic Container Service for Kubernetes (EKS) :octicons-link-external-16:](https://aws.amazon.com) 1.32 - 1.34  
+- [Azure Kubernetes Service (AKS) :octicons-link-external-16:](https://azure.microsoft.com/en-us/services/kubernetes-service/) 1.32 - 1.34  
+- [OpenShift :octicons-link-external-16:](https://www.redhat.com/en/technologies/cloud-computing/openshift) 4.17 - 4.20  
+- [Minikube :octicons-link-external-16:](https://minikube.sigs.k8s.io/docs/) 1.37.0 based on Kubernetes 1.34.0  
 
 --8<-- [end:platforms]
 
@@ -369,8 +383,6 @@ This list only includes the platforms that the Percona Operators are specificall
 
 Find Percona's certified Docker images that you can use with the
 Percona Operator for MySQL based on Percona XtraDB Cluster in the following table.
-
-**Images released with the Operator version 1.19.0:**
 
 --8<-- [start:images]
 
