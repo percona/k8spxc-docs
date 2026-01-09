@@ -10,7 +10,7 @@ Cluster debug image has the following specifics:
 
 * it has debug mode enabled for the logs.
 
-There are debug versions for all [Percona XtraDB Cluster images](images.md): they have same names as normal images with a special `-debug` suffix in their version tag: for example, `percona-xtradb-cluster:{{ pxc80recommended }}-debug`.
+There are debug versions for all [Percona XtraDB Cluster images](images.md): they have same names as normal images with a special `-debug` suffix in their version tag: for example, `percona-xtradb-cluster:{{ pxc84recommended }}-debug`.
 
 To use the debug image instead of the normal one, find the needed image name
 [in the list of certified images](images.md) and set it
@@ -18,6 +18,7 @@ for the proper key in the `deploy/cr.yaml` configuration file. For example,
 set the following value of the `pxc.image` key to use the Percona XtraDB
 Cluster debug image:
 
+* `percona/percona-xtradb-cluster:{{ pxc84recommended }}-debug` for Percona XtraDB Cluster 8.4,
 
 * `percona/percona-xtradb-cluster:{{ pxc80recommended }}-debug` for Percona XtraDB Cluster 8.0,
 
