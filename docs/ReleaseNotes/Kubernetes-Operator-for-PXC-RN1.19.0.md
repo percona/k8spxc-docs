@@ -4,6 +4,8 @@
 
 ## What's new at a glance
 
+- Percona XtraDB Cluster 8.4 is the default version for cluster deployments
+
 **Security & Compliance**
 
 - [Data-at-rest encryption for Percona XtraDB Cluster 8.4](#ensure-data-security-for-percona-xtradb-cluster-84-with-data-at-rest-encryption)
@@ -38,6 +40,10 @@ Data at rest encryption ensures that sensitive information stored on disk remain
 The Operator supports data at rest encryption for MySQL 8.0 with HashiCorp Vault using the `keyring_vault` *plugin*. Now, it also supports data at rest encryption for MySQL 8.4, leveraging the `keyring_vault` *component*.
 
 This enhancement enables you to benefit from the rich feature set of the latest major version of Percona XtraDB Cluster 8.4 while ensuring your sensitive data is secured. In doing so, you can meet compliance requirements and protect critical information without added operational complexity. Learn how to [configure data at rest encryption for Percona XtraDB Cluster 8.4](../encryption-setup.md).
+
+### Percona XtraDB Cluster 8.4 is now fully supported
+
+Percona XtraDB Cluster 8.4 is now fully supported and recommended for production deployments. Starting with this release, it becomes the default version for all new database cluster deployments using the Operator. This support enables you to benefit from its latest features, performance improvements, and enhanced security.
 
 ### Use your own CA certificates for TLS verification
 
