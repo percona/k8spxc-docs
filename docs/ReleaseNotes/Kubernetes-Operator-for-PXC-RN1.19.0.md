@@ -183,12 +183,13 @@ You can now deploy ProxySQL 3 with Percona Operator for MySQL. This gives you mo
 By default, the Operator makes backups using the SST method. This creates a separate backup Pod with Percona XtraBackup, while the database node enters Donor state and stops serving client requests. SST backups can also fail with cryptic network errors, making root cause analysis and recovery difficult.
 
 Starting with version 1.19.0, you can make backups via the XtraBackup sidecar container. The Operator deploys a sidecar with XtraBackup inside each Percona XtraDB Cluster Pod. This sidecar makes a backup and uploads it to the remote backup storage. The database Pod doesn’t change its state to Donor and keeps accepting client requests.
+
 Using the sidecar method provides a direct access to data thus boosting backup performance. The sidecar container constantly runs in the database Pod, so you have constant access to logs and status, which simplifies troubleshooting.
 
 To enable the XtraBackup sidecar container backup method, set `PXCO_FEATURE_GATES=XtrabackupSidecar=true` environment variable in the Operator Deployment.
 This functionality is in the tech preview stage and currently supports only cloud storages. We encourage you to try it out in your testing or staging environments and leave your feedback.
 
-Future enhancements such support of PVC volumes, backup encryption and incremental backups are planned for future releases.
+Future enhancements such as support of PVC volumes, backup encryption and incremental backups are planned for future releases.
 
 To learn more about XtraBackup sidecar container backup method, see our [documentation](../backups.md#xtrabackup-sidecar-method-tech-preview).
 
