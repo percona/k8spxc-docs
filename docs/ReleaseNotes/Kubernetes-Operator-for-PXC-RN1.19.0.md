@@ -358,10 +358,10 @@ This enhancement lets you fine-tune memory management for your cluster while kee
 
 The Operator was developed and tested with the following software:
 
-- Percona XtraDB Cluster versions 8.4.6-6.1, 8.0.44-35.1, and 5.7.44-31.65 
+- Percona XtraDB Cluster versions 8.4.7-7.1, 8.0.44-35.1, and 5.7.44-31.65 
 - Percona XtraBackup versions 8.4.0-5.1, 8.0.35-34.1, and 2.4.29  
 - HAProxy 2.8.17  
-- ProxySQL 2.7.3-1.2  
+- ProxySQL 2.7.3-1.2, 3.0.1-1.2
 - LogCollector based on fluent-bit 4.0.1  
 - PMM Client 2.44.1-1 and 3.5.0  
 
@@ -395,13 +395,13 @@ Percona Operator for MySQL based on Percona XtraDB Cluster in the following tabl
 |:-------------------------------------------------------|:-----------------------------------------------------------------|
 | percona/percona-xtradb-cluster-operator:1.19.0         | 4f3e0823af80488ff2f5d1e8fc034f5638a78bdcbd431610daccd4dc3c2a7a03 |
 | percona/percona-xtradb-cluster-operator:1.19.0 (ARM64) | b747573292d44cf1d93e4e3cb289ed764a7914fdab98ef4824bb1517c28e4760 |
-| percona/percona-xtradb-cluster:8.4.6-6.1               | 907113d711a56325b2bfab62a39c661611868f7fc4cd474141f46e3004f084dc |
-| percona/percona-xtradb-cluster:8.4.6-6.1 (ARM64)       | bc5744ef60578dd559e75c88cf32acec62a7ecb9423de9f65316b04346880083 |
+| percona/percona-xtradb-cluster:8.4.7-7.1               | 5b18775ad62a1c5f8d8bffc63a1518360d2e7a82c1bed7cbd8a15011f6cdff9f |
+| percona/percona-xtradb-cluster:8.4.7-7.1 (ARM64)       | 4c3785f5befd001ca3ae035f42c9b586447b874158b0d9b26afb8ff87658829f |
 | percona/percona-xtradb-cluster:8.0.44-35.1             | f91026ec8427ace53dc31f3b00ec14cebdc0868bda921ae0713e8ad3af71ba1f |
 | percona/percona-xtradb-cluster:8.0.44-35.1 (ARM64)     | 33a0f32c1d42cf6e74f45aeebd6422cfdea6c8c8bc3cce600e46c4661b0183be |
 | percona/percona-xtradb-cluster:5.7.44-31.65            | 36fafdef46485839d4ff7c6dc73b4542b07031644c0152e911acb9734ff2be85 |
-| percona/percona-xtrabackup:8.4.0-5.1                   | d76e8beaa228e278818f85104ee5280ae6b76784f951c2199002e23e11efacde |
-| percona/percona-xtrabackup:8.4.0-5.1 (ARM64)           | e3ad94427e180672b51b1923de0e193ab101291e369412d15b96a6862f26e4ed |
+| percona/percona-xtrabackup:8.4.0-5.1                   | 1b81d06b1beb6a126b493d11532a5c71d1b1c2a1d13cb655e3cc5760c0896035 |
+| percona/percona-xtrabackup:8.4.0-5.1 (ARM64)           | ca40d7975ae39bd5dd652487a1389b823cbf788e9948db6cf53ebb0d3f57c51b |
 | percona/percona-xtrabackup:8.0.35-34.1                 | 967bafa0823c90aa8fa9c25a9012be36b0deef64e255294a09148d77ce6aea68 |
 | percona/percona-xtrabackup:8.0.35-34.1 (ARM64)         | 83f814dca9ed398b585938baa86508bda796ba301e34c948a5106095d27bf86e |
 | percona/percona-xtrabackup:2.4.29                      | 11b92a7f7362379fc6b0de92382706153f2ac007ebf0d7ca25bac2c7303fdf10 |
@@ -414,4 +414,5 @@ Percona Operator for MySQL based on Percona XtraDB Cluster in the following tabl
 | percona/haproxy:2.8.17 (ARM64)                         | bbc5b3b66ac985d1a4500195539e7dff5196245a5a842a6858ea0848ec089967 |
 | percona/proxysql2:2.7.3-1.2                            | 719d0ab363c65c7f75431bbed7ec0d9f2af7e691765c489da954813c552359a2 |
 | percona/proxysql2:2.7.3-1.2 (ARM64)                    | 4c4d094652c9f2eb097be5d92dcc05da61c9e8699ac7321def959d5a205a89f7 |
-
+| percona/proxysql3:3.0.1-1.2                            | f3fb43d4ef2467f207ecd66c51414520a100a0474807f307775a985303c56ec5 |
+| percona/proxysql3:3.0.1-1.2 (ARM64)                    | d21ba769b9e364a1a0c1d5e9d3b6287e8051efcf79cd6ec3df5756278961bbec |

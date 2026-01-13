@@ -15,7 +15,7 @@ pxb80recommended: '8.0.35-34.1'
 pxb57recommended: '2.4.29'
 pxc57recommended: '5.7.44-31.65'
 pxc80recommended: '8.0.44-35.1'
-pxc84recommended: '8.4.6-6.1'
+pxc84recommended: '8.4.7-7.1'
 pmm2recommended: '2.44.1-1'
 pmm3recommended: '3.5.0'
 gkerecommended: '1.33'
@@ -24,6 +24,6 @@ k8s_monitor_tag: 'v0.1.1'
 year: "2026"
 
 date:
-  1_19_0: "2026-01-13"
+  1_19_0: "2026-01-14"
   1_18_0: "2025-08-14"
   1_17_0: "2025-04-14"
