@@ -362,7 +362,7 @@ The Operator was developed and tested with the following software:
 - Percona XtraBackup versions 8.4.0-5.1, 8.0.35-34.1, and 2.4.29  
 - HAProxy 2.8.17  
 - ProxySQL 2.7.3-1.2, 3.0.1-1.2
-- LogCollector based on fluent-bit 4.0.1  
+- LogCollector based on fluent-bit 4.0.1-1 
 - PMM Client 2.44.1-1 and 3.5.0  
 
 Other options may also work but have not been tested.
@@ -405,7 +405,8 @@ Percona Operator for MySQL based on Percona XtraDB Cluster in the following tabl
 | percona/percona-xtrabackup:8.0.35-34.1                 | 967bafa0823c90aa8fa9c25a9012be36b0deef64e255294a09148d77ce6aea68 |
 | percona/percona-xtrabackup:8.0.35-34.1 (ARM64)         | 83f814dca9ed398b585938baa86508bda796ba301e34c948a5106095d27bf86e |
 | percona/percona-xtrabackup:2.4.29                      | 11b92a7f7362379fc6b0de92382706153f2ac007ebf0d7ca25bac2c7303fdf10 |
-| percona/fluentbit:4.0.1                                | a4ab7dd10379ccf74607f6b05225c4996eeff53b628bda94e615781a1f58b779 |
+| percona/fluentbit:4.0.1-1                               | 65bdf7d38cbceed6b6aa6412aea3fb4a196000ac6c66185f114a0a62c4a442ad |
+| percona/fluentbit:4.0.1-1 (ARM64)                      | dabda77b298b67d30d7f53b5cdb7215ad19dabb22b9543e3fd8aedb74ab24733 |
 | percona/pmm-client:3.5.0                               | 352aee74f25b3c1c4cd9dff1f378a0c3940b315e551d170c09953bf168531e4a |
 | percona/pmm-client:3.5.0 (ARM64)                       | cbbb074d51d90a5f2d6f1d98a05024f6de2ffdcb5acab632324cea4349a820bd |
 | percona/pmm-client:2.44.1-1                            | 52a8fb5e8f912eef1ff8a117ea323c401e278908ce29928dafc23fac1db4f1e3 |

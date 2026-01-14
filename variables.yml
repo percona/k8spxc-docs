@@ -7,7 +7,7 @@ clusterName: 'cluster1'
 # Software variables
 
 certmanagerversion: '1.19.2'
-fluentbitrecommended: '4.0.1'
+fluentbitrecommended: '4.0.1-1'
 haproxyrecommended: '2.8.17'
 proxysqlrecommended: '2.7.3-1.2'
 pxb84recommended: '8.4.0-5.1'
