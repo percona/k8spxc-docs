@@ -122,7 +122,7 @@ This list only includes the platforms that the Percona Operators are specificall
 Find Percona's certified Docker images that you can use with the
 Percona Operator for MySQL based on Percona XtraDB Cluster in the following table.
 
-**Images released with the Operator version {{ release }}:** 
+**Images released with the Operator version 1.17.0:** 
 
 --8<-- [start:images]
 
