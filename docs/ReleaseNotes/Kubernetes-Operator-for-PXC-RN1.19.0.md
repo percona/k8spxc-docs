@@ -393,8 +393,8 @@ Percona Operator for MySQL based on Percona XtraDB Cluster in the following tabl
 
 | Image                                                  | Digest                                                           |
 |:-------------------------------------------------------|:-----------------------------------------------------------------|
-| percona/percona-xtradb-cluster-operator:1.19.0         | 4f3e0823af80488ff2f5d1e8fc034f5638a78bdcbd431610daccd4dc3c2a7a03 |
-| percona/percona-xtradb-cluster-operator:1.19.0 (ARM64) | b747573292d44cf1d93e4e3cb289ed764a7914fdab98ef4824bb1517c28e4760 |
+| percona/percona-xtradb-cluster-operator:1.19.0         | 6ccbac5e74f5b5309fd4788c5b8d91d5abd01850a4a356ad9eff9f82d20afb51 |
+| percona/percona-xtradb-cluster-operator:1.19.0 (ARM64) | 1ed2a5ab22ee7588aa17ec2339876dc72c9724dc9a81506ff449a2b1aa085024 |
 | percona/percona-xtradb-cluster:8.4.7-7.1               | 5b18775ad62a1c5f8d8bffc63a1518360d2e7a82c1bed7cbd8a15011f6cdff9f |
 | percona/percona-xtradb-cluster:8.4.7-7.1 (ARM64)       | 4c3785f5befd001ca3ae035f42c9b586447b874158b0d9b26afb8ff87658829f |
 | percona/percona-xtradb-cluster:8.0.44-35.1             | f91026ec8427ace53dc31f3b00ec14cebdc0868bda921ae0713e8ad3af71ba1f |
