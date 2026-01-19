@@ -36,7 +36,7 @@ unsafeFlags:
 
 If the appropriate option is set to `false` and the Operator detects unsafe parameters, it sets cluster status to `error`, and prints an error message in the log.
 
-Also, TLS configuration is now [enabled or disabled](../TLS.md#run-percona-xtradb-cluster-without-tls) by setting `unsafeFlags.tls` and  `tls.enabled` Custom Resource options to `true` or `false`.
+Also, TLS configuration is now [enabled or disabled](../tls-disable.md) by setting `unsafeFlags.tls` and  `tls.enabled` Custom Resource options to `true` or `false`.
 
 ## New Features 
 

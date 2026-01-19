@@ -18,7 +18,7 @@ This document covers the following restore scenarios:
 To restore from a backup, you create a special Restore object using a special restore configuration file. The
 example of such file is [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml).
 
-You can check available options in the [restore options reference](operator.md#perconaxtradbclusterrestore-custom-resource-options).
+You can check available options in the [restore options reference](restore-cr.md).
 
 Note that you **cannot restore** to [emptyDir and hostPath volumes](storage.md),
 but you can make a backup from such storage (i. e., from

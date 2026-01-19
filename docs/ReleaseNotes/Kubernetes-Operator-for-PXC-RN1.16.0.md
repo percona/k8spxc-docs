@@ -49,8 +49,8 @@ Being a technical preview, Percona XtraDB Cluster 8.4 is not yet recommended for
 ## Improvements
 
 * {{ k8spxcjira(1230) }} and {{ k8spxcjira(1378) }}: Now the Operator assigns labels to all Kubernetes objects it creates (backups/restores, Secrets, Volumes, etc.) to make them clearly distinguishable
-* {{ k8spxcjira(1411) }}: Enabling/disabling TLS on a running cluster [is now possible](../TLS.md#enabling-or-disabling-tls-on-a-running-cluster) simply by toggling the appropriate Custom Resource option
-* {{ k8spxcjira(1451) }}: The [automated storage scaling](../scaling.md#automated-scaling-with-volume-expansion-capability) is now disabled by default and needs to be explicitly enabled with the `enableVolumeExpansion` Custom Resource option
+* {{ k8spxcjira(1411) }}: Enabling/disabling TLS on a running cluster [is now possible](../tls-disable.md) simply by toggling the appropriate Custom Resource option
+* {{ k8spxcjira(1451) }}: The [automated storage scaling](../scaling.md#storage-resizing-with-volume-expansion-capability) is now disabled by default and needs to be explicitly enabled with the `enableVolumeExpansion` Custom Resource option
 * {{ k8spxcjira(1462) }}: A restart of Percona XtraDB Cluster Pods is now triggered by the monitor user’s password change if the user secret is used within a sidecar container, which can be useful for custom monitoring solutions (Thanks to Vlad Gusev for contribution)
 * {{ k8spxcjira(1503) }}: Improved logic saves logs from the appearance of a number of temporary non-critical errors related to ProxySQL user sync and non-presence of point-in-time recovery files (Thanks to dcaputo-harmoni for contribution)
 * {{ k8spxcjira(1500) }}: A new `backup.activeDeadlineSeconds` Custom Resource option was added to fail the backup job automatically after the specified timeout (Thanks to Vlad Gusev for contribution)

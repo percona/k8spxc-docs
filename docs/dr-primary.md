@@ -61,7 +61,7 @@ We will use this backup to deploy the replica site.
 
     Use the [Configure storage for backups tutorial](backups-storage.md) for the steps.
 
-2. [Make an on-demand backup](backup-tutorial.md#make-a-logical-backup) on the primary site.
+2. [Make an on-demand backup](backup-tutorial.md#make-a-physical-backup) on the primary site.
 3. View the information about a backup:
 
     ```{.bash data-prompt="$" }
