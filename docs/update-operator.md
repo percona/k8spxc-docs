@@ -148,13 +148,28 @@ The upgrade includes the following steps.
 
     We recommend to update the PMM Server **before** the upgrade of PMM Client. In order to use PMM3, [upgrade your PMM Server to version 3 :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/pmm-upgrade/migrating_from_pmm_2.html). 
 
-    <!-- To keep using PMM2, specify the PMM Client version compatible with PMM Server 2. -->
+    To keep using PMM2, specify the PMM Client version compatible with PMM Server 2.
     
     If you haven't updated your PMM Server yet, exclude PMM Client from the list of images to update.
 
     Since this is a working cluster, the way to update the Custom Resource is to [apply a patch  :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) with the `kubectl patch pxc` command.
 
     === "With PMM Client"
+
+        === "For Percona XtraDB Cluster 8.4"
+
+            ```{.bash data-prompt="$"}
+            $ kubectl patch pxc cluster1 --type=merge --patch '{
+               "spec": {
+                   "crVersion":"{{ release }}",
+                   "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc84recommended }}" },
+                   "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
+                   "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
+                   "backup":   { "image": "percona/percona-xtrabackup:{{ pxb84recommended }}" },
+                   "logcollector": { "image": "percona/fluentbit:{{ fluentbitrecommended }}" },
+                   "pmm":      { "image": "percona/pmm-client:{{ pmm3recommended }}" }
+               }}'
+            ```
 
         === "For Percona XtraDB Cluster 8.0"
 
@@ -167,7 +182,7 @@ The upgrade includes the following steps.
                    "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
                    "backup":   { "image": "percona/percona-xtrabackup:{{ pxb80recommended }}" },
                    "logcollector": { "image": "percona/fluentbit:{{ fluentbitrecommended }}" },
-                   "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
+                   "pmm":      { "image": "percona/pmm-client:{{ pmm3recommended }}" }
                }}'
             ```
 
@@ -182,11 +197,25 @@ The upgrade includes the following steps.
                        "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
                        "backup":   { "image": "percona/percona-xtrabackup:{{ pxb57recommended }}" },
                        "logcollector": { "image": "percona/fluentbit:{{ fluentbitrecommended }}" },
-                       "pmm":      { "image": "percona/pmm-client:{{ pmm2recommended }}" }
+                       "pmm":      { "image": "percona/pmm-client:{{ pmm3recommended }}" }
                    }}'
                 ```
 
     === "Without PMM Client"
+
+        === "For Percona XtraDB Cluster 8.4"
+
+            ```{.bash data-prompt="$"}
+            $ kubectl patch pxc cluster1 --type=merge --patch '{
+               "spec": {
+                   "crVersion":"{{ release }}",
+                   "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc84recommended }}" },
+                   "proxysql": { "image": "percona/proxysql2:{{ proxysqlrecommended }}" },
+                   "haproxy":  { "image": "percona/haproxy:{{ haproxyrecommended }}" },
+                   "backup":   { "image": "percona/percona-xtrabackup:{{ pxb84recommended }}" },
+                   "logcollector": { "image": "percona/fluentbit:{{ fluentbitrecommended }}" }
+               }}'
+            ```
 
         === "For Percona XtraDB Cluster 8.0"
 
