@@ -53,7 +53,7 @@ Enables or disables schema validation before applying `cr.yaml` file (works only
 
 ### `enableVolumeExpansion`
 
-Enables or disables [automatic storage scaling / volume expansion](scaling.md#automated-scaling-with-volume-expansion-capability).
+Enables or disables [automatic storage scaling / volume expansion](scaling.md#storage-resizing-with-volume-expansion-capability).
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -249,7 +249,7 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 
 ## <a name="operator-issuerconf-section"></a>TLS (extended cert-manager configuration section)
 
-The `tls` section in the [deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains various configuration options for additional customization of the [TLS cert-manager](TLS.md#tls-certs-certmanager).
+The `tls` section in the [deploy/cr.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains various configuration options for additional customization of the [TLS cert-manager](tls-cert-manager.md).
 
 ### `tls.enabled`
 
@@ -1998,7 +1998,7 @@ A secret with environment variables, see [Define environment variables](containe
 
 Enables the external ProxySQL scheduler for even distribution of read/write traffic across Percona XtraDB Cluster nodes. Available since Operator version 1.19.0
 
-See [ProxySQL scheduler](proxysql-conf.md#proxysql-scheduler) for more information.
+See [ProxySQL scheduler](proxysql-conf.md#proxysql-scheduler-tech-preview) for more information.
 
 | Value type  | Example    |
 | ----------- | ---------- |

@@ -116,8 +116,7 @@ A configmap allows Kubernetes to pass or update configuration
 data inside a containerized application. When you apply a ConfigMap, the cluster restarts.
 
 See [Configure a Pod to use a
-ConfigMap :octicons-link-external-16:](<https://kubernetes.io/docs/>
-tasks/configure-pod-container/configure-pod-configmap/#create-a-configmap) for information how to create a ConfigMap.
+ConfigMap :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-a-configmap) for information how to create a ConfigMap.
 
 
 Here's the example configuration.

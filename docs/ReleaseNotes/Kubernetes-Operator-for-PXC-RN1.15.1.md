@@ -14,7 +14,7 @@
 
 ## Deprecation, Change, Rename and Removal
 
-* The new `enableVolumeExpansion` Custom Resource option allows to disable the [automated storage scaling with Volume Expansion capability](../scaling.md#automated-scaling-with-volume-expansion-capability). The default value of this option is `false`, which means that the automated scaling is turned off by default.
+* The new `enableVolumeExpansion` Custom Resource option allows to disable the [automated storage scaling with Volume Expansion capability](../scaling.md#storage-resizing-with-volume-expansion-capability). The default value of this option is `false`, which means that the automated scaling is turned off by default.
 
 ## Supported Platforms
 

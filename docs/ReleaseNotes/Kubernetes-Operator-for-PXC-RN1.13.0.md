@@ -11,7 +11,7 @@
 ## Release Highlights
 
 * It is now [possible to control](../operator.md#backupallowparallel) whether backup jobs are executed  in parallel or sequentially, which can be useful to avoid the cluster overload; also, CPU and memory resource limits can now be configured for the backup restore job
-* A substantial improvement of the [backup documentation](../backups.md) was done in this release, making it much easier to read, and the [backup restore options](../operator.md#perconaxtradbclusterrestore-custom-resource-options) have been added to the Сustom Resource reference
+* A substantial improvement of the [backup documentation](../backups.md) was done in this release, making it much easier to read, and the [backup restore options](../restore-cr.md) have been added to the Сustom Resource reference
 * We are deeply committed to delivering software that truly sets the bar for quality and stability. With our latest release, we put an all-hands-on-deck approach towards fine-tuning the Operator with minor improvements, along with addressing key bugs reported by our vibrant community. We are extremely grateful to each and every person who submitted feedback and collaborated to help us get to the bottom of these pesky issues.
 
 ## New Features and improvements
@@ -20,7 +20,7 @@
 * {{ k8spxcjira(1166) }}: Starting from now, Docker image tags for Percona XtraBackup include full XtraBackup version instead of the major number used before
 * {{ k8spxcjira(1189) }}: Improve security and meet compliance requirements by building the Operator based on Red Hat Universal Base Image (UBI) 9 instead of UBI 8
 * {{ k8spxcjira(1192) }}: Backup and restore documentation was substantially improved to make it easier to work with, and [backup restore options](../operator.md#perconaxtradbclusterrestore-custom-resource-options) have been added to the Сustom Resource reference
-* {{ k8spxcjira(1210) }}: A [headless service :octicons-link-external-16:](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services) can now be configured for [ProxySQL](../proxysql-conf.md/#headless-service) and [HAProxy](../haproxy-conf.md/#headless-service) to make them usable on a tenant network (thanks to Vishal Anarase for contribution)
+* {{ k8spxcjira(1210) }}: A [headless service :octicons-link-external-16:](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services) can now be configured for [ProxySQL](../proxysql-conf.md#headless-proxysql-service) and [HAProxy](../haproxy-conf.md) to make them usable on a tenant network (thanks to Vishal Anarase for contribution)
 * {{ k8spxcjira(1225) }}: The Operator (system) users are now created with the `PASSWORD EXPIRE NEVER` policy to avoid breaking the cluster due to the password expiration set by the `default_password_lifetime` system variable
 * {{ k8spxcjira(362) }}: Code clean-up and refactoring for checking if ProxySQL and HAProxy enabled in the Custom Resource (thanks to Vladislav Safronov for contributing)
 * {{ k8spxcjira(1224) }}: New `backup.allowParallel` Custom Resource option allows to disable running backup jobs in parallel, which can be useful to avoid connection issues caused by the cluster overload

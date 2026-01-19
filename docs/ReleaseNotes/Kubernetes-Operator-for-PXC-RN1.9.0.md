@@ -136,7 +136,7 @@ auto recovery functionality even with the `auto_recovery` flag set to false
 
 
 * [K8SPXC-706](https://jira.percona.com/browse/K8SPXC-706): TLS certificates
-[renewal by a cert-manager was failing](../TLS.md#update-certificates)
+[renewal by a cert-manager was failing](../tls-cert-manager.md)
 (Thanks to Jeff Andrews for reporting this issue)
 
 

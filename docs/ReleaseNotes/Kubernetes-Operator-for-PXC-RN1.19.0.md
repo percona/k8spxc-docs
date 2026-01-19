@@ -131,7 +131,7 @@ This means you could see:
 - more efficient use of your resources and hardware
 - a smoother, more predictable experience for everyone using the database
 
-See our [documentation](../proxysql-conf.md#proxysql-scheduler) for full information about the scheduler behavior and setup.
+See our [documentation](../proxysql-conf.md#proxysql-scheduler-tech-preview) for full information about the scheduler behavior and setup.
 
 The previous internal scheduler remains enabled by default to maintain backward compatibility. You can switch to the new one when you're ready to benefit from smarter query handling.
 
