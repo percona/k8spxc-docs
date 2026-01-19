@@ -4,20 +4,41 @@ Monitoring the state of the database is crucial to timely identify and react to 
 
 However, the database state also depends on the state of the Kubernetes cluster itself. Hence it’s important to have metrics that can depict the state of the Kubernetes cluster.
 
-This document describes how to set up monitoring of the Kubernetes cluster health. This setup has been tested with the [PMM server :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/2/details/architecture.html#pmm-server) as the centralized data storage and the Victoria Metrics Kubernetes monitoring stack as the metrics collector. These steps may also apply if you use another Prometheus-compatible storage.
+This document describes how to set up monitoring of the Kubernetes cluster health. This setup has been tested with the [PMM server :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/reference/index.html#pmm-server) as the centralized data storage and the Victoria Metrics Kubernetes monitoring stack as the metrics collector. 
+
+These steps may also apply if you use another Prometheus-compatible storage.
+
+The Operator is compatible with both PMM versions 2 and 3. We recommend using the latest PMM version 3 for optimal monitoring capabilities.
+
+The steps in this tutorial are for PMM 3. 
 
 ## Pre-requisites
 
 To set up monitoring of Kubernetes, you need the following:
 
-1. PMM Server up and running. You can run PMM Server as a Docker image, a virtual appliance, or on an AWS instance. Please refer to the [official PMM documentation :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/2/setting-up/server/index.html) for the installation instructions.
+1. PMM Server up and running. You can run PMM Server as a Docker image, a virtual appliance, or on an AWS instance. Please refer to the [official PMM documentation :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/install-pmm/install-pmm-server/index.html) for the installation instructions of PMM 3. 
+
+    See [PMM upgrade documentation :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/pmm-upgrade/migrating_from_pmm_2.html) for how you can upgrade to PMM3. Also check the [Automatic migration of API keys :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/api/authentication.html#automatic-migration-of-api-keys) page.
 
 2. [Helm v3 :octicons-link-external-16:](https://docs.helm.sh/using_helm/#installing-helm).
 3. [kubectl :octicons-link-external-16:](https://kubernetes.io/docs/tasks/tools/).
-4. The PMM Server API key. The key must have the role "Admin".
+4. PMM 3 Service account token or PMM2 API key. 
 
-    <a name="get-the-pmm-server-api-key"></a>
-    Get the PMM API key:
+## Configure authentication 
+
+=== "PMM3 (recommended)"
+
+    PMM3 uses Grafana service accounts to control access to PMM server components and resources. To authenticate in PMM server, you need a service account token. [Generate a service account and token :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/api/authentication.html?h=authe#generate-a-service-account-and-token). Specify the Admin role for the service account.
+
+    The token must have the format `glsa_*************************_9e35351b`.
+
+    !!! warning
+
+        When you create a service account token, you can select its lifetime: it can be either a permanent token that never expires or the one with the expiration date. PMM server cannot rotate service account tokens after they expire. So you must take care of reconfiguring PMM Client in this case.
+
+=== "PMM2"
+
+    [Get the PMM API key from PMM Server :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/2/details/api.    html#api-keys-and-authentication). The API key must have the role "Admin". You need this key to authorize PMM Client within PMM Server. 
 
     === ":material-view-dashboard-variant: From PMM UI" 
 
@@ -27,14 +48,14 @@ To set up monitoring of Kubernetes, you need the following:
 
         You can query your PMM Server installation for the API
         Key using `curl` and `jq` utilities. Replace `<login>:<password>@<server_host>` placeholders with your real PMM Server login, password, and hostname in the following command:
-
+        
         ``` {.bash data-prompt="$" }
-        $ API_KEY=$(curl --insecure -X POST -H "Content-Type: application/json" -d {"name":"operator", "role": "Admin"}' "https://<login>:<password>@<server_host>/graph/api/auth/keys" | jq .key)
+        $ API_KEY=$(curl --insecure -X POST -H "Content-Type: application/json" -d '{"name":"operator", "role": "Admin"}' "https://<login>:<password>@<server_host>/graph/api/auth/keys" | jq .key)
         ```
 
-        !!! note
+    !!! warning
 
-            The API key is not rotated. 
+        The API key is not rotated. 
 
 ## Install the Victoria Metrics Kubernetes monitoring stack
 
@@ -42,7 +63,7 @@ To set up monitoring of Kubernetes, you need the following:
 
     1. To install the Victoria Metrics Kubernetes monitoring stack with the default parameters, use the quick install command. Replace the following placeholders with your values:
 
-        * `API-KEY` - The [API key of your PMM Server](#get-the-pmm-server-api-key)
+        * `PMM-SERVER-TOKEN` - The [PMM Server service account token](#configure-authentication)
         * `PMM-SERVER-URL` - The URL to access the PMM Server 
         * `UNIQUE-K8s-CLUSTER-IDENTIFIER` - Identifier for the Kubernetes cluster. It can be the name you defined during the cluster creation.
 
@@ -53,7 +74,7 @@ To set up monitoring of Kubernetes, you need the following:
           We recommend to use a separate namespace like `monitoring-system`.
 
           ```{.bash data-prompt="$" }
-          $ curl -fsL  https://raw.githubusercontent.com/Percona-Lab/k8s-monitoring/refs/tags/{{k8s_monitor_tag}}/vm-operator-k8s-stack/quick-install.sh | bash -s -- --api-key <API-KEY> --pmm-server-url <PMM-SERVER-URL> --k8s-cluster-id <UNIQUE-K8s-CLUSTER-IDENTIFIER> --namespace <NAMESPACE> 
+          $ curl -fsL  https://raw.githubusercontent.com/Percona-Lab/k8s-monitoring/refs/tags/{{k8s_monitor_tag}}/vm-operator-k8s-stack/quick-install.sh | bash -s -- --api-key <PMM-SERVER-TOKEN> --pmm-server-url <PMM-SERVER-URL> --k8s-cluster-id <UNIQUE-K8s-CLUSTER-IDENTIFIER> --namespace <NAMESPACE> 
           ```
 
         !!! note
@@ -61,7 +82,7 @@ To set up monitoring of Kubernetes, you need the following:
             The Prometheus node exporter is not installed by default since it requires privileged containers with the access to the host file system. If you need the metrics for Nodes, add the `--node-exporter-enabled` flag as follows:
 
             ```{.bash data-prompt="$" }
-            $ curl -fsL  https://raw.githubusercontent.com/Percona-Lab/k8s-monitoring/refs/tags/{{k8s_monitor_tag}}/vm-operator-k8s-stack/quick-install.sh | bash -s -- --api-key <API-KEY> --pmm-server-url <PMM-SERVER-URL> --k8s-cluster-id <UNIQUE-K8s-CLUSTER-IDENTIFIER> --namespace <NAMESPACE> --node-exporter-enabled
+            $ curl -fsL  https://raw.githubusercontent.com/Percona-Lab/k8s-monitoring/refs/tags/{{k8s_monitor_tag}}/vm-operator-k8s-stack/quick-install.sh | bash -s -- --api-key <PMM-SERVER-TOKEN> --pmm-server-url <PMM-SERVER-URL> --k8s-cluster-id <UNIQUE-K8s-CLUSTER-IDENTIFIER> --namespace <NAMESPACE> --node-exporter-enabled
             ```
 
 === ":fontawesome-solid-user-gear: Install manually"
@@ -75,7 +96,7 @@ To set up monitoring of Kubernetes, you need the following:
 
     To access the PMM Server resources and perform actions on the server, configure authentication.
 
-    1. Encode the PMM Server API key with base64.
+    1. Encode the PMM Server token key with base64.
 
         === ":simple-linux: Linux"     
 
@@ -83,7 +104,8 @@ To set up monitoring of Kubernetes, you need the following:
             $ echo -n <API-key> | base64 --wrap=0
             ````    
 
-        === ":simple-apple: macOS"   
+        === ":simple-apple: macOS" 
+
             ```{.bash data-prompt="$" }
             $ echo -n <API-key> | base64 
             ```    
@@ -99,7 +121,7 @@ To set up monitoring of Kubernetes, you need the following:
         ```yaml title="pmm-api-vmoperator.yaml"
         apiVersion: v1
         data:
-          api_key: <base-64-encoded-API-key>
+          api_key: <base-64-encoded-pmm-server-token>
         kind: Secret
         metadata:
           name: pmm-token-vmoperator
@@ -177,7 +199,6 @@ To set up monitoring of Kubernetes, you need the following:
         --set vmagent.spec.externalLabels.k8s_cluster_id=test-cluster \
         -n monitoring-system
         ```
-
 
 ## Validate the successful installation
 

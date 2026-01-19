@@ -18,7 +18,7 @@ not exceed 22 characters, start with an alphabetic character, and end with an
 alphanumeric character;
 * `finalizers` subsection:
     * `percona.com/delete-pods-in-order` if present, activates the [Finalizer :octicons-link-external-16:](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#finalizers) which controls the proper Pods deletion order in case of the cluster deletion event (on by default).
-    * `percona.com/delete-pxc-pvc` if present, activates the [Finalizer :octicons-link-external-16:](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#finalizers) which deletes [Persistent Volume Claims :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) for Percona XtraDB Cluster Pods after the cluster deletion event (off by default).
+    * `percona.com/delete-pxc-pvc` if present, activates the [Finalizer :octicons-link-external-16:](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#finalizers) which deletes [Persistent Volume Claims :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) for Percona XtraDB Cluster Pods after the cluster deletion event (off by default). It also deletes user Secrets.
     * `percona.com/delete-proxysql-pvc` if present, activates the [Finalizer :octicons-link-external-16:](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#finalizers) which deletes [Persistent Volume Claim :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) for ProxySQL Pod after the cluster deletion event (off by default).
     * <a name="finalizers-delete-ssl"></a> `percona.com/delete-ssl` if present, activates the [Finalizer :octicons-link-external-16:](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#finalizers) which deletes [objects, created for SSL](TLS.md) (Secret, certificate, and issuer) after the cluster deletion event (off by default).
 
@@ -26,7 +26,18 @@ The toplevel spec elements of the [deploy/cr.yaml :octicons-link-external-16:](h
 
 ### `allowUnsafeConfigurations`
 
-Prevents users from configuring a cluster with unsafe parameters such as starting the cluster with the number of Percona XtraDB Cluster instances which is less than 3, more than 5, or is an even number, with less than 2 ProxySQL or HAProxy Pods, or without TLS/SSL certificates. **This option is deprecated and will be removed in future releases**. Use `unsafeFlags` subsection instead.
+Prevents users from configuring a cluster with unsafe parameters such as:
+
+* using an invalid number of Percona XtraDB Cluster nodes, which is:
+
+   * less than 3 
+   * more than 5 
+   * an even number (for production use, we recommend a minimum of 3 nodes and a maximum of 5 nodes), 
+   
+* deploying less than 2 ProxySQL or HAProxy Pods, 
+* starting the cluster without TLS/SSL certificates. 
+
+**This option is deprecated and will be removed in future releases**. Use `unsafeFlags` subsection instead.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -151,7 +162,17 @@ Allows users to configure a cluster without TLS/SSL certificates (if `false`, th
 
 ### `unsafeFlags.pxcSize`
 
-Allows users to configure a cluster with less than 3 Percona XtraDB Cluster instances (if `false`, the Operator will detect unsafe parameters, set cluster status to `error`, and print error message in logs).
+Allows users to configure a cluster with unsafe node counts. For production use, we recommend a minimum of 3 nodes and a maximum of 5 nodes. Even numbers of nodes are not recommended due to quorum voting issues in Galera replication. Higher numbers of nodes (for example, 7) are not recommended due to increased latency from synchronous replication overhead.
+
+Setting this to `true` allows configurations such as:
+
+- Less than 3 nodes 
+- More than 5 nodes
+- Even numbers of nodes
+
+If the option is set to `false`, the Operator detects unsafe parameters, sets clusters status to `error`, and prints error message in logs. 
+
+**Note:** Using unsafe configurations may result in reduced availability, split-brain scenarios, or performance degradation. We cannot guarantee proper operation of the cluster with unsafe node counts.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -238,6 +259,22 @@ Enables or disables the [TLS encryption](TLS.md). If set to `false`,
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-toggle-switch-outline: boolean     | `true` |
+
+### `tls.certValidityDuration`
+
+Validity period for TLS certificates. Minimum required validity is 1 hour. Durations lower than 1 hour are rejected. Setting the duration to exactly 1 hour prevents the Operator from generating the correct certificate object.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `2160h` |
+
+### `tls.caValidityDuration`
+
+Validity period for CA certificate. Minimum accepted duration is 730 hours (approximately 30 days). Setting this value to exactly 730 hours prevents the Operator from generating the correct certificate object. You must set this value greater than 730 hours.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `26280h` |
 
 ### `tls.SANs`
 
@@ -489,13 +526,17 @@ For the [cross-site replication](replication.md) Replica cluster, this key shoul
 
 Adds a delay before a run check to verify the application is ready to process traffic.
 
+This field is deprecated and will be removed in version 1.22.0. Use the [`pxc.readinessProbes.initialDelaySeconds`](#pxcreadinessprobesinitialdelayseconds) option instead.
+
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-numeric-1-box: int     | `15` |
 
 ### `pxc.livenessDelaySec`
 
-Adds a delay before the run check ensures the application is healthy and capable of processing requests.
+Adds a delay before the run check ensures the application is healthy and capable of processing requests. 
+
+This field is deprecated and will be removed in version 1.22.0. Use the [`pxc.livenessProbes.initialDelaySeconds`](#pxclivenessprobesinitialdelayseconds) option instead.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -636,6 +677,20 @@ A secret with environment variables, see [Define environment variables](containe
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-code-string: string     | `my-env-var-secrets` |
+
+### `pxc.mysqlAllocator`
+
+Specifies which memory allocator to use for the MySQL process. Available since Operator version 1.19.0 for Percona XtraDB Cluster 8.0 and later.
+
+Supported values: `jemalloc`, `tcmalloc`. When left empty or omitted, the default `libc` allocator is used.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `jemalloc` |
+
+!!! warning
+
+    If you have `LD_PRELOAD` set in a Secret referenced by `pxc.envVarsSecret`, that value takes precedence over the `mysqlAllocator` option. The Operator checks for `LD_PRELOAD` in the Secret first, and if found, uses that value regardless of the `mysqlAllocator` setting.
 
 ### `pxc.resources.requests.memory`
 
@@ -829,6 +884,48 @@ The [Kubernetes API group :octicons-link-external-16:](https://kubernetes.io/doc
 | ----------- | ---------- |
 | :material-code-string: string     | `snapshot.storage.k8s.io` |
 
+
+### `pxc.extraPVCs.name`
+
+The name of the volume provisioned for the external PersistentVolumeClaim that you mount to Percona XtraDB Cluster pods. In such a way you can attach pre-existing storage volumes to your database instances for use cases such as importing data, sharing configuration files, or accessing external datasets. For more information, see [Add external PersistentVolumeClaims to the Operator](external-pvc.md). You can configure external PVCs for both new and running clusters.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `shared-data` |
+
+### `pxc.extraPVCs.claimName`
+
+The name of the existing PersistentVolumeClaim to mount. This PVC must exist in the same namespace as your cluster before you apply the configuration. The Operator will mount the existing
+    PVC to all PXC pods.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `my-existing-pvc` |
+
+### `pxc.extraPVCs.mountPath`
+
+The path inside the container where the volume will be mounted.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `/mnt/shared-data` |
+
+### `pxc.extraPVCs.subPath`
+
+An optional folder within the volume to mount. If not specified, the volume's root is mounted.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `config` |
+
+### `pxc.extraPVCs.readOnly`
+
+Optional read-only flag. If set to `true`, the volume will be mounted as read-only. Defaults to `false`.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-toggle-switch-outline: boolean     | `false` |
+
 ### `pxc.gracePeriod`
 
 The [Kubernetes grace period when terminating a Pod :octicons-link-external-16:](https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods).
@@ -1004,7 +1101,9 @@ The [Kubernetes imagePullSecrets :octicons-link-external-16:](https://kubernetes
 
 ### `haproxy.readinessDelaySec`
 
-Adds a delay before a run check to verify the application is ready to process traffic.
+Adds a delay before a run check to verify the application is ready to process traffic. 
+
+This field is deprecated and will be removed in version 1.22.0. Use the [`haproxy.readinessProbes.initialDelaySeconds`](#haproxyreadinessprobesinitialdelayseconds) option instead.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1013,6 +1112,8 @@ Adds a delay before a run check to verify the application is ready to process tr
 ### `haproxy.livenessDelaySec`
 
 Adds a delay before the run check ensures the application is healthy and capable of processing requests.
+
+This field is deprecated and will be removed in version 1.22.0. Use the [`haproxy.livenessProbes.initialDelaySeconds`](#haproxylivenessprobesinitialdelayseconds) option instead.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1195,6 +1296,38 @@ The [Kubernetes Scheduler :octicons-link-external-16:](https://kubernetes.io/doc
 | ----------- | ---------- |
 | :material-label-outline: label     | `disktype: ssd` |
 
+### `haproxy.sidecarResources.requests.memory`
+
+The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for default sidecar containers such as `haproxy-monit` running inside HAProxy Pods.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `1G` |
+
+### `haproxy.sidecarResources.requests.cpu`
+
+[Kubernetes CPU requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for default sidecar containers such as `haproxy-monit` running inside HAProxy Pods.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `500m` |
+
+### `haproxy.sidecarResources.limits.memory`
+
+[Kubernetes memory limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for default sidecar containers such as `haproxy-monit` running inside HAProxy Pods.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `2G` |
+
+### `haproxy.sidecarResources.limits.cpu`
+
+[Kubernetes CPU limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for default sidecar containers such as `haproxy-monit` running inside HAProxy Pods.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `600m` |
+
 ### `haproxy.topologySpreadConstraints.labelSelector.matchLabels`
 
 The Label selector for the [Kubernetes Pod Topology Spread Constraints :octicons-link-external-16:](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/).
@@ -1250,6 +1383,47 @@ If available it makes a [topologyKey :octicons-link-external-16:](https://kubern
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-text-long: subdoc     | `node.alpha.kubernetes.io/unreachable` |
+
+### `haproxy.extraPVCs.name`
+
+The name of the volume provisioned for the external PersistentVolumeClaim that you mount to HAProxy pods. In such a way you can attach pre-existing storage volumes to your database instances for use cases such as importing data, sharing configuration files, or accessing external datasets. For more information, see [Add external PersistentVolumeClaims to the Operator](external-pvc.md). You can configure external PVCs for both new and running clusters.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `shared-data` |
+
+### `haproxy.extraPVCs.claimName`
+
+The name of the existing PersistentVolumeClaim to mount. This PVC must exist in the same namespace as your cluster before you apply the configuration. The Operator will mount the existing PVC to all HAProxy pods.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `my-existing-pvc` |
+
+### `haproxy.extraPVCs.mountPath`
+
+The path inside the container where the volume will be mounted.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `/mnt/shared-data` |
+
+### `haproxy.extraPVCs.subPath`
+
+An optional folder within the volume to mount. If not specified, the volume's root is mounted.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `config` |
+
+### `haproxy.extraPVCs.readOnly`
+
+Optional read-only flag. If set to `true`, the volume will be mounted as read-only. Defaults to `false`.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-toggle-switch-outline: boolean     | `false` |
+
 
 ### `haproxy.podDisruptionBudget.maxUnavailable`
 
@@ -1467,6 +1641,30 @@ The [Kubernetes annotations :octicons-link-external-16:](https://kubernetes.io/d
 | ----------- | ---------- |
 | :material-code-string: string     | `service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp` |
 
+### `haproxy.healthCheck.interval`
+
+Interval in milliseconds between HAProxy health checks. The minimum value is 1000 milliseconds.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `10000` | 
+
+### `haproxy.healthCheck.fall`
+
+Number of consecutive failed health checks before HAProxy marks a server as down. The minimum value is 1.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `2` | 
+
+### `haproxy.healthCheck.rise`
+
+Number of consecutive successful health checks before HAProxy marks a server as up and running. The minimum value is 1.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `1` |
+
 ### `haproxy.containerSecurityContext`
 
 A custom [Kubernetes Security Context for a Container :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) to be used instead of the default one.
@@ -1533,7 +1731,7 @@ Name of the [custom sidecar container](sidecar.md) for the HAProxy Pod.
 
 ### `haproxy.sidecars.resources.requests.memory`
 
-The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the sidecar HAProxy containers.
+The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for custom sidecar containers running inside the HAProxy Pod.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1541,7 +1739,7 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 
 ### `haproxy.sidecars.resources.requests.cpu`
 
-[Kubernetes CPU requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the sidecar HAProxy containers.
+[Kubernetes CPU requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for custom sidecar containers running inside the HAProxy Pod.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1549,7 +1747,7 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 
 ### `haproxy.sidecars.resources.limits.memory`
 
-[Kubernetes memory limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the sidecar HAProxy containers.
+[Kubernetes memory limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for custom sidecar containers running inside the HAProxy Pod.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1557,7 +1755,7 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 
 ### `haproxy.sidecars.resources.limits.cpu`
 
-[Kubernetes CPU limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the sidecar HAProxy containers.
+[Kubernetes CPU limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for custom sidecar containers running inside the HAProxy Pod.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -1623,22 +1821,6 @@ The [Kubernetes imagePullSecrets :octicons-link-external-16:](https://kubernetes
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-code-string: string     | `private-registry-credentials` |
-
-### `proxysql.readinessDelaySec`
-
-Adds a delay before a run check to verify the application is ready to process traffic.
-
-| Value type  | Example    |
-| ----------- | ---------- |
-| :material-numeric-1-box: int     | `15` |
-
-### `proxysql.livenessDelaySec`
-
-Adds a delay before the run check ensures the application is healthy and capable of processing requests.
-
-| Value type  | Example    |
-| ----------- | ---------- |
-| :material-numeric-1-box: int     | `300` |
 
 ### `proxysql.configuration`
 
@@ -1812,6 +1994,73 @@ A secret with environment variables, see [Define environment variables](containe
 | ----------- | ---------- |
 | :material-code-string: string     | `my-env-var-secrets` |
 
+### `proxysql.scheduler.enabled`
+
+Enables the external ProxySQL scheduler for even distribution of read/write traffic across Percona XtraDB Cluster nodes. Available since Operator version 1.19.0
+
+See [ProxySQL scheduler](proxysql-conf.md#proxysql-scheduler) for more information.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-toggle-switch-outline: boolean     | `true` |
+
+
+### `proxysql.scheduler.writerIsAlsoReader`
+
+Controls whether the writer node is included in the read pool. When set to `false`, the writer node is excluded from receiving read queries. If the cluster loses its last reader, the writer is automatically elected as a reader regardless of this setting. Available since Operator version 1.19.0
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-toggle-switch-outline: boolean     | `true` |
+
+### `proxysql.scheduler.checkTimeoutMilliseconds`
+
+The maximum time (in milliseconds) allowed for checking a backend PXC node. If checking a node exceeds this timeout, it is not processed. Available since Operator version 1.19.0
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `2000` |
+
+### `proxysql.scheduler.successThreshold`
+
+The number of successful checks required before a failed node is restored to the pool. Available since Operator version 1.19.0
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `1` |
+
+### `proxysql.scheduler.failureThreshold`
+
+The number of failed checks required before a node is marked as DOWN and removed from the pool. Available since Operator version 1.19.0
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `3` |
+
+### `proxysql.scheduler.pingTimeoutMilliseconds`
+
+The connection timeout (in milliseconds) used to test the connection to a PXC server. Available since Operator version 1.19.0
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `1000` |
+
+### `proxysql.scheduler.nodeCheckIntervalMilliseconds`
+
+How frequently (in milliseconds) the scheduler runs to check node health and update the server configuration. Available since Operator version 1.19.0
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `2000` |
+
+### `proxysql.scheduler.maxConnections`
+
+The maximum number of connections from ProxySQL to each backend PXC server. Available since Operator version 1.19.0
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `1000` |
+
 ### `proxysql.priorityClassName`
 
 The [Kubernetes Pod Priority class :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass) for ProxySQL.
@@ -1835,6 +2084,38 @@ The [Kubernetes Scheduler :octicons-link-external-16:](https://kubernetes.io/doc
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-label-outline: label     | `disktype: ssd` |
+
+### `proxysql.sidecarResources.requests.memory`
+
+The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for default sidecar containers such as `proxysql-monit` running inside ProxySQL Pods.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `1G` |
+
+### `proxysql.sidecarResources.requests.cpu`
+
+[Kubernetes CPU requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for default sidecar containers such as `proxysql-monit` running inside ProxySQL Pods.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `500m` |
+
+### `proxysql.sidecarResources.limits.memory`
+
+[Kubernetes memory limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for default sidecar containers such as `proxysql-monit` running inside ProxySQL Pods.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `2G` |
+
+### `proxysql.sidecarResources.limits.cpu`
+
+[Kubernetes CPU limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for default sidecar containers such as `proxysql-monit` running inside ProxySQL Pods.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `600m` |
 
 ### `proxysql.topologySpreadConstraints.labelSelector.matchLabels`
 
@@ -1940,6 +2221,46 @@ The [Kubernetes PersistentVolumeClaim :octicons-link-external-16:](https://kuber
 | ----------- | ---------- |
 | :material-code-string: string     | `6Gi` |
 
+### `proxysql.extraPVCs.name`
+
+The name of the volume provisioned for the external PersistentVolumeClaim that you mount to ProxySQL pods. In such a way you can attach pre-existing storage volumes to your database instances for use cases such as importing data, sharing configuration files, or accessing external datasets. For more information, see [Add external PersistentVolumeClaims to the Operator](external-pvc.md). You can configure external PVCs for both new and running clusters.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `shared-data` |
+
+### `proxysql.extraPVCs.claimName`
+
+The name of the existing PersistentVolumeClaim to mount. This PVC must exist in the same namespace as your cluster before you apply the configuration. The Operator will mount the existing PVC to all ProxySQL pods.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `my-existing-pvc` |
+
+### `proxysql.extraPVCs.mountPath`
+
+The path inside the container where the volume will be mounted.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `/mnt/shared-data` |
+
+### `proxysql.extraPVCs.subPath`
+
+An optional folder within the volume to mount. If not specified, the volume's root is mounted.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `config` |
+
+### `proxysql.extraPVCs.readOnly`
+
+Optional read-only flag. If set to `true`, the volume will be mounted as read-only. Defaults to `false`.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-toggle-switch-outline: boolean     | `false` |
+
 ### `proxysql.podDisruptionBudget.maxUnavailable`
 
 The [Kubernetes podDisruptionBudget :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/configure-pdb/#specifying-a-poddisruptionbudget) specifies the number of Pods from the set unavailable after the eviction.
@@ -2030,7 +2351,7 @@ Name of the [custom sidecar container](sidecar.md) for the ProxySQL Pod.
 
 ### `proxysql.sidecars.resources.requests.memory`
 
-The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the sidecar ProxySQL containers.
+The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the custom sidecar containers deployed in ProxySQL Pods.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -2038,7 +2359,7 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 
 ### `proxysql.sidecars.resources.requests.cpu`
 
-[Kubernetes CPU requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the sidecar ProxySQL containers.
+[Kubernetes CPU requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the custom sidecar containers deployed in ProxySQL Pods.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -2046,7 +2367,7 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 
 ### `proxysql.sidecars.resources.limits.memory`
 
-[Kubernetes memory limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the sidecar ProxySQL containers.
+[Kubernetes memory limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the custom sidecar containers deployed in ProxySQL Pods.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -2054,7 +2375,7 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 
 ### `proxysql.sidecars.resources.limits.cpu`
 
-[Kubernetes CPU limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the sidecar ProxySQL containers.
+[Kubernetes CPU limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the custom sidecar containers deployed in ProxySQL Pods.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -2379,6 +2700,18 @@ The Percona XtraDB cluster Docker image to use for the backup.
 | ----------- | ---------- |
 | :material-code-string: string     | `percona/percona-xtradb-cluster-operator:{{ release }}-backup` |
 
+### `backup.ttlSecondsAfterFinished`
+
+The time for a backup or restore job to live after it finishes. After this time expires, the Operator removes the backup/restore Job and associated Pod.
+
+Applies to both on-demand/scheduled backups and restores.
+
+When the value is too low, the Operator applies the internal.percona.com/keep-job finalizer to allow the operation to finish. After the operation completes with the Succeeded or Failed status, the finalizer is removed and the Job is cleaned up.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int     | `3600` |
+
 ### `backup.backoffLimit`
 
 The number of retries to make a backup (by default, 10 retries are made).
@@ -2395,7 +2728,7 @@ The timeout value in seconds, after which backup job will automatically fail.
 | ----------- | ---------- |
 | :material-numeric-1-box: int     | `3600` |
 
-### backup.startingDeadlineSeconds
+### `backup.startingDeadlineSeconds`
 
 The maximum time in seconds for a backup to start. The Operator compares the timestamp of the backup object against the current time. If the backup is not started within the set time, the Operator automatically marks it as "failed". 
 
@@ -2472,7 +2805,23 @@ The endpoint URL of the S3-compatible storage to be used (not needed for the ori
 | ----------- | ---------- |
 | :material-code-string: string     | |
 
-### `backup.storages.STORAGE-NAME.persistentVolumeClaim.type`
+### `backup.storages.STORAGE-NAME.s3.caBundle.name`
+
+The name of the Secret that stores custom TLS certificates for TLS communication with S3 storage. See [Configure TLS verification with custom certificates for S3 storage](backups-storage.md#configure-storage-for-backups) for more information.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `s3-ca-bundle-secret` |
+
+### `backup.storages.STORAGE-NAME.s3.caBundle.key`
+
+The custom CA certificate for TLS communication with S3 storage. See [Configure TLS verification with custom certificates for S3 storage](backups-storage.md#configure-storage-for-backups) for more information.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `ca.crt` |
+
+### `backup.storages.STORAGE-NAME.volume.persistentVolumeClaim.type`
 
 The persistent volume claim storage type.
 
@@ -2480,7 +2829,7 @@ The persistent volume claim storage type.
 | ----------- | ---------- |
 | :material-code-string: string     | `filesystem` |
 
-### `backup.storages.STORAGE-NAME.persistentVolumeClaim.storageClassName`
+### `backup.storages.STORAGE-NAME.volume.persistentVolumeClaim.storageClassName`
 
 Set the [Kubernetes Storage Class :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/storage-classes/) to use with the Percona XtraDB Cluster backups [PersistentVolumeClaims :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims) for the `filesystem` storage type.
 
@@ -2791,69 +3140,33 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 | ----------- | ---------- |
 | :material-code-string: string     | `700m` |
 
-## <a name="operator-backupsource-section"></a> PerconaXtraDBClusterRestore Custom Resource options
+## Password generation section
 
-[Percona XtraDB Cluster Restore](backups-restore.md) options are managed by the Operator via the 
-`PerconaXtraDBClusterRestore` [Custom Resource :octicons-link-external-16:](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) and can be configured via the
-[deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml)
-configuration file. This Custom Resource contains the following options:
+This section contains the options to customize password generation for user Secrets
 
-| Key              | Value type        | Description                                    | Required |
-| ---------------- | ----------------- | ---------------------------------------------- | -------- |
-| metadata.name    | string            | The name of the restore                        | true     |
-| spec.pxcCluster  | string            | Percona XtraDB Cluster name (the name of your running cluster) | true |
-| spec.backupName  | string            | The name of the backup which should be restored| false    |
-| spec.resources   | [subdoc](operator.md#operator-restore-resources-options-section)| Defines resources limits for the restore job | false |
-| spec.backupSource| [subdoc](operator.md#operator-restore-backupsource-options-section)| Defines configuration for different restore sources | false |
-| spec.pitr        | [subdoc](operator.md#operator-restore-pitr-options-section) | Defines configuration for PITR restore | false |
+### `passwordGenerationOptions.symbols`
 
-### <a name="operator-restore-resources-options-section"></a>resources section
+Specify what special symbols to use when generating user passwords. The passwords must contain only ASCII characters to ensure authentication to MySQL.
 
-| Key              | Value type        | Description                                    | Required |
-| ---------------- | ----------------- | ---------------------------------------------- | -------- |
-| requests.memory  | string            | The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the restore job (the specified value is used if memory limits are not set)   | false    |
-| requests.cpu     | string            | [Kubernetes CPU requests :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the restore job (the specified value is used if CPU limits are not set)                | false    |
-| limits.memory    | string            | The [Kubernetes memory limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the restore job (if set, the value will be used for memory requests as well) | false    |
-| limits.cpu       | string            | [Kubernetes CPU limits :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) for the restore job (if set, the value will be used for CPU requests as well)              | false    |
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `"!#$%&()*+,-.<=>?@[]^_{}~"` |
 
-### <a name="operator-restore-backupsource-options-section"></a>backupSource section
+### `passwordGenerationOptions.maxLength`
 
-| Key              | Value type        | Description                                    | Required |
-| ---------------- | ----------------- | ---------------------------------------------- | -------- |
-| destination      | string            | Path to the backup                             | false    |
-| storageName      | string            | The storage name from CR `spec.backup.storages`| false    |
-| verifyTLS        | boolean           | Enable or disable verification of the storage server TLS certificate. Disabling it may be useful e.g. to skip TLS verification for private S3-compatible storage with a self-issued certificate | true |
-| s3               | [subdoc](operator.md#operator-restore-s3-options-section)    | Define configuration for S3 compatible storages | false |
-| azure            | [subdoc](operator.md#operator-restore-azure-options-section) | Define configuration for azure blob storage     | false |
+Specify the max password length for user passwords
 
-### <a name="operator-restore-s3-options-section"></a>backupSource.s3 subsection
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int | `20` |
 
-| Key              | Value type        | Description                                    | Required |
-| ---------------- | ----------------- | ---------------------------------------------- | -------- |
-| bucket           | string            | The bucket with a backup                       | true     |
-| credentialsSecret| string            | The Secret name for the backup                 | true     |
-| endpointUrl      | string            | A valid endpoint URL                           | false    |
-| region           | string            | The region corresponding to the S3 bucket      | false    |
+### `passwordGenerationOptions.minLength`
 
-### <a name="operator-restore-azure-options-section"></a>backupSource.azure subsection
+Specify the min password length for user passwords
 
-| Key              | Value type        | Description                                    | Required |
-| ---------------- | ----------------- | ---------------------------------------------- | -------- |
-| credentialsSecret| string            | The Secret name for the azure blob storage     | true     |
-| container        | string            | The container name of the azure blob storage   | true     |
-| endpointUrl      | string            | A valid endpoint URL                           | false    |
-| storageClass     | string            | The storage class name of the azure blob storage    | false    |
-| blockSize        | integer           | The size of a block of data to save and retrieve from the azure blob storage 
-| concurrency      | integer           | The number of writers to the same blob
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int | `16` |
 
-### <a name="operator-restore-pitr-options-section"></a>pitr subsection
 
-| Key              | Value type        | Description                                    | Required |
-| ---------------- | ----------------- | ---------------------------------------------- | -------- |
-| type             | string            | The type of PITR recover                       | true     |
-| date             | string            | The exact date of recovery                     | true     |
-| gtid             | string            | The exact GTID for PITR recover                | true     |
-| spec.backupSource| [subdoc](operator.md#operator-restore-backupsource-options-section)| Percona XtraDB Cluster backups section     | true  |
-| s3               | [subdoc](operator.md#operator-restore-s3-options-section)    | Defines configuration for S3 compatible storages | false |
-| azure            | [subdoc](operator.md#operator-restore-azure-options-section) | Defines configuration for azure blob storage     | false |
 

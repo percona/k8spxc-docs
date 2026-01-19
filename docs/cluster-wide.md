@@ -102,12 +102,7 @@ the following information there:
 
 * `subjects.namespace` option should contain the namespace which will host
     the Operator,
-* `WATCH_NAMESPACE` key-value pair in the `env` section should have
-    `value` equal to a  comma-separated list of the namespaces to be watched by
-    the Operator (or just a blank string to make the Operator deal with
-    *all namespaces* in a Kubernetes cluster). Prior to the Operator version
-    1.12.0 it was necessary to mention the Operator's own namespace in the list
-    of watched namespaces, but now this limitation has gone.
+* `WATCH_NAMESPACE` environment variable should be set to a comma-separated list of the namespaces to be watched by the Operator (or an empty string to watch all namespaces). See [Operator environment variables](env-vars-operator.md#watch_namespace) for more details. Prior to the Operator version 1.12.0 it was necessary to mention the Operator's own namespace in the list of watched namespaces, but now this limitation has gone.
 
 !!! note
 
