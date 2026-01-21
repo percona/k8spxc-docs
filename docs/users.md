@@ -107,7 +107,8 @@ Instead of using the Custom Resource, you can create unprivileged users directly
 To create a user manually, connect to your cluster and run the `GRANT` statement. Replace `cluster1` with your actual cluster name and `root_password` with your root password:
 
 ``` {.bash data-prompt="$" data-prompt-second="mysql>"}
-$ kubectl run -it --rm percona-client --image=percona:8.0 --restart=Never -- mysql -hcluster1-pxc -uroot -proot_password
+MYPASS=`kubectl get secrets cluster1-secrets -o yaml|grep "root:"|awk -F": " '{print $2}'| base64 -d`
+$ kubectl run -it --rm percona-client --image=percona:8.0 --restart=Never -- mysql -hcluster1-pxc -uroot -p$MYPASS
 mysql> GRANT ALL PRIVILEGES ON database1.* TO 'user1'@'%' IDENTIFIED BY 'password1';
 ```
 
