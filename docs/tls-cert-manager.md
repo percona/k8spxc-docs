@@ -48,7 +48,15 @@ The steps to install the *cert-manager* are the following:
     kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v{{ certmanagerversion }}/cert-manager.yaml
     ```
 
-4. Verify the *cert-manager* by running the following command:
+4. For cert-manager v1.18.0 and above, update the default rotation policy to not rotate the private key Secret associated with a Certificate object automatically upon the certificate reissue:
+    
+    ```bash
+    kubectl patch certificate cluster1-ca-cert --type=merge -p '{"spec":{"privateKey":{"rotationPolicy":"Never"}}}'
+    ```
+
+    This workaround ensures the correct start of the database cluster upon the certificate renewal. 
+
+5. Verify the *cert-manager* by running the following command:
 
     ```bash
     kubectl get pods -n cert-manager
