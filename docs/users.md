@@ -89,7 +89,7 @@ When creating users via Custom Resource, keep the following behavior in mind:
 
 * **Minimal configuration**: The only required field is `users.name`. If you omit other fields:
 
-  * If no Secret is specified, the Operator generates a password and stores it in a Secret named `<cluster-name>-<custom-user-name>-secret`
+  * If no Secret is specified, the Operator generates a password and stores it in a Secret named `<cluster-name>-custom-user-secret`
   * If `grants` or `dbs` are omitted, MySQL provides default grants
 
 * **User deletion**: The Operator does not delete users when they are removed from the Custom Resource. This prevents accidental removal of pre-existing users.
