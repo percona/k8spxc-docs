@@ -234,7 +234,11 @@ spec:
 
 User passwords on the target cluster may have changed and now differ from the ones in a backup.
 
-Starting with version 1.18.0, the Operator no longer requires matching secrets between the backup and the target cluster. After the restore, it changes user passwords using the local Secret as a source. It also creates missing system users and adds missing grants. So you can [restore from a full backup](#restore-from-a-full-backup) or run a [point-in-time restore](#restore-with-point-in-time-recovery) as usual.
+Starting with version 1.18.0, the Operator no longer requires matching secrets between the backup and the target cluster. After the restore, it changes user passwords using the local Secret as a source. It also creates missing system users and adds missing grants. So you can [restore from a full backup](#restore-from-a-full-backup) as usual.
+
+!!! important 
+
+    To run a [point-in-time restore](#restore-with-point-in-time-recovery) you still require a Secret object with the same user passwords. This is a known limitation and will be addressed in a future release. Please refer to the flow described below for now.
 
 **For the Operator versions 1.17.0 and earlier**, read on.
 
