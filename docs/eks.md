@@ -44,17 +44,17 @@ Also, you need to configure AWS CLI with your credentials according to the [offi
 
     So, create the namespace and save it in the namespace context for subsequent commands as follows (replace the `<namespace name>` placeholder with some descriptive name):
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl create namespace <namespace name>
-    $ kubectl config set-context $(kubectl config current-context) --namespace=<namespace name>
+    ```bash
+    kubectl create namespace <namespace name>
+    kubectl config set-context $(kubectl config current-context) --namespace=<namespace name>
     ```
 
     At success, you will see the message that namespace/<namespace name> was created, and the context was modified.
 
     Deploy the Operator using the following command:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/bundle.yaml
+    ```bash
+    kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/bundle.yaml
     ```
 
     ??? example "Expected output"
@@ -72,8 +72,8 @@ Also, you need to configure AWS CLI with your credentials according to the [offi
 
 2. The operator has been started, and you can deploy Percona XtraDB Cluster:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cr.yaml
+    ```bash
+    kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cr.yaml
     ```
 
     ??? example "Expected output"
@@ -91,22 +91,22 @@ Also, you need to configure AWS CLI with your credentials according to the [offi
         options. You can clone the repository with all manifests and source code
         by executing the following command:
 
-        ``` {.bash data-prompt="$" }
-        $ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
+        ```bash
+        git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
         ```
 
         After editing the needed options, apply your modified `deploy/cr.yaml` file as follows:
 
-        ``` {.bash data-prompt="$" }
-        $ kubectl apply -f deploy/cr.yaml
+        ```bash
+        kubectl apply -f deploy/cr.yaml
         ```
 
     The creation process may take some time. When the process is over your
     cluster will obtain the `ready` status. You can check it with the following
     command:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl get pxc
+    ```bash
+    kubectl get pxc
     ```
 
     ??? example "Expected output"
@@ -129,8 +129,8 @@ to the cluster.
 If `kubectl get pxc` command doesn't show `ready` status too long, you can 
 check the creation process with the `kubectl get pods` command:
 
-``` {.bash data-prompt="$" }
-$ kubectl get pods
+```bash
+kubectl get pods
 ```
 
 ??? example "Expected output"
@@ -140,8 +140,8 @@ $ kubectl get pods
 If the command output had shown some errors, you can examine the problematic
 Pod with the `kubectl describe <pod name>` command as follows:
 
-``` {.bash data-prompt="$" }
-$ kubectl describe pod  cluster1-pxc-2
+```bash
+kubectl describe pod  cluster1-pxc-2
 ```
 
 Review the detailed information for `Warning` statements and then correct the

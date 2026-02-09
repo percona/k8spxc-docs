@@ -26,8 +26,8 @@ You can disable telemetry by setting the `DISABLE_TELEMETRY` environment variabl
 
 * if you [install the Operator with helm](helm.md), use the following installation command:
 
-  ``` {.bash data-prompt="$" }
-  $ helm install my-db percona/pxc-db --version {{ release }} --namespace my-namespace --set disable_telemetry="true"
+  ```bash
+  helm install my-db percona/pxc-db --version {{ release }} --namespace my-namespace --set disable_telemetry="true"
   ```
 
 * if you don't use Helm for installation, configure the `DISABLE_TELEMETRY` environment variable in the Operator Deployment. 

@@ -10,14 +10,14 @@ To check available configuration options, see [`deploy/cr.yaml` :octicons-link-e
 
     1. Clone the repository with all manifests and source code by executing the following command:
 
-        ```{.bash data-prompt="$" }
-        $ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
+        ```bash
+        git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
         ```
 
     2. Edit the required options and apply the modified `deploy/cr.yaml` file as follows:
 
-        ```{.bash data-prompt="$" }
-        $ kubectl apply -f deploy/cr.yaml
+        ```bash
+        kubectl apply -f deploy/cr.yaml
         ```
 
 
@@ -25,8 +25,8 @@ To check available configuration options, see [`deploy/cr.yaml` :octicons-link-e
 
     To install Percona XtraDB Cluster with custom parameters, use the following command:
     
-    ```{.bash data-prompt="$" }
-    $ helm install --set key=value
+    ```bash
+    helm install --set key=value
     ```
 
     You can pass any of the Operator’s [Custom Resource options :octicons-link-external-16:](https://github.com/percona/percona-helm-charts/tree/main/charts/pxc-db#installing-the-chart) as a
@@ -37,8 +37,8 @@ To check available configuration options, see [`deploy/cr.yaml` :octicons-link-e
 
     === "Command line"
 
-        ``` {.bash data-prompt="$" }
-        $ helm install my-db percona/pxc-db --version {{ release }} --namespace pxc \
+        ```bash
+        helm install my-db percona/pxc-db --version {{ release }} --namespace pxc \
           --set pxc.volumeSpec.resources.requests.storage=20Gi \
           --set backup.enabled=false
         ``` 
@@ -65,8 +65,8 @@ To check available configuration options, see [`deploy/cr.yaml` :octicons-link-e
 
         Apply the resulting YAML file as follows:        
 
-        ``` {.bash data-prompt="$" }
-        $ helm install my-db percona/pxc-db --namespace pxc -f values.yaml
+        ```bash
+        helm install my-db percona/pxc-db --namespace pxc -f values.yaml
         ```
 
 

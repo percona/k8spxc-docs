@@ -16,9 +16,9 @@ If you don’t have access to AWS, you can use any S3-compatible storage like [M
 Also, we will use some files from the Operator repository for setting up
 backups. So, clone the percona-xtradb-cluster-operator repository:
 
-``` {.bash data-prompt="$" }
+```bash
 git clone -b v{{ release }} git@github.com:percona/percona-xtradb-cluster-operator.git
-$ cd percona-xtradb-cluster-operator
+cd percona-xtradb-cluster-operator
 ```
 
 !!! note
@@ -32,16 +32,16 @@ $ cd percona-xtradb-cluster-operator
 
     === "on Linux" 
 
-        ```{.bash data-prompt="$"}
-        $ echo -n 'AWS_ACCESS_KEY_ID' | base64 --wrap=0
-        $ echo -n 'AWS_SECRET_ACCESS_KEY' | base64 --wrap=0
+        ```bash
+        echo -n 'AWS_ACCESS_KEY_ID' | base64 --wrap=0
+        echo -n 'AWS_SECRET_ACCESS_KEY' | base64 --wrap=0
         ``` 
 
     === "on MacOS" 
 
-        ```{.bash data-prompt="$"}
-        $ echo -n 'AWS_ACCESS_KEY_ID' | base64 
-        $ echo -n 'AWS_SECRET_ACCESS_KEY' | base64 
+        ```bash
+        echo -n 'AWS_ACCESS_KEY_ID' | base64 
+        echo -n 'AWS_SECRET_ACCESS_KEY' | base64 
         ```
 
 2. Edit the [`deploy/backup-secret-s3.yaml` :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/backup/backup-secret-s3.yaml) example Secrets configuration file and specify the following:
@@ -62,8 +62,8 @@ $ cd percona-xtradb-cluster-operator
 
 3. Create the Secrets object from this yaml file. Specify your namespace instead of the `<namespace>` placeholder:
 
-	```{.bash data-prompt="$"}
-	$ kubectl apply -f deploy/backup/backup-secret-s3.yaml -n <namespace>
+	```bash
+	kubectl apply -f deploy/backup/backup-secret-s3.yaml -n <namespace>
 	```
 
 4. Update your `deploy/cr.yaml` configuration. Specify the following parameters in the `backup` section:
@@ -101,8 +101,8 @@ $ cd percona-xtradb-cluster-operator
   
 5. Apply the configuration. Specify your namespace instead of the `<namespace>` placeholder:
 
-	```{.bash data-prompt="$"}
-	$ kubectl apply -f deploy/cr.yaml -n <namespace>
+	```bash
+	kubectl apply -f deploy/cr.yaml -n <namespace>
 	```
  
 ## Make a physical backup
@@ -132,8 +132,8 @@ Custom Resource, you can make your first backup.
 
 2. Apply the configuration. This instructs the Operator to start a backup. Specify your namespace instead of the `<namespace>` placeholder:
 
-    ```{.bash data-prompt="$"}
-    $ kubectl apply -f deploy/backup/backup.yaml -n <namespace>
+    ```bash
+    kubectl apply -f deploy/backup/backup.yaml -n <namespace>
     ```
 
 3. Track the backup progress. 
@@ -158,14 +158,14 @@ You may face issues with the backup. To identify the issue, you can do the follo
 
 * View the information about the backup with the following command:
 
-   ```{.bash data-prompt="$"}
-   $ kubectl get pxc-backup <backup-name> -n <namespace> -o yaml
+   ```bash
+   kubectl get pxc-backup <backup-name> -n <namespace> -o yaml
    ```
 
 * [View the backup-agent logs](debug-logs.md). Use the previous command to find the name of the pod where the backup was made:
   
-  ```{.bash data-prompt="$"}
-  $ kubectl logs pod/<pod-name> -c xtrabackup -n <namespace>
+  ```bash
+  kubectl logs pod/<pod-name> -c xtrabackup -n <namespace>
   ```
 
 Congratulations! You have made the first backup manually. Want to learn more about backups? See the [Backup and restore](backups.md) section for how to [configure point-in-time recovery](backups-pitr.md), and how to [automatically make backups according to the schedule](backups-scheduled.md).

@@ -8,8 +8,8 @@ Your replica site needs to connect to your primary site to replicate data from i
 
 1. Since the primary site is already running, we will patch its configuration with the following command. Replace the `<namespace>` placeholder with your namespace:
 
-     ```{.bash data-prompt="$" }
-     $ kubectl patch pxc cluster1 -n <namespace> --type=merge --patch '{
+     ```bash
+     kubectl patch pxc cluster1 -n <namespace> --type=merge --patch '{
        "spec": {
        "pxc": {
          "expose": {
@@ -42,8 +42,8 @@ Your replica site needs to connect to your primary site to replicate data from i
 
 3. Check that the Pods are exposed by listing the services:
 
-    ```{.bash data-prompt="$" }
-	  $ kubectl get services -n <namespace>
+    ```bash
+	  kubectl get services -n <namespace>
   	```  
 
   	??? example "Expected output"  
@@ -67,8 +67,8 @@ Configure the replication channel on the replica site. Specify the following Cus
 
 Run the following command to apply a patch to the replica site's configuration with the required information. Don't forget to replace the `<placeholders>` with your values:
 
-```{.bash data-prompt="$" }
-$ kubectl patch pxc cluster1 -n <namespace> --type=merge --patch '{
+```bash
+kubectl patch pxc cluster1 -n <namespace> --type=merge --patch '{
 "spec": {
   "pxc": {
     "replicationChannels": [

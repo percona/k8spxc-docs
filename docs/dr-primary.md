@@ -4,8 +4,8 @@
 
 Clone the repository with all manifests and source code. You'll need it to edit configuration files for the database clusters, Secrets, backups and restores. Run the following command:
 
-```{.bash data-prompt="$" }
-$ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
+```bash
+git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
 ```
 
 Make sure to clone the correct branch. The branch name is the same as the Operator release version. 
@@ -14,8 +14,8 @@ Make sure to clone the correct branch. The branch name is the same as the Operat
 
 1. Create a namespace.  
 
-    ```{.bash data-prompt="$" }
-	$ kubectl create namespace <namespace>
+    ```bash
+	kubectl create namespace <namespace>
 	```
 
 2. Use the [Quickstart guide](kubectl.md) to install the Operator and Percona XtraDB Cluster. 
@@ -29,8 +29,8 @@ While on the primary site, export the Secrets object with the user credentials. 
 
 1. List the Secrets objects. 
 
-	```{.bash data-prompt="$" }
-	$ kubectl get secrets -n <namespace>
+	```bash
+	kubectl get secrets -n <namespace>
 	```
 
     ??? example "Expected output"
@@ -46,8 +46,8 @@ While on the primary site, export the Secrets object with the user credentials. 
 
 2. Export the database cluster's Secret file. You'll need it later to set up the replica site. The replica must have the same users as the primary site to replicate data from it. The following command exports the `cluster1-secrets` Secret to a `pxcsecret.yaml` file. Feel free to use your name and namespace:
     
-    ```{.bash data-prompt="$" }
-	$ kubectl get secret cluster1-secrets -n <namespace> -o yaml > pxcsecret.yaml
+    ```bash
+	kubectl get secret cluster1-secrets -n <namespace> -o yaml > pxcsecret.yaml
 	```
 
 3. Edit the exported `pxcsecret.yaml` file: remove the `annotations`, `creationTimestamp`, `resourceVersion`, `selfLink`, and `uid` metadata fields.  
@@ -64,8 +64,8 @@ We will use this backup to deploy the replica site.
 2. [Make an on-demand backup](backup-tutorial.md#make-a-physical-backup) on the primary site.
 3. View the information about a backup:
 
-    ```{.bash data-prompt="$" }
-    $ kubectl get pxc-backup -n <namespace>
+    ```bash
+    kubectl get pxc-backup -n <namespace>
     ```
 
     ??? example "Expected output"

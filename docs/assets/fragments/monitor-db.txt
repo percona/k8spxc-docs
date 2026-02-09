@@ -51,8 +51,8 @@ PMM Client is installed as a side-car container in the database, HAProxy and Pro
         You can query your PMM Server installation for the API
         Key using `curl` and `jq` utilities. Replace `<login>:<password>@<server_host>` placeholders with your real PMM Server login, password, and hostname in the following command:
         
-        ``` {.bash data-prompt="$" }
-        $ API_KEY=$(curl --insecure -X POST -H "Content-Type: application/json" -d '{"name":"operator", "role": "Admin"}' "https://<login>:<password>@<server_host>/graph/api/auth/keys" | jq .key)
+        ```bash
+        API_KEY=$(curl --insecure -X POST -H "Content-Type: application/json" -d '{"name":"operator", "role": "Admin"}' "https://<login>:<password>@<server_host>/graph/api/auth/keys" | jq .key)
         ```
 
     !!! warning
@@ -99,8 +99,8 @@ Now you must pass the credentials to the Operator. To do so, create a Secret obj
 
 2. Create the Secrets object using the `deploy/secrets.yaml` file. Replace the `<namespace>` placeholder with your value.
 
-    ```{.bash data-prompt="$"}
-    $ kubectl apply -f deploy/secrets.yaml -n <namespace>
+    ```bash
+    kubectl apply -f deploy/secrets.yaml -n <namespace>
     ```
 
     ??? example "Expected output"
@@ -126,16 +126,16 @@ Now you must pass the credentials to the Operator. To do so, create a Secret obj
     
 2. Update the cluster. Replace the `<namespace>` placeholder with your value.
 
-    ```{.bash data-prompt="$"}
-    $ kubectl apply -f deploy/cr.yaml -n <namespace>
+    ```bash
+    kubectl apply -f deploy/cr.yaml -n <namespace>
     ```
         
 6. Check that corresponding Pods are not in a cycle of stopping and restarting.
     This cycle occurs if there are errors on the previous steps:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl get pods -n <namespace>
-    $ kubectl logs <pod_name> -c pmm-client
+    ```bash
+    kubectl get pods -n <namespace>
+    kubectl logs <pod_name> -c pmm-client
     ```
     
 ## Update the secrets file
@@ -147,28 +147,28 @@ To encode a password or any other parameter, run the following command:
 
 === ":simple-linux: Linux" 
 
-    ```{.bash data-prompt="$"} 
-    $ echo -n "password" | base64 --wrap=0
+    ```bash 
+    echo -n "password" | base64 --wrap=0
     ``` 
 
 === ":simple-apple: macOS" 
 
-    ```{.bash data-prompt="$"} 
-    $ echo -n "password" | base64
+    ```bash 
+    echo -n "password" | base64
     ```
 
 For example, to set the new service account token in the `cluster1-secrets` object, use the following command replacing the placeholders in `<>` with your values:
 
 === ":simple-linux: Linux"
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl patch secret/cluster1-secrets -p '{"data":{"pmmservertoken": '$(echo -n <new-token> | base64 --wrap=0)'}}'
+    ```bash
+    kubectl patch secret/cluster1-secrets -p '{"data":{"pmmservertoken": '$(echo -n <new-token> | base64 --wrap=0)'}}'
     ```
 
 === ":simple-apple: macOS"
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl patch secret/cluster1-secrets -p '{"data":{"pmmservertoken": '$(echo -n <new-token> | base64)'}}'
+    ```bash
+    kubectl patch secret/cluster1-secrets -p '{"data":{"pmmservertoken": '$(echo -n <new-token> | base64)'}}'
     ```
     
 ## Check the metrics

@@ -22,21 +22,21 @@ Here's a sequence of steps to follow:
 1. Add the Percona’s Helm charts repository and make your Helm client up to
     date with it:
 
-    ``` {.bash data-prompt="$" }
-    $ helm repo add percona https://percona.github.io/percona-helm-charts/
-    $ helm repo update
+    ```bash
+    helm repo add percona https://percona.github.io/percona-helm-charts/
+    helm repo update
     ```
 
 2. It is a good practice to isolate workloads in Kubernetes via namespaces. Create a namespace:
 
-    ```{.bash data-prompt="$" }
-    $ kubectl create namespace <namespace>
+    ```bash
+    kubectl create namespace <namespace>
     ```
 
 3. Install the Percona Operator for MySQL based on Percona XtraDB Cluster:
 
-    ``` {.bash data-prompt="$" }
-    $ helm install my-op percona/pxc-operator --namespace <namespace>
+    ```bash
+    helm install my-op percona/pxc-operator --namespace <namespace>
     ```
 
     The `namespace` is the name of your namespace. The `my-op` parameter in the
@@ -46,8 +46,8 @@ Here's a sequence of steps to follow:
 
 4. Install Percona XtraDB Cluster:
 
-    ``` {.bash data-prompt="$" }
-    $ helm install my-db percona/pxc-db --namespace <namespace>
+    ```bash
+    helm install my-db percona/pxc-db --namespace <namespace>
     ```
 
     The `my-db` parameter in the above example is the name of [a new release object :octicons-link-external-16:](https://helm.sh/docs/intro/using_helm/#three-big-concepts)
@@ -56,8 +56,8 @@ Here's a sequence of steps to follow:
 
 5. Check the Operator and the Percona XtraDB Cluster Pods status.
 
-    ```{.bash data-prompt="$" }
-    $ kubectl get pxc -n <namespace>
+    ```bash
+    kubectl get pxc -n <namespace>
     ```
 
     The creation process may take some time. When the process is over your

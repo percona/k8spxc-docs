@@ -34,8 +34,8 @@ The general recommendation is to set the number of concurrent workers equal to t
 
 2. To set a new value and verify it's been updated, run the following command:
 
-    ```{.bash data-prompt="$"}
-    $ kubectl patch deployment percona-xtradb-cluster-operator \
+    ```bash
+    kubectl patch deployment percona-xtradb-cluster-operator \
     --type='strategic' \
     -o yaml \
     -p='{

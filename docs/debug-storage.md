@@ -11,8 +11,8 @@ It is important to remember that PVC is namespace-scoped, but PV and Storage Cla
 
 You can check all the PVC with the following command (use your namespace name instead of the `<namespace>` placeholder):
 
-``` {.bash data-prompt="$" }
-$ kubectl get pvc -n <namespace>
+```bash
+kubectl get pvc -n <namespace>
 ```
 
 ???+ example "Expected output"
@@ -36,8 +36,8 @@ The fields in the output of this command provide the following insights:
 
 Now you can check a specific PVC for more details using its name as follows:
 
-``` {.bash data-prompt="$" }
-$ kubectl get pvc datadir-pxc-pxc-0 -n <namespace> -oyaml # output stripped for brevity, name of PVC may vary
+```bash
+kubectl get pvc datadir-pxc-pxc-0 -n <namespace> -oyaml # output stripped for brevity, name of PVC may vary
 ```
 
 ??? example "Expected output"
@@ -73,8 +73,8 @@ It is important to remember that PV is a cluster-scoped Object. If you see any i
 
 Check all the PV present in the Kubernetes cluster as follows:
 
-``` {.bash data-prompt="$" }
-$ kubectl get pv
+```bash
+kubectl get pv
 ```
 
 ???+ example "Expected output"
@@ -88,8 +88,8 @@ $ kubectl get pv
 
 Now you can check a specific PV for more details using its name as follows:
 
-``` {.bash data-prompt="$" }
-$ kubectl get pv pvc-f3e7097f-accd-4f5d-9c9d-6f29b54a368b -oyaml
+```bash
+kubectl get pv pvc-f3e7097f-accd-4f5d-9c9d-6f29b54a368b -oyaml
 ```
 
 ???+ example "Expected output"
@@ -149,8 +149,8 @@ You can set StorageClass in `pxc.volumeSpec.persistentVolumeClaim.storageClassNa
 
 The following command checks all the storage class present in the Kubernetes cluster, and allows to see which storage class is the default one:
 
-``` {.bash data-prompt="$" }
-$ kubectl get sc
+```bash
+kubectl get sc
 ```
 
 ???+ example "Expected output"
@@ -166,8 +166,8 @@ If some PVC does not refer any storage class explicitly, it means that the defau
 
 You can check a specific storage class as follows:
 
-``` {.bash data-prompt="$" }
-$ kubectl get sc standard -oyaml
+```bash
+kubectl get sc standard -oyaml
 ```
 
 ???+ example "Expected output"

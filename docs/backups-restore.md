@@ -31,20 +31,20 @@ emptyDir/hostPath to S3), and later restore it to a [Persistent Volume :octicons
 1. Make sure that the cluster is running.
 2. List the cluster to find the correct cluster name. Replace the `<namespace>` with your value:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl get pxc -n <namespace>
+    ```bash
+    kubectl get pxc -n <namespace>
     ```
 
 3. List backups to retrieve the desired backup name. Replace the `<namespace>` with your value:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl get pxc-backup -n <namespace>
+    ```bash
+    kubectl get pxc-backup -n <namespace>
     ```
 
 4. For point-in-time recovery, disable storing binlogs point-in-time functionality on the existing cluster. You must do it regardless of whether you made the backup with point-in-time recovery or without it. Use the following command and replace the cluster name and the `<namespace>` with your values:
 
-    ```{.bash data-prompt="$" }
-    $ kubectl patch pxc cluster1 \
+    ```bash
+    kubectl patch pxc cluster1 \
       -n <namespace> \
       --type merge \
       -p '{"spec":{"backup":{"pitr":{"enabled":false}}}}'
@@ -77,16 +77,16 @@ Pass this configuration to the Operator:
 
     2. Start the restore with this command:
 
-        ``` {.bash data-prompt="$" }
-        $ kubectl apply -f deploy/backup/restore.yaml -n <namespace>
+        ```bash
+        kubectl apply -f deploy/backup/restore.yaml -n <namespace>
         ```
 
 === "via the command line"
 
     You can skip creating a separate file by passing YAML content directly:
 
-    ``` {.bash data-prompt="$" }
-    $ cat <<EOF | kubectl apply -f-
+    ```bash
+    cat <<EOF | kubectl apply -f-
     apiVersion: "pxc.percona.com/v1"
     kind: "PerconaXtraDBClusterRestore"
     metadata:
@@ -101,8 +101,8 @@ Pass this configuration to the Operator:
 
 1. Check a time to restore for a backup. Use the command below to find the latest restorable timestamp:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl get pxc-backup <backup_name> -o jsonpath='{.status.latestRestorableTime}'
+    ```bash
+    kubectl get pxc-backup <backup_name> -o jsonpath='{.status.latestRestorableTime}'
     ```
 
 2. Set the following keys for the `PerconaXtraDBClusterRestore` custom resource:
@@ -151,16 +151,16 @@ Pass this configuration to the Operator:
    
         2. Start the restore:
 
-            ``` {.bash data-prompt="$" }
-            $ kubectl apply -f deploy/backup/restore.yaml
+            ```bash
+            kubectl apply -f deploy/backup/restore.yaml
             ```
 
     === "via the command line"
 
         You can skip editing the YAML file and pass its contents to the Operator via the command line. For example:
         
-        ``` {.bash data-prompt="$" }
-        $ cat <<EOF | kubectl apply -f-
+        ```bash
+        cat <<EOF | kubectl apply -f-
         apiVersion: "pxc.percona.com/v1"
         kind: "PerconaXtraDBClusterRestore"
         metadata:
@@ -275,8 +275,8 @@ your own with the latest passwords as follows.
 
     === "in Linux"
 
-        ``` {.bash data-prompt="$" }
-        $ cat <<EOF | base64 --wrap=0
+        ```bash
+        cat <<EOF | base64 --wrap=0
         ALTER USER 'root'@'%' IDENTIFIED BY '<latestPass>';
         ALTER USER 'root'@'localhost' IDENTIFIED BY '<latestPass>';
         ALTER USER 'operator'@'%' IDENTIFIED BY '<latestPass>';
@@ -290,8 +290,8 @@ your own with the latest passwords as follows.
 
     === "in macOS"
 
-        ``` {.bash data-prompt="$" }
-        $ cat <<EOF | base64
+        ```bash
+        cat <<EOF | base64
         ALTER USER 'root'@'%' IDENTIFIED BY '<latestPass>';
         ALTER USER 'root'@'localhost' IDENTIFIED BY '<latestPass>';
         ALTER USER 'operator'@'%' IDENTIFIED BY '<latestPass>';
@@ -306,8 +306,8 @@ your own with the latest passwords as follows.
 2. After you obtained the needed base64-encoded string, create the appropriate
    Secret:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl apply -f - <<EOF
+    ```bash
+    kubectl apply -f - <<EOF
     apiVersion: v1
     kind: Secret
     type: Opaque

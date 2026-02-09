@@ -55,9 +55,9 @@ Following steps will allow you to deploy the Operator and Percona XtraDB Cluster
 
     1. Clone the `percona-xtradb-cluster-operator` repository. Pay attention to specify the right branch with the -b option while cloning the code on this step:
 
-        ``` {.bash data-prompt="$" }
-        $ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
-        $ cd percona-xtradb-cluster-operator
+        ```bash
+        git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
+        cd percona-xtradb-cluster-operator
         ```
     
     2. **For OpenShift 4.19**. Edit the `deploy/bundle.yaml` file. 
@@ -71,14 +71,14 @@ Following steps will allow you to deploy the Operator and Percona XtraDB Cluster
     
     3. Create the namespace
 
-        ``` {.bash data-prompt="$" }
-        $ oc new-project pxc
+        ```bash
+        oc new-project pxc
         ```
 
     4. Create the Custom Resource Definition, RBAC (role-based access control) and the Operator deployment.
 
-        ``` {.bash data-prompt="$" }
-        $ oc apply --server-side -f deploy/bundle.yaml
+        ```bash
+        oc apply --server-side -f deploy/bundle.yaml
         ```
 
 === "Step-by-step installation"
@@ -87,17 +87,17 @@ Following steps will allow you to deploy the Operator and Percona XtraDB Cluster
 
     1. Clone the repository. Pay attention to specify the right branch with the -b option while cloning the code on this step:
 
-        ``` {.bash data-prompt="$" }
-        $ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
-        $ cd percona-xtradb-cluster-operator
+        ```bash
+        git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
+        cd percona-xtradb-cluster-operator
         ```
 
     2. Create the Custom Resource Definition (CRD)
 
         The CRD extends Kubernetes with new resource types required by the operator. This step only needs to be done once.
 
-        ``` {.bash data-prompt="$" }
-        $ oc apply --server-side -f deploy/crd.yaml
+        ```bash
+        oc apply --server-side -f deploy/crd.yaml
         ```
 
         !!! note
@@ -106,30 +106,30 @@ Following steps will allow you to deploy the Operator and Percona XtraDB Cluster
 
         If you want to manage your Percona XtraDB Cluster with a non-privileged user, grant the necessary permissions by applying the following cluster role:
 
-        ``` {.bash data-prompt="$" }
-        $ oc create clusterrole pxc-admin --verb="*" --resource=perconaxtradbclusters.pxc.percona.com,perconaxtradbclusters.pxc.percona.com/status,perconaxtradbclusterbackups.pxc.percona.com,perconaxtradbclusterbackups.pxc.percona.com/status,perconaxtradbclusterrestores.pxc.percona.com,perconaxtradbclusterrestores.pxc.percona.com/status
-        $ oc adm policy add-cluster-role-to-user pxc-admin <some-user>
+        ```bash
+        oc create clusterrole pxc-admin --verb="*" --resource=perconaxtradbclusters.pxc.percona.com,perconaxtradbclusters.pxc.percona.com/status,perconaxtradbclusterbackups.pxc.percona.com,perconaxtradbclusterbackups.pxc.percona.com/status,perconaxtradbclusterrestores.pxc.percona.com,perconaxtradbclusterrestores.pxc.percona.com/status
+        oc adm policy add-cluster-role-to-user pxc-admin <some-user>
         ```
 
         If you have [cert-manager :octicons-link-external-16:](https://docs.cert-manager.io/en/release-0.8/getting-started/install/openshift.html) installed, run these commands to manage certificates with a non-privileged user:
 
-        ``` {.bash data-prompt="$" }
-        $ oc create clusterrole cert-admin --verb="*" --resource=issuers.certmanager.k8s.io,certificates.certmanager.k8s.io
-        $ oc adm policy add-cluster-role-to-user cert-admin <some-user>
+        ```bash
+        oc create clusterrole cert-admin --verb="*" --resource=issuers.certmanager.k8s.io,certificates.certmanager.k8s.io
+        oc adm policy add-cluster-role-to-user cert-admin <some-user>
         ```
 
     3. Create a new project for the cluster
 
-        ``` {.bash data-prompt="$" }
-        $ oc new-project pxc
+        ```bash
+        oc new-project pxc
         ```
 
     4. Set up RBAC (Role-Based Access Control)
 
         Apply the RBAC configuration to define roles and permissions for the operator:
 
-        ``` {.bash data-prompt="$" }
-        $ oc apply -f deploy/rbac.yaml
+        ```bash
+        oc apply -f deploy/rbac.yaml
         ```
 
     5. **For OpenShift 4.19** Edit the `deploy/operator.yaml` and update the `spec.image` field to  `docker.io/percona/percona-xtradb-cluster-operator:{{release}}`:
@@ -144,8 +144,8 @@ Following steps will allow you to deploy the Operator and Percona XtraDB Cluster
     
     6. Deploy the Operator
 
-        ``` {.bash data-prompt="$" }
-        $ oc apply -f deploy/operator.yaml
+        ```bash
+        oc apply -f deploy/operator.yaml
         ```
 
     For more details about users and roles, see the [OpenShift documentation :octicons-link-external-16:](https://docs.openshift.com/enterprise/3.0/architecture/additional_concepts/authorization.html).
@@ -161,8 +161,8 @@ Following steps will allow you to deploy the Operator and Percona XtraDB Cluster
     section of the `deploy/secrets.yaml` file; after editing is finished, create
     users Secrets with the following command:
 
-    ``` {.bash data-prompt="$" }
-    $ oc create -f deploy/secrets.yaml
+    ```bash
+    oc create -f deploy/secrets.yaml
     ```
 
     More details about secrets can be found in [Users](users.md).
@@ -175,16 +175,16 @@ Following steps will allow you to deploy the Operator and Percona XtraDB Cluster
 3. After the operator is started and user secrets are added, Percona
     XtraDB Cluster can be created at any time with the following command:
 
-    ``` {.bash data-prompt="$" }
-    $ oc apply -f deploy/cr.yaml
+    ```bash
+    oc apply -f deploy/cr.yaml
     ```
 
     The creation process may take some time. When the process is over your
     cluster will obtain the `ready` status. You can check it with the following
     command:
 
-    ``` {.bash data-prompt="$" }
-    $ oc get pxc
+    ```bash
+    oc get pxc
     ```
 
     ??? example "Expected output"

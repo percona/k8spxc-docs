@@ -1,7 +1,7 @@
 3. Check the current version of the Custom Resource and what versions of the database and cluster components are compatible with it. Use the following command:
 
-    ``` {.bash data-prompt="$" }
-    $ curl https://check.percona.com/versions/v1/pxc-operator/{{release}} |jq -r ‘.versions[].matrix’
+    ```bash
+    curl https://check.percona.com/versions/v1/pxc-operator/{{release}} |jq -r ‘.versions[].matrix’
     ```
 
     You can also find this information in the [Versions compatibility](versions.md) matrix.
@@ -21,8 +21,8 @@
 
         === "For Percona XtraDB Cluster 8.4"
 
-            ```{.bash data-prompt="$"}
-            $ kubectl patch pxc cluster1 --type=merge --patch '{
+            ```bash
+            kubectl patch pxc cluster1 --type=merge --patch '{
                "spec": {
                    "crVersion":"{{ release }}",
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc84recommended }}" },
@@ -36,8 +36,8 @@
         
         === "For Percona XtraDB Cluster 8.0"
 
-            ```{.bash data-prompt="$"}
-            $ kubectl patch pxc cluster1 --type=merge --patch '{
+            ```bash
+            kubectl patch pxc cluster1 --type=merge --patch '{
                "spec": {
                    "crVersion":"{{ release }}",
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
@@ -51,8 +51,8 @@
 
         === "For Percona XtraDB Cluster 5.7"
 
-            ```{.bash data-prompt="$"}
-            $ kubectl patch pxc cluster1 --type=merge --patch '{
+            ```bash
+            kubectl patch pxc cluster1 --type=merge --patch '{
                "spec": {
                    "crVersion":"{{ release }}",
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc57recommended }}" },
@@ -68,8 +68,8 @@
 
         === "For Percona XtraDB Cluster 8.4"
 
-            ```{.bash data-prompt="$"}
-            $ kubectl patch pxc cluster1 --type=merge --patch '{
+            ```bash
+            kubectl patch pxc cluster1 --type=merge --patch '{
                "spec": {
                    "crVersion":"{{ release }}",
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc84recommended }}" },
@@ -83,8 +83,8 @@
 
         === "For Percona XtraDB Cluster 8.0"
 
-            ```{.bash data-prompt="$"}
-            $ kubectl patch pxc cluster1 --type=merge --patch '{
+            ```bash
+            kubectl patch pxc cluster1 --type=merge --patch '{
                "spec": {
                    "crVersion":"{{ release }}",
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
@@ -98,8 +98,8 @@
 
         === "For Percona XtraDB Cluster 5.7"
 
-            ```{.bash data-prompt="$"}
-            $ kubectl patch pxc cluster1 --type=merge --patch '{
+            ```bash
+            kubectl patch pxc cluster1 --type=merge --patch '{
                "spec": {
                    "crVersion":"{{ release }}",
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc57recommended }}" },

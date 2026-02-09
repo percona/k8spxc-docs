@@ -6,8 +6,8 @@ In the following examples we will access the container `pxc` of the `cluster1-px
 
 * Run `date` command:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl exec -ti cluster1-pxc-0 -c pxc -- date
+    ```bash
+    kubectl exec -ti cluster1-pxc-0 -c pxc -- date
     ```
 
     ??? example "Expected output"
@@ -27,15 +27,15 @@ In the following examples we will access the container `pxc` of the `cluster1-px
 
 * Print `/var/log/mysqld.log` file to a terminal:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl exec -ti cluster1-pxc-0 -c pxc -- cat /var/log/mysqld.log
+    ```bash
+    kubectl exec -ti cluster1-pxc-0 -c pxc -- cat /var/log/mysqld.log
     ```
 
 * Similarly, opening an Interactive terminal, executing a pair of commands in
     the container, and exiting it may look as follows:
 
-    ```{.bash data-prompt="$" data-prompt-second="bash-4.4$"}
-    $ kubectl exec -ti cluster1-pxc-0 -c pxc -- bash
+    ```bash
+    kubectl exec -ti cluster1-pxc-0 -c pxc -- bash
     bash-4.4$ hostname
     cluster1-pxc-0
     bash-4.4$ ls /var/log/mysqld.log
@@ -60,14 +60,14 @@ of the container entry point is triggered by the presence of the
 For example, you can do it for the `pxc` container of an appropriate Percona
 XtraDB Cluster instance as follows:
 
-``` {.bash data-prompt="$" }
-$ kubectl exec -it cluster1-pxc-0 -c pxc -- sh -c 'touch /var/lib/mysql/sleep-forever'
+```bash
+kubectl exec -it cluster1-pxc-0 -c pxc -- sh -c 'touch /var/lib/mysql/sleep-forever'
 ```
 
 If `pxc` container can’t start, you can use `logs` container instead:
 
-``` {.bash data-prompt="$" }
-$ kubectl exec -it cluster1-pxc-0 -c logs -- sh -c 'touch /var/lib/mysql/sleep-forever'
+```bash
+kubectl exec -it cluster1-pxc-0 -c logs -- sh -c 'touch /var/lib/mysql/sleep-forever'
 ```
 
 The instance will restart automatically and run in its usual way as soon as you

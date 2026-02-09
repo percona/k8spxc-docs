@@ -4,8 +4,8 @@
 
 Events can be checked by the following command
 
-```{.bash data-prompt="$"}
-$ kubectl get events
+```bash
+kubectl get events
 ```
 
 ???+ example "Expected output"
@@ -19,8 +19,8 @@ $ kubectl get events
 Events capture many information happening at Kubernetes level and provide valuable information. By default, the ordering of events cannot be guaranteed.
 Use the following command to sort the output in a reverse chronological fashion.
 
-```{.bash data-prompt="$"}
-$ kubectl get events --sort-by=".lastTimestamp"
+```bash
+kubectl get events --sort-by=".lastTimestamp"
 ```
 
 ???+ example "Expected output"
@@ -37,8 +37,8 @@ When there are too many events and there is a need of filtering output, tools li
 
 Example:
 
-```{.bash data-prompt="$"}
-$ kubectl get events -oyaml | yq .items[0]
+```bash
+kubectl get events -oyaml | yq .items[0]
 ```
 
 ??? example "Expected output"
@@ -75,14 +75,14 @@ $ kubectl get events -oyaml | yq .items[0]
 Flag `--field-selector` can be used to filter out the output as well.
 For example, the following command provides events of Pod only:
 
-```{.bash data-prompt="$"}
-$ kubectl get events --field-selector involvedObject.kind=Pod
+```bash
+kubectl get events --field-selector involvedObject.kind=Pod
 ```
 
 More fields can be added to the field-selector flag for filtering events further. Example: the following command provides events of Pod by name `xb-cron-pxc-pxc-backup-stora-202211245300-3qf7g-bpm5s`.
 
-```{.bash data-prompt="$"}
-$ kubectl get events --field-selector involvedObject.kind=Pod,involvedObject.name=xb-cron-pxc-pxc-backup-stora-202211245300-3qf7g-bpm5s
+```bash
+kubectl get events --field-selector involvedObject.kind=Pod,involvedObject.name=xb-cron-pxc-pxc-backup-stora-202211245300-3qf7g-bpm5s
 ```
 
 ???+ example "Expected output"
@@ -95,8 +95,8 @@ $ kubectl get events --field-selector involvedObject.kind=Pod,involvedObject.nam
 
 Same way you can query events for other Kubernetes object (StatefulSet, Custom Resource, etc.) to investigate any problems to them:
 
-```{.bash data-prompt="$"}
-$ kubectl get events --field-selector involvedObject.kind=PerconaXtraDBCluster,involvedObject.name=cluster1
+```bash
+kubectl get events --field-selector involvedObject.kind=PerconaXtraDBCluster,involvedObject.name=cluster1
 ```
 
 ???+ example "Expected output"
@@ -109,8 +109,8 @@ $ kubectl get events --field-selector involvedObject.kind=PerconaXtraDBCluster,i
 
 Alternatively, you can see events for a specific object in the output of `kubectl describe` command:
 
-```{.bash data-prompt="$"}
-$ kubectl describe ps cluster1
+```bash
+kubectl describe ps cluster1
 ```
 
 ??? example "Expected output"

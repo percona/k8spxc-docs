@@ -38,8 +38,8 @@ but semi-automatic recovery is still possible.
 In this case you need to get the log from pxc container from all Pods
 using the following command:
 
-``` {.bash data-prompt="$" }
-$ for i in $(seq 0 $(($(kubectl get pxc cluster1 -o jsonpath='{.spec.pxc.size}')-1))); do echo "###############cluster1-pxc-$i##############"; kubectl logs cluster1-pxc-$i -c pxc | grep '(seqno):' ; done
+```bash
+for i in $(seq 0 $(($(kubectl get pxc cluster1 -o jsonpath='{.spec.pxc.size}')-1))); do echo "###############cluster1-pxc-$i##############"; kubectl logs cluster1-pxc-$i -c pxc | grep '(seqno):' ; done
 ```
 
 The output of this command should be similar to the following one:
@@ -58,8 +58,8 @@ above example).
 
 Now execute the following commands to start this instance:
 
-``` {.bash data-prompt="$" }
-$ kubectl exec cluster1-pxc-2 -c pxc -- sh -c 'kill -s USR1 1'
+```bash
+kubectl exec cluster1-pxc-2 -c pxc -- sh -c 'kill -s USR1 1'
 ```
 
 ## Manual Crash Recovery
@@ -93,15 +93,15 @@ which is based on three Percona XtraDB Cluster Pods.
     [Smart Updates](update.md#update-strategies) are turned off during the
     recovery:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl get pxc cluster1 -o jsonpath='{.spec.updateStrategy}'
+    ```bash
+    kubectl get pxc cluster1 -o jsonpath='{.spec.updateStrategy}'
     ```
 
     If the returned value is `SmartUpdate`, please change it to `onDelete`
     with the following command:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl patch pxc cluster1 --type=merge --patch '{"spec": {"updateStrategy": "OnDelete" }}'
+    ```bash
+    kubectl patch pxc cluster1 --type=merge --patch '{"spec": {"updateStrategy": "OnDelete" }}'
     ```
 
 2. Change the normal PXC image inside the cluster object to the debug image:
@@ -111,48 +111,48 @@ which is based on three Percona XtraDB Cluster Pods.
         Please make sure the Percona XtraDB Cluster version for the debug image matches the version currently in use in the cluster.
         You can run the following command to find out which Percona XtraDB Cluster image is in use:
 
-        ``` {.bash data-prompt="$" }
-        $ kubectl get pxc cluster1 -o jsonpath='{.spec.pxc.image}'
+        ```bash
+        kubectl get pxc cluster1 -o jsonpath='{.spec.pxc.image}'
         ```
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl patch pxc cluster1 --type="merge" -p '{"spec":{"pxc":{"image":"percona/percona-xtradb-cluster:{{ pxc80recommended }}-debug"}}}'
+    ```bash
+    kubectl patch pxc cluster1 --type="merge" -p '{"spec":{"pxc":{"image":"percona/percona-xtradb-cluster:{{ pxc80recommended }}-debug"}}}'
     ```
 
 !!! note
 
     For Percona XtraDB Cluster 5.7 this command should be as follows:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl patch pxc cluster1 --type="merge" -p '{"spec":{"pxc":{"image":"percona/percona-xtradb-cluster:{{ pxc57recommended }}-debug"}}}'
+    ```bash
+    kubectl patch pxc cluster1 --type="merge" -p '{"spec":{"pxc":{"image":"percona/percona-xtradb-cluster:{{ pxc57recommended }}-debug"}}}'
     ```
 
 3. Restart all Pods:
 
-    ``` {.bash data-prompt="$" }
-    $ for i in $(seq 0 $(($(kubectl get pxc cluster1 -o jsonpath='{.spec.pxc.size}')-1))); do kubectl delete pod cluster1-pxc-$i --force --grace-period=0; done
+    ```bash
+    for i in $(seq 0 $(($(kubectl get pxc cluster1 -o jsonpath='{.spec.pxc.size}')-1))); do kubectl delete pod cluster1-pxc-$i --force --grace-period=0; done
     ```
 
 4. Wait until the Pod `0` is ready, and execute the following code (it is
     required for the Pod liveness check):
 
-    ``` {.bash data-prompt="$" }
-    $ for i in $(seq 0 $(($(kubectl get pxc cluster1 -o jsonpath='{.spec.pxc.size}')-1))); do until [[ $(kubectl get pod cluster1-pxc-$i -o jsonpath='{.status.phase}') == 'Running' ]]; do sleep 10; done; kubectl exec cluster1-pxc-$i -- touch /var/lib/mysql/sst_in_progress; done
+    ```bash
+    for i in $(seq 0 $(($(kubectl get pxc cluster1 -o jsonpath='{.spec.pxc.size}')-1))); do until [[ $(kubectl get pod cluster1-pxc-$i -o jsonpath='{.status.phase}') == 'Running' ]]; do sleep 10; done; kubectl exec cluster1-pxc-$i -- touch /var/lib/mysql/sst_in_progress; done
     ```
 
 5. Wait for all Percona XtraDB Cluster Pods to start, and execute the following
     code to make sure no mysqld processes are running:
 
-    ``` {.bash data-prompt="$" }
-    $ for i in $(seq $(($(kubectl get pxc cluster1 -o jsonpath='{.spec.pxc.size}')-1))); do pid=$(kubectl exec cluster1-pxc-$i -- ps -C mysqld-ps -o pid=); if [[ -n "$pid" ]]; then kubectl exec cluster1-pxc-$i -- kill -9 $pid; fi;  done
+    ```bash
+    for i in $(seq $(($(kubectl get pxc cluster1 -o jsonpath='{.spec.pxc.size}')-1))); do pid=$(kubectl exec cluster1-pxc-$i -- ps -C mysqld-ps -o pid=); if [[ -n "$pid" ]]; then kubectl exec cluster1-pxc-$i -- kill -9 $pid; fi;  done
     ```
 
 6. Wait for all Percona XtraDB Cluster Pods to start, then find the Percona
     XtraDB Cluster instance with the most recent data - i.e. the one with the
     highest [sequence number (seqno) :octicons-link-external-16:](https://www.percona.com/blog/2017/12/14/sequence-numbers-seqno-percona-xtradb-cluster/):
 
-    ``` {.bash data-prompt="$" }
-    $ for i in $(seq 0 $(($(kubectl get pxc cluster1 -o jsonpath='{.spec.pxc.size}')-1))); do echo "###############cluster1-pxc-$i##############"; kubectl exec cluster1-pxc-$i -- cat /var/lib/mysql/grastate.dat; done
+    ```bash
+    for i in $(seq 0 $(($(kubectl get pxc cluster1 -o jsonpath='{.spec.pxc.size}')-1))); do echo "###############cluster1-pxc-$i##############"; kubectl exec cluster1-pxc-$i -- cat /var/lib/mysql/grastate.dat; done
     ```
 
     The output of this command should be similar to the following one:
@@ -184,11 +184,11 @@ which is based on three Percona XtraDB Cluster Pods.
 7. Now execute the following commands *in a separate shell* to start this
     instance:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl exec cluster1-pxc-2 -- mysqld --wsrep_recover
-    $ kubectl exec cluster1-pxc-2 -- sed -i 's/safe_to_bootstrap: 0/safe_to_bootstrap: 1/g' /var/lib/mysql/grastate.dat
-    $ kubectl exec cluster1-pxc-2 -- sed -i 's/wsrep_cluster_address=.*/wsrep_cluster_address=gcomm:\/\//g' /etc/mysql/node.cnf
-    $ kubectl exec cluster1-pxc-2 -- mysqld
+    ```bash
+    kubectl exec cluster1-pxc-2 -- mysqld --wsrep_recover
+    kubectl exec cluster1-pxc-2 -- sed -i 's/safe_to_bootstrap: 0/safe_to_bootstrap: 1/g' /var/lib/mysql/grastate.dat
+    kubectl exec cluster1-pxc-2 -- sed -i 's/wsrep_cluster_address=.*/wsrep_cluster_address=gcomm:\/\//g' /etc/mysql/node.cnf
+    kubectl exec cluster1-pxc-2 -- mysqld
     ```
 
     The `mysqld` process will initialize the database once again, and it will
@@ -201,30 +201,30 @@ which is based on three Percona XtraDB Cluster Pods.
 
     Please make sure the Percona XtraDB Cluster version for the debug image matches the version currently in use in the cluster.
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl patch pxc cluster1 --type="merge" -p '{"spec":{"pxc":{"image":"percona/percona-xtradb-cluster:{{ pxc80recommended }}"}}}'
+    ```bash
+    kubectl patch pxc cluster1 --type="merge" -p '{"spec":{"pxc":{"image":"percona/percona-xtradb-cluster:{{ pxc80recommended }}"}}}'
     ```
 
 !!! note
 
     For Percona XtraDB Cluster 5.7 this command should be as follows:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl patch pxc cluster1 --type="merge" -p '{"spec":{"pxc":{"image":"percona/percona-xtradb-cluster:{{ pxc57recommended }}"}}}'
+    ```bash
+    kubectl patch pxc cluster1 --type="merge" -p '{"spec":{"pxc":{"image":"percona/percona-xtradb-cluster:{{ pxc57recommended }}"}}}'
     ```
 
 9. Restart all Pods besides the `cluster1-pxc-2` Pod (the recovery donor).
 
-    ``` {.bash data-prompt="$" }
-    $ for i in $(seq 0 $(($(kubectl get pxc cluster1 -o jsonpath='{.spec.pxc.size}')-1))); do until [[ $(kubectl get pod cluster1-pxc-$i -o jsonpath='{.status.phase}') == 'Running' ]]; do sleep 10; done; kubectl exec cluster1-pxc-$i -- rm /var/lib/mysql/sst_in_progress; done
-    $ kubectl delete pods --force --grace-period=0 cluster1-pxc-0 cluster1-pxc-1
+    ```bash
+    for i in $(seq 0 $(($(kubectl get pxc cluster1 -o jsonpath='{.spec.pxc.size}')-1))); do until [[ $(kubectl get pod cluster1-pxc-$i -o jsonpath='{.status.phase}') == 'Running' ]]; do sleep 10; done; kubectl exec cluster1-pxc-$i -- rm /var/lib/mysql/sst_in_progress; done
+    kubectl delete pods --force --grace-period=0 cluster1-pxc-0 cluster1-pxc-1
     ```
 
 10. Wait for the successful startup of the Pods which were deleted during the
     previous step, and finally remove the `cluster1-pxc-2` Pod:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl delete pods --force --grace-period=0 cluster1-pxc-2
+    ```bash
+    kubectl delete pods --force --grace-period=0 cluster1-pxc-2
     ```
 
 11. After the Pod startup, the cluster is fully recovered.
@@ -234,6 +234,6 @@ which is based on three Percona XtraDB Cluster Pods.
     If you have changed the update strategy on the 1st step, don’t
     forget to revert it back to `SmartUpdate` with the following command:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl patch pxc cluster1 --type=merge --patch '{"spec": {"updateStrategy": "SmartUpdate" }}'
+    ```bash
+    kubectl patch pxc cluster1 --type=merge --patch '{"spec": {"updateStrategy": "SmartUpdate" }}'
     ```

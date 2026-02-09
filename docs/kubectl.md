@@ -30,8 +30,8 @@ Here's a sequence of steps to follow:
 
 1. Create the Kubernetes namespace for your cluster. It is a good practice to isolate workloads in Kubernetes by installing the Operator in a custom namespace. Replace the `<namespace>` placeholder with your value.
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl create namespace <namespace>
+    ```bash
+    kubectl create namespace <namespace>
     ```
 
     ??? example "Expected output"
@@ -42,8 +42,8 @@ Here's a sequence of steps to follow:
 
 2. Deploy the Operator with the following command:
 
-    ```{.bash data-prompt="$" }
-    $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/bundle.yaml  -n <namespace>
+    ```bash
+    kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/bundle.yaml  -n <namespace>
     ```
 
     ??? example "Expected output"
@@ -63,8 +63,8 @@ Here's a sequence of steps to follow:
 
 3. Deploy Percona XtraDB Cluster:
 
-    ```{.bash data-prompt="$" }
-    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cr.yaml -n <namespace>
+    ```bash
+    kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cr.yaml -n <namespace>
     ```
 
     ??? example "Expected output"
@@ -75,8 +75,8 @@ Here's a sequence of steps to follow:
 
 4. Check the Operator and the Percona XtraDB Cluster Pods status.
 
-    ```{.bash data-prompt="$" }
-    $ kubectl get pxc -n <namespace>
+    ```bash
+    kubectl get pxc -n <namespace>
     ```
 
     The creation process may take some time. When the process is over your

@@ -29,8 +29,8 @@ Starting with OpenShift 4.19, the way images with not fully qualified names are 
 
         1. Find the initial Operator installation image with `kubectl get deploy` command:
 
-            ``` {.bash data-prompt="$" }
-            $ kubectl get deploy percona-xtradb-cluster-operator -o yaml
+            ```bash
+            kubectl get deploy percona-xtradb-cluster-operator -o yaml
             ```
         
             ??? example "Expected output"
@@ -45,8 +45,8 @@ Starting with OpenShift 4.19, the way images with not fully qualified names are 
 
         2. [Apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to update the `initContainer.image` option of your cluster Custom Resource with this value. Supposing that your cluster name is `cluster1`, the command should look as follows:
 
-            ``` {.bash data-prompt="$" }
-            $ kubectl patch pxc cluster1 --type=merge --patch '{
+            ```bash
+            kubectl patch pxc cluster1 --type=merge --patch '{
                 "spec": {
                    "initContainer": { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:4edb5a53230e023bbe54c8e9e1154579668423fc3466415d5b04b8304a8e01d7" }
                 }}'
@@ -66,8 +66,8 @@ Starting with OpenShift 4.19, the way images with not fully qualified names are 
 
         1. Find the initial Operator installation image with `kubectl get deploy` command:
 
-            ``` {.bash data-prompt="$" }
-            $ kubectl get deploy percona-xtradb-cluster-operator -o yaml
+            ```bash
+            kubectl get deploy percona-xtradb-cluster-operator -o yaml
             ```
         
             ??? example "Expected output"
@@ -82,8 +82,8 @@ Starting with OpenShift 4.19, the way images with not fully qualified names are 
 
         2. [Apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to update the `initImage` option of your cluster Custom Resource with this value. Supposing that your cluster name is `cluster1`, the command should look as follows:
 
-            ``` {.bash data-prompt="$" }
-            $ kubectl patch pxc cluster1 --type=merge --patch '{
+            ```bash
+            kubectl patch pxc cluster1 --type=merge --patch '{
                 "spec": {
                    "initImage":"registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:4edb5a53230e023bbe54c8e9e1154579668423fc3466415d5b04b8304a8e01d7"
                 }}'
@@ -108,8 +108,8 @@ The following steps apply if you plan to use OpenShift 4.19. See the [Considerat
 
     2. Apply a patch to the clusters with undefined `initContainer.image` to define this image with the `docker.io` registry in the image path:
 
-        ```{.bash data-prompt="$" }
-        $ kubectl patch pxc cluster1 --type=merge --patch '{
+        ```bash
+        kubectl patch pxc cluster1 --type=merge --patch '{
           "spec": {
             "initcontainer": {
               "image": "docker.io/percona/percona-xtradb-cluster-operator:1.17.0"
@@ -122,15 +122,15 @@ The following steps apply if you plan to use OpenShift 4.19. See the [Considerat
 
     3. Update the Operator deployment and specify the `docker.io` registry name in the image path:
 
-        ```{.bash data-prompt="$" }
-        $ kubectl patch deployment percona-xtradb-cluster-operator \
+        ```bash
+        kubectl patch deployment percona-xtradb-cluster-operator \
         -p'{"spec":{"template":{"spec":{"containers":[{"name":"percona-xtradb-cluster-operator","image":"docker.io/percona/percona-xtradb-cluster-operator:{{release}}"}]}}}}'
         ```
 
     4. Update the Custom Resource version and the database cluster. Specify the `initContainer` image with the `docker.io` registry name in the path. Pay attention to the changed repositories for PXB and logcollector:
 
-        ```{.bash data-prompt="$" }
-        $ kubectl patch pxc cluster1 --type=merge --patch '{
+        ```bash
+        kubectl patch pxc cluster1 --type=merge --patch '{
           "spec": {
             "crVersion": "{{release}}",
             "initContainer": "docker.io/percona/percona-xtradb-cluster-operator:{{release}}",
@@ -162,8 +162,8 @@ The following steps apply if you plan to use OpenShift 4.19. See the [Considerat
 
 2. Find the **new** initial Operator installation image name (it had changed during the Operator upgrade) and other image names for the components of your cluster with the `kubectl get deploy` command:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl get deploy percona-xtradb-cluster-operator -o yaml
+    ```bash
+    kubectl get deploy percona-xtradb-cluster-operator -o yaml
     ```
 
     ??? example "Expected output"
@@ -211,8 +211,8 @@ The following steps apply if you plan to use OpenShift 4.19. See the [Considerat
 
     === "Operator 1.14.0 or newer"
 
-        ``` {.bash data-prompt="$" }
-        $ kubectl patch pxc cluster1 --type=merge --patch '{
+        ```bash
+        kubectl patch pxc cluster1 --type=merge --patch '{
             "spec": {
                "crVersion":"{{ release }}",
                "initContainer": { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:e8c0237ace948653d8f3e297ec67276f23f4f7fb4f8018f97f246b65604d49e6" },
@@ -227,8 +227,8 @@ The following steps apply if you plan to use OpenShift 4.19. See the [Considerat
 
     === "Operator 1.13.0 or older"
 
-        ``` {.bash data-prompt="$" }
-        $ kubectl patch pxc cluster1 --type=merge --patch '{
+        ```bash
+        kubectl patch pxc cluster1 --type=merge --patch '{
             "spec": {
                "crVersion":"1.13.0",
                "initImage": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:e8c0237ace948653d8f3e297ec67276f23f4f7fb4f8018f97f246b65604d49e6",
@@ -247,8 +247,8 @@ The following steps apply if you plan to use OpenShift 4.19. See the [Considerat
 
         === "Operator 1.14.0 or newer"
 
-            ``` {.bash data-prompt="$" }
-            $ kubectl patch pxc cluster1 --type=merge --patch '{
+            ```bash
+            kubectl patch pxc cluster1 --type=merge --patch '{
                 "spec": {
                    "crVersion":"{{ release }}",
                    "initContainer": { "image": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:e8c0237ace948653d8f3e297ec67276f23f4f7fb4f8018f97f246b65604d49e6" },
@@ -262,8 +262,8 @@ The following steps apply if you plan to use OpenShift 4.19. See the [Considerat
 
         === "Operator 1.13.0 or older"
 
-            ``` {.bash data-prompt="$" }
-            $ kubectl patch pxc cluster1 --type=merge --patch '{
+            ```bash
+            kubectl patch pxc cluster1 --type=merge --patch '{
                 "spec": {
                    "crVersion":"1.13.0",
                    "initImage": "registry.connect.redhat.com/percona/percona-xtradb-cluster-operator@sha256:e8c0237ace948653d8f3e297ec67276f23f4f7fb4f8018f97f246b65604d49e6",

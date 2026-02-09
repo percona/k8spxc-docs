@@ -110,8 +110,8 @@ Configure the `PerconaXtraDBClusterRestore` Custom Resource. Specify the followi
 
 2. After that, the actual restoration process can be started as follows:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl apply -f deploy/backup/restore.yaml
+    ```bash
+    kubectl apply -f deploy/backup/restore.yaml
     ```
 
 ## Restore the cluster with point-in-time recovery
@@ -182,8 +182,8 @@ Configure the `PerconaXtraDBClusterRestore` Custom Resource. Specify the followi
 
 2. Run the actual restoration process:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl apply -f deploy/backup/restore.yaml
+    ```bash
+    kubectl apply -f deploy/backup/restore.yaml
     ```
 
 3. Make a new full backup after the restore, because your restored database is now the new baseline for future recoveries.

@@ -22,28 +22,28 @@ Let’s say you will use a Kubernetes Namespace called `percona-db-1`.
 
 1. Clone `percona-xtradb-cluster-operator` repository:
 
-    ``` {.bash data-prompt="$" }
-    $ git clone -b v{{ release }} git@github.com:percona/percona-xtradb-cluster-operator.git
-    $ cd percona-xtradb-cluster-operator
+    ```bash
+    git clone -b v{{ release }} git@github.com:percona/percona-xtradb-cluster-operator.git
+    cd percona-xtradb-cluster-operator
     ```
 
 2. Create your `percona-db-1` Namespace (if it doesn't yet exist) as follows:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl create namespace percona-db-1
+    ```bash
+    kubectl create namespace percona-db-1
     ```
 
 3. Deploy the Operator [using :octicons-link-external-16:](https://kubernetes.io/docs/reference/using-api/server-side-apply/)
     the following command:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl apply --server-side -f deploy/bundle.yaml -n percona-db-1
+    ```bash
+    kubectl apply --server-side -f deploy/bundle.yaml -n percona-db-1
     ```
 
 4. Once Operator is up and running, deploy the database cluster itself:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl apply -f deploy/cr.yaml -n percona-db-1
+    ```bash
+    kubectl apply -f deploy/cr.yaml -n percona-db-1
     ```
 
 You can deploy multiple clusters in this namespace.
@@ -54,20 +54,20 @@ What if there is a need to deploy clusters in another namespace? The solution fo
 
 1. Create your `percona-db-2` namespace (if it doesn't yet exist) as follows:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl create namespace percona-db-2
+    ```bash
+    kubectl create namespace percona-db-2
     ```
 
 2. Deploy the Operator:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl apply --server-side -f deploy/bundle.yaml -n percona-db-2
+    ```bash
+    kubectl apply --server-side -f deploy/bundle.yaml -n percona-db-2
     ```
 
 3. Once Operator is up and running deploy the database cluster itself:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl apply -f deploy/cr.yaml -n percona-db-2
+    ```bash
+    kubectl apply -f deploy/cr.yaml -n percona-db-2
     ```
 
     !!! note
@@ -117,23 +117,23 @@ Kubernetes.
 
 1. First of all, clone the percona-xtradb-cluster-operator repository:
 
-    ``` {.bash data-prompt="$" }
-    $ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
-    $ cd percona-xtradb-cluster-operator
+    ```bash
+    git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
+    cd percona-xtradb-cluster-operator
     ```
 
 2. Let’s suppose that Operator’s namespace should be the `pxc-operator` one.
     Create it as follows:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl create namespace pxc-operator
+    ```bash
+    kubectl create namespace pxc-operator
     ```
 
     Namespaces to be watched by the Operator should be created in the same way
     if not exist. Let’s say the Operator should watch the `pxc` namespace:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl create namespace pxc
+    ```bash
+    kubectl create namespace pxc
     ```
 
 3. Edit the ``deploy/cw-bundle.yaml`` configuration file to set proper
@@ -154,24 +154,24 @@ Kubernetes.
 
 4. Apply the `deploy/cw-bundle.yaml` file with the following command:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl apply --server-side -f deploy/cw-bundle.yaml -n pxc-operator
+    ```bash
+    kubectl apply --server-side -f deploy/cw-bundle.yaml -n pxc-operator
     ```
 
 5. After the Operator is started, Percona XtraDB Cluster can be created at any
     time by applying the `deploy/cr.yaml` configuration file, like in the case
     of normal installation:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl apply -f deploy/cr.yaml -n pxc
+    ```bash
+    kubectl apply -f deploy/cr.yaml -n pxc
     ```
 
     The creation process will take some time. When the process is over your
     cluster will obtain the `ready` status. You can check it with the following
     command:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl get pxc
+    ```bash
+    kubectl get pxc
     ```
 
     ??? example "Expected output"
@@ -194,16 +194,16 @@ to the cluster.
     You can use the following command to get the password of the `root`
     user:
     
-    ``` {.bash data-prompt="$" }
-    $ kubectl get secrets --namespace=pxc cluster1-secrets --template='{{"{{"}}.data.root | base64decode{{"}}"}}{{"{{"}}"\n"{{"}}"}}'
+    ```bash
+    kubectl get secrets --namespace=pxc cluster1-secrets --template='{{"{{"}}.data.root | base64decode{{"}}"}}{{"{{"}}"\n"{{"}}"}}'
     ```
 
 2. Run a container with `mysql` client and connect its console output to your
     terminal. The following command will do this, naming the new Pod
     `percona-client`:
 
-    ```{.bash data-prompt="$"}
-    $ kubectl run -i --rm --tty percona-client --image=percona:5.7 --restart=Never --env="POD_NAMESPACE=pxc" -- bash -il
+    ```bash
+    kubectl run -i --rm --tty percona-client --image=percona:5.7 --restart=Never --env="POD_NAMESPACE=pxc" -- bash -il
     ```
     
     Executing it may require some time to deploy the correspondent Pod.
@@ -215,13 +215,13 @@ to the cluster.
     [ProxySQL](proxysql-conf.md):
 
     === "with HAProxy (default)"
-        ```{.bash data-prompt="$"}
-        $ mysql -h cluster1-haproxy -uroot -p'<root_password>'
+        ```bash
+        mysql -h cluster1-haproxy -uroot -p'<root_password>'
         ```
 
     === "with ProxySQL"
-        ```{.bash data-prompt="$"}
-        $ mysql -h cluster1-proxysql -uroot -p'<root_password>'
+        ```bash
+        mysql -h cluster1-proxysql -uroot -p'<root_password>'
         ```
 
 !!! note 
@@ -273,9 +273,9 @@ To upgrade the cluster-wide Operator you follow the [standard upgrade scenario](
     for the Operator, taking it from the official repository on Github, and do
     the same for the Role-based access control:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/crd.yaml
-    $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cw-rbac.yaml
+    ```bash
+    kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/crd.yaml
+    kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cw-rbac.yaml
     ```
 
 2. Now you should [apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to your
@@ -285,8 +285,8 @@ To upgrade the cluster-wide Operator you follow the [standard upgrade scenario](
     For example, updating to the `{{ release }}` version in the `pxc-operator` namespace should look as
     follows.
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl patch deployment percona-xtradb-cluster-operator \
+    ```bash
+    kubectl patch deployment percona-xtradb-cluster-operator \
       -p'{"spec":{"template":{"spec":{"containers":[{"name":"percona-xtradb-cluster-operator","image":"percona/percona-xtradb-cluster-operator:{{ release }}"}]}}}}' -n pxc-operator
     ```
 
@@ -294,6 +294,6 @@ To upgrade the cluster-wide Operator you follow the [standard upgrade scenario](
     You can track the rollout process in real time with the
     `kubectl rollout status` command with the name of your cluster:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl rollout status deployments percona-xtradb-cluster-operator -n pxc-operator
+    ```bash
+    kubectl rollout status deployments percona-xtradb-cluster-operator -n pxc-operator
     ```

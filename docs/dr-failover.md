@@ -11,8 +11,8 @@ Here's how to do it:
 
     Run the following command to apply a patch configuration to `cluster2`. 
 
-    ```{.bash data-prompt="$" }
-    $ kubectl patch pxc cluster2 -n <namespace> --type=merge --patch '{
+    ```bash
+    kubectl patch pxc cluster2 -n <namespace> --type=merge --patch '{
       "spec": {
         "pxc": {
           "replicationChannels": [

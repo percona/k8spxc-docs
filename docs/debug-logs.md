@@ -16,32 +16,32 @@ In the following examples we will access containers of the `cluster1-pxc-0` Pod.
 
 * Check logs of the `pxc` container:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl logs cluster1-pxc-0 -c pxc
+    ```bash
+    kubectl logs cluster1-pxc-0 -c pxc
     ```
 
 * Check logs of the `pmm-client` container:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl logs cluster1-pxc-0 -c pmm-client
+    ```bash
+    kubectl logs cluster1-pxc-0 -c pmm-client
     ```
 
 * Filter logs of the `pxc` container which are not older than 600 seconds:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl logs cluster1-pxc-0 -c pxc --since=600s
+    ```bash
+    kubectl logs cluster1-pxc-0 -c pxc --since=600s
     ```
 
 * Check logs of a previous instantiation of the `pxc` container, if any:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl logs cluster1-pxc-0 -c pxc --previous
+    ```bash
+    kubectl logs cluster1-pxc-0 -c pxc --previous
     ```
 
 * Check logs of the `pxc` container, parsing the output with [jq JSON processor :octicons-link-external-16:](https://stedolan.github.io/jq/):
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl logs cluster1-pxc-0 -c pxc -f | jq -R 'fromjson?'
+    ```bash
+    kubectl logs cluster1-pxc-0 -c pxc -f | jq -R 'fromjson?'
     ```
 
 ## Cluster-level logging
@@ -65,8 +65,8 @@ Logs are stored for 7 days and then rotated.
 
 Collected logs can be examined using the following command:
 
-``` {.bash data-prompt="$" }
-$ kubectl logs cluster1-pxc-0 -c logs
+```bash
+kubectl logs cluster1-pxc-0 -c logs
 ```
 
 !!! note

@@ -4,8 +4,8 @@ This page describes how to configure and customize HAProxy for your Percona Xtra
 
 Use the following command to enable HAProxy:
 
-``` {.bash data-prompt="$" }
-$ kubectl patch pxc cluster1 --type=merge --patch '{
+```bash
+kubectl patch pxc cluster1 --type=merge --patch '{
   "spec": {
      "haproxy": {
         "enabled": true,
@@ -217,8 +217,8 @@ You should use the combination of the cluster name with the `-haproxy`
 suffix as the naming convention for the configmap. To find the cluster
 name, you can use the following command:
 
-``` {.bash data-prompt="$" }
-$ kubectl get pxc
+```bash
+kubectl get pxc
 ```
 
 The syntax for `kubectl create configmap` command is:
@@ -230,14 +230,14 @@ kubectl create configmap <cluster-name>-haproxy <resource-type=resource-name>
 The following example defines `cluster1-haproxy` as the configmap name and
 the `haproxy.cfg` file as the data source:
 
-``` {.bash data-prompt="$" }
-$ kubectl create configmap cluster1-haproxy --from-file=haproxy.cfg
+```bash
+kubectl create configmap cluster1-haproxy --from-file=haproxy.cfg
 ```
 
 To view the created configmap, use the following command:
 
-``` {.bash data-prompt="$" }
-$ kubectl describe configmaps cluster1-haproxy
+```bash
+kubectl describe configmaps cluster1-haproxy
 ```
 
 ### Use a Secret Object
@@ -252,8 +252,8 @@ name and the `haproxy` suffix.
 
     To find the cluster name, you can use the following command:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl get pxc
+    ```bash
+    kubectl get pxc
     ```
 
 Configuration options should be put inside a specific key inside of the `data`
@@ -271,22 +271,22 @@ follows:
 
 === "in Linux"
 
-    ``` {.bash data-prompt="$" }
-    $ cat haproxy.cfg | base64 --wrap=0
+    ```bash
+    cat haproxy.cfg | base64 --wrap=0
     ```
 
 === "in macOS"
 
-    ``` {.bash data-prompt="$" }
-    $ cat haproxy.cfg | base64
+    ```bash
+    cat haproxy.cfg | base64
     ```
 
 !!! note
 
     Similarly, you can read the list of options from a Base64 encoded string:
 
-    ``` {.bash data-prompt="$" }
-    $ echo "IGdsb2JhbAogICBtYXhjb25uIDIwNDgKICAgZXh0ZXJuYWwtY2hlY2sKICAgc3RhdHMgc29ja2V0\
+    ```bash
+    echo "IGdsb2JhbAogICBtYXhjb25uIDIwNDgKICAgZXh0ZXJuYWwtY2hlY2sKICAgc3RhdHMgc29ja2V0\
       IC92YXIvcnVuL2hhcHJveHkuc29jayBtb2RlIDYwMCBleHBvc2UtZmQgbGlzdGVuZXJzIGxldmVs\
       IHVzZXIKIGRlZmF1bHRzCiAgIGxvZyBnbG9iYWwKICAgbW9kZSB0Y3AKICAgcmV0cmllcyAxMAog\
       ICB0aW1lb3V0IGNsaWVudCAxMDAwMAogICB0aW1lb3V0IGNvbm5lY3QgMTAwNTAwCiAgIHRpbWVv\
@@ -319,8 +319,8 @@ data:
 
 When ready, apply it with the following command:
 
-``` {.bash data-prompt="$" }
-$ kubectl create -f deploy/my-haproxy-secret.yaml
+```bash
+kubectl create -f deploy/my-haproxy-secret.yaml
 ```
 
 !!! note

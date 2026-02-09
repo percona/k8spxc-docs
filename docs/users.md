@@ -106,8 +106,8 @@ Instead of using the Custom Resource, you can create unprivileged users directly
 
 To create a user manually, connect to your cluster and run the `GRANT` statement. Replace `cluster1` with your actual cluster name and `root_password` with your root password:
 
-``` {.bash data-prompt="$" data-prompt-second="mysql>"}
-$ kubectl run -it --rm percona-client --image=percona:8.0 --restart=Never -- mysql -hcluster1-pxc -uroot -proot_password
+```bash
+kubectl run -it --rm percona-client --image=percona:8.0 --restart=Never -- mysql -hcluster1-pxc -uroot -proot_password
 mysql> GRANT ALL PRIVILEGES ON database1.* TO 'user1'@'%' IDENTIFIED BY 'password1';
 ```
 
@@ -119,8 +119,8 @@ mysql> GRANT ALL PRIVILEGES ON database1.* TO 'user1'@'%' IDENTIFIED BY 'passwor
 
 After creating the user, verify that it was created successfully and can connect to the database. The following example connects to the cluster via ProxySQL and executes a simple query:
 
-``` {.bash data-prompt="$" data-prompt-second="percona-client:/$"}
-$ kubectl run -it --rm percona-client --image=percona:8.0 --restart=Never -- bash -il
+```bash
+kubectl run -it --rm percona-client --image=percona:8.0 --restart=Never -- bash -il
 percona-client:/$ mysql -h cluster1-proxysql -uuser1 -ppassword1
 mysql> SELECT * FROM database1.table1 LIMIT 1;
 ```
@@ -197,28 +197,28 @@ Here's how to do it:
 
     === "in Linux"
 
-        ``` {.bash data-prompt="$" }
-        $ echo -n "new_password" | base64 --wrap=0
+        ```bash
+        echo -n "new_password" | base64 --wrap=0
         ```
 
     === "in macOS"
 
-        ``` {.bash data-prompt="$" }
-        $ echo -n "new_password" | base64
+        ```bash
+        echo -n "new_password" | base64
         ```
 
 2. Update the Secrets object. For example, the following command updates the Admin user's password to `new_password` in the `cluster1-secrets` object:
 
     === "in Linux"
 
-        ``` {.bash data-prompt="$" }
-        $ kubectl patch secret/cluster1-secrets -p '{"data":{"root": "'$(echo -n new_password | base64 --wrap=0)'"}}'
+        ```bash
+        kubectl patch secret/cluster1-secrets -p '{"data":{"root": "'$(echo -n new_password | base64 --wrap=0)'"}}'
         ```
 
     === "in macOS"
 
-        ``` {.bash data-prompt="$" }
-        $ kubectl patch secret/cluster1-secrets -p '{"data":{"root": "'$(echo -n new_password | base64)'"}}'
+        ```bash
+        kubectl patch secret/cluster1-secrets -p '{"data":{"root": "'$(echo -n new_password | base64)'"}}'
         ```
 
 ### Internal Secret and its usage

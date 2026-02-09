@@ -42,8 +42,8 @@ Before configuring the storage, you need to create a [Kubernetes Secret :octicon
 
     1. Create the Kubernetes Secret object with this file:
 
-        ``` {.bash data-prompt="$" }
-        $ kubectl apply -f deploy/backup/backup-secret-s3.yaml -n <namespace>
+        ```bash
+        kubectl apply -f deploy/backup/backup-secret-s3.yaml -n <namespace>
         ```
 
         !!! note
@@ -129,20 +129,20 @@ Before configuring the storage, you need to create a [Kubernetes Secret :octicon
 
             === "in Linux"
 
-                ``` {.bash data-prompt="$" }
-                $ echo -n 'plain-text-string' | base64 --wrap=0
+                ```bash
+                echo -n 'plain-text-string' | base64 --wrap=0
                 ```
 
             === "in macOS"
 
-                ``` {.bash data-prompt="$" }
-                $ echo -n 'plain-text-string' | base64
+                ```bash
+                echo -n 'plain-text-string' | base64
                 ```
 
         Once the editing is over, create the Kubernetes Secret object as follows:
 
-        ``` {.bash data-prompt="$" }
-        $ kubectl apply -f deploy/backup/backup-secret-azure.yaml
+        ```bash
+        kubectl apply -f deploy/backup/backup-secret-azure.yaml
         ```
 
     2. Put the data needed to access the Azure Blob storage into the

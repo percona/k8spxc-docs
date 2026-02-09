@@ -45,8 +45,8 @@ But updating the CRD *and* Operator is the **recommended path**.
 
 3. Starting with version 1.12.0, the Operator no longer has a separate API version for each release in CRD. Instead, the CRD has the API version `v1`. Therefore, if you installed the CRD when the Operator version was **older than 1.12.0**, you must update the API version in the CRD manually to run the upgrade. To check your CRD version, use the following command:
 
-    ```{.bash data-prompt="$"}
-    $ kubectl get crd perconaxtradbclusters.pxc.percona.com -o yaml | yq .status.storedVersions
+    ```bash
+    kubectl get crd perconaxtradbclusters.pxc.percona.com -o yaml | yq .status.storedVersions
     ```
 
     ??? example "Sample output"
@@ -83,9 +83,9 @@ The upgrade includes the following steps.
 
     === "Manually"
 
-        ```{.bash data-prompt="$"}
-        $ kubectl proxy &  \
-        $ curl \
+        ```bash
+        kubectl proxy &  \
+        curl \
                --header "Content-Type: application/json-patch+json" \
                --request PATCH \
                --data '[{"op": "replace", "path": "/status/storedVersions", "value":["v1"]}]' \
@@ -107,8 +107,8 @@ The upgrade includes the following steps.
 
     === "Via `kubectl patch`"
 
-        ```{.bash data-prompt="$"}
-        $ kubectl patch customresourcedefinitions perconaxtradbclusters.pxc.percona.com --subresource='status' --type='merge' -p '{"status":{"storedVersions":["v1"]}}'
+        ```bash
+        kubectl patch customresourcedefinitions perconaxtradbclusters.pxc.percona.com --subresource='status' --type='merge' -p '{"status":{"storedVersions":["v1"]}}'
         ```
 
         ??? example "Expected output"
@@ -119,15 +119,15 @@ The upgrade includes the following steps.
 
 2. Update the Custom Resource Definition for the Operator and the Role-based access control. Take the latest versions from the official repository on GitHub with the following commands:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/crd.yaml
-    $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/rbac.yaml
+    ```bash
+    kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/crd.yaml
+    kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/rbac.yaml
     ```
 
 3. Next, update the Percona Server for MySQL Operator Deployment in Kubernetes by changing the container image of the Operator Pod to the latest version. Find the image name for the current Operator release [in the list of certified images](images.md). Then [apply a patch :octicons-link-external-16:](https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/) to the Operator Deployment and specify the image name and version. Use the following command to update the Operator to the `{{ release }}` version:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl patch deployment percona-xtradb-cluster-operator \
+    ```bash
+    kubectl patch deployment percona-xtradb-cluster-operator \
       -p'{"spec":{"template":{"spec":{"containers":[{"name":"percona-xtradb-cluster-operator","image":"percona/percona-xtradb-cluster-operator:{{ release }}"}]}}}}'
     ```
 
@@ -158,8 +158,8 @@ The upgrade includes the following steps.
 
         === "For Percona XtraDB Cluster 8.4"
 
-            ```{.bash data-prompt="$"}
-            $ kubectl patch pxc cluster1 --type=merge --patch '{
+            ```bash
+            kubectl patch pxc cluster1 --type=merge --patch '{
                "spec": {
                    "crVersion":"{{ release }}",
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc84recommended }}" },
@@ -173,8 +173,8 @@ The upgrade includes the following steps.
 
         === "For Percona XtraDB Cluster 8.0"
 
-            ```{.bash data-prompt="$"}
-            $ kubectl patch pxc cluster1 --type=merge --patch '{
+            ```bash
+            kubectl patch pxc cluster1 --type=merge --patch '{
                "spec": {
                    "crVersion":"{{ release }}",
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
@@ -188,8 +188,8 @@ The upgrade includes the following steps.
 
         === "For Percona XtraDB Cluster 5.7"
 
-                ```{.bash data-prompt="$"}
-                $ kubectl patch pxc cluster1 --type=merge --patch '{
+                ```bash
+                kubectl patch pxc cluster1 --type=merge --patch '{
                    "spec": {
                        "crVersion":"{{ release }}",
                        "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc57recommended }}" },
@@ -205,8 +205,8 @@ The upgrade includes the following steps.
 
         === "For Percona XtraDB Cluster 8.4"
 
-            ```{.bash data-prompt="$"}
-            $ kubectl patch pxc cluster1 --type=merge --patch '{
+            ```bash
+            kubectl patch pxc cluster1 --type=merge --patch '{
                "spec": {
                    "crVersion":"{{ release }}",
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc84recommended }}" },
@@ -219,8 +219,8 @@ The upgrade includes the following steps.
 
         === "For Percona XtraDB Cluster 8.0"
 
-            ```{.bash data-prompt="$"}
-            $ kubectl patch pxc cluster1 --type=merge --patch '{
+            ```bash
+            kubectl patch pxc cluster1 --type=merge --patch '{
                "spec": {
                    "crVersion":"{{ release }}",
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc80recommended }}" },
@@ -233,8 +233,8 @@ The upgrade includes the following steps.
 
         === "For Percona XtraDB Cluster 5.7"
 
-            ```{.bash data-prompt="$"}
-            $ kubectl patch pxc cluster1 --type=merge --patch '{
+            ```bash
+            kubectl patch pxc cluster1 --type=merge --patch '{
                "spec": {
                    "crVersion":"{{ release }}",
                    "pxc":{ "image": "percona/percona-xtradb-cluster:{{ pxc57recommended }}" },
@@ -254,9 +254,9 @@ Operator with the `helm upgrade` command.
     for the Operator, taking it from the official repository on Github, and do
     the same for the Role-based access control:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/crd.yaml
-    $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/rbac.yaml
+    ```bash
+    kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/crd.yaml
+    kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/rbac.yaml
     ```
 
 2. Next, update the Operator deployment. 
@@ -265,8 +265,8 @@ Operator with the `helm upgrade` command.
     
         If you installed the Operator with default parameters, the upgrade can be done as follows: 
 
-        ``` {.bash data-prompt="$" }
-        $ helm upgrade my-op percona/pxc-operator --version {{ release }}
+        ```bash
+        helm upgrade my-op percona/pxc-operator --version {{ release }}
         ```
 
     === "With customized parameters"
@@ -275,8 +275,8 @@ Operator with the `helm upgrade` command.
 
         You can get the list of the used options in YAML format with the `helm get values my-op -a > my-values.yaml` command. Then pass this file directly to the upgrade command as follows:
 
-        ``` {.bash data-prompt="$" }
-        $ helm upgrade my-op percona/pxc-operator --version {{ release }} -f my-values.yaml
+        ```bash
+        helm upgrade my-op percona/pxc-operator --version {{ release }} -f my-values.yaml
         ```
     
     The `my-op` parameter in the above example is the name of a [release object :octicons-link-external-16:](https://helm.sh/docs/intro/using_helm/#three-big-concepts)
