@@ -49,8 +49,8 @@ backup:
 
     You can check if there are any CronJobs in the namespace of your cluster related to scheduled backups as follows:
 
-    ```{.bash data-prompt="$" }
-    $ kubectl get cronjobs -n <namespace>
+    ```bash
+    kubectl get cronjobs -n <namespace>
     ```
 
     ??? example "Expected output"
@@ -62,8 +62,8 @@ backup:
 
     Deleting CronJob is straightforward:
     
-    ```{.bash data-prompt="$" }
-    $ kubectl delete cronjob sat-night-backup -n <namespace>
+    ```bash
+    kubectl delete cronjob sat-night-backup -n <namespace>
     ```
 
     ??? example "Expected output"

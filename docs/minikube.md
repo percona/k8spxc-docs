@@ -30,14 +30,14 @@ Minikube:
 
 2. Deploy the operator with the following command:
 
-    ```{.bash data-prompt="$" }
-    $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/bundle.yaml
+    ```bash
+    kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/bundle.yaml
     ```
 
 3. Deploy Percona XtraDB Cluster:
 
-    ```{.bash data-prompt="$" }
-    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cr-minimal.yaml
+    ```bash
+    kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cr-minimal.yaml
     ```
 
     !!! note
@@ -49,22 +49,22 @@ Minikube:
         repository with all manifests and source code by executing the following
         command:
 
-        ``` {.bash data-prompt="$" }
-        $ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
+        ```bash
+        git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
         ```
 
         After editing the needed options, apply your modified `deploy/cr.yaml` file as follows:
 
-        ``` {.bash data-prompt="$" }
-        $ kubectl apply -f deploy/cr.yaml
+        ```bash
+        kubectl apply -f deploy/cr.yaml
         ```
 
     Creation process will take some time. When the process is over your
     cluster will obtain the `ready` status. You can check it with the following
     command:
 
-    ```{.bash data-prompt="$" }
-    $ kubectl get pxc
+    ```bash
+    kubectl get pxc
     ```
 
     ??? example "Expected output"

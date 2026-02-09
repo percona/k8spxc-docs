@@ -6,8 +6,8 @@ The replica site must be the exact copy of the primary site and must have the sa
 
 Clone the repository with all manifests and source code. You'll need it to edit configuration files for the database clusters, Secrets, backups and restores. Run the following command:
 
-```{.bash data-prompt="$" }
-$ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
+```bash
+git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
 ```
 
 Make sure to clone the correct branch. The branch name is the same as the Operator release version. 
@@ -18,8 +18,8 @@ Let's create `cluster2` on the replica site.
 
 1. Create a namespace.  
 
-    ```{.bash data-prompt="$" }
-	$ kubectl create namespace <namespace>
+    ```bash
+	kubectl create namespace <namespace>
 	```
 
 2. Create the Secrets object with the user credentials for the replica site. The Operator uses this Secret object when installing Percona XtraDB Cluster. As a result, the users in both sites have the same credentials. This is required to restore the backup from the main site on the replica.
@@ -47,8 +47,8 @@ Let's create `cluster2` on the replica site.
 
 3. Create the Secret with the following command. Replace the `<namespace>` placeholder with your name:
 
-	```{.bash data-prompt="$" }
-	$ kubectl apply -f path/to/pxcsecret.yaml -n <namespace>
+	```bash
+	kubectl apply -f path/to/pxcsecret.yaml -n <namespace>
 	```
 
 4. Install Percona XtraDB Cluster. Edit the `deploy/cr.yaml` file and specify the following configuration:
@@ -62,16 +62,16 @@ Let's create `cluster2` on the replica site.
 
 5. Run the following command to install Percona XtraDB Cluster:
 
-    ```{.bash data-prompt="$" }
-	$ kubectl apply -f deploy/cr.yaml -n <namespace>
+    ```bash
+	kubectl apply -f deploy/cr.yaml -n <namespace>
 	```
 
 	It may take some time to install and initialize the cluster.
 
 6. Check the status of the cluster:
 
-	```{.bash data-prompt="$" }
-	$ kubectl get pxc -n <namespace>
+	```bash
+	kubectl get pxc -n <namespace>
 	```
 
 	??? example "Expected output"
@@ -85,8 +85,8 @@ Let's create `cluster2` on the replica site.
 
 1. Create the Secret object with the credentials from the cloud storage where you made the backup to. The Operator uses the same Secret for backups and  restores. For example, if you named the Secret `deploy/backup/backup-s3-secret.yaml`, run the following command to create the Secrets object on the replica site. Replace the `<namespace>` placeholder with your namespace.
 
-    ```{.bash data-prompt="$" }
-	$ kubectl apply -f deploy/backup/backup-s3-secret.yaml -n <namespace>
+    ```bash
+	kubectl apply -f deploy/backup/backup-s3-secret.yaml -n <namespace>
 	```
 
 2. To restore from a backup, create a special restore configuration file. Edit the sample [`deploy/backup/restore.yaml`](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/backup/restore.yaml) file.
@@ -119,14 +119,14 @@ Let's create `cluster2` on the replica site.
 
 3. Run the following command to start a restore:
 
-    ```{.bash data-prompt="$" }
-	$ kubectl apply -f deploy/backup/restore.yaml -n <namespace>
+    ```bash
+	kubectl apply -f deploy/backup/restore.yaml -n <namespace>
 	```
 
 4. Check the cluster status to see if the restore was successful:
 
-	```{.bash data-prompt="$" }
-	$ kubectl get pxc -n <namespace>
+	```bash
+	kubectl get pxc -n <namespace>
 	```
 
 	??? example "Expected output"

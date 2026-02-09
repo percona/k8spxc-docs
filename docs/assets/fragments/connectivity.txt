@@ -4,8 +4,8 @@ Here’s how to get it:
 
 1. List the Secrets objects.
 
-    ```{.bash data-prompt="$"}
-    $ {{ commandName }} get secrets
+    ```bash
+    {{ commandName }} get secrets
     ```
     The Secrets object you are interested in has the
     `{{ clusterName }}-secrets` name by default.
@@ -15,16 +15,16 @@ Here’s how to get it:
     value (and use the different Secrets object name instead
     of the `{{ clusterName }}-secrets`, if needed):
     
-    ``` {.bash data-prompt="$" }
-    $ {{ commandName }} get secret {{ clusterName }}-secrets -n <namespace> --template='{{"{{"}}.data.root | base64decode{{"}}"}}{{"{{"}}"\n"{{"}}"}}'
+    ```bash
+    {{ commandName }} get secret {{ clusterName }}-secrets -n <namespace> --template='{{"{{"}}.data.root | base64decode{{"}}"}}{{"{{"}}"\n"{{"}}"}}'
     ```
 
 3. Run a container with `mysql` tool and connect its console output to your
     terminal. The following command does this, naming the new Pod
     `percona-client`:
 
-    ```{.bash data-prompt="$"}
-    $ {{ commandName }} run -n <namespace> -i --rm --tty percona-client --image=percona:8.4 --restart=Never -- bash -il
+    ```bash
+    {{ commandName }} run -n <namespace> -i --rm --tty percona-client --image=percona:8.4 --restart=Never -- bash -il
     ```
 
     Executing it may require some time to deploy the corresponding Pod.
@@ -36,13 +36,13 @@ Here’s how to get it:
     [ProxySQL](proxysql-conf.md):
 
     === "with HAProxy (default)"
-        ```{.bash data-prompt="$"}
-        $ mysql -h {{ clusterName }}-haproxy -uroot -p'<root_password>'
+        ```bash
+        mysql -h {{ clusterName }}-haproxy -uroot -p'<root_password>'
         ```
 
     === "with ProxySQL"
-        ```{.bash data-prompt="$"}
-        $ mysql -h {{ clusterName }}-proxysql -uroot -p'<root_password>'
+        ```bash
+        mysql -h {{ clusterName }}-proxysql -uroot -p'<root_password>'
         ```
     
     This command will connect you to the MySQL server.

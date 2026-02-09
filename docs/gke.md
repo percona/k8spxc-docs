@@ -14,17 +14,17 @@ If you would like to use *your local shell*, install the following:
 
 2. [kubectl :octicons-link-external-16:](https://cloud.google.com/kubernetes-engine/docs/quickstart#choosing_a_shell). It is the Kubernetes command-line tool you will use to manage and deploy applications. To install the tool, run the following command:
 
-    ``` {.bash data-prompt="$" }
-    $ gcloud auth login
-    $ gcloud components install kubectl
+    ```bash
+    gcloud auth login
+    gcloud components install kubectl
     ```
 
 ## Configuring default settings for the cluster
 
 You can configure the settings using the `gcloud` tool. You can run it either in the [Cloud Shell :octicons-link-external-16:](https://cloud.google.com/shell/docs/quickstart) or in your local shell (if you have installed Google Cloud SDK locally on the previous step). The following command will create a cluster named `my-cluster-1`:
 
-``` {.bash data-prompt="$" }
-$ gcloud container clusters create my-cluster-1 --project <project ID> --zone us-central1-a --cluster-version {{ gkerecommended }} --machine-type n1-standard-4 --num-nodes=3
+```bash
+gcloud container clusters create my-cluster-1 --project <project ID> --zone us-central1-a --cluster-version {{ gkerecommended }} --machine-type n1-standard-4 --num-nodes=3
 ```
 
 !!! note
@@ -39,16 +39,16 @@ Now you should configure the command-line access to your newly created cluster t
 
 In the Google Cloud Console, select your cluster and then click the *Connect* shown on the above image. You will see the connect statement configures command-line access. After you have edited the statement, you may run the command in your local shell:
 
-``` {.bash data-prompt="$" }
-$ gcloud container clusters get-credentials my-cluster-1 --zone us-central1-a --project <project name>
+```bash
+gcloud container clusters get-credentials my-cluster-1 --zone us-central1-a --project <project name>
 ```
 
 ## Installing the Operator
 
 1. First of all, use your [Cloud Identity and Access Management (Cloud IAM) :octicons-link-external-16:](https://cloud.google.com/iam) to control access to the cluster. The following command will give you the ability to create Roles and RoleBindings:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl create clusterrolebinding cluster-admin-binding --clusterrole cluster-admin --user $(gcloud config get-value core/account)
+    ```bash
+    kubectl create clusterrolebinding cluster-admin-binding --clusterrole cluster-admin --user $(gcloud config get-value core/account)
     ```
 
     The return statement confirms the creation:
@@ -61,17 +61,17 @@ $ gcloud container clusters get-credentials my-cluster-1 --zone us-central1-a --
 
     So, create the namespace and save it in the namespace context for subsequent commands as follows (replace the `<namespace name>` placeholder with some descriptive name):
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl create namespace <namespace name>
-    $ kubectl config set-context $(kubectl config current-context) --namespace=<namespace name>
+    ```bash
+    kubectl create namespace <namespace name>
+    kubectl config set-context $(kubectl config current-context) --namespace=<namespace name>
     ```
 
     At success, you will see the message that namespace/<namespace name> was created, and the context (gke_<project name>_<zone location>_<cluster name>) was modified.
 
     Deploy the Operator using the following command:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/bundle.yaml
+    ```bash
+    kubectl apply --server-side -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/bundle.yaml
     ```
 
     ??? example "Expected output"
@@ -89,8 +89,8 @@ $ gcloud container clusters get-credentials my-cluster-1 --zone us-central1-a --
 
 2. The operator has been started, and you can deploy Percona XtraDB Cluster:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cr.yaml
+    ```bash
+    kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cr.yaml
     ```
 
     ??? example "Expected output"
@@ -108,22 +108,22 @@ $ gcloud container clusters get-credentials my-cluster-1 --zone us-central1-a --
         options. You can clone the repository with all manifests and source code
         by executing the following command:
 
-        ``` {.bash data-prompt="$" }
-        $ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
+        ```bash
+        git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
         ```
 
         After editing the needed options, apply your modified `deploy/cr.yaml` file as follows:
 
-        ``` {.bash data-prompt="$" }
-        $ kubectl apply -f deploy/cr.yaml
+        ```bash
+        kubectl apply -f deploy/cr.yaml
         ```
 
     The creation process may take some time. When the process is over your
     cluster will obtain the `ready` status. You can check it with the following
     command:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl get pxc
+    ```bash
+    kubectl get pxc
     ```
 
     ??? example "Expected output"
@@ -146,8 +146,8 @@ to the cluster.
 If `kubectl get pxc` command doesn't show `ready` status too long, you can 
 check the creation process with the `kubectl get pods` command:
 
-``` {.bash data-prompt="$" }
-$ kubectl get pods
+```bash
+kubectl get pods
 ```
 
 ??? example "Expected output"
@@ -161,8 +161,8 @@ Also, you can see the same information when browsing Pods of your cluster in Goo
 If the command output had shown some errors, you can examine the problematic
 Pod with the `kubectl describe <pod name>` command as follows:
 
-``` {.bash data-prompt="$" }
-$ kubectl describe pod  cluster1-pxc-2
+```bash
+kubectl describe pod  cluster1-pxc-2
 ```
 
 Review the detailed information for `Warning` statements and then correct the
@@ -184,8 +184,8 @@ There are several ways that you can delete the cluster.
 
 You can clean up the cluster with the `gcloud container clusters delete <cluster name> --zone <zone location>` command. The return statement requests your confirmation of the deletion. Type `y` to confirm.
 
-``` {.bash data-prompt="$" }
-$ gcloud container clusters delete my-cluster-1 --zone us-central1-a --project <project ID>
+```bash
+gcloud container clusters delete my-cluster-1 --zone us-central1-a --project <project ID>
 ```
 
 ??? example "Expected output"

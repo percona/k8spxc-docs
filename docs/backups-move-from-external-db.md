@@ -46,20 +46,20 @@ This document provides the steps how to migrate Percona Server for MySQL 8.0 dep
 
         === "in Linux"
 
-            ``` {.bash data-prompt="$" }
-            $ echo -n 'plain-text-string' | base64 --wrap=0
+            ```bash
+            echo -n 'plain-text-string' | base64 --wrap=0
             ```
 
         === "in macOS"
 
-            ``` {.bash data-prompt="$" }
-            $ echo -n 'plain-text-string' | base64
+            ```bash
+            echo -n 'plain-text-string' | base64
             ```
 
 3. Once the editing is over, create the Kubernetes Secret object as follows:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl apply -f deploy/backup-s3.yaml
+    ```bash
+    kubectl apply -f deploy/backup-s3.yaml
     ```
 
 4. You will need passwords for the `monitor`, `operator`, `xtrabackup` and
@@ -69,8 +69,8 @@ This document provides the steps how to migrate Percona Server for MySQL 8.0 dep
     name). When you know the Secrets name, you can get password for a specific
     user as follows:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl get secrets cluster1-secrets --template='{{"{{"}}.data.<user_name> | base64decode{{"}}"}}{{"{{"}}"\n"{{"}}"}}'
+    ```bash
+    kubectl get secrets cluster1-secrets --template='{{"{{"}}.data.<user_name> | base64decode{{"}}"}}{{"{{"}}"\n"{{"}}"}}'
     ```
     
     Repeat this command 4 times, substituting <user_name> with `monitor`,
@@ -128,9 +128,9 @@ This document provides the steps how to migrate Percona Server for MySQL 8.0 dep
 1. Export the storage credentials as environment variables. Following the above
     example, here is a command which shows how to export the AWS S3 credentials:
 
-    ```{.bash data-prompt="$"}
-    $ export AWS_ACCESS_KEY_ID=XXXXXX
-    $ export AWS_SECRET_ACCESS_KEY=XXXXXX
+    ```bash
+    export AWS_ACCESS_KEY_ID=XXXXXX
+    export AWS_SECRET_ACCESS_KEY=XXXXXX
     ```
 
     Don't forget to replace the ```XXXX``` placeholders with your actual Amazon
@@ -138,8 +138,8 @@ This document provides the steps how to migrate Percona Server for MySQL 8.0 dep
 
 2. Make the backup of your database and upload it to the storage using [xbcloud :octicons-link-external-16:](https://docs.percona.com/percona-xtrabackup/8.0/xbcloud-binary-overview.html?h=xbcloud). Replace the values for the `--target-dir`, `--password`, `--s3-bucket` with your values in the following command:
 
-    ```{.bash data-prompt="$"}
-    $ xtrabackup --backup --stream=xbstream --target-dir=/tmp/backups/ --extra-lsndir=/tmp/backups/  --password=root_password | xbcloud put --storage=s3 --parallel=10 --md5 --s3-bucket="mysql-testing-bucket" "db-test-1"
+    ```bash
+    xtrabackup --backup --stream=xbstream --target-dir=/tmp/backups/ --extra-lsndir=/tmp/backups/  --password=root_password | xbcloud put --storage=s3 --parallel=10 --md5 --s3-bucket="mysql-testing-bucket" "db-test-1"
     ```
 
 ## Restore from a backup in the target environment
@@ -169,8 +169,8 @@ If your source database didn't have any data, skip this step and proceed with th
 
 2. Restore from the backup:
     
-    ```{.bash data-prompt="$"}
-    $ kubectl apply -f restore.yml
+    ```bash
+    kubectl apply -f restore.yml
     ```
 
 You can find more information on restoring backup to a new Kubernetes-based
@@ -200,8 +200,8 @@ the asynchronous replication between the source database and the target cluster.
 
     Apply the changes for your Custom Resource as usual:
 
-    ```{.bash data-prompt="$"}
-    $ kubectl apply -f deploy/cr.yaml
+    ```bash
+    kubectl apply -f deploy/cr.yaml
     ```
 
 2. Verify the replication by connecting to a Percona XtraDB Cluster node. You
@@ -209,15 +209,15 @@ the asynchronous replication between the source database and the target cluster.
     password created by the Operator for this. The password can be obtained in
     a same way we used for other system users:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl get secrets cluster1-secrets -o yaml -o jsonpath='{.data.root}' | base64 --decode | tr '\n' ' ' && echo " "
+    ```bash
+    kubectl get secrets cluster1-secrets -o yaml -o jsonpath='{.data.root}' | base64 --decode | tr '\n' ' ' && echo " "
     ```
 
     When you know the `root` password, you can use `kubectl` command as follows
     (substitute `root_password` with the actual password you have just obtained):
 
-    ```{.bash data-prompt="$"}
-    $ kubectl exec -it cluster1-pxc-0 -c pxc -- mysql -uroot -proot_password -e "show replica status \G"
+    ```bash
+    kubectl exec -it cluster1-pxc-0 -c pxc -- mysql -uroot -proot_password -e "show replica status \G"
     ```
 
     ??? example "Expected output"
@@ -314,14 +314,14 @@ Cluster in Kubernetes, you can promote this cluster as primary.
 2. Stop the `mysqld` service in your source environment to make sure no new data
     is written:
 
-    ```{.bash data-prompt="$"}
-    $ sudo systemctl stop mysqld
+    ```bash
+    sudo systemctl stop mysqld
     ```
 
 3. Apply the changes to the Kubernetes cluster in your target environment:
 
-    ```{.bash data-prompt="$"}
-    $ kubectl apply -f deploy/cr.yaml
+    ```bash
+    kubectl apply -f deploy/cr.yaml
     ```
 
 As a result, replication is stopped and the read-only mode is disabled for the

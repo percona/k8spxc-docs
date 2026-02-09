@@ -32,7 +32,7 @@ If you [use cert-manager](tls-cert-manager.md):
 
 2. Optionally you can also check that the certificates issuer is up and running:
 
-    ``` {.bash data-prompt="$" }
+    ```bash
     kubectl get issuer
     ```
 
@@ -57,8 +57,8 @@ If you [use cert-manager](tls-cert-manager.md):
 3. Use the following command to find out the certificates validity dates,
     substituting Secrets names if necessary:
 
-    ``` {.bash data-prompt="$" }
-    $ {
+    ```bash
+    {
       kubectl get secret/cluster1-ssl-internal -o jsonpath='{.data.tls\.crt}' | base64 --decode | openssl x509 -inform pem -noout -text | grep "Not After"
       kubectl get secret/cluster1-ssl -o jsonpath='{.data.ca\.crt}' | base64 --decode | openssl x509 -inform pem -noout -text | grep "Not After"
       }
@@ -157,8 +157,8 @@ Operator version prior to 1.9.0), you should move through the
 2. If cert-manager is used, delete issuer
     and TLS certificates:
 
-    ``` {.bash data-prompt="$" }
-    $ {
+    ```bash
+    {
       kubectl delete issuer/cluster1-pxc-ca
       kubectl delete certificate/cluster1-ssl certificate/cluster1-ssl-internal
       }
@@ -166,7 +166,7 @@ Operator version prior to 1.9.0), you should move through the
 
 3. Delete Secrets to force the SSL reconciliation:
 
-    ``` {.bash data-prompt="$" }
+    ```bash
     kubectl delete secret/cluster1-ssl secret/cluster1-ssl-internal
     ```
 

@@ -2,9 +2,9 @@
 
 1. First of all, clone the percona-xtradb-cluster-operator repository:
 
-    ``` {.bash data-prompt="$" }
-    $ git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
-    $ cd percona-xtradb-cluster-operator
+    ```bash
+    git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator
+    cd percona-xtradb-cluster-operator
     ```
 
 !!! note
@@ -20,16 +20,16 @@
     This step should be done only once; it does not need to be repeated
     with the next Operator deployments, etc.
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl apply --server-side -f deploy/crd.yaml
+    ```bash
+    kubectl apply --server-side -f deploy/crd.yaml
     ```
 
 3. The next thing to do is to add the `pxc` namespace to Kubernetes,
     not forgetting to set the correspondent context for further steps:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl create namespace pxc
-    $ kubectl config set-context $(kubectl config current-context) --namespace=pxc
+    ```bash
+    kubectl create namespace pxc
+    kubectl config set-context $(kubectl config current-context) --namespace=pxc
     ```
 
 4. Now RBAC (role-based access control) for Percona XtraDB Cluster should be set
@@ -38,8 +38,8 @@
     them, allowed to be done on specific Kubernetes resources (details
     about users and roles can be found in [Kubernetes documentation :octicons-link-external-16:](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#default-roles-and-role-bindings)).
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl apply -f deploy/rbac.yaml
+    ```bash
+    kubectl apply -f deploy/rbac.yaml
     ```
 
     !!! note
@@ -52,8 +52,8 @@
 
     Finally it’s time to start the operator within Kubernetes:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl apply -f deploy/operator.yaml
+    ```bash
+    kubectl apply -f deploy/operator.yaml
     ```
 
     !!! note
@@ -62,8 +62,8 @@
         `deploy/bundle.yaml` file instead of running commands from the steps
         2 and 4:
         
-        ``` {.bash data-prompt="$" }
-        $ kubectl apply --server-side -f deploy/bundle.yaml
+        ```bash
+        kubectl apply --server-side -f deploy/bundle.yaml
         ```
         
         This will automatically create Custom Resource Definition, set up
@@ -78,8 +78,8 @@
     section of the `deploy/secrets.yaml` file; after editing is finished, create
     users Secrets with the following command:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl create -f deploy/secrets.yaml
+    ```bash
+    kubectl create -f deploy/secrets.yaml
     ```
 
     More details about secrets can be found in [Users](users.md#users).
@@ -92,16 +92,16 @@
 7. After the operator is started and user secrets are added, Percona
     XtraDB Cluster can be created at any time with the following command:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl apply -f deploy/cr.yaml
+    ```bash
+    kubectl apply -f deploy/cr.yaml
     ```
 
     Creation process will take some time. When the process is over your
     cluster will obtain the `ready` status. You can check it with the following
     command:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl get pxc
+    ```bash
+    kubectl get pxc
     ```
 
     ??? example "Expected output"

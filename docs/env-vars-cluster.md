@@ -34,8 +34,8 @@ To encode a value, run this command:
 
 To verify or decode an encoded value:
 
-```{.bash data-prompt="$" }
-$ echo "MTAwMA==" | base64 --decode
+```bash
+echo "MTAwMA==" | base64 --decode
 1000
 ```
 
@@ -58,8 +58,8 @@ data:
 
 Save this manifest to a file (for example, `deploy/my-env-secret.yaml`) and create the Secret:
 
-```{.bash data-prompt="$" }
-$ kubectl create -f deploy/my-env-secret.yaml
+```bash
+kubectl create -f deploy/my-env-secret.yaml
 ```
 
 ### Apply the configuration
@@ -73,8 +73,8 @@ $ kubectl create -f deploy/my-env-secret.yaml
 
 2. Apply the updated configuration:
 
-    ```{.bash data-prompt="$" }
-    $ kubectl apply -f deploy/cr.yaml
+    ```bash
+    kubectl apply -f deploy/cr.yaml
     ```
 
 ## Configure alternative memory allocator
@@ -115,8 +115,8 @@ data:
 
 Save this manifest to a file (for example, `deploy/my-new-env-var-secret.yaml`) and create the Secret:
 
-```{.bash data-prompt="$" }
-$ kubectl create -f deploy/my-new-env-var-secret.yaml
+```bash
+kubectl create -f deploy/my-new-env-var-secret.yaml
 ```
 
 ### Apply the memory allocator configuration
@@ -130,7 +130,7 @@ $ kubectl create -f deploy/my-new-env-var-secret.yaml
 
 2. Apply the updated configuration:
 
-    ```{.bash data-prompt="$" }
-    $ kubectl apply -f deploy/cr.yaml
+    ```bash
+    kubectl apply -f deploy/cr.yaml
     ```
 

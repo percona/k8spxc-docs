@@ -45,8 +45,8 @@ To make an on-demand backup, use
 
 3. Track the backup process by checking the status of the Backup object:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl get pxc-backup -n $NAMESPACE -w
+    ```bash
+    kubectl get pxc-backup -n $NAMESPACE -w
     ```
 
     The `-w` flag instructs the Operator to provide real-time updates about the backup progress. The `Succeeded` status indicates that a backup is completed. 
@@ -60,8 +60,8 @@ To make an on-demand backup, use
 
 4. View detailed information about the backup using the `kubectl describe` command:
     
-    ``` {.bash data-prompt="$" }
-    $ kubectl describe pxc-backup -n $NAMESPACE 
+    ```bash
+    kubectl describe pxc-backup -n $NAMESPACE 
     ```
 
     The `Status` section of the output provides useful details about the backup state, the error message in case of issues with the backup, and the storage details.

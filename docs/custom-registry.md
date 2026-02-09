@@ -9,13 +9,13 @@ in the OpenShift environment.
 
 1. First of all login to the OpenShift and create project.
 
-    ``` {.bash data-prompt="$" }
-    $ oc login
+    ```bash
+    oc login
     Authentication required for https://192.168.1.100:8443 (openshift)
     Username: admin
     Password:
     Login successful.
-    $ oc new-project pxc
+    oc new-project pxc
     Now using project "pxc" on server "https://192.168.1.100:8443".
     ```
 
@@ -27,30 +27,30 @@ in the OpenShift environment.
 
     The token can be find out with the following command:
 
-    ``` {.bash data-prompt="$" }
-    $ oc whoami -t
+    ```bash
+    oc whoami -t
     ADO8CqCDappWR4hxjfDqwijEHei31yXAvWg61Jg210s
     ```
 
     And the following one tells you the registry IP address:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl get services/docker-registry -n default
+    ```bash
+    kubectl get services/docker-registry -n default
     NAME              TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
     docker-registry   ClusterIP   172.30.162.173   <none>        5000/TCP   1d
     ```
 
 3. Now you can use the obtained token and address to login to the registry:
 
-    ``` {.bash data-prompt="$" }
-    $ docker login -u admin -p ADO8CqCDappWR4hxjfDqwijEHei31yXAvWg61Jg210s 172.30.162.173:5000
+    ```bash
+    docker login -u admin -p ADO8CqCDappWR4hxjfDqwijEHei31yXAvWg61Jg210s 172.30.162.173:5000
     Login Succeeded
     ```
 
 4. Pull the needed image by its SHA digest:
 
-    ``` {.bash data-prompt="$" }
-    $ docker pull docker.io/perconalab/percona-xtradb-cluster-operator@sha256:841c07eef30605080bfe80e549f9332ab6b9755fcbc42aacbf86e4ac9ef0e444
+    ```bash
+    docker pull docker.io/perconalab/percona-xtradb-cluster-operator@sha256:841c07eef30605080bfe80e549f9332ab6b9755fcbc42aacbf86e4ac9ef0e444
     Trying to pull repository docker.io/perconalab/percona-xtradb-cluster-operator ...
     sha256:841c07eef30605080bfe80e549f9332ab6b9755fcbc42aacbf86e4ac9ef0e444: Pulling from docker.io/perconalab/percona-xtradb-cluster-operator
     Digest: sha256:841c07eef30605080bfe80e549f9332ab6b9755fcbc42aacbf86e4ac9ef0e444
@@ -63,17 +63,17 @@ in the OpenShift environment.
 5. The following way is used to push an image to the custom registry
     (into the OpenShift pxc project):
 
-    ``` {.bash data-prompt="$" }
-    $ docker tag \
+    ```bash
+    docker tag \
         docker.io/perconalab/percona-xtradb-cluster-operator@sha256:841c07eef30605080bfe80e549f9332ab6b9755fcbc42aacbf86e4ac9ef0e444 \
         172.30.162.173:5000/pxc/percona-xtradb-cluster-operator:{{ release }}
-    $ docker push 172.30.162.173:5000/pxc/percona-xtradb-cluster-operator:{{ release }}
+    docker push 172.30.162.173:5000/pxc/percona-xtradb-cluster-operator:{{ release }}
     ```
 
 6. Check the image in the OpenShift registry with the following command:
 
-    ``` {.bash data-prompt="$" }
-    $ oc get is
+    ```bash
+    oc get is
     NAME                              DOCKER REPO                                                            TAGS      UPDATED
     percona-xtradb-cluster-operator   docker-registry.default.svc:5000/pxc/percona-xtradb-cluster-operator   {{ release }}     2 hours ago
     ```

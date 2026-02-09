@@ -30,7 +30,7 @@ To update Percona XtraDB Cluster to a specific version, do the following:
     You can track the rollout process in real time with the
     `kubectl rollout status` command with the name of your cluster:
 
-    ```{.bash data-prompt="$"}
-    $ kubectl rollout status sts cluster1-pxc
+    ```bash
+    kubectl rollout status sts cluster1-pxc
     ```
 

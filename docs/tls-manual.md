@@ -39,17 +39,17 @@ Replace `cluster1` and `my-namespace` with your actual cluster name and namespac
 
 1. Set your cluster variables
 
-    ``` {.bash data-prompt="$" }
-    $ CLUSTER_NAME=my-cluster-name
-    $ NAMESPACE=my-namespace
+    ```bash
+    CLUSTER_NAME=my-cluster-name
+    NAMESPACE=my-namespace
     ```
 
 2. Create the Certificate Authority (CA)
 
     This command creates a root Certificate Authority that will sign all your certificates:
         
-    ``` {.bash data-prompt="$" }
-    $ cat <<EOF | cfssl gencert -initca - | cfssljson -bare ca
+    ```bash
+    cat <<EOF | cfssl gencert -initca - | cfssljson -bare ca
     {
       "CN": "Root CA",
       "key": {
@@ -62,8 +62,8 @@ Replace `cluster1` and `my-namespace` with your actual cluster name and namespac
 
 3. Generate the server certificate for external communication. The command generates a server TLS certificate and a key for external connections, with SANs (Subject Alternative Names) for ProxySQL and Percona XtraDB Cluster endpoints.
 
-    ```{.bash data-prompt="$"}
-    $ cat <<EOF | cfssl gencert -ca=ca.pem -ca-key=ca-key.pem - | cfssljson -bare server
+    ```bash
+    cat <<EOF | cfssl gencert -ca=ca.pem -ca-key=ca-key.pem - | cfssljson -bare server
     {
       "hosts": [
         "${CLUSTER_NAME}-proxysql",
@@ -83,8 +83,8 @@ Replace `cluster1` and `my-namespace` with your actual cluster name and namespac
 
 4. Create a Kubernetes Secret for the external certificate. This command creates a Kubernetes TLS secret named `cluster1-ssl`. The secret contains the server certificate (`server.pem`), its private key (`server-key.pem`), and the CA certificate (`ca.pem`). This secret should be referenced in your cluster's configuration for external TLS connections.
 
-    ```{.bash data-prompt="$"}
-    $ kubectl create secret generic cluster1-ssl \
+    ```bash
+    kubectl create secret generic cluster1-ssl \
       --from-file=tls.crt=server.pem \
       --from-file=tls.key=server-key.pem \
       --from-file=ca.crt=ca.pem \
@@ -95,8 +95,8 @@ Replace `cluster1` and `my-namespace` with your actual cluster name and namespac
 
     To secure communication between Percona XtraDB Cluster instances, you need a separate internal server certificate. Generate the internal TLS certificate and key with appropriate SANs:
 
-    ```{.bash data-prompt="$"}
-    $ cat <<EOF | cfssl gencert -ca=ca.pem -ca-key=ca-key.pem - | cfssljson -bare server-internal
+    ```bash
+    cat <<EOF | cfssl gencert -ca=ca.pem -ca-key=ca-key.pem - | cfssljson -bare server-internal
     {
       "hosts": [
         "*.${CLUSTER_NAME}-pxc"
@@ -116,8 +116,8 @@ Replace `cluster1` and `my-namespace` with your actual cluster name and namespac
 
     This command creates a Kubernetes TLS secret named `cluster1-ssl-internal`. The secret contains the internal server certificate (`server-internal.pem`), its private key (`server-internal-key.pem`), and the CA certificate (`ca.pem`). This secret should be referenced in your cluster's configuration for internal TLS communications.
 
-    ```{.bash data-prompt="$"}
-    $ kubectl create secret generic cluster1-ssl-internal \
+    ```bash
+    kubectl create secret generic cluster1-ssl-internal \
       --from-file=tls.crt=server-internal.pem \
       --from-file=tls.key=server-internal-key.pem \
       --from-file=ca.crt=ca.pem \

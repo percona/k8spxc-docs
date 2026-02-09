@@ -112,9 +112,9 @@ For manual installation or update, follow the instructions below:
 
     1. Clone the Operator repository:
 
-       ```{.bash data-prompt="$"}
-       $ git clone -b v1.18.0 https://github.com/percona/percona-xtradb-cluster-operator
-       $ cd percona-xtradb-cluster-operator
+       ```bash
+       git clone -b v1.18.0 https://github.com/percona/percona-xtradb-cluster-operator
+       cd percona-xtradb-cluster-operator
        ```
     
     2. Edit the `deploy/bundle.yaml` file. 
@@ -128,14 +128,14 @@ For manual installation or update, follow the instructions below:
 
     3. Apply the updated `deploy/bundle.yaml` file
 
-        ```{.bash data-prompt="$"}
-        $ oc apply --server-side -f deploy/bundle.yaml
+        ```bash
+        oc apply --server-side -f deploy/bundle.yaml
         ```
 
     4. Install Percona XtraDB Cluster:
 
-        ``` {.bash data-prompt="$" }
-        $ oc create -f deploy/secrets.yaml
+        ```bash
+        oc create -f deploy/secrets.yaml
         ```
 
 === "Update the Operator to {{release}}"
@@ -147,8 +147,8 @@ For manual installation or update, follow the instructions below:
     
     2. Apply a patch to the clusters with undefined `initContainer.image` to define this image with the `docker.io` registry in the image path:
 
-        ```{.bash data-prompt="$" }
-        $ kubectl patch pxc cluster1 --type=merge --patch '{
+        ```bash
+        kubectl patch pxc cluster1 --type=merge --patch '{
           "spec": {
             "initcontainer": {
               "image": "docker.io/percona/percona-xtradb-cluster-operator:1.17.0"
@@ -161,15 +161,15 @@ For manual installation or update, follow the instructions below:
 
     3. Update the Operator deployment and specify the `docker.io` registry name in the image path:
 
-        ```{.bash data-prompt="$" }
-        $ kubectl patch deployment percona-xtradb-cluster-operator \
+        ```bash
+        kubectl patch deployment percona-xtradb-cluster-operator \
         -p'{"spec":{"template":{"spec":{"containers":[{"name":"percona-xtradb-cluster-operator","image":"docker.io/percona/percona-xtradb-cluster-operator:{{release}}"}]}}}}'
         ```
     
     4. Update the Custom Resource version and the database cluster. Specify the `initContainer` image with the `docker.io` registry name in the path. Pay attention to the changed repositories for PXB and logcollector:
 
-        ```{.bash data-prompt="$" }
-        $ kubectl patch pxc cluster1 --type=merge --patch '{
+        ```bash
+        kubectl patch pxc cluster1 --type=merge --patch '{
           "spec": {
             "crVersion": "{{release}}",
             "initContainer": "docker.io/percona/percona-xtradb-cluster-operator:{{release}}",

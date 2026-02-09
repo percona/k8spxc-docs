@@ -61,8 +61,8 @@ spec:
 
 The cluster will be ready for asynchronous replication when you apply changes as usual:
 
-``` {.bash data-prompt="$" }
-$ kubectl apply -f deploy/cr.yaml
+```bash
+kubectl apply -f deploy/cr.yaml
 ```
 
 To list the endpoints assigned to PXC Pods list the Kubernetes Service objects by
@@ -111,8 +111,8 @@ spec:
 
 The cluster will be ready for asynchronous replication when you apply changes as usual:
 
-``` {.bash data-prompt="$" }
-$ kubectl apply -f deploy/cr.yaml
+```bash
+kubectl apply -f deploy/cr.yaml
 ```
 <a name="replication-ssl">
 
@@ -155,14 +155,14 @@ If you need you can change a password for this user as follows:
 
 === "in Linux"
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl patch secret/cluster1-secrets -p '{"data":{"replication": "'$(echo -n new_password | base64 --wrap=0)'"}}'
+    ```bash
+    kubectl patch secret/cluster1-secrets -p '{"data":{"replication": "'$(echo -n new_password | base64 --wrap=0)'"}}'
     ```
 
 === "in macOS"
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl patch secret/cluster1-secrets -p '{"data":{"replication": "'$(echo -n new_password | base64)'"}}'
+    ```bash
+    kubectl patch secret/cluster1-secrets -p '{"data":{"replication": "'$(echo -n new_password | base64)'"}}'
     ```
 
 If you have changed the `replication` user’s password on the Source cluster, you can have a *replication is not running* error message in log, similar to the following one:
@@ -175,14 +175,14 @@ To fix this error, do the following:
 
 1. Find the Replica Pod which was chosen by the Operator for replication, using the following command:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl get pods --selector percona.com/replicationPod=true
+    ```bash
+    kubectl get pods --selector percona.com/replicationPod=true
     ```
 
 2. Get the shell access to this Pod and login to the MySQL monitor as a [root user](users.md#system-users):
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl exec -c pxc --stdin --tty <pod_name> -- /bin/bash
+    ```bash
+    kubectl exec -c pxc --stdin --tty <pod_name> -- /bin/bash
     bash-4.4$ mysql -uroot -proot_password
     ```
 

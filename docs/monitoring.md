@@ -27,14 +27,14 @@ To encode a password or any other parameter, run the following command:
 
 === "on Linux" 
 
-    ```{.bash data-prompt="$"} 
-    $ echo -n "password" | base64 --wrap=0
+    ```bash 
+    echo -n "password" | base64 --wrap=0
     ``` 
 
 === "on macOS" 
 
-    ```{.bash data-prompt="$"} 
-    $ echo -n "password" | base64
+    ```bash 
+    echo -n "password" | base64
     ```
 
 For example, to set the new PMM API key to `new_key` in the `cluster1-secrets`
@@ -42,14 +42,14 @@ object, do the following:
 
 === "in Linux"
 
-    ```{.bash data-prompt="$"}
-    $ kubectl patch secret/cluster1-secrets -p '{"data":{"pmmserverkey": "'$(echo -n new_key | base64 --wrap=0)'"}}'
+    ```bash
+    kubectl patch secret/cluster1-secrets -p '{"data":{"pmmserverkey": "'$(echo -n new_key | base64 --wrap=0)'"}}'
     ```
 
 === "on macOS"
 
-    ```{.bash data-prompt="$"}
-    $ kubectl patch secret/cluster1-secrets -p '{"data":{"pmmserverkey": "'$(echo -n new_key | base64)'"}}'
+    ```bash
+    kubectl patch secret/cluster1-secrets -p '{"data":{"pmmserverkey": "'$(echo -n new_key | base64)'"}}'
     ```
 
 ## Check PMM Client health and status

@@ -127,20 +127,20 @@ Here's the example configuration.
 
 2. Find your cluster name:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl get pxc
+    ```bash
+    kubectl get pxc
     ```
 
 3. Create the ConfigMap using the cluster name with the `-proxysql` suffix:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl create configmap cluster1-proxysql --from-file=proxysql.cnf
+    ```bash
+    kubectl create configmap cluster1-proxysql --from-file=proxysql.cnf
     ```
 
 4. Verify the ConfigMap:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl describe configmaps cluster1-proxysql
+    ```bash
+    kubectl describe configmaps cluster1-proxysql
     ```
 
 ### Use a Secret object
@@ -152,8 +152,8 @@ name and the `proxysql` suffix.
 
 1. Find your cluster name:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl get pxc
+    ```bash
+    kubectl get pxc
     ```
 
 2. Create a `proxysql.cnf` configuration file with your options:
@@ -164,14 +164,14 @@ name and the `proxysql` suffix.
 
     === "in Linux"
 
-        ``` {.bash data-prompt="$" }
-        $ cat proxysql.cnf | base64 --wrap=0
+        ```bash
+        cat proxysql.cnf | base64 --wrap=0
         ```
 
     === "in macOS"
 
-        ``` {.bash data-prompt="$" }
-        $ cat proxysql.cnf | base64
+        ```bash
+        cat proxysql.cnf | base64
         ```
 
 4. Create a Secret object with a name composed of your cluster name and the `proxysql` suffix. Put the Base64-encoded configuration in the `data` section under the `proxysql.cnf` key. Example `deploy/my-proxysql-secret.yaml`:
@@ -209,8 +209,8 @@ name and the `proxysql` suffix.
 
 5. Apply the Secret:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl create -f deploy/my-proxysql-secret.yaml
+    ```bash
+    kubectl create -f deploy/my-proxysql-secret.yaml
     ```
 
 6. Restart Percona XtraDB Cluster to apply the configuration changes.
@@ -221,8 +221,8 @@ Use the [ProxySQL admin interface :octicons-link-external-16:](https://www.perco
 
 1. Find the ProxySQL Pod name:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl get pods
+    ```bash
+    kubectl get pods
     ```
 
     ??? example "Sample output"
@@ -244,14 +244,14 @@ Use the [ProxySQL admin interface :octicons-link-external-16:](https://www.perco
 
 2. Get the admin password:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl get secrets $(kubectl get pxc -o jsonpath='{.items[].spec.secretsName}') -o template='{{'{{'}} .data.proxyadmin | base64decode {{'}}'}}'
+    ```bash
+    kubectl get secrets $(kubectl get pxc -o jsonpath='{.items[].spec.secretsName}') -o template='{{'{{'}} .data.proxyadmin | base64decode {{'}}'}}'
     ```
 
 3. Connect to ProxySQL. Replace `cluster1-proxysql-0` with your Pod name and `admin_password` with the retrieved password:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl exec -it cluster1-proxysql-0 -- mysql -h127.0.0.1 -P6032 -uproxyadmin -padmin_password
+    ```bash
+    kubectl exec -it cluster1-proxysql-0 -- mysql -h127.0.0.1 -P6032 -uproxyadmin -padmin_password
     ```
 
 ## ProxySQL scheduler (tech preview)
@@ -289,8 +289,8 @@ The scheduler is disabled by default to maintain backward compatibility. You can
 
 2. Apply the configuration:
 
-    ```{.bash data-prompt="$" }
-    $ kubectl apply -f deploy/cr.yaml -n <namespace>
+    ```bash
+    kubectl apply -f deploy/cr.yaml -n <namespace>
     ```
 
 When the scheduler is enabled, you should see:
@@ -302,8 +302,8 @@ To verify that ProxySQL is properly balancing read traffic across your Percona X
 
 Replace the `<user>` and `<password>` placeholders with the valid credentials of a MySQL user that has permissions to connect through ProxySQL and can execute simple `SELECT` statements on the cluster.
 
-```{.bash data-prompt="$" }
-$ for i in $(seq 100); do 
+```bash
+for i in $(seq 100); do 
     kubectl exec -i cluster1-pxc-0 -c pxc -- mysql -u<user> -p<password> \
       --host cluster1-proxysql -Ne "SELECT VARIABLE_VALUE FROM \
       performance_schema.global_variables WHERE VARIABLE_NAME = 'wsrep_node_name' LIMIT 1" \
@@ -339,7 +339,7 @@ If you need to disable the scheduler after it has been enabled, be aware of the 
 
 * **Hostgroup leftovers**: After disabling the scheduler, ProxySQL pod-0 may retain 80XX hostgroups in the `runtime_mysql_servers` table. Restart the Pod to clear these leftovers.
 
-    ```{.bash data-prompt="$" }
+    ```bash
     kubectl delete pod <proxysql-pod-name> -n <namespace>
     ```
 

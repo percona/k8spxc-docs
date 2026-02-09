@@ -16,8 +16,8 @@ spec:
 Pausing the cluster may take some time, and when the process is over, you will
 see only the Operator Pod running:
 
-``` {.bash data-prompt="$" }
-$ kubectl get pods
+```bash
+kubectl get pods
 NAME                                               READY   STATUS    RESTARTS   AGE
 percona-xtradb-cluster-operator-79966668bd-rswbk   1/1     Running   0          12m
 ```

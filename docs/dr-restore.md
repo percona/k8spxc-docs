@@ -33,20 +33,20 @@ The steps are the following:
 
 4. Create the Secrets object:
 
-	```{.bash data-prompt="$" }
-	$ kubectl apply -f path/to/pxcsecret.yaml -n <namespace>
+	```bash
+	kubectl apply -f path/to/pxcsecret.yaml -n <namespace>
 	```
 
 5. Install Percona XtraDB Cluster with the `cluster1` name and the default parameters:
 
-    ```{.bash data-prompt="$"}
-    $ kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{release}}/deploy/cr.yaml -n <namespace>
+    ```bash
+    kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{release}}/deploy/cr.yaml -n <namespace>
     ```
 
 6. Check the status of the cluster:
 
-	```{.bash data-prompt="$" }
-	$ kubectl get pxc -n <namespace>
+	```bash
+	kubectl get pxc -n <namespace>
 	```
 
 	??? example "Expected output"
@@ -91,14 +91,14 @@ The steps are the following:
 
 2. Start the restore with the following command:
 
-    ```{.bash data-prompt="$" }
-	$ kubectl apply -f deploy/backup/restore.yaml -n <namespace>
+    ```bash
+	kubectl apply -f deploy/backup/restore.yaml -n <namespace>
 	```
 
 3. Check the status of the cluster:
 
-	```{.bash data-prompt="$" }
-	$ kubectl get pxc -n <namespace>
+	```bash
+	kubectl get pxc -n <namespace>
 	```
 
     The cluster should report the Ready status.

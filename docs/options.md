@@ -62,8 +62,8 @@ You should use the combination of the cluster name with the `-pxc`
 suffix as the naming convention for the configmap. To find the cluster
 name, you can use the following command:
 
-``` {.bash data-prompt="$" }
-$ kubectl get pxc
+```bash
+kubectl get pxc
 ```
 
 The syntax for `kubectl create configmap` command is:
@@ -75,14 +75,14 @@ $ kubectl create configmap <cluster-name>-pxc <resource-type=resource-name>
 The following example defines `cluster1-pxc` as the configmap name and the
 `my.cnf` file as the data source:
 
-``` {.bash data-prompt="$" }
-$ kubectl create configmap cluster1-pxc --from-file=my.cnf
+```bash
+kubectl create configmap cluster1-pxc --from-file=my.cnf
 ```
 
 To view the created configmap, use the following command:
 
-``` {.bash data-prompt="$" }
-$ kubectl describe configmaps cluster1-pxc
+```bash
+kubectl describe configmaps cluster1-pxc
 ```
 
 ## Use a Secret Object
@@ -97,8 +97,8 @@ name and the `pxc` suffix.
 
     To find the cluster name, you can use the following command:
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl get pxc
+    ```bash
+    kubectl get pxc
     ```
 
 Configuration options should be put inside a specific key inside of the `data`
@@ -121,22 +121,22 @@ follows:
 
 === "in Linux"
 
-    ``` {.bash data-prompt="$" }
-    $ cat my.cnf | base64 --wrap=0
+    ```bash
+    cat my.cnf | base64 --wrap=0
     ```
 
 === "in macOS"
 
-    ``` {.bash data-prompt="$" }
-    $ cat my.cnf | base64
+    ```bash
+    cat my.cnf | base64
     ```
 
 !!! note
 
     Similarly, you can read the list of options from a Base64 encoded string:
 
-    ``` {.bash data-prompt="$" }
-    $ echo "W215c3FsZF0Kd3NyZXBfZGVidWc9T04KW3NzdF0Kd3NyZXBfZGVidWc9T04K" | base64 --decode
+    ```bash
+    echo "W215c3FsZF0Kd3NyZXBfZGVidWc9T04KW3NzdF0Kd3NyZXBfZGVidWc9T04K" | base64 --decode
     ```
 
 Finally, use a yaml file to create the Secret object. For example, you can
@@ -153,8 +153,8 @@ data:
 
 When ready, apply it with the following command:
 
-``` {.bash data-prompt="$" }
-$ kubectl create -f deploy/my-pxc-secret.yaml
+```bash
+kubectl create -f deploy/my-pxc-secret.yaml
 ```
 
 !!! note

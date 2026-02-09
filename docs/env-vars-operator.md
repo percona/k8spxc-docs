@@ -218,8 +218,8 @@ Here's how to do it:
 
 You can also edit the Deployment directly:
 
-```{.bash data-prompt="$" }
-$ kubectl edit deployment percona-xtradb-cluster-operator
+```bash
+kubectl edit deployment percona-xtradb-cluster-operator
 ```
 
 Then modify the `env` section in the container specification.

@@ -59,8 +59,8 @@ You can switch from proxy to another on an existing cluster:
 
 === "From ProxySQL to HAProxy"
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl patch pxc cluster1 --type=merge --patch '{
+    ```bash
+    kubectl patch pxc cluster1 --type=merge --patch '{
       "spec": {
          "haproxy": {
             "enabled": true,
@@ -74,8 +74,8 @@ You can switch from proxy to another on an existing cluster:
 
     You must be running the Operator version 1.19.0 and higher.
 
-    ``` {.bash data-prompt="$" }
-    $ kubectl patch pxc cluster1 --type=merge --patch '{
+    ```bash
+    kubectl patch pxc cluster1 --type=merge --patch '{
       "spec": {
          "haproxy": { "enabled": false },
          "proxysql": {

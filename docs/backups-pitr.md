@@ -69,8 +69,8 @@ You can connect to the point-in-time recovery Pod using the `<pitr-pod-service>:
 
 List services to get the point-in-time-recovery service name:
 
-```{.bash data-prompt="$"}
-$ kubectl get services | grep 'pitr'
+```bash
+kubectl get services | grep 'pitr'
 ```
 
 ??? example "Expected output"
@@ -85,8 +85,8 @@ Use this method to access the metrics from your local machine.
 
 1. Forward the Kubernetes service's port:
 
-    ```{.bash data-prompt="$"}
-    $ kubectl port-forward svc/cluster1-pitr 8080:8080
+    ```bash
+    kubectl port-forward svc/cluster1-pitr 8080:8080
     ```
 
 2. Open your browser and visit `<http://localhost:8080/metrics>`
@@ -99,14 +99,14 @@ You can gather the metrics from inside a database cluster.
 
 1. Connect to the cluster as follows, replacing the `<namespace>` placeholder with your value:
 
-    ```{.bash data-prompt="$"}
-    $ kubectl run -n <namespace> -i --rm --tty percona-client --image=percona:8.0 --restart=Never -- bash -il
+    ```bash
+    kubectl run -n <namespace> -i --rm --tty percona-client --image=percona:8.0 --restart=Never -- bash -il
     ```
 
 2. Connect to the point-in-time recovery port using `curl`:
 
-    ```{.bash data-prompt="$"}
-    $ curl cluster1-pitr:8080/metrics
+    ```bash
+    curl cluster1-pitr:8080/metrics
     ```
 
     --8<-- "cli/pitr-metrics-sample.md"

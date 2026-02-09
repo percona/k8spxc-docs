@@ -35,8 +35,8 @@ default choice.
     example) by getting the Service object with the `kubectl get service` command.
     The output will be as follows:
 
-    ```{.bash data-prompt="$"}
-    $ kubectl get service cluster1-haproxy
+    ```bash
+    kubectl get service cluster1-haproxy
     NAME                        TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)                                                         AGE
     cluster1-haproxy            LoadBalancer   10.12.23.173   <pending>     3306:32548/TCP,3309:30787/TCP,33062:32347/TCP,33060:31867/TCP   14s
     cluster1-haproxy-replicas   LoadBalancer   10.12.25.208   <pending>     3306:32166/TCP                                                  14s
@@ -62,8 +62,8 @@ default choice.
     example) by getting the Service object with the `kubectl get service` command.
     The output will be as follows:
 
-    ```{.bash data-prompt="$"}
-    $ kubectl get service cluster1-proxysql
+    ```bash
+    kubectl get service cluster1-proxysql
     NAME                     TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)                        AGE
     cluster1-proxysql        LoadBalancer   10.0.238.36    35.192.172.85   3306:30408/TCP,33062:30217/TCP   115s
     ```
@@ -104,8 +104,8 @@ pxc:
 When the cluster instances are exposed in this way, you can find the
 corresponding Services with the `kubectl get services` command:
 
-```{.bash data-prompt="$"}
-$ kubectl get services
+```bash
+kubectl get services
 NAME                              TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)                                 AGE
 ...
 cluster1-pxc-0                    LoadBalancer   10.120.15.23    34.132.93.114   3306:30771/TCP                          111s

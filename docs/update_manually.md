@@ -37,8 +37,8 @@ To run a semi-automatic update of Percona XtraDB Cluster, do the following:
     You can track the rollout process in real time using the
     `kubectl rollout status` command with the name of your cluster:
 
-    ```{.bash data-prompt="$"}
-    $ kubectl rollout status sts cluster1-pxc
+    ```bash
+    kubectl rollout status sts cluster1-pxc
     ```
 
 ## Manual upgrade (the On Delete strategy)
@@ -58,14 +58,14 @@ To update Percona XtraDB Cluster manually, do the following:
 
     1. Delete the Pod using its name with the command like the following one:
 
-        ```{.bash data-prompt="$"}
-        $ kubectl delete pod cluster1-pxc-2
+        ```bash
+        kubectl delete pod cluster1-pxc-2
         ```
 
     2. Wait until Pod becomes ready:
 
-        ```{.bash data-prompt="$"}
-        $ kubectl get pod cluster1-pxc-2
+        ```bash
+        kubectl get pod cluster1-pxc-2
         ```
 
         The output should be like this:
