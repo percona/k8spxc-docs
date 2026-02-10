@@ -5,7 +5,9 @@ You can restore from a backup as follows:
 * [On the same cluster where you made a backup](backups-restore.md)
 * On a new cluster deployed in a different Kubernetes-based environment.
 
-This document focuses on the restore on a new cluster deployed in a different Kubernetes environment.
+This document focuses on the restore on a new cluster deployed in a different Kubernetes environment. 
+
+Note that you can restore on a new cluster only from backups stored in a cloud backup storage, such as S3 or Azure. Since PVCs are namespace-specific Kubernetes resources, you can restore from Persistent volume backups only to the same namespace. See the [Restore on the same cluster where you made a backup](backups-restore.md) chapter for the steps.  
 
 !!! admonition "For Operator version 1.17.0 and earlier"
 
@@ -22,22 +24,10 @@ This document covers the following restore scenarios:
 * [Restore from a full backup](#restore-from-a-full-backup) - the restore from a backup without point-in-time
 * [Point-in-time recovery](#restore-the-cluster-with-point-in-time-recovery) - restore to a specific time, a specific or  latest transaction or skip a specific transaction during a restore. This ability requires that you [configure storing binlogs for point-in-time recovery](backups-pitr.md)
 
-To restore from a backup, you create a special Restore object using a special restore configuration file. The
-example of such file is [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml).
+To restore from a backup, you create a `PerconaXtraDBClusterRestore` object using a restore configuration file. The example of such file is [deploy/backup/restore.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/backup/restore.yaml).
 
 You can check available options in the [restore options reference](restore-cr.md).
 
-## Preconditions for a restore from a PVC backup
-
-If you are restoring from a backup stored in a Persistent Volume Claim (PVC), note that PVCs are namespace-specific Kubernetes resources. This means:
-
-* **PVCs cannot be directly accessed across different Kubernetes clusters or namespaces** - The PVC that contains your backup exists only in the source cluster's namespace and cannot be accessed from the target cluster.
-
-* **You must recreate the PVC on the target cluster** - Your Kubernetes cluster administrator needs to create a new PVC on the target cluster that contains the backup data. This typically involves:
-
-    1. Copying the backup data from the source PVC to the target PVC (using tools like `kubectl cp`, `rsync`, or storage-level replication depending on your infrastructure)
-    2. Ensuring the new PVC has sufficient storage capacity to hold the backup
-    3. Ensuring the new PVC is accessible from the namespace where you plan to restore
 
 --8<-- "backups-restore.md:backup-prepare"
 
@@ -50,10 +40,6 @@ You can define the backup storage in two ways: within the restore object configu
 ### Approach 1: Define storage configuration in the Restore object
 
 If you haven't defined storage in the target cluster's `cr.yaml` file, you can configure it directly in the restore object.
-
-!!! important 
-
-    This approach is supported only for backups stored in a cloud storage. To restore from Persistent Volume backups, use [Approach 2](#approach-2-storage-is-configured-on-the-target-cluster)
 
 1. Configure the `PerconaXtraDBClusterRestore` Custom Resource. Specify the following keys in the [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/backup/restore.yaml) file:
 
@@ -117,35 +103,14 @@ You can [already define](backups-storage.md) the storage where the backup is sto
 
 1. Configure the `PerconaXtraDBClusterRestore` Custom Resource. Specify the following keys in the [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/backup/restore.yaml) file:
 
-    * set `spec.pxcCluster` key to the name of the target cluster to restore the backup on,
+    * set `spec.pxcCluster` key to the name of the target cluster to restore the backup on
 
-    * specify the storage name in the `storageName` key. The name must match the name in the `backup.storages` subsection of the `deploy/cr.yaml` file.
+    * specify the storage name in the `storageName` key. The name must match the name in the `backup.storages` subsection of the `deploy/cr.yaml` file
 
     * configure the `spec.backupSource` subsection with the backup destination
  
         Here are example configurations:
        
-        === "Persistent volume"
-
-            ```yaml
-            spec:
-              pxcCluster: cluster1
-              storageName: pvc
-              backupSource:
-                destination: pvc/PVC_VOLUME_NAME
-              ...
-            ```
-
-            !!! note
-            
-                <a name="backups-headless-service"> If you need a [headless Service :octicons-link-external-16:](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services) for the restore Pod (i.e. restoring from a Persistent Volume in a tenant network), mention this in the `metadata.annotations` as follows:
-
-                ```yaml
-                annotations:
-                  percona.com/headless-service: "true"
-                ...
-                ```
-      
         === "S3-compatible storage"
 
             ```yaml
@@ -184,10 +149,6 @@ As with the restore from a backup, the Operator must know where to take the back
 
 
 ### Approach 1: Define storage configuration in the restore object
-
-!!! important
-
-    This approach is supported only for backups stored in a cloud storage. To restore from Persistent Volume backups, use [Approach 2](#approach-2-the-storage-is-defined-on-target)
 
 You can configure the storage within the restore object configuration:
 
@@ -261,7 +222,7 @@ You can configure the storage within the restore object configuration:
               ...
         ```
 
-2. Run the actual restoration process:
+2. Run the actual restore process:
 
     ```bash
     kubectl apply -f deploy/backup/restore.yaml -n <namespace>
@@ -293,27 +254,10 @@ You can define the storage where the backup is stored in the `backup.storages` s
 
     * Specify the storage name in the `storageName` key. The name must match the name in the `backup.storages` subsection of the `deploy/cr.yaml` file.
 
-    * Configure the `spec.backupSource` subsection with the backup destination. Take it from the output of the `kubectl get pxc-backup` command on the source cluster
+    * Configure the `spec.backupSource` subsection with the backup destination. Take it from the output of the `kubectl get pxc-backup` command on the source cluster.
 
     Here are example configurations:
 
-    === "Persistent volume"
-
-        ```yaml
-        apiVersion: pxc.percona.com/v1
-        kind: PerconaXtraDBClusterRestore
-        metadata:
-          name: restore1
-        spec:
-          pxcCluster: cluster1
-          storageName: pvc
-          pitr:
-            type: date
-            date: "2020-12-31 09:37:13"
-          backupSource:
-            destination: pvc/PVC_VOLUME_NAME
-        ```
-    
     === "S3-compatible storage"
 
         ```yaml
