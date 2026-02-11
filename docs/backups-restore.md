@@ -11,18 +11,29 @@ This document focuses on the restore to the same cluster.
 
 This document covers the following restore scenarios:
 
-* [Restore from a full backup](#restore-from-a-full-backup) - the restore from a backup without point-in-time
-* [Point-in-time recovery](#restore-with-point-in-time-recovery) - restore to a specific time, a specific or  latest transaction or skip a specific transaction during a restore. This ability requires that you [configure storing binlogs for point-in-time recovery](backups-pitr.md)
+* [Restore from a full backup](#restore-from-a-full-backup) - restore from a backup without point-in-time recovery
+* [Point-in-time recovery](#restore-with-point-in-time-recovery) - restore to a specific time, a specific or latest transaction, or skip a specific transaction during a restore. This ability requires that you [configure storing binlogs for point-in-time recovery](backups-pitr.md)
 * [Restore when a backup has different passwords](#restore-the-cluster-when-backup-has-different-passwords)
 
-To restore from a backup, you create a special Restore object using a special restore configuration file. The
-example of such file is [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml).
+To restore from a backup, you create a `PerconaXtraDBClusterRestore` object using a restore configuration file. The example of such file is [deploy/backup/restore.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/backup/restore.yaml).
 
 You can check available options in the [restore options reference](restore-cr.md).
 
-Note that you **cannot restore** to [emptyDir and hostPath volumes](storage.md),
-but you can make a backup from such storage (i. e., from
-emptyDir/hostPath to S3), and later restore it to a [Persistent Volume :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/persistent-volumes/).
+### Specifying the backup source
+
+You can specify the backup to restore from in two ways: using the `backupName` or the `backupSource` keys. You must use only one of these options in your restore configuration. Specifying them both together is not allowed.
+
+* Use the **`backupName`** option when backup objects exist in the cluster, such as for restoring to the same cluster where the backup was created.
+
+* Use the **`backupSource`** option for the following scenarios:
+
+    * when there are no backup objects in the cluster, such as when restoring to a new cluster. 
+
+    * for restores to the same cluster, instead of `backupName`. If the backup storage is configured in the target cluster's configuration, you can use `backupSource` with `storageName` (for example, for restores from Persistent volume backups). If the storage is not defined in the cluster, you must manually specify all required storage details within the restore configuration.
+
+### Storage limitations
+
+You **cannot restore** to [emptyDir and hostPath volumes](storage.md). However, you can make a backup from such storage (for example, from emptyDir/hostPath to S3) and later restore it to a [Persistent Volume](https://kubernetes.io/docs/concepts/storage/persistent-volumes/).
 
 --8<-- [start:backup-prepare]
 
@@ -96,6 +107,39 @@ Pass this configuration to the Operator:
       backupName: "backup1"
     EOF
     ```
+
+### Restore from a backup using the `backupSource` option
+
+You can use the `backupSource` option instead of the `backupName`. In this case you also need to specify the destination - where the backup is stored. Take this value from the output of the `kubectl get pxc-backup -n <namespace>` command.
+
+When restoring to the same cluster, the backup storage is already defined in the cluster's configuration and you can reference it by name.
+
+Here's the example configuration for the restore from a Persistent volume backup:
+
+```yaml
+spec:
+  pxcCluster: cluster1
+  storageName: pvc-fs
+  backupSource:
+    destination: pvc-fs/PVC_VOLUME_NAME
+  ...
+```
+
+!!! note
+
+    <a name="backups-headless-service"> If you need a [headless Service :octicons-link-external-16:](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services) for the restore Pod (i.e. restoring from a Persistent Volume in a tenant network), mention this in the `metadata.annotations` as follows:
+
+    ```yaml
+    annotations:
+      percona.com/headless-service: "true"
+    ...
+    ```
+
+Apply the configuration to start the restore:
+
+```bash
+kubectl apply -f deploy/backup/restore.yaml -n <namespace>
+```
 
 ## Restore with point-in-time recovery
 
@@ -234,7 +278,11 @@ spec:
 
 User passwords on the target cluster may have changed and now differ from the ones in a backup.
 
-Starting with version 1.18.0, the Operator no longer requires matching secrets between the backup and the target cluster. After the restore, it changes user passwords using the local Secret as a source. It also creates missing system users and adds missing grants. So you can [restore from a full backup](#restore-from-a-full-backup) or run a [point-in-time restore](#restore-with-point-in-time-recovery) as usual.
+Starting with version 1.18.0, the Operator no longer requires matching secrets between the backup and the target cluster. After the restore, it changes user passwords using the local Secret as a source. It also creates missing system users and adds missing grants. So you can [restore from a full backup](#restore-from-a-full-backup) as usual.
+
+!!! important 
+
+    To run a [point-in-time restore](#restore-with-point-in-time-recovery) you still require a Secret object with the same user passwords. This is a known limitation and will be addressed in a future release. Please refer to the flow described below for now.
 
 **For the Operator versions 1.17.0 and earlier**, read on.
 
