@@ -296,6 +296,7 @@ nav:
           - "Trademark policy": trademark-policy.md
     - Release Notes:
           - "Release notes index": ReleaseNotes/index.md
+          - ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.19.1.md
           - ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.19.0.md
           - ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.18.0.md
           - ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.17.0.md
