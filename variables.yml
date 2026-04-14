@@ -18,7 +18,7 @@ pxc80recommended: '8.0.44-35.1'
 pxc84recommended: '8.4.7-7.1'
 pmm2recommended: '2.44.1-1'
 pmm3recommended: '3.5.0'
-gkerecommended: '1.33'
+gkerecommended: '1.35'
 k8s_monitor_tag: 'v0.1.1'
 
 year: "2026"
