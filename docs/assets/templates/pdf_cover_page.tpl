@@ -1,7 +1,7 @@
 <!--<h1>'{{ config.site_name }}'</h1>-->
 {{ config.extra.added_key }}
 <p>
-<img src="assets/images//Percona_Logo_Color.png" />
+<img src="assets/images/Percona_Color_Dark.svg" />
 </p>
 <h1>Operator for MySQL based on Percona XtraDB Cluster </h1>
 {% if config.site_description %}
