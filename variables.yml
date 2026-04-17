@@ -1,6 +1,8 @@
 # Variables used across the documentation
 
-release: '1.20.0'
+release: 1.20.0
+#pruned_version: 1.19.0
+
 commandName: 'kubectl'
 clusterName: 'cluster1'
 
