@@ -14,7 +14,7 @@ To view collected logs, use the following command:
 kubectl logs cluster1-pxc-0 -c logs -n <namespace>
 ```
 
-## Configure  Log collector
+## Configure log collector
 
 Log collection is enabled by default and is controlled by the `logcollector.enabled` key in the `deploy/cr.yaml` configuration file.
 
