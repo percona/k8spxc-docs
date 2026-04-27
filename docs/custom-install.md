@@ -55,11 +55,11 @@ Select how you wish to install the Operator and the database cluster:
     ```
     
     For example, to install Percona XtraDB Cluster in the
-    `pxc` namespace with disabled backups and 20 Gi storage, run:
+    `pxc` namespace with 20 Gi storage, run:
 
     ```bash
     helm install my-db percona/pxc-db --version {{ release }} --namespace pxc \
-    --set pxc.volumeSpec.resources.requests.storage=20Gi \
+    --set pxc.volumeSpec.persistentVolumeClaim.resources.requests.storage=20Gi \
     --set backup.enabled=false
     ``` 
 
@@ -68,24 +68,19 @@ Select how you wish to install the Operator and the database cluster:
     Create a `values.yaml` file with your custom parameters and pass it to `helm install` with the `-f` or `--values` flag:
 
     ```bash
-    helm install my-db percona/ps-db --version {{ release }} --namespace <namespace> -f values.yaml
+    helm install my-db percona/pxc-db --version {{ release }} --namespace <namespace> -f values.yaml
     ```
 
     Example `values.yaml`:
 
     ``` yaml title="values.yaml"
-    allowUnsafeConfigurations: true
-    sharding:
-      enabled: false
     pxc:
       size: 3
       volumeSpec:
-        pvc:
+        persistentVolumeClaim:
           resources:
             requests:
               storage: 2Gi
-    backup:
-      enabled: false
     ```        
 
     ## Naming conventions for Helm resources
