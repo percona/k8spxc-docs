@@ -42,7 +42,7 @@ Select how you wish to install the Operator and the database cluster:
 
 === "Helm"
 
-    You can install the Operator deployment and the Percona XtraDB Cluster  with custom parameters using Helm. Find what options you can customize in the [Operator chart documentation :octicons-link-external-16:](https://github.com/percona/percona-helm-charts/tree/main/charts/pxc-operator#installing-the-chart) and the [Percona Server for MySQL chart documentation :octicons-link-external-16:](https://github.com/percona/percona-helm-charts/tree/main/charts/pxc-db#installing-the-chart).
+    You can install the Operator deployment and the Percona XtraDB Cluster  with custom parameters using Helm. Find what options you can customize in the [Operator chart documentation :octicons-link-external-16:](https://github.com/percona/percona-helm-charts/tree/main/charts/pxc-operator#installing-the-chart) and the [Percona XtraDB Cluster chart documentation :octicons-link-external-16:](https://github.com/percona/percona-helm-charts/tree/main/charts/pxc-db#installing-the-chart).
 
     You can provide custom parameters to Helm using either the `--set` flag or a `values.yaml` file. The `--set` flag is convenient for overriding a small number of parameters directly in the command line, while a `values.yaml` file is preferable when you want to manage many custom settings in one place. Both methods are fully supported by Helm and can be used as needed for your deployment.
     
