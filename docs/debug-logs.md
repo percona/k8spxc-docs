@@ -44,38 +44,3 @@ In the following examples we will access containers of the `cluster1-pxc-0` Pod.
     kubectl logs cluster1-pxc-0 -c pxc -f | jq -R 'fromjson?'
     ```
 
-## Cluster-level logging
-
-Cluster-level logging involves collecting logs from all Percona XtraDB Cluster
-Pods in the cluster to some persistent storage. This feature gives the logs a
-lifecycle independent of nodes, Pods and containers in which they were
-collected. Particularly, it ensures that Pod logs from previous failures are
-available for later review.
-
-Log collector is turned on by the `logcollector.enabled` key in the
-`deploy/cr.yaml` configuration file (`true` by default).
-
-The Operator collects logs using [Fluent Bit Log Processor :octicons-link-external-16:](https://fluentbit.io/),
-which supports many output plugins and has broad forwarding capabilities.
-If necessary, Fluent Bit filtering and advanced features can be configured via
-the `logcollector.configuration` key in the `deploy/cr.yaml` configuration
-file.
-
-Logs are stored for 7 days and then rotated.
-
-Collected logs can be examined using the following command:
-
-```bash
-kubectl logs cluster1-pxc-0 -c logs
-```
-
-!!! note
-
-    Technically, logs are stored on the same Persistent Volume, which is
-    used with the corresponding Percona XtraDB Cluster Pod. Therefore collected
-    logs can be found in `DATADIR` (`var/lib/mysql/`). Also, there is an additional
-    Secrets object for Fluent Bit passwords and other similar data, e.g. for
-    output plugins. The name of this Secrets object can be found in the
-    `logCollectorSecretName` option of the Custom Resource (it is set to
-    `my-log-collector-secrets` in the `deploy/cr.yaml` configuration file by
-    default).
