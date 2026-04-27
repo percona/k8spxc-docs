@@ -51,7 +51,7 @@ Select how you wish to install the Operator and the database cluster:
     To pass a custom parameter to Helm, use the `--set key=value` flag with the `helm install` command as follows:
     
     ```bash
-    helm install --set key=value
+    helm install <release-name> <chart> --set key=value
     ```
     
     For example, to install Percona XtraDB Cluster in the
