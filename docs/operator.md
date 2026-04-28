@@ -365,6 +365,16 @@ Turns [Automatic Crash Recovery](recovery.md#automatic-crash-recovery) on or off
 | ----------- | ---------- |
 | :material-toggle-switch-outline: boolean     | `true` |
 
+### `pxc.sstRetryCount`
+
+Limits how many State Snapshot Transfer (SST) retries a joining node can perform before it stops retrying and remains running but unready.
+
+Use this option to avoid endless SST retry loops and make recovery behavior predictable. For details about behavior and recovery steps, see [Limit SST retries](sst-retry-limit.md).
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric-1-box: int (minimum `1`)    | `3` |
+
 ### `pxc.expose.enabled`
 
 Enable or disable exposing Percona XtraDB Cluster instances with dedicated IP addresses.
