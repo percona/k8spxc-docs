@@ -1,6 +1,6 @@
 # Limit SST retries
 
-When a Percona XtraDB Cluster node joins or rejoins the cluster, it receives  data from an existing cluster member using the State Snapshot Transfer (SST) method. If SST fails repeatedly, the node can quickly enter an endless retry loop, using resources such network bandwidth and impacting the overall cluster performance.
+When a Percona XtraDB Cluster node joins or rejoins the cluster, it receives data from an existing cluster member using the State Snapshot Transfer (SST) method. If SST fails repeatedly, the node can quickly enter an endless retry loop, using resources such as network bandwidth and impacting the overall cluster performance.
 
 To prevent excessive and ineffective SST retry loops, you can set a limit on SST attempts for each joining node using the `spec.pxc.sstRetryCount` option in the Custom Resource. The Operator counts SST retries and records them in the `/var/lib/mysql/sst_retry_count` file inside the Pod.
 
