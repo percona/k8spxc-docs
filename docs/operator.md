@@ -2450,6 +2450,30 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 | ----------- | ---------- |
 | :material-code-string: string     | `200m` |
 
+### `logcollector.logRotate.schedule`
+
+Cron expression for the logrotate schedule (default: 0 0 0 * * *).
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `*/5 * * * *` |
+
+### `logcollector.logRotate.configuration`
+
+Overrides the default logrotate configuration used by the log collector sidecar container. You must provide the full configuration because the Operator replaces the default configuration with the one you provide.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-text-long: subdoc      |  |
+
+### `logcollector.logRotate.extraConfig.name`
+
+References a ConfigMap containing additional logrotate configuration. The key name must end with `.conf`.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `my-logrotate-config` |
+
 ## <a name="operator-users-section"></a>Users section
 
 The `users` section in the [deploy/cr.yaml  :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/cr.yaml) file contains various configuration options [to configure custom MySQL users via the Custom Resource](users.md#create-users-in-the-custom-resource).
