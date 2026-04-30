@@ -164,7 +164,7 @@ kubectl apply -f deploy/backup/restore.yaml -n <namespace>
           * `latest` - recover the most recent transaction,
           * `skip` - skip a specific transaction (available since Operator 1.7.0).
 
-       * `date`: specify the exact date and time for point-in-time recovery in the format `"YYYY-MM-DD HH:MM:SS"`. Required when `pitr.type` is set to `date`,
+       * `date`: specify the exact date and time for point-in-time recovery in the format `"YYYY-MM-DD HH:MM:SS"`. Required when `pitr.type` is set to `date`.
        * `gtid`: specify the exact GTID of a transaction **which follows** the last transaction included into the recovery. Required if `pitr.type` is set to `transaction` or `skip`.
 
       * (optional) `storageName`: the exact name of the storage. Note that you must have [already defined the storage](backups-storage.md) in the `backup.storages` subsection of the `deploy/cr.yaml` file.
