@@ -189,8 +189,8 @@ The type of point-in-time recovery. Supported values are:
 
 * `latest` - to restore to the latest available point in time
 * `date` - to restore to a specific date
-* `transaction` - to restore to a specific transaction identified by a GTID set
-* `skip` - skip a specific transaction
+* `transaction` - to restore to a specific transaction identified by a GTID
+* `skip` - to skip a specific transaction identified by a GTID
 
 | Value type  | Example    |
 | ----------- | ---------- |
