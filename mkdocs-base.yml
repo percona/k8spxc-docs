@@ -223,6 +223,7 @@ nav:
               - proxy-switching.md
           - Logging:
               - "Persistent logging": persistent-logging.md
+              - "Log rotation": log-rotation.md
           - Workload transfer and disaster recovery: 
              - "Overview": dr.md
              - dr-primary.md
