@@ -185,7 +185,12 @@ The `pitr` section in the [deploy/backup/restore.yaml :octicons-link-external-16
 
 ### `pitr.type`
 
-The type of point-in-time recovery. Supported values are `latest` to restore to the latest available point in time, `date` to restore to a specific date, or `gtid` to restore to a specific GTID.
+The type of point-in-time recovery. Supported values are:
+
+* `latest` - to restore to the latest available point in time
+* `date` - to restore to a specific date
+* `transaction` - to restore to a specific transaction identified by a GTID set
+* `skip` - skip a specific transaction
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -193,15 +198,29 @@ The type of point-in-time recovery. Supported values are `latest` to restore to 
 
 ### `pitr.date`
 
-The exact date and time for point-in-time recovery, specified in the format `"yyyy-mm-dd hh:mm:ss"`.
+Specify the exact date and time for point-in-time recovery in the format
+`"YYYY-MM-DD HH:MM:SS"`
+
+where:
+
+- `YYYY`: four-digit year (e.g. {{year}})
+- `MM`: two-digit month (`01`–`12`)
+- `DD`: two-digit day (`01`–`31`)
+- `HH`: hours in 24-hour format (`00`–`23`)
+- `MM`: minutes (`00`–`59`)
+- `SS`: seconds (`00`–`59`)
+
+This option is required and valid only if `pitr.type` is set to `date`.
 
 | Value type  | Example    |
 | ----------- | ---------- |
-| :material-code-string: string     | `"2024-01-15 14:30:00"` |
+| :material-code-string: string     | `"{{year}}-01-15 14:30:00"` |
 
 ### `pitr.gtid`
 
 The exact GTID for point-in-time recovery, specified in the format `"aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee:nnn"`.
+
+This option is required and valid if `pitr.type` is set to `transaction` or `skip`.
 
 | Value type  | Example    |
 | ----------- | ---------- |
