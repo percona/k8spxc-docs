@@ -85,7 +85,7 @@ You can pass additional configuration options for the default logrotate configur
 
 For example, the following ConfigMap adds separate rotation rules for Galera-related logs (`GRA_*.log`) and for audit logs (`audit.log`) with different rotation and compression settings.
 
-1. Create a ConfigMap configuration file. For example, `custom-logrotate.yaml` . Specify additional rules:
+1. Create a ConfigMap configuration file. For example, `custom-logrotate.yaml`. Specify additional rules:
 
     ```yaml title="custom-logrotate.yaml"
     apiVersion: v1
