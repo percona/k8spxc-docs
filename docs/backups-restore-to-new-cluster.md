@@ -166,7 +166,7 @@ You can configure the storage within the restore object configuration:
             * `skip` - skip a specific transaction (available since Operator 1.7.0)
 
         * For the `type=date` option, set the `date` key in the datetime format following the pattern `"YYYY-MM-DD HH:MM:SS"`.
-        * For the `type=transaction` or `type=skip` option, set the `gtid` key (available since the Operator 1.8.0) to be the exact GTID of a transaction **which follows** the last transaction included into the recovery.
+        * For the `type=transaction` or `type=skip` option, set the `gtid` key to be the exact GTID of a transaction **which follows** the last transaction included into the recovery.
 
     * Configure the `spec.backupSource` subsection to point to the cloud storage where the backup is stored. This subsection should include:
 
