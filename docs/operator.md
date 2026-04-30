@@ -2452,11 +2452,11 @@ The [Kubernetes memory requests :octicons-link-external-16:](https://kubernetes.
 
 ### `logcollector.logRotate.schedule`
 
-Cron expression for the logrotate schedule (default: 0 0 0 * * *).
+Cron expression for the logrotate schedule. This field uses a 6-field cron format, including seconds (default: `0 0 0 * * *`).
 
 | Value type  | Example    |
 | ----------- | ---------- |
-| :material-code-string: string     | `*/5 * * * *` |
+| :material-code-string: string     | `0 */5 * * * *` |
 
 ### `logcollector.logRotate.configuration`
 
