@@ -235,6 +235,7 @@ nav:
              - "Install and use the cert-manager": tls-cert-manager.md
              - "Generate certificates manually": tls-manual.md
              - "Update certificates": tls-update.md
+             - "Migrate from Operator-generated or custom certificates to cert-manager": tls-migrate-to-cert-manager.md
              - "Run Percona XtraDB Cluster without TLS": tls-disable.md
           - Data at rest encryption:
             - "About data at rest encryption": encryption.md
