@@ -41,7 +41,9 @@ The cert-manager requires its own namespace.
         The default rotation policy is set to "Never" by default. No action is needed from your side. 
 
     === "For cert-manager v1.18.0 - v1.19.1"
-    
+
+        Run the following command **after you have deployed the Operator and created the database cluster**, because the `cluster1-ca-cert` Certificate is created by the Operator during cluster creation and does not exist during cert-manager installation:
+
         ```bash
         kubectl patch certificate cluster1-ca-cert --type=merge -p '{"spec":{"privateKey":{"rotationPolicy":"Never"}}}'
         ```
