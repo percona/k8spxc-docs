@@ -22,41 +22,33 @@ by the same CA (Certificate authority).
 Self-signed issuer allows you to deploy and use the Percona
 Operator without creating a cluster issuer separately.
 
-
-
 ## Install the *cert-manager*
 
-The cert-manager requires its own namespace
+The cert-manager requires its own namespace. 
 
-The steps to install the *cert-manager* are the following:
-
-1. Create the `cert-manager` namespace:
-   
-    ```bash
-    kubectl create namespace cert-manager
-    ```
-
-2. Disable resource validations on the `cert-manager` namespace:
-   
-    ```bash
-    kubectl label namespace cert-manager certmanager.k8s.io/disable-validation=true
-    ```
-
-3. Install the cert-manager:
+1. Run the following command to install the cert-manager:
    
     ```bash
     kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v{{ certmanagerversion }}/cert-manager.yaml
     ```
 
-4. For cert-manager v1.18.0 and above, update the default rotation policy to not rotate the private key Secret associated with a Certificate object automatically upon the certificate reissue:
+    This creates the dedicated namespace `cert-manager` and installs cert-manager Deployments, Pods and Services in this namespace. It also creates cluster-wide resources such as Custom Resource Definitions and RBAC to enable the use of cert-manager in any namespace in the Kubernetes cluster.
+
+2. Update the default rotation policy to not rotate the private key Secret associated with a Certificate object automatically upon the certificate reissue.
+   
+    === "For cert-manager v1.19.2 and above"
+
+        The default rotation policy is set to "Never" by default. No action is needed from your side. 
+
+    === "For cert-manager v1.18.0 - v1.19.1"
     
-    ```bash
-    kubectl patch certificate cluster1-ca-cert --type=merge -p '{"spec":{"privateKey":{"rotationPolicy":"Never"}}}'
-    ```
+        ```bash
+        kubectl patch certificate cluster1-ca-cert --type=merge -p '{"spec":{"privateKey":{"rotationPolicy":"Never"}}}'
+        ```
 
-    This workaround ensures the correct start of the database cluster upon the certificate renewal. 
+        This workaround ensures the correct start of the database cluster upon the certificate renewal. 
 
-5. Verify the *cert-manager* by running the following command:
+3. Verify the *cert-manager* by running the following command:
 
     ```bash
     kubectl get pods -n cert-manager
