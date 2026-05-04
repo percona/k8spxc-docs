@@ -59,7 +59,7 @@ data:
 Save this manifest to a file (for example, `deploy/my-env-secret.yaml`) and create the Secret:
 
 ```bash
-kubectl create -f deploy/my-env-secret.yaml
+kubectl create -f deploy/my-env-secret.yaml -n <namespace>
 ```
 
 ### Apply the configuration
@@ -74,30 +74,53 @@ kubectl create -f deploy/my-env-secret.yaml
 2. Apply the updated configuration:
 
     ```bash
-    kubectl apply -f deploy/cr.yaml
+    kubectl apply -f deploy/cr.yaml -n <namespace>
     ```
 
 ## Configure alternative memory allocator
 
 You can use an alternative memory allocator library for `mysqld` to optimize memory usage. This is often recommended when memory usage is higher than expected.
 
-The Percona XtraDB Cluster Pods include the jemalloc allocator. You can enable it with the `LD_PRELOAD` environment variable.
+The Percona XtraDB Cluster Pods include the `jemalloc` allocator. You can enable it with the `LD_PRELOAD` environment variable.
+
+Here's how to do it:
 
 ### Encode the LD_PRELOAD value
 
-The value for `LD_PRELOAD` is `/usr/lib64/libjemalloc.so.1`. Encode it using base64:
+The path to the `jemalloc` library depends on your MySQL version:
 
-=== "On Linux"
+* For **Percona XtraDB Cluster MySQL 8.4 and newer**, use `/usr/lib64/libjemalloc.so.2`
+* For **Percona XtraDB Cluster MySQL 8.0**, use `/usr/lib64/libjemalloc.so.1`
 
-    ```bash
-    echo -n "/usr/lib64/libjemalloc.so.1" | base64 --wrap=0
-    ```
+Set the appropriate path as the value for the `LD_PRELOAD` environment variable. Encode it with base64 before including it in your Secret.
 
-=== "On macOS"
+=== "8.4 and newer"
 
-    ```bash
-    echo -n "/usr/lib64/libjemalloc.so.1" | base64
-    ```
+    === "On Linux"
+
+        ```bash
+        echo -n "/usr/lib64/libjemalloc.so.2" | base64 --wrap=0
+        ```
+
+    === "On macOS"
+
+        ```bash
+        echo -n "/usr/lib64/libjemalloc.so.2" | base64
+        ```
+
+=== "8.0"
+
+    === "On Linux"
+
+        ```bash
+        echo -n "/usr/lib64/libjemalloc.so.1" | base64 --wrap=0
+        ```
+
+    === "On macOS"
+
+        ```bash
+        echo -n "/usr/lib64/libjemalloc.so.1" | base64
+        ```
 
 ### Create the memory allocator Secret
 
@@ -110,18 +133,18 @@ metadata:
   name: my-new-env-var-secrets
 type: Opaque
 data:
-  LD_PRELOAD: L3Vzci9saWI2NC9saWJqZW1hbGxvYy5zby4x
+  LD_PRELOAD: <your-encoded-value>
 ```
 
 Save this manifest to a file (for example, `deploy/my-new-env-var-secret.yaml`) and create the Secret:
 
 ```bash
-kubectl create -f deploy/my-new-env-var-secret.yaml
+kubectl create -f deploy/my-new-env-var-secret.yaml -n <namespace>
 ```
 
 ### Apply the memory allocator configuration
 
-1. Add the Secret to the PXC section in your `deploy/cr.yaml` file:
+1. Add the Secret to the `pxc` section in your `deploy/cr.yaml` file:
 
     ```yaml
     pxc:
@@ -131,6 +154,6 @@ kubectl create -f deploy/my-new-env-var-secret.yaml
 2. Apply the updated configuration:
 
     ```bash
-    kubectl apply -f deploy/cr.yaml
+    kubectl apply -f deploy/cr.yaml -n <namespace>
     ```
 
