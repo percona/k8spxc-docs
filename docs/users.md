@@ -109,7 +109,7 @@ To create a user manually, use separate statements to create the account and gra
 1. Connect to your cluster. Replace `cluster1` with your actual cluster name and `root_password` with your root password:
 
     ```bash
-    kubectl run -it --rm percona-client --image=percona/percona:8.4 --restart=Never -- mysql -hcluster1-pxc -uroot -proot_password
+    kubectl run -it --rm percona-client --image=percona/percona-xtradb-cluster:8.4 --restart=Never -- mysql -hcluster1-pxc -uroot -proot_password
     ```
 
 2. Create the user account:
