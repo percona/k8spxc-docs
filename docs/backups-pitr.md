@@ -100,7 +100,7 @@ You can gather the metrics from inside a database cluster.
 1. Connect to the cluster as follows, replacing the `<namespace>` placeholder with your value:
 
     ```bash
-    kubectl run -n <namespace> -i --rm --tty percona-client --image=percona:8.0 --restart=Never -- bash -il
+    kubectl run -n <namespace> -i --rm --tty percona-client --image=percona/percona-xtradb-cluster:8.4 --restart=Never -- bash -il
     ```
 
 2. Connect to the point-in-time recovery port using `curl`:
