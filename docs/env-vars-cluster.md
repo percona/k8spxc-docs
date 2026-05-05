@@ -14,6 +14,8 @@ The following environment variables are available for HAProxy:
 
 * `PEER_LIST_SRV_PROTOCOL`: The protocol (TCP or UDP) for the Operator to use for peer-list SRV lookups. TCP is useful in large clusters with many nodes where peer-list SRV lookup returns large DNS responses or when DNS over UDP is blocked by network policies. You can configure the protocol for both HAProxy and ProxySQL.
 
+* `HA_RLIMIT_NOFILE`: Sets the soft file descriptor limit in the entrypoint before HAProxy container starts. The default value is `1048576`. If the set value is invalid, the Operator falls back to the default one.
+
 ### Encode environment variable values
 
 All environment variable values must be base64-encoded in the Secret's `data` section.
