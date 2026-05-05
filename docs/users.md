@@ -120,7 +120,7 @@ To create a user manually, use separate statements to create the account and gra
     
     !!! note
 
-    MySQL password for the user you create should not exceed 32 characters due to the [replication-specific limit introduced in MySQL 5.7.5 :octicons-link-external-16:](https://dev.mysql.com/doc/relnotes/mysql/5.7/en/news-5-7-5.html).
+        MySQL password for the user you create should not exceed 32 characters due to the [replication-specific limit introduced in MySQL 5.7.5 :octicons-link-external-16:](https://dev.mysql.com/doc/relnotes/mysql/5.7/en/news-5-7-5.html).
 
 3. Grant privileges to the user:
 
@@ -130,7 +130,7 @@ To create a user manually, use separate statements to create the account and gra
 
 #### Verify user creation
 
-After creating the user, verify that it was created successfully and can connect to the database. The following example connects to the cluster via ProxySQL and executes a simple query:
+After creating the user, verify that it was created successfully and can connect to the database. The following example connects to the cluster via HAProxy and executes a simple query:
 
 ```bash
 kubectl run -it --rm percona-client --image=percona/percona-xtradb-cluster:8.4 --restart=Never -- bash -il
