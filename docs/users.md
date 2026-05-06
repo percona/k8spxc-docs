@@ -104,24 +104,37 @@ Instead of using the Custom Resource, you can create unprivileged users directly
 
 #### Create a user
 
-To create a user manually, connect to your cluster and run the `GRANT` statement. Replace `cluster1` with your actual cluster name and `root_password` with your root password:
+To create a user manually, use separate statements to create the account and grant privileges:
 
-```bash
-kubectl run -it --rm percona-client --image=percona:8.0 --restart=Never -- mysql -hcluster1-pxc -uroot -proot_password
-mysql> GRANT ALL PRIVILEGES ON database1.* TO 'user1'@'%' IDENTIFIED BY 'password1';
-```
+1. Connect to your cluster. Replace `cluster1` with your actual cluster name and `root_password` with your root password:
 
-!!! note
+    ```bash
+    kubectl run -it --rm percona-client --image=percona/percona-xtradb-cluster:8.4 --restart=Never -- mysql -hcluster1-pxc -uroot -proot_password
+    ```
 
-    MySQL password for the user you create should not exceed 32 characters due to the [replication-specific limit introduced in MySQL 5.7.5 :octicons-link-external-16:](https://dev.mysql.com/doc/relnotes/mysql/5.7/en/news-5-7-5.html).
+2. Create the user account:
+
+    ```sql
+    CREATE USER 'user1'@'%' IDENTIFIED BY 'password1';
+    ```
+    
+    !!! note
+
+        MySQL password for the user you create should not exceed 32 characters due to the [replication-specific limit introduced in MySQL 5.7.5 :octicons-link-external-16:](https://dev.mysql.com/doc/relnotes/mysql/5.7/en/news-5-7-5.html).
+
+3. Grant privileges to the user:
+
+    ```sql
+    GRANT ALL PRIVILEGES ON database1.* TO 'user1'@'%';
+    ```
 
 #### Verify user creation
 
-After creating the user, verify that it was created successfully and can connect to the database. The following example connects to the cluster via ProxySQL and executes a simple query:
+After creating the user, verify that it was created successfully and can connect to the database. The following example connects to the cluster via HAProxy and executes a simple query:
 
 ```bash
-kubectl run -it --rm percona-client --image=percona:8.0 --restart=Never -- bash -il
-percona-client:/$ mysql -h cluster1-proxysql -uuser1 -ppassword1
+kubectl run -it --rm percona-client --image=percona/percona-xtradb-cluster:8.4 --restart=Never -- bash -il
+percona-client:/$ mysql -h cluster1-haproxy -uuser1 -ppassword1
 mysql> SELECT * FROM database1.table1 LIMIT 1;
 ```
 

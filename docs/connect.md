@@ -35,7 +35,7 @@ Here's how to get it:
 3. Run a container with `mysql` tool and connect its console output to your terminal. The following command does this, naming the new Pod `percona-client`:
 
     ```bash
-    kubectl run -n <namespace> -i --rm --tty percona-client --image=percona:8.0 --restart=Never -- bash -il
+    kubectl run -n <namespace> -i --rm --tty percona-client --image=percona/percona-xtradb-cluster:8.4 --restart=Never -- bash -il
     ```
     Executing it may require some time to deploy the correspondent Pod.
 
