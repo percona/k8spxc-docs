@@ -684,6 +684,8 @@ Specifies which memory allocator to use for the MySQL process. Available since O
 
 Supported values: `jemalloc`, `tcmalloc`. When left empty or omitted, the default `libc` allocator is used.
 
+For how the Operator handles `jemalloc` memory allocator, see [Correct jemaloc path based on Percona XtraDB Cluster version](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.20.0.md#correct-jemalloc-path-based-on-percona-xtradb-cluster-version).
+
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-code-string: string     | `jemalloc` |
@@ -691,6 +693,7 @@ Supported values: `jemalloc`, `tcmalloc`. When left empty or omitted, the defaul
 !!! warning
 
     If you have `LD_PRELOAD` set in a Secret referenced by `pxc.envVarsSecret`, that value takes precedence over the `mysqlAllocator` option. The Operator checks for `LD_PRELOAD` in the Secret first, and if found, uses that value regardless of the `mysqlAllocator` setting.
+
 
 ### `pxc.resources.requests.memory`
 
