@@ -192,12 +192,9 @@ Controls whether the Operator uses leader election. Leader election ensures only
 **Example configuration:**
 
 ```yaml
-spec:
-  containers:
-  - name: percona-xtradb-cluster-operator
-    env:
-    - name: PXCO_LEADER_ELECTION_ENABLED
-      value: "true"
+env:
+  - name: PXCO_LEADER_ELECTION_ENABLED
+    value: "true"
 ```
 
 ### `PXCO_LEADER_ELECTION_NAME`
@@ -211,15 +208,12 @@ Specifies the name of the Lease resource used for the leader lock.
 **Example configuration:**
 
 ```yaml
-spec:
-  containers:
-  - name: percona-xtradb-cluster-operator
-    env:
-    - name: PXCO_LEADER_ELECTION_NAME
-      value: "my-custom-lease"
+env:
+  - name: PXCO_LEADER_ELECTION_NAME
+    value: "my-custom-lease"
 ```
 
-### `PXCO_LEADER_ELECTION_DURATION`
+### `PXCO_LEADER_ELECTION_LEASE_DURATION`
 
 Duration that non-leader candidates wait before forcing leader acquisition. This is measured against the time of last observed acknowledgment. Uses Go duration format (for example, `60s`). You can increase this value if the Operator experiences leader election failures in high-latency or resource-constrained environments.
 
@@ -230,12 +224,9 @@ Duration that non-leader candidates wait before forcing leader acquisition. This
 **Example configuration:**
 
 ```yaml
-spec:
-  containers:
-  - name: percona-xtradb-cluster-operator
-    env:
-    - name: PXCO_LEADER_ELECTION_LEASE_DURATION
-      value: "60s"
+env:
+  - name: PXCO_LEADER_ELECTION_LEASE_DURATION
+    value: "60s"
 ```
 
 ### `PXCO_LEADER_ELECTION_RENEW_DEADLINE`
@@ -249,12 +240,9 @@ Duration that the acting leader retries refreshing the lease before giving up. U
 **Example configuration:**
 
 ```yaml
-spec:
-  containers:
-  - name: percona-xtradb-cluster-operator
-    env:
-    - name: PXCO_LEADER_ELECTION_RENEW_DEADLINE
-      value: "30s"
+env:
+  - name: PXCO_LEADER_ELECTION_RENEW_DEADLINE
+    value: "30s"
 ```
 
 ### `PXCO_LEADER_ELECTION_RETRY_PERIOD`
@@ -268,12 +256,9 @@ Duration between leader election retry attempts. Uses Go duration format (for ex
 **Example configuration:**
 
 ```yaml
-spec:
-  containers:
-  - name: percona-xtradb-cluster-operator
-    env:
-    - name: PXCO_LEADER_ELECTION_RETRY_PERIOD
-      value: "10ss"
+env:
+  - name: PXCO_LEADER_ELECTION_RETRY_PERIOD
+    value: "10s"
 ```
 
 
