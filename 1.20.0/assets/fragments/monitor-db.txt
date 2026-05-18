@@ -1,0 +1,181 @@
+The Operator integrates natively with [Percona Monitoring and Management (PMM) :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/index.html) for comprehensive database monitoring. While [custom monitoring solutions](monitoring.md#implement-custom-monitoring-solution-without-pmm) solutions are also supported, they require manual setup and are not automated by the Operator.
+
+The Operator is compatible with both PMM versions 2 and 3. We recommend using the latest PMM version 3 for optimal monitoring capabilities.
+
+In this section, you'll learn how to monitor Percona XtraDB Cluster using PMM.
+
+PMM is a client/server application. It includes the [PMM Server :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/reference/index.html#pmm-server) and the number of [PMM Clients :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/reference/index.html#pmm-client) running on each node with the
+database you wish to monitor.
+
+A PMM Client collects needed metrics and sends gathered data
+to the PMM Server. As a user, you connect to the PMM Server to see database metrics on a number of dashboards.
+PMM Server and PMM Client are installed separately.
+
+## Considerations
+
+1. If you are using PMM server version 2, use a PMM client image compatible with PMM 2. If you are using PMM server version 3, use a PMM client image compatible with PMM 3. Check [Percona certified images](images.md) for the right one.
+2. If you specified both authentication methods for PMM server configuration and they have non-empty values, priority goes to PMM 3. 
+3. For migration from PMM2 to PMM3, see [PMM upgrade documentation :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/pmm-upgrade/migrating_from_pmm_2.html). Also check the [Automatic migration of API keys :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/api/authentication.html#automatic-migration-of-api-keys) page.
+
+
+## Install PMM Server
+
+You must have PMM server up and running. You can run PMM Server as a *Docker image*, a *virtual appliance*, or in Kubernetes.
+Please refer to the [official PMM documentation :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/install-pmm/install-pmm-server/index.html) for the installation instructions.
+
+## Install PMM Client
+
+PMM Client is installed as a side-car container in the database, HAProxy and ProxySQL Pods in your Kubernetes-based environment. To install PMM Client, do the following:
+{.power-number}
+
+### Configure authentication
+
+=== "PMM3"
+
+    PMM3 uses Grafana service accounts to control access to PMM server components and resources. To authenticate in PMM server, you need a service account token. [Generate a service account and token :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/api/authentication.html?h=authe#generate-a-service-account-and-token). Specify the Admin role for the service account.
+
+    !!! warning
+
+        When you create a service account token, you can select its lifetime: it can be either a permanent token that never expires or the one with the expiration date. PMM server cannot rotate service account tokens after they expire. So you must take care of reconfiguring PMM Client in this case.
+
+=== "PMM2"
+
+    [Get the PMM API key from PMM Server :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/2/details/api.    html#api-keys-and-authentication). The API key must have the role "Admin". You need this key to authorize PMM Client within PMM Server. 
+
+    === ":material-view-dashboard-variant: From PMM UI" 
+
+        [Generate the PMM API key :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/2/details/api.html#api-keys-and-authentication){.md-button} 
+
+    === ":material-console: From command line"
+
+        You can query your PMM Server installation for the API
+        Key using `curl` and `jq` utilities. Replace `<login>:<password>@<server_host>` placeholders with your real PMM Server login, password, and hostname in the following command:
+        
+        ```bash
+        API_KEY=$(curl --insecure -X POST -H "Content-Type: application/json" -d '{"name":"operator", "role": "Admin"}' "https://<login>:<password>@<server_host>/graph/api/auth/keys" | jq .key)
+        ```
+
+    !!! warning
+
+        The API key is not rotated. 
+
+### Create a secret
+
+Now you must pass the credentials to the Operator. To do so, create a Secret object.
+
+!!! warning
+
+    PMM3 Client only works with PMM Server tokens. Make sure to use the  `pmmservertoken` option for PMM3 Client. Otherwise you may face issues with the setup. 
+
+1. Create a Secret configuration file. You can use the [deploy/secrets.yaml :octicons-link-external-16:](https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/secrets.yaml) secrets file.
+
+    === "PMM 3"
+        
+        Specify the service account token as the `pmmservertoken` value in the secrets file:
+
+        ```yaml
+        apiVersion: v1
+        kind: Secret
+        metadata:
+          name: cluster1-secrets
+        type: Opaque
+        stringData:
+          pmmservertoken: ""
+        ``` 
+
+    === "PMM 2"
+
+        Specify the API key as the `pmmserverkey` value in the secrets file:
+
+        ```yaml
+        apiVersion: v1
+        kind: Secret
+        metadata:
+          name: cluster1-secrets
+        type: Opaque
+        stringData:
+          pmmserverkey: ""
+        ``` 
+
+2. Create the Secrets object using the `deploy/secrets.yaml` file. Replace the `<namespace>` placeholder with your value.
+
+    ```bash
+    kubectl apply -f deploy/secrets.yaml -n <namespace>
+    ```
+
+    ??? example "Expected output"
+
+        ```{.text .no-copy}
+        secret/cluster1-secrets created
+        ```
+
+### Deploy a PMM Client
+
+1. Update the `pmm` section in the [deploy/cr.yaml :octicons-link-external-16:](https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{ release }}/deploy/cr.yaml) file. 
+
+      * Set `pmm.enabled`=`true`.
+      * Specify the PMM Client image path. Check [Percona certified images](images.md) for the required one.
+      * Specify your PMM Server hostname / an IP address for the `pmm.serverHost` option. The PMM Server IP address should be resolvable and reachable from within your cluster.
+
+     ```yaml
+       pmm:
+         enabled: true
+         image: percona/pmm-client:{{pmm2recommended}}
+         serverHost: monitoring-service
+     ```
+    
+2. Update the cluster. Replace the `<namespace>` placeholder with your value.
+
+    ```bash
+    kubectl apply -f deploy/cr.yaml -n <namespace>
+    ```
+        
+6. Check that corresponding Pods are not in a cycle of stopping and restarting.
+    This cycle occurs if there are errors on the previous steps:
+
+    ```bash
+    kubectl get pods -n <namespace>
+    kubectl logs <pod_name> -c pmm-client
+    ```
+    
+## Update the secrets file
+
+The `deploy/secrets.yaml` file contains all values for each key/value pair in a convenient plain text format. But the resulting Secrets Object contains passwords stored as base64-encoded strings. If you want to *update* the password field, you need to encode the new password into the base64 format and pass it to the Secrets Object.
+{.power-number}
+
+To encode a password or any other parameter, run the following command:
+
+=== ":simple-linux: Linux" 
+
+    ```bash 
+    echo -n "password" | base64 --wrap=0
+    ``` 
+
+=== ":simple-apple: macOS" 
+
+    ```bash 
+    echo -n "password" | base64
+    ```
+
+For example, to set the new service account token in the `cluster1-secrets` object, use the following command replacing the placeholders in `<>` with your values:
+
+=== ":simple-linux: Linux"
+
+    ```bash
+    kubectl patch secret/cluster1-secrets -p '{"data":{"pmmservertoken": '$(echo -n <new-token> | base64 --wrap=0)'}}'
+    ```
+
+=== ":simple-apple: macOS"
+
+    ```bash
+    kubectl patch secret/cluster1-secrets -p '{"data":{"pmmservertoken": '$(echo -n <new-token> | base64)'}}'
+    ```
+    
+## Check the metrics
+
+Let's see how the collected data is visualized in PMM.
+{.power-number}
+
+Now you can access PMM via *https* in a web browser, with the login/password
+authentication, and the browser is configured to show Percona XtraDB Cluster
+metrics.
