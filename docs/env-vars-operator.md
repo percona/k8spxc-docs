@@ -181,6 +181,101 @@ env:
 * The Operator injects an XtraBackup sidecar container into each PXC Pod.
 * The sidecar exposes a gRPC interface on port 6450 that handles backup requests.
 
+### `PXCO_LEADER_ELECTION_ENABLED`
+
+Controls whether the Operator uses leader election. Leader election ensures only one Operator instance manages resources when multiple replicas run. Set to `"false"` to disable leader election (single-replica deployments only).
+
+| Value type | Default | Example |
+| ---------- | ------- | ------- |
+| string     | `"true"` | `"false"` |
+
+**Example configuration:**
+
+```yaml
+spec:
+  containers:
+  - name: percona-xtradb-cluster-operator
+    env:
+    - name: PXCO_LEADER_ELECTION_ENABLED
+      value: "true"
+```
+
+### `PXCO_LEADER_ELECTION_NAME`
+
+Specifies the name of the Lease resource used for the leader lock.
+
+| Value type | Default | Example |
+| ---------- | ------- | ------- |
+| string     | `""` (empty) | `"my-custom-lease"` |
+
+**Example configuration:**
+
+```yaml
+spec:
+  containers:
+  - name: percona-xtradb-cluster-operator
+    env:
+    - name: PXCO_LEADER_ELECTION_NAME
+      value: "my-custom-lease"
+```
+
+### `PXCO_LEADER_ELECTION_DURATION`
+
+Duration that non-leader candidates wait before forcing leader acquisition. This is measured against the time of last observed acknowledgment. Uses Go duration format (for example, `60s`). You can increase this value if the Operator experiences leader election failures in high-latency or resource-constrained environments.
+
+| Value type | Default | Example |
+| ---------- | ------- | ------- |
+| string     | `"15s"` | `"60s"` |
+
+**Example configuration:**
+
+```yaml
+spec:
+  containers:
+  - name: percona-xtradb-cluster-operator
+    env:
+    - name: PXCO_LEADER_ELECTION_LEASE_DURATION
+      value: "60s"
+```
+
+### `PXCO_LEADER_ELECTION_RENEW_DEADLINE`
+
+Duration that the acting leader retries refreshing the lease before giving up. Uses Go duration format (for example, `60s`).
+
+| Value type | Default | Example |
+| ---------- | ------- | ------- |
+| string     | `"10s"` | `"30s"` |
+
+**Example configuration:**
+
+```yaml
+spec:
+  containers:
+  - name: percona-xtradb-cluster-operator
+    env:
+    - name: PXCO_LEADER_ELECTION_RENEW_DEADLINE
+      value: "30s"
+```
+
+### `PXCO_LEADER_ELECTION_RETRY_PERIOD`
+
+Duration between leader election retry attempts. Uses Go duration format (for example, `60s`).
+
+| Value type | Default | Example |
+| ---------- | ------- | ------- |
+| string     | `"2s"` | `"10s"` |
+
+**Example configuration:**
+
+```yaml
+spec:
+  containers:
+  - name: percona-xtradb-cluster-operator
+    env:
+    - name: PXCO_LEADER_ELECTION_RETRY_PERIOD
+      value: "10ss"
+```
+
 
 ### Automatic environment variables
 
