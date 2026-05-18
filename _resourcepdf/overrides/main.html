@@ -43,11 +43,12 @@ by adding marketing-requested elements
                  {% elif page and page.title and not page.is_homepage %}
                  {% set title = title ~ " - " ~ page.title %}
                  {% endif %}
-                 <meta property="og:type" content="website" />
-                 <meta property="og:title" content="{{ title }}" />
-                 <meta property="og:image" content="https://docs.percona.com/percona-operator-for-mysql/assets/images/kubernetes-operators.png">
-                 <meta property="og:url" content="https://docs.percona.com/percona-operator-for-mysql/">
-                </head>
+                  <meta property="og:type" content="website" />
+                  <meta property="og:title" content="{{ title }}" />
+                  <meta property="og:image"
+                    content="https://docs.percona.com/percona-operator-for-xtradb-cluster/assets/images/kubernetes-operators.png">
+                  <meta property="og:url" content="https://docs.percona.com/percona-operator-for-xtradb-cluster/">
+                  </head>
                 <body>
                 </body>
               </html>

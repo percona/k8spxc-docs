@@ -6,7 +6,7 @@
 
 Percona Operator for MySQL automates and simplifies deploying and managing open source MySQL clusters on Kubernetes.
 
-This repository contains source files for [Percona Operator for MySQL based on Percona Server for MySQL documentation](https://docs.percona.com/percona-operator-for-mysql/ps/index.html). The documentation is written in [Markdown markup language](https://en.wikipedia.org/wiki/Markdown) and is converted to HTML using [MkDocs](https://www.mkdocs.org/).
+This repository contains source files for [Percona Operator for MySQL based on Percona XtraDB Cluster documentation](https://docs.percona.com/percona-operator-for-xtradb-cluster/index.html). The documentation is written in [Markdown markup language](https://en.wikipedia.org/wiki/Markdown) and is converted to HTML using [MkDocs](https://www.mkdocs.org/).
 
 # Contributing
 
