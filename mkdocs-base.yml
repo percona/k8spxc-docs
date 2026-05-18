@@ -1,6 +1,6 @@
 # MkDocs configuration
 # Used as base - look for .yml files with INHERIT
-site_name: Percona Operator for MySQL
+site_name: Percona Operator for MySQL based on Percona XtraDB Cluster
 site_description: Documentation
 site_author: Percona LLC
 site_url: ""
