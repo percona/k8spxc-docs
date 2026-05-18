@@ -168,6 +168,7 @@ You can configure the storage within the restore object configuration:
         * For the `type=date` option, set the `date` key in the datetime format following the pattern `"YYYY-MM-DD HH:MM:SS"`.
         * For the `type=transaction` option, set the `gtid` key to be the exact GTID of a transaction **which follows** the last transaction included into the recovery.
         * For the `type=skip` option, set the `gtid` key to be the exact GTID or GTID set of transactions that will be **excluded** from the restore. 
+        * In the `pitr.backupSource.s3` subsection, specify the storage location settings for the binlogs on the source cluster. The Operator requires access to this binlogs storage in order to perform point-in-time recovery, so the settings (including credentials, endpoint, bucket name, etc.) must exactly match those used on the source cluster.
 
     * Configure the `spec.backupSource` subsection to point to the cloud storage where the backup is stored. This subsection should include:
 
@@ -189,6 +190,12 @@ You can configure the storage within the restore object configuration:
           pitr:
             type: date
             date: "2020-12-31 09:37:13"
+            backupSource:
+              s3:
+               bucket: S3-BINLOG-BACKUP-BUCKET-NAME-HERE
+               credentialsSecret: my-cluster-name-backup-s3
+               endpointUrl: https://URL-OF-THE-S3-COMPATIBLE-STORAGE
+               region: us-west-2
           backupSource:
             verifyTLS: true
             destination: s3://S3-BUCKET-NAME/BACKUP-NAME
@@ -215,6 +222,11 @@ You can configure the storage within the restore object configuration:
           pitr:
             type: date
             date: "2020-12-31 09:37:13"
+            backupSource:
+              s3:
+               bucket: S3-BINLOG-BACKUP-BUCKET-NAME-HERE
+               credentialsSecret: my-cluster-name-backup-s3
+               endpointUrl: https://URL-OF-THE-S3-COMPATIBLE-STORAGE
           backupSource:
             destination: azure://AZURE-CONTAINER-NAME/BACKUP-NAME
             azure:
