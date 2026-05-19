@@ -199,11 +199,11 @@ env:
 
 ### `PXCO_LEADER_ELECTION_NAME`
 
-Specifies the name of the Lease resource used for the leader lock.
+Specifies the name of the Lease resource used for the leader lock. When left undefined, the default name `08db1feb.percona.com` is used.
 
 | Value type | Default | Example |
 | ---------- | ------- | ------- |
-| string     | `""` (empty) | `"my-custom-lease"` |
+| string     | `"08db1feb.percona.com"` | `"my-custom-lease"` |
 
 **Example configuration:**
 
