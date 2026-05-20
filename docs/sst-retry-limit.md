@@ -35,7 +35,7 @@ The value must be an integer greater than or equal to `1`.
 To allow retries again, remove the marker file inside the affected Pod:
 
 ```bash
-kubectl exec -it cluster1-pxc-2 -c pxc -- rm -f /var/lib/mysql/sst_retry_limit_reached
+kubectl exec -it cluster1-pxc-2 -c pxc -- rm -f /var/lib/mysql/sst_retry_limit_reached /var/lib/mysql/sst_retry_count
 ```
 
 The retry state is cleared automatically after the node successfully reaches the `joined` or `synced` state.
