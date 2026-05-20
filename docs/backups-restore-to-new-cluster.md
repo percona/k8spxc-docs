@@ -165,13 +165,7 @@ You can configure the storage within the restore object configuration:
             * `latest` - recover to the latest possible transaction.
             * `skip` - skip a specific transaction (available since Operator 1.7.0)
 
-        * For the `type=date` option, set the `date` key in the datetime format following the pattern `"YYYY-MM-DD HH:MM:SS"`. The date you specify must not be later than the `status.latestRestorableTime` value for the backup you restore from. Otherwise, the restore fails.
-        
-          To check the latest restorable time for the backup, run the following command on the **source** cluster:
-          
-          ```bash
-          kubectl -n <source-cluster-namespace> get pxc-backup <backup_name> -o jsonpath='{.status.latestRestorableTime}'
-          ```
+        * For the `type=date` option, set the `date` key in the datetime format following the pattern `"YYYY-MM-DD HH:MM:SS"`. If the date you specify exceeds the `latestRestorableTime` of the backup object, the Operator restores the database to the `latestRestorableTime` value.
    
         * For the `type=transaction` or `type=skip` option, set the `gtid` key to be the exact GTID of a transaction **which follows** the last transaction included into the recovery.
 
