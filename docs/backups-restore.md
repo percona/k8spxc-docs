@@ -168,8 +168,11 @@ kubectl apply -f deploy/backup/restore.yaml -n <namespace>
        * For the `type=transaction` option, set the `gtid` key to be the exact GTID of a transaction **which follows** the last transaction included into the recovery.
        * For the `type=skip` option, set the `gtid` key to be the exact GTID or GTID set of transactions that will be **excluded** from the restore.
 
-      * (optional) `storageName`: the exact name of the storage. Note that you must have [already defined the storage](backups-storage.md) in the `backup.storages` subsection of the `deploy/cr.yaml` file.
+       * In the `backupSource` subsection, specify the storage where binlogs are stored for point-in-time recovery. You can do this either by referencing the storage using `storageName`, or by providing the storage settings directly in the restore manifest:
 
+          * If you have [already defined the storage](backups-pitr.md#enable-point-in-time-recovery) for binlogs in the `pitr.storages` section of your `deploy/cr.yaml` file, specify the storage name in the `storageName` option.
+          * If you have not configured the binlog storage in your cluster CR, specify the storage settings directly for the `s3` subsection in your restore configuration.
+   
 3. Pass this configuration to the Operator:
 
     === "via the YAML manifest"
