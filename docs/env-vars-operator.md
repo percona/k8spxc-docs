@@ -188,6 +188,7 @@ The following environment variables are automatically set by Kubernetes and shou
 
 * `POD_NAME` - The name of the Operator Pod (set from `metadata.name`)
 * `OPERATOR_NAME` - The name of the Operator (set to `percona-xtradb-cluster-operator`)
+* `PXC_SST_RETRY_COUNT` - The number of SST attempts a rejoining node takes to receive data. This environment variable is set automatically and only if the `spec.pxc.sstRetryCount` option is defined in the Custom Resource. To learn more about setting up SST retry limit, see [Limit SST retries](sst-retry-limit.md).
 
 ### Update environment variables
 

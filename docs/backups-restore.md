@@ -146,7 +146,7 @@ kubectl apply -f deploy/backup/restore.yaml -n <namespace>
 1. Check a time to restore for a backup. Use the command below to find the latest restorable timestamp:
 
     ```bash
-    kubectl get pxc-backup <backup_name> -o jsonpath='{.status.latestRestorableTime}'
+    kubectl -n <namespace> get pxc-backup <backup_name> -o jsonpath='{.status.latestRestorableTime}'
     ```
 
 2. Set the following keys for the `PerconaXtraDBClusterRestore` custom resource:
@@ -159,7 +159,7 @@ kubectl apply -f deploy/backup/restore.yaml -n <namespace>
 
        * `type`: one of the following values:
 
-          * `date` - roll back to specific date,
+          * `date` - roll back to specific date. Note that the date must not be later than the `status.latestRestorableTime` value.
           * `transaction` - roll back to a specific transaction (available since Operator 1.8.0),
           * `latest` - recover the most recent transaction,
           * `skip` - skip a specific transaction (available since Operator 1.7.0).
