@@ -165,15 +165,15 @@ kubectl describe sc <storage class name> | grep AllowVolumeExpansion
     AllowVolumeExpansion: true
     ```
 
-To enable storage resizing via volume expansion, set the [enableVolumeExpansion](operator.md#enablevolumeexpansion) Custom Resource option to `true` ( it is turned off by default). When enabled, the Operator will automatically expand such storage for you when you change the
-`pxc.volumeSpec.persistentVolumeClaim.resources.requests.storage` option in the Custom Resource.
+To enable storage resizing via volume expansion, set the [storageScaling.enableVolumeScaling](operator.md#storagescalingenablevolumescaling) Custom Resource option to `true` and set the new storage size in the
+`pxc.volumeSpec.persistentVolumeClaim.resources.requests.storage` option in the Custom Resource. The Operator will automatically expand the storage for all database Pods to the new value.
 
-For example, you can do it by editing and applying the `deploy/cr.yaml` file:
+For example, edit the `deploy/cr.yaml` file:
 
 ```yaml
 spec:
-  ...
-  enableVolumeExpansion: true
+  storageScaling:
+    enableVolumeScaling: true
     ...
   pxc:
     ...
@@ -191,11 +191,19 @@ Apply changes as usual:
 kubectl apply -f cr.yaml
 ```
 
-The storage size change takes some time. When it starts, the Operator automatically adds the `pvc-resize-in-progress` annotation to the `PerconaXtraDBCluster` Custom Resource. The annotation contains the timestamp of the resize start and indicates that the resize operation is running.. After the resize finishes, the Operator deletes this annotation.
+The storage size change takes some time. When it starts, the Operator automatically adds the `pvc-resize-in-progress` annotation to the `PerconaXtraDBCluster` Custom Resource. The annotation contains the timestamp of the resize start and indicates that the resize operation is running. After the resize finishes, the Operator deletes this annotation.
 
-!!! warning
+##### If storage scaling cannot complete
 
-    If the new storage size can't be reached because there is a resource quota in place and the PVC storage limits are reached, this will be detected, there will be no scaling attempts, and the Operator will revert the value in the Custom Resource option back. If resize isn't successful (for example, no quota is set, but the new storage size turns out to be just too large), the Operator will detect Kubernetes failure on scaling, and revert the Custom Resource option. Still, Kubernetes will continue attempts to fulfill the scaling request until the problem is [fixed manually by the Kubernetes administrator](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#recovering-from-failure-when-expanding-volumes).
+Sometimes resizing storage does not finish as expected. Here are common situations and what the Operator does:
+
+- **If there is a resource quota** that prevents your PersistentVolumeClaim (PVC) from growing to the new size, the Operator will detect this right away. In this case, no scaling will be attempted and the storage size in the Custom Resource  will be changed back to the previous value automatically.
+  
+* If no quota is set but **you request a storage size that is too large for your environment**, the resize may still fail. The Operator will again detect the failure and revert the storage size in the Custom Resource back to its original value. However, Kubernetes may keep trying to finish the resize until the issue is [fixed manually by an administrator](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#recovering-from-failure-when-expanding-volumes).
+
+* If storage resizing is only partially successful (for example, two out of three pods have their PVCs expanded) and you turn off the `enableVolumeScaling` option while this is happening, the Operator will roll back the storage size in the Custom Resource to the previous value so that everything stays consistent.
+
+  If you later re-enable the `enableVolumeScaling` option, always check the actual storage size of your PVCs. Be sure to set your desired storage size in the Custom Resource again to give all pods the correct storage capacity.
 
 
 #### Manual resizing without Volume Expansion capability
