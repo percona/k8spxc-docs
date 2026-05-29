@@ -201,9 +201,9 @@ Sometimes resizing storage does not finish as expected. Here are common situatio
   
 * If no quota is set but **you request a storage size that is too large for your environment**, the resize may still fail. The Operator will again detect the failure and revert the storage size in the Custom Resource back to its original value. However, Kubernetes may keep trying to finish the resize until the issue is [fixed manually by an administrator](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#recovering-from-failure-when-expanding-volumes).
 
-* If storage resizing is only partially successful (for example, two out of three pods have their PVCs expanded) and you turn off the `enableVolumeScaling` option while this is happening, the Operator will roll back the storage size in the Custom Resource to the previous value so that everything stays consistent.
+* If storage resizing is only partially successful (for example, two out of three pods have their PVCs expanded) and you turn off the `enableVolumeScaling` option while this is happening, the Operator rolls back the storage size in the Custom Resource to the previous value. However, since Kubernetes doesn't allow shrinking the storage, PVCs remain with the size they had when scaling was interrupted.
 
-  If you later re-enable the `enableVolumeScaling` option, always check the actual storage size of your PVCs. Be sure to set your desired storage size in the Custom Resource again to give all pods the correct storage capacity.
+  If you later re-enable the `enableVolumeScaling` option, always check the actual storage size of your PVCs. Make sure to set the storage size in the Custom Resource to be equal to or greater than the largest current PVC size.
 
 
 #### Manual resizing without Volume Expansion capability
