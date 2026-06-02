@@ -147,7 +147,7 @@ The support for PMM2 will be dropped in the Operator in release 1.22.0.
 
 ### Improvements
 
-???? status Open * [K8SPXC-804](https://perconadev.atlassian.net/browse/K8SPXC-804) - Marked PXC container restarts in logs container output for improved log clarity.
+* [K8SPXC-804](https://perconadev.atlassian.net/browse/K8SPXC-804) - Marked PXC container restarts in logs container output for improved log clarity.
 
 * [K8SPXC-1318](https://perconadev.atlassian.net/browse/K8SPXC-1318) - Added verification of point-in-time recovery targets prior to initiating the database restoration workflow. By confirming that the requested timestamp is reachable via existing binary logs, the Operator prevents unnecessary database downtime from a failed recovery path.
 
@@ -157,7 +157,7 @@ The support for PMM2 will be dropped in the Operator in release 1.22.0.
 
 * [K8SPXC-1635](https://perconadev.atlassian.net/browse/K8SPXC-1635) - Added validation for the `pitr.gtid` field prior to executing point-in-time recovery routines. This structural safeguard prevents unvalidated or corrupted GTID targets from corrupting cluster recovery steps or causing unneeded application downtime.
 
-??? In progress * [K8SPXC-1679](https://perconadev.atlassian.net/browse/K8SPXC-1679) - Improved configuration options for backup storages. This backend refinement makes the declaration of advanced bucket options cleaner and more reliable
+* [K8SPXC-1679](https://perconadev.atlassian.net/browse/K8SPXC-1679) - Improved configuration options for backup storages. This backend refinement makes the declaration of advanced bucket options cleaner and more reliable
 
 * [K8SPXC-1751](https://perconadev.atlassian.net/browse/K8SPXC-1751) - Increased log verbosity and visibility regarding the selection of specific binary log source nodes during point-in-time recovery. These additional diagnostic messages make it easier for cluster administrators to monitor and audit log sync health during recovery operations.
 
@@ -175,6 +175,8 @@ The support for PMM2 will be dropped in the Operator in release 1.22.0.
 
 * [K8SPXC-1873](https://perconadev.atlassian.net/browse/K8SPXC-1873) - Made bucket existence check optional to allow flexible backup configurations.(Thank you DimitriosLisenko for reporting and contribution to this issue)
 
+* [K8SPXC-1817](https://perconadev.atlassian.net/browse/K8SPXC-1817) - Documented the Plugin/Component Configuration
+
 ### Bugs Fixed
 
 * [K8SPXC-1438](https://perconadev.atlassian.net/browse/K8SPXC-1438) - Fixed an issue where the Operator attempted unnecessary storage resizing when working with CSI storage drivers that declare capacity with a generic "G" unit. The updated size parsing accurately translates raw values to standardized Kubernetes notation to avoid false resizing actions on platforms like k3d.
@@ -183,7 +185,7 @@ The support for PMM2 will be dropped in the Operator in release 1.22.0.
 
 * [K8SPXC-1626](https://perconadev.atlassian.net/browse/K8SPXC-1626) - Resolved an issue where the specified `internalTrafficPolicy` parameter was not being applied to generated Kubernetes Services. The Operator now respects this setting, allowing optimal regional network routing for cluster endpoints. 
 
-??? In progress * [K8SPXC-1648](https://perconadev.atlassian.net/browse/K8SPXC-1648) - Fixed a bug where storage expansion actions entered an error state if the requested value rounded up to the same integer GiB value as the current volume. The Operator now detects identical post-rounding values gracefully and prevents invalid StatefulSet specification update errors.
+* [K8SPXC-1648](https://perconadev.atlassian.net/browse/K8SPXC-1648) - Fixed a bug where storage expansion actions entered an error state if the requested value rounded up to the same integer GiB value as the current volume. The Operator now detects identical post-rounding values gracefully and prevents invalid StatefulSet specification update errors.
 
 * [K8SPXC-1685](https://perconadev.atlassian.net/browse/K8SPXC-1685) - Fixed an issue where automated volume expansion validation did not align with the underlying storage class capabilities. The system now respects the explicit volume expansion settings before requesting backend storage infrastructure shifts. 
 
@@ -199,8 +201,6 @@ The support for PMM2 will be dropped in the Operator in release 1.22.0.
 
 * [K8SPXC-1800](https://perconadev.atlassian.net/browse/K8SPXC-1800) - Resolved a bug that caused point-in-time recovery processes to fail when matching user Secret tokens were missing from the restore context. The Operator now runs validation and preparatory jobs correctly ahead of time to verify all authorization components. 
 
-* ??? Open [K8SPXC-1817](https://perconadev.atlassian.net/browse/K8SPXC-1817) Plugin/Component Configuration
-
 * [K8SPXC-1821](https://perconadev.atlassian.net/browse/K8SPXC-1821) - Fixed a container failure where the logrotate process crashed on ARM64 platforms due to an unresolved cron package binary dependency. The container structure was rewritten to ensure multi-arch compliance and stable runtime utility availability for log rotation chores.
 
 * [K8SPXC-1822](https://perconadev.atlassian.net/browse/K8SPXC-1822) - Fixed an issue in point-in-time recovery where the binary log collector mistakenly reported gaps in backups if a single transaction was split across multiple files. The log parsing process was improved to correctly assemble and recognize these fragmented transactions, preventing false gap alerts and validation errors. (Thank you to Bernard Grymonpon for reporting and contributing to this fix.)
@@ -211,13 +211,9 @@ The support for PMM2 will be dropped in the Operator in release 1.22.0.
 
 * [K8SPXC-1831](https://perconadev.atlassian.net/browse/K8SPXC-1831) - Fixed a startup failure where the memory allocator looked for a legacy library version. The Operator detects the MySQL version and uses the correct path to memory allocator library.
 
-* ??? In progress [K8SPXC-1843](https://perconadev.atlassian.net/browse/K8SPXC-1843) - Fixed a bug where a running backup task became permanently stuck if the Joiner node unexpectedly disconnected from the Donor. Reliable session timeouts and state verification handlers have been incorporated to ensure stuck backup resources fail gracefully and release locks.
-
 * [K8SPXC-1847](https://perconadev.atlassian.net/browse/K8SPXC-1847) - Fixed a bug where automated CA certificate rotation by cert-manager broke cluster TLS by invalidating all existing leaf certificates. The Operator now actively detects CA certificate rotation and automatically re-issues all dependent leaf TLS certificates, preventing cluster connection failures. (Thank you Dong Ma for reporting this issue and contributing to the fix)
 
 * [K8SPXC-1861](https://perconadev.atlassian.net/browse/K8SPXC-1861) - Resolved a data discrepancy bug where point-in-time recovery processes generated inconsistent or mismatched GTID tracking catalogs. The state file assembly code was hardened to preserve linear transaction ordering when building master replication mappings.
-
-??? Open * [K8SPXC-1866](https://perconadev.atlassian.net/browse/K8SPXC-1866) - Fixed a crash in the point-in-time recovery subsystem where the binlog collector failed with an HTTP/2 protocol error when targeting Google Cloud Storage through an S3-compatible path. The underlying storage driver's HTTP network layer was updated to handle streaming multi-part requests more reliably. (Thank you Thomas Einwaller for reporting this issue)
 
 * [K8SPXC-1870](https://perconadev.atlassian.net/browse/K8SPXC-1870) - Fixed a bug where running the Operator with multiple replicas caused intermittent webhook TLS verification failures. The Operator now persists the self-signed CA and certificate material into the pxc-webhook-ssl Secret upon first issuance, ensuring that all replica pods reuse the same certificate data rather than independently generating conflicting authorities on startup. (Thank you user konoox for reporting this issue)
 
@@ -225,14 +221,14 @@ The support for PMM2 will be dropped in the Operator in release 1.22.0.
 
 * [K8SPXC-1877](https://perconadev.atlassian.net/browse/K8SPXC-1877) - Fixed an issue where switching binary log source nodes threw false gap detection alarms due to differing log rotation granularities between hosts. The collection coordinator now reviews global cluster GTID status rather than file indexes to avoid crashing during node transitions.
   
-??? internal * [K8SPXC-1886](https://perconadev.atlassian.net/browse/K8SPXC-1886) - Resolved a security vulnerability where unvalidated text strings inside Custom Resource configuration parameters allowed Server-Side Template Injection (SSTI) via the pongo2 engine. Strict sandboxing, tag restrictions, and input sanitization layers have been implemented around the rendering engine to prevent unauthorized code execution.
+* [K8SPXC-1886](https://perconadev.atlassian.net/browse/K8SPXC-1886) - Resolved a security vulnerability where unvalidated text strings inside Custom Resource configuration parameters allowed Server-Side Template Injection (SSTI) via the pongo2 engine. Strict sandboxing, tag restrictions, and input sanitization layers have been implemented around the rendering engine to prevent unauthorized code execution.
 
 * [K8SPXC-1892](https://perconadev.atlassian.net/browse/K8SPXC-1892) - Fixed a bug where the `latestRestorableTime` property was incorrectly evaluated when multiple independent database clusters resided inside the same Kubernetes namespace. The tracking filter was updated to isolate backup queries cleanly by individual cluster name fields to prevent timestamp cross-contamination.
 
 ### Documentation improvements
 
 * Added instructions how to install the Operator with customized parameters using Helm as well as how to override release names.
-- Added a new chapter to the documentation covering how to extend MySQL with plugins and components, including an [overview](../mysql-plugins-components.md) and [practical configuration examples](../mysql-plugins-components-examples.md).
+* Added a new chapter to the documentation covering how to extend MySQL with plugins and components, including an [overview](../mysql-plugins-components.md) and [practical configuration examples](../mysql-plugins-components-examples.md).
 
 ## Supported Software
 
