@@ -63,6 +63,7 @@ As with the SST method, the Operator uses one of the secondary Percona XtraDB Cl
 
 * PVC (Persistent Volume Claim) backups are not supported when this feature is enabled. This support is planned to be implemented in future releases.
 * Only cloud storage backups (S3, Azure, GCP) are available
+* IAM profiles are not yet supported. The support for IAM profiles is planned to be added in future releases.
 
 To enable this method, set `PXCO_FEATURE_GATES=XtrabackupSidecar=true` in the Operator Deployment. See [Configure Operator environment variables](env-vars-operator.md#pxco_feature_gates) for detailed instructions.
 
