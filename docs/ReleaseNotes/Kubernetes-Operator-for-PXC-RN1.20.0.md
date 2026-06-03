@@ -234,12 +234,13 @@ The support for PMM2 will be dropped in the Operator in release 1.22.0.
 
 The Operator was developed and tested with the following software:
 
-- Percona XtraDB Cluster versions 8.4.7-7.1, 8.0.44-35.1, and 5.7.44-31.65 
-- Percona XtraBackup versions 8.4.0-5.1, 8.0.35-34.1, and 2.4.29  
-- HAProxy 2.8.17  
-- ProxySQL 2.7.3-1.2, 3.0.1-1.2
-- LogCollector based on fluent-bit 4.0.1-1 
-- PMM Client 2.44.1-1 and 3.5.0  
+- Percona XtraDB Cluster versions 8.4.8-8.1, 8.0.45-36.1, and 5.7.44-31.65
+- Percona XtraBackup versions 8.4.0-5.1, 8.0.35-35.1, and 2.4.29
+- HAProxy 2.8.18-1
+- ProxySQL 2.7.3-1.3, 3.0.6
+- LogCollector based on fluent-bit 5.0.6
+- PMM Client 2.44.1-1 and 3.8.0
+- cert-manager 1.20.2
 
 Other options may also work but have not been tested.
 
@@ -250,11 +251,11 @@ Percona Operators are designed for compatibility with all [CNCF-certified :octic
 
 --8<-- [start:platforms]
 
-- [Google Kubernetes Engine (GKE) :octicons-link-external-16:](https://cloud.google.com/kubernetes-engine) 1.31 - 1.33  
-- [Amazon Elastic Container Service for Kubernetes (EKS) :octicons-link-external-16:](https://aws.amazon.com) 1.32 - 1.34  
-- [Azure Kubernetes Service (AKS) :octicons-link-external-16:](https://azure.microsoft.com/en-us/services/kubernetes-service/) 1.32 - 1.34  
-- [OpenShift :octicons-link-external-16:](https://www.redhat.com/en/technologies/cloud-computing/openshift) 4.17 - 4.20  
-- [Minikube :octicons-link-external-16:](https://minikube.sigs.k8s.io/docs/) 1.37.0 based on Kubernetes 1.34.0  
+- [Google Kubernetes Engine (GKE) :octicons-link-external-16:](https://cloud.google.com/kubernetes-engine) 1.33 - 1.35  
+- [Amazon Elastic Container Service for Kubernetes (EKS) :octicons-link-external-16:](https://aws.amazon.com) 1.33 - 1.35  
+- [Azure Kubernetes Service (AKS) :octicons-link-external-16:](https://azure.microsoft.com/en-us/services/kubernetes-service/) 1.33 - 1.36  
+- [OpenShift :octicons-link-external-16:](https://www.redhat.com/en/technologies/cloud-computing/openshift) 4.18 - 4.21
+- [Minikube :octicons-link-external-16:](https://minikube.sigs.k8s.io/docs/) 1.38.1 based on Kubernetes 1.35.1
 
 --8<-- [end:platforms]
 
