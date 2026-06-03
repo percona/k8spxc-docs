@@ -2842,6 +2842,39 @@ The endpoint URL of the S3-compatible storage to be used (not needed for the ori
 | ----------- | ---------- |
 | :material-code-string: string     | |
 
+### `backup.storages.STORAGE-NAME.s3.forcePathStyle`
+
+Enforces the use of path style access to the storage, where the bucket name is in the `endpointURL` path (e.g. `https://host/bucket/prefix`). 
+
+If you enforce the path style and specify the bucket name both in the `endpointURL` path and in the `bucket` option, the Operator will use the bucket name from the `endpointURL` and ignore the value specified in `bucket`.
+
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-toggle-switch-outline: boolean     | `false` |
+
+### `backup.storages.STORAGE-NAME.s3.prefix`
+
+The path to the data directory in the bucket. If the `bucket` value already contains the prefix, the Operator appends the `prefix` value to the end of the bucket path. 
+
+For example, if the `bucket` value is `bucket-name/prefix1` and the `prefix` value is `prefix2`, the resulting bucket path is `bucket-name/prefix1/prefix2`.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `my-prefix` |
+
+### `backup.storages.STORAGE-NAME.s3.checksumAlgorithm`
+
+Enables you to specify the checksum algorithm used to verify data integrity during uploads to AWS S3 storage. 
+
+See the [list of supported checksum algorithms :octicons-link-external-16:](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html).
+
+This option is supported for binary log collection and uploads.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `SHA256` |
+
 ### `backup.storages.STORAGE-NAME.s3.caBundle.name`
 
 The name of the Secret that stores custom TLS certificates for TLS communication with S3 storage. See [Configure TLS verification with custom certificates for S3 storage](backups-storage.md#configure-storage-for-backups) for more information.
