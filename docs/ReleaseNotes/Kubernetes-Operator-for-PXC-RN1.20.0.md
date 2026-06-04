@@ -8,7 +8,7 @@
 
 **Security & compliance**
 
-- [Automated TLS certificates rotation](#automated-tls-certificates-rotation) - no downtime, update via Secret
+- [Automated TLS certificates rotation](#automated-tls-certificates-rotation) - minimal downtime, update via Secret
 
 **Performance & reliability**
 
@@ -151,8 +151,6 @@ The support for PMM2 will be dropped in the Operator in release 1.22.0.
 
 * [K8SPXC-1318](https://perconadev.atlassian.net/browse/K8SPXC-1318) - Added verification of point-in-time recovery targets prior to initiating the database restoration workflow. By confirming that the requested timestamp is reachable via existing binary logs, the Operator prevents unnecessary database downtime from a failed recovery path.
 
-??? Open * [K8SPXC-1555](https://perconadev.atlassian.net/browse/K8SPXC-1555) - Clarified documentation regarding official support for a single database version.
-
 * [K8SPXC-1634](https://perconadev.atlassian.net/browse/K8SPXC-1634) - Introduced upfront validation for the `pitr.type` configuration parameter in the Custom Resource definition. Early structural validation prevents the cluster from entering an irrecoverable or broken state due to type mismatches specified during a restore process.
 
 * [K8SPXC-1635](https://perconadev.atlassian.net/browse/K8SPXC-1635) - Added validation for the `pitr.gtid` field prior to executing point-in-time recovery routines. This structural safeguard prevents unvalidated or corrupted GTID targets from corrupting cluster recovery steps or causing unneeded application downtime.
@@ -191,7 +189,7 @@ The support for PMM2 will be dropped in the Operator in release 1.22.0.
 
 * [K8SPXC-1700](https://perconadev.atlassian.net/browse/K8SPXC-1700) - Fixed an issue where newly generated TLS certificates had expiration timelines tied incorrectly to the Operator's initialization time. Expiration metrics are now properly computed from the exact certificate creation date to prevent unexpected pre-mature expiration events. (Thank you David Gloe for reporting this issue)
 
-??? Internal task * [K8SPXC-1724](https://perconadev.atlassian.net/browse/K8SPXC-1724) - Resolved a race condition where the Operator prematurely terminated active State Snapshot Transfer (SST) processes on large database deployments. Extended timeouts and advanced execution checks now ensure that data cloning operations over 1TB can complete without being interrupted.
+* [K8SPXC-1724](https://perconadev.atlassian.net/browse/K8SPXC-1724) - Resolved a race condition where the Operator prematurely terminated active State Snapshot Transfer (SST) processes on large database deployments. Extended timeouts and advanced execution checks now ensure that data cloning operations over 1TB can complete without being interrupted.
 
 * [K8SPXC-1737](https://perconadev.atlassian.net/browse/K8SPXC-1737) - Fixed a panic inside the reconciliation routine triggered during the CompareMySQLVersion verification step. The version checking logic was hardened to seamlessly process unstructured release identifiers without throwing errors.
 
@@ -270,27 +268,29 @@ Percona Operator for MySQL based on Percona XtraDB Cluster in the following tabl
 
 | Image                                                  | Digest                                                           |
 |:-------------------------------------------------------|:-----------------------------------------------------------------|
-| percona/percona-xtradb-cluster-operator:1.19.0         | 6ccbac5e74f5b5309fd4788c5b8d91d5abd01850a4a356ad9eff9f82d20afb51 |
-| percona/percona-xtradb-cluster-operator:1.19.0 (ARM64) | 1ed2a5ab22ee7588aa17ec2339876dc72c9724dc9a81506ff449a2b1aa085024 |
-| percona/percona-xtradb-cluster:8.4.7-7.1               | 5b18775ad62a1c5f8d8bffc63a1518360d2e7a82c1bed7cbd8a15011f6cdff9f |
-| percona/percona-xtradb-cluster:8.4.7-7.1 (ARM64)       | 4c3785f5befd001ca3ae035f42c9b586447b874158b0d9b26afb8ff87658829f |
-| percona/percona-xtradb-cluster:8.0.44-35.1             | f91026ec8427ace53dc31f3b00ec14cebdc0868bda921ae0713e8ad3af71ba1f |
-| percona/percona-xtradb-cluster:8.0.44-35.1 (ARM64)     | 33a0f32c1d42cf6e74f45aeebd6422cfdea6c8c8bc3cce600e46c4661b0183be |
+| percona/percona-xtradb-cluster-operator:1.20.0         | 98e7a58a65b80c3cb76cff7285d4ee25bf17bd881c70763061521cd0076057f4 |
+| percona/percona-xtradb-cluster-operator:1.20.0 (ARM64) | dff802c01f504397ad96c12eb96c22785b389652a497c82aa1860b66e74a0d6a |
+| percona/percona-xtradb-cluster:8.4.8-8.1               | c901e20ed8bdb6c6a1da5195b31aa30cdaa34e5a54b8e4b2f5151f998e3eadc4 |
+| percona/percona-xtradb-cluster:8.4.8-8.1 (ARM64)       | a243c31fd34fec6b5f493216d9b4f4cba369d1cb06d7a2640782ec85c28e7e40 |
+| percona/percona-xtradb-cluster:8.0.45-36.1             | e34f43f3f2d3c38d27f0b32767057636b0f9dfb0b00cae28bd0fd612b51b7638 |
+| percona/percona-xtradb-cluster:8.0.45-36.1 (ARM64)     | de0c0a9300e53b3b93bb169bb6ea8d1f2e86967fa54ff5ae44ddc6dacbed7ff5 |
 | percona/percona-xtradb-cluster:5.7.44-31.65            | 36fafdef46485839d4ff7c6dc73b4542b07031644c0152e911acb9734ff2be85 |
-| percona/percona-xtrabackup:8.4.0-5.1                   | 1b81d06b1beb6a126b493d11532a5c71d1b1c2a1d13cb655e3cc5760c0896035 |
-| percona/percona-xtrabackup:8.4.0-5.1 (ARM64)           | ca40d7975ae39bd5dd652487a1389b823cbf788e9948db6cf53ebb0d3f57c51b |
-| percona/percona-xtrabackup:8.0.35-34.1                 | 967bafa0823c90aa8fa9c25a9012be36b0deef64e255294a09148d77ce6aea68 |
-| percona/percona-xtrabackup:8.0.35-34.1 (ARM64)         | 83f814dca9ed398b585938baa86508bda796ba301e34c948a5106095d27bf86e |
+| percona/percona-xtradb-cluster:5.7.44-31.65 (ARM64)    | 36fafdef46485839d4ff7c6dc73b4542b07031644c0152e911acb9734ff2be85 |
+| percona/percona-xtrabackup:8.4.0-5.1                   | 1c7e20fac192f70de2233e471a9243ba9a65399e9667cf954f5fc5afba1b9aa4 |
+| percona/percona-xtrabackup:8.4.0-5.1 (ARM64)           | dd6089277586865a7debfbe2e8b3a894632f9240fd1aec8c77c4f71cb9750b90 |
+| percona/percona-xtrabackup:8.0.35-35.1                 | f44162b0bede26d74f23c1cd3ab58efb0f43529f7fe09d221e3ad7b473463f0b |
+| percona/percona-xtrabackup:8.0.35-35.1 (ARM64)         | 68908749139e3904d81a21a0cbb7ff85b08dc7a65d9d063b17dfff278ad81107 |
 | percona/percona-xtrabackup:2.4.29                      | 11b92a7f7362379fc6b0de92382706153f2ac007ebf0d7ca25bac2c7303fdf10 |
-| percona/fluentbit:4.0.1-1                               | 65bdf7d38cbceed6b6aa6412aea3fb4a196000ac6c66185f114a0a62c4a442ad |
-| percona/fluentbit:4.0.1-1 (ARM64)                      | dabda77b298b67d30d7f53b5cdb7215ad19dabb22b9543e3fd8aedb74ab24733 |
-| percona/pmm-client:3.5.0                               | 352aee74f25b3c1c4cd9dff1f378a0c3940b315e551d170c09953bf168531e4a |
-| percona/pmm-client:3.5.0 (ARM64)                       | cbbb074d51d90a5f2d6f1d98a05024f6de2ffdcb5acab632324cea4349a820bd |
+| percona/percona-xtrabackup:2.4.29 (ARM64)              | 11b92a7f7362379fc6b0de92382706153f2ac007ebf0d7ca25bac2c7303fdf10 |
+| percona/fluentbit:5.0.6-1                              | 8e728120c36d78757d5f272f54aa49c67beb92b0b34bf875f558f51b6459aba1 |
+| percona/fluentbit:5.0.6-1 (ARM64)                      | 448c485db84501b889092296581c6a3fa3e093c00d4411fa58ea9a424e4fe479 |
+| percona/pmm-client:3.8.0                               | 9b497528b4c0d454911f37bbe7bea65dc2d7198f4bd8e63fc4fd828ed0d2647f |
+| percona/pmm-client:3.8.0 (ARM64)                       | d475404b77d2a8d7fff03fc9497d43c044d72095a19da984b3f32cea7cdafe6d |
 | percona/pmm-client:2.44.1-1                            | 52a8fb5e8f912eef1ff8a117ea323c401e278908ce29928dafc23fac1db4f1e3 |
 | percona/pmm-client:2.44.1-1 (ARM64)                    | 390bfd12f981e8b3890550c4927a3ece071377065e001894458047602c744e3b |
-| percona/haproxy:2.8.17                                 | ef8486b39a1e8dca97b5cdf1135e6282be1757ad188517b889d12c5a3470eeda |
-| percona/haproxy:2.8.17 (ARM64)                         | bbc5b3b66ac985d1a4500195539e7dff5196245a5a842a6858ea0848ec089967 |
-| percona/proxysql2:2.7.3-1.2                            | 719d0ab363c65c7f75431bbed7ec0d9f2af7e691765c489da954813c552359a2 |
-| percona/proxysql2:2.7.3-1.2 (ARM64)                    | 4c4d094652c9f2eb097be5d92dcc05da61c9e8699ac7321def959d5a205a89f7 |
-| percona/proxysql3:3.0.1-1.2                            | f3fb43d4ef2467f207ecd66c51414520a100a0474807f307775a985303c56ec5 |
-| percona/proxysql3:3.0.1-1.2 (ARM64)                    | d21ba769b9e364a1a0c1d5e9d3b6287e8051efcf79cd6ec3df5756278961bbec |
+| percona/haproxy:2.8.18-1                               | fa668cec0a541ce862ecd8fd781df4631e837e085dde6b5ae2a4bb678cc84024 |
+| percona/haproxy:2.8.18-1 (ARM64)                       | 8271dafc8db4d1a4e5a446b3618ec8bed95837c7e9066cce0898ffefdf6b36f1 |
+| percona/proxysql2:2.7.3-1.3                            | 50381e9798b99e9af0898614001370c965ac5393cee9023d9e9f90003442e321 |
+| percona/proxysql2:2.7.3-1.3 (ARM64)                    | f4addf63bd8e3b846d63f1277e1a2316d0d88591cb42bd95497957406ef0b43a |
+| percona/proxysql3:3.0.6-1.1 | 062bb7d717053b6325ed8277da3b85e39b4345de44a76ad3cd52456fe710d75c|
+| percona/proxysql3:3.0.6-1.1 (ARM64) | c5048c1a1e07436266720fb2119a1c0e774c0546a99b8fe4ca9742951c9d5902|
