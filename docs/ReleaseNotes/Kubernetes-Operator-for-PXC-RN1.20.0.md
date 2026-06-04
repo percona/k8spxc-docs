@@ -54,7 +54,7 @@ spec:
 
 Learn more about the workflow and troubleshooting tips in our [documentation](../scaling.md#automatic-storage-resizing).
 
-### Automated TLS certificates rotation
+ ### Automated TLS certificates rotation
 
 You no longer need to go through the long manual procedure of updating the TLS certificates issued by the Operator. With this release, the Operator handles certificate update automatically. All you need to do is to provide new CA, server and key certificates to the operator via a Secret object. Note that the Secret must have the name in the format `<existing-secre>-new` because the Operator expects the `-new` suffix to trigger the update. On the next reconciliation loop the Operator detects the new TLS certificates and updates them accordingly.
 
@@ -90,7 +90,7 @@ When you configure a memory allocator to `jemalloc` using the Custom Resource, t
 
 Since Percona XtraDB Cluster 8.4 is the default and recommended version for new clusters, the default `jemalloc` path is changed to `/usr/lib64/libjemalloc.so.2`.
 
-The Operator determines the PXC version from the image tag. If you deploy images where Percona XtraDB Cluster is referenced using a `sha256` digest, such as from a Red Hat Container Registry or some custom images, the Operator cannot detect the version and therefore falls back to the default `jemalloc` path `/usr/lib64/libjemalloc.so.2`. To avoid this, consider upgrading to Percona XtraDB Cluster 8.4 or [specify the memory allocator using the environment variable](../env-vars-cluster.md#configure-alternative-memory-allocator).
+The Operator determines the Percona XtraDB Cluster version from the image tag. If you deploy images where Percona XtraDB Cluster is referenced using a `sha256` digest, such as from a Red Hat Container Registry or some custom images, the Operator cannot detect the version and therefore falls back to the default `jemalloc` path `/usr/lib64/libjemalloc.so.2`. To avoid this, consider upgrading to Percona XtraDB Cluster 8.4 or [specify the memory allocator using the environment variable](../env-vars-cluster.md#configure-alternative-memory-allocator).
 
 This change ensures your memory allocation settings work smoothly and without manual intervention.
 
@@ -218,8 +218,6 @@ The support for PMM2 will be dropped in the Operator in release 1.22.0.
 * [K8SPXC-1872](https://perconadev.atlassian.net/browse/K8SPXC-1872) - Fixed a bug where initiating a point-in-time recovery using the latest option could accidentally replay stale transaction history from an outdated timeline. The restore job configuration has been corrected to explicitly evaluate the active cluster timeline name when generating binlog filters, ensuring that only current binary logs are replayed.
 
 * [K8SPXC-1877](https://perconadev.atlassian.net/browse/K8SPXC-1877) - Fixed an issue where switching binary log source nodes threw false gap detection alarms due to differing log rotation granularities between hosts. The collection coordinator now reviews global cluster GTID status rather than file indexes to avoid crashing during node transitions.
-  
-* [K8SPXC-1886](https://perconadev.atlassian.net/browse/K8SPXC-1886) - Resolved a security vulnerability where unvalidated text strings inside Custom Resource configuration parameters allowed Server-Side Template Injection (SSTI) via the pongo2 engine. Strict sandboxing, tag restrictions, and input sanitization layers have been implemented around the rendering engine to prevent unauthorized code execution.
 
 * [K8SPXC-1892](https://perconadev.atlassian.net/browse/K8SPXC-1892) - Fixed a bug where the `latestRestorableTime` property was incorrectly evaluated when multiple independent database clusters resided inside the same Kubernetes namespace. The tracking filter was updated to isolate backup queries cleanly by individual cluster name fields to prevent timestamp cross-contamination.
 
