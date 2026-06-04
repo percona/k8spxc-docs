@@ -197,3 +197,25 @@ Important things to observe here are the following ones:
 * Check if the provisioner and parameters are indicating the type of storage you intend to provision.
 * Check the [volumeBindingMode :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/storage-classes/#volume-binding-mode) especially if the storage cannot be accessed across availability zones. “WaitForFirstConsumer” volumeBindingMode ensures volume is provisioned only after a Pod requesting the Volume is created.
 * If you are going to rely on the Operator [storage scaling functionality](scaling.md#storage-resizing-with-volume-expansion-capability), ensure the storage class supports PVC expansion (it should have  `allowVolumeExpansion: true` in the output of the above command).
+
+## Troubleshoot storage resizing
+
+Use this guidance if [storage resizing](scaling.md#scale-storage) does not behave as expected.
+
+### Storage does not scale when you expect it
+
+* Check namespace quotas; they can block PVC expansion even if the storage class has capacity.
+* Check quotas or limits set by your cloud provider.
+* Look for storage or CSI-level errors (missing storage, driver issues). Fix the issue and let the Operator reconcile.
+
+### Max size is not respected
+
+The Operator grows storage by the full `growthStep` value. If the current size plus `growthStep` exceeds the `maxSize` value, the Operator caps the resize at `maxSize` instead. To avoid large jumps or unexpected caps, either set the `growthStep` value to the increment you want the storage to resize or raise the `maxSize` limit.
+
+### Scaling doesn't happen even though the maximum size hasn't been reached
+
+If storage is not scaling, check if any PVC has reached the max size. Thresholds and limits apply to all PVCs, so when one hits the limit, scaling stops for all. Adjust PVC sizes if needed.
+
+### PVC resize is one-way
+
+PVC resizing in Kubernetes is one-way. You cannot shrink a PVC to roll back to the old size without recreating it. Recreating PVCs can cause data loss, so make sure you have a backup strategy in place. Learn more [about backups](backups.md).

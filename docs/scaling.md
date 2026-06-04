@@ -39,18 +39,117 @@ for more details about other components.
 
 ### Scale storage
 
-Kubernetes manages storage with a PersistentVolume (PV), a segment of
-storage supplied by the administrator, and a PersistentVolumeClaim
-(PVC), a request for storage from a user. Starting with Kubernetes v1.11, a user can increase the size of an existing
-PVC object (considered stable since Kubernetes v1.24).
-The user cannot shrink the size of an existing PVC object.
+Kubernetes manages storage with the following components:
 
-Starting from the version 1.14.0, you can scale Percona XtraDB
-Cluster storage automatically by configuring the Custom Resource manifest. Alternatively, you can scale the storage manually. For either way, the volume type must support PVCs expansion.
+* a PersistentVolume (PV) - a segment of
+storage supplied by the Kubernetes administrator,
+* a PersistentVolumeClaim
+(PVC) - a request for storage from a user.
+
+Starting from the version 1.14.0, you can increase the size of an existing PVC object (considered stable since Kubernetes v1.24).
+Note that you **cannot** shrink the size of an existing PVC object.
+
+Use storage scaling to keep up with growing data while keeping the cluster online. The Operator supports the following scaling options:
+
+* automatic scaling - Starting with Operator version 1.20.0, the Operator monitors storage usage and scales the storage automatically
+* storage resizing with Volume Expansion capability - Starting with the Operator version 1.14.0, you can instruct the Operator to scale the storage by updating the Custom Resource manifest
+* manual scaling - scale the storage manually.
+
+You can also use an external autoscaler with the Operator. Enabling an external autoscaler disables the Operator's internal logic for automatic storage resizing. Choose one method based on your environment and requirements; using both simultaneously is not supported.
+
+For either option, the volume type must support PVC expansion.
+To check if your storage supports the expansion capability, run the following command:
+
+```bash
+kubectl describe sc <storage class name> | grep AllowVolumeExpansion
+```
+
+??? example "Expected output"
+
+    ``` {.text .no-copy}
+    AllowVolumeExpansion: true
+    ```
 
 Find exact details about
 PVCs and the supported volume types in [Kubernetes
-documentation  :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#expanding-persistent-volumes-claims).
+documentation :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#expanding-persistent-volumes-claims).
+
+#### Automatic storage resizing
+
+Starting with version 1.20.0, the Operator can automatically resize Persistent Volume Claims (PVCs) for Percona XtraDB Cluster Pods based on your configured thresholds. The Operator monitors storage usage of all PVCs and when it exceeds the defined threshold, triggers resizing until the storage size reaches the maximum limit.
+
+This feature gives you:
+
+* fewer outages from full disks because storage grows with demand
+* less guesswork on capacity planning and fewer last-minute fixes
+* lower operational effort for developers and platform engineers
+* cost control by expanding only when needed
+* a more predictable environment so teams can focus on delivery
+
+To enable automatic storage resizing, edit the `deploy/cr.yaml` Custom Resource manifest as follows:
+{.power-number}
+
+1. Make sure each Percona XtraDB Cluster container has a storage size set.
+
+    Example for a replica set container:
+
+    ```yaml
+    pxc:
+      volumeSpec:
+        persistentVolumeClaim:
+          resources:
+            requests:
+              storage: 6Gi
+    ```
+
+2. Configure autoscaling thresholds in the `storageScaling` subsection:
+
+    * `enableVolumeScaling` - set to `true`
+    * `autoscaling.enabled` - set to `true`
+    * `autoscaling.triggerThresholdPercent` - specify the usage percentage. When the usage exceeds this threshold, this triggers autoscaling
+    * `autoscaling.growthStep` - specify how much to increase the storage on
+    * `autoscaling.maxSize` - specify the upper limit for storage growth. When this limit is reached, scaling is no longer possible.
+
+    Example configuration:
+
+    ```yaml
+    spec:
+      storageScaling:
+        enableVolumeScaling: true
+        autoscaling:
+          enabled: true
+          triggerThresholdPercent: 80
+          growthStep: 2Gi
+          maxSize: "10Gi"
+    ```
+
+3. Apply the configuration:
+
+    ```bash
+    kubectl apply -f deploy/cr.yaml -n <namespace>
+    ```
+
+When the Operator changes the storage size, it updates the Custom Resource status as follows:
+
+* adds the `pvc-resize-in-progress` annotation. The annotation contains the timestamp of the resize start and indicates that the resize operation is running. After the resize finishes, the Operator deletes this annotation.
+* records the new size in the `currentSize` field
+* updates the `resizeCount` field.
+
+Run the `kubectl get pxc -o yaml -n <namespace>` to check the current cluster state.
+
+??? example "Sample output"
+
+    ```{.text .no-copy}
+    storageAutoscaling:
+      datadir-pxc-pxc-0:
+        currentSize: 5123744Ki
+        lastResizeTime: "2026-01-23T15:08:59Z"
+        resizeCount: 2
+    ```
+
+The `storageAutoscaling` section appears under `.status` in the Custom Resource.
+
+When the storage size reaches the limit, no further resizing is done and this event is recorded in the logs. You can either clean up the data or set a new limit based on your organization's policies and requirements. For help with common issues, see [Troubleshooting storage](debug-storage.md).
 
 #### Storage resizing with Volume Expansion capability
 
@@ -66,15 +165,15 @@ kubectl describe sc <storage class name> | grep AllowVolumeExpansion
     AllowVolumeExpansion: true
     ```
 
-To enable storage resizing via volume expansion, set the [enableVolumeExpansion](operator.md#enablevolumeexpansion) Custom Resource option to `true` ( it is turned off by default). When enabled, the Operator will automatically expand such storage for you when you change the
-`pxc.volumeSpec.persistentVolumeClaim.resources.requests.storage` option in the Custom Resource.
+To enable storage resizing via volume expansion, set the [storageScaling.enableVolumeScaling](operator.md#storagescalingenablevolumescaling) Custom Resource option to `true` and set the new storage size in the
+`pxc.volumeSpec.persistentVolumeClaim.resources.requests.storage` option in the Custom Resource. The Operator will automatically expand the storage for all database Pods to the new value.
 
-For example, you can do it by editing and applying the `deploy/cr.yaml` file:
+For example, edit the `deploy/cr.yaml` file:
 
 ```yaml
 spec:
-  ...
-  enableVolumeExpansion: true
+  storageScaling:
+    enableVolumeScaling: true
     ...
   pxc:
     ...
@@ -92,11 +191,19 @@ Apply changes as usual:
 kubectl apply -f cr.yaml
 ```
 
-The storage size change takes some time. When it starts, the Operator automatically adds the `pvc-resize-in-progress` annotation to the `PerconaXtraDBCluster` Custom Resource. The annotation contains the timestamp of the resize start and indicates that the resize operation is running.. After the resize finishes, the Operator deletes this annotation.
+The storage size change takes some time. When it starts, the Operator automatically adds the `pvc-resize-in-progress` annotation to the `PerconaXtraDBCluster` Custom Resource. The annotation contains the timestamp of the resize start and indicates that the resize operation is running. After the resize finishes, the Operator deletes this annotation.
 
-!!! warning
+##### If storage scaling cannot complete
 
-    If the new storage size can't be reached because there is a resource quota in place and the PVC storage limits are reached, this will be detected, there will be no scaling attempts, and the Operator will revert the value in the Custom Resource option back. If resize isn't successful (for example, no quota is set, but the new storage size turns out to be just too large), the Operator will detect Kubernetes failure on scaling, and revert the Custom Resource option. Still, Kubernetes will continue attempts to fulfill the scaling request until the problem is [fixed manually by the Kubernetes administrator](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#recovering-from-failure-when-expanding-volumes).
+Sometimes resizing storage does not finish as expected. Here are common situations and what the Operator does:
+
+- **If there is a resource quota** that prevents your PersistentVolumeClaim (PVC) from growing to the new size, the Operator will detect this right away. In this case, no scaling will be attempted and the storage size in the Custom Resource  will be changed back to the previous value automatically.
+  
+* If no quota is set but **you request a storage size that is too large for your environment**, the resize may still fail. The Operator will again detect the failure and revert the storage size in the Custom Resource back to its original value. However, Kubernetes may keep trying to finish the resize until the issue is [fixed manually by an administrator](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#recovering-from-failure-when-expanding-volumes).
+
+* If storage resizing is only partially successful (for example, two out of three pods have their PVCs expanded) and you turn off the `enableVolumeScaling` option while this is happening, the Operator rolls back the storage size in the Custom Resource to the previous value. However, since Kubernetes doesn't allow shrinking the storage, PVCs remain with the size they had when scaling was interrupted.
+
+  If you later re-enable the `enableVolumeScaling` option, always check the actual storage size of your PVCs. Make sure to set the storage size in the Custom Resource to be equal to or greater than the largest current PVC size.
 
 
 #### Manual resizing without Volume Expansion capability
