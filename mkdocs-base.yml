@@ -209,6 +209,9 @@ nav:
           - "Application and system users": users.md
           - "Exposing the cluster": expose.md
           - "Changing MySQL Options": options.md
+          - Extend MySQL with plugins and components:
+              - "About plugins and components": mysql-plugins-components.md
+              - "Configure plugins and components": mysql-plugins-components-examples.md
           - "Limit SST retries": sst-retry-limit.md
           - "Control Pod scheduling": constraints.md
           - "Labels and annotations": annotations.md

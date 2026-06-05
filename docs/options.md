@@ -8,6 +8,8 @@ You may need to change the MySQL configuration for your application. MySQL lets 
 
 In most cases, you don’t need to add custom options because the Operator already provides sensible defaults for MySQL.
 
+To enable MySQL plugins and components (audit logging, password validation, connection throttling, and others), see [MySQL plugins and components](mysql-plugins-components.md).
+
 If you supply custom configuration in more than one way, the Operator will only use one method. It follows this order of preference:
 
 1. First, it checks for a Secret object.
