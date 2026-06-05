@@ -19,7 +19,7 @@
 * {{ k8spxcjira(1088) }}: It is now possible to configure CPU and memory resources for the backup restore job in the PerconaXtraDBClusterRestore Custom Resource options
 * {{ k8spxcjira(1166) }}: Starting from now, Docker image tags for Percona XtraBackup include full XtraBackup version instead of the major number used before
 * {{ k8spxcjira(1189) }}: Improve security and meet compliance requirements by building the Operator based on Red Hat Universal Base Image (UBI) 9 instead of UBI 8
-* {{ k8spxcjira(1192) }}: Backup and restore documentation was substantially improved to make it easier to work with, and [backup restore options](../operator.md#perconaxtradbclusterrestore-custom-resource-options) have been added to the Сustom Resource reference
+* {{ k8spxcjira(1192) }}: Backup and restore documentation was substantially improved to make it easier to work with, and [backup restore options](../backup-cr.md) have been added to the Сustom Resource reference
 * {{ k8spxcjira(1210) }}: A [headless service :octicons-link-external-16:](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services) can now be configured for [ProxySQL](../proxysql-conf.md#headless-proxysql-service) and [HAProxy](../haproxy-conf.md) to make them usable on a tenant network (thanks to Vishal Anarase for contribution)
 * {{ k8spxcjira(1225) }}: The Operator (system) users are now created with the `PASSWORD EXPIRE NEVER` policy to avoid breaking the cluster due to the password expiration set by the `default_password_lifetime` system variable
 * {{ k8spxcjira(362) }}: Code clean-up and refactoring for checking if ProxySQL and HAProxy enabled in the Custom Resource (thanks to Vladislav Safronov for contributing)

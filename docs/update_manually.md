@@ -8,8 +8,7 @@ is not an option. For example, if the database upgrade impacts your application,
 Running a manual database upgrade allows you to do just that. You can use one of the following
 *upgrade strategies*:
 
-* *Rolling Update*, initiated manually and [controlled by Kubernetes  :octicons-link-external-16:](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies). Note that the order of Pods restart may not be optimal from the Percona Server for
-    MongoDB point of view.
+* *Rolling Update*, initiated manually and [controlled by Kubernetes  :octicons-link-external-16:](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies). Note that the order of Pods restart may not be optimal from the Percona XtraDB Cluster point of view.
 
 * *On Delete*, [done by Kubernetes on per-Pod basis  :octicons-link-external-16:](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies) when Pods are manually deleted.
 
