@@ -54,7 +54,7 @@ spec:
 
 Learn more about the workflow and troubleshooting tips in our [documentation](../scaling.md#automatic-storage-resizing).
 
- ### Automated TLS certificates rotation
+### Automated TLS certificates rotation
 
 You no longer need to go through the long manual procedure of updating the TLS certificates issued by the Operator. With this release, the Operator handles certificate update automatically. All you need to do is to provide new CA, server and key certificates to the operator via a Secret object. Note that the Secret must have the name in the format `<existing-secre>-new` because the Operator expects the `-new` suffix to trigger the update. On the next reconciliation loop the Operator detects the new TLS certificates and updates them accordingly.
 

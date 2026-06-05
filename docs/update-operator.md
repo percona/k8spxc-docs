@@ -284,7 +284,7 @@ Operator with the `helm upgrade` command.
 
 ## Upgrade via Operator Lifecycle Manager (OLM)
 
-If you have [installed the Operator on the OpenShift platform using OLM](openshift.md#install-the-operator-via-the-operator-lifecycle-manager-olm), you can upgrade the Operator within it.
+If you have [installed the Operator on the OpenShift platform using OLM](openshift.md#install-via-the-operator-lifecycle-manager-olm), you can upgrade the Operator within it.
 
 1. List installed Operators for your Namespace to see if there are upgradable items.
 

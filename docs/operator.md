@@ -177,7 +177,7 @@ A secret with TLS certificate generated for *internal* communications, see [Tran
 
 ### `logCollectorSecretName`
 
-A secret for the [Fluent Bit Log Collector](debug-logs.md#cluster-level-logging).
+A secret for the [Fluent Bit Log Collector](persistent-logging.md).
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -745,7 +745,7 @@ Specifies which memory allocator to use for the MySQL process. Available since O
 
 Supported values: `jemalloc`, `tcmalloc`. When left empty or omitted, the default `libc` allocator is used.
 
-For how the Operator handles `jemalloc` memory allocator, see [Correct jemaloc path based on Percona XtraDB Cluster version](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.20.0.md#correct-jemalloc-path-based-on-percona-xtradb-cluster-version).
+For how the Operator handles `jemalloc` memory allocator, see [Correct jemaloc path based on Percona XtraDB Cluster version](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.20.0.md#version-aware-jemalloc-path-selection-for-optimized-memory-usage).
 
 | Value type  | Example    |
 | ----------- | ---------- |

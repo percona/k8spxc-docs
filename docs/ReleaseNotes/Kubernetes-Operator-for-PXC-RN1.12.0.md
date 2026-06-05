@@ -18,7 +18,7 @@
 * {{ k8spxcjira(1043) }} and {{ k8spxcjira(1005) }}: Add support for the [Azure Kubernetes Service (AKS)](../aks.md) platform and allow [using Azure Blob Storage](../backups-storage.md#__tabbed_1_2) for backups
 * {{ k8spxcjira(1010) }}: Allow [using templates](../options.md#auto-tuning-mysql-options) to define `innodb_buffer_pool_size` auto-tuning based on container memory limits
 * {{ k8spxcjira(1082) }}: New `ignoreAnnotations` and `ignoreLabels` Custom Resource options allow to list [specific annotations and labels](../annotations.md) for Kubernetes Service objects, which the Operator should ignore (useful with various Kubernetes flavors which add annotations to the objects managed by the Operator)
-* {{ k8spxcjira(1120) }}: Add [headless service :octicons-link-external-16:](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services) support for the restore Pod to [make it possible](../backups-restore-to-new-cluster.md#backups-headless-service) restoring backups from a Persistent Volume on a tenant network (thanks to Zulh for contribution)
+* {{ k8spxcjira(1120) }}: Add [headless service :octicons-link-external-16:](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services) support for the restore Pod to [make it possible](../backups-restore-to-new-cluster.md) restoring backups from a Persistent Volume on a tenant network (thanks to Zulh for contribution)
 * {{ k8spxcjira(1140) }}: The Operator now [allows using SSL channel](../replication.md#replication-ssl) for cross-site replication (thanks to Alvaro Aguilar-Tablada Espinosa for contribution)
 
 ## Improvements
