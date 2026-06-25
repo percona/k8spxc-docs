@@ -9,19 +9,19 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Congratulations! You have completed all the steps in the Get started guide.">
+        <meta name="description" content="You can start using cert-manager for TLS certificate lifecycle management if you have previously deployed your cluster with auto-generated or custom certificates. The use of cert-manager provides automatic certificate renewal, configurable validity periods, and centralized certificate management across your Kubernetes cluster.">
       
       
         <meta name="author" content="Percona LLC">
       
       
-        <link rel="canonical" href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/what-next.html">
+        <link rel="canonical" href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/tls-migrate-to-cert-manager.html">
       
       
-        <link rel="prev" href="monitoring-tutorial.html">
+        <link rel="prev" href="tls-update.html">
       
       
-        <link rel="next" href="System-Requirements.html">
+        <link rel="next" href="tls-disable.html">
       
       
         
@@ -32,7 +32,7 @@
     
     
       
-        <title>What’s next? - Percona Operator for MySQL based on Percona XtraDB Cluster</title>
+        <title>Migrate from Operator-generated or custom certificates to cert-manager - Percona Operator for MySQL based on Percona XtraDB Cluster</title>
       
     
     
@@ -100,7 +100,7 @@
                  
                  
                   <meta property="og:type" content="website" />
-                  <meta property="og:title" content="Percona Operator for MySQL based on Percona XtraDB Cluster - What&rsquo;s next?" />
+                  <meta property="og:title" content="Percona Operator for MySQL based on Percona XtraDB Cluster - Migrate from Operator-generated or custom certificates to cert-manager" />
                   <meta property="og:image"
                     content="https://docs.percona.com/percona-operator-for-xtradb-cluster/assets/images/kubernetes-operators.png">
                   <meta property="og:url" content="https://docs.percona.com/percona-operator-for-xtradb-cluster/">
@@ -128,7 +128,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#whats-next" class="md-skip">
+        <a href="#migrate-from-operator-generated-or-custom-certificates-to-cert-manager" class="md-skip">
           Skip to content
         </a>
       
@@ -236,7 +236,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              What&rsquo;s next?
+              Migrate from Operator-generated or custom certificates to cert-manager
             
           </span>
         </div>
@@ -563,20 +563,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
         
           
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
@@ -597,7 +595,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -863,19 +861,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="what-next.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="what-next.html" class="md-nav__link">
         
   
   
@@ -891,7 +880,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -1519,18 +1507,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
         
           
           <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
@@ -1551,7 +1541,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2513,18 +2503,20 @@
                 
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_13" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_13" checked>
         
           
           <label class="md-nav__link" for="__nav_7_13" id="__nav_7_13_label" tabindex="0">
@@ -2545,7 +2537,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_13_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_13_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_7_13">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2672,10 +2664,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="tls-migrate-to-cert-manager.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Migrate from Operator-generated or custom certificates to cert-manager
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="tls-migrate-to-cert-manager.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -2691,6 +2710,54 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#migration-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Migration steps
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Migration steps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#verify-the-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify the migration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -5571,7 +5638,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
                     <div data-banner="data-banner" class="edit-contrib-banner">
     <div class="banner-content">
       <!-- Edit link centered -->
-      <a href="https://github.com/percona/k8spxc-docs/edit/main/docs/what-next.md" title="Edit this page on GitHub" class="edit-page-link">
+      <a href="https://github.com/percona/k8spxc-docs/edit/main/docs/tls-migrate-to-cert-manager.md" title="Edit this page on GitHub" class="edit-page-link">
         <span class="edit-page-icon">
           
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
@@ -5614,6 +5681,42 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#migration-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Migration steps
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Migration steps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#verify-the-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify the migration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -5636,32 +5739,122 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     
       
     
-    <a href="https://github.com/percona/k8spxc-docs/raw/main/docs/what-next.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/percona/k8spxc-docs/raw/main/docs/tls-migrate-to-cert-manager.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
     </a>
   
 
 
-<h1 id="whats-next">What&rsquo;s next?<a class="headerlink" href="#whats-next" title="Permanent link">&para;</a></h1>
-<p>Congratulations! You have completed all the steps in the Get started guide. </p>
-<p>You have the following options to move forward with the Operator:</p>
-<ul>
-<li>Deepen your monitoring insights by setting up <a href="monitor-kubernetes.html">Kubernetes monitoring with PMM</a></li>
-<li>Control Pods assignment on specific Kubernetes Nodes by setting up <a href="constraints.html">affinity / anti-affinity</a></li>
-<li>Ready to adopt the Operator for production use and need to delete the testing deployment? Use <a href="delete.html">this guide</a> to do it</li>
-<li>You can also try operating the Operator and database clusters via the web interface with <a href="https://docs.percona.com/everest/index.html">Percona Everest <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> - an open-source web-based database provisioning tool based on Percona Operators. See <a href="https://docs.percona.com/everest/quickstart-guide/quick-install.html">Get started with Percona Everest <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> on how to start using it</li>
-</ul>
+<h1 id="migrate-from-operator-generated-or-custom-certificates-to-cert-manager">Migrate from Operator-generated or custom certificates to cert-manager<a class="headerlink" href="#migrate-from-operator-generated-or-custom-certificates-to-cert-manager" title="Permanent link">&para;</a></h1>
+<p>You can start using cert-manager for TLS certificate lifecycle management if you have previously deployed your cluster with auto-generated or custom certificates. The use of cert-manager provides automatic certificate renewal, configurable validity periods, and centralized certificate management across your Kubernetes cluster.</p>
+<p>Read more about cert-manager in <a href="tls-cert-manager.html#about-the-cert-manager">About cert-manager</a></p>
+<h2 id="migration-steps">Migration steps<a class="headerlink" href="#migration-steps" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>Export the cluster name and the namespace where the cluster is running as an environment variable:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">CLUSTER_NAME</span><span class="o">=</span>&lt;cluster1&gt;
+<span class="nb">export</span><span class="w"> </span><span class="nv">NAMESPACE</span><span class="o">=</span>&lt;namespace&gt;
+</code></pre></div>
+</li>
+<li>
+<p><a href="pause.html">Pause the cluster</a> to stop reconciliation before you change TLS resources. Run the following command to patch your running cluster:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span><span class="w"> </span>pxc<span class="w"> </span><span class="nv">$CLUSTER_NAME</span><span class="w"> </span>--type<span class="w"> </span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">&quot;spec&quot;: {</span>
+<span class="s1">  &quot;pause&quot;: true}</span>
+<span class="s1">  }&#39;</span>
+</code></pre></div>
+</li>
+<li>
+<p>Verify the cluster status:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pxc<span class="w"> </span><span class="nv">$CLUSTER_NAME</span><span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span>
+</code></pre></div>
+<p>Wait until the cluster status is <code>Paused</code>. You can verify with <code>kubectl get pods -n $NAMESPACE</code>.</p>
+</li>
+<li>
+<p>Deploy cert-manager:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/cert-manager/cert-manager/releases/download/v1.20.2/cert-manager.yaml
+</code></pre></div>
+<p>This command installs cert-manager in the default <code>cert-manager</code> namespace.</p>
+</li>
+<li>
+<p>Verify that cert-manager is running:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>cert-manager
+</code></pre></div>
+</li>
+<li>
+<p>Delete the TLS Secrets.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Operator-generated certificates</label><label for="__tabbed_1_2">Custom certificates</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<ol>
+<li>
+<p>List the Secrets:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>secrets<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span><span class="w"> </span>-o<span class="w"> </span>custom-columns<span class="o">=</span>NAME:.metadata.name,TYPE:.type<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">&#39;NAME|ssl&#39;</span>
+</code></pre></div>
+<details class="example">
+<summary>Expected output</summary>
+<div class="no-copy highlight"><pre><span></span><code>cluster1-ssl            kubernetes.io/tls
+cluster1-ssl-internal   kubernetes.io/tls
+</code></pre></div>
+</details>
+</li>
+<li>
+<p>Delete the Secrets:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>secret<span class="w"> </span><span class="nv">$CLUSTER_NAME</span>-ssl<span class="w"> </span><span class="nv">$CLUSTER_NAME</span>-ssl-internal<span class="w"> </span>-n<span class="w">  </span><span class="nv">$NAMESPACE</span>
+</code></pre></div>
+</li>
+</ol>
+</div>
+<div class="tabbed-block">
+<ol>
+<li>
+<p>Update the Custom Resource and remove all references to Secrets that contain your custom certificates:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span><span class="w"> </span>patch<span class="w"> </span>pxc<span class="w"> </span><span class="nv">$CLUSTER_NAME</span><span class="w"> </span>--type<span class="w"> </span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">  &quot;spec&quot;: {</span>
+<span class="s1">    &quot;sslSecretName&quot;: null,</span>
+<span class="s1">    &quot;sslInternalSecretName&quot;: null</span>
+<span class="s1">  }</span>
+<span class="s1">}&#39;</span>
+</code></pre></div>
+</li>
+<li>
+<p>Delete the Secrets. This includes your custom Secrets and the ones generated by the Operator:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>secret<span class="w"> </span>&lt;sslSecretName-value&gt;<span class="w"> </span>&lt;sslInternalSecretName-value&gt;<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span>
+kubectl<span class="w"> </span>delete<span class="w"> </span>secret<span class="w"> </span><span class="nv">$CLUSTER_NAME</span>-ssl<span class="w"> </span><span class="nv">$CLUSTER_NAME</span>-ssl-internal<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span>
+</code></pre></div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</li>
+<li>
+<p>Resume the cluster. Set <code>spec.pause</code> back to <code>false</code>:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span><span class="w"> </span>pxc<span class="w"> </span><span class="nv">$CLUSTER_NAME</span><span class="w"> </span>--type<span class="w"> </span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">&quot;spec&quot;: {</span>
+<span class="s1">  &quot;pause&quot;: false}</span>
+<span class="s1">  }&#39;</span>
+</code></pre></div>
+</li>
+</ol>
+<p>The Operator detects the missing Secrets, sees cert-manager installed, requests new certificates from cert-manager, creates the Secrets, and resumes the cluster.</p>
+<h3 id="verify-the-migration">Verify the migration<a class="headerlink" href="#verify-the-migration" title="Permanent link">&para;</a></h3>
+<p>After the cluster is running, verify that cert-manager resources were created:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>issuers<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span>
+kubectl<span class="w"> </span>get<span class="w"> </span>certificates<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span>
+kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span><span class="nv">$CLUSTER_NAME</span>-ca-cert<span class="w"> </span><span class="nv">$CLUSTER_NAME</span>-ssl<span class="w"> </span><span class="nv">$CLUSTER_NAME</span>-ssl-internal<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span>
+</code></pre></div>
 <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2024 20:58:06 UTC">July 22, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 3, 2026 13:22:35 UTC">June 3, 2026</span>
       
         <br>
         Created:
-        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="December 26, 2023 20:55:37 UTC">December 26, 2023</span>
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 3, 2026 13:22:35 UTC">June 3, 2026</span>
       
     
   </small>

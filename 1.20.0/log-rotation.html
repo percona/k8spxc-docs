@@ -9,19 +9,19 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Congratulations! You have completed all the steps in the Get started guide.">
+        <meta name="description" content="logrotate controls log file growth in Percona XtraDB Cluster Pods. Without rotation, MySQL and related logs can grow until they consume the Persistent Volume and affect database stability.">
       
       
         <meta name="author" content="Percona LLC">
       
       
-        <link rel="canonical" href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/what-next.html">
+        <link rel="canonical" href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/log-rotation.html">
       
       
-        <link rel="prev" href="monitoring-tutorial.html">
+        <link rel="prev" href="persistent-logging.html">
       
       
-        <link rel="next" href="System-Requirements.html">
+        <link rel="next" href="dr.html">
       
       
         
@@ -32,7 +32,7 @@
     
     
       
-        <title>What’s next? - Percona Operator for MySQL based on Percona XtraDB Cluster</title>
+        <title>Log rotation - Percona Operator for MySQL based on Percona XtraDB Cluster</title>
       
     
     
@@ -100,7 +100,7 @@
                  
                  
                   <meta property="og:type" content="website" />
-                  <meta property="og:title" content="Percona Operator for MySQL based on Percona XtraDB Cluster - What&rsquo;s next?" />
+                  <meta property="og:title" content="Percona Operator for MySQL based on Percona XtraDB Cluster - Log rotation" />
                   <meta property="og:image"
                     content="https://docs.percona.com/percona-operator-for-xtradb-cluster/assets/images/kubernetes-operators.png">
                   <meta property="og:url" content="https://docs.percona.com/percona-operator-for-xtradb-cluster/">
@@ -128,7 +128,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#whats-next" class="md-skip">
+        <a href="#log-rotation" class="md-skip">
           Skip to content
         </a>
       
@@ -236,7 +236,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              What&rsquo;s next?
+              Log rotation
             
           </span>
         </div>
@@ -563,20 +563,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
         
           
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
@@ -597,7 +595,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -863,19 +861,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="what-next.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="what-next.html" class="md-nav__link">
         
   
   
@@ -891,7 +880,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -1519,18 +1507,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
         
           
           <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
@@ -1551,7 +1541,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2179,18 +2169,20 @@
                 
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_11" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_11" checked>
         
           
           <label class="md-nav__link" for="__nav_7_11" id="__nav_7_11_label" tabindex="0">
@@ -2211,7 +2203,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_11_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_11_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_7_11">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2254,10 +2246,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="log-rotation.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Log rotation
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="log-rotation.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -2273,6 +2292,76 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#configure-log-rotation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configure log rotation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configure log rotation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#set-a-custom-log-rotation-schedule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Set a custom log rotation schedule
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#override-the-default-logrotate-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Override the default logrotate configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extend-the-default-logrotate-configuration-via-configmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extend the default logrotate configuration via ConfigMap
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -5571,7 +5660,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
                     <div data-banner="data-banner" class="edit-contrib-banner">
     <div class="banner-content">
       <!-- Edit link centered -->
-      <a href="https://github.com/percona/k8spxc-docs/edit/main/docs/what-next.md" title="Edit this page on GitHub" class="edit-page-link">
+      <a href="https://github.com/percona/k8spxc-docs/edit/main/docs/log-rotation.md" title="Edit this page on GitHub" class="edit-page-link">
         <span class="edit-page-icon">
           
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
@@ -5614,6 +5703,64 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#configure-log-rotation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configure log rotation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configure log rotation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#set-a-custom-log-rotation-schedule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Set a custom log rotation schedule
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#override-the-default-logrotate-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Override the default logrotate configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extend-the-default-logrotate-configuration-via-configmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extend the default logrotate configuration via ConfigMap
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -5636,32 +5783,141 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     
       
     
-    <a href="https://github.com/percona/k8spxc-docs/raw/main/docs/what-next.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/percona/k8spxc-docs/raw/main/docs/log-rotation.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
     </a>
   
 
 
-<h1 id="whats-next">What&rsquo;s next?<a class="headerlink" href="#whats-next" title="Permanent link">&para;</a></h1>
-<p>Congratulations! You have completed all the steps in the Get started guide. </p>
-<p>You have the following options to move forward with the Operator:</p>
+<h1 id="log-rotation">Log rotation<a class="headerlink" href="#log-rotation" title="Permanent link">&para;</a></h1>
+<p><code>logrotate</code> controls log file growth in Percona XtraDB Cluster Pods. Without rotation, MySQL and related logs can grow until they consume the Persistent Volume and affect database stability.</p>
+<p>In Percona Operator for MySQL, <code>logrotate</code> runs inside the <code>logcollector</code> sidecar container in every PXC Pod. Starting from Operator <code>1.20.0</code>, logrotate scripts and default configuration are shipped with the Operator image and copied into the Pod by an init container.</p>
+<p>On each scheduled run, <code>logrotate</code> applies the configured rules to MySQL log files and executes the post-rotate script:</p>
 <ul>
-<li>Deepen your monitoring insights by setting up <a href="monitor-kubernetes.html">Kubernetes monitoring with PMM</a></li>
-<li>Control Pods assignment on specific Kubernetes Nodes by setting up <a href="constraints.html">affinity / anti-affinity</a></li>
-<li>Ready to adopt the Operator for production use and need to delete the testing deployment? Use <a href="delete.html">this guide</a> to do it</li>
-<li>You can also try operating the Operator and database clusters via the web interface with <a href="https://docs.percona.com/everest/index.html">Percona Everest <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> - an open-source web-based database provisioning tool based on Percona Operators. See <a href="https://docs.percona.com/everest/quickstart-guide/quick-install.html">Get started with Percona Everest <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> on how to start using it</li>
+<li>It rotates matching log files according to size and retention rules.</li>
+<li>It can compress old files if configured.</li>
+<li>It runs postrotate script (<code>/opt/percona/logcollector/logrotate/postrotate-mysql.sh</code> by default) to make MySQL continue writing to the active log files after rotation.</li>
 </ul>
+<h2 id="configure-log-rotation">Configure log rotation<a class="headerlink" href="#configure-log-rotation" title="Permanent link">&para;</a></h2>
+<p>You can customize log rotation in PXC to match your workload, for example by changing retention and size thresholds for MySQL error/slow logs, enabling compression, or adding rules for extra files such as <code>GRA_*.log</code> and <code>audit.log</code>. This gives you predictable disk usage and keeps troubleshooting or compliance logs for the required period.</p>
+<p>You can configure log rotation in three ways:</p>
+<ol>
+<li>Set a custom log rotation schedule inline in the Custom Resource.</li>
+<li>Override the default logrotate configuration inline in the Custom Resource.</li>
+<li>Extend the default configuration with additional <code>.conf</code> files from a ConfigMap.</li>
+</ol>
+<p>When you change logrotate configuration, the Operator detects config changes and performs a rolling restart of PXC Pods.</p>
+<h3 id="set-a-custom-log-rotation-schedule">Set a custom log rotation schedule<a class="headerlink" href="#set-a-custom-log-rotation-schedule" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Edit the <code>deploy/cr.yaml</code> Custom Resource manifest. Set the log rotation schedule in <a href="https://en.wikipedia.org/wiki/Cron">cron format</a> using the <code>spec.logcollector.logRotate.schedule</code> option.</p>
+<p>This example runs log rotation every 6 hours:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">logcollector</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">logRotate</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">schedule</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0</span><span class="nv"> </span><span class="s">*/6</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*&quot;</span>
+</code></pre></div>
+</li>
+<li>
+<p>Apply the Custom Resource:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deploy/cr.yaml<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
+</code></pre></div>
+</li>
+</ol>
+<h3 id="override-the-default-logrotate-configuration">Override the default logrotate configuration<a class="headerlink" href="#override-the-default-logrotate-configuration" title="Permanent link">&para;</a></h3>
+<p>Use the <code>spec.logcollector.logRotate.configuration</code> section in the Custom Resource to completely override the default logrotate settings. For example, you want to rotate logs when their size is between 5M (minimum) and 50M (maximum) and keep 5 rotated files. Also, compress rotated logs.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>You must provide the full <code>logrotate</code> configuration because the Operator replaces the default configuration with the one you provide. Refer to the <a href="https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.20.0/build/logcollector/logrotate/logrotate-mysql.conf">default configuration</a> to see the built-in logrotate rules and use it as a guide for your custom settings.</p>
+</div>
+<p>Here&rsquo;s the example configuration:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">logcollector</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">logRotate</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">schedule</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0</span><span class="nv"> </span><span class="s">0</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*&quot;</span>
+<span class="w">      </span><span class="nt">configuration</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">        </span><span class="no">/var/lib/mysql/[!G]*.log {</span>
+<span class="w">          </span><span class="no">daily</span>
+<span class="w">          </span><span class="no">minsize 5M</span>
+<span class="w">          </span><span class="no">maxsize 50M</span>
+<span class="w">          </span><span class="no">rotate 5</span>
+<span class="w">          </span><span class="no">missingok</span>
+<span class="w">          </span><span class="no">compress</span>
+<span class="w">          </span><span class="no">delaycompress</span>
+<span class="w">          </span><span class="no">notifempty</span>
+<span class="w">          </span><span class="no">sharedscripts</span>
+<span class="w">          </span><span class="no">postrotate</span>
+<span class="w">            </span><span class="no">/opt/percona/logcollector/logrotate/postrotate-mysql.sh</span>
+<span class="w">          </span><span class="no">endscript</span>
+<span class="w">        </span><span class="no">}</span>
+</code></pre></div>
+<p>Apply the Custom Resource:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deploy/cr.yaml<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
+</code></pre></div>
+<h3 id="extend-the-default-logrotate-configuration-via-configmap">Extend the default logrotate configuration via ConfigMap<a class="headerlink" href="#extend-the-default-logrotate-configuration-via-configmap" title="Permanent link">&para;</a></h3>
+<p>You can pass additional configuration options for the default logrotate configuration via a ConfigMap. Use the <code>spec.logcollector.logRotate.extraConfig.name</code> option to load additional <code>.conf</code> files from a ConfigMap.</p>
+<p>For example, the following ConfigMap adds separate rotation rules for Galera-related logs (<code>GRA_*.log</code>) and for audit logs (<code>audit.log</code>) with different rotation and compression settings.</p>
+<ol>
+<li>
+<p>Create a ConfigMap configuration file. For example, <code>custom-logrotate.yaml</code>. Specify additional rules:</p>
+<div class="highlight"><span class="filename">custom-logrotate.yaml</span><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-logrotate-config</span>
+<span class="nt">data</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">gra-logs.conf</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">    </span><span class="no">/var/lib/mysql/GRA_*.log {</span>
+<span class="w">      </span><span class="no">daily</span>
+<span class="w">      </span><span class="no">rotate 7</span>
+<span class="w">      </span><span class="no">missingok</span>
+<span class="w">      </span><span class="no">notifempty</span>
+<span class="w">      </span><span class="no">compress</span>
+<span class="w">      </span><span class="no">delaycompress</span>
+<span class="w">    </span><span class="no">}</span>
+<span class="w">  </span><span class="nt">audit-log.conf</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">    </span><span class="no">/var/lib/mysql/audit.log {</span>
+<span class="w">      </span><span class="no">daily</span>
+<span class="w">      </span><span class="no">rotate 14</span>
+<span class="w">      </span><span class="no">minsize 10M</span>
+<span class="w">      </span><span class="no">maxsize 200M</span>
+<span class="w">      </span><span class="no">missingok</span>
+<span class="w">      </span><span class="no">compress</span>
+<span class="w">      </span><span class="no">delaycompress</span>
+<span class="w">      </span><span class="no">notifempty</span>
+<span class="w">    </span><span class="no">}</span>
+</code></pre></div>
+</li>
+<li>
+<p>Create the ConfigMap:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>custom-logrotate.yaml<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
+</code></pre></div>
+</li>
+<li>
+<p>Reference the ConfigMap in your Custom Resource:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">logcollector</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">logRotate</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">extraConfig</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-logrotate-config</span>
+</code></pre></div>
+</li>
+<li>
+<p>Update the configuration:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deploy/cr.yaml<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
+</code></pre></div>
+</li>
+</ol>
 <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2024 20:58:06 UTC">July 22, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 1, 2026 12:09:48 UTC">June 1, 2026</span>
       
         <br>
         Created:
-        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="December 26, 2023 20:55:37 UTC">December 26, 2023</span>
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 1, 2026 12:09:48 UTC">June 1, 2026</span>
       
     
   </small>

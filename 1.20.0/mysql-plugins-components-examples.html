@@ -9,19 +9,19 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Congratulations! You have completed all the steps in the Get started guide.">
+        <meta name="description" content="This page provides examples for enabling a plugin and a component in a Percona XtraDB Cluster managed by the Operator. It covers the validate_password and audit_log_filter, which is a component in Percona XtraDB Cluster 8.4 and a plugin in Percona XtraDB Cluster 8.0.">
       
       
         <meta name="author" content="Percona LLC">
       
       
-        <link rel="canonical" href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/what-next.html">
+        <link rel="canonical" href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/mysql-plugins-components-examples.html">
       
       
-        <link rel="prev" href="monitoring-tutorial.html">
+        <link rel="prev" href="mysql-plugins-components.html">
       
       
-        <link rel="next" href="System-Requirements.html">
+        <link rel="next" href="sst-retry-limit.html">
       
       
         
@@ -32,7 +32,7 @@
     
     
       
-        <title>What’s next? - Percona Operator for MySQL based on Percona XtraDB Cluster</title>
+        <title>Configure plugins and components - Percona Operator for MySQL based on Percona XtraDB Cluster</title>
       
     
     
@@ -100,7 +100,7 @@
                  
                  
                   <meta property="og:type" content="website" />
-                  <meta property="og:title" content="Percona Operator for MySQL based on Percona XtraDB Cluster - What&rsquo;s next?" />
+                  <meta property="og:title" content="Percona Operator for MySQL based on Percona XtraDB Cluster - Configure plugins and components" />
                   <meta property="og:image"
                     content="https://docs.percona.com/percona-operator-for-xtradb-cluster/assets/images/kubernetes-operators.png">
                   <meta property="og:url" content="https://docs.percona.com/percona-operator-for-xtradb-cluster/">
@@ -128,7 +128,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#whats-next" class="md-skip">
+        <a href="#configuration-examples-for-plugins-and-components" class="md-skip">
           Skip to content
         </a>
       
@@ -236,7 +236,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              What&rsquo;s next?
+              Configure plugins and components
             
           </span>
         </div>
@@ -563,20 +563,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
         
           
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
@@ -597,7 +595,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -863,19 +861,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="what-next.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="what-next.html" class="md-nav__link">
         
   
   
@@ -891,7 +880,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -1519,18 +1507,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
         
           
           <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
@@ -1551,7 +1541,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1650,18 +1640,20 @@
                 
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_4" checked>
         
           
           <label class="md-nav__link" for="__nav_7_4" id="__nav_7_4_label" tabindex="0">
@@ -1682,7 +1674,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_7_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1725,10 +1717,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="mysql-plugins-components-examples.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configure plugins and components
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="mysql-plugins-components-examples.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1744,6 +1763,87 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#audit_log_filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        audit_log_filter
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="audit_log_filter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#percona-xtradb-cluster-84" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Percona XtraDB Cluster 8.4
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#percona-xtradb-cluster-80" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Percona XtraDB Cluster 8.0
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validate_password" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        validate_password
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-of-validate_password-and-audit_log_filter-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example of validate_password and audit_log_filter together
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -5571,7 +5671,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
                     <div data-banner="data-banner" class="edit-contrib-banner">
     <div class="banner-content">
       <!-- Edit link centered -->
-      <a href="https://github.com/percona/k8spxc-docs/edit/main/docs/what-next.md" title="Edit this page on GitHub" class="edit-page-link">
+      <a href="https://github.com/percona/k8spxc-docs/edit/main/docs/mysql-plugins-components-examples.md" title="Edit this page on GitHub" class="edit-page-link">
         <span class="edit-page-icon">
           
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
@@ -5614,6 +5714,75 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#audit_log_filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        audit_log_filter
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="audit_log_filter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#percona-xtradb-cluster-84" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Percona XtraDB Cluster 8.4
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#percona-xtradb-cluster-80" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Percona XtraDB Cluster 8.0
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validate_password" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        validate_password
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-of-validate_password-and-audit_log_filter-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example of validate_password and audit_log_filter together
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -5636,32 +5805,257 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     
       
     
-    <a href="https://github.com/percona/k8spxc-docs/raw/main/docs/what-next.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/percona/k8spxc-docs/raw/main/docs/mysql-plugins-components-examples.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
     </a>
   
 
 
-<h1 id="whats-next">What&rsquo;s next?<a class="headerlink" href="#whats-next" title="Permanent link">&para;</a></h1>
-<p>Congratulations! You have completed all the steps in the Get started guide. </p>
-<p>You have the following options to move forward with the Operator:</p>
+<h1 id="configuration-examples-for-plugins-and-components">Configuration examples for plugins and components<a class="headerlink" href="#configuration-examples-for-plugins-and-components" title="Permanent link">&para;</a></h1>
+<p>This page provides examples for enabling a <strong>plugin</strong> and a <strong>component</strong> in a Percona XtraDB Cluster managed by the Operator. It covers the <code>validate_password</code> and <code>audit_log_filter</code>, which is a component in Percona XtraDB Cluster 8.4 and a plugin in Percona XtraDB Cluster 8.0.</p>
+<p>Examples below show the configuration for both Percona XtraDB Cluster 8.0 and 8.4. For details on the difference between plugins and components, how to enable them and how to use the <code>loose-</code> prefix for their setup, see <a href="mysql-plugins-components.html">MySQL plugins and components</a>.</p>
+<p>Examples use a three-node cluster named <code>cluster1</code>. Replace the cluster name, the namespace and root password with your own values.</p>
+<h2 id="audit_log_filter"><code>audit_log_filter</code><a class="headerlink" href="#audit_log_filter" title="Permanent link">&para;</a></h2>
+<p>The <code>audit_log_filter</code> records database events to an audit log for security monitoring, compliance, and activity tracking.</p>
+<h3 id="percona-xtradb-cluster-84">Percona XtraDB Cluster 8.4<a class="headerlink" href="#percona-xtradb-cluster-84" title="Permanent link">&para;</a></h3>
+<p>The <code>component_audit_log_filter</code> is installed in Percona XtraDB Cluster 8.4 by default so you only need to configure it.</p>
+<ol>
+<li>
+<p>Edit the <code>deploy/cr.yaml</code> and set the component variables in the <code>spec.pxc.configuration</code> using dot notation and the <code>loose-</code> prefix. Pay attention that the variables use the <strong>dot notation</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">pxc</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">configuration</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">      </span><span class="no">[mysqld]</span>
+<span class="w">      </span><span class="no">loose-audit_log_filter.strategy=SYNCHRONOUS</span>
+<span class="w">      </span><span class="no">loose-audit_log_filter.format=JSON</span>
+<span class="w">      </span><span class="no">loose-audit_log_filter.rotate_on_size=104857600</span>
+</code></pre></div>
+</li>
+<li>
+<p>Apply the configuration:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deploy/cr.yaml<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
+</code></pre></div>
+<p>This command updates the cluster Custom Resource and triggers a rolling restart for the configuration changes to take effect.</p>
+</li>
+<li>
+<p>Verify the changes on all nodes after the rolling restart:</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">  </span>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cluster1-pxc-<span class="nv">$i</span><span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">&#39;&lt;root-password&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-e<span class="w"> </span><span class="s2">&quot;SELECT component_urn FROM mysql.component WHERE component_urn LIKE &#39;%audit%&#39;;</span>
+<span class="s2">          SHOW VARIABLES LIKE &#39;audit_log_filter.%&#39;;&quot;</span>
+<span class="k">done</span>
+</code></pre></div>
+<details class="example">
+<summary>Expected output on each node</summary>
+<div class="no-copy highlight"><pre><span></span><code>file://component_audit_log_filter
+audit_log_filter.format             JSON
+audit_log_filter.rotate_on_size     104857600
+audit_log_filter.strategy           SYNCHRONOUS
+...
+</code></pre></div>
+</details>
+</li>
+</ol>
+<h3 id="percona-xtradb-cluster-80">Percona XtraDB Cluster 8.0<a class="headerlink" href="#percona-xtradb-cluster-80" title="Permanent link">&para;</a></h3>
+<p>In Percona XtraDB Cluster 8.0, the <code>audit_log_filter</code> is a plugin and is not installed by default. You can load it in two ways:</p>
 <ul>
-<li>Deepen your monitoring insights by setting up <a href="monitor-kubernetes.html">Kubernetes monitoring with PMM</a></li>
-<li>Control Pods assignment on specific Kubernetes Nodes by setting up <a href="constraints.html">affinity / anti-affinity</a></li>
-<li>Ready to adopt the Operator for production use and need to delete the testing deployment? Use <a href="delete.html">this guide</a> to do it</li>
-<li>You can also try operating the Operator and database clusters via the web interface with <a href="https://docs.percona.com/everest/index.html">Percona Everest <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> - an open-source web-based database provisioning tool based on Percona Operators. See <a href="https://docs.percona.com/everest/quickstart-guide/quick-install.html">Get started with Percona Everest <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> on how to start using it</li>
+<li>Add the plugin to the <code>spec.pxc.configuration</code> section in the Custom Resource and have it loaded automatically at startup</li>
+<li>Install it manually at runtime using the <code>INSTALL PLUGIN</code> command</li>
 </ul>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">At startup via Custom Resource</label><label for="__tabbed_1_2">At runtime via <code>INSTALL PLUGIN</code></label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<ol>
+<li>
+<p>The plugin ships with an installation SQL script that creates the required filter tables. Run it once on one of the Pods: </p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cluster1-pxc-0<span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;mysql -uroot -p&#39;&lt;root-password&gt;&#39; -D mysql &lt; \</span>
+<span class="s2">  /usr/share/percona-xtradb-cluster/audit_log_filter_linux_install.sql&quot;</span>
+</code></pre></div>
+</li>
+<li>
+<p>Edit the <code>deploy/cr.yaml</code> configuration file and set the following for the <code>spec.pxc.configuration</code> section:</p>
+<ul>
+<li>Specify the <code>plugin-load-add</code> to load the plugin on every startup</li>
+<li>Specify the configuration variables with the <code>loose-</code> prefix. Pay attention that the variables use the <strong>underscore notation</strong>:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">pxc</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">configuration</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">      </span><span class="no">[mysqld]</span>
+<span class="w">      </span><span class="no">plugin-load-add=audit_log_filter.so</span>
+<span class="w">      </span><span class="no">loose-audit_log_filter_strategy=SYNCHRONOUS</span>
+<span class="w">      </span><span class="no">loose-audit_log_filter_format=JSON</span>
+<span class="w">      </span><span class="no">loose-audit_log_filter_rotate_on_size=104857600</span>
+</code></pre></div>
+</li>
+<li>
+<p>Apply the configuration:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deploy/cr.yaml<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
+</code></pre></div>
+<p>This command updates the cluster Custom Resource and triggers a rolling restart for the configuration changes to take effect.</p>
+<p>The plugin loads on every startup while <code>plugin-load-add</code> is present. Removing it from the config unloads the plugin on the next restart.</p>
+</li>
+<li>
+<p>Verify after the rolling restart on every node:</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">  </span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>cluster1-pxc-<span class="nv">$i</span><span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">&#39;&lt;root-password&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-e<span class="w"> </span><span class="s2">&quot;SELECT PLUGIN_NAME, PLUGIN_STATUS FROM information_schema.PLUGINS WHERE PLUGIN_NAME=&#39;audit_log_filter&#39;;</span>
+<span class="s2">        SHOW VARIABLES LIKE &#39;audit_log_filter_strategy&#39;;</span>
+<span class="s2">        SHOW VARIABLES LIKE &#39;audit_log_filter_format&#39;;</span>
+<span class="s2">        SHOW VARIABLES LIKE &#39;audit_log_filter_rotate_on_size&#39;;&quot;</span>
+<span class="k">done</span>
+</code></pre></div>
+<details class="example">
+<summary>Expected output on each node</summary>
+<div class="highlight"><pre><span></span><code>audit_log_filter   ACTIVE
+audit_log_filter_strategy     SYNCHRONOUS
+audit_log_filter_format       JSON
+audit_log_filter_rotate_on_size  104857600
+</code></pre></div>
+</details>
+</li>
+</ol>
+</div>
+<div class="tabbed-block">
+<ol>
+<li>
+<p>Run the installation script in one of the Pods:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cluster1-pxc-0<span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;mysql -uroot -p&#39;&lt;root-password&gt;&#39; -D mysql &lt; \</span>
+<span class="s2">  /usr/share/percona-xtradb-cluster/audit_log_filter_linux_install.sql&quot;</span>
+</code></pre></div>
+<p>The script runs <code>INSTALL PLUGIN</code> internally and registers the plugin in <code>mysql.plugin</code>. Galera
+replicates the <code>mysql.plugin</code> and <code>mysql.audit_log_filter</code> entries to all nodes and they all activate the plugin automatically. The plugin reloads on every restart without needing the <code>plugin-load-add</code> entry. </p>
+</li>
+<li>
+<p>Edit the <code>deploy/cr.yaml</code> configuration file and specify the plugin configuration variables for the <code>spec.pxc.configuration</code> using the <code>loose-</code> prefix. Pay attention that the variables use the <strong>underscore notation</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">pxc</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">configuration</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">      </span><span class="no">[mysqld]</span>
+<span class="w">      </span><span class="no">loose-audit_log_filter_strategy=SYNCHRONOUS</span>
+<span class="w">      </span><span class="no">loose-audit_log_filter_format=JSON</span>
+<span class="w">      </span><span class="no">loose-audit_log_filter_rotate_on_size=104857600</span>
+</code></pre></div>
+</li>
+<li>
+<p>Apply the configuration:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deploy/cr.yaml<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
+</code></pre></div>
+<p>This command updates the cluster Custom Resource and triggers a rolling restart for the configuration changes to take effect.</p>
+</li>
+<li>
+<p>Verify after the rolling restart on every node:</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">  </span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>cluster1-pxc-<span class="nv">$i</span><span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">&#39;&lt;root-password&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-e<span class="w"> </span><span class="s2">&quot;SELECT PLUGIN_NAME, PLUGIN_STATUS FROM information_schema.PLUGINS WHERE PLUGIN_NAME=&#39;audit_log_filter&#39;;</span>
+<span class="s2">        SHOW VARIABLES LIKE &#39;audit_log_filter_strategy&#39;;</span>
+<span class="s2">        SHOW VARIABLES LIKE &#39;audit_log_filter_format&#39;;</span>
+<span class="s2">        SHOW VARIABLES LIKE &#39;audit_log_filter_rotate_on_size&#39;;&quot;</span>
+<span class="k">done</span>
+</code></pre></div>
+<details class="example">
+<summary>Expected output on each node</summary>
+<div class="highlight"><pre><span></span><code>audit_log_filter   ACTIVE
+audit_log_filter_strategy     SYNCHRONOUS
+audit_log_filter_format       JSON
+audit_log_filter_rotate_on_size  104857600
+</code></pre></div>
+</details>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<h2 id="validate_password"><code>validate_password</code><a class="headerlink" href="#validate_password" title="Permanent link">&para;</a></h2>
+<p><code>validate_password</code> enforces password length. It is a component in both Percona XtraDB Cluster 8.0 and 8.4 and is not installed by default in
+either version.</p>
+<p>To enable and configure this component, do the following:</p>
+<ol>
+<li>
+<p>Edit the <code>deploy/cr.yaml</code> and add the configuration variables to the <code>spec.pxc.configuration</code> section before or after installing the component. Use the
+<code>loose-</code> prefix to ensure the pod will not crash if the component is not yet installed:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">pxc</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">configuration</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">      </span><span class="no">[mysqld]</span>
+<span class="w">      </span><span class="no">loose-validate_password.length=14</span>
+<span class="w">      </span><span class="no">loose-validate_password.mixed_case_count=1</span>
+<span class="w">      </span><span class="no">loose-validate_password.number_count=1</span>
+<span class="w">      </span><span class="no">loose-validate_password.special_char_count=1</span>
+<span class="w">      </span><span class="no">loose-validate_password.policy=MEDIUM</span>
+</code></pre></div>
+</li>
+<li>
+<p>Apply the configuration:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deploy/cr.yaml<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
+</code></pre></div>
+<p>This triggers the rolling restart of the database Pods.</p>
+</li>
+<li>
+<p>Install the component. Connect to any of the <code>pxc</code> Pods and run:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>cluster1-pxc-0<span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">&#39;&lt;root-password&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="s2">&quot;INSTALL COMPONENT &#39;file://component_validate_password&#39;;&quot;</span>
+</code></pre></div>
+<p>The <code>INSTALL COMPONENT</code> command writes a row to the <code>mysql.component</code> system table. Galera replicates this to all cluster
+nodes, so the component becomes available everywhere after a single command. The configured
+<code>loose-validate_password.*</code> values take effect immediately on the node where the component is
+loaded, and on all other nodes after their next restart (or after they pick up the component
+state via IST/SST).</p>
+</li>
+<li>
+<p>Verify the changes on all nodes:</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">  </span>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cluster1-pxc-<span class="nv">$i</span><span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">&#39;&lt;root-password&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-e<span class="w"> </span><span class="s2">&quot;SELECT component_urn FROM mysql.component WHERE component_urn LIKE &#39;%validate%&#39;;</span>
+<span class="s2">        SHOW VARIABLES LIKE &#39;validate_password.%&#39;;&quot;</span>
+<span class="k">done</span>
+</code></pre></div>
+<details class="example">
+<summary>Expected output on each node</summary>
+<div class="highlight"><pre><span></span><code>file://component_validate_password
+validate_password.check_user_name   ON
+validate_password.length            14
+validate_password.mixed_case_count  1
+validate_password.number_count      1
+validate_password.policy            MEDIUM
+validate_password.special_char_count 1
+</code></pre></div>
+</details>
+</li>
+</ol>
+<h2 id="example-of-validate_password-and-audit_log_filter-together">Example of <code>validate_password</code> and <code>audit_log_filter</code> together<a class="headerlink" href="#example-of-validate_password-and-audit_log_filter-together" title="Permanent link">&para;</a></h2>
+<p>This configuration example is for Percona XtraDB Cluster 8.4:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">pxc</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">configuration</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">      </span><span class="no">[mysqld]</span>
+<span class="w">      </span><span class="no"># audit_log_filter -- component installed by default in PXC 8.4</span>
+<span class="w">      </span><span class="no">loose-audit_log_filter.strategy=SYNCHRONOUS</span>
+<span class="w">      </span><span class="no">loose-audit_log_filter.format=JSON</span>
+<span class="w">      </span><span class="no">loose-audit_log_filter.rotate_on_size=104857600</span>
+
+<span class="w">      </span><span class="no"># validate_password -- component, install via INSTALL COMPONENT before or after this config</span>
+<span class="w">      </span><span class="no">loose-validate_password.length=14</span>
+<span class="w">      </span><span class="no">loose-validate_password.mixed_case_count=1</span>
+<span class="w">      </span><span class="no">loose-validate_password.number_count=1</span>
+<span class="w">      </span><span class="no">loose-validate_password.special_char_count=1</span>
+<span class="w">      </span><span class="no">loose-validate_password.policy=MEDIUM</span>
+</code></pre></div>
+<p>Both sections use <code>loose-</code>. Apply this configuration at any time — it will never cause a crash
+regardless of the installation state of either component.</p>
 <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 22, 2024 20:58:06 UTC">July 22, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 5, 2026 10:41:19 UTC">June 5, 2026</span>
       
         <br>
         Created:
-        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="December 26, 2023 20:55:37 UTC">December 26, 2023</span>
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 5, 2026 10:41:19 UTC">June 5, 2026</span>
       
     
   </small>
