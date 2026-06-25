@@ -85,6 +85,28 @@ To set up monitoring of Kubernetes, you need the following:
             curl -fsL  https://raw.githubusercontent.com/Percona-Lab/k8s-monitoring/refs/tags/{{k8s_monitor_tag}}/vm-operator-k8s-stack/quick-install.sh | bash -s -- --api-key <PMM-SERVER-TOKEN> --pmm-server-url <PMM-SERVER-URL> --k8s-cluster-id <UNIQUE-K8s-CLUSTER-IDENTIFIER> --namespace <NAMESPACE> --node-exporter-enabled
             ```
 
+        !!! note
+            When installing the chart on OpenShift, some components might require additional Security Context Constraints (SCCs), depending on the permissions they need at runtime.
+
+            The `prometheus-node-exporter` component runs as a DaemonSet and requires access to host-level resources such as `/proc`, `/sys`, and other node-level paths. Because these are exposed through `hostPath` mounts, the service account used by `prometheus-node-exporter` must be granted an SCC that allows host access, such as `hostaccess`, `hostmount-anyuid`, or a custom SCC with equivalent permissions.
+
+            For example:
+
+            ```bash
+            oc adm policy add-scc-to-user node-exporter \
+            -z prometheus-node-exporter \
+            -n <namespace>
+
+            Similarly, for `kube-state-metrics`, if the `restricted` SCC is enforced, avoid setting fixed user, group, or filesystem group IDs. Allow OpenShift to assign these values from the namespace UID/GID range by either adding the service account to the required SCC or by adding the following entries to the values YAML file:
+
+            ```yaml
+            kube-state-metrics:
+            securityContext:
+                runAsUser: null
+                runAsGroup: null
+                fsGroup: null
+
+
 === ":fontawesome-solid-user-gear: Install manually"
 
     You may need to customize the default parameters of the Victoria metrics Kubernetes stack.
@@ -185,7 +207,7 @@ To set up monitoring of Kubernetes, you need the following:
         ```bash
         helm install vm-k8s vm/victoria-metrics-k8s-stack \
         -f https://raw.githubusercontent.com/Percona-Lab/k8s-monitoring/refs/tags/{{k8s_monitor_tag}}/vm-operator-k8s-stack/values.yaml \
-        --set externalVM.write.url=<PMM-SERVER-URL>/victoriametrics/api/v1/write \
+        --set external.vm.write.url=<PMM-SERVER-URL>/victoriametrics/api/v1/write \
         --set vmagent.spec.externalLabels.k8s_cluster_id=<UNIQUE-CLUSTER-IDENTIFIER/NAME> \
         -n <namespace>
         ```
