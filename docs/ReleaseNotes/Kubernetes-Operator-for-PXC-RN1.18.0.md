@@ -112,10 +112,10 @@ For manual installation or update, follow the instructions below:
 
     1. Clone the Operator repository:
 
-       ```bash
-       git clone -b v1.18.0 https://github.com/percona/percona-xtradb-cluster-operator
-       cd percona-xtradb-cluster-operator
-       ```
+        ```bash
+        git clone -b v1.18.0 https://github.com/percona/percona-xtradb-cluster-operator
+        cd percona-xtradb-cluster-operator
+        ```
     
     2. Edit the `deploy/bundle.yaml` file. 
     
@@ -135,7 +135,7 @@ For manual installation or update, follow the instructions below:
     4. Install Percona XtraDB Cluster:
 
         ```bash
-        oc create -f deploy/secrets.yaml
+        oc create -f deploy/cr.yaml
         ```
 
 === "Update the Operator to {{release}}"
