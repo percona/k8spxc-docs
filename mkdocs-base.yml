@@ -56,12 +56,14 @@ extra_css:
   - css/operators.css
   - css/extra.css
   - css/rating.css
+  - css/kapa.css
 
 extra_javascript:
    - js/promptremover.js
    - js/consent.js
    - js/percona-select.js
    - js/rating.js
+   - js/kapa.js
 #   - js/version-select.js
 #  - js/toctree.js
 #  - js/lightgallery.min.js
@@ -302,6 +304,7 @@ nav:
           - "How we use artificial intelligence": ai-docs.md
           - "Copyright and licensing information": copyright.md
           - "Trademark policy": trademark-policy.md
+          - legal-notice.md
     - Release Notes:
           - "Release notes index": ReleaseNotes/index.md
           - ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.20.0.md
