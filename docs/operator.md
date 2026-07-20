@@ -745,7 +745,7 @@ Specifies which memory allocator to use for the MySQL process. Available since O
 
 Supported values: `jemalloc`, `tcmalloc`. When left empty or omitted, the default `libc` allocator is used.
 
-For how the Operator handles `jemalloc` memory allocator, see [Correct jemaloc path based on Percona XtraDB Cluster version](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.20.0.md#version-aware-jemalloc-path-selection-on-arm64-architectures-for-optimized-memory-usage).
+For how the Operator handles `jemalloc` memory allocator, see [Correct `jemalloc` path on ARM64 based on Percona XtraDB Cluster version](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.20.0.md#version-aware-jemalloc-path-selection-on-arm64-architectures-for-optimized-memory-usage).
 
 | Value type  | Example    |
 | ----------- | ---------- |
