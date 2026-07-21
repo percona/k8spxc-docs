@@ -28,7 +28,7 @@
       
       
       <link rel="icon" href="../assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.7.7">
     
     
       
@@ -36,7 +36,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -4775,10 +4775,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#version-aware-jemalloc-path-selection-for-optimized-memory-usage" class="md-nav__link">
+  <a href="#version-aware-jemalloc-path-selection-on-arm64-architectures-for-optimized-memory-usage" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Version-aware jemalloc path selection for optimized memory usage
+        Version-aware jemalloc path selection on ARM64 architectures for optimized memory usage
       
     </span>
   </a>
@@ -5993,10 +5993,10 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </li>
         
           <li class="md-nav__item">
-  <a href="#version-aware-jemalloc-path-selection-for-optimized-memory-usage" class="md-nav__link">
+  <a href="#version-aware-jemalloc-path-selection-on-arm64-architectures-for-optimized-memory-usage" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Version-aware jemalloc path selection for optimized memory usage
+        Version-aware jemalloc path selection on ARM64 architectures for optimized memory usage
       
     </span>
   </a>
@@ -6208,7 +6208,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <ul>
 <li><a href="#automatic-storage-resizing">Automatic storage resizing</a> - expand PVCs before disks fill up</li>
 <li><a href="#configure-file-descriptor-limit-for-haproxy">Configure file descriptor limit for HAProxy</a> - faster, more stable health checks</li>
-<li><a href="#version-aware-jemalloc-path-selection-for-optimized-memory-usage">Version-aware <code>jemalloc</code> path selection</a> - correct library path per PXC version</li>
+<li><a href="#version-aware-jemalloc-path-selection-on-arm64-architectures-for-optimized-memory-usage">Version-aware <code>jemalloc</code> path selection on ARM64</a> - correct library path per PXC version</li>
 <li><a href="#percona-xtradb-clusters-84-have-numa-disabled-by-default">Percona XtraDB clusters 8.4 have NUMA disabled by default</a> - fewer warnings in Kubernetes</li>
 </ul>
 <p><strong>Operational excellence</strong></p>
@@ -6256,15 +6256,16 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p>This release sets a safe file descriptor limit in the entrypoint script before HAProxy container starts. The default FD limit value is 1048576.
 You can change this limit with the <code>HA_RLIMIT_NOFILE</code> environment variable. The value is checked, and if it is invalid, the Operator falls back to the default value. If the value is too large, the Operator uses the hard limit file descriptor value. This makes external checks fast, stable, and predictable.</p>
 <p>See how to set HAProxy environment variables in the <a href="../env-vars-cluster.html#configure-haproxy-environment-variables">documentation</a>.</p>
-<h3 id="version-aware-jemalloc-path-selection-for-optimized-memory-usage">Version-aware <code>jemalloc</code> path selection for optimized memory usage<a class="headerlink" href="#version-aware-jemalloc-path-selection-for-optimized-memory-usage" title="Permanent link">&para;</a></h3>
-<p>When you configure a memory allocator to <code>jemalloc</code> using the Custom Resource, the Operator correctly sets the path to <code>jemalloc</code> shared library based on the deployed Percona XtraDB Cluster version:</p>
+<h3 id="version-aware-jemalloc-path-selection-on-arm64-architectures-for-optimized-memory-usage">Version-aware <code>jemalloc</code> path selection on ARM64 architectures for optimized memory usage<a class="headerlink" href="#version-aware-jemalloc-path-selection-on-arm64-architectures-for-optimized-memory-usage" title="Permanent link">&para;</a></h3>
+<p>When you configure a memory allocator to <code>jemalloc</code> using the Custom Resource on <strong>ARM64</strong> architectures, the Operator automatically sets the path to the <code>jemalloc</code> shared library based on the deployed Percona XtraDB Cluster version:</p>
 <ul>
 <li>For version 8.4 and newer, the Operator uses <code>/usr/lib64/libjemalloc.so.2</code></li>
 <li>For version 8.0, the path to jemalloc is <code>/usr/lib64/libjemalloc.so.1</code></li>
 </ul>
-<p>Since Percona XtraDB Cluster 8.4 is the default and recommended version for new clusters, the default <code>jemalloc</code> path is changed to <code>/usr/lib64/libjemalloc.so.2</code>.</p>
+<p>Since Percona XtraDB Cluster 8.4 is the default and recommended version for new clusters, the default <code>jemalloc</code> path is <code>/usr/lib64/libjemalloc.so.2</code>.</p>
 <p>The Operator determines the Percona XtraDB Cluster version from the image tag. If you deploy images where Percona XtraDB Cluster is referenced using a <code>sha256</code> digest, such as from a Red Hat Container Registry or some custom images, the Operator cannot detect the version and therefore falls back to the default <code>jemalloc</code> path <code>/usr/lib64/libjemalloc.so.2</code>. To avoid this, consider upgrading to Percona XtraDB Cluster 8.4 or <a href="../env-vars-cluster.html#configure-alternative-memory-allocator">specify the memory allocator using the environment variable</a>.</p>
-<p>This change ensures your memory allocation settings work smoothly and without manual intervention.</p>
+<p>If you use <code>jemalloc</code> on <strong>x86_64</strong>, <a href="../env-vars-cluster.html#configure-alternative-memory-allocator">specify the memory allocator path using the environment variable</a>.</p>
+<p>This change ensures your memory allocation settings work smoothly on ARM64 without manual intervention.</p>
 <h3 id="percona-xtradb-clusters-84-have-numa-disabled-by-default">Percona XtraDB clusters 8.4 have NUMA disabled by default<a class="headerlink" href="#percona-xtradb-clusters-84-have-numa-disabled-by-default" title="Permanent link">&para;</a></h3>
 <p><code>innodb_numa_interleave</code> is a MySQL configuration variable that spreads memory allocation across multiple NUMA (Non Uniform Memory Access) nodes.
 MySQL 8.4 turns this setting on by default to improve performance on servers with NUMA architecture, particularly when using a large InnoDB buffer pool.  </p>
@@ -6571,7 +6572,7 @@ Percona Operator for MySQL based on Percona XtraDB Cluster in the following tabl
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 5, 2026 11:46:02 UTC">June 5, 2026</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 21, 2026 11:37:32 UTC">July 21, 2026</span>
       
         <br>
         Created:
@@ -6666,7 +6667,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../js/print-site.js"></script>
       
