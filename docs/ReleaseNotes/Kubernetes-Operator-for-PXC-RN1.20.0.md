@@ -14,7 +14,7 @@
 
 - [Automatic storage resizing](#automatic-storage-resizing) - expand PVCs before disks fill up
 - [Configure file descriptor limit for HAProxy](#configure-file-descriptor-limit-for-haproxy) - faster, more stable health checks
-- [Version-aware `jemalloc` path selection](#version-aware-jemalloc-path-selection-for-optimized-memory-usage) - correct library path per PXC version
+- [Version-aware `jemalloc` path selection on ARM64](#version-aware-jemalloc-path-selection-on-arm64-architectures-for-optimized-memory-usage) - correct library path per PXC version
 - [Percona XtraDB clusters 8.4 have NUMA disabled by default](#percona-xtradb-clusters-84-have-numa-disabled-by-default) - fewer warnings in Kubernetes
 
 **Operational excellence**
@@ -81,18 +81,20 @@ You can change this limit with the `HA_RLIMIT_NOFILE` environment variable. The 
 
 See how to set HAProxy environment variables in the [documentation](../env-vars-cluster.md#configure-haproxy-environment-variables).
 
-### Version-aware `jemalloc` path selection for optimized memory usage
+### Version-aware `jemalloc` path selection on ARM64 architectures for optimized memory usage
 
-When you configure a memory allocator to `jemalloc` using the Custom Resource, the Operator correctly sets the path to `jemalloc` shared library based on the deployed Percona XtraDB Cluster version:
+When you configure a memory allocator to `jemalloc` using the Custom Resource on **ARM64** architectures, the Operator automatically sets the path to the `jemalloc` shared library based on the deployed Percona XtraDB Cluster version:
 
 * For version 8.4 and newer, the Operator uses `/usr/lib64/libjemalloc.so.2`
 * For version 8.0, the path to jemalloc is `/usr/lib64/libjemalloc.so.1`
 
-Since Percona XtraDB Cluster 8.4 is the default and recommended version for new clusters, the default `jemalloc` path is changed to `/usr/lib64/libjemalloc.so.2`.
+Since Percona XtraDB Cluster 8.4 is the default and recommended version for new clusters, the default `jemalloc` path is `/usr/lib64/libjemalloc.so.2`.
 
 The Operator determines the Percona XtraDB Cluster version from the image tag. If you deploy images where Percona XtraDB Cluster is referenced using a `sha256` digest, such as from a Red Hat Container Registry or some custom images, the Operator cannot detect the version and therefore falls back to the default `jemalloc` path `/usr/lib64/libjemalloc.so.2`. To avoid this, consider upgrading to Percona XtraDB Cluster 8.4 or [specify the memory allocator using the environment variable](../env-vars-cluster.md#configure-alternative-memory-allocator).
 
-This change ensures your memory allocation settings work smoothly and without manual intervention.
+If you use `jemalloc` on **x86_64**, [specify the memory allocator path using the environment variable](../env-vars-cluster.md#configure-alternative-memory-allocator).
+
+This change ensures your memory allocation settings work smoothly on ARM64 without manual intervention.
 
 ### Percona XtraDB clusters 8.4 have NUMA disabled by default
 
