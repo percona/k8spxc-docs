@@ -97,6 +97,7 @@ To set up monitoring of Kubernetes, you need the following:
             oc adm policy add-scc-to-user node-exporter \
             -z prometheus-node-exporter \
             -n <namespace>
+            ```
 
             Similarly, for `kube-state-metrics`, if the `restricted` SCC is enforced, avoid setting fixed user, group, or filesystem group IDs. Allow OpenShift to assign these values from the namespace UID/GID range by either adding the service account to the required SCC or by adding the following entries to the values YAML file:
 
@@ -106,6 +107,7 @@ To set up monitoring of Kubernetes, you need the following:
                 runAsUser: null
                 runAsGroup: null
                 fsGroup: null
+            ```
 
 
 === ":fontawesome-solid-user-gear: Install manually"
