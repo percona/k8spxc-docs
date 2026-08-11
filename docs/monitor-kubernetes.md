@@ -86,6 +86,7 @@ To set up monitoring of Kubernetes, you need the following:
             ```
 
         !!! note
+        
             When installing the chart on OpenShift, some components might require additional Security Context Constraints (SCCs), depending on the permissions they need at runtime.
 
             The `prometheus-node-exporter` component runs as a DaemonSet and requires access to host-level resources such as `/proc`, `/sys`, and other node-level paths. Because these are exposed through `hostPath` mounts, the service account used by `prometheus-node-exporter` must be granted an SCC that allows host access, such as `hostaccess`, `hostmount-anyuid`, or a custom SCC with equivalent permissions.
