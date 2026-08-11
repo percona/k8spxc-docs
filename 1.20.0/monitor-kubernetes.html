@@ -6011,17 +6011,17 @@ Key using <code>curl</code> and <code>jq</code> utilities. Replace <code>&lt;log
 <p>When installing the chart on OpenShift, some components might require additional Security Context Constraints (SCCs), depending on the permissions they need at runtime.</p>
 <p>The <code>prometheus-node-exporter</code> component runs as a DaemonSet and requires access to host-level resources such as <code>/proc</code>, <code>/sys</code>, and other node-level paths. Because these are exposed through <code>hostPath</code> mounts, the service account used by <code>prometheus-node-exporter</code> must be granted an SCC that allows host access, such as <code>hostaccess</code>, <code>hostmount-anyuid</code>, or a custom SCC with equivalent permissions.</p>
 <p>For example:</p>
-<p>```bash
-oc adm policy add-scc-to-user node-exporter \
--z prometheus-node-exporter \
--n <namespace></p>
+<div class="highlight"><pre><span></span><code>oc<span class="w"> </span>adm<span class="w"> </span>policy<span class="w"> </span>add-scc-to-user<span class="w"> </span>node-exporter<span class="w"> </span><span class="se">\</span>
+-z<span class="w"> </span>prometheus-node-exporter<span class="w"> </span><span class="se">\</span>
+-n<span class="w"> </span>&lt;namespace&gt;
+</code></pre></div>
 <p>Similarly, for <code>kube-state-metrics</code>, if the <code>restricted</code> SCC is enforced, avoid setting fixed user, group, or filesystem group IDs. Allow OpenShift to assign these values from the namespace UID/GID range by either adding the service account to the required SCC or by adding the following entries to the values YAML file:</p>
-<p>```yaml
-kube-state-metrics:
-securityContext:
-    runAsUser: null
-    runAsGroup: null
-    fsGroup: null</p>
+<div class="highlight"><pre><span></span><code><span class="nt">kube-state-metrics</span><span class="p">:</span>
+<span class="nt">securityContext</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">runAsUser</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">    </span><span class="nt">runAsGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">    </span><span class="nt">fsGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+</code></pre></div>
 </div>
 </li>
 </ol>
@@ -6187,7 +6187,7 @@ vmagent-vm-k8s-stack-victoria-metrics-k8s-stack-55fd8fc4fbcxwhx   2/2     Runnin
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 11, 2026 10:09:29 UTC">August 11, 2026</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 11, 2026 12:40:33 UTC">August 11, 2026</span>
       
         <br>
         Created:
