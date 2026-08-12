@@ -20343,7 +20343,7 @@ Key using <code>curl</code> and <code>jq</code> utilities. Replace <code>&lt;log
 </code></pre></div>
 <p>Similarly, for <code>kube-state-metrics</code>, if the <code>restricted</code> SCC is enforced, avoid setting fixed user, group, or filesystem group IDs. Allow OpenShift to assign these values from the namespace UID/GID range by either adding the service account to the required SCC or by adding the following entries to the values YAML file:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">kube-state-metrics</span><span class="p">:</span>
-<span class="nt">securityContext</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">securityContext</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">runAsUser</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="w">    </span><span class="nt">runAsGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="w">    </span><span class="nt">fsGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
@@ -20506,7 +20506,7 @@ vmagent-vm-k8s-stack-victoria-metrics-k8s-stack-55fd8fc4fbcxwhx   2/2     Runnin
 </code></pre></div>
 <p>The output should provide the empty list.</p>
 <p>If you face any issues with the removal, uninstall the stack manually:</p>
-<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>uninstall<span class="w"> </span>vm-k8s-stack<span class="w"> </span>-n<span class="w"> </span>&lt;<span class="w"> </span>namespace&gt;<span class="w"> </span>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>uninstall<span class="w"> </span>vm-k8s-stack<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>
 </code></pre></div></section><section class="print-page" id="delete" heading-number="10.6"><h1 id="delete-delete-percona-operator-for-mysql-based-on-percona-xtradb-cluster">Delete Percona Operator for MySQL based on Percona XtraDB Cluster<a class="headerlink" href="#delete-delete-percona-operator-for-mysql-based-on-percona-xtradb-cluster" title="Permanent link">&para;</a></h1>
 <p>You may have different reasons to clean up your Kubernetes environment: moving from trial deployment to a production one, testing experimental configurations and the like. In either case, you need to remove some (or all) of these objects:</p>
 <ul>

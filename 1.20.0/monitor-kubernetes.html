@@ -6017,7 +6017,7 @@ Key using <code>curl</code> and <code>jq</code> utilities. Replace <code>&lt;log
 </code></pre></div>
 <p>Similarly, for <code>kube-state-metrics</code>, if the <code>restricted</code> SCC is enforced, avoid setting fixed user, group, or filesystem group IDs. Allow OpenShift to assign these values from the namespace UID/GID range by either adding the service account to the required SCC or by adding the following entries to the values YAML file:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">kube-state-metrics</span><span class="p">:</span>
-<span class="nt">securityContext</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">securityContext</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">runAsUser</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="w">    </span><span class="nt">runAsGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
 <span class="w">    </span><span class="nt">fsGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
@@ -6180,14 +6180,14 @@ vmagent-vm-k8s-stack-victoria-metrics-k8s-stack-55fd8fc4fbcxwhx   2/2     Runnin
 </code></pre></div>
 <p>The output should provide the empty list.</p>
 <p>If you face any issues with the removal, uninstall the stack manually:</p>
-<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>uninstall<span class="w"> </span>vm-k8s-stack<span class="w"> </span>-n<span class="w"> </span>&lt;<span class="w"> </span>namespace&gt;<span class="w"> </span>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>uninstall<span class="w"> </span>vm-k8s-stack<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>
 </code></pre></div>
 <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 11, 2026 12:40:33 UTC">August 11, 2026</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 12, 2026 16:20:50 UTC">August 12, 2026</span>
       
         <br>
         Created:
