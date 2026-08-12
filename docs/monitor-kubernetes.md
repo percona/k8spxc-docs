@@ -103,7 +103,7 @@ To set up monitoring of Kubernetes, you need the following:
 
             ```yaml
             kube-state-metrics:
-            securityContext:
+              securityContext:
                 runAsUser: null
                 runAsGroup: null
                 fsGroup: null
@@ -291,6 +291,6 @@ The output should provide the empty list.
 If you face any issues with the removal, uninstall the stack manually:
 
 ```bash
-helm uninstall vm-k8s-stack -n < namespace> 
+helm uninstall vm-k8s-stack -n <namespace> 
 ```
 
