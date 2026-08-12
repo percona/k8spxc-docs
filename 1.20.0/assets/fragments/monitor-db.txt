@@ -16,6 +16,7 @@ PMM Server and PMM Client are installed separately.
 1. If you are using PMM server version 2, use a PMM client image compatible with PMM 2. If you are using PMM server version 3, use a PMM client image compatible with PMM 3. Check [Percona certified images](images.md) for the right one.
 2. If you specified both authentication methods for PMM server configuration and they have non-empty values, priority goes to PMM 3. 
 3. For migration from PMM2 to PMM3, see [PMM upgrade documentation :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/pmm-upgrade/migrating_from_pmm_2.html). Also check the [Automatic migration of API keys :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/api/authentication.html#automatic-migration-of-api-keys) page.
+4. Query Analytics (QAN) reads MySQL queries from Performance Schema, which the Operator configures on each cluster node. If your applications use server-side prepared statements (common with drivers such as JDBC), expect QAN to show query examples as placeholders (`?`) rather than literal values, and EXPLAIN to be unavailable for them. This is how upstream MySQL exposes prepared statements to Performance Schema — expected behavior, not a limitation of PMM or the Operator.
 
 
 ## Install PMM Server
