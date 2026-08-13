@@ -1,5 +1,8 @@
 # Percona Operator for MySQL based on Percona XtraDB Cluster Release Notes
 
+Use the [public roadmap :octicons-link-external-16:](https://github.com/orgs/percona/projects/10/views/5) to see what the team is working on next. For planned release windows, see the [release timeline :octicons-link-external-16:](https://github.com/orgs/percona/projects/10/views/7).
+
+
 * [Percona Operator for MySQL based on Percona XtraDB Cluster 1.20.0 ({{date.1_20_0}})](Kubernetes-Operator-for-PXC-RN1.20.0.md)
 * [Percona Operator for MySQL based on Percona XtraDB Cluster 1.19.1 ({{date.1_19_1}})](Kubernetes-Operator-for-PXC-RN1.19.1.md)
 * [Percona Operator for MySQL based on Percona XtraDB Cluster 1.19.0 ({{date.1_19_0}})](Kubernetes-Operator-for-PXC-RN1.19.0.md)
