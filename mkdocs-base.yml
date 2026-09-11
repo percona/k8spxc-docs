@@ -45,6 +45,7 @@ theme:
     - navigation.top
     - content.tabs.link
     - content.code.copy
+    - content.footnote.tooltips
 
 extra_css:
   - https://unicons.iconscout.com/release/v3.0.3/css/line.css
@@ -75,6 +76,7 @@ markdown_extensions:
   md_in_html: {}
   admonition: {}
   def_list: {}
+  footnotes: {}
   meta: {}
   smarty: { smart_angled_quotes: true }
   pymdownx.details: {}
