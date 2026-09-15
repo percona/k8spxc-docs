@@ -6194,7 +6194,7 @@ You can set environment variables in the following ways:</p>
 <p><strong>Example configuration:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="nt">env</span><span class="p">:</span>
 <span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LOG_STRUCTURED</span>
-<span class="w">   </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">   </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 </code></pre></div>
 <h3 id="log_level"><code>LOG_LEVEL</code><a class="headerlink" href="#log_level" title="Permanent link">&para;</a></h3>
 <p>Sets the verbosity level of Operator logs. Available since Operator version 1.12.0</p>
@@ -6224,7 +6224,7 @@ You can set environment variables in the following ways:</p>
 <p><strong>Example configuration:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="nt">env</span><span class="p">:</span>
 <span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LOG_LEVEL</span>
-<span class="w">   </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;DEBUG&quot;</span>
+<span class="w">   </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"DEBUG"</span>
 </code></pre></div>
 <h3 id="watch_namespace"><code>WATCH_NAMESPACE</code><a class="headerlink" href="#watch_namespace" title="Permanent link">&para;</a></h3>
 <p>Specifies which namespaces the Operator should watch for Custom Resources.</p>
@@ -6252,7 +6252,7 @@ You can set environment variables in the following ways:</p>
 <p><strong>Example configuration for cluster-wide mode:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="nt">env</span><span class="p">:</span>
 <span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WATCH_NAMESPACE</span>
-<span class="w">   </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;pxc,pxc-dev,pxc-prod&quot;</span>
+<span class="w">   </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"pxc,pxc-dev,pxc-prod"</span>
 </code></pre></div>
 <p>See <a href="cluster-wide.html">Cluster-wide installation</a> for more details.</p>
 <h3 id="disable_telemetry"><code>DISABLE_TELEMETRY</code><a class="headerlink" href="#disable_telemetry" title="Permanent link">&para;</a></h3>
@@ -6277,7 +6277,7 @@ You can set environment variables in the following ways:</p>
 <p><strong>Example configuration:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="nt">env</span><span class="p">:</span>
 <span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DISABLE_TELEMETRY</span>
-<span class="w">   </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">   </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 </code></pre></div>
 <p>See <a href="telemetry.html">Telemetry</a> for more information about what data is collected.</p>
 <h3 id="s3_workers_limit"><code>S3_WORKERS_LIMIT</code><a class="headerlink" href="#s3_workers_limit" title="Permanent link">&para;</a></h3>
@@ -6314,7 +6314,7 @@ You can set environment variables in the following ways:</p>
 <p><strong>Example configuration:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="nt">env</span><span class="p">:</span>
 <span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">S3_WORKERS_LIMIT</span>
-<span class="w">   </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;20&quot;</span>
+<span class="w">   </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"20"</span>
 </code></pre></div>
 <h3 id="max_concurrent_reconciles"><code>MAX_CONCURRENT_RECONCILES</code><a class="headerlink" href="#max_concurrent_reconciles" title="Permanent link">&para;</a></h3>
 <p>Controls the maximum number of concurrent reconciliation operations the Operator can perform.</p>
@@ -6339,7 +6339,7 @@ You can set environment variables in the following ways:</p>
 <p><strong>Example configuration:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="nt">env</span><span class="p">:</span>
 <span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MAX_CONCURRENT_RECONCILES</span>
-<span class="w">   </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3&quot;</span>
+<span class="w">   </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"3"</span>
 </code></pre></div>
 <h3 id="pxco_feature_gates"><code>PXCO_FEATURE_GATES</code><a class="headerlink" href="#pxco_feature_gates" title="Permanent link">&para;</a></h3>
 <p>Enables you to turn on specific features for the Operator. </p>
@@ -6373,7 +6373,7 @@ You can set environment variables in the following ways:</p>
 <p>Set the <code>PXCO_FEATURE_GATES</code> environment variable in the Operator Deployment:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">env</span><span class="p">:</span>
 <span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PXCO_FEATURE_GATES</span>
-<span class="w">   </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;XtrabackupSidecar=true&quot;</span>
+<span class="w">   </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"XtrabackupSidecar=true"</span>
 </code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -6407,7 +6407,7 @@ You can set environment variables in the following ways:</p>
 <p><strong>Example configuration:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="nt">env</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PXCO_LEADER_ELECTION_ENABLED</span>
-<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 </code></pre></div>
 <h3 id="pxco_leader_election_name"><code>PXCO_LEADER_ELECTION_NAME</code><a class="headerlink" href="#pxco_leader_election_name" title="Permanent link">&para;</a></h3>
 <p>Specifies the name of the Lease resource used for the leader lock. When left undefined, the default name <code>08db1feb.percona.com</code> is used.</p>
@@ -6430,7 +6430,7 @@ You can set environment variables in the following ways:</p>
 <p><strong>Example configuration:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="nt">env</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PXCO_LEADER_ELECTION_NAME</span>
-<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my-custom-lease&quot;</span>
+<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"my-custom-lease"</span>
 </code></pre></div>
 <h3 id="pxco_leader_election_lease_duration"><code>PXCO_LEADER_ELECTION_LEASE_DURATION</code><a class="headerlink" href="#pxco_leader_election_lease_duration" title="Permanent link">&para;</a></h3>
 <p>Duration that non-leader candidates wait before forcing leader acquisition. This is measured against the time of last observed acknowledgment. Uses Go duration format (for example, <code>60s</code>). You can increase this value if the Operator experiences leader election failures in high-latency or resource-constrained environments.</p>
@@ -6453,7 +6453,7 @@ You can set environment variables in the following ways:</p>
 <p><strong>Example configuration:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="nt">env</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PXCO_LEADER_ELECTION_LEASE_DURATION</span>
-<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;60s&quot;</span>
+<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"60s"</span>
 </code></pre></div>
 <h3 id="pxco_leader_election_renew_deadline"><code>PXCO_LEADER_ELECTION_RENEW_DEADLINE</code><a class="headerlink" href="#pxco_leader_election_renew_deadline" title="Permanent link">&para;</a></h3>
 <p>Duration that the acting leader retries refreshing the lease before giving up. Uses Go duration format (for example, <code>60s</code>).</p>
@@ -6476,7 +6476,7 @@ You can set environment variables in the following ways:</p>
 <p><strong>Example configuration:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="nt">env</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PXCO_LEADER_ELECTION_RENEW_DEADLINE</span>
-<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;30s&quot;</span>
+<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"30s"</span>
 </code></pre></div>
 <h3 id="pxco_leader_election_retry_period"><code>PXCO_LEADER_ELECTION_RETRY_PERIOD</code><a class="headerlink" href="#pxco_leader_election_retry_period" title="Permanent link">&para;</a></h3>
 <p>Duration between leader election retry attempts. Uses Go duration format (for example, <code>60s</code>).</p>
@@ -6499,7 +6499,7 @@ You can set environment variables in the following ways:</p>
 <p><strong>Example configuration:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="nt">env</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PXCO_LEADER_ELECTION_RETRY_PERIOD</span>
-<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;10s&quot;</span>
+<span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"10s"</span>
 </code></pre></div>
 <h3 id="automatic-environment-variables">Automatic environment variables<a class="headerlink" href="#automatic-environment-variables" title="Permanent link">&para;</a></h3>
 <p>The following environment variables are automatically set by Kubernetes and should not be manually configured:</p>
@@ -6515,17 +6515,17 @@ You can set environment variables in the following ways:</p>
 <ol>
 <li>
 <p>Get the current environment variables:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>deployment<span class="w"> </span>percona-xtradb-cluster-operator<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.spec.template.spec.containers[?(@.name==&quot;percona-xtradb-cluster-operator&quot;)].env}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>deployment<span class="w"> </span>percona-xtradb-cluster-operator<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.spec.template.spec.containers[?(@.name=="percona-xtradb-cluster-operator")].env}'</span>
 </code></pre></div>
 </li>
 <li>
 <p>Edit the output to add or update your variable (e.g., <code>S3_WORKERS_LIMIT</code>), then use the full list in your patch:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>deployment<span class="w"> </span>percona-xtradb-cluster-operator<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-p<span class="w"> </span><span class="s1">&#39;{&quot;spec&quot;:{&quot;template&quot;:{&quot;spec&quot;:{&quot;containers&quot;:[{&quot;name&quot;:&quot;percona-xtradb-cluster-operator&quot;,&quot;env&quot;:[</span>
-<span class="s1">    {&quot;name&quot;:&quot;POD_NAME&quot;,&quot;valueFrom&quot;:{&quot;fieldRef&quot;:{&quot;fieldPath&quot;:&quot;metadata.name&quot;}}},</span>
-<span class="s1">    {&quot;name&quot;:&quot;OPERATOR_NAME&quot;,&quot;value&quot;:&quot;percona-xtradb-cluster-operator&quot;},</span>
-<span class="s1">    {&quot;name&quot;:&quot;S3_WORKERS_LIMIT&quot;,&quot;value&quot;:&quot;20&quot;}</span>
-<span class="s1">  ]}}]}}}&#39;</span>
+<span class="w">  </span>-p<span class="w"> </span><span class="s1">'{"spec":{"template":{"spec":{"containers":[{"name":"percona-xtradb-cluster-operator","env":[</span>
+<span class="s1">    {"name":"POD_NAME","valueFrom":{"fieldRef":{"fieldPath":"metadata.name"}}},</span>
+<span class="s1">    {"name":"OPERATOR_NAME","value":"percona-xtradb-cluster-operator"},</span>
+<span class="s1">    {"name":"S3_WORKERS_LIMIT","value":"20"}</span>
+<span class="s1">  ]}}]}}}'</span>
 </code></pre></div>
 </li>
 </ol>
@@ -6651,6 +6651,10 @@ window.addEventListener('afterprint', (event) => {
         <script src="js/rating.js"></script>
       
         <script src="js/kapa.js"></script>
+      
+        <script src="js/posthog-search.js"></script>
+      
+        <script src="js/posthog-version.js"></script>
       
         <script src="js/open_in_new_tab.js"></script>
       

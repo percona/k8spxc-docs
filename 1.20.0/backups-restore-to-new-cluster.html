@@ -5964,7 +5964,7 @@ Find the name of the required Secrets object in the
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>pxc<span class="w"> </span>cluster1<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--type<span class="w"> </span>merge<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-p<span class="w"> </span><span class="s1">&#39;{&quot;spec&quot;:{&quot;backup&quot;:{&quot;pitr&quot;:{&quot;enabled&quot;:false}}}}&#39;</span>
+<span class="w">  </span>-p<span class="w"> </span><span class="s1">'{"spec":{"backup":{"pitr":{"enabled":false}}}}'</span>
 </code></pre></div>
 </li>
 </ol>
@@ -6142,7 +6142,7 @@ Find the name of the required Secrets object in the
 <span class="w">  </span><span class="nt">backupName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">backup1</span>
 <span class="w">  </span><span class="nt">pitr</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">date</span>
-<span class="w">    </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2020-12-31</span><span class="nv"> </span><span class="s">09:37:13&quot;</span>
+<span class="w">    </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="s">"2020-12-31</span><span class="nv"> </span><span class="s">09:37:13"</span>
 <span class="w">    </span><span class="nt">backupSource</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">s3</span><span class="p">:</span>
 <span class="w">       </span><span class="nt">bucket</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">S3-BINLOG-BACKUP-BUCKET-NAME-HERE</span>
@@ -6172,7 +6172,7 @@ Find the name of the required Secrets object in the
 <span class="w">  </span><span class="nt">backupName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">backup1</span>
 <span class="w">  </span><span class="nt">pitr</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">date</span>
-<span class="w">    </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2020-12-31</span><span class="nv"> </span><span class="s">09:37:13&quot;</span>
+<span class="w">    </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="s">"2020-12-31</span><span class="nv"> </span><span class="s">09:37:13"</span>
 <span class="w">    </span><span class="nt">backupSource</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">s3</span><span class="p">:</span>
 <span class="w">       </span><span class="nt">bucket</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">S3-BINLOG-BACKUP-BUCKET-NAME-HERE</span>
@@ -6248,7 +6248,7 @@ Find the name of the required Secrets object in the
 <span class="w">  </span><span class="nt">storageName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3-us-west</span>
 <span class="w">  </span><span class="nt">pitr</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">date</span>
-<span class="w">    </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2020-12-31</span><span class="nv"> </span><span class="s">09:37:13&quot;</span>
+<span class="w">    </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="s">"2020-12-31</span><span class="nv"> </span><span class="s">09:37:13"</span>
 <span class="w">  </span><span class="nt">backupSource</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">destination</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3://S3-BUCKET-NAME/BACKUP-NAME</span>
 </code></pre></div>
@@ -6265,7 +6265,7 @@ Find the name of the required Secrets object in the
 <span class="w">    </span><span class="nt">destination</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azure://AZURE-CONTAINER-NAME/BACKUP-NAME</span>
 <span class="w">  </span><span class="nt">pitr</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">date</span>
-<span class="w">    </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2020-12-31</span><span class="nv"> </span><span class="s">09:37:13&quot;</span>
+<span class="w">    </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="s">"2020-12-31</span><span class="nv"> </span><span class="s">09:37:13"</span>
 </code></pre></div>
 </div>
 </div>
@@ -6396,6 +6396,10 @@ window.addEventListener('afterprint', (event) => {
         <script src="js/rating.js"></script>
       
         <script src="js/kapa.js"></script>
+      
+        <script src="js/posthog-search.js"></script>
+      
+        <script src="js/posthog-version.js"></script>
       
         <script src="js/open_in_new_tab.js"></script>
       

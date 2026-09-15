@@ -5789,10 +5789,10 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </li>
 <li>
 <p><a href="pause.html">Pause the cluster</a> to stop reconciliation before you change TLS resources. Run the following command to patch your running cluster:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span><span class="w"> </span>pxc<span class="w"> </span><span class="nv">$CLUSTER_NAME</span><span class="w"> </span>--type<span class="w"> </span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">&quot;spec&quot;: {</span>
-<span class="s1">  &quot;pause&quot;: true}</span>
-<span class="s1">  }&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span><span class="w"> </span>pxc<span class="w"> </span><span class="nv">$CLUSTER_NAME</span><span class="w"> </span>--type<span class="w"> </span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">'{</span>
+<span class="s1">"spec": {</span>
+<span class="s1">  "pause": true}</span>
+<span class="s1">  }'</span>
 </code></pre></div>
 </li>
 <li>
@@ -5820,7 +5820,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <ol>
 <li>
 <p>List the Secrets:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>secrets<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span><span class="w"> </span>-o<span class="w"> </span>custom-columns<span class="o">=</span>NAME:.metadata.name,TYPE:.type<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">&#39;NAME|ssl&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>secrets<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span><span class="w"> </span>-o<span class="w"> </span>custom-columns<span class="o">=</span>NAME:.metadata.name,TYPE:.type<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">'NAME|ssl'</span>
 </code></pre></div>
 <details class="example">
 <summary>Expected output</summary>
@@ -5840,12 +5840,12 @@ cluster1-ssl-internal   kubernetes.io/tls
 <ol>
 <li>
 <p>Update the Custom Resource and remove all references to Secrets that contain your custom certificates:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span><span class="w"> </span>patch<span class="w"> </span>pxc<span class="w"> </span><span class="nv">$CLUSTER_NAME</span><span class="w"> </span>--type<span class="w"> </span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">  &quot;spec&quot;: {</span>
-<span class="s1">    &quot;sslSecretName&quot;: null,</span>
-<span class="s1">    &quot;sslInternalSecretName&quot;: null</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span><span class="w"> </span>patch<span class="w"> </span>pxc<span class="w"> </span><span class="nv">$CLUSTER_NAME</span><span class="w"> </span>--type<span class="w"> </span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">'{</span>
+<span class="s1">  "spec": {</span>
+<span class="s1">    "sslSecretName": null,</span>
+<span class="s1">    "sslInternalSecretName": null</span>
 <span class="s1">  }</span>
-<span class="s1">}&#39;</span>
+<span class="s1">}'</span>
 </code></pre></div>
 </li>
 <li>
@@ -5861,10 +5861,10 @@ kubectl<span class="w"> </span>delete<span class="w"> </span>secret<span class="
 </li>
 <li>
 <p>Resume the cluster. Set <code>spec.pause</code> back to <code>false</code>:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span><span class="w"> </span>pxc<span class="w"> </span><span class="nv">$CLUSTER_NAME</span><span class="w"> </span>--type<span class="w"> </span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">&quot;spec&quot;: {</span>
-<span class="s1">  &quot;pause&quot;: false}</span>
-<span class="s1">  }&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span><span class="w"> </span>pxc<span class="w"> </span><span class="nv">$CLUSTER_NAME</span><span class="w"> </span>--type<span class="w"> </span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">'{</span>
+<span class="s1">"spec": {</span>
+<span class="s1">  "pause": false}</span>
+<span class="s1">  }'</span>
 </code></pre></div>
 </li>
 </ol>
@@ -5988,6 +5988,10 @@ window.addEventListener('afterprint', (event) => {
         <script src="js/rating.js"></script>
       
         <script src="js/kapa.js"></script>
+      
+        <script src="js/posthog-search.js"></script>
+      
+        <script src="js/posthog-version.js"></script>
       
         <script src="js/open_in_new_tab.js"></script>
       

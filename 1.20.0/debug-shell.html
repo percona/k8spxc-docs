@@ -5757,7 +5757,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 example, trying to run the <code>time</code> command, which is not present in the
 container, by executing <code>kubectl exec -ti cluster1-pxc-0 -c pxc -- time</code>
 would show the following result:</p>
-<div class="no-copy highlight"><pre><span></span><code>error: Internal error occurred: error executing command in container: failed to exec in container: failed to start exec &quot;71bdb96a65af89d3672cd0d69a8f2c1068542a97b1938e7f6f17d29a87d76453&quot;: OCI runtime exec failed: exec failed: unable to start container process: exec: &quot;time&quot;: executable file not found in $PATH: unknown
+<div class="no-copy highlight"><pre><span></span><code>error: Internal error occurred: error executing command in container: failed to exec in container: failed to start exec "71bdb96a65af89d3672cd0d69a8f2c1068542a97b1938e7f6f17d29a87d76453": OCI runtime exec failed: exec failed: unable to start container process: exec: "time": executable file not found in $PATH: unknown
 </code></pre></div>
 </li>
 <li>
@@ -5790,10 +5790,10 @@ of the container entry point is triggered by the presence of the
 <code>/var/lib/mysql/sleep-forever</code> file.</p>
 <p>For example, you can do it for the <code>pxc</code> container of an appropriate Percona
 XtraDB Cluster instance as follows:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>cluster1-pxc-0<span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;touch /var/lib/mysql/sleep-forever&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>cluster1-pxc-0<span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'touch /var/lib/mysql/sleep-forever'</span>
 </code></pre></div>
 <p>If <code>pxc</code> container can’t start, you can use <code>logs</code> container instead:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>cluster1-pxc-0<span class="w"> </span>-c<span class="w"> </span>logs<span class="w"> </span>--<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;touch /var/lib/mysql/sleep-forever&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>cluster1-pxc-0<span class="w"> </span>-c<span class="w"> </span>logs<span class="w"> </span>--<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'touch /var/lib/mysql/sleep-forever'</span>
 </code></pre></div>
 <p>The instance will restart automatically and run in its usual way as soon as you
 remove this file (you can do it with a command similar to the one you have used
@@ -5911,6 +5911,10 @@ window.addEventListener('afterprint', (event) => {
         <script src="js/rating.js"></script>
       
         <script src="js/kapa.js"></script>
+      
+        <script src="js/posthog-search.js"></script>
+      
+        <script src="js/posthog-version.js"></script>
       
         <script src="js/open_in_new_tab.js"></script>
       

@@ -5793,14 +5793,14 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <ol>
 <li>
 <p>Since the primary site is already running, we will patch its configuration with the following command. Replace the <code>&lt;namespace&gt;</code> placeholder with your namespace:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>pxc<span class="w"> </span>cluster1<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">  &quot;spec&quot;: {</span>
-<span class="s1">  &quot;pxc&quot;: {</span>
-<span class="s1">    &quot;expose&quot;: {</span>
-<span class="s1">      &quot;enabled&quot;: true,</span>
-<span class="s1">      &quot;type&quot;: &quot;LoadBalancer&quot;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>pxc<span class="w"> </span>cluster1<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">'{</span>
+<span class="s1">  "spec": {</span>
+<span class="s1">  "pxc": {</span>
+<span class="s1">    "expose": {</span>
+<span class="s1">      "enabled": true,</span>
+<span class="s1">      "type": "LoadBalancer"</span>
 <span class="s1">    }</span>
-<span class="s1">  }}}&#39;</span>
+<span class="s1">  }}}'</span>
 </code></pre></div>
 </li>
 <li>
@@ -5810,17 +5810,17 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><code>pxc.replicationChannels.[].isSource</code> defines what cluster the data is replicated from. Set the value to <code>true</code>.</li>
 </ul>
 <p>Run the following command to add this configuration:</p>
-<div class="highlight" data-prompt="$"><pre><span></span><code><span class="err">$</span><span class="w"> </span><span class="err">kubec</span><span class="kc">tl</span><span class="w"> </span><span class="err">pa</span><span class="kc">t</span><span class="err">ch</span><span class="w"> </span><span class="err">pxc</span><span class="w"> </span><span class="err">clus</span><span class="kc">ter</span><span class="mi">1</span><span class="w"> </span><span class="mi">--</span><span class="kc">t</span><span class="err">ype=merge</span><span class="w"> </span><span class="mi">--</span><span class="err">pa</span><span class="kc">t</span><span class="err">ch</span><span class="w"> </span><span class="err">&#39;</span><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;spec&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;pxc&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;replicationChannels&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<div class="highlight" data-prompt="$"><pre><span></span><code><span class="err">$</span><span class="w"> </span><span class="err">kubec</span><span class="kc">tl</span><span class="w"> </span><span class="err">pa</span><span class="kc">t</span><span class="err">ch</span><span class="w"> </span><span class="err">pxc</span><span class="w"> </span><span class="err">clus</span><span class="kc">ter</span><span class="mi">1</span><span class="w"> </span><span class="mi">--</span><span class="kc">t</span><span class="err">ype=merge</span><span class="w"> </span><span class="mi">--</span><span class="err">pa</span><span class="kc">t</span><span class="err">ch</span><span class="w"> </span><span class="err">'</span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"spec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"pxc"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"replicationChannels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="p">{</span>
-<span class="w">          </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pxc1_to_pxc2&quot;</span><span class="p">,</span>
-<span class="w">          </span><span class="nt">&quot;isSource&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pxc1_to_pxc2"</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"isSource"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">      </span><span class="p">]</span>
 <span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}}</span><span class="err">&#39;</span>
+<span class="w">  </span><span class="p">}}</span><span class="err">'</span>
 </code></pre></div>
 </li>
 <li>
@@ -5846,22 +5846,22 @@ cluster1-pxc-2                    LoadBalancer   34.118.236.170   35.222.208.249
 <li><code>spec.pxc.replicationChannels[].sourcesList</code> - The list of sources. Specify the external IP addresses of the database Pods from the primary site. </li>
 </ul>
 <p>Run the following command to apply a patch to the replica site&rsquo;s configuration with the required information. Don&rsquo;t forget to replace the <code>&lt;placeholders&gt;</code> with your values:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>pxc<span class="w"> </span>cluster1<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">&quot;spec&quot;: {</span>
-<span class="s1">  &quot;pxc&quot;: {</span>
-<span class="s1">    &quot;replicationChannels&quot;: [</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>pxc<span class="w"> </span>cluster1<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">'{</span>
+<span class="s1">"spec": {</span>
+<span class="s1">  "pxc": {</span>
+<span class="s1">    "replicationChannels": [</span>
 <span class="s1">      {</span>
-<span class="s1">        &quot;name&quot;: &quot;pxc1_to_pxc2&quot;,</span>
-<span class="s1">        &quot;isSource&quot;: false,</span>
-<span class="s1">        &quot;sourcesList&quot;: [</span>
-<span class="s1">          { &quot;host&quot;: &quot;34.118.227.242&quot;, &quot;port&quot;: 3306, &quot;weight&quot;: 100 },</span>
-<span class="s1">          { &quot;host&quot;: &quot;34.118.227.242&quot;, &quot;port&quot;: 3306, &quot;weight&quot;: 100 },</span>
-<span class="s1">          { &quot;host&quot;: &quot;34.118.227.242&quot;, &quot;port&quot;: 3306, &quot;weight&quot;: 100 }</span>
+<span class="s1">        "name": "pxc1_to_pxc2",</span>
+<span class="s1">        "isSource": false,</span>
+<span class="s1">        "sourcesList": [</span>
+<span class="s1">          { "host": "34.118.227.242", "port": 3306, "weight": 100 },</span>
+<span class="s1">          { "host": "34.118.227.242", "port": 3306, "weight": 100 },</span>
+<span class="s1">          { "host": "34.118.227.242", "port": 3306, "weight": 100 }</span>
 <span class="s1">        ]</span>
 <span class="s1">      }</span>
 <span class="s1">    ]</span>
 <span class="s1">  }</span>
-<span class="s1">}}&#39;</span>
+<span class="s1">}}'</span>
 </code></pre></div>
 <h2 id="verify-the-replication">Verify the replication<a class="headerlink" href="#verify-the-replication" title="Permanent link">&para;</a></h2>
 <p>To verify that the replication is working, do the following:</p>
@@ -5888,7 +5888,7 @@ cluster1-pxc-2                    LoadBalancer   34.118.236.170   35.222.208.249
 </li>
 <li>
 <p>Insert some data into the database:</p>
-<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; INSERT INTO demo.users VALUES (1, &#39;percona&#39;);
+<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; INSERT INTO demo.users VALUES (1, 'percona');
 </code></pre></div>
 </li>
 <li>
@@ -6023,6 +6023,10 @@ window.addEventListener('afterprint', (event) => {
         <script src="js/rating.js"></script>
       
         <script src="js/kapa.js"></script>
+      
+        <script src="js/posthog-search.js"></script>
+      
+        <script src="js/posthog-version.js"></script>
       
         <script src="js/open_in_new_tab.js"></script>
       

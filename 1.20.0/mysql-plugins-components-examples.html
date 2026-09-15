@@ -5871,9 +5871,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li>
 <p>Verify the changes on all nodes after the rolling restart:</p>
 <div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">  </span>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cluster1-pxc-<span class="nv">$i</span><span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">&#39;&lt;root-password&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-e<span class="w"> </span><span class="s2">&quot;SELECT component_urn FROM mysql.component WHERE component_urn LIKE &#39;%audit%&#39;;</span>
-<span class="s2">          SHOW VARIABLES LIKE &#39;audit_log_filter.%&#39;;&quot;</span>
+<span class="w">  </span>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cluster1-pxc-<span class="nv">$i</span><span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">'&lt;root-password&gt;'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-e<span class="w"> </span><span class="s2">"SELECT component_urn FROM mysql.component WHERE component_urn LIKE '%audit%';</span>
+<span class="s2">          SHOW VARIABLES LIKE 'audit_log_filter.%';"</span>
 <span class="k">done</span>
 </code></pre></div>
 <details class="example">
@@ -5900,8 +5900,8 @@ audit_log_filter.strategy           SYNCHRONOUS
 <li>
 <p>The plugin ships with an installation SQL script that creates the required filter tables. Run it once on one of the Pods: </p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cluster1-pxc-0<span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="s2">&quot;mysql -uroot -p&#39;&lt;root-password&gt;&#39; -D mysql &lt; \</span>
-<span class="s2">  /usr/share/percona-xtradb-cluster/audit_log_filter_linux_install.sql&quot;</span>
+<span class="w">  </span><span class="s2">"mysql -uroot -p'&lt;root-password&gt;' -D mysql &lt; \</span>
+<span class="s2">  /usr/share/percona-xtradb-cluster/audit_log_filter_linux_install.sql"</span>
 </code></pre></div>
 </li>
 <li>
@@ -5930,11 +5930,11 @@ audit_log_filter.strategy           SYNCHRONOUS
 <li>
 <p>Verify after the rolling restart on every node:</p>
 <div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">  </span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>cluster1-pxc-<span class="nv">$i</span><span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">&#39;&lt;root-password&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-e<span class="w"> </span><span class="s2">&quot;SELECT PLUGIN_NAME, PLUGIN_STATUS FROM information_schema.PLUGINS WHERE PLUGIN_NAME=&#39;audit_log_filter&#39;;</span>
-<span class="s2">        SHOW VARIABLES LIKE &#39;audit_log_filter_strategy&#39;;</span>
-<span class="s2">        SHOW VARIABLES LIKE &#39;audit_log_filter_format&#39;;</span>
-<span class="s2">        SHOW VARIABLES LIKE &#39;audit_log_filter_rotate_on_size&#39;;&quot;</span>
+<span class="w">  </span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>cluster1-pxc-<span class="nv">$i</span><span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">'&lt;root-password&gt;'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-e<span class="w"> </span><span class="s2">"SELECT PLUGIN_NAME, PLUGIN_STATUS FROM information_schema.PLUGINS WHERE PLUGIN_NAME='audit_log_filter';</span>
+<span class="s2">        SHOW VARIABLES LIKE 'audit_log_filter_strategy';</span>
+<span class="s2">        SHOW VARIABLES LIKE 'audit_log_filter_format';</span>
+<span class="s2">        SHOW VARIABLES LIKE 'audit_log_filter_rotate_on_size';"</span>
 <span class="k">done</span>
 </code></pre></div>
 <details class="example">
@@ -5953,8 +5953,8 @@ audit_log_filter_rotate_on_size  104857600
 <li>
 <p>Run the installation script in one of the Pods:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cluster1-pxc-0<span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="s2">&quot;mysql -uroot -p&#39;&lt;root-password&gt;&#39; -D mysql &lt; \</span>
-<span class="s2">  /usr/share/percona-xtradb-cluster/audit_log_filter_linux_install.sql&quot;</span>
+<span class="w">  </span><span class="s2">"mysql -uroot -p'&lt;root-password&gt;' -D mysql &lt; \</span>
+<span class="s2">  /usr/share/percona-xtradb-cluster/audit_log_filter_linux_install.sql"</span>
 </code></pre></div>
 <p>The script runs <code>INSTALL PLUGIN</code> internally and registers the plugin in <code>mysql.plugin</code>. Galera
 replicates the <code>mysql.plugin</code> and <code>mysql.audit_log_filter</code> entries to all nodes and they all activate the plugin automatically. The plugin reloads on every restart without needing the <code>plugin-load-add</code> entry. </p>
@@ -5979,11 +5979,11 @@ replicates the <code>mysql.plugin</code> and <code>mysql.audit_log_filter</code>
 <li>
 <p>Verify after the rolling restart on every node:</p>
 <div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">  </span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>cluster1-pxc-<span class="nv">$i</span><span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">&#39;&lt;root-password&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-e<span class="w"> </span><span class="s2">&quot;SELECT PLUGIN_NAME, PLUGIN_STATUS FROM information_schema.PLUGINS WHERE PLUGIN_NAME=&#39;audit_log_filter&#39;;</span>
-<span class="s2">        SHOW VARIABLES LIKE &#39;audit_log_filter_strategy&#39;;</span>
-<span class="s2">        SHOW VARIABLES LIKE &#39;audit_log_filter_format&#39;;</span>
-<span class="s2">        SHOW VARIABLES LIKE &#39;audit_log_filter_rotate_on_size&#39;;&quot;</span>
+<span class="w">  </span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>cluster1-pxc-<span class="nv">$i</span><span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">'&lt;root-password&gt;'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-e<span class="w"> </span><span class="s2">"SELECT PLUGIN_NAME, PLUGIN_STATUS FROM information_schema.PLUGINS WHERE PLUGIN_NAME='audit_log_filter';</span>
+<span class="s2">        SHOW VARIABLES LIKE 'audit_log_filter_strategy';</span>
+<span class="s2">        SHOW VARIABLES LIKE 'audit_log_filter_format';</span>
+<span class="s2">        SHOW VARIABLES LIKE 'audit_log_filter_rotate_on_size';"</span>
 <span class="k">done</span>
 </code></pre></div>
 <details class="example">
@@ -6026,8 +6026,8 @@ either version.</p>
 </li>
 <li>
 <p>Install the component. Connect to any of the <code>pxc</code> Pods and run:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>cluster1-pxc-0<span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">&#39;&lt;root-password&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-e<span class="w"> </span><span class="s2">&quot;INSTALL COMPONENT &#39;file://component_validate_password&#39;;&quot;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>cluster1-pxc-0<span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">'&lt;root-password&gt;'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="s2">"INSTALL COMPONENT 'file://component_validate_password';"</span>
 </code></pre></div>
 <p>The <code>INSTALL COMPONENT</code> command writes a row to the <code>mysql.component</code> system table. Galera replicates this to all cluster
 nodes, so the component becomes available everywhere after a single command. The configured
@@ -6038,9 +6038,9 @@ state via IST/SST).</p>
 <li>
 <p>Verify the changes on all nodes:</p>
 <div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">  </span>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cluster1-pxc-<span class="nv">$i</span><span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">&#39;&lt;root-password&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-e<span class="w"> </span><span class="s2">&quot;SELECT component_urn FROM mysql.component WHERE component_urn LIKE &#39;%validate%&#39;;</span>
-<span class="s2">        SHOW VARIABLES LIKE &#39;validate_password.%&#39;;&quot;</span>
+<span class="w">  </span>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cluster1-pxc-<span class="nv">$i</span><span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">'&lt;root-password&gt;'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-e<span class="w"> </span><span class="s2">"SELECT component_urn FROM mysql.component WHERE component_urn LIKE '%validate%';</span>
+<span class="s2">        SHOW VARIABLES LIKE 'validate_password.%';"</span>
 <span class="k">done</span>
 </code></pre></div>
 <details class="example">
@@ -6189,6 +6189,10 @@ window.addEventListener('afterprint', (event) => {
         <script src="js/rating.js"></script>
       
         <script src="js/kapa.js"></script>
+      
+        <script src="js/posthog-search.js"></script>
+      
+        <script src="js/posthog-version.js"></script>
       
         <script src="js/open_in_new_tab.js"></script>
       

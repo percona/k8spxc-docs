@@ -5981,12 +5981,12 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <ol>
 <li>
 <p>Export the namespace and other variables as environment variables to simplify further configuration:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">NAMESPACE</span><span class="o">=</span><span class="s2">&quot;vault&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">VAULT_HELM_VERSION</span><span class="o">=</span><span class="s2">&quot;0.30.0&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">SERVICE</span><span class="o">=</span><span class="s2">&quot;vault&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">SECRET_NAME_VAULT</span><span class="o">=</span><span class="s2">&quot;vault-secret&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">POLICY_NAME</span><span class="o">=</span><span class="s2">&quot;mysql-policy&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">WORKDIR</span><span class="o">=</span><span class="s2">&quot;/tmp/vault&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">NAMESPACE</span><span class="o">=</span><span class="s2">"vault"</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">VAULT_HELM_VERSION</span><span class="o">=</span><span class="s2">"0.30.0"</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SERVICE</span><span class="o">=</span><span class="s2">"vault"</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SECRET_NAME_VAULT</span><span class="o">=</span><span class="s2">"vault-secret"</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">POLICY_NAME</span><span class="o">=</span><span class="s2">"mysql-policy"</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">WORKDIR</span><span class="o">=</span><span class="s2">"/tmp/vault"</span>
 </code></pre></div>
 </li>
 <li>
@@ -6015,24 +6015,24 @@ helm<span class="w"> </span>repo<span class="w"> </span>update
 <span class="w">  </span>--disable-openapi-validation<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--version<span class="w"> </span><span class="si">${</span><span class="nv">VAULT_HELM_VERSION</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--namespace<span class="w"> </span><span class="si">${</span><span class="nv">NAMESPACE</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;global.enabled=true&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;global.tlsDisable=true&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;global.platform=kubernetes&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;server.ha.enabled=true&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;server.ha.replicas=3&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;server.ha.raft.enabled=true&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set<span class="w"> </span><span class="s2">&quot;server.ha.raft.setNodeId=true&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--set-string<span class="w"> </span><span class="s2">&quot;server.ha.raft.config=cluster_name = \&quot;vault-integrated-storage\&quot;</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">"global.enabled=true"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">"global.tlsDisable=true"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">"global.platform=kubernetes"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">"server.ha.enabled=true"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">"server.ha.replicas=3"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">"server.ha.raft.enabled=true"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span><span class="s2">"server.ha.raft.setNodeId=true"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set-string<span class="w"> </span><span class="s2">"server.ha.raft.config=cluster_name = \"vault-integrated-storage\"</span>
 <span class="s2">ui = true</span>
-<span class="s2">listener \&quot;tcp\&quot; {</span>
-<span class="s2">  address = \&quot;[::]:8200\&quot;</span>
-<span class="s2">  cluster_address = \&quot;[::]:8201\&quot;</span>
+<span class="s2">listener \"tcp\" {</span>
+<span class="s2">  address = \"[::]:8200\"</span>
+<span class="s2">  cluster_address = \"[::]:8201\"</span>
 <span class="s2">}</span>
-<span class="s2">storage \&quot;raft\&quot; {</span>
-<span class="s2">  path = \&quot;/vault/data\&quot;</span>
+<span class="s2">storage \"raft\" {</span>
+<span class="s2">  path = \"/vault/data\"</span>
 <span class="s2">}</span>
 <span class="s2">disable_mlock = true</span>
-<span class="s2">service_registration \&quot;kubernetes\&quot; {}&quot;</span>
+<span class="s2">service_registration \"kubernetes\" {}"</span>
 </code></pre></div>
 <p>This command does the following:</p>
 <ul>
@@ -6064,7 +6064,7 @@ https://developer.hashicorp.com/vault/docs
 </li>
 <li>
 <p>Retrieve the Pod names where Vault is running:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span><span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>-l<span class="w"> </span>app.kubernetes.io/name<span class="o">=</span><span class="si">${</span><span class="nv">SERVICE</span><span class="si">}</span><span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{range .items[*]}{.metadata.name}{&quot;\n&quot;}{end}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span><span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>-l<span class="w"> </span>app.kubernetes.io/name<span class="o">=</span><span class="si">${</span><span class="nv">SERVICE</span><span class="si">}</span><span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{range .items[*]}{.metadata.name}{"\n"}{end}'</span>
 </code></pre></div>
 <details class="example">
 <summary>Sample output</summary>
@@ -6092,10 +6092,10 @@ vault-2
 <li>
 <p>Vault is started in a sealed state. In this state Vault can access the storage but it cannot decrypt data. In order to use Vault, you need to unseal it.</p>
 <p>Retrieve the unseal key from the file:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">unsealKey</span><span class="o">=</span><span class="k">$(</span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;.unseal_keys_b64[]&quot;</span><span class="w"> </span>&lt;<span class="w"> </span><span class="si">${</span><span class="nv">WORKDIR</span><span class="si">}</span>/vault-init<span class="k">)</span>
+<div class="highlight"><pre><span></span><code><span class="nv">unsealKey</span><span class="o">=</span><span class="k">$(</span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s2">".unseal_keys_b64[]"</span><span class="w"> </span>&lt;<span class="w"> </span><span class="si">${</span><span class="nv">WORKDIR</span><span class="si">}</span>/vault-init<span class="k">)</span>
 </code></pre></div>
 <p>Now, unseal the first Vault pod:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>pod/vault-0<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span><span class="w"> </span>--<span class="w"> </span>vault<span class="w"> </span>operator<span class="w"> </span>unseal<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$unsealKey</span><span class="s2">&quot;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>pod/vault-0<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span><span class="w"> </span>--<span class="w"> </span>vault<span class="w"> </span>operator<span class="w"> </span>unseal<span class="w"> </span><span class="s2">"</span><span class="nv">$unsealKey</span><span class="s2">"</span>
 </code></pre></div>
 <details class="example">
 <summary>Sample output</summary>
@@ -6118,9 +6118,9 @@ HA Enabled      true
 <li>
 <p>Add the remaining Pods to the Vault cluster. Run the following for loop:</p>
 <div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span>POD<span class="w"> </span><span class="k">in</span><span class="w"> </span>vault-1<span class="w"> </span>vault-2<span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">  </span>kubectl<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$NAMESPACE</span><span class="s2">&quot;</span><span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="nv">$POD</span><span class="w"> </span>--<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;</span>
+<span class="w">  </span>kubectl<span class="w"> </span>-n<span class="w"> </span><span class="s2">"</span><span class="nv">$NAMESPACE</span><span class="s2">"</span><span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="nv">$POD</span><span class="w"> </span>--<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'</span>
 <span class="s1">    vault operator raft join http://vault-0.vault-internal:8200</span>
-<span class="s1">  &#39;</span>
+<span class="s1">  '</span>
 <span class="k">done</span>
 </code></pre></div>
 <p>The command connects to each Vault Pod (<code>vault-1</code> and <code>vault-2</code>) and issues the <code>vault operator raft join</code> command, which:</p>
@@ -6141,9 +6141,9 @@ Leader Address          http://vault-0.vault-internal:8200
 <li>
 <p>Unseal the remaining Pods. Use this for loop:</p>
 <div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span>POD<span class="w"> </span><span class="k">in</span><span class="w"> </span>vault-1<span class="w"> </span>vault-2<span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">    </span>kubectl<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$NAMESPACE</span><span class="s2">&quot;</span><span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="nv">$POD</span><span class="w"> </span>--<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span>
-<span class="s2">        vault operator unseal \&quot;</span><span class="nv">$unsealKey</span><span class="s2">\&quot;</span>
-<span class="s2">    &quot;</span>
+<span class="w">    </span>kubectl<span class="w"> </span>-n<span class="w"> </span><span class="s2">"</span><span class="nv">$NAMESPACE</span><span class="s2">"</span><span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="nv">$POD</span><span class="w"> </span>--<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s2">"</span>
+<span class="s2">        vault operator unseal \"</span><span class="nv">$unsealKey</span><span class="s2">\"</span>
+<span class="s2">    "</span>
 <span class="k">done</span>
 </code></pre></div>
 <details class="example">
@@ -6170,7 +6170,7 @@ HA Enabled         true
 <ol>
 <li>
 <p>Extract the Vault root token from the file where you saved the init response output:</p>
-<div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="si">${</span><span class="nv">WORKDIR</span><span class="si">}</span>/vault-init<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;.root_token&quot;</span>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="si">${</span><span class="nv">WORKDIR</span><span class="si">}</span>/vault-init<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s2">".root_token"</span>
 </code></pre></div>
 <details class="example">
 <summary>Sample output</summary>
@@ -6214,34 +6214,34 @@ HA Enabled         true
 <ol>
 <li>
 <p>Create a policy for accessing the kv engine path and define the required permissions in the <code>capabilities</code> parameter:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$NAMESPACE</span><span class="s2">&quot;</span><span class="w"> </span><span class="nb">exec</span><span class="w"> </span>vault-0<span class="w"> </span>--<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span><span class="s2">"</span><span class="nv">$NAMESPACE</span><span class="s2">"</span><span class="w"> </span><span class="nb">exec</span><span class="w"> </span>vault-0<span class="w"> </span>--<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s2">"</span>
 <span class="s2">  vault policy write </span><span class="nv">$POLICY_NAME</span><span class="s2"> - &lt;&lt;EOF</span>
-<span class="s2">path \&quot;pxc-secret/data/*\&quot; {</span>
-<span class="s2">  capabilities = [\&quot;create\&quot;, \&quot;read\&quot;, \&quot;update\&quot;, \&quot;delete\&quot;, \&quot;list\&quot;]</span>
+<span class="s2">path \"pxc-secret/data/*\" {</span>
+<span class="s2">  capabilities = [\"create\", \"read\", \"update\", \"delete\", \"list\"]</span>
 <span class="s2">}</span>
-<span class="s2">path \&quot;pxc-secret/metadata/*\&quot; {</span>
-<span class="s2">  capabilities = [\&quot;create\&quot;, \&quot;read\&quot;, \&quot;update\&quot;, \&quot;delete\&quot;, \&quot;list\&quot;]</span>
+<span class="s2">path \"pxc-secret/metadata/*\" {</span>
+<span class="s2">  capabilities = [\"create\", \"read\", \"update\", \"delete\", \"list\"]</span>
 <span class="s2">}</span>
-<span class="s2">path \&quot;pxc-secret/*\&quot; {</span>
-<span class="s2">  capabilities = [\&quot;create\&quot;, \&quot;read\&quot;, \&quot;update\&quot;, \&quot;delete\&quot;, \&quot;list\&quot;]</span>
+<span class="s2">path \"pxc-secret/*\" {</span>
+<span class="s2">  capabilities = [\"create\", \"read\", \"update\", \"delete\", \"list\"]</span>
 <span class="s2">}</span>
 <span class="s2">EOF</span>
-<span class="s2">&quot;</span>
+<span class="s2">"</span>
 </code></pre></div>
 </li>
 <li>
 <p>Now create a token with a policy.</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">NAMESPACE</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="nb">exec</span><span class="w"> </span>pod/vault-0<span class="w"> </span>--<span class="w"> </span>vault<span class="w"> </span>token<span class="w"> </span>create<span class="w"> </span>-policy<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">POLICY_NAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>-format<span class="o">=</span>json<span class="w"> </span>&gt;<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">WORKDIR</span><span class="si">}</span><span class="s2">/vault-token.json&quot;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">NAMESPACE</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span><span class="nb">exec</span><span class="w"> </span>pod/vault-0<span class="w"> </span>--<span class="w"> </span>vault<span class="w"> </span>token<span class="w"> </span>create<span class="w"> </span>-policy<span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">POLICY_NAME</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>-format<span class="o">=</span>json<span class="w"> </span>&gt;<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">WORKDIR</span><span class="si">}</span><span class="s2">/vault-token.json"</span>
 </code></pre></div>
 </li>
 <li>
 <p>Export the non-root token as an environment variable:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">NEW_TOKEN</span><span class="o">=</span><span class="k">$(</span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.auth.client_token&#39;</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">WORKDIR</span><span class="si">}</span><span class="s2">/vault-token.json&quot;</span><span class="k">)</span>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">NEW_TOKEN</span><span class="o">=</span><span class="k">$(</span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">'.auth.client_token'</span><span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">WORKDIR</span><span class="si">}</span><span class="s2">/vault-token.json"</span><span class="k">)</span>
 </code></pre></div>
 </li>
 <li>
 <p>Verify the token:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;New Vault Token: </span><span class="nv">$NEW_TOKEN</span><span class="s2">&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">"New Vault Token: </span><span class="nv">$NEW_TOKEN</span><span class="s2">"</span>
 </code></pre></div>
 <details class="example">
 <summary>Sample output</summary>
@@ -6287,9 +6287,9 @@ HA Enabled         true
 <span class="nt">stringData</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">keyring_vault.conf</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
 <span class="w">    </span><span class="no">{</span>
-<span class="w">      </span><span class="no">&quot;token&quot;: &quot;hvs.CAESINO******************************************T2Y&quot;,</span>
-<span class="w">      </span><span class="no">&quot;vault_url&quot;: &quot;http://vault.vault.svc.cluster.local:8200&quot;,</span>
-<span class="w">      </span><span class="no">&quot;secret_mount_point&quot;: &quot;pxc-secret&quot;</span>
+<span class="w">      </span><span class="no">"token": "hvs.CAESINO******************************************T2Y",</span>
+<span class="w">      </span><span class="no">"vault_url": "http://vault.vault.svc.cluster.local:8200",</span>
+<span class="w">      </span><span class="no">"secret_mount_point": "pxc-secret"</span>
 <span class="w">    </span><span class="no">}</span>
 </code></pre></div>
 </div>
@@ -6304,7 +6304,7 @@ HA Enabled         true
 <li>
 <p>Export the namespace where the cluster is deployed and the secret name as environment variables:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">CLUSTER_NAMESPACE</span><span class="o">=</span>&lt;cluster-namespace&gt;
-<span class="nb">export</span><span class="w"> </span><span class="nv">SECRET_NAME_PXC</span><span class="o">=</span><span class="s2">&quot;keyring-secret-vault-84&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SECRET_NAME_PXC</span><span class="o">=</span><span class="s2">"keyring-secret-vault-84"</span>
 </code></pre></div>
 </li>
 <li>
@@ -6313,7 +6313,7 @@ HA Enabled         true
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>pxc<span class="w"> </span>cluster1<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--namespace<span class="w"> </span><span class="nv">$CLUSTER_NAMESPACE</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--type<span class="o">=</span>merge<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--patch<span class="w"> </span><span class="s2">&quot;{\&quot;spec\&quot;:{\&quot;vaultSecretName\&quot;:\&quot;</span><span class="si">${</span><span class="nv">SECRET_NAME_PXC</span><span class="si">}</span><span class="s2">\&quot;}}&quot;</span>
+<span class="w">  </span>--patch<span class="w"> </span><span class="s2">"{\"spec\":{\"vaultSecretName\":\"</span><span class="si">${</span><span class="nv">SECRET_NAME_PXC</span><span class="si">}</span><span class="s2">\"}}"</span>
 </code></pre></div>
 </li>
 </ol>
@@ -6323,8 +6323,8 @@ HA Enabled         true
 <ul>
 <li>turn it on for every table you create with the <code>ENCRYPTION='Y'</code> clause in your SQL statement. For example:</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="p">(</span><span class="n">c1</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">pk</span><span class="p">(</span><span class="n">c1</span><span class="p">))</span><span class="w"> </span><span class="n">ENCRYPTION</span><span class="o">=</span><span class="s1">&#39;Y&#39;</span><span class="p">;</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="n">DATAFILE</span><span class="w"> </span><span class="s1">&#39;foo.ibd&#39;</span><span class="w"> </span><span class="n">ENCRYPTION</span><span class="o">=</span><span class="s1">&#39;Y&#39;</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="p">(</span><span class="n">c1</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">pk</span><span class="p">(</span><span class="n">c1</span><span class="p">))</span><span class="w"> </span><span class="n">ENCRYPTION</span><span class="o">=</span><span class="s1">'Y'</span><span class="p">;</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="n">DATAFILE</span><span class="w"> </span><span class="s1">'foo.ibd'</span><span class="w"> </span><span class="n">ENCRYPTION</span><span class="o">=</span><span class="s1">'Y'</span><span class="p">;</span>
 </code></pre></div>
 <p>Existing tables will not be encrypted unless you specifically enable it via the <code>ALTER TABLE .... ENCRYPTION='Y';</code> statement.</p>
 <ul>
@@ -6455,6 +6455,10 @@ window.addEventListener('afterprint', (event) => {
         <script src="js/rating.js"></script>
       
         <script src="js/kapa.js"></script>
+      
+        <script src="js/posthog-search.js"></script>
+      
+        <script src="js/posthog-version.js"></script>
       
         <script src="js/open_in_new_tab.js"></script>
       

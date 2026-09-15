@@ -6156,7 +6156,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p>By default, the Operator generates user passwords using alphanumeric characters plus a set of special symbols. The password length is randomly chosen in the range of 16 to 20 characters.</p>
 <p>To ensure compatibility with tools that may not support certain special symbols or require a different password length, you can customize password generation using the <code>passwordGenerationOptions</code> subsection in the Custom Resource:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">passwordGenerationOptions</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">symbols</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;!#$%&amp;()*+,-.&lt;=&gt;?@[]^_{}~&quot;</span>
+<span class="w">  </span><span class="nt">symbols</span><span class="p">:</span><span class="w"> </span><span class="s">"!#$%&amp;()*+,-.&lt;=&gt;?@[]^_{}~"</span>
 <span class="w">  </span><span class="nt">maxLength</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
 <span class="w">  </span><span class="nt">minLength</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16</span>
 </code></pre></div>
@@ -6192,7 +6192,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </li>
 <li>
 <p>Create the user account:</p>
-<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="s1">&#39;user1&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="w"> </span><span class="n">IDENTIFIED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="s1">&#39;password1&#39;</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="s1">'user1'</span><span class="o">@</span><span class="s1">'%'</span><span class="w"> </span><span class="n">IDENTIFIED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="s1">'password1'</span><span class="p">;</span>
 </code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -6201,7 +6201,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </li>
 <li>
 <p>Grant privileges to the user:</p>
-<div class="highlight"><pre><span></span><code><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">PRIVILEGES</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">database1</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="s1">&#39;user1&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">PRIVILEGES</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">database1</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="s1">'user1'</span><span class="o">@</span><span class="s1">'%'</span><span class="p">;</span>
 </code></pre></div>
 </li>
 </ol>
@@ -6312,11 +6312,11 @@ configuration file.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">in Linux</label><label for="__tabbed_1_2">in macOS</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;new_password&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>--wrap<span class="o">=</span><span class="m">0</span>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">"new_password"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>--wrap<span class="o">=</span><span class="m">0</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;new_password&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">"new_password"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64
 </code></pre></div>
 </div>
 </div>
@@ -6327,11 +6327,11 @@ configuration file.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">in Linux</label><label for="__tabbed_2_2">in macOS</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>secret/cluster1-secrets<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{&quot;data&quot;:{&quot;root&quot;: &quot;&#39;</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span>new_password<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>--wrap<span class="o">=</span><span class="m">0</span><span class="k">)</span><span class="s1">&#39;&quot;}}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>secret/cluster1-secrets<span class="w"> </span>-p<span class="w"> </span><span class="s1">'{"data":{"root": "'</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span>new_password<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>--wrap<span class="o">=</span><span class="m">0</span><span class="k">)</span><span class="s1">'"}}'</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>secret/cluster1-secrets<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{&quot;data&quot;:{&quot;root&quot;: &quot;&#39;</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span>new_password<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="k">)</span><span class="s1">&#39;&quot;}}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>secret/cluster1-secrets<span class="w"> </span>-p<span class="w"> </span><span class="s1">'{"data":{"root": "'</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span>new_password<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="k">)</span><span class="s1">'"}}'</span>
 </code></pre></div>
 </div>
 </div>
@@ -6504,6 +6504,10 @@ window.addEventListener('afterprint', (event) => {
         <script src="js/rating.js"></script>
       
         <script src="js/kapa.js"></script>
+      
+        <script src="js/posthog-search.js"></script>
+      
+        <script src="js/posthog-version.js"></script>
       
         <script src="js/open_in_new_tab.js"></script>
       

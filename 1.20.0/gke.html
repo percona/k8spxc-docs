@@ -5969,7 +5969,7 @@ The Secrets object you are interested in has the
     user.  Substitute the <code>&lt;namespace&gt;</code> placeholder with your
     value (and use the different Secrets object name instead
     of the <code>cluster1-secrets</code>, if needed):</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>cluster1-secrets<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>--template<span class="o">=</span><span class="s1">&#39;{{.data.root | base64decode}}{{&quot;\n&quot;}}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>cluster1-secrets<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>--template<span class="o">=</span><span class="s1">'{{.data.root | base64decode}}{{"\n"}}'</span>
 </code></pre></div>
 </li>
 <li>
@@ -5989,11 +5989,11 @@ The Secrets object you are interested in has the
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">with HAProxy (default)</label><label for="__tabbed_1_2">with ProxySQL</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>mysql<span class="w"> </span>-h<span class="w"> </span>cluster1-haproxy<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">&#39;&lt;root_password&gt;&#39;</span>
+<div class="highlight"><pre><span></span><code>mysql<span class="w"> </span>-h<span class="w"> </span>cluster1-haproxy<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">'&lt;root_password&gt;'</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>mysql<span class="w"> </span>-h<span class="w"> </span>cluster1-proxysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">&#39;&lt;root_password&gt;&#39;</span>
+<div class="highlight"><pre><span></span><code>mysql<span class="w"> </span>-h<span class="w"> </span>cluster1-proxysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">'&lt;root_password&gt;'</span>
 </code></pre></div>
 </div>
 </div>
@@ -6162,6 +6162,10 @@ window.addEventListener('afterprint', (event) => {
         <script src="js/rating.js"></script>
       
         <script src="js/kapa.js"></script>
+      
+        <script src="js/posthog-search.js"></script>
+      
+        <script src="js/posthog-version.js"></script>
       
         <script src="js/open_in_new_tab.js"></script>
       

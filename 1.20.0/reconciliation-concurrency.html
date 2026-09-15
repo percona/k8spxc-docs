@@ -5757,7 +5757,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <ol>
 <li>
 <p>Check the index of the <code>MAX_CONCURRENT_RECONCILES</code> environment variable using the following command:</p>
-<div class="highlight" data-prompt="$"><pre><span></span><code>kubectl get deployment percona-xtradb-cluster-operator -o jsonpath=&#39;{.spec.template.spec.containers[0].env[?(@.name==&quot;MAX_CONCURRENT_RECONCILES&quot;)].value}&#39;
+<div class="highlight" data-prompt="$"><pre><span></span><code>kubectl get deployment percona-xtradb-cluster-operator -o jsonpath='{.spec.template.spec.containers[0].env[?(@.name=="MAX_CONCURRENT_RECONCILES")].value}'
 </code></pre></div>
 <details class="example">
 <summary>Sample output</summary>
@@ -5768,19 +5768,19 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li>
 <p>To set a new value and verify it&rsquo;s been updated, run the following command:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>deployment<span class="w"> </span>percona-xtradb-cluster-operator<span class="w"> </span><span class="se">\</span>
---type<span class="o">=</span><span class="s1">&#39;strategic&#39;</span><span class="w"> </span><span class="se">\</span>
+--type<span class="o">=</span><span class="s1">'strategic'</span><span class="w"> </span><span class="se">\</span>
 -o<span class="w"> </span>yaml<span class="w"> </span><span class="se">\</span>
--p<span class="o">=</span><span class="s1">&#39;{</span>
-<span class="s1">    &quot;spec&quot;: {</span>
-<span class="s1">        &quot;template&quot;: {</span>
-<span class="s1">            &quot;spec&quot;: {</span>
-<span class="s1">                &quot;containers&quot;: [</span>
+-p<span class="o">=</span><span class="s1">'{</span>
+<span class="s1">    "spec": {</span>
+<span class="s1">        "template": {</span>
+<span class="s1">            "spec": {</span>
+<span class="s1">                "containers": [</span>
 <span class="s1">                    {</span>
-<span class="s1">                        &quot;name&quot;: &quot;percona-xtradb-cluster-operator&quot;,</span>
-<span class="s1">                        &quot;env&quot;: [</span>
+<span class="s1">                        "name": "percona-xtradb-cluster-operator",</span>
+<span class="s1">                        "env": [</span>
 <span class="s1">                            {</span>
-<span class="s1">                                &quot;name&quot;: &quot;MAX_CONCURRENT_RECONCILES&quot;,</span>
-<span class="s1">                                &quot;value&quot;: &quot;2&quot;</span>
+<span class="s1">                                "name": "MAX_CONCURRENT_RECONCILES",</span>
+<span class="s1">                                "value": "2"</span>
 <span class="s1">                            }</span>
 <span class="s1">                        ]</span>
 <span class="s1">                    }</span>
@@ -5788,8 +5788,8 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <span class="s1">            }</span>
 <span class="s1">        }</span>
 <span class="s1">    }</span>
-<span class="s1">}&#39;</span><span class="se">\</span>
--o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.spec.template.spec.containers[0].env[?(@.name==&quot;MAX_CONCURRENT_RECONCILES&quot;)].value}&#39;</span>
+<span class="s1">}'</span><span class="se">\</span>
+-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.spec.template.spec.containers[0].env[?(@.name=="MAX_CONCURRENT_RECONCILES")].value}'</span>
 </code></pre></div>
 </li>
 </ol>
@@ -5920,6 +5920,10 @@ window.addEventListener('afterprint', (event) => {
         <script src="js/rating.js"></script>
       
         <script src="js/kapa.js"></script>
+      
+        <script src="js/posthog-search.js"></script>
+      
+        <script src="js/posthog-version.js"></script>
       
         <script src="js/open_in_new_tab.js"></script>
       

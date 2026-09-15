@@ -5681,13 +5681,13 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <details class="example" open="open">
 <summary>Expected output</summary>
 <div class="no-copy highlight"><pre><span></span><code>LAST SEEN   TYPE      REASON                   OBJECT                                                                   MESSAGE
-38m         Normal    Provisioning             persistentvolumeclaim/xb-cron-pxc-pxc-backup-stora-202211231300-3qf7g    External provisioner is provisioning volume for claim &quot;default/xb-cron-pxc-pxc-backup-stora-202211231300-3qf7g&quot;
+38m         Normal    Provisioning             persistentvolumeclaim/xb-cron-pxc-pxc-backup-stora-202211231300-3qf7g    External provisioner is provisioning volume for claim "default/xb-cron-pxc-pxc-backup-stora-202211231300-3qf7g"
 ...
 </code></pre></div>
 </details>
 <p>Events capture many information happening at Kubernetes level and provide valuable information. By default, the ordering of events cannot be guaranteed.
 Use the following command to sort the output in a reverse chronological fashion.</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>events<span class="w"> </span>--sort-by<span class="o">=</span><span class="s2">&quot;.lastTimestamp&quot;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>events<span class="w"> </span>--sort-by<span class="o">=</span><span class="s2">".lastTimestamp"</span>
 </code></pre></div>
 <details class="example" open="open">
 <summary>Expected output</summary>
@@ -5707,26 +5707,26 @@ Use the following command to sort the output in a reverse chronological fashion.
 <div class="no-copy highlight"><pre><span></span><code>apiVersion: v1
 count: 2
 eventTime: null
-firstTimestamp: &quot;2022-11-24T05:30:00Z&quot;
+firstTimestamp: "2022-11-24T05:30:00Z"
 involvedObject:
  apiVersion: v1
  kind: Pod
  name: xb-cron-pxc-pxc-backup-stora-202211245300-3qf7g-bpm5s
  namespace: default
- resourceVersion: &quot;41813970&quot;
+ resourceVersion: "41813970"
  uid: c2463e2a-65a0-4fc2-b5c3-86d88bba6b5b
 kind: Event
-lastTimestamp: &quot;2022-11-24T05:30:03Z&quot;
-message: &#39;0/6 nodes are available: 6 pod has unbound immediate PersistentVolumeClaims.&#39;
+lastTimestamp: "2022-11-24T05:30:03Z"
+message: '0/6 nodes are available: 6 pod has unbound immediate PersistentVolumeClaims.'
 metadata:
- creationTimestamp: &quot;2022-11-24T05:30:00Z&quot;
+ creationTimestamp: "2022-11-24T05:30:00Z"
  name: xb-cron-pxc-pxc-backup-stora-202211245300-3qf7g-bpm5s.172a6e3851f6710c
  namespace: default
- resourceVersion: &quot;94245&quot;
+ resourceVersion: "94245"
  uid: d56ea5b8-3b15-4a22-a6ea-a4f641fcc54e
 reason: FailedScheduling
-reportingComponent: &quot;&quot;
-reportingInstance: &quot;&quot;
+reportingComponent: ""
+reportingInstance: ""
 source:
  component: default-scheduler
 type: Warning
@@ -5743,7 +5743,7 @@ For example, the following command provides events of Pod only:</p>
 <summary>Expected output</summary>
 <div class="no-copy highlight"><pre><span></span><code>LAST SEEN   TYPE      REASON                   OBJECT                                                      MESSAGE
 53m         Warning   FailedScheduling         pod/xb-cron-pxc-pxc-backup-stora-202211245300-3qf7g-bpm5s   0/6 nodes are available: 6 pod has unbound immediate PersistentVolumeClaims.
-53m         Normal    NotTriggerScaleUp        pod/xb-cron-pxc-pxc-backup-stora-202211245300-3qf7g-bpm5s   pod didn&#39;t trigger scale-up: 3 pod has unbound immediate PersistentVolumeClaims
+53m         Normal    NotTriggerScaleUp        pod/xb-cron-pxc-pxc-backup-stora-202211245300-3qf7g-bpm5s   pod didn't trigger scale-up: 3 pod has unbound immediate PersistentVolumeClaims
 </code></pre></div>
 </details>
 <p>Same way you can query events for other Kubernetes object (StatefulSet, Custom Resource, etc.) to investigate any problems to them:</p>
@@ -5888,6 +5888,10 @@ window.addEventListener('afterprint', (event) => {
         <script src="js/rating.js"></script>
       
         <script src="js/kapa.js"></script>
+      
+        <script src="js/posthog-search.js"></script>
+      
+        <script src="js/posthog-version.js"></script>
       
         <script src="js/open_in_new_tab.js"></script>
       

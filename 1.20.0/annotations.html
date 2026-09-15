@@ -6113,7 +6113,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster1</span>
 <span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">percona.com/issue-vault-token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">    </span><span class="nt">percona.com/issue-vault-token</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 <span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 </code></pre></div>
@@ -6133,10 +6133,10 @@ perconaxtradbclusters.pxc.percona.com   2025-07-29T09:02:34Z   app.kubernetes.io
 </code></pre></div>
 </details>
 <p>To check <strong>annotations</strong> associated with an object, use the following command:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>&lt;resource&gt;<span class="w"> </span>&lt;resource-name&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.metadata.annotations}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>&lt;resource&gt;<span class="w"> </span>&lt;resource-name&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.metadata.annotations}'</span>
 </code></pre></div>
 <p>For example:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>cluster1-pxc-0<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.metadata.annotations}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>cluster1-pxc-0<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.metadata.annotations}'</span>
 </code></pre></div>
 <h2 id="specifying-labels-and-annotations-ignored-by-the-operator"><a name="annotations-ignore"></a>Specifying labels and annotations ignored by the Operator<a class="headerlink" href="#specifying-labels-and-annotations-ignored-by-the-operator" title="Permanent link">&para;</a></h2>
 <p>Sometimes various Kubernetes flavors can add their own annotations to the
@@ -6279,6 +6279,10 @@ window.addEventListener('afterprint', (event) => {
         <script src="js/rating.js"></script>
       
         <script src="js/kapa.js"></script>
+      
+        <script src="js/posthog-search.js"></script>
+      
+        <script src="js/posthog-version.js"></script>
       
         <script src="js/open_in_new_tab.js"></script>
       

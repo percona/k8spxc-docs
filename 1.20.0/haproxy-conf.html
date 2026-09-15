@@ -5989,14 +5989,14 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <h1 id="configuring-load-balancing-with-haproxy">Configuring Load Balancing with HAProxy<a class="headerlink" href="#configuring-load-balancing-with-haproxy" title="Permanent link">&para;</a></h1>
 <p>This page describes how to configure and customize HAProxy for your Percona XtraDB Cluster. For information about choosing between HAProxy and ProxySQL, see <a href="load-balancing.html">Configure load balancing</a>.</p>
 <p>Use the following command to enable HAProxy:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>pxc<span class="w"> </span>cluster1<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">  &quot;spec&quot;: {</span>
-<span class="s1">     &quot;haproxy&quot;: {</span>
-<span class="s1">        &quot;enabled&quot;: true,</span>
-<span class="s1">        &quot;size&quot;: 3,</span>
-<span class="s1">        &quot;image&quot;: &quot;percona/percona-xtradb-cluster-operator:1.20.0-haproxy&quot; },</span>
-<span class="s1">     &quot;proxysql&quot;: { &quot;enabled&quot;: false }</span>
-<span class="s1">  }}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>pxc<span class="w"> </span>cluster1<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">'{</span>
+<span class="s1">  "spec": {</span>
+<span class="s1">     "haproxy": {</span>
+<span class="s1">        "enabled": true,</span>
+<span class="s1">        "size": 3,</span>
+<span class="s1">        "image": "percona/percona-xtradb-cluster-operator:1.20.0-haproxy" },</span>
+<span class="s1">     "proxysql": { "enabled": false }</span>
+<span class="s1">  }}'</span>
 </code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -6287,7 +6287,7 @@ follows:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Similarly, you can read the list of options from a Base64 encoded string:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;IGdsb2JhbAogICBtYXhjb25uIDIwNDgKICAgZXh0ZXJuYWwtY2hlY2sKICAgc3RhdHMgc29ja2V0\</span>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">"IGdsb2JhbAogICBtYXhjb25uIDIwNDgKICAgZXh0ZXJuYWwtY2hlY2sKICAgc3RhdHMgc29ja2V0\</span>
 <span class="s2">  IC92YXIvcnVuL2hhcHJveHkuc29jayBtb2RlIDYwMCBleHBvc2UtZmQgbGlzdGVuZXJzIGxldmVs\</span>
 <span class="s2">  IHVzZXIKIGRlZmF1bHRzCiAgIGxvZyBnbG9iYWwKICAgbW9kZSB0Y3AKICAgcmV0cmllcyAxMAog\</span>
 <span class="s2">  ICB0aW1lb3V0IGNsaWVudCAxMDAwMAogICB0aW1lb3V0IGNvbm5lY3QgMTAwNTAwCiAgIHRpbWVv\</span>
@@ -6295,7 +6295,7 @@ follows:</p>
 <span class="s2">  LXByb3h5CiAgIGJpbmQgKjozMzA2CiAgIG1vZGUgdGNwCiAgIG9wdGlvbiBjbGl0Y3BrYQogICBk\</span>
 <span class="s2">  ZWZhdWx0X2JhY2tlbmQgZ2FsZXJhLW5vZGVzCiBmcm9udGVuZCBnYWxlcmEtcmVwbGljYS1pbgog\</span>
 <span class="s2">  ICBiaW5kICo6MzMwOSBhY2NlcHQtcHJveHkKICAgYmluZCAqOjMzMDcKICAgbW9kZSB0Y3AKICAg\</span>
-<span class="s2">  b3B0aW9uIGNsaXRjcGthCiAgIGRlZmF1bHRfYmFja2VuZCBnYWxlcmEtcmVwbGljYS1ub2Rlcwo=&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>--decode
+<span class="s2">  b3B0aW9uIGNsaXRjcGthCiAgIGRlZmF1bHRfYmFja2VuZCBnYWxlcmEtcmVwbGljYS1ub2Rlcwo="</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>--decode
 </code></pre></div>
 </div>
 <p>Finally, use a yaml file to create the Secret object. For example, you can
@@ -6305,7 +6305,7 @@ create a <code>deploy/my-haproxy-secret.yaml</code> file with the following cont
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster1-haproxy</span>
 <span class="nt">data</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">haproxy.cfg</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;IGdsb2JhbAogICBtYXhjb25uIDIwNDgKICAgZXh0ZXJuYWwtY2hlY2sKICAgc3RhdHMgc29ja2V0\</span>
+<span class="w">  </span><span class="nt">haproxy.cfg</span><span class="p">:</span><span class="w"> </span><span class="s">"IGdsb2JhbAogICBtYXhjb25uIDIwNDgKICAgZXh0ZXJuYWwtY2hlY2sKICAgc3RhdHMgc29ja2V0\</span>
 <span class="w">     </span><span class="s">IC92YXIvcnVuL2hhcHJveHkuc29jayBtb2RlIDYwMCBleHBvc2UtZmQgbGlzdGVuZXJzIGxldmVs\</span>
 <span class="w">     </span><span class="s">IHVzZXIKIGRlZmF1bHRzCiAgIGxvZyBnbG9iYWwKICAgbW9kZSB0Y3AKICAgcmV0cmllcyAxMAog\</span>
 <span class="w">     </span><span class="s">ICB0aW1lb3V0IGNsaWVudCAxMDAwMAogICB0aW1lb3V0IGNvbm5lY3QgMTAwNTAwCiAgIHRpbWVv\</span>
@@ -6313,7 +6313,7 @@ create a <code>deploy/my-haproxy-secret.yaml</code> file with the following cont
 <span class="w">     </span><span class="s">LXByb3h5CiAgIGJpbmQgKjozMzA2CiAgIG1vZGUgdGNwCiAgIG9wdGlvbiBjbGl0Y3BrYQogICBk\</span>
 <span class="w">     </span><span class="s">ZWZhdWx0X2JhY2tlbmQgZ2FsZXJhLW5vZGVzCiBmcm9udGVuZCBnYWxlcmEtcmVwbGljYS1pbgog\</span>
 <span class="w">     </span><span class="s">ICBiaW5kICo6MzMwOSBhY2NlcHQtcHJveHkKICAgYmluZCAqOjMzMDcKICAgbW9kZSB0Y3AKICAg\</span>
-<span class="w">     </span><span class="s">b3B0aW9uIGNsaXRjcGthCiAgIGRlZmF1bHRfYmFja2VuZCBnYWxlcmEtcmVwbGljYS1ub2Rlcwo=&quot;</span>
+<span class="w">     </span><span class="s">b3B0aW9uIGNsaXRjcGthCiAgIGRlZmF1bHRfYmFja2VuZCBnYWxlcmEtcmVwbGljYS1ub2Rlcwo="</span>
 </code></pre></div>
 <p>When ready, apply it with the following command:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>deploy/my-haproxy-secret.yaml
@@ -6459,6 +6459,10 @@ window.addEventListener('afterprint', (event) => {
         <script src="js/rating.js"></script>
       
         <script src="js/kapa.js"></script>
+      
+        <script src="js/posthog-search.js"></script>
+      
+        <script src="js/posthog-version.js"></script>
       
         <script src="js/open_in_new_tab.js"></script>
       

@@ -6010,7 +6010,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>pxc<span class="w"> </span>cluster1<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--type<span class="w"> </span>merge<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-p<span class="w"> </span><span class="s1">&#39;{&quot;spec&quot;:{&quot;backup&quot;:{&quot;pitr&quot;:{&quot;enabled&quot;:false}}}}&#39;</span>
+<span class="w">  </span>-p<span class="w"> </span><span class="s1">'{"spec":{"backup":{"pitr":{"enabled":false}}}}'</span>
 </code></pre></div>
 </li>
 </ol>
@@ -6046,13 +6046,13 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <div class="tabbed-block">
 <p>You can skip creating a separate file by passing YAML content directly:</p>
 <div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | kubectl apply -f-</span>
-<span class="s">apiVersion: &quot;pxc.percona.com/v1&quot;</span>
-<span class="s">kind: &quot;PerconaXtraDBClusterRestore&quot;</span>
+<span class="s">apiVersion: "pxc.percona.com/v1"</span>
+<span class="s">kind: "PerconaXtraDBClusterRestore"</span>
 <span class="s">metadata:</span>
-<span class="s">  name: &quot;restore1&quot;</span>
+<span class="s">  name: "restore1"</span>
 <span class="s">spec:</span>
-<span class="s">  pxcCluster: &quot;cluster1&quot;</span>
-<span class="s">  backupName: &quot;backup1&quot;</span>
+<span class="s">  pxcCluster: "cluster1"</span>
+<span class="s">  backupName: "backup1"</span>
 <span class="s">EOF</span>
 </code></pre></div>
 </div>
@@ -6073,7 +6073,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p class="admonition-title">Note</p>
 <p><a name="backups-headless-service"> If you need a <a href="https://kubernetes.io/docs/concepts/services-networking/service/#headless-services">headless Service <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> for the restore Pod (i.e. restoring from a Persistent Volume in a tenant network), mention this in the <code>metadata.annotations</code> as follows:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">annotations</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">percona.com/headless-service</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">  </span><span class="nt">percona.com/headless-service</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 <span class="nn">...</span>
 </code></pre></div>
 </div>
@@ -6084,7 +6084,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <ol>
 <li>
 <p>Check a time to restore for a backup. Use the command below to find the latest restorable timestamp:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>get<span class="w"> </span>pxc-backup<span class="w"> </span>&lt;backup_name&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.latestRestorableTime}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>get<span class="w"> </span>pxc-backup<span class="w"> </span>&lt;backup_name&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.latestRestorableTime}'</span>
 </code></pre></div>
 </li>
 <li>
@@ -6142,7 +6142,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <span class="w">  </span><span class="nt">backupName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">backup1</span>
 <span class="w">  </span><span class="nt">pitr</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">date</span>
-<span class="w">    </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2020-12-31</span><span class="nv"> </span><span class="s">09:37:13&quot;</span>
+<span class="w">    </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="s">"2020-12-31</span><span class="nv"> </span><span class="s">09:37:13"</span>
 <span class="w">    </span><span class="nt">backupSource</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">storageName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3-us-west</span>
 </code></pre></div>
@@ -6157,18 +6157,18 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <div class="tabbed-block">
 <p>You can skip editing the YAML file and pass its contents to the Operator via the command line. For example:</p>
 <div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | kubectl apply -f-</span>
-<span class="s">apiVersion: &quot;pxc.percona.com/v1&quot;</span>
-<span class="s">kind: &quot;PerconaXtraDBClusterRestore&quot;</span>
+<span class="s">apiVersion: "pxc.percona.com/v1"</span>
+<span class="s">kind: "PerconaXtraDBClusterRestore"</span>
 <span class="s">metadata:</span>
-<span class="s">  name: &quot;restore1&quot;</span>
+<span class="s">  name: "restore1"</span>
 <span class="s">spec:</span>
-<span class="s">  pxcCluster: &quot;cluster1&quot;</span>
-<span class="s">  backupName: &quot;backup1&quot;</span>
+<span class="s">  pxcCluster: "cluster1"</span>
+<span class="s">  backupName: "backup1"</span>
 <span class="s">  pitr:</span>
 <span class="s">    type: date</span>
-<span class="s">    date: &quot;2020-12-31 09:37:13&quot;</span>
+<span class="s">    date: "2020-12-31 09:37:13"</span>
 <span class="s">    backupSource:</span>
-<span class="s">      storageName: &quot;s3-us-west&quot;</span>
+<span class="s">      storageName: "s3-us-west"</span>
 <span class="s">EOF</span>
 </code></pre></div>
 </div>
@@ -6193,17 +6193,17 @@ condition looks as follows:</p>
 <span class="w">  </span><span class="nt">pxcCluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pitr</span>
 <span class="w">  </span><span class="nt">storageName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio</span>
 <span class="nt">status</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">completed</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2022-11-25T15:57:29Z&quot;</span>
+<span class="w">  </span><span class="nt">completed</span><span class="p">:</span><span class="w"> </span><span class="s">"2022-11-25T15:57:29Z"</span>
 <span class="w">  </span><span class="nt">conditions</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">lastTransitionTime</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2022-11-25T15:57:48Z&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">lastTransitionTime</span><span class="p">:</span><span class="w"> </span><span class="s">"2022-11-25T15:57:48Z"</span>
 <span class="w">    </span><span class="nt">message</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Binlog with GTID set e41eb219-6cd8-11ed-94c8-9ebf697d3d20:21-22 not found</span>
 <span class="w">    </span><span class="nt">reason</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">BinlogGapDetected</span>
-<span class="w">    </span><span class="nt">status</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;False&quot;</span>
+<span class="w">    </span><span class="nt">status</span><span class="p">:</span><span class="w"> </span><span class="s">"False"</span>
 <span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PITRReady</span>
 <span class="w">  </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Succeeded</span>
 </code></pre></div>
 <p>Trying a point-in-time restore from such backup (with the condition value &ldquo;False&rdquo;) results in the following error: </p>
-<div class="highlight"><pre><span></span><code>Backup doesn&#39;t guarantee consistent recovery with PITR. Annotate PerconaXtraDBClusterRestore with percona.com/unsafe-pitr to force it.
+<div class="highlight"><pre><span></span><code>Backup doesn't guarantee consistent recovery with PITR. Annotate PerconaXtraDBClusterRestore with percona.com/unsafe-pitr to force it.
 </code></pre></div>
 <p>You can bypass this check and force the restore by annotating it with
 <code>pxc.percona.com/unsafe-pitr</code> as follows:</p>
@@ -6211,7 +6211,7 @@ condition looks as follows:</p>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PerconaXtraDBClusterRestore</span>
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">percona.com/unsafe-pitr</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">    </span><span class="nt">percona.com/unsafe-pitr</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">restore2</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">pxcCluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pitr</span>
@@ -6219,7 +6219,7 @@ condition looks as follows:</p>
 <span class="w">  </span><span class="nt">pitr</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">latest</span>
 <span class="w">    </span><span class="nt">backupSource</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">storageName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;minio-binlogs&quot;</span>
+<span class="w">      </span><span class="nt">storageName</span><span class="p">:</span><span class="w"> </span><span class="s">"minio-binlogs"</span>
 </code></pre></div>
 <h2 id="restore-the-cluster-when-backup-has-different-passwords">Restore the cluster when backup has different passwords<a class="headerlink" href="#restore-the-cluster-when-backup-has-different-passwords" title="Permanent link">&para;</a></h2>
 <p>User passwords on the target cluster may have changed and now differ from the ones in a backup.</p>
@@ -6262,27 +6262,27 @@ your own with the latest passwords as follows.</p>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | base64 --wrap=0</span>
-<span class="s">ALTER USER &#39;root&#39;@&#39;%&#39; IDENTIFIED BY &#39;&lt;latestPass&gt;&#39;;</span>
-<span class="s">ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;&lt;latestPass&gt;&#39;;</span>
-<span class="s">ALTER USER &#39;operator&#39;@&#39;%&#39; IDENTIFIED BY &#39;&lt;latestPass&gt;&#39;;</span>
-<span class="s">ALTER USER &#39;monitor&#39;@&#39;%&#39; IDENTIFIED BY &#39;&lt;latestPass&gt;&#39;;</span>
-<span class="s">ALTER USER &#39;clustercheck&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;&lt;latestPass&gt;&#39;;</span>
-<span class="s">ALTER USER &#39;xtrabackup&#39;@&#39;%&#39; IDENTIFIED BY &#39;&lt;latestPass&gt;&#39;;</span>
-<span class="s">ALTER USER &#39;xtrabackup&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;&lt;latestPass&gt;&#39;;</span>
-<span class="s">ALTER USER &#39;replication&#39;@&#39;%&#39; IDENTIFIED BY &#39;&lt;latestPass&gt;&#39;;</span>
+<span class="s">ALTER USER 'root'@'%' IDENTIFIED BY '&lt;latestPass&gt;';</span>
+<span class="s">ALTER USER 'root'@'localhost' IDENTIFIED BY '&lt;latestPass&gt;';</span>
+<span class="s">ALTER USER 'operator'@'%' IDENTIFIED BY '&lt;latestPass&gt;';</span>
+<span class="s">ALTER USER 'monitor'@'%' IDENTIFIED BY '&lt;latestPass&gt;';</span>
+<span class="s">ALTER USER 'clustercheck'@'localhost' IDENTIFIED BY '&lt;latestPass&gt;';</span>
+<span class="s">ALTER USER 'xtrabackup'@'%' IDENTIFIED BY '&lt;latestPass&gt;';</span>
+<span class="s">ALTER USER 'xtrabackup'@'localhost' IDENTIFIED BY '&lt;latestPass&gt;';</span>
+<span class="s">ALTER USER 'replication'@'%' IDENTIFIED BY '&lt;latestPass&gt;';</span>
 <span class="s">EOF</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | base64</span>
-<span class="s">ALTER USER &#39;root&#39;@&#39;%&#39; IDENTIFIED BY &#39;&lt;latestPass&gt;&#39;;</span>
-<span class="s">ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;&lt;latestPass&gt;&#39;;</span>
-<span class="s">ALTER USER &#39;operator&#39;@&#39;%&#39; IDENTIFIED BY &#39;&lt;latestPass&gt;&#39;;</span>
-<span class="s">ALTER USER &#39;monitor&#39;@&#39;%&#39; IDENTIFIED BY &#39;&lt;latestPass&gt;&#39;;</span>
-<span class="s">ALTER USER &#39;clustercheck&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;&lt;latestPass&gt;&#39;;</span>
-<span class="s">ALTER USER &#39;xtrabackup&#39;@&#39;%&#39; IDENTIFIED BY &#39;&lt;latestPass&gt;&#39;;</span>
-<span class="s">ALTER USER &#39;xtrabackup&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;&lt;latestPass&gt;&#39;;</span>
-<span class="s">ALTER USER &#39;replication&#39;@&#39;%&#39; IDENTIFIED BY &#39;&lt;latestPass&gt;&#39;;</span>
+<span class="s">ALTER USER 'root'@'%' IDENTIFIED BY '&lt;latestPass&gt;';</span>
+<span class="s">ALTER USER 'root'@'localhost' IDENTIFIED BY '&lt;latestPass&gt;';</span>
+<span class="s">ALTER USER 'operator'@'%' IDENTIFIED BY '&lt;latestPass&gt;';</span>
+<span class="s">ALTER USER 'monitor'@'%' IDENTIFIED BY '&lt;latestPass&gt;';</span>
+<span class="s">ALTER USER 'clustercheck'@'localhost' IDENTIFIED BY '&lt;latestPass&gt;';</span>
+<span class="s">ALTER USER 'xtrabackup'@'%' IDENTIFIED BY '&lt;latestPass&gt;';</span>
+<span class="s">ALTER USER 'xtrabackup'@'localhost' IDENTIFIED BY '&lt;latestPass&gt;';</span>
+<span class="s">ALTER USER 'replication'@'%' IDENTIFIED BY '&lt;latestPass&gt;';</span>
 <span class="s">EOF</span>
 </code></pre></div>
 </div>
@@ -6420,6 +6420,10 @@ window.addEventListener('afterprint', (event) => {
         <script src="js/rating.js"></script>
       
         <script src="js/kapa.js"></script>
+      
+        <script src="js/posthog-search.js"></script>
+      
+        <script src="js/posthog-version.js"></script>
       
         <script src="js/open_in_new_tab.js"></script>
       

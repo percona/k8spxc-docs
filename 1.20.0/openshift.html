@@ -6170,11 +6170,11 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p>Setting the Custom Resource Definition requires your user to have cluster-admin privileges.</p>
 </div>
 <p>If you want to manage your Percona XtraDB Cluster with a non-privileged user, grant the necessary permissions by applying the following cluster role:</p>
-<div class="highlight"><pre><span></span><code>oc<span class="w"> </span>create<span class="w"> </span>clusterrole<span class="w"> </span>pxc-admin<span class="w"> </span>--verb<span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="w"> </span>--resource<span class="o">=</span>perconaxtradbclusters.pxc.percona.com,perconaxtradbclusters.pxc.percona.com/status,perconaxtradbclusterbackups.pxc.percona.com,perconaxtradbclusterbackups.pxc.percona.com/status,perconaxtradbclusterrestores.pxc.percona.com,perconaxtradbclusterrestores.pxc.percona.com/status
+<div class="highlight"><pre><span></span><code>oc<span class="w"> </span>create<span class="w"> </span>clusterrole<span class="w"> </span>pxc-admin<span class="w"> </span>--verb<span class="o">=</span><span class="s2">"*"</span><span class="w"> </span>--resource<span class="o">=</span>perconaxtradbclusters.pxc.percona.com,perconaxtradbclusters.pxc.percona.com/status,perconaxtradbclusterbackups.pxc.percona.com,perconaxtradbclusterbackups.pxc.percona.com/status,perconaxtradbclusterrestores.pxc.percona.com,perconaxtradbclusterrestores.pxc.percona.com/status
 oc<span class="w"> </span>adm<span class="w"> </span>policy<span class="w"> </span>add-cluster-role-to-user<span class="w"> </span>pxc-admin<span class="w"> </span>&lt;some-user&gt;
 </code></pre></div>
 <p>If you have <a href="https://docs.cert-manager.io/en/release-0.8/getting-started/install/openshift.html">cert-manager <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> installed, run these commands to manage certificates with a non-privileged user:</p>
-<div class="highlight"><pre><span></span><code>oc<span class="w"> </span>create<span class="w"> </span>clusterrole<span class="w"> </span>cert-admin<span class="w"> </span>--verb<span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="w"> </span>--resource<span class="o">=</span>issuers.certmanager.k8s.io,certificates.certmanager.k8s.io
+<div class="highlight"><pre><span></span><code>oc<span class="w"> </span>create<span class="w"> </span>clusterrole<span class="w"> </span>cert-admin<span class="w"> </span>--verb<span class="o">=</span><span class="s2">"*"</span><span class="w"> </span>--resource<span class="o">=</span>issuers.certmanager.k8s.io,certificates.certmanager.k8s.io
 oc<span class="w"> </span>adm<span class="w"> </span>policy<span class="w"> </span>add-cluster-role-to-user<span class="w"> </span>cert-admin<span class="w"> </span>&lt;some-user&gt;
 </code></pre></div>
 </li>
@@ -6289,7 +6289,7 @@ The Secrets object you are interested in has the
     user.  Substitute the <code>&lt;namespace&gt;</code> placeholder with your
     value (and use the different Secrets object name instead
     of the <code>cluster1-secrets</code>, if needed):</p>
-<div class="highlight"><pre><span></span><code>oc<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>cluster1-secrets<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>--template<span class="o">=</span><span class="s1">&#39;{{.data.root | base64decode}}{{&quot;\n&quot;}}&#39;</span>
+<div class="highlight"><pre><span></span><code>oc<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>cluster1-secrets<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>--template<span class="o">=</span><span class="s1">'{{.data.root | base64decode}}{{"\n"}}'</span>
 </code></pre></div>
 </li>
 <li>
@@ -6309,11 +6309,11 @@ The Secrets object you are interested in has the
 <div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">with HAProxy (default)</label><label for="__tabbed_2_2">with ProxySQL</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>mysql<span class="w"> </span>-h<span class="w"> </span>cluster1-haproxy<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">&#39;&lt;root_password&gt;&#39;</span>
+<div class="highlight"><pre><span></span><code>mysql<span class="w"> </span>-h<span class="w"> </span>cluster1-haproxy<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">'&lt;root_password&gt;'</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>mysql<span class="w"> </span>-h<span class="w"> </span>cluster1-proxysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">&#39;&lt;root_password&gt;&#39;</span>
+<div class="highlight"><pre><span></span><code>mysql<span class="w"> </span>-h<span class="w"> </span>cluster1-proxysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">'&lt;root_password&gt;'</span>
 </code></pre></div>
 </div>
 </div>
@@ -6434,6 +6434,10 @@ window.addEventListener('afterprint', (event) => {
         <script src="js/rating.js"></script>
       
         <script src="js/kapa.js"></script>
+      
+        <script src="js/posthog-search.js"></script>
+      
+        <script src="js/posthog-version.js"></script>
       
         <script src="js/open_in_new_tab.js"></script>
       

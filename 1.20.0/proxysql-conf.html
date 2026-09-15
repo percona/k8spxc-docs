@@ -6060,18 +6060,18 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <span class="w">  </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
 <span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">percona/percona-xtradb-cluster-operator:1.20.0-proxysql</span>
 <span class="w">  </span><span class="nt">configuration</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<span class="w">    </span><span class="no">datadir=&quot;/var/lib/proxysql&quot;</span>
+<span class="w">    </span><span class="no">datadir="/var/lib/proxysql"</span>
 
 <span class="w">    </span><span class="no">admin_variables =</span>
 <span class="w">    </span><span class="no">{</span>
-<span class="w">        </span><span class="no">admin_credentials=&quot;admin:admin&quot;</span>
-<span class="w">        </span><span class="no">mysql_ifaces=&quot;0.0.0.0:6032&quot;</span>
+<span class="w">        </span><span class="no">admin_credentials="admin:admin"</span>
+<span class="w">        </span><span class="no">mysql_ifaces="0.0.0.0:6032"</span>
 <span class="w">        </span><span class="no">refresh_interval=2000</span>
 <span class="w">        </span><span class="no">restapi_enabled=true</span>
 <span class="w">        </span><span class="no">restapi_port=6070</span>
 
-<span class="w">        </span><span class="no">cluster_username=&quot;admin&quot;</span>
-<span class="w">        </span><span class="no">cluster_password=&quot;admin&quot;</span>
+<span class="w">        </span><span class="no">cluster_username="admin"</span>
+<span class="w">        </span><span class="no">cluster_password="admin"</span>
 <span class="w">        </span><span class="no">checksum_admin_variables=false</span>
 <span class="w">        </span><span class="no">checksum_ldap_variables=false</span>
 <span class="w">        </span><span class="no">checksum_mysql_variables=false</span>
@@ -6089,15 +6089,15 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 
 <span class="w">    </span><span class="no">mysql_variables=</span>
 <span class="w">    </span><span class="no">{</span>
-<span class="w">        </span><span class="no">monitor_password=&quot;monitor&quot;</span>
+<span class="w">        </span><span class="no">monitor_password="monitor"</span>
 <span class="w">        </span><span class="no">monitor_galera_healthcheck_interval=1000</span>
 <span class="w">        </span><span class="no">threads=2</span>
 <span class="w">        </span><span class="no">max_connections=2048</span>
 <span class="w">        </span><span class="no">default_query_delay=0</span>
 <span class="w">        </span><span class="no">default_query_timeout=10000</span>
 <span class="w">        </span><span class="no">poll_timeout=2000</span>
-<span class="w">        </span><span class="no">interfaces=&quot;0.0.0.0:3306&quot;</span>
-<span class="w">        </span><span class="no">default_schema=&quot;information_schema&quot;</span>
+<span class="w">        </span><span class="no">interfaces="0.0.0.0:3306"</span>
+<span class="w">        </span><span class="no">default_schema="information_schema"</span>
 <span class="w">        </span><span class="no">stacksize=1048576</span>
 <span class="w">        </span><span class="no">connect_timeout_server=10000</span>
 <span class="w">        </span><span class="no">monitor_history=60000</span>
@@ -6107,11 +6107,11 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <span class="w">        </span><span class="no">commands_stats=true</span>
 <span class="w">        </span><span class="no">sessions_sort=true</span>
 <span class="w">        </span><span class="no">have_ssl=false</span>
-<span class="w">        </span><span class="no">ssl_p2s_ca=&quot;&quot;</span>
-<span class="w">        </span><span class="no">ssl_p2s_cert=&quot;&quot;</span>
-<span class="w">        </span><span class="no">ssl_p2s_key=&quot;&quot;</span>
-<span class="w">        </span><span class="no">ssl_p2s_cipher=&quot;ECDHE-RSA-AES128-GCM-SHA256&quot;</span>
-<span class="w">        </span><span class="no">default_authentication_plugin=&quot;caching_sha2_password&quot;</span>
+<span class="w">        </span><span class="no">ssl_p2s_ca=""</span>
+<span class="w">        </span><span class="no">ssl_p2s_cert=""</span>
+<span class="w">        </span><span class="no">ssl_p2s_key=""</span>
+<span class="w">        </span><span class="no">ssl_p2s_cipher="ECDHE-RSA-AES128-GCM-SHA256"</span>
+<span class="w">        </span><span class="no">default_authentication_plugin="caching_sha2_password"</span>
 <span class="w">    </span><span class="no">}</span>
 </code></pre></div>
 <h3 id="use-a-configmap">Use a ConfigMap<a class="headerlink" href="#use-a-configmap" title="Permanent link">&para;</a></h3>
@@ -6123,18 +6123,18 @@ ConfigMap <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox=
 <ol>
 <li>
 <p>Create a <code>proxysql.cnf</code> configuration file:</p>
-<div class="highlight"><pre><span></span><code>datadir=&quot;/var/lib/proxysql&quot;
+<div class="highlight"><pre><span></span><code>datadir="/var/lib/proxysql"
 
 admin_variables =
 {
-    admin_credentials=&quot;admin:admin&quot;
-    mysql_ifaces=&quot;0.0.0.0:6032&quot;
+    admin_credentials="admin:admin"
+    mysql_ifaces="0.0.0.0:6032"
     refresh_interval=2000
     restapi_enabled=true
     restapi_port=6070
 
-    cluster_username=&quot;admin&quot;
-    cluster_password=&quot;admin&quot;
+    cluster_username="admin"
+    cluster_password="admin"
     checksum_admin_variables=false
     checksum_ldap_variables=false
     checksum_mysql_variables=false
@@ -6152,15 +6152,15 @@ admin_variables =
 
 mysql_variables=
 {
-    monitor_password=&quot;monitor&quot;
+    monitor_password="monitor"
     monitor_galera_healthcheck_interval=1000
     threads=2
     max_connections=2048
     default_query_delay=0
     default_query_timeout=10000
     poll_timeout=2000
-    interfaces=&quot;0.0.0.0:3306&quot;
-    default_schema=&quot;information_schema&quot;
+    interfaces="0.0.0.0:3306"
+    default_schema="information_schema"
     stacksize=1048576
     connect_timeout_server=10000
     monitor_history=60000
@@ -6170,11 +6170,11 @@ mysql_variables=
     commands_stats=true
     sessions_sort=true
     have_ssl=false
-    ssl_p2s_ca=&quot;&quot;
-    ssl_p2s_cert=&quot;&quot;
-    ssl_p2s_key=&quot;&quot;
-    ssl_p2s_cipher=&quot;ECDHE-RSA-AES128-GCM-SHA256&quot;
-    default_authentication_plugin=&quot;caching_sha2_password&quot;
+    ssl_p2s_ca=""
+    ssl_p2s_cert=""
+    ssl_p2s_key=""
+    ssl_p2s_cipher="ECDHE-RSA-AES128-GCM-SHA256"
+    default_authentication_plugin="caching_sha2_password"
 }
 </code></pre></div>
 </li>
@@ -6206,18 +6206,18 @@ name and the <code>proxysql</code> suffix.</p>
 </li>
 <li>
 <p>Create a <code>proxysql.cnf</code> configuration file with your options:</p>
-<div class="highlight"><pre><span></span><code>datadir=&quot;/var/lib/proxysql&quot;
+<div class="highlight"><pre><span></span><code>datadir="/var/lib/proxysql"
 
 admin_variables =
 {
-    admin_credentials=&quot;admin:admin&quot;
-    mysql_ifaces=&quot;0.0.0.0:6032&quot;
+    admin_credentials="admin:admin"
+    mysql_ifaces="0.0.0.0:6032"
     refresh_interval=2000
     restapi_enabled=true
     restapi_port=6070
 
-    cluster_username=&quot;admin&quot;
-    cluster_password=&quot;admin&quot;
+    cluster_username="admin"
+    cluster_password="admin"
     checksum_admin_variables=false
     checksum_ldap_variables=false
     checksum_mysql_variables=false
@@ -6235,15 +6235,15 @@ admin_variables =
 
 mysql_variables=
 {
-    monitor_password=&quot;monitor&quot;
+    monitor_password="monitor"
     monitor_galera_healthcheck_interval=1000
     threads=2
     max_connections=2048
     default_query_delay=0
     default_query_timeout=10000
     poll_timeout=2000
-    interfaces=&quot;0.0.0.0:3306&quot;
-    default_schema=&quot;information_schema&quot;
+    interfaces="0.0.0.0:3306"
+    default_schema="information_schema"
     stacksize=1048576
     connect_timeout_server=10000
     monitor_history=60000
@@ -6253,11 +6253,11 @@ mysql_variables=
     commands_stats=true
     sessions_sort=true
     have_ssl=false
-    ssl_p2s_ca=&quot;&quot;
-    ssl_p2s_cert=&quot;&quot;
-    ssl_p2s_key=&quot;&quot;
-    ssl_p2s_cipher=&quot;ECDHE-RSA-AES128-GCM-SHA256&quot;
-    default_authentication_plugin=&quot;caching_sha2_password&quot;
+    ssl_p2s_ca=""
+    ssl_p2s_cert=""
+    ssl_p2s_key=""
+    ssl_p2s_cipher="ECDHE-RSA-AES128-GCM-SHA256"
+    default_authentication_plugin="caching_sha2_password"
 }
 </code></pre></div>
 </li>
@@ -6283,7 +6283,7 @@ mysql_variables=
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster1-proxysql</span>
 <span class="nt">data</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">proxysql.cnf</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ZGF0YWRpcj0iL3Zhci9saWIvcHJveHlzcWwiCgphZG1pbl92YXJpYWJsZXMgPQp7CiBhZG1pbl9j\</span>
+<span class="w">    </span><span class="nt">proxysql.cnf</span><span class="p">:</span><span class="w"> </span><span class="s">"ZGF0YWRpcj0iL3Zhci9saWIvcHJveHlzcWwiCgphZG1pbl92YXJpYWJsZXMgPQp7CiBhZG1pbl9j\</span>
 <span class="w">     </span><span class="s">cmVkZW50aWFscz0icHJveHlhZG1pbjphZG1pbl9wYXNzd29yZCIKIG15c3FsX2lmYWNlcz0iMC4w\</span>
 <span class="w">     </span><span class="s">LjAuMDo2MDMyIgogcmVmcmVzaF9pbnRlcnZhbD0yMDAwCgogY2x1c3Rlcl91c2VybmFtZT0icHJv\</span>
 <span class="w">     </span><span class="s">eHlhZG1pbiIKIGNsdXN0ZXJfcGFzc3dvcmQ9ImFkbWluX3Bhc3N3b3JkIgogY2x1c3Rlcl9jaGVj\</span>
@@ -6305,7 +6305,7 @@ mysql_variables=
 <span class="w">     </span><span class="s">cnVlCiBoYXZlX3NzbD10cnVlCiBzc2xfcDJzX2NhPSIvZXRjL3Byb3h5c3FsL3NzbC1pbnRlcm5h\</span>
 <span class="w">     </span><span class="s">bC9jYS5jcnQiCiBzc2xfcDJzX2NlcnQ9Ii9ldGMvcHJveHlzcWwvc3NsLWludGVybmFsL3Rscy5j\</span>
 <span class="w">     </span><span class="s">cnQiCiBzc2xfcDJzX2tleT0iL2V0Yy9wcm94eXNxbC9zc2wtaW50ZXJuYWwvdGxzLmtleSIKIHNz\</span>
-<span class="w">     </span><span class="s">bF9wMnNfY2lwaGVyPSJFQ0RIRS1SU0EtQUVTMTI4LUdDTS1TSEEyNTYiCn0K&quot;</span>
+<span class="w">     </span><span class="s">bF9wMnNfY2lwaGVyPSJFQ0RIRS1SU0EtQUVTMTI4LUdDTS1TSEEyNTYiCn0K"</span>
 </code></pre></div>
 </li>
 <li>
@@ -6343,7 +6343,7 @@ percona-xtradb-cluster-operator-dc67778fd-qtspz   1/1     Running
 </li>
 <li>
 <p>Get the admin password:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>secrets<span class="w"> </span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>pxc<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.items[].spec.secretsName}&#39;</span><span class="k">)</span><span class="w"> </span>-o<span class="w"> </span><span class="nv">template</span><span class="o">=</span><span class="s1">&#39;{{ .data.proxyadmin | base64decode }}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>secrets<span class="w"> </span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>pxc<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.items[].spec.secretsName}'</span><span class="k">)</span><span class="w"> </span>-o<span class="w"> </span><span class="nv">template</span><span class="o">=</span><span class="s1">'{{ .data.proxyadmin | base64decode }}'</span>
 </code></pre></div>
 </li>
 <li>
@@ -6396,8 +6396,8 @@ percona-xtradb-cluster-operator-dc67778fd-qtspz   1/1     Running
 <p>Replace the <code>&lt;user&gt;</code> and <code>&lt;password&gt;</code> placeholders with the valid credentials of a MySQL user that has permissions to connect through ProxySQL and can execute simple <code>SELECT</code> statements on the cluster.</p>
 <div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>seq<span class="w"> </span><span class="m">100</span><span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span>
 <span class="w">    </span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>cluster1-pxc-0<span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-u&lt;user&gt;<span class="w"> </span>-p&lt;password&gt;<span class="w"> </span><span class="se">\</span>
-<span class="w">      </span>--host<span class="w"> </span>cluster1-proxysql<span class="w"> </span>-Ne<span class="w"> </span><span class="s2">&quot;SELECT VARIABLE_VALUE FROM \</span>
-<span class="s2">      performance_schema.global_variables WHERE VARIABLE_NAME = &#39;wsrep_node_name&#39; LIMIT 1&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>--host<span class="w"> </span>cluster1-proxysql<span class="w"> </span>-Ne<span class="w"> </span><span class="s2">"SELECT VARIABLE_VALUE FROM \</span>
+<span class="s2">      performance_schema.global_variables WHERE VARIABLE_NAME = 'wsrep_node_name' LIMIT 1"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">      </span><span class="m">2</span>&gt;/dev/null
 <span class="w">  </span><span class="k">done</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-n<span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>-c
 </code></pre></div>
@@ -6551,6 +6551,10 @@ window.addEventListener('afterprint', (event) => {
         <script src="js/rating.js"></script>
       
         <script src="js/kapa.js"></script>
+      
+        <script src="js/posthog-search.js"></script>
+      
+        <script src="js/posthog-version.js"></script>
       
         <script src="js/open_in_new_tab.js"></script>
       

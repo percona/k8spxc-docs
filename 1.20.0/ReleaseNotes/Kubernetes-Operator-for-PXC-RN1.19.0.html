@@ -6376,14 +6376,14 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p>You can now use your organization’s custom Certificate Authority (CA) to securely verify TLS communication with S3 storage during backups and restores.</p>
 <p>The configuration is straightforward: create the Secret that stores your custom CA and certificates to authorize in the S3 storage. Then reference this Secret and specify the CA certificate in the <code>caBundle</code> option in the Operator Custom Resource. The Operator will verify TLS communication against it.</p>
 <p>Here&rsquo;s the example configuration:</p>
-<div class="highlight"><pre><span></span><code>storages:
-  minio-s3:
-    type: s3
-    verifyTLS: true
-    s3:
-      caBundle:
-         name: minio-ca-bundle
-         key: tls.crt
+<div class="highlight"><pre><span></span><code><span class="nt">storages</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">minio-s3</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3</span>
+<span class="w">    </span><span class="nt">verifyTLS</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">s3</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">caBundle</span><span class="p">:</span>
+<span class="w">         </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio-ca-bundle</span>
+<span class="w">         </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tls.crt</span>
 </code></pre></div>
 <p>With this improvement you ensure the following:</p>
 <ul>
@@ -6510,7 +6510,7 @@ This functionality is in the tech preview stage and currently supports only clou
 <p>To improve compatibility and user experience, you can now customize password generation parameters in the Custom Resource:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
 <span class="w"> </span><span class="nt">passwordGenerationOptions</span><span class="p">:</span>
-<span class="w">   </span><span class="nt">symbols</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;!#$%&amp;()*+,-.&lt;=&gt;?@[]^_{}~&quot;</span>
+<span class="w">   </span><span class="nt">symbols</span><span class="p">:</span><span class="w"> </span><span class="s">"!#$%&amp;()*+,-.&lt;=&gt;?@[]^_{}~"</span>
 <span class="w">   </span><span class="nt">maxLength</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
 <span class="w">   </span><span class="nt">minLength</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16</span>
 </code></pre></div>
@@ -6843,6 +6843,10 @@ window.addEventListener('afterprint', (event) => {
         <script src="../js/rating.js"></script>
       
         <script src="../js/kapa.js"></script>
+      
+        <script src="../js/posthog-search.js"></script>
+      
+        <script src="../js/posthog-version.js"></script>
       
         <script src="../js/open_in_new_tab.js"></script>
       

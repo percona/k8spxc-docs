@@ -5940,7 +5940,7 @@ under the <code>backup</code> section of the <a href="https://github.com/percona
 <h3 id="gather-metrics-data">Gather metrics data<a class="headerlink" href="#gather-metrics-data" title="Permanent link">&para;</a></h3>
 <p>You can connect to the point-in-time recovery Pod using the <code>&lt;pitr-pod-service&gt;:8080/metrics</code> endpoint to gather these metrics and further analyze them.</p>
 <p>List services to get the point-in-time-recovery service name:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>services<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39;pitr&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>services<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">'pitr'</span>
 </code></pre></div>
 <details class="example">
 <summary>Expected output</summary>
@@ -5961,11 +5961,11 @@ under the <code>backup</code> section of the <a href="https://github.com/percona
 <summary>Expected output</summary>
 <div class="no-copy highlight"><pre><span></span><code># HELP go_gc_duration_seconds A summary of the wall-time pause (stop-the-world) duration in garbage collection cycles.
 # TYPE go_gc_duration_seconds summary
-go_gc_duration_seconds{quantile=&quot;0&quot;} 0.000109735
-go_gc_duration_seconds{quantile=&quot;0.25&quot;} 0.000147529
-go_gc_duration_seconds{quantile=&quot;0.5&quot;} 0.000176199
-go_gc_duration_seconds{quantile=&quot;0.75&quot;} 0.000196962
-go_gc_duration_seconds{quantile=&quot;1&quot;} 0.000570426
+go_gc_duration_seconds{quantile="0"} 0.000109735
+go_gc_duration_seconds{quantile="0.25"} 0.000147529
+go_gc_duration_seconds{quantile="0.5"} 0.000176199
+go_gc_duration_seconds{quantile="0.75"} 0.000196962
+go_gc_duration_seconds{quantile="1"} 0.000570426
 go_gc_duration_seconds_sum 0.002970858
 go_gc_duration_seconds_count 14
 # HELP go_gc_gogc_percent Heap size target percentage configured by the user, otherwise 100. This value is set by the GOGC environment variable, and the runtime/debug.SetGCPercent function. Sourced from /gc/gogc:percent.
@@ -5979,7 +5979,7 @@ go_gc_gomemlimit_bytes 9.223372036854776e+18
 go_goroutines 31
 # HELP go_info Information about the Go environment.
 # TYPE go_info gauge
-go_info{version=&quot;go1.24.3&quot;} 1
+go_info{version="go1.24.3"} 1
 # HELP go_memstats_alloc_bytes Number of bytes allocated in heap and currently in use. Equals to /memory/classes/heap/objects:bytes.
 # TYPE go_memstats_alloc_bytes gauge
 go_memstats_alloc_bytes 2.83268e+06
@@ -6084,9 +6084,9 @@ process_virtual_memory_max_bytes 1.8446744073709552e+19
 promhttp_metric_handler_requests_in_flight 1
 # HELP promhttp_metric_handler_requests_total Total number of scrapes by HTTP status code.
 # TYPE promhttp_metric_handler_requests_total counter
-promhttp_metric_handler_requests_total{code=&quot;200&quot;} 3
-promhttp_metric_handler_requests_total{code=&quot;500&quot;} 0
-promhttp_metric_handler_requests_total{code=&quot;503&quot;} 0
+promhttp_metric_handler_requests_total{code="200"} 3
+promhttp_metric_handler_requests_total{code="500"} 0
+promhttp_metric_handler_requests_total{code="503"} 0
 # HELP pxc_binlog_collector_failure_total Total number of failed binlog     collection cycles
 # TYPE pxc_binlog_collector_failure_total counter
 pxc_binlog_collector_failure_total 0
@@ -6125,11 +6125,11 @@ pxc_binlog_collector_uploaded_total 1
 <summary>Expected output</summary>
 <div class="no-copy highlight"><pre><span></span><code># HELP go_gc_duration_seconds A summary of the wall-time pause (stop-the-world) duration in garbage collection cycles.
 # TYPE go_gc_duration_seconds summary
-go_gc_duration_seconds{quantile=&quot;0&quot;} 0.000109735
-go_gc_duration_seconds{quantile=&quot;0.25&quot;} 0.000147529
-go_gc_duration_seconds{quantile=&quot;0.5&quot;} 0.000176199
-go_gc_duration_seconds{quantile=&quot;0.75&quot;} 0.000196962
-go_gc_duration_seconds{quantile=&quot;1&quot;} 0.000570426
+go_gc_duration_seconds{quantile="0"} 0.000109735
+go_gc_duration_seconds{quantile="0.25"} 0.000147529
+go_gc_duration_seconds{quantile="0.5"} 0.000176199
+go_gc_duration_seconds{quantile="0.75"} 0.000196962
+go_gc_duration_seconds{quantile="1"} 0.000570426
 go_gc_duration_seconds_sum 0.002970858
 go_gc_duration_seconds_count 14
 # HELP go_gc_gogc_percent Heap size target percentage configured by the user, otherwise 100. This value is set by the GOGC environment variable, and the runtime/debug.SetGCPercent function. Sourced from /gc/gogc:percent.
@@ -6143,7 +6143,7 @@ go_gc_gomemlimit_bytes 9.223372036854776e+18
 go_goroutines 31
 # HELP go_info Information about the Go environment.
 # TYPE go_info gauge
-go_info{version=&quot;go1.24.3&quot;} 1
+go_info{version="go1.24.3"} 1
 # HELP go_memstats_alloc_bytes Number of bytes allocated in heap and currently in use. Equals to /memory/classes/heap/objects:bytes.
 # TYPE go_memstats_alloc_bytes gauge
 go_memstats_alloc_bytes 2.83268e+06
@@ -6248,9 +6248,9 @@ process_virtual_memory_max_bytes 1.8446744073709552e+19
 promhttp_metric_handler_requests_in_flight 1
 # HELP promhttp_metric_handler_requests_total Total number of scrapes by HTTP status code.
 # TYPE promhttp_metric_handler_requests_total counter
-promhttp_metric_handler_requests_total{code=&quot;200&quot;} 3
-promhttp_metric_handler_requests_total{code=&quot;500&quot;} 0
-promhttp_metric_handler_requests_total{code=&quot;503&quot;} 0
+promhttp_metric_handler_requests_total{code="200"} 3
+promhttp_metric_handler_requests_total{code="500"} 0
+promhttp_metric_handler_requests_total{code="503"} 0
 # HELP pxc_binlog_collector_failure_total Total number of failed binlog     collection cycles
 # TYPE pxc_binlog_collector_failure_total counter
 pxc_binlog_collector_failure_total 0
@@ -6387,6 +6387,10 @@ window.addEventListener('afterprint', (event) => {
         <script src="js/rating.js"></script>
       
         <script src="js/kapa.js"></script>
+      
+        <script src="js/posthog-search.js"></script>
+      
+        <script src="js/posthog-version.js"></script>
       
         <script src="js/open_in_new_tab.js"></script>
       

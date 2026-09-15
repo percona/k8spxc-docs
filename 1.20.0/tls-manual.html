@@ -5927,10 +5927,10 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p>This command creates a root Certificate Authority that will sign all your certificates:</p>
 <div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | cfssl gencert -initca - | cfssljson -bare ca</span>
 <span class="s">{</span>
-<span class="s">  &quot;CN&quot;: &quot;Root CA&quot;,</span>
-<span class="s">  &quot;key&quot;: {</span>
-<span class="s">    &quot;algo&quot;: &quot;rsa&quot;,</span>
-<span class="s">    &quot;size&quot;: 2048</span>
+<span class="s">  "CN": "Root CA",</span>
+<span class="s">  "key": {</span>
+<span class="s">    "algo": "rsa",</span>
+<span class="s">    "size": 2048</span>
 <span class="s">  }</span>
 <span class="s">}</span>
 <span class="s">EOF</span>
@@ -5940,15 +5940,15 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p>Generate the server certificate for external communication. The command generates a server TLS certificate and a key for external connections, with SANs (Subject Alternative Names) for ProxySQL and Percona XtraDB Cluster endpoints.</p>
 <div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | cfssl gencert -ca=ca.pem -ca-key=ca-key.pem - | cfssljson -bare server</span>
 <span class="s">{</span>
-<span class="s">  &quot;hosts&quot;: [</span>
-<span class="s">    &quot;${CLUSTER_NAME}-proxysql&quot;,</span>
-<span class="s">    &quot;*.${CLUSTER_NAME}-proxysql-unready&quot;,</span>
-<span class="s">    &quot;*.${CLUSTER_NAME}-pxc&quot;</span>
+<span class="s">  "hosts": [</span>
+<span class="s">    "${CLUSTER_NAME}-proxysql",</span>
+<span class="s">    "*.${CLUSTER_NAME}-proxysql-unready",</span>
+<span class="s">    "*.${CLUSTER_NAME}-pxc"</span>
 <span class="s">  ],</span>
-<span class="s">  &quot;CN&quot;: &quot;${CLUSTER_NAME}-pxc&quot;,</span>
-<span class="s">  &quot;key&quot;: {</span>
-<span class="s">    &quot;algo&quot;: &quot;rsa&quot;,</span>
-<span class="s">    &quot;size&quot;: 2048</span>
+<span class="s">  "CN": "${CLUSTER_NAME}-pxc",</span>
+<span class="s">  "key": {</span>
+<span class="s">    "algo": "rsa",</span>
+<span class="s">    "size": 2048</span>
 <span class="s">  }</span>
 <span class="s">}</span>
 <span class="s">EOF</span>
@@ -5969,13 +5969,13 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p>To secure communication between Percona XtraDB Cluster instances, you need a separate internal server certificate. Generate the internal TLS certificate and key with appropriate SANs:</p>
 <div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | cfssl gencert -ca=ca.pem -ca-key=ca-key.pem - | cfssljson -bare server-internal</span>
 <span class="s">{</span>
-<span class="s">  &quot;hosts&quot;: [</span>
-<span class="s">    &quot;*.${CLUSTER_NAME}-pxc&quot;</span>
+<span class="s">  "hosts": [</span>
+<span class="s">    "*.${CLUSTER_NAME}-pxc"</span>
 <span class="s">  ],</span>
-<span class="s">  &quot;CN&quot;: &quot;${CLUSTER_NAME}-pxc-internal&quot;,</span>
-<span class="s">  &quot;key&quot;: {</span>
-<span class="s">    &quot;algo&quot;: &quot;rsa&quot;,</span>
-<span class="s">    &quot;size&quot;: 2048</span>
+<span class="s">  "CN": "${CLUSTER_NAME}-pxc-internal",</span>
+<span class="s">  "key": {</span>
+<span class="s">    "algo": "rsa",</span>
+<span class="s">    "size": 2048</span>
 <span class="s">  }</span>
 <span class="s">}</span>
 <span class="s">EOF</span>
@@ -6115,6 +6115,10 @@ window.addEventListener('afterprint', (event) => {
         <script src="js/rating.js"></script>
       
         <script src="js/kapa.js"></script>
+      
+        <script src="js/posthog-search.js"></script>
+      
+        <script src="js/posthog-version.js"></script>
       
         <script src="js/open_in_new_tab.js"></script>
       

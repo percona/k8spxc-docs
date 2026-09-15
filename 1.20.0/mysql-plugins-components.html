@@ -6076,9 +6076,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <ol>
 <li>
 <p>Run <code>INSTALL PLUGIN</code> once on one of the database Pods:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cluster1-pxc-0<span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">&#39;&lt;root-password&gt;&#39;</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;</span>
-<span class="s2">INSTALL PLUGIN CONNECTION_CONTROL SONAME &#39;connection_control.so&#39;;</span>
-<span class="s2">INSTALL PLUGIN CONNECTION_CONTROL_FAILED_LOGIN_ATTEMPTS SONAME &#39;connection_control.so&#39;;&quot;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cluster1-pxc-0<span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">'&lt;root-password&gt;'</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">"</span>
+<span class="s2">INSTALL PLUGIN CONNECTION_CONTROL SONAME 'connection_control.so';</span>
+<span class="s2">INSTALL PLUGIN CONNECTION_CONTROL_FAILED_LOGIN_ATTEMPTS SONAME 'connection_control.so';"</span>
 </code></pre></div>
 <p>The entry is stored in <code>mysql.plugin</code> and Galera replicates it to all cluster nodes - all nodes activate the plugin automatically. </p>
 <p>The plugin reloads on every restart even if you remove <code>plugin-load-add</code> from the configuration.</p>
@@ -6091,7 +6091,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <h3 id="components">Components<a class="headerlink" href="#components" title="Permanent link">&para;</a></h3>
 <p>MySQL includes both non-keyring and keyring components. Non-keyring components such as <code>validate_password</code> or <code>audit_log_filter</code> for Percona XtraDB Cluster 8.4 add extra features to your database. Keyring components provide secure storage for sensitive information such as master keys for tablespace encryption. </p>
 <p>There is no MySQL configuration file for components. As such, you install all <strong>non-keyring components</strong> directly using the <code>INSTALL COMPONENT</code> SQL command: </p>
-<div class="highlight"><pre><span></span><code><span class="n">INSTALL</span><span class="w"> </span><span class="n">COMPONENT</span><span class="w"> </span><span class="s1">&#39;file://component_validate_password&#39;</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="n">INSTALL</span><span class="w"> </span><span class="n">COMPONENT</span><span class="w"> </span><span class="s1">'file://component_validate_password'</span><span class="p">;</span>
 </code></pre></div>
 <p>Run this command on one node only. The command writes to <code>mysql.component</code>. Galera replicates the entry to all nodes, which automatically load the component. This setting persists across configuration changes.</p>
 <p><strong>Keyring components</strong> must be loaded through a manifest file, not via <code>INSTALL COMPONENT</code>. See the <a href="https://docs.percona.com/percona-server/8.4/quickstart-component-keyring.html">Get started with keyring component documentation <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a>.</p>
@@ -6124,8 +6124,8 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><code>validate_password</code> is not installed, so its <code>loose-</code> variables are silently ignored. MySQL does not error or log a warning.</li>
 </ul>
 <p>You can install the <code>validate_password</code> component later by running the <code>INSTALL COMPONENT</code> in one of the Pods:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cluster1-pxc-0<span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">&#39;&lt;root-password&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-e<span class="w"> </span><span class="s2">&quot;INSTALL COMPONENT &#39;file://component_validate_password&#39;;&quot;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cluster1-pxc-0<span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">'&lt;root-password&gt;'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="s2">"INSTALL COMPONENT 'file://component_validate_password';"</span>
 </code></pre></div>
 <p>The <code>loose-validate_password.*</code> values from <code>/etc/percona-xtradb-cluster.conf.d/init.cnf</code> will take effect immediately for the newly loaded component with no further changes or restarts required.</p>
 <h3 id="rules-and-recommendations-for-enabling-and-configuring-plugins-and-components">Rules and recommendations for enabling and configuring plugins and components<a class="headerlink" href="#rules-and-recommendations-for-enabling-and-configuring-plugins-and-components" title="Permanent link">&para;</a></h3>
@@ -6135,9 +6135,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li>
 <p>Confirm the extension is active on every node. After you apply the updated <code>deploy/cr.yaml</code> or run the install command, database Pods are restarted. Exec into the Pods to check that the changes are applied:</p>
 <div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">  </span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cluster1-pxc-<span class="nv">$i</span><span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">&#39;&lt;root-password&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>-e<span class="w"> </span><span class="s2">&quot;SELECT PLUGIN_NAME, PLUGIN_STATUS FROM information_schema.PLUGINS WHERE PLUGIN_STATUS=&#39;ACTIVE&#39;;</span>
-<span class="s2">        SELECT component_urn FROM mysql.component;&quot;</span>
+<span class="w">  </span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cluster1-pxc-<span class="nv">$i</span><span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">'&lt;root-password&gt;'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-e<span class="w"> </span><span class="s2">"SELECT PLUGIN_NAME, PLUGIN_STATUS FROM information_schema.PLUGINS WHERE PLUGIN_STATUS='ACTIVE';</span>
+<span class="s2">        SELECT component_urn FROM mysql.component;"</span>
 <span class="k">done</span>
 </code></pre></div>
 <p>Replace <code>cluster1</code> with your cluster name and use the root password from your cluster Secrets.</p>
@@ -6145,8 +6145,8 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </ol>
 <h2 id="uninstalling-extensions">Uninstalling extensions<a class="headerlink" href="#uninstalling-extensions" title="Permanent link">&para;</a></h2>
 <p>Remove a component:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cluster1-pxc-0<span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">&#39;&lt;root-password&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-e<span class="w"> </span><span class="s2">&quot;UNINSTALL COMPONENT &#39;file://component_validate_password&#39;;&quot;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cluster1-pxc-0<span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">'&lt;root-password&gt;'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="s2">"UNINSTALL COMPONENT 'file://component_validate_password';"</span>
 </code></pre></div>
 <p>Remove the corresponding variables from <code>spec.pxc.configuration</code>, or keep them with <code>loose-</code> — they are silently ignored after uninstall.</p>
 <p>To remove the <code>audit_log_filter</code> plugin on Percona XtraDB Cluster 8.0:</p>
@@ -6267,6 +6267,10 @@ window.addEventListener('afterprint', (event) => {
         <script src="js/rating.js"></script>
       
         <script src="js/kapa.js"></script>
+      
+        <script src="js/posthog-search.js"></script>
+      
+        <script src="js/posthog-version.js"></script>
       
         <script src="js/open_in_new_tab.js"></script>
       

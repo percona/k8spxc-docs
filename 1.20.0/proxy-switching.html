@@ -5855,7 +5855,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>If your MySQL client uses the <code>mysql_native_password</code> authentication plugin (for example, MySQL 5.7 client), but your database user is configured with the <code>caching_sha2_password</code> plugin, you must pass the <code>--default-auth=caching_sha2_password</code> option to the client for successful authentication as follows:</p>
-<div class="highlight"><pre><span></span><code>mysql<span class="w"> </span>-u&lt;user&gt;<span class="w"> </span>-p<span class="s1">&#39;&lt;password&gt;&#39;</span><span class="w"> </span>-hcluster1-proxysql<span class="w"> </span>--default-auth<span class="o">=</span>caching_sha2_password
+<div class="highlight"><pre><span></span><code>mysql<span class="w"> </span>-u&lt;user&gt;<span class="w"> </span>-p<span class="s1">'&lt;password&gt;'</span><span class="w"> </span>-hcluster1-proxysql<span class="w"> </span>--default-auth<span class="o">=</span>caching_sha2_password
 </code></pre></div>
 </div>
 <h2 id="switching-from-proxysql-to-haproxy">Switching from ProxySQL to HAProxy<a class="headerlink" href="#switching-from-proxysql-to-haproxy" title="Permanent link">&para;</a></h2>
@@ -5897,27 +5897,27 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">From ProxySQL to HAProxy</label><label for="__tabbed_1_2">From HAProxy to ProxySQL</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>pxc<span class="w"> </span>cluster1<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">  &quot;spec&quot;: {</span>
-<span class="s1">     &quot;haproxy&quot;: {</span>
-<span class="s1">        &quot;enabled&quot;: true,</span>
-<span class="s1">        &quot;size&quot;: 3,</span>
-<span class="s1">        &quot;image&quot;: &quot;percona/percona-xtradb-cluster-operator:1.20.0-haproxy&quot; },</span>
-<span class="s1">     &quot;proxysql&quot;: { &quot;enabled&quot;: false }</span>
-<span class="s1">  }}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>pxc<span class="w"> </span>cluster1<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">'{</span>
+<span class="s1">  "spec": {</span>
+<span class="s1">     "haproxy": {</span>
+<span class="s1">        "enabled": true,</span>
+<span class="s1">        "size": 3,</span>
+<span class="s1">        "image": "percona/percona-xtradb-cluster-operator:1.20.0-haproxy" },</span>
+<span class="s1">     "proxysql": { "enabled": false }</span>
+<span class="s1">  }}'</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
 <p>You must be running the Operator version 1.19.0 and higher.</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>pxc<span class="w"> </span>cluster1<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">  &quot;spec&quot;: {</span>
-<span class="s1">     &quot;haproxy&quot;: { &quot;enabled&quot;: false },</span>
-<span class="s1">     &quot;proxysql&quot;: {</span>
-<span class="s1">        &quot;enabled&quot;: true,</span>
-<span class="s1">        &quot;size&quot;: 3,</span>
-<span class="s1">        &quot;image&quot;: &quot;percona/percona-xtradb-cluster-operator:1.20.0-proxysql&quot;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>pxc<span class="w"> </span>cluster1<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">'{</span>
+<span class="s1">  "spec": {</span>
+<span class="s1">     "haproxy": { "enabled": false },</span>
+<span class="s1">     "proxysql": {</span>
+<span class="s1">        "enabled": true,</span>
+<span class="s1">        "size": 3,</span>
+<span class="s1">        "image": "percona/percona-xtradb-cluster-operator:1.20.0-proxysql"</span>
 <span class="s1">     }</span>
-<span class="s1">  }}&#39;</span>
+<span class="s1">  }}'</span>
 </code></pre></div>
 </div>
 </div>
@@ -6035,6 +6035,10 @@ window.addEventListener('afterprint', (event) => {
         <script src="js/rating.js"></script>
       
         <script src="js/kapa.js"></script>
+      
+        <script src="js/posthog-search.js"></script>
+      
+        <script src="js/posthog-version.js"></script>
       
         <script src="js/open_in_new_tab.js"></script>
       

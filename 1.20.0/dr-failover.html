@@ -5686,17 +5686,17 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li>Remove the <code>sourcesList</code> configuration.</li>
 </ul>
 <p>Run the following command to apply a patch configuration to <code>cluster2</code>. </p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>pxc<span class="w"> </span>cluster2<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">  &quot;spec&quot;: {</span>
-<span class="s1">    &quot;pxc&quot;: {</span>
-<span class="s1">      &quot;replicationChannels&quot;: [</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>pxc<span class="w"> </span>cluster2<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">'{</span>
+<span class="s1">  "spec": {</span>
+<span class="s1">    "pxc": {</span>
+<span class="s1">      "replicationChannels": [</span>
 <span class="s1">        {</span>
-<span class="s1">          &quot;name&quot;: &quot;pxc1_to_pxc2&quot;,</span>
-<span class="s1">          &quot;isSource&quot;: true</span>
+<span class="s1">          "name": "pxc1_to_pxc2",</span>
+<span class="s1">          "isSource": true</span>
 <span class="s1">        }</span>
 <span class="s1">      ]</span>
 <span class="s1">    }</span>
-<span class="s1">  }}&#39;</span>
+<span class="s1">  }}'</span>
 </code></pre></div>
 <p>Now <code>cluster2</code> acts as the primary site.</p>
 </li>
@@ -5817,6 +5817,10 @@ window.addEventListener('afterprint', (event) => {
         <script src="js/rating.js"></script>
       
         <script src="js/kapa.js"></script>
+      
+        <script src="js/posthog-search.js"></script>
+      
+        <script src="js/posthog-version.js"></script>
       
         <script src="js/open_in_new_tab.js"></script>
       

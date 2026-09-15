@@ -5875,7 +5875,7 @@ Operator without creating a cluster issuer separately.</p>
 </div>
 <div class="tabbed-block">
 <p>Run the following command <strong>after you have deployed the Operator and created the database cluster</strong>, because the <code>cluster1-ca-cert</code> Certificate is created by the Operator during cluster creation and does not exist during cert-manager installation:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>certificate<span class="w"> </span>cluster1-ca-cert<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{&quot;spec&quot;:{&quot;privateKey&quot;:{&quot;rotationPolicy&quot;:&quot;Never&quot;}}}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>certificate<span class="w"> </span>cluster1-ca-cert<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>-p<span class="w"> </span><span class="s1">'{"spec":{"privateKey":{"rotationPolicy":"Never"}}}'</span>
 </code></pre></div>
 <p>This workaround ensures the correct start of the database cluster upon the certificate renewal. </p>
 </div>
@@ -6047,6 +6047,10 @@ window.addEventListener('afterprint', (event) => {
         <script src="js/rating.js"></script>
       
         <script src="js/kapa.js"></script>
+      
+        <script src="js/posthog-search.js"></script>
+      
+        <script src="js/posthog-version.js"></script>
       
         <script src="js/open_in_new_tab.js"></script>
       

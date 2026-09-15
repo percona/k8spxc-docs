@@ -5964,11 +5964,11 @@ if not exist. Let’s say the Operator should watch the <code>pxc</code> namespa
 <span class="nt">subjects</span><span class="p">:</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceAccount</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">percona-xtradb-cluster-operator</span>
-<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;pxc&quot;</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="s">"pxc"</span>
 <span class="nn">...</span>
 <span class="nt">env</span><span class="p">:</span>
 <span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WATCH_NAMESPACE</span>
-<span class="w">           </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;pxc&quot;</span>
+<span class="w">           </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"pxc"</span>
 <span class="nn">...</span>
 </code></pre></div>
 </li>
@@ -6008,14 +6008,14 @@ to the cluster.</p>
     <code>cluster1-secrets</code> name).
     You can use the following command to get the password of the <code>root</code>
     user:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>secrets<span class="w"> </span>--namespace<span class="o">=</span>pxc<span class="w"> </span>cluster1-secrets<span class="w"> </span>--template<span class="o">=</span><span class="s1">&#39;{{.data.root | base64decode}}{{&quot;\n&quot;}}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>secrets<span class="w"> </span>--namespace<span class="o">=</span>pxc<span class="w"> </span>cluster1-secrets<span class="w"> </span>--template<span class="o">=</span><span class="s1">'{{.data.root | base64decode}}{{"\n"}}'</span>
 </code></pre></div>
 </li>
 <li>
 <p>Run a container with <code>mysql</code> client and connect its console output to your
     terminal. The following command will do this, naming the new Pod
     <code>percona-client</code>:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>-i<span class="w"> </span>--rm<span class="w"> </span>--tty<span class="w"> </span>percona-client<span class="w"> </span>--image<span class="o">=</span>percona:5.7<span class="w"> </span>--restart<span class="o">=</span>Never<span class="w"> </span>--env<span class="o">=</span><span class="s2">&quot;POD_NAMESPACE=pxc&quot;</span><span class="w"> </span>--<span class="w"> </span>bash<span class="w"> </span>-il
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>-i<span class="w"> </span>--rm<span class="w"> </span>--tty<span class="w"> </span>percona-client<span class="w"> </span>--image<span class="o">=</span>percona:5.7<span class="w"> </span>--restart<span class="o">=</span>Never<span class="w"> </span>--env<span class="o">=</span><span class="s2">"POD_NAMESPACE=pxc"</span><span class="w"> </span>--<span class="w"> </span>bash<span class="w"> </span>-il
 </code></pre></div>
 <p>Executing it may require some time to deploy the correspondent Pod.</p>
 <p>Now run <code>mysql</code> tool in the percona-client command shell using the password
@@ -6026,11 +6026,11 @@ balancing with <a href="haproxy-conf.html">HAProxy</a> (the default choice) or
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">with HAProxy (default)</label><label for="__tabbed_1_2">with ProxySQL</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>mysql<span class="w"> </span>-h<span class="w"> </span>cluster1-haproxy<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">&#39;&lt;root_password&gt;&#39;</span>
+<div class="highlight"><pre><span></span><code>mysql<span class="w"> </span>-h<span class="w"> </span>cluster1-haproxy<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">'&lt;root_password&gt;'</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>mysql<span class="w"> </span>-h<span class="w"> </span>cluster1-proxysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">&#39;&lt;root_password&gt;&#39;</span>
+<div class="highlight"><pre><span></span><code>mysql<span class="w"> </span>-h<span class="w"> </span>cluster1-proxysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">'&lt;root_password&gt;'</span>
 </code></pre></div>
 </div>
 </div>
@@ -6093,7 +6093,7 @@ kubectl<span class="w"> </span>apply<span class="w"> </span>--server-side<span c
     For example, updating to the <code>1.20.0</code> version in the <code>pxc-operator</code> namespace should look as
     follows.</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>deployment<span class="w"> </span>percona-xtradb-cluster-operator<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-p<span class="s1">&#39;{&quot;spec&quot;:{&quot;template&quot;:{&quot;spec&quot;:{&quot;containers&quot;:[{&quot;name&quot;:&quot;percona-xtradb-cluster-operator&quot;,&quot;image&quot;:&quot;percona/percona-xtradb-cluster-operator:1.20.0&quot;}]}}}}&#39;</span><span class="w"> </span>-n<span class="w"> </span>pxc-operator
+<span class="w">  </span>-p<span class="s1">'{"spec":{"template":{"spec":{"containers":[{"name":"percona-xtradb-cluster-operator","image":"percona/percona-xtradb-cluster-operator:1.20.0"}]}}}}'</span><span class="w"> </span>-n<span class="w"> </span>pxc-operator
 </code></pre></div>
 </li>
 <li>
@@ -6217,6 +6217,10 @@ window.addEventListener('afterprint', (event) => {
         <script src="js/rating.js"></script>
       
         <script src="js/kapa.js"></script>
+      
+        <script src="js/posthog-search.js"></script>
+      
+        <script src="js/posthog-version.js"></script>
       
         <script src="js/open_in_new_tab.js"></script>
       
