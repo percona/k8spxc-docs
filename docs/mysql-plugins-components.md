@@ -23,7 +23,7 @@ The following extensions are available in Percona XtraDB Cluster 8.0 and 8.4 con
 
 | Extension | Type | Pre-installed | Purpose |
 | --- | --- | --- | --- |
-| `audit_log_filter` | Plugin (8.0) / Component (8.4) | Yes in 8.4 only | Audit logging |
+| `audit_log_filter` | Plugin (8.0) / Component (8.4) | Yes in 8.4, with Operator 1.20.0+ | Audit logging |
 | `validate_password` | Component | No | Password strength enforcement |
 | `connection_control` | Plugin | No | Brute-force login throttling |
 | `component_masking_functions` | Component | No | Data masking functions |
@@ -38,10 +38,12 @@ Some extensions changed type between Percona XtraDB Cluster versions. Always mat
 
 | Feature | Percona XtraDB Cluster 8.0 | Percona XtraDB Cluster 8.4 |
 | --- | --- | --- |
-| `audit_log_filter` | **Plugin** — not installed by default | **Component** — installed by default |
+| `audit_log_filter` | **Plugin** — not installed by default | **Component** — installed by default [^1] |
 | `audit_log_filter` variables | `audit_log_filter_format` (underscores) | `audit_log_filter.format` (dots) |
 | `validate_password` | **Component** — not installed by default | **Component** — not installed by default |
 | `validate_password` variables | `validate_password.length` (dots) | `validate_password.length` (dots) |
+
+[^1]: With Percona Operator for MySQL 1.20.0 and later. Earlier Operator versions ship the component but require a manual install — see [Configuration examples for plugins and components](mysql-plugins-components-examples.md#audit_log_filter).
 
 ## Enable plugins and components
 
@@ -124,14 +126,13 @@ You can use the `loose-` prefix with configuration variables for both plugins an
     `loose-` does **not** protect against wrong variable names. Using dot notation on Percona XtraDB Cluster 8.0 (`audit_log_filter.format`) or underscore notation on Percona XtraDB Cluster 8.4 (`audit_log_filter_format`) still causes MySQL to abort, even with the `loose-` prefix.
 
 
-This example configuration illustrates how it works:
+This example configuration for Percona XtraDB Cluster 8.4 and the Operator version 1.20.0 illustrates how it works:
 
 ```yaml
 spec:
   pxc:
     configuration: |
       [mysqld]
-      # Percona XtraDB Cluster 8.4: audit_log_filter is pre-installed — takes effect immediately
       loose-audit_log_filter.strategy=SYNCHRONOUS
       loose-audit_log_filter.format=JSON
 
@@ -142,7 +143,7 @@ spec:
 
 After you apply this configuration, the Operator triggers a rolling restart of all Percona XtraDB Cluster Pods. The restart completes successfully because:
 
-- `audit_log_filter` is already installed, so its `loose-` variables are applied automatically.
+- `audit_log_filter` is already installed when you run the Operator 1.20.0 and higher and Percona XtraDB Cluster 8.4, so its `loose-` variables are applied automatically. If you run the earlier versions of the Operator, see [Configuration examples for plugins and components](mysql-plugins-components-examples.md#audit_log_filter)
 - `validate_password` is not installed, so its `loose-` variables are silently ignored. MySQL does not error or log a warning.
 
 You can install the `validate_password` component later by running the `INSTALL COMPONENT` in one of the Pods:

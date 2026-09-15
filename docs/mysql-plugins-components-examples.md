@@ -12,7 +12,29 @@ The `audit_log_filter` records database events to an audit log for security moni
 
 ### Percona XtraDB Cluster 8.4
 
-The `component_audit_log_filter` is installed in Percona XtraDB Cluster 8.4 by default so you only need to configure it.
+Percona XtraDB Cluster 8.4 container images ship the `component_audit_log_filter` component along with its install script (`audit_log_filter_linux_install.sql`).
+
+- **Percona Operator for MySQL 1.20.0 and later** runs this install script automatically when the cluster bootstraps. The component is already registered in `mysql.component` and active. You only need to configure it.
+- **Earlier Operator versions** don't run this step automatically. Install the component manually first. Then configure it.
+
+    Check whether the component is already registered before assuming which case applies:
+
+    ```bash
+    kubectl -n <namespace> exec cluster1-pxc-0 -c pxc -- mysql -uroot -p'<root-password>' \
+      -e "SELECT component_urn FROM mysql.component WHERE component_urn LIKE '%audit%';"
+    ```
+
+    An empty result means you need to install it first:
+
+    ```bash
+    kubectl -n <namespace> exec cluster1-pxc-0 -c pxc -- bash -c \
+      "mysql -uroot -p'<root-password>' -D mysql < \
+      /usr/share/percona-xtradb-cluster/audit_log_filter_linux_install.sql"
+    ```
+
+Once the component is registered (automatically or manually), continue with the configuration. 
+
+The steps are:
 
 1. Edit the `deploy/cr.yaml` and set the component variables in the `spec.pxc.configuration` using dot notation and the `loose-` prefix. Pay attention that the variables use the **dot notation**:
 
@@ -241,14 +263,13 @@ To enable and configure this component, do the following:
 
 ## Example of `validate_password` and `audit_log_filter` together
 
-This configuration example is for Percona XtraDB Cluster 8.4:
+This configuration example is for Percona XtraDB Cluster 8.4 and the Operator 1.20.0:
 
 ```yaml
 spec:
   pxc:
     configuration: |
       [mysqld]
-      # audit_log_filter -- component installed by default in PXC 8.4
       loose-audit_log_filter.strategy=SYNCHRONOUS
       loose-audit_log_filter.format=JSON
       loose-audit_log_filter.rotate_on_size=104857600
