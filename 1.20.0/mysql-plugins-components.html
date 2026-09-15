@@ -5950,7 +5950,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <tr>
 <td><code>audit_log_filter</code></td>
 <td>Plugin (8.0) / Component (8.4)</td>
-<td>Yes in 8.4 only</td>
+<td>Yes in 8.4, with Operator 1.20.0+</td>
 <td>Audit logging</td>
 </tr>
 <tr>
@@ -6022,7 +6022,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <tr>
 <td><code>audit_log_filter</code></td>
 <td><strong>Plugin</strong> — not installed by default</td>
-<td><strong>Component</strong> — installed by default</td>
+<td><strong>Component</strong> — installed by default <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></td>
 </tr>
 <tr>
 <td><code>audit_log_filter</code> variables</td>
@@ -6105,12 +6105,11 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p class="admonition-title">Warning</p>
 <p><code>loose-</code> does <strong>not</strong> protect against wrong variable names. Using dot notation on Percona XtraDB Cluster 8.0 (<code>audit_log_filter.format</code>) or underscore notation on Percona XtraDB Cluster 8.4 (<code>audit_log_filter_format</code>) still causes MySQL to abort, even with the <code>loose-</code> prefix.</p>
 </div>
-<p>This example configuration illustrates how it works:</p>
+<p>This example configuration for Percona XtraDB Cluster 8.4 and the Operator version 1.20.0 illustrates how it works:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">pxc</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">configuration</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">      </span><span class="no">[mysqld]</span>
-<span class="w">      </span><span class="no"># Percona XtraDB Cluster 8.4: audit_log_filter is pre-installed — takes effect immediately</span>
 <span class="w">      </span><span class="no">loose-audit_log_filter.strategy=SYNCHRONOUS</span>
 <span class="w">      </span><span class="no">loose-audit_log_filter.format=JSON</span>
 
@@ -6120,7 +6119,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </code></pre></div>
 <p>After you apply this configuration, the Operator triggers a rolling restart of all Percona XtraDB Cluster Pods. The restart completes successfully because:</p>
 <ul>
-<li><code>audit_log_filter</code> is already installed, so its <code>loose-</code> variables are applied automatically.</li>
+<li><code>audit_log_filter</code> is already installed when you run the Operator 1.20.0 and higher and Percona XtraDB Cluster 8.4, so its <code>loose-</code> variables are applied automatically. If you run the earlier versions of the Operator, see <a href="mysql-plugins-components-examples.html#audit_log_filter">Configuration examples for plugins and components</a></li>
 <li><code>validate_password</code> is not installed, so its <code>loose-</code> variables are silently ignored. MySQL does not error or log a warning.</li>
 </ul>
 <p>You can install the <code>validate_password</code> component later by running the <code>INSTALL COMPONENT</code> in one of the Pods:</p>
@@ -6154,12 +6153,20 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">mysql</span><span class="p">.</span><span class="n">audit_log_filter</span><span class="p">;</span>
 <span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">mysql</span><span class="p">.</span><span class="n">audit_log_user</span><span class="p">;</span>
 </code></pre></div>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>With Percona Operator for MySQL 1.20.0 and later. Earlier Operator versions ship the component but require a manual install — see <a href="mysql-plugins-components-examples.html#audit_log_filter">Configuration examples for plugins and components</a>.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
 <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 5, 2026 10:41:19 UTC">June 5, 2026</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 15, 2026 13:54:09 UTC">September 15, 2026</span>
       
         <br>
         Created:

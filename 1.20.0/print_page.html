@@ -11630,7 +11630,7 @@ as follows:</p>
 <tr>
 <td><code>audit_log_filter</code></td>
 <td>Plugin (8.0) / Component (8.4)</td>
-<td>Yes in 8.4 only</td>
+<td>Yes in 8.4, with Operator 1.20.0+</td>
 <td>Audit logging</td>
 </tr>
 <tr>
@@ -11702,7 +11702,7 @@ as follows:</p>
 <tr>
 <td><code>audit_log_filter</code></td>
 <td><strong>Plugin</strong> — not installed by default</td>
-<td><strong>Component</strong> — installed by default</td>
+<td><strong>Component</strong> — installed by default <sup id="fnref:1"><a class="footnote-ref" href="#mysql-plugins-components-fn:1">1</a></sup></td>
 </tr>
 <tr>
 <td><code>audit_log_filter</code> variables</td>
@@ -11785,12 +11785,11 @@ as follows:</p>
 <p class="admonition-title">Warning</p>
 <p><code>loose-</code> does <strong>not</strong> protect against wrong variable names. Using dot notation on Percona XtraDB Cluster 8.0 (<code>audit_log_filter.format</code>) or underscore notation on Percona XtraDB Cluster 8.4 (<code>audit_log_filter_format</code>) still causes MySQL to abort, even with the <code>loose-</code> prefix.</p>
 </div>
-<p>This example configuration illustrates how it works:</p>
+<p>This example configuration for Percona XtraDB Cluster 8.4 and the Operator version 1.20.0 illustrates how it works:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">pxc</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">configuration</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">      </span><span class="no">[mysqld]</span>
-<span class="w">      </span><span class="no"># Percona XtraDB Cluster 8.4: audit_log_filter is pre-installed — takes effect immediately</span>
 <span class="w">      </span><span class="no">loose-audit_log_filter.strategy=SYNCHRONOUS</span>
 <span class="w">      </span><span class="no">loose-audit_log_filter.format=JSON</span>
 
@@ -11800,7 +11799,7 @@ as follows:</p>
 </code></pre></div>
 <p>After you apply this configuration, the Operator triggers a rolling restart of all Percona XtraDB Cluster Pods. The restart completes successfully because:</p>
 <ul>
-<li><code>audit_log_filter</code> is already installed, so its <code>loose-</code> variables are applied automatically.</li>
+<li><code>audit_log_filter</code> is already installed when you run the Operator 1.20.0 and higher and Percona XtraDB Cluster 8.4, so its <code>loose-</code> variables are applied automatically. If you run the earlier versions of the Operator, see <a href="#mysql-plugins-components-examples-audit_log_filter">Configuration examples for plugins and components</a></li>
 <li><code>validate_password</code> is not installed, so its <code>loose-</code> variables are silently ignored. MySQL does not error or log a warning.</li>
 </ul>
 <p>You can install the <code>validate_password</code> component later by running the <code>INSTALL COMPONENT</code> in one of the Pods:</p>
@@ -11833,14 +11832,39 @@ as follows:</p>
 <div class="highlight"><pre><span></span><code><span class="n">UNINSTALL</span><span class="w"> </span><span class="n">PLUGIN</span><span class="w"> </span><span class="n">audit_log_filter</span><span class="p">;</span>
 <span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">mysql</span><span class="p">.</span><span class="n">audit_log_filter</span><span class="p">;</span>
 <span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">mysql</span><span class="p">.</span><span class="n">audit_log_user</span><span class="p">;</span>
-</code></pre></div></section><section class="print-page" id="mysql-plugins-components-examples" heading-number="7.4.2"><h1 id="mysql-plugins-components-examples-configuration-examples-for-plugins-and-components">Configuration examples for plugins and components<a class="headerlink" href="#mysql-plugins-components-examples-configuration-examples-for-plugins-and-components" title="Permanent link">&para;</a></h1>
+</code></pre></div>
+<div class="footnote">
+<hr />
+<ol>
+<li id="mysql-plugins-components-fn:1">
+<p>With Percona Operator for MySQL 1.20.0 and later. Earlier Operator versions ship the component but require a manual install — see <a href="#mysql-plugins-components-examples-audit_log_filter">Configuration examples for plugins and components</a>.&#160;<a class="footnote-backref" href="#mysql-plugins-components-fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div></section><section class="print-page" id="mysql-plugins-components-examples" heading-number="7.4.2"><h1 id="mysql-plugins-components-examples-configuration-examples-for-plugins-and-components">Configuration examples for plugins and components<a class="headerlink" href="#mysql-plugins-components-examples-configuration-examples-for-plugins-and-components" title="Permanent link">&para;</a></h1>
 <p>This page provides examples for enabling a <strong>plugin</strong> and a <strong>component</strong> in a Percona XtraDB Cluster managed by the Operator. It covers the <code>validate_password</code> and <code>audit_log_filter</code>, which is a component in Percona XtraDB Cluster 8.4 and a plugin in Percona XtraDB Cluster 8.0.</p>
 <p>Examples below show the configuration for both Percona XtraDB Cluster 8.0 and 8.4. For details on the difference between plugins and components, how to enable them and how to use the <code>loose-</code> prefix for their setup, see <a href="#mysql-plugins-components">MySQL plugins and components</a>.</p>
 <p>Examples use a three-node cluster named <code>cluster1</code>. Replace the cluster name, the namespace and root password with your own values.</p>
 <h2 id="mysql-plugins-components-examples-audit_log_filter"><code>audit_log_filter</code><a class="headerlink" href="#mysql-plugins-components-examples-audit_log_filter" title="Permanent link">&para;</a></h2>
 <p>The <code>audit_log_filter</code> records database events to an audit log for security monitoring, compliance, and activity tracking.</p>
 <h3 id="mysql-plugins-components-examples-percona-xtradb-cluster-84">Percona XtraDB Cluster 8.4<a class="headerlink" href="#mysql-plugins-components-examples-percona-xtradb-cluster-84" title="Permanent link">&para;</a></h3>
-<p>The <code>component_audit_log_filter</code> is installed in Percona XtraDB Cluster 8.4 by default so you only need to configure it.</p>
+<p>Percona XtraDB Cluster 8.4 container images ship the <code>component_audit_log_filter</code> component along with its install script (<code>audit_log_filter_linux_install.sql</code>).</p>
+<ul>
+<li><strong>Percona Operator for MySQL 1.20.0 and later</strong> runs this install script automatically when the cluster bootstraps. The component is already registered in <code>mysql.component</code> and active. You only need to configure it.</li>
+<li>
+<p><strong>Earlier Operator versions</strong> don&rsquo;t run this step automatically. Install the component manually first. Then configure it.</p>
+<p>Check whether the component is already registered before assuming which case applies:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cluster1-pxc-0<span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">'&lt;root-password&gt;'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="s2">"SELECT component_urn FROM mysql.component WHERE component_urn LIKE '%audit%';"</span>
+</code></pre></div>
+<p>An empty result means you need to install it first:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cluster1-pxc-0<span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">"mysql -uroot -p'&lt;root-password&gt;' -D mysql &lt; \</span>
+<span class="s2">  /usr/share/percona-xtradb-cluster/audit_log_filter_linux_install.sql"</span>
+</code></pre></div>
+</li>
+</ul>
+<p>Once the component is registered (automatically or manually), continue with the configuration. </p>
+<p>The steps are:</p>
 <ol>
 <li>
 <p>Edit the <code>deploy/cr.yaml</code> and set the component variables in the <code>spec.pxc.configuration</code> using dot notation and the <code>loose-</code> prefix. Pay attention that the variables use the <strong>dot notation</strong>:</p>
@@ -12048,12 +12072,11 @@ validate_password.special_char_count 1
 </li>
 </ol>
 <h2 id="mysql-plugins-components-examples-example-of-validate_password-and-audit_log_filter-together">Example of <code>validate_password</code> and <code>audit_log_filter</code> together<a class="headerlink" href="#mysql-plugins-components-examples-example-of-validate_password-and-audit_log_filter-together" title="Permanent link">&para;</a></h2>
-<p>This configuration example is for Percona XtraDB Cluster 8.4:</p>
+<p>This configuration example is for Percona XtraDB Cluster 8.4 and the Operator 1.20.0:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">pxc</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">configuration</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">      </span><span class="no">[mysqld]</span>
-<span class="w">      </span><span class="no"># audit_log_filter -- component installed by default in PXC 8.4</span>
 <span class="w">      </span><span class="no">loose-audit_log_filter.strategy=SYNCHRONOUS</span>
 <span class="w">      </span><span class="no">loose-audit_log_filter.format=JSON</span>
 <span class="w">      </span><span class="no">loose-audit_log_filter.rotate_on_size=104857600</span>

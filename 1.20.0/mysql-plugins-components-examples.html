@@ -5849,7 +5849,24 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <h2 id="audit_log_filter"><code>audit_log_filter</code><a class="headerlink" href="#audit_log_filter" title="Permanent link">&para;</a></h2>
 <p>The <code>audit_log_filter</code> records database events to an audit log for security monitoring, compliance, and activity tracking.</p>
 <h3 id="percona-xtradb-cluster-84">Percona XtraDB Cluster 8.4<a class="headerlink" href="#percona-xtradb-cluster-84" title="Permanent link">&para;</a></h3>
-<p>The <code>component_audit_log_filter</code> is installed in Percona XtraDB Cluster 8.4 by default so you only need to configure it.</p>
+<p>Percona XtraDB Cluster 8.4 container images ship the <code>component_audit_log_filter</code> component along with its install script (<code>audit_log_filter_linux_install.sql</code>).</p>
+<ul>
+<li><strong>Percona Operator for MySQL 1.20.0 and later</strong> runs this install script automatically when the cluster bootstraps. The component is already registered in <code>mysql.component</code> and active. You only need to configure it.</li>
+<li>
+<p><strong>Earlier Operator versions</strong> don&rsquo;t run this step automatically. Install the component manually first. Then configure it.</p>
+<p>Check whether the component is already registered before assuming which case applies:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cluster1-pxc-0<span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">'&lt;root-password&gt;'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="s2">"SELECT component_urn FROM mysql.component WHERE component_urn LIKE '%audit%';"</span>
+</code></pre></div>
+<p>An empty result means you need to install it first:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cluster1-pxc-0<span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">"mysql -uroot -p'&lt;root-password&gt;' -D mysql &lt; \</span>
+<span class="s2">  /usr/share/percona-xtradb-cluster/audit_log_filter_linux_install.sql"</span>
+</code></pre></div>
+</li>
+</ul>
+<p>Once the component is registered (automatically or manually), continue with the configuration. </p>
+<p>The steps are:</p>
 <ol>
 <li>
 <p>Edit the <code>deploy/cr.yaml</code> and set the component variables in the <code>spec.pxc.configuration</code> using dot notation and the <code>loose-</code> prefix. Pay attention that the variables use the <strong>dot notation</strong>:</p>
@@ -6057,12 +6074,11 @@ validate_password.special_char_count 1
 </li>
 </ol>
 <h2 id="example-of-validate_password-and-audit_log_filter-together">Example of <code>validate_password</code> and <code>audit_log_filter</code> together<a class="headerlink" href="#example-of-validate_password-and-audit_log_filter-together" title="Permanent link">&para;</a></h2>
-<p>This configuration example is for Percona XtraDB Cluster 8.4:</p>
+<p>This configuration example is for Percona XtraDB Cluster 8.4 and the Operator 1.20.0:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">pxc</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">configuration</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">      </span><span class="no">[mysqld]</span>
-<span class="w">      </span><span class="no"># audit_log_filter -- component installed by default in PXC 8.4</span>
 <span class="w">      </span><span class="no">loose-audit_log_filter.strategy=SYNCHRONOUS</span>
 <span class="w">      </span><span class="no">loose-audit_log_filter.format=JSON</span>
 <span class="w">      </span><span class="no">loose-audit_log_filter.rotate_on_size=104857600</span>
@@ -6081,7 +6097,7 @@ regardless of the installation state of either component.</p>
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 5, 2026 10:41:19 UTC">June 5, 2026</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 15, 2026 13:54:09 UTC">September 15, 2026</span>
       
         <br>
         Created:
