@@ -64,6 +64,8 @@ extra_javascript:
    - js/percona-select.js
    - js/rating.js
    - js/kapa.js
+   - js/posthog-search.js
+   - js/posthog-version.js
 #   - js/version-select.js
 #  - js/toctree.js
 #  - js/lightgallery.min.js
