@@ -17,7 +17,7 @@ Also, we will use some files from the Operator repository for setting up
 backups. So, clone the percona-xtradb-cluster-operator repository:
 
 ```bash
-git clone -b v{{ release }} git@github.com:percona/percona-xtradb-cluster-operator.git
+git clone -b v{{ release }} https://github.com/percona/percona-xtradb-cluster-operator.git
 cd percona-xtradb-cluster-operator
 ```
 
