@@ -269,7 +269,10 @@ nav:
                   - "On the same cluster": backups-restore.md
                   - "On a new cluster": backups-restore-to-new-cluster.md
               - "Delete the unneeded backup": backups-delete.md
-          - "Horizontal and vertical scaling": scaling.md
+          - Scaling and storage:
+              - "About scaling and storage": scaling-about.md
+              - "Horizontal and vertical scaling": scaling.md
+              - "Resize storage": scaling-storage-resize.md
           - "Monitor with Percona Monitoring and Management (PMM)": monitoring.md
           - "Add sidecar containers": sidecar.md
           - "Add external PersistentVolumeClaims to the Operator": external-pvc.md
