@@ -37,8 +37,7 @@ kubectl get pxc <cluster-name> -n <namespace> -o yaml
 Check the following fields in the output:
 
 * `.status.state` is `ready` (not `error` or stuck in `initializing`) 
-* the `.ready` value under
-`.status.pxc` matches the expected node count. 
+* the `.ready` value under `.status.pxc`, `.status.haproxy`, or `.status.proxysql` matches the expected count for the corresponding component.
 
 A resource change triggers a
 rolling restart of the affected component's Pods. During the restart, `.status.state`
@@ -159,7 +158,7 @@ reconcile it, the same way an unsafe `pxc.size` does:
     To go below 2, set [`unsafeFlags.proxySize`](operator.md#unsafeflagsproxysize) to `true`.
 
 
-* **Don't** scale the proxy StatefulSet directly. The Operator doesn't automatically reconcile manual changes to match the Custom Resource. This leaves the cluster out of sync with the Custom Resource until the `haproxy.size` or `proxysql.size` are changed an the Operator reconciles.
+* **Don't** scale the proxy StatefulSet directly. The Operator doesn't automatically reconcile manual changes to match the Custom Resource. This leaves the cluster out of sync with the Custom Resource until the `haproxy.size` or `proxysql.size` are changed and the Operator reconciles.
 
 ## Automated scaling
 

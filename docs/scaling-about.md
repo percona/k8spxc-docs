@@ -18,7 +18,7 @@ This page describes each approach and which one to plan before you deploy.
 | *Proxy sizing* | The number of HAProxy or ProxySQL Pods (`haproxy.size` / `proxysql.size`). | You're hitting connection bottlenecks or need proxy redundancy. |
 | *Storage scaling* | The size of the persistent volumes behind the database nodes (`pxc.volumeSpec`). | The dataset outgrows the disks. |
 
-These approaches can compliment each other — a growing workload often needs more than one at once.
+These approaches can complement each other — a growing workload often needs more than one at once.
 Vertical scaling, horizontal scaling, and proxy sizing are covered in
 [Horizontal and vertical scaling](scaling.md). Storage is covered on this page and in
 [Resize storage](scaling-storage-resize.md).
@@ -39,21 +39,12 @@ thresholds, resizing through Kubernetes' Volume Expansion capability, and manual
 for volume types or Operator versions that don't support Volume Expansion. For the full
 step-by-step procedures, see [Resize storage](scaling-storage-resize.md).
 
-### Volume attributes
-
-Some storage systems expose volume attributes such as IOPS and throughput through a
-`VolumeAttributesClass`. Check [Custom Resource options](operator.md) for whether your
-storage class supports this.
-
 ## Limitations
 
-* **Volumes cannot shrink.** Kubernetes can expand a PersistentVolumeClaim, but not reduce
-  it. The Operator rejects any spec that requests less storage than is already provisioned.
-  To move to smaller volumes, create a new cluster and restore your data. One exception
-  applies: when Volume Expansion is unavailable, you can shrink storage by deleting and
-  recreating Pods one at a time. See
-  [Manual resizing without Volume Expansion capability](scaling-storage-resize.md#manual-resizing-without-volume-expansion-capability)
-  for that procedure.
+* **Volumes cannot shrink.** Kubernetes can expand a PersistentVolumeClaim, but it cannot reduce
+  it. When Volume Expansion is unavailable, use
+  [Manual resizing](scaling-storage-resize.md#manual-resizing-without-volume-expansion-capability)
+  to recreate PVCs one at a time. Otherwise create a new cluster and restore your data.
 * Expansion depends on the storage class. A `StorageClass` without
   `allowVolumeExpansion: true` cannot grow its volumes at all. Check this before you need
   it, not during an incident.
@@ -68,9 +59,7 @@ kubectl get pxc <cluster-name> -n <namespace>
 kubectl get pvc -n <namespace>
 ```
 
-`.status.state` must return to `ready`, and PVC capacity must show the new size. A PVC
-stuck at the old size with the cluster otherwise healthy means the storage class didn't
-accept the expansion — check the PVC events.
+`.status.state` must return `ready`. After a storage change, PVC capacity must show the new size. A PVC stuck at the old size with the cluster otherwise healthy means the storage class didn't accept the expansion — check the PVC events.
 
 ## See also
 

@@ -15,8 +15,8 @@ You can also use an external autoscaler with the Operator. Enabling an external 
 disables the Operator's own automatic storage resizing. Choose one method based on your
 environment and requirements. Using both together isn't supported.
 
-For any option, the volume type must support PVC expansion. To check whether your storage
-supports expansion, run:
+Automatic resizing and resizing through Volume Expansion require a volume type that supports PVC expansion. Manual resizing is available when Volume Expansion is unavailable. To check whether your storage 
+supports volume expansion, run:
 
 ```bash
 kubectl describe sc <storage class name> | grep AllowVolumeExpansion
