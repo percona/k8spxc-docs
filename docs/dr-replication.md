@@ -27,7 +27,7 @@ Your replica site needs to connect to your primary site to replicate data from i
      Run the following command to add this configuration:
 
      ```{.json data-prompt="$" }
-     $ kubectl patch pxc cluster1 --type=merge --patch '{
+     $ kubectl patch pxc cluster1 -n <namespace> --type=merge --patch '{
        "spec": {
          "pxc": {
            "replicationChannels": [
