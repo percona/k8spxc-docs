@@ -11,7 +11,9 @@ Operator monitors storage usage and resizes storage automatically
 * [Storage resizing with Volume Expansion capability](#storage-resizing-with-volume-expansion-capability) (Operator 1.14.0+) - you set the new size in the Custom Resource and the Operator resizes the storage to match the desired size
 * [Manual resizing](#manual-resizing-without-volume-expansion-capability) — you resize storage when Volume Expansion is unavailable
 
-You can also use an external autoscaler with the Operator. Enabling an external autoscaler
+You can also use an external autoscaler with the Operator. To enable it, set the `spec.storageScaling.enableExternalAutoscaling` to `true`.
+
+Enabling an external autoscaler
 disables the Operator's own automatic storage resizing. Choose one method based on your
 environment and requirements. Using both together isn't supported.
 
