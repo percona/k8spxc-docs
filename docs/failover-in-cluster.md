@@ -37,8 +37,6 @@ Traffic rerouting depends on which proxy is in use.
     - HAProxy reroutes the *next new connection attempt* as soon as `pxc-0` stops accepting connections — this is what your application actually feels, and it happens immediately, before any formal check completes.
     - The health check itself (`check inter 10000 rise 1 fall 2`) requires the node to be the Galera primary component and synced, or an eligible donor. It runs roughly every ten seconds, so formally marking a failed node down takes up to about 12 seconds in the worst case.
 
-    Don't read the 12-second number as your application's downtime — it's the outer bound for HAProxy's own bookkeeping, not for when traffic starts moving again.
-
 === "ProxySQL, native scheduler mode"
 
     ProxySQL uses its own built-in Galera support for load balancing: a monitor thread checks each node's state roughly once a second and moves nodes between hostgroups accordingly. ProxySQL always configures a backup-writer hostgroup containing every non-writer node, so a promotion candidate is always available.
@@ -83,6 +81,8 @@ Only do this once you've confirmed the other nodes are actually down. If one of 
 
 The behavior above applies to an unplanned failure. To perform maintenance without triggering one, take a node out of rotation deliberately instead of stopping MySQL and forcing a failover.
 
+**With HAProxy, there is no equivalent drain command.** HAProxy routes based only on its health check, and the Operator does not expose a supported way to mark a node down manually ahead of maintenance. The safe path is to let the health check do its job: perform your maintenance, and if it requires stopping MySQL, expect HAProxy to treat it as an unplanned failure. This includes the failback session drop when the node comes back (see [What to expect](#what-to-expect) above).
+
 **With ProxySQL** in either mode, use `pxc_maint_mode`:
 
 ```{sql data-prompt="mysql> "}
@@ -96,8 +96,6 @@ mysql> SET GLOBAL pxc_maint_mode='DISABLED';
 ```
 
 `pxc_maint_mode` does not persist across a MySQL restart. If maintenance includes restarting the node, also set the variable in `my.cnf` before the restart, and remove it once the node is back in rotation.
-
-**With HAProxy, there is no equivalent drain command.** HAProxy routes based only on its health check, and the Operator does not expose a supported way to mark a node down manually ahead of maintenance. The safe path is to let the health check do its job: perform your maintenance, and if it requires stopping MySQL, expect HAProxy to treat it as an unplanned failure. This includes the failback session drop when the node comes back (see [What to expect](#what-to-expect) above).
 
 **Without a proxy, on Galera directly**, use `wsrep_desync` to exempt a node from flow control during a long-running operation:
 
