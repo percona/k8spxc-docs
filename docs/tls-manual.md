@@ -142,19 +142,38 @@ Once your cluster is running with these certificates, see [Update certificates](
 
 The Operator applies whatever Secret `sslSecretName` and `sslInternalSecretName` point to without validating it, and without logging or reporting whether the certificate is well-formed or correctly paired with its CA. A malformed certificate, or one that doesn't match its CA or private key, can be accepted silently — the cluster can report `Ready` with nothing in the logs or Kubernetes Events to indicate a problem.
 
-Always confirm the certificate actually served matches what you provided. Check what the proxy presents during a live handshake:
+Always confirm the certificate actually served matches what you provided. Check what the proxy presents during a live handshake. The cluster's hostnames only resolve from inside the cluster's network, so run the check from a temporary pod:
+
+```bash
+kubectl run -n <namespace> -i --rm --tty tls-debug --image=percona/percona-xtradb-cluster:{{pxc84recommended}} --restart=Never -- bash -il
+```
+
+Inside that pod, run:
 
 ```bash
 openssl s_client -starttls mysql -connect cluster1-haproxy.<namespace>:3306 -showcerts < /dev/null 2>/dev/null \
   | openssl x509 -noout -subject -serial -fingerprint -sha256
 ```
 
-Compare the output against the certificate in your Secret:
+Compare the output against the certificate in your Secret. Which Secret to check depends on the proxy deployed in your cluster:
 
-```bash
-kubectl get secret cluster1-ssl -n <namespace> -o jsonpath='{.data.tls\.crt}' \
-  | base64 -d | openssl x509 -noout -subject -serial -fingerprint -sha256
-```
+=== "HAProxy"
+
+    With HAProxy, client connections are served the internal certificate, not the external one. HAProxy passes the TLS handshake through to the PXC node itself instead of terminating it, so the node's own (internal) certificate is what the client sees. Compare against the Secret you set in `sslInternalSecretName`:
+
+    ```bash
+    kubectl get secret cluster1-ssl-internal -n <namespace> -o jsonpath='{.data.tls\.crt}' \
+      | base64 -d | openssl x509 -noout -subject -serial -fingerprint -sha256
+    ```
+
+=== "ProxySQL"
+
+    With ProxySQL, client connections are served the external certificate. Compare against the Secret you set in `sslSecretName`:
+
+    ```bash
+    kubectl get secret cluster1-ssl -n <namespace> -o jsonpath='{.data.tls\.crt}' \
+      | base64 -d | openssl x509 -noout -subject -serial -fingerprint -sha256
+    ```
 
 The subject, serial, and fingerprint must match. If they don't, check your Secret for a mismatched CA, certificate, or key before assuming the configuration is broken elsewhere.
 

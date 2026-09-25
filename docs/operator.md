@@ -1850,7 +1850,7 @@ configuration options for the ProxySQL daemon.
 
 Enables or disables [load balancing with ProxySQL :octicons-link-external-16:](https://docs.percona.com/percona-xtradb-cluster/8.4/load-balance-proxysql.html) Services. 
 
-You can also switch to ProxySQL on a running cluster starting with OPerator 1.19.0. See [Switching from one proxy to another](proxy-switching.md).
+You can also switch to ProxySQL on a running cluster starting with Operator 1.19.0. See [Switching from one proxy to another](proxy-switching.md).
 
 | Value type  | Example    |
 | ----------- | ---------- |

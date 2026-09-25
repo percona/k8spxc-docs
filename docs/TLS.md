@@ -6,7 +6,7 @@ Security (TLS) cryptographic protocol for the following types of communication:
 | Certificate | Secures | Used by |
 | --- | --- | --- |
 | External (`sslSecretName`) | Client-to-proxy connections | ProxySQL only |
-| Internal (`sslInternalSecretName`) | Node-to-node Galera traffic. This certificate also serves as an authorization method | Every Pecrona XtraDB Cluster node and HAProxy. HAProxy passes the TLS handshake through to the PXC node instead of terminating it, so client connections through HAProxy are secured by the internal certificate, not the external one. |
+| Internal (`sslInternalSecretName`) | Node-to-node Galera traffic. This certificate also serves as an authorization method | Every Percona XtraDB Cluster node and HAProxy. HAProxy passes the TLS handshake through to the PXC node instead of terminating it, so client connections through HAProxy are secured by the internal certificate, not the external one. |
 
 ## TLS certificates
 
