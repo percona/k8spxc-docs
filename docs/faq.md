@@ -217,11 +217,7 @@ From the other side, utilizing HAProxy for the service is the easier way to go,
 and getting use of the ProxySQL level 7 specifics requires good understanding of
 Kubernetes and ProxySQL.
 
-You can enable ProxySQL only at cluster creation time. Otherwise you will be 
-able to use HAProxy only. The switch from HAProxy to ProxySQL is not possible,
-because ProxySQL does not yet support [caching_sha2_password :octicons-link-external-16:](https://dev.mysql.com/doc/refman/8.0/en/caching-sha2-pluggable-authentication.html)
-MySQL authentication plugin used by the Operator by default instead of the older
-[mysql_native_password :octicons-link-external-16:](https://dev.mysql.com/doc/refman/8.0/en/native-pluggable-authentication.html) one.
+You can switch between HAProxy and ProxySQL on a running cluster starting with Operator version 1.19.0. See [Switching from one proxy to another](proxy-switching.md) for the steps and version requirements.
 
 See more detailed functionality and performance comparison of using the Operator
 with both solutions in [this blog post :octicons-link-external-16:](https://www.percona.com/blog/2021/01/11/percona-kubernetes-operator-for-percona-xtradb-cluster-haproxy-or-proxysql/).
