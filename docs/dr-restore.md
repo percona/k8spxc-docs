@@ -109,3 +109,26 @@ The newly deployed site with `cluster1` is now the working copy of the current p
 
 To do this, configure the replication channels on both sites. Refer to the [Configure replication between the sites](dr-replication.md) section for the steps.
 
+Before using `cluster1` as the new primary, make sure its promotion was successful. 
+
+1. Check the Galera status on every node of `cluster1`, not just one:
+
+    ```{sql data-prompt="mysql> "}
+    mysql> SHOW STATUS LIKE 'wsrep_cluster_status';
+    mysql> SHOW STATUS LIKE 'wsrep_local_state_comment';
+    mysql> SHOW STATUS LIKE 'wsrep_ready';
+    mysql> SHOW VARIABLES LIKE 'read_only';
+    ```
+
+    Make sure every nide reports the following:
+	
+	* `wsrep_cluster_status = Primary`
+	* `wsrep_local_state_comment = Synced`
+	* `wsrep_ready = ON`
+	* `read_only = OFF`
+
+2. Confirm a write succeeds through the client-facing endpoint your application uses, not a direct connection to a single Pod:
+
+    ```{sql data-prompt="mysql> "}
+    mysql> INSERT INTO <your_table> VALUES (...);
+    ```

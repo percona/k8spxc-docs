@@ -85,7 +85,7 @@ markdown_extensions:
   pymdownx.mark: {}
   pymdownx.smartsymbols: {}
   pymdownx.tilde: {}
-  pymdownx.superfences: 
+  pymdownx.superfences:
     custom_fences:
       - name: mermaid
         class: mermaid
@@ -112,12 +112,12 @@ markdown_extensions:
 
 plugins:
   section-index: {}
-  search: 
+  search:
     separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
   git-revision-date-localized:
     enable_creation_date: true
     enabled: !ENV [ENABLED_GIT_REVISION_DATE, True]
-  git-committers: 
+  git-committers:
     enabled: !ENV [CI, false]
     repository: percona/k8spxc-docs
     branch: "main"
@@ -164,7 +164,7 @@ extra:
   version:
     provider: mike
 
-  
+
 
 # Pages excluded from navigation
 
@@ -178,7 +178,7 @@ nav:
     - Features:
           - "Design and architecture": architecture.md
           - "Comparison with other solutions": compare.md
-          
+
     - Quickstart guides:
           - Overview: quickstart.md
           - 1. Quick install:
@@ -189,7 +189,7 @@ nav:
           - 4. Make a backup: backup-tutorial.md
           - 5. Monitor the database with PMM: monitoring-tutorial.md
           - what-next.md
-          
+
     - Installation:
           - "System requirements": System-Requirements.md
           - "Install on Minikube": minikube.md
@@ -205,7 +205,7 @@ nav:
           - "About upgrades": update.md
           - "Upgrade CRD and the Operator": update-operator.md
           - "Database upgrade overview": update-db.md
-          - Minor upgrade: 
+          - Minor upgrade:
             - "To a specific version": update-minor-set-version.md
             - "Automatic minor upgrades": update-automatic.md
             - "Manual upgrade": update_manually.md
@@ -234,14 +234,17 @@ nav:
           - Logging:
               - "Persistent logging": persistent-logging.md
               - "Log rotation": log-rotation.md
-          - Workload transfer and disaster recovery: 
-             - "Overview": dr.md
-             - dr-primary.md
-             - dr-replica.md
-             - dr-replication.md
-             - dr-failover.md
-             - dr-restore.md
-          - "Transport Encryption (TLS/SSL)": 
+          - Failover and high availability:
+             - "Overview": failover-about.md
+             - "In-cluster failover": failover-in-cluster.md
+             - Multi-site disaster recovery:
+                - "Overview": dr.md
+                - dr-primary.md
+                - dr-replica.md
+                - dr-replication.md
+                - dr-failover.md
+                - dr-restore.md
+          - "Transport Encryption (TLS/SSL)":
              - "About TLS / SSL security": TLS.md
              - "Install and use the cert-manager": tls-cert-manager.md
              - "Generate certificates manually": tls-manual.md
@@ -254,7 +257,7 @@ nav:
             - "Configure data at rest encryption with TLS": encryption-setup-tls.md
           - "Telemetry": telemetry.md
           - reconciliation-concurrency.md
-          
+
     - Management:
           - Backup and restore:
               - "About backups": backups.md
@@ -276,7 +279,7 @@ nav:
           - "Restart or pause the cluster": pause.md
           - "Crash recovery": recovery.md
           - data-source.md
-          
+
     - Troubleshooting:
           - "Initial troubleshooting": debug.md
           - "Exec into the container": debug-shell.md
@@ -284,9 +287,9 @@ nav:
           - "Check the logs": debug-logs.md
           - "Check storage": debug-storage.md
           - "Special debug images": debug-images.md
-          
+
     - HOWTOs:
-          - Install the database with customized parameters: custom-install.md 
+          - Install the database with customized parameters: custom-install.md
           - "Provide Percona Operator for MySQL single-namespace and multi-namespace deployment": cluster-wide.md
           - "How to use private registry": custom-registry.md
           - "How to use backups and asynchronous replication to move an external database to Kubernetes": backups-move-from-external-db.md
