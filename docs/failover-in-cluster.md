@@ -81,7 +81,7 @@ Only do this once you've confirmed the other nodes are actually down. If one of 
 
 The behavior above applies to an unplanned failure. To perform maintenance without triggering one, take a node out of rotation deliberately instead of stopping MySQL and forcing a failover.
 
-**With HAProxy, there is no equivalent drain command.** HAProxy routes based only on its health check, and the Operator does not expose a supported way to mark a node down manually ahead of maintenance. The safe path is to let the health check do its job: perform your maintenance, and if it requires stopping MySQL, expect HAProxy to treat it as an unplanned failure. This includes the failback session drop when the node comes back (see [What to expect](#what-to-expect) above).
+**With HAProxy**, expect maintenance to be treated as an unplanned failure. There's no supported way to drain a node ahead of time. Perform your maintenance, and if it requires stopping MySQL, HAProxy's health check will react to it as a failure. This includes the failback session drop when the node comes back (see [What to expect](#what-to-expect) above).
 
 **With ProxySQL** in either mode, use `pxc_maint_mode`:
 
