@@ -107,7 +107,41 @@ The steps are the following:
 
 The newly deployed site with `cluster1` is now the working copy of the current primary `cluster2`. It's time to configure it back as the primary site.
 
+### Check the replica before you promote it
+
+Before you promote `cluster1`, confirm it applied everything `cluster2` sent it, and that the cluster itself is healthy.
+
+1. Check the replication status on `cluster1`:
+
+    ```{sql data-prompt="mysql> "}
+    mysql> SHOW REPLICA STATUS\G
+    ```
+
+    Confirm `Executed_Gtid_Set` matches `Retrieved_Gtid_Set`. This shows `cluster1` already applied every event it retrieved from `cluster2`, with nothing left queued.
+
+2. Check the Galera status on every node of `cluster1`, not just one:
+
+    ```{sql data-prompt="mysql> "}
+    mysql> SHOW STATUS LIKE 'wsrep_cluster_status';
+    mysql> SHOW STATUS LIKE 'wsrep_local_state_comment';
+    mysql> SHOW STATUS LIKE 'wsrep_ready';
+    mysql> SHOW VARIABLES LIKE 'read_only';
+    ```
+
+    Look for the following on every node:
+
+    * `wsrep_cluster_status = Primary`
+    * `wsrep_local_state_comment = Synced`
+    * `wsrep_ready = ON`
+    * `read_only = ON`
+
+    `read_only = ON` is expected here, since `cluster1` is still running as the replica.
+
+### Promote cluster1 to primary
+
 To do this, configure the replication channels on both sites. Refer to the [Configure replication between the sites](dr-replication.md) section for the steps.
+
+### Check that the promotion is successful
 
 Before using `cluster1` as the new primary, make sure its promotion was successful. 
 
@@ -120,7 +154,7 @@ Before using `cluster1` as the new primary, make sure its promotion was successf
     mysql> SHOW VARIABLES LIKE 'read_only';
     ```
 
-    Make sure every nide reports the following:
+    Make sure every node reports the following:
 	
 	* `wsrep_cluster_status = Primary`
 	* `wsrep_local_state_comment = Synced`
