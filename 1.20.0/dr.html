@@ -19,7 +19,7 @@
         <link rel="canonical" href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/dr.html">
       
       
-        <link rel="prev" href="log-rotation.html">
+        <link rel="prev" href="failover-in-cluster.html">
       
       
         <link rel="next" href="dr-primary.html">
@@ -2292,7 +2292,7 @@
   <span class="md-ellipsis">
     
   
-    Workload transfer and disaster recovery
+    Failover and high availability
   
 
     
@@ -2308,7 +2308,112 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Workload transfer and disaster recovery
+    Failover and high availability
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="failover-about.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="failover-in-cluster.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    In-cluster failover
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_12_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7_12_3" id="__nav_7_12_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-site disaster recovery
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_7_12_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7_12_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Multi-site disaster recovery
   
 
           </label>
@@ -2535,6 +2640,14 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -5734,6 +5847,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p>If the primary site goes down, you need a way to move the workload to the backup site so that users won&rsquo;t notice anything. </p>
 <p>Once the primary site is fixed, you can move the services back to it.</p>
 <p>This guide explains how to set up a disaster recovery system and transfer workloads between sites when something goes wrong.</p>
+<p>If you&rsquo;re dealing with a single node or the primary Pod going down inside one running cluster, see <a href="failover-in-cluster.html">In-cluster failover</a> instead. </p>
 <h2 id="assumptions">Assumptions<a class="headerlink" href="#assumptions" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
@@ -5743,6 +5857,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><code>cluster1</code> is the PXC on the primary site </li>
 <li><code>cluster2</code> is the PXC on the replica site</li>
 </ul>
+</li>
+<li>
+<p>In this setup we deploy clusters in different namespaces in the same Kubernetes cluster. Each cluster requires its own Operator Deployment. By default, the Operator only watches its own namespace (<code>WATCH_NAMESPACE</code>), so a single Operator Deployment can&rsquo;t manage both sites.</p>
 </li>
 <li>
 <p>The primary and replica sites must be identical. The easiest way to achieve this is to make a backup on the primary site and restore it on the replica. </p>
@@ -5756,7 +5873,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="August 14, 2025 13:00:04 UTC">August 14, 2025</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 30, 2026 09:09:08 UTC">September 30, 2026</span>
       
         <br>
         Created:

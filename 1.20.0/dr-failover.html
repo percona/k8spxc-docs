@@ -2292,7 +2292,7 @@
   <span class="md-ellipsis">
     
   
-    Workload transfer and disaster recovery
+    Failover and high availability
   
 
     
@@ -2308,7 +2308,112 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Workload transfer and disaster recovery
+    Failover and high availability
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="failover-about.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="failover-in-cluster.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    In-cluster failover
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_12_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7_12_3" id="__nav_7_12_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-site disaster recovery
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_7_12_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7_12_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Multi-site disaster recovery
   
 
           </label>
@@ -2442,6 +2547,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Promote the replica site to a new primary
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="dr-failover.html" class="md-nav__link md-nav__link--active">
         
   
@@ -2458,6 +2581,69 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#check-the-replica-before-you-promote-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check the replica before you promote it
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#promote-the-replica-to-primary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Promote the replica to primary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-that-the-promotion-is-successful" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check that the promotion is successful
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#delete-the-previous-primary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delete the previous primary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2487,6 +2673,14 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -5633,6 +5827,58 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#check-the-replica-before-you-promote-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check the replica before you promote it
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#promote-the-replica-to-primary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Promote the replica to primary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-that-the-promotion-is-successful" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check that the promotion is successful
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#delete-the-previous-primary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delete the previous primary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -5664,7 +5910,33 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 
 <h1 id="promote-the-replica-site-to-a-new-primary">Promote the replica site to a new primary<a class="headerlink" href="#promote-the-replica-site-to-a-new-primary" title="Permanent link">&para;</a></h1>
 <p>Let&rsquo;s say the primary site with <code>cluster1</code> is down. The client applications have automatically switched to the replica site. Now you need to reconfigure your setup to make <code>cluster2</code> on the replica site a new primary and have it handle the load.</p>
-<p>Here&rsquo;s how to do it:</p>
+<h2 id="check-the-replica-before-you-promote-it">Check the replica before you promote it<a class="headerlink" href="#check-the-replica-before-you-promote-it" title="Permanent link">&para;</a></h2>
+<p>Before you promote <code>cluster2</code>, confirm it applied everything <code>cluster1</code> sent it, and that the cluster itself is healthy.</p>
+<ol>
+<li>
+<p>Check the replication status on <code>cluster2</code>:</p>
+<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; SHOW REPLICA STATUS\G
+</code></pre></div>
+<p>Confirm <code>Executed_Gtid_Set</code> matches <code>Retrieved_Gtid_Set</code>. This shows <code>cluster2</code> already applied every event it retrieved from <code>cluster1</code>, with nothing left queued.</p>
+</li>
+<li>
+<p>Check the Galera status on every node of <code>cluster2</code>, not just one:</p>
+<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; SHOW STATUS LIKE 'wsrep_cluster_status';
+mysql&gt; SHOW STATUS LIKE 'wsrep_local_state_comment';
+mysql&gt; SHOW STATUS LIKE 'wsrep_ready';
+mysql&gt; SHOW VARIABLES LIKE 'read_only';
+</code></pre></div>
+<p>Look for the following on every node:</p>
+<ul>
+<li><code>wsrep_cluster_status = Primary</code></li>
+<li><code>wsrep_local_state_comment = Synced</code></li>
+<li><code>wsrep_ready = ON</code></li>
+<li><code>read_only = ON</code></li>
+</ul>
+<p><code>read_only = ON</code> is expected here, since <code>cluster2</code> is still running as the replica.</p>
+</li>
+</ol>
+<h2 id="promote-the-replica-to-primary">Promote the replica to primary<a class="headerlink" href="#promote-the-replica-to-primary" title="Permanent link">&para;</a></h2>
 <ol>
 <li>
 <p>Modify the replication channel for <code>cluster2</code> within the <code>deploy/cr.yaml</code> file:</p>
@@ -5687,16 +5959,37 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </code></pre></div>
 <p>Now <code>cluster2</code> acts as the primary site.</p>
 </li>
-<li>
-<p>While the old primary site is unavailable, <code>cluster1</code> no longer has up-to-date data. So you can delete it. Refer to the <a href="delete.html#delete-the-database-cluster">Delete the database cluster</a> tutorial for the steps how to do it.</p>
-</li>
 </ol>
+<h2 id="check-that-the-promotion-is-successful">Check that the promotion is successful<a class="headerlink" href="#check-that-the-promotion-is-successful" title="Permanent link">&para;</a></h2>
+<p>Confirm that <code>cluster2</code> is genuinely serving as the primary before you do anything irreversible to <code>cluster1</code>.</p>
+<p>Check the Galera status on every node of <code>cluster2</code>, not just one:</p>
+<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; SHOW STATUS LIKE 'wsrep_cluster_status';
+mysql&gt; SHOW STATUS LIKE 'wsrep_local_state_comment';
+mysql&gt; SHOW STATUS LIKE 'wsrep_ready';
+mysql&gt; SHOW VARIABLES LIKE 'read_only';
+</code></pre></div>
+<p>Look for the following on every node:</p>
+<ul>
+<li><code>wsrep_cluster_status = Primary</code></li>
+<li><code>wsrep_local_state_comment = Synced</code></li>
+<li><code>wsrep_ready = ON</code></li>
+<li><code>read_only = OFF</code> </li>
+</ul>
+<p>Then confirm that a write succeeds through the client-facing endpoint your application uses, not a direct connection to a single Pod:</p>
+<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; INSERT INTO &lt;your_table&gt; VALUES (...);
+</code></pre></div>
+<h2 id="delete-the-previous-primary">Delete the previous primary<a class="headerlink" href="#delete-the-previous-primary" title="Permanent link">&para;</a></h2>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Do this step only after you confirmed that the new primary is successfully promoted and correctly serves the write requests.</p>
+</div>
+<p>While the old primary site is unavailable, <code>cluster1</code> no longer has up-to-date data. Once you&rsquo;ve confirmed <code>cluster2</code> is serving writes correctly, you can delete it. Refer to the <a href="delete.html#delete-the-database-cluster">Delete the database cluster</a> tutorial for the steps how to do it.</p>
 <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="February 9, 2026 13:11:35 UTC">February 9, 2026</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 30, 2026 09:09:08 UTC">September 30, 2026</span>
       
         <br>
         Created:

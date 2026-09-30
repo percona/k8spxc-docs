@@ -10,19 +10,19 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Our documentation guides are packed with information, but they can’t cover everything you need to know about Percona Operator for MySQL Based on Percona XtraDB Cluster. They also won’t cover every scenario you might come across. Don’t be afraid to try things out and ask questions when you get stuck.">
+        <meta name="description" content="A node running Percona XtraDB Cluster can fail at any time — a Pod restart, a node drain, or the primary Pod going down. The rest of the cluster stays up, and the Operator and the proxy in front of it recover the failed node automatically in most cases.">
       
       
         <meta name="author" content="Percona LLC">
       
       
-        <link rel="canonical" href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/get-help.html">
+        <link rel="canonical" href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/failover-in-cluster.html">
       
       
-        <link rel="prev" href="index.html">
+        <link rel="prev" href="failover-about.html">
       
       
-        <link rel="next" href="architecture.html">
+        <link rel="next" href="dr.html">
       
       
         
@@ -50,7 +50,7 @@
 
     
       
-        <title>Get help from Percona - Percona Operator for MySQL based on Percona XtraDB Cluster</title>
+        <title>In-cluster failover - Percona Operator for MySQL based on Percona XtraDB Cluster</title>
       
     
     
@@ -120,7 +120,7 @@
                  
                  
                   <meta property="og:type" content="website" />
-                  <meta property="og:title" content="Percona Operator for MySQL based on Percona XtraDB Cluster - Get help from Percona" />
+                  <meta property="og:title" content="Percona Operator for MySQL based on Percona XtraDB Cluster - In-cluster failover" />
                   <meta property="og:image"
                     content="https://docs.percona.com/percona-operator-for-xtradb-cluster/assets/images/kubernetes-operators.png">
                   <meta property="og:url" content="https://docs.percona.com/percona-operator-for-xtradb-cluster/">
@@ -148,7 +148,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#get-help-from-percona" class="md-skip">
+        <a href="#in-cluster-failover" class="md-skip">
           Skip to content
         </a>
       
@@ -225,7 +225,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Get help from Percona
+              In-cluster failover
             
           </span>
         </div>
@@ -415,37 +415,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Get help from Percona
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="get-help.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="get-help.html" class="md-nav__link">
         
   
   
@@ -461,48 +434,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#perconas-community-forum" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Percona&rsquo;s Community Forum
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#percona-experts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Percona experts
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1565,18 +1496,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
         
           
           <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
@@ -1597,7 +1530,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2336,18 +2269,20 @@
                 
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_12" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_12" checked>
         
           
           <label class="md-nav__link" for="__nav_7_12" id="__nav_7_12_label" tabindex="0">
@@ -2368,7 +2303,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_12_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_12_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_7_12">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2411,10 +2346,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="failover-in-cluster.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    In-cluster failover
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="failover-in-cluster.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -2430,6 +2392,131 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How it works
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How it works">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pod-recreation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pod recreation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rejoining-the-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rejoining the cluster
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#traffic-rerouting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Traffic rerouting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-to-expect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What to expect
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#take-a-node-out-of-rotation-for-maintenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Take a node out of rotation for maintenance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verify-a-failover-completed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify a failover completed
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-not-to-do" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What not to do
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See also
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -5756,7 +5843,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
                     <div data-banner="data-banner" class="edit-contrib-banner">
     <div class="banner-content">
       <!-- Edit link centered -->
-      <a href="https://github.com/percona/k8spxc-docs/edit/main/docs/get-help.md" title="Edit this page on GitHub" class="edit-page-link">
+      <a href="https://github.com/percona/k8spxc-docs/edit/main/docs/failover-in-cluster.md" title="Edit this page on GitHub" class="edit-page-link">
         <span class="edit-page-icon">
           
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
@@ -5806,10 +5893,60 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#perconas-community-forum" class="md-nav__link">
+  <a href="#how-it-works" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Percona&rsquo;s Community Forum
+        How it works
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How it works">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pod-recreation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pod recreation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rejoining-the-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rejoining the cluster
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#traffic-rerouting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Traffic rerouting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-to-expect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What to expect
       
     </span>
   </a>
@@ -5817,10 +5954,43 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </li>
       
         <li class="md-nav__item">
-  <a href="#percona-experts" class="md-nav__link">
+  <a href="#take-a-node-out-of-rotation-for-maintenance" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Percona experts
+        Take a node out of rotation for maintenance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verify-a-failover-completed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify a failover completed
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-not-to-do" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What not to do
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See also
       
     </span>
   </a>
@@ -5851,61 +6021,131 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     
       
     
-    <a href="https://github.com/percona/k8spxc-docs/raw/main/docs/get-help.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/percona/k8spxc-docs/raw/main/docs/failover-in-cluster.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
     </a>
   
 
 
-<h1 id="get-help-from-percona">Get help from Percona<a class="headerlink" href="#get-help-from-percona" title="Permanent link">&para;</a></h1>
-<p>Our documentation guides are packed with information, but they can’t cover everything you need to know about Percona Operator for MySQL Based on Percona XtraDB Cluster. They also won’t cover every scenario you might come across. Don’t be afraid to try things out and ask questions when you get stuck.</p>
-<h2 id="perconas-community-forum">Percona&rsquo;s Community Forum<a class="headerlink" href="#perconas-community-forum" title="Permanent link">&para;</a></h2>
-<p>Be a part of a space where you can tap into a wealth of knowledge from other database enthusiasts and experts who work with Percona’s software every day. While our service is entirely free, keep in mind that response times can vary depending on the complexity of the question. You are engaging with people who genuinely love solving database challenges.</p>
-<p>We recommend visiting our <a href="https://forums.percona.com/t/welcome-to-perconas-community-forum/7" target="_blank">Community Forum</a>. It’s an excellent place for discussions, technical insights, and support around Percona database software. If you’re new and feeling a bit unsure, our <a href="https://forums.percona.com/faq" target="_blank">FAQ</a> and <a href="https://forums.percona.com/t/faq-guide-for-new-users/8562" target="_blank">Guide for New Users</a> ease you in.</p>
-<p>If you have thoughts, feedback, or ideas, the community team would like to hear from you at <a href="https://forums.percona.com/t/any-ideas-on-how-to-make-the-forum-better/11522" target="blank">Any ideas on how to make the forum better?</a>. We’re always excited to connect and improve everyone&rsquo;s experience.</p>
-<h2 id="percona-experts">Percona experts<a class="headerlink" href="#percona-experts" title="Permanent link">&para;</a></h2>
-<p>Percona experts bring years of experience in tackling tough database performance issues and design challenges.</p>
-<div data-tf-live="01JKGYCWAND5C0GZRTZ548CRYA"></div>
-<script src="//embed.typeform.com/next/embed.js"></script>
-<p>We understand your challenges when managing complex database environments. That&rsquo;s why we offer various services to help you simplify your operations and achieve your goals.</p>
-<table>
-<thead>
-<tr>
-<th>Service</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>24/7 Expert Support</td>
-<td>Our dedicated team of database experts is available 24/7 to assist you with any database issues. We provide flexible support plans tailored to your specific needs.</td>
-</tr>
-<tr>
-<td>Hands-On Database Management</td>
-<td>Our managed services team can take over the day-to-day management of your database infrastructure, freeing up your time to focus on other priorities.</td>
-</tr>
-<tr>
-<td>Expert Consulting</td>
-<td>Our experienced consultants provide guidance on database topics like architecture design, migration planning, performance optimization, and security best practices.</td>
-</tr>
-<tr>
-<td>Comprehensive Training</td>
-<td>Our training programs help your team develop skills to manage databases effectively, offering virtual and in-person courses.</td>
-</tr>
-</tbody>
-</table>
-<p>We&rsquo;re here to help you every step of the way. Whether you need a quick fix or a long-term partnership, we&rsquo;re ready to provide your expertise and support.</p>
+<h1 id="in-cluster-failover">In-cluster failover<a class="headerlink" href="#in-cluster-failover" title="Permanent link">&para;</a></h1>
+<p>A node running Percona XtraDB Cluster can fail at any time — a Pod restart, a node drain, or the primary Pod going down. The rest of the cluster stays up, and the Operator and the proxy in front of it recover the failed node automatically in most cases.</p>
+<p>This page covers what to expect when a node fails and how to confirm recovery completed. For failover when an entire site goes down, see <a href="dr.html">Set up disaster recovery</a> instead.</p>
+<h2 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
+<p>Restoring a single failed node is fully automatic:</p>
+<ol>
+<li>The Operator detects the failure and recreates the failed Pod.</li>
+<li>The recreated Pod rejoins the cluster and catches up on the data it missed while it was down.</li>
+<li>The proxy reroutes writes to the surviving nodes.</li>
+</ol>
+<p>Even though recovery is automatic, there are some behaviors that affect your application. See <a href="#what-to-expect">What to expect</a> for more details, and <a href="#verify-a-failover-completed">Verify a failover completed</a> to confirm recovery actually completed.</p>
+<h3 id="pod-recreation">Pod recreation<a class="headerlink" href="#pod-recreation" title="Permanent link">&para;</a></h3>
+<p>Kubernetes probes drive recovery independently of the proxy. The <code>readiness-check.sh</code> script removes a Pod from the Service as soon as it stops being the Primary or a synced or donor node. The <code>liveness-check.sh</code> script restarts a Pod that stays stuck in that state.</p>
+<h3 id="rejoining-the-cluster">Rejoining the cluster<a class="headerlink" href="#rejoining-the-cluster" title="Permanent link">&para;</a></h3>
+<p>The recreated Pod rejoins the cluster and catches up on the data it missed while it was down. Galera does this via SST (State Snapshot Transfer), making a full data copy from a healthy node acting as donor. When the gap is small enough, Galera uses IST (Incremental State Transfer) as a faster way to catch up. The time it takes to catch up depends on the size of the gap and the network conditions.</p>
+<p>The node providing SST is called the <em>donor</em>. While it is donating, its <code>wsrep_local_state_comment</code> shows <code>Donor/Desynced</code>. This also matters during a typical single-node restart. If the gap is large enough to require a full SST, the healthy node that the Operator selects as donor will temporarily fail HAProxy&rsquo;s health check. As a result, this donor node can drop out of HAProxy rotation for the entire duration of the SST. This issue affects not only the node that is rejoining, but also the donor node itself.</p>
+<h3 id="traffic-rerouting">Traffic rerouting<a class="headerlink" href="#traffic-rerouting" title="Permanent link">&para;</a></h3>
+<p>Traffic rerouting depends on which proxy is in use.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">HAProxy</label><label for="__tabbed_1_2">ProxySQL, native scheduler mode</label><label for="__tabbed_1_3">ProxySQL, external scheduler mode</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>HAProxy always treats <code>&lt;cluster&gt;-pxc-0</code> as the only non-backup server. Every other node is a <code>backup</code> server that receives traffic only if <code>pxc-0</code> fails its health check.</p>
+<p>Two different things happen on two different timelines:</p>
+<ul>
+<li>HAProxy reroutes the <em>next new connection attempt</em> as soon as <code>pxc-0</code> stops accepting connections — this is what your application actually feels, and it happens immediately, before any formal check completes.</li>
+<li>The health check itself (<code>check inter 10000 rise 1 fall 2</code>) requires the node to be the Galera primary component and synced, or an eligible donor. It runs roughly every ten seconds, so formally marking a failed node down takes up to about 12 seconds in the worst case.</li>
+</ul>
+</div>
+<div class="tabbed-block">
+<p>ProxySQL uses its own built-in Galera support for load balancing: a monitor thread checks each node&rsquo;s state roughly once a second and moves nodes between hostgroups accordingly. ProxySQL always configures a backup-writer hostgroup containing every non-writer node, so a promotion candidate is always available.</p>
+<p>Unlike HAProxy, this mode does not pin a preferred Pod. All nodes get equal connection weight, and the Operator elects the initial writer automatically — do not assume it will be <code>pxc-0</code>.</p>
+</div>
+<div class="tabbed-block">
+<p>When an <a href="proxysql-conf.html#proxysql-scheduler-tech-preview">external scheduler</a> is enabled, ProxySQL elects a single writer dynamically instead of relying on native Galera hostgroups. It uses settings such as <code>activeFailover=1</code>, <code>singlePrimary=true</code>, and <code>maxNumWriters=1</code>.</p>
+<p>This mode&rsquo;s single-writer guarantee is not absolute at every instant. During a failover cycle, there can be a brief window where two nodes are both marked online as writer at once. This is a normal, transient part of how the scheduler re-elects a writer, not a malfunction. However, an application that assumes exactly one writer is reachable at all times should not treat this mode&rsquo;s guarantee as instantaneous.</p>
+</div>
+</div>
+</div>
+<h2 id="what-to-expect">What to expect<a class="headerlink" href="#what-to-expect" title="Permanent link">&para;</a></h2>
+<p>Automatic recovery handles the failure itself. Two behaviors are not obvious from the mechanics above, and both can affect your application directly.</p>
+<p><strong>Failback forcibly closes the active session.</strong> When <code>pxc-0</code> recovers, HAProxy does not leave traffic on the backup node it failed over to. It forcibly closes the session using the backup node and forces reconnection to <code>pxc-0</code>, typically within about two seconds of <code>pxc-0</code> being marked healthy again. You may see the following error for a client that wasconnected to the backup node and then failed:</p>
+<div class="no-copy highlight"><pre><span></span><code>ERROR 2013 (HY000): Lost connection to MySQL server during query
+</code></pre></div>
+<p>This can happen <em>after</em> <code>kubectl get pxc</code> already reports the cluster as <code>ready</code>. Cluster-ready status confirms the Operator reconciled, not that every existing connection is still valid. Design your application to reconnect on error rather than treat a long-lived connection as safe.</p>
+<p><strong>Losing two of three nodes is a Galera-level failure, not just a proxy one.</strong> If a cluster loses two of three nodes at once, the survivor no longer has a majority of the cluster&rsquo;s last known membership, so by default Galera takes it out of the Primary Component. Once that happens, the node stops accepting <em>any</em> query, including both reads and writes, and returns an error like this:</p>
+<div class="no-copy highlight"><pre><span></span><code>ERROR 1047 (08S01): WSREP has not yet prepared node for application use
+</code></pre></div>
+<p>Once the survivor node rejoins a Primary Component and starts acting as SST donor for the returning nodes, it enters the <code>Donor</code> state. HAProxy&rsquo;s default health check won&rsquo;t route to a Donor node. You can set the <code>OK_IF_DONOR</code> environment variable to allow HAProxy to route to a Donor node. However, this does nothing while the survivor is still non-Primary. This is a Galera quorum issue, and no proxy setting can route around a node refusing queries at the database layer.</p>
+<p>Recovery from the non-Primary state is usually automatic. Once the other two nodes are recreated and can reach the survivor again, the cluster reassesses quorum and re-forms a Primary Component on its own. If the other nodes are confirmed down rather than just slow to return, you can force the survivor to form a new primary by itself:</p>
+<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; SET GLOBAL wsrep_provider_options='pc.bootstrap=YES';
+</code></pre></div>
+<p>Only do this once you&rsquo;ve confirmed the other nodes are actually down. If one of them is still up and serving as Primary elsewhere — for example, after a network split — bootstrapping a second primary creates two independent clusters with diverging data.</p>
+<h2 id="take-a-node-out-of-rotation-for-maintenance">Take a node out of rotation for maintenance<a class="headerlink" href="#take-a-node-out-of-rotation-for-maintenance" title="Permanent link">&para;</a></h2>
+<p>The behavior above applies to an unplanned failure. To perform maintenance without triggering one, take a node out of rotation deliberately instead of stopping MySQL and forcing a failover.</p>
+<p><strong>With HAProxy</strong>, expect maintenance to be treated as an unplanned failure. There&rsquo;s no supported way to drain a node ahead of time. Perform your maintenance, and if it requires stopping MySQL, HAProxy&rsquo;s health check will react to it as a failure. This includes the failback session drop when the node comes back (see <a href="#what-to-expect">What to expect</a> above).</p>
+<p><strong>With ProxySQL</strong> in either mode, use <code>pxc_maint_mode</code>:</p>
+<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; SET GLOBAL pxc_maint_mode='MAINTENANCE';
+</code></pre></div>
+<p>ProxySQL stops routing new connections to the node once it is in maintenance mode. The node itself stays online. If it is the current writer, ProxySQL routes writes to a backup-writer node instead. Once maintenance is complete, restore the node to normal operation:</p>
+<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; SET GLOBAL pxc_maint_mode='DISABLED';
+</code></pre></div>
+<p><code>pxc_maint_mode</code> does not persist across a MySQL restart. If maintenance includes restarting the node, also set the variable in <code>my.cnf</code> before the restart, and remove it once the node is back in rotation.</p>
+<p><strong>Without a proxy, on Galera directly</strong>, use <code>wsrep_desync</code> to exempt a node from flow control during a long-running operation:</p>
+<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; SET GLOBAL wsrep_desync=ON;
+-- perform maintenance --
+mysql&gt; SET GLOBAL wsrep_desync=OFF;
+</code></pre></div>
+<p><code>wsrep_desync</code> is not a drain command. It doesn&rsquo;t remove the node from the Kubernetes Service or from either proxy&rsquo;s rotation. Clients can still be routed to it while it&rsquo;s set. It only lets the node fall behind on replication without blocking the rest of the cluster&rsquo;s flow control, which is what makes it safe to run a long operation on that node without stalling everyone else&rsquo;s writes.</p>
+<h2 id="verify-a-failover-completed">Verify a failover completed<a class="headerlink" href="#verify-a-failover-completed" title="Permanent link">&para;</a></h2>
+<p><code>kubectl get pxc</code> reporting <code>ready</code> confirms the cluster reconciled, not that every node is healthy and reachable from the application&rsquo;s point of view. To confirm a node actually recovered and rejoined:</p>
+<ol>
+<li>
+<p>Check the Galera status on every node individually, not just one:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>&lt;cluster-name&gt;-pxc-0<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="w"> </span>-e<span class="w"> </span><span class="s2">"</span>
+<span class="s2">  SHOW STATUS LIKE 'wsrep_cluster_status';</span>
+<span class="s2">  SHOW STATUS LIKE 'wsrep_cluster_size';</span>
+<span class="s2">  SHOW STATUS LIKE 'wsrep_local_state_comment';</span>
+<span class="s2">  SHOW STATUS LIKE 'wsrep_ready';</span>
+<span class="s2">"</span>
+</code></pre></div>
+<p>Repeat for <code>-pxc-1</code>, <code>-pxc-2</code>, and so on. Confirm the following on every node:</p>
+<ul>
+<li><code>wsrep_cluster_status = Primary</code></li>
+<li><code>wsrep_cluster_size</code> matches the number of nodes you expect back</li>
+<li><code>wsrep_local_state_comment = Synced</code></li>
+<li><code>wsrep_ready = ON</code></li>
+</ul>
+<p>A node reporting <code>wsrep_cluster_status = non-Primary</code> has not rejoined, regardless of what <code>kubectl get pxc</code> says.</p>
+</li>
+<li>
+<p>Confirm the proxy serves a write through the same endpoint the application uses, not a direct connection to a single Pod. Use a dedicated check table rather than application data:</p>
+<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; CREATE DATABASE IF NOT EXISTS healthcheck;
+mysql&gt; CREATE TABLE IF NOT EXISTS healthcheck.failover_probe (id INT PRIMARY KEY, checked_at TIMESTAMP);
+mysql&gt; REPLACE INTO healthcheck.failover_probe VALUES (1, NOW());
+</code></pre></div>
+<p>A successful write confirms the proxy is routing to a working writer, without touching application tables.</p>
+</li>
+</ol>
+<h2 id="what-not-to-do">What not to do<a class="headerlink" href="#what-not-to-do" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Do not assume <code>kubectl get pxc</code> reporting <code>ready</code> means every existing connection is still valid, or that every node has rejoined. See <a href="#what-to-expect">What to expect</a> and <a href="#verify-a-failover-completed">Verify a failover completed</a>.</li>
+<li>Do not run <code>pc.bootstrap=YES</code> unless you&rsquo;ve confirmed the other nodes are actually down. Running it while another node is still Primary elsewhere causes a split-brain.</li>
+</ul>
+<h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="dr.html">Set up disaster recovery</a> — for losing an entire site, not just a node</li>
+<li><a href="load-balancing.html">Configure load balancing</a> — background on how HAProxy and ProxySQL differ</li>
+</ul>
 <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="February 20, 2025 16:18:28 UTC">February 20, 2025</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 30, 2026 09:09:08 UTC">September 30, 2026</span>
       
         <br>
         Created:
-        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="February 7, 2025 16:08:48 UTC">February 7, 2025</span>
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 30, 2026 09:09:08 UTC">September 30, 2026</span>
       
     
   </small>

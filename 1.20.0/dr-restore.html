@@ -2292,7 +2292,7 @@
   <span class="md-ellipsis">
     
   
-    Workload transfer and disaster recovery
+    Failover and high availability
   
 
     
@@ -2308,7 +2308,112 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Workload transfer and disaster recovery
+    Failover and high availability
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="failover-about.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="failover-in-cluster.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    In-cluster failover
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_12_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7_12_3" id="__nav_7_12_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-site disaster recovery
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_7_12_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7_12_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Multi-site disaster recovery
   
 
           </label>
@@ -2562,11 +2667,58 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Promote the new database cluster as the primary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#check-the-replica-before-you-promote-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check the replica before you promote it
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#promote-cluster1-to-primary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Promote cluster1 to primary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#check-that-the-promotion-is-successful" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check that the promotion is successful
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
   
 </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -5762,6 +5914,45 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Promote the new database cluster as the primary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#check-the-replica-before-you-promote-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check the replica before you promote it
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#promote-cluster1-to-primary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Promote cluster1 to primary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#check-that-the-promotion-is-successful" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check that the promotion is successful
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -5891,13 +6082,64 @@ backup1   cluster2   s3-us-west   s3://mybucket/cluster2-2025-03-21-12:05:37-ful
 </ol>
 <h2 id="promote-the-new-database-cluster-as-the-primary">Promote the new database cluster as the primary<a class="headerlink" href="#promote-the-new-database-cluster-as-the-primary" title="Permanent link">&para;</a></h2>
 <p>The newly deployed site with <code>cluster1</code> is now the working copy of the current primary <code>cluster2</code>. It&rsquo;s time to configure it back as the primary site.</p>
+<h3 id="check-the-replica-before-you-promote-it">Check the replica before you promote it<a class="headerlink" href="#check-the-replica-before-you-promote-it" title="Permanent link">&para;</a></h3>
+<p>Before you promote <code>cluster1</code>, confirm it applied everything <code>cluster2</code> sent it, and that the cluster itself is healthy.</p>
+<ol>
+<li>
+<p>Check the replication status on <code>cluster1</code>:</p>
+<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; SHOW REPLICA STATUS\G
+</code></pre></div>
+<p>Confirm <code>Executed_Gtid_Set</code> matches <code>Retrieved_Gtid_Set</code>. This shows <code>cluster1</code> already applied every event it retrieved from <code>cluster2</code>, with nothing left queued.</p>
+</li>
+<li>
+<p>Check the Galera status on every node of <code>cluster1</code>, not just one:</p>
+<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; SHOW STATUS LIKE 'wsrep_cluster_status';
+mysql&gt; SHOW STATUS LIKE 'wsrep_local_state_comment';
+mysql&gt; SHOW STATUS LIKE 'wsrep_ready';
+mysql&gt; SHOW VARIABLES LIKE 'read_only';
+</code></pre></div>
+<p>Look for the following on every node:</p>
+<ul>
+<li><code>wsrep_cluster_status = Primary</code></li>
+<li><code>wsrep_local_state_comment = Synced</code></li>
+<li><code>wsrep_ready = ON</code></li>
+<li><code>read_only = ON</code></li>
+</ul>
+<p><code>read_only = ON</code> is expected here, since <code>cluster1</code> is still running as the replica.</p>
+</li>
+</ol>
+<h3 id="promote-cluster1-to-primary">Promote cluster1 to primary<a class="headerlink" href="#promote-cluster1-to-primary" title="Permanent link">&para;</a></h3>
 <p>To do this, configure the replication channels on both sites. Refer to the <a href="dr-replication.html">Configure replication between the sites</a> section for the steps.</p>
+<h3 id="check-that-the-promotion-is-successful">Check that the promotion is successful<a class="headerlink" href="#check-that-the-promotion-is-successful" title="Permanent link">&para;</a></h3>
+<p>Before using <code>cluster1</code> as the new primary, make sure its promotion was successful. </p>
+<ol>
+<li>
+<p>Check the Galera status on every node of <code>cluster1</code>, not just one:</p>
+<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; SHOW STATUS LIKE 'wsrep_cluster_status';
+mysql&gt; SHOW STATUS LIKE 'wsrep_local_state_comment';
+mysql&gt; SHOW STATUS LIKE 'wsrep_ready';
+mysql&gt; SHOW VARIABLES LIKE 'read_only';
+</code></pre></div>
+<p>Make sure every node reports the following:</p>
+<ul>
+<li><code>wsrep_cluster_status = Primary</code></li>
+<li><code>wsrep_local_state_comment = Synced</code></li>
+<li><code>wsrep_ready = ON</code></li>
+<li><code>read_only = OFF</code></li>
+</ul>
+</li>
+<li>
+<p>Confirm a write succeeds through the client-facing endpoint your application uses, not a direct connection to a single Pod:</p>
+<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; INSERT INTO &lt;your_table&gt; VALUES (...);
+</code></pre></div>
+</li>
+</ol>
 <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="February 9, 2026 13:11:35 UTC">February 9, 2026</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 30, 2026 09:09:08 UTC">September 30, 2026</span>
       
         <br>
         Created:

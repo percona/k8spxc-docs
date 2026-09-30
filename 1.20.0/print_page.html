@@ -2296,7 +2296,7 @@
   <span class="md-ellipsis">
     
   
-    Workload transfer and disaster recovery
+    Failover and high availability
   
 
     
@@ -2312,7 +2312,110 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Workload transfer and disaster recovery
+    Failover and high availability
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="failover-about.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="failover-in-cluster.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    In-cluster failover
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_12_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_12_3" id="__nav_7_12_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-site disaster recovery
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_7_12_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_12_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Multi-site disaster recovery
   
 
           </label>
@@ -2481,6 +2584,14 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -6323,12 +6434,46 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   <a href="#section-7-12" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Workload transfer and disaster recovery
+        Failover and high availability
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Workload transfer and disaster recovery">
+    <nav class="md-nav" aria-label="Failover and high availability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#failover-about" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failover-in-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In-cluster failover
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#section-7-12-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multi-site disaster recovery
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Multi-site disaster recovery">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -6394,6 +6539,11 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -14212,13 +14362,159 @@ percona-xtradb-cluster-operator-dc67778fd-qtspz   1/1     Running
 </li>
 </ol></section></section>
                     <section class='print-page md-section' id='section-7-12' heading-number='7.12'>
-                        <h1>Workload transfer and disaster recovery<a class='headerlink' href='#section-7-12' title='Permanent link'></a>
+                        <h1>Failover and high availability<a class='headerlink' href='#section-7-12' title='Permanent link'></a>
                         </h1>
-                    <section class="print-page" id="dr" heading-number="7.12.1"><h1 id="dr-multi-data-center-setup-for-disaster-recovery">Multi-data center setup for disaster recovery<a class="headerlink" href="#dr-multi-data-center-setup-for-disaster-recovery" title="Permanent link">&para;</a></h1>
+                    <section class="print-page" id="failover-about" heading-number="7.12.1"><h1 id="failover-about-failover-and-high-availability">Failover and high availability<a class="headerlink" href="#failover-about-failover-and-high-availability" title="Permanent link">&para;</a></h1>
+<p>Percona XtraDB Cluster handles two different kinds of failure, and the Operator responds to each one differently.</p>
+<ul>
+<li>Losing one or more nodes inside a running cluster, while a majority of nodes stay up. The Operator and the proxy in front of the cluster (HAProxy or ProxySQL) recover from this automatically.</li>
+<li>Losing an entire site. It can be a whole Kubernetes cluster, an availability zone, or a cloud region. To recover, you must promote a replica site and switch over the workload to it manually.</li>
+</ul>
+<p>Use the following table to find the right page for your situation.</p>
+<h2 id="failover-about-which-situation-are-you-in">Which situation are you in?<a class="headerlink" href="#failover-about-which-situation-are-you-in" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>What recovers it</th>
+<th>Go to</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>One or more nodes go down inside a running cluster, but a majority of nodes stay up. This includes the primary Pod, <code>&lt;cluster-name&gt;-pxc-0</code>, going down.</td>
+<td>The Operator recreates the failed Pod, and HAProxy or ProxySQL reroutes traffic to a surviving node automatically.</td>
+<td><a href="#failover-in-cluster">In-cluster failover</a></td>
+</tr>
+<tr>
+<td>An entire site goes down — the whole Kubernetes cluster, availability zone, or cloud region.</td>
+<td>No automatic recovery. You promote the replica site yourself.</td>
+<td><a href="#dr">Set up disaster recovery</a></td>
+</tr>
+</tbody>
+</table>
+<p>These two scenarios are not mutually exclusive. A site-wide outage also takes down every node in that site at once. We recommend you to read both pages: in-cluster failover explains what happens automatically inside each site, and disaster recovery explains how to fail over between sites when that isn&rsquo;t enough.</p>
+<h2 id="failover-about-next-steps">Next steps<a class="headerlink" href="#failover-about-next-steps" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a class="md-button" href="#failover-in-cluster">In-cluster failover</a></li>
+<li><a class="md-button" href="#dr">Set up disaster recovery</a></li>
+</ul></section><section class="print-page" id="failover-in-cluster" heading-number="7.12.2"><h1 id="failover-in-cluster-in-cluster-failover">In-cluster failover<a class="headerlink" href="#failover-in-cluster-in-cluster-failover" title="Permanent link">&para;</a></h1>
+<p>A node running Percona XtraDB Cluster can fail at any time — a Pod restart, a node drain, or the primary Pod going down. The rest of the cluster stays up, and the Operator and the proxy in front of it recover the failed node automatically in most cases.</p>
+<p>This page covers what to expect when a node fails and how to confirm recovery completed. For failover when an entire site goes down, see <a href="#dr">Set up disaster recovery</a> instead.</p>
+<h2 id="failover-in-cluster-how-it-works">How it works<a class="headerlink" href="#failover-in-cluster-how-it-works" title="Permanent link">&para;</a></h2>
+<p>Restoring a single failed node is fully automatic:</p>
+<ol>
+<li>The Operator detects the failure and recreates the failed Pod.</li>
+<li>The recreated Pod rejoins the cluster and catches up on the data it missed while it was down.</li>
+<li>The proxy reroutes writes to the surviving nodes.</li>
+</ol>
+<p>Even though recovery is automatic, there are some behaviors that affect your application. See <a href="#failover-in-cluster-what-to-expect">What to expect</a> for more details, and <a href="#failover-in-cluster-verify-a-failover-completed">Verify a failover completed</a> to confirm recovery actually completed.</p>
+<h3 id="failover-in-cluster-pod-recreation">Pod recreation<a class="headerlink" href="#failover-in-cluster-pod-recreation" title="Permanent link">&para;</a></h3>
+<p>Kubernetes probes drive recovery independently of the proxy. The <code>readiness-check.sh</code> script removes a Pod from the Service as soon as it stops being the Primary or a synced or donor node. The <code>liveness-check.sh</code> script restarts a Pod that stays stuck in that state.</p>
+<h3 id="failover-in-cluster-rejoining-the-cluster">Rejoining the cluster<a class="headerlink" href="#failover-in-cluster-rejoining-the-cluster" title="Permanent link">&para;</a></h3>
+<p>The recreated Pod rejoins the cluster and catches up on the data it missed while it was down. Galera does this via SST (State Snapshot Transfer), making a full data copy from a healthy node acting as donor. When the gap is small enough, Galera uses IST (Incremental State Transfer) as a faster way to catch up. The time it takes to catch up depends on the size of the gap and the network conditions.</p>
+<p>The node providing SST is called the <em>donor</em>. While it is donating, its <code>wsrep_local_state_comment</code> shows <code>Donor/Desynced</code>. This also matters during a typical single-node restart. If the gap is large enough to require a full SST, the healthy node that the Operator selects as donor will temporarily fail HAProxy&rsquo;s health check. As a result, this donor node can drop out of HAProxy rotation for the entire duration of the SST. This issue affects not only the node that is rejoining, but also the donor node itself.</p>
+<h3 id="failover-in-cluster-traffic-rerouting">Traffic rerouting<a class="headerlink" href="#failover-in-cluster-traffic-rerouting" title="Permanent link">&para;</a></h3>
+<p>Traffic rerouting depends on which proxy is in use.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="failover-in-cluster-__tabbed_1_1" name="failover-in-cluster-__tabbed_1" type="radio" /><input id="failover-in-cluster-__tabbed_1_2" name="failover-in-cluster-__tabbed_1" type="radio" /><input id="failover-in-cluster-__tabbed_1_3" name="failover-in-cluster-__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="failover-in-cluster-__tabbed_1_1">HAProxy</label><label for="failover-in-cluster-__tabbed_1_2">ProxySQL, native scheduler mode</label><label for="failover-in-cluster-__tabbed_1_3">ProxySQL, external scheduler mode</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>HAProxy always treats <code>&lt;cluster&gt;-pxc-0</code> as the only non-backup server. Every other node is a <code>backup</code> server that receives traffic only if <code>pxc-0</code> fails its health check.</p>
+<p>Two different things happen on two different timelines:</p>
+<ul>
+<li>HAProxy reroutes the <em>next new connection attempt</em> as soon as <code>pxc-0</code> stops accepting connections — this is what your application actually feels, and it happens immediately, before any formal check completes.</li>
+<li>The health check itself (<code>check inter 10000 rise 1 fall 2</code>) requires the node to be the Galera primary component and synced, or an eligible donor. It runs roughly every ten seconds, so formally marking a failed node down takes up to about 12 seconds in the worst case.</li>
+</ul>
+</div>
+<div class="tabbed-block">
+<p>ProxySQL uses its own built-in Galera support for load balancing: a monitor thread checks each node&rsquo;s state roughly once a second and moves nodes between hostgroups accordingly. ProxySQL always configures a backup-writer hostgroup containing every non-writer node, so a promotion candidate is always available.</p>
+<p>Unlike HAProxy, this mode does not pin a preferred Pod. All nodes get equal connection weight, and the Operator elects the initial writer automatically — do not assume it will be <code>pxc-0</code>.</p>
+</div>
+<div class="tabbed-block">
+<p>When an <a href="#proxysql-conf-proxysql-scheduler-tech-preview">external scheduler</a> is enabled, ProxySQL elects a single writer dynamically instead of relying on native Galera hostgroups. It uses settings such as <code>activeFailover=1</code>, <code>singlePrimary=true</code>, and <code>maxNumWriters=1</code>.</p>
+<p>This mode&rsquo;s single-writer guarantee is not absolute at every instant. During a failover cycle, there can be a brief window where two nodes are both marked online as writer at once. This is a normal, transient part of how the scheduler re-elects a writer, not a malfunction. However, an application that assumes exactly one writer is reachable at all times should not treat this mode&rsquo;s guarantee as instantaneous.</p>
+</div>
+</div>
+</div>
+<h2 id="failover-in-cluster-what-to-expect">What to expect<a class="headerlink" href="#failover-in-cluster-what-to-expect" title="Permanent link">&para;</a></h2>
+<p>Automatic recovery handles the failure itself. Two behaviors are not obvious from the mechanics above, and both can affect your application directly.</p>
+<p><strong>Failback forcibly closes the active session.</strong> When <code>pxc-0</code> recovers, HAProxy does not leave traffic on the backup node it failed over to. It forcibly closes the session using the backup node and forces reconnection to <code>pxc-0</code>, typically within about two seconds of <code>pxc-0</code> being marked healthy again. You may see the following error for a client that wasconnected to the backup node and then failed:</p>
+<div class="no-copy highlight"><pre><span></span><code>ERROR 2013 (HY000): Lost connection to MySQL server during query
+</code></pre></div>
+<p>This can happen <em>after</em> <code>kubectl get pxc</code> already reports the cluster as <code>ready</code>. Cluster-ready status confirms the Operator reconciled, not that every existing connection is still valid. Design your application to reconnect on error rather than treat a long-lived connection as safe.</p>
+<p><strong>Losing two of three nodes is a Galera-level failure, not just a proxy one.</strong> If a cluster loses two of three nodes at once, the survivor no longer has a majority of the cluster&rsquo;s last known membership, so by default Galera takes it out of the Primary Component. Once that happens, the node stops accepting <em>any</em> query, including both reads and writes, and returns an error like this:</p>
+<div class="no-copy highlight"><pre><span></span><code>ERROR 1047 (08S01): WSREP has not yet prepared node for application use
+</code></pre></div>
+<p>Once the survivor node rejoins a Primary Component and starts acting as SST donor for the returning nodes, it enters the <code>Donor</code> state. HAProxy&rsquo;s default health check won&rsquo;t route to a Donor node. You can set the <code>OK_IF_DONOR</code> environment variable to allow HAProxy to route to a Donor node. However, this does nothing while the survivor is still non-Primary. This is a Galera quorum issue, and no proxy setting can route around a node refusing queries at the database layer.</p>
+<p>Recovery from the non-Primary state is usually automatic. Once the other two nodes are recreated and can reach the survivor again, the cluster reassesses quorum and re-forms a Primary Component on its own. If the other nodes are confirmed down rather than just slow to return, you can force the survivor to form a new primary by itself:</p>
+<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; SET GLOBAL wsrep_provider_options='pc.bootstrap=YES';
+</code></pre></div>
+<p>Only do this once you&rsquo;ve confirmed the other nodes are actually down. If one of them is still up and serving as Primary elsewhere — for example, after a network split — bootstrapping a second primary creates two independent clusters with diverging data.</p>
+<h2 id="failover-in-cluster-take-a-node-out-of-rotation-for-maintenance">Take a node out of rotation for maintenance<a class="headerlink" href="#failover-in-cluster-take-a-node-out-of-rotation-for-maintenance" title="Permanent link">&para;</a></h2>
+<p>The behavior above applies to an unplanned failure. To perform maintenance without triggering one, take a node out of rotation deliberately instead of stopping MySQL and forcing a failover.</p>
+<p><strong>With HAProxy</strong>, expect maintenance to be treated as an unplanned failure. There&rsquo;s no supported way to drain a node ahead of time. Perform your maintenance, and if it requires stopping MySQL, HAProxy&rsquo;s health check will react to it as a failure. This includes the failback session drop when the node comes back (see <a href="#failover-in-cluster-what-to-expect">What to expect</a> above).</p>
+<p><strong>With ProxySQL</strong> in either mode, use <code>pxc_maint_mode</code>:</p>
+<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; SET GLOBAL pxc_maint_mode='MAINTENANCE';
+</code></pre></div>
+<p>ProxySQL stops routing new connections to the node once it is in maintenance mode. The node itself stays online. If it is the current writer, ProxySQL routes writes to a backup-writer node instead. Once maintenance is complete, restore the node to normal operation:</p>
+<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; SET GLOBAL pxc_maint_mode='DISABLED';
+</code></pre></div>
+<p><code>pxc_maint_mode</code> does not persist across a MySQL restart. If maintenance includes restarting the node, also set the variable in <code>my.cnf</code> before the restart, and remove it once the node is back in rotation.</p>
+<p><strong>Without a proxy, on Galera directly</strong>, use <code>wsrep_desync</code> to exempt a node from flow control during a long-running operation:</p>
+<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; SET GLOBAL wsrep_desync=ON;
+-- perform maintenance --
+mysql&gt; SET GLOBAL wsrep_desync=OFF;
+</code></pre></div>
+<p><code>wsrep_desync</code> is not a drain command. It doesn&rsquo;t remove the node from the Kubernetes Service or from either proxy&rsquo;s rotation. Clients can still be routed to it while it&rsquo;s set. It only lets the node fall behind on replication without blocking the rest of the cluster&rsquo;s flow control, which is what makes it safe to run a long operation on that node without stalling everyone else&rsquo;s writes.</p>
+<h2 id="failover-in-cluster-verify-a-failover-completed">Verify a failover completed<a class="headerlink" href="#failover-in-cluster-verify-a-failover-completed" title="Permanent link">&para;</a></h2>
+<p><code>kubectl get pxc</code> reporting <code>ready</code> confirms the cluster reconciled, not that every node is healthy and reachable from the application&rsquo;s point of view. To confirm a node actually recovered and rejoined:</p>
+<ol>
+<li>
+<p>Check the Galera status on every node individually, not just one:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>&lt;cluster-name&gt;-pxc-0<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>--<span class="w"> </span>mysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="w"> </span>-e<span class="w"> </span><span class="s2">"</span>
+<span class="s2">  SHOW STATUS LIKE 'wsrep_cluster_status';</span>
+<span class="s2">  SHOW STATUS LIKE 'wsrep_cluster_size';</span>
+<span class="s2">  SHOW STATUS LIKE 'wsrep_local_state_comment';</span>
+<span class="s2">  SHOW STATUS LIKE 'wsrep_ready';</span>
+<span class="s2">"</span>
+</code></pre></div>
+<p>Repeat for <code>-pxc-1</code>, <code>-pxc-2</code>, and so on. Confirm the following on every node:</p>
+<ul>
+<li><code>wsrep_cluster_status = Primary</code></li>
+<li><code>wsrep_cluster_size</code> matches the number of nodes you expect back</li>
+<li><code>wsrep_local_state_comment = Synced</code></li>
+<li><code>wsrep_ready = ON</code></li>
+</ul>
+<p>A node reporting <code>wsrep_cluster_status = non-Primary</code> has not rejoined, regardless of what <code>kubectl get pxc</code> says.</p>
+</li>
+<li>
+<p>Confirm the proxy serves a write through the same endpoint the application uses, not a direct connection to a single Pod. Use a dedicated check table rather than application data:</p>
+<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; CREATE DATABASE IF NOT EXISTS healthcheck;
+mysql&gt; CREATE TABLE IF NOT EXISTS healthcheck.failover_probe (id INT PRIMARY KEY, checked_at TIMESTAMP);
+mysql&gt; REPLACE INTO healthcheck.failover_probe VALUES (1, NOW());
+</code></pre></div>
+<p>A successful write confirms the proxy is routing to a working writer, without touching application tables.</p>
+</li>
+</ol>
+<h2 id="failover-in-cluster-what-not-to-do">What not to do<a class="headerlink" href="#failover-in-cluster-what-not-to-do" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Do not assume <code>kubectl get pxc</code> reporting <code>ready</code> means every existing connection is still valid, or that every node has rejoined. See <a href="#failover-in-cluster-what-to-expect">What to expect</a> and <a href="#failover-in-cluster-verify-a-failover-completed">Verify a failover completed</a>.</li>
+<li>Do not run <code>pc.bootstrap=YES</code> unless you&rsquo;ve confirmed the other nodes are actually down. Running it while another node is still Primary elsewhere causes a split-brain.</li>
+</ul>
+<h2 id="failover-in-cluster-see-also">See also<a class="headerlink" href="#failover-in-cluster-see-also" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="#dr">Set up disaster recovery</a> — for losing an entire site, not just a node</li>
+<li><a href="#load-balancing">Configure load balancing</a> — background on how HAProxy and ProxySQL differ</li>
+</ul></section>
+                    <section class='print-page md-section' id='section-7-12-3' heading-number='7.12.3'>
+                        <h1>Multi-site disaster recovery<a class='headerlink' href='#section-7-12-3' title='Permanent link'></a>
+                        </h1>
+                    <section class="print-page" id="dr" heading-number="7.12.3.1"><h1 id="dr-multi-data-center-setup-for-disaster-recovery">Multi-data center setup for disaster recovery<a class="headerlink" href="#dr-multi-data-center-setup-for-disaster-recovery" title="Permanent link">&para;</a></h1>
 <p>Disaster can happen at any moment. To keep your services running smoothly, you can set up two Percona XtraDB Clusters in different locations (called &ldquo;sites&rdquo;). You then configure them to replicate data between each other. This makes sure both clusters have the same data and stay in sync. One site works as the primary site, and the other is a replica. It is usually in a standby mode.</p>
 <p>If the primary site goes down, you need a way to move the workload to the backup site so that users won&rsquo;t notice anything. </p>
 <p>Once the primary site is fixed, you can move the services back to it.</p>
 <p>This guide explains how to set up a disaster recovery system and transfer workloads between sites when something goes wrong.</p>
+<p>If you&rsquo;re dealing with a single node or the primary Pod going down inside one running cluster, see <a href="#failover-in-cluster">In-cluster failover</a> instead. </p>
 <h2 id="dr-assumptions">Assumptions<a class="headerlink" href="#dr-assumptions" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
@@ -14230,12 +14526,15 @@ percona-xtradb-cluster-operator-dc67778fd-qtspz   1/1     Running
 </ul>
 </li>
 <li>
+<p>In this setup we deploy clusters in different namespaces in the same Kubernetes cluster. Each cluster requires its own Operator Deployment. By default, the Operator only watches its own namespace (<code>WATCH_NAMESPACE</code>), so a single Operator Deployment can&rsquo;t manage both sites.</p>
+</li>
+<li>
 <p>The primary and replica sites must be identical. The easiest way to achieve this is to make a backup on the primary site and restore it on the replica. </p>
 </li>
 <li>
 <p>We assume your applications are already set up to automatically switch to the replica site B if the primary site goes down. Setting this up is not covered in this guide.</p>
 </li>
-</ul></section><section class="print-page" id="dr-primary" heading-number="7.12.2"><h1 id="dr-primary-set-up-the-primary-site">Set up the primary site<a class="headerlink" href="#dr-primary-set-up-the-primary-site" title="Permanent link">&para;</a></h1>
+</ul></section><section class="print-page" id="dr-primary" heading-number="7.12.3.2"><h1 id="dr-primary-set-up-the-primary-site">Set up the primary site<a class="headerlink" href="#dr-primary-set-up-the-primary-site" title="Permanent link">&para;</a></h1>
 <h2 id="dr-primary-before-you-start">Before you start<a class="headerlink" href="#dr-primary-before-you-start" title="Permanent link">&para;</a></h2>
 <p>Clone the repository with all manifests and source code. You&rsquo;ll need it to edit configuration files for the database clusters, Secrets, backups and restores. Run the following command:</p>
 <div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>-b<span class="w"> </span>v1.20.0<span class="w"> </span>https://github.com/percona/percona-xtradb-cluster-operator
@@ -14253,7 +14552,7 @@ percona-xtradb-cluster-operator-dc67778fd-qtspz   1/1     Running
 <p>You now have the <code>cluster1</code> database cluster up and running.</p>
 </li>
 </ol>
-<h2 id="dr-primary-export-the-database-secrets-for-operator-1170-and-earlier">Export the database secrets (for Operator 1.17.0 and earlier)<a class="headerlink" href="#dr-primary-export-the-database-secrets-for-operator-1170-and-earlier" title="Permanent link">&para;</a></h2>
+<h2 id="dr-primary-export-the-database-secrets">Export the database secrets<a class="headerlink" href="#dr-primary-export-the-database-secrets" title="Permanent link">&para;</a></h2>
 <p>While on the primary site, export the Secrets object with the user credentials. Both the primary and the replica sites must have the same user credentials. This enables the Operator to restore the backup from the primary on the replica site.</p>
 <ol>
 <li>
@@ -14276,7 +14575,9 @@ internal-cluster1       Opaque              6      5m43s
 </code></pre></div>
 </li>
 <li>
-<p>Edit the exported <code>pxcsecret.yaml</code> file: remove the <code>annotations</code>, <code>creationTimestamp</code>, <code>resourceVersion</code>, <code>selfLink</code>, and <code>uid</code> metadata fields.  </p>
+<p>Edit the exported <code>pxcsecret.yaml</code> file: remove the <code>annotations</code>, <code>creationTimestamp</code>, <code>resourceVersion</code>, <code>selfLink</code>, and <code>uid</code> metadata fields:</p>
+<div class="highlight"><pre><span></span><code>yq<span class="w"> </span>-i<span class="w"> </span><span class="s1">'del(.metadata.annotations, .metadata.creationTimestamp, .metadata.resourceVersion, .metadata.selfLink, .metadata.uid)'</span><span class="w"> </span>pxcsecret.yaml
+</code></pre></div>
 </li>
 </ol>
 <h2 id="dr-primary-create-a-backup-from-the-primary-site">Create a backup from the primary site<a class="headerlink" href="#dr-primary-create-a-backup-from-the-primary-site" title="Permanent link">&para;</a></h2>
@@ -14300,7 +14601,7 @@ backup1   cluster1   s3-us-west   s3://mybucket/cluster1-2025-03-18-10:55:43-ful
 </code></pre></div>
 </details>
 </li>
-</ol></section><section class="print-page" id="dr-replica" heading-number="7.12.3"><h1 id="dr-replica-set-up-the-replica-site">Set up the replica site<a class="headerlink" href="#dr-replica-set-up-the-replica-site" title="Permanent link">&para;</a></h1>
+</ol></section><section class="print-page" id="dr-replica" heading-number="7.12.3.3"><h1 id="dr-replica-set-up-the-replica-site">Set up the replica site<a class="headerlink" href="#dr-replica-set-up-the-replica-site" title="Permanent link">&para;</a></h1>
 <p>The replica site must be the exact copy of the primary site and must have the same system user credentials. The easiest way to achieve this is to <a href="#dr-primary-create-a-backup-from-the-primary-site">make a backup on the primary site</a> and restore it on the replica. </p>
 <h2 id="dr-replica-before-you-start">Before you start<a class="headerlink" href="#dr-replica-before-you-start" title="Permanent link">&para;</a></h2>
 <p>Clone the repository with all manifests and source code. You&rsquo;ll need it to edit configuration files for the database clusters, Secrets, backups and restores. Run the following command:</p>
@@ -14317,7 +14618,7 @@ backup1   cluster1   s3-us-west   s3://mybucket/cluster1-2025-03-18-10:55:43-ful
 </li>
 <li>
 <p>Create the Secrets object with the user credentials for the replica site. The Operator uses this Secret object when installing Percona XtraDB Cluster. As a result, the users in both sites have the same credentials. This is required to restore the backup from the main site on the replica.</p>
-<p>Edit the <code>pxcsecret.yaml</code> file that you exported from the primary site, if you haven&rsquo;t done it before. Remove the <code>annotations</code>, <code>creationTimestamp</code>, <code>resourceVersion</code>, <code>selfLink</code>, and <code>uid</code> metadata fields. </p>
+<p>Edit the <code>pxcsecret.yaml</code> file that you exported from the primary site, if you haven&rsquo;t done it before. Remove the <code>annotations</code>, <code>creationTimestamp</code>, <code>resourceVersion</code>, <code>selfLink</code>, and <code>uid</code> metadata fields. Change the <code>namespace</code> value to match the namespace where your replica cluster will run.</p>
 <p>You can create the replica site with the same name as the primary. In our setup we differentiate the clusters and must change the name in the Secret.</p>
 <p>The resulting Secret file must resemble the following:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
@@ -14416,7 +14717,7 @@ cluster2   cluster2-haproxy.&lt;namespace&gt;   ready    3                3     
 </code></pre></div>
 </details>
 </li>
-</ol></section><section class="print-page" id="dr-replication" heading-number="7.12.4"><h1 id="dr-replication-configure-replication-between-the-sites">Configure replication between the sites<a class="headerlink" href="#dr-replication-configure-replication-between-the-sites" title="Permanent link">&para;</a></h1>
+</ol></section><section class="print-page" id="dr-replication" heading-number="7.12.3.4"><h1 id="dr-replication-configure-replication-between-the-sites">Configure replication between the sites<a class="headerlink" href="#dr-replication-configure-replication-between-the-sites" title="Permanent link">&para;</a></h1>
 <p>The sites must have the same copy of data. To do so, configure the replication between them so that sites are always in sync. The replication is defined via a replication channel where you specify which site is the source of data and which site receives it.</p>
 <h2 id="dr-replication-prepare-the-primary-site">Prepare the primary site<a class="headerlink" href="#dr-replication-prepare-the-primary-site" title="Permanent link">&para;</a></h2>
 <p>Your replica site needs to connect to your primary site to replicate data from it. For this, each database Pod on the primary site must have an external IP addresses to be reached directly. This is done by exposing the database cluster Pods using the LoadBalancer service type. Read more about <a href="#expose-service-per-pod">exposing a cluster</a>.</p>
@@ -14440,7 +14741,7 @@ cluster2   cluster2-haproxy.&lt;namespace&gt;   ready    3                3     
 <li><code>pxc.replicationChannels.[].isSource</code> defines what cluster the data is replicated from. Set the value to <code>true</code>.</li>
 </ul>
 <p>Run the following command to add this configuration:</p>
-<div class="highlight" data-prompt="$"><pre><span></span><code><span class="err">$</span><span class="w"> </span><span class="err">kubec</span><span class="kc">tl</span><span class="w"> </span><span class="err">pa</span><span class="kc">t</span><span class="err">ch</span><span class="w"> </span><span class="err">pxc</span><span class="w"> </span><span class="err">clus</span><span class="kc">ter</span><span class="mi">1</span><span class="w"> </span><span class="mi">--</span><span class="kc">t</span><span class="err">ype=merge</span><span class="w"> </span><span class="mi">--</span><span class="err">pa</span><span class="kc">t</span><span class="err">ch</span><span class="w"> </span><span class="err">'</span><span class="p">{</span>
+<div class="highlight" data-prompt="$"><pre><span></span><code><span class="err">$</span><span class="w"> </span><span class="err">kubec</span><span class="kc">tl</span><span class="w"> </span><span class="err">pa</span><span class="kc">t</span><span class="err">ch</span><span class="w"> </span><span class="err">pxc</span><span class="w"> </span><span class="err">clus</span><span class="kc">ter</span><span class="mi">1</span><span class="w"> </span><span class="mi">-</span><span class="kc">n</span><span class="w"> </span><span class="err">&lt;</span><span class="kc">na</span><span class="err">mespace&gt;</span><span class="w"> </span><span class="mi">--</span><span class="kc">t</span><span class="err">ype=merge</span><span class="w"> </span><span class="mi">--</span><span class="err">pa</span><span class="kc">t</span><span class="err">ch</span><span class="w"> </span><span class="err">'</span><span class="p">{</span>
 <span class="w">  </span><span class="nt">"spec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nt">"pxc"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">      </span><span class="nt">"replicationChannels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
@@ -14539,9 +14840,35 @@ cluster1-pxc-2                    LoadBalancer   34.118.236.170   35.222.208.249
 </code></pre></div>
 </details>
 </li>
-</ol></section><section class="print-page" id="dr-failover" heading-number="7.12.5"><h1 id="dr-failover-promote-the-replica-site-to-a-new-primary">Promote the replica site to a new primary<a class="headerlink" href="#dr-failover-promote-the-replica-site-to-a-new-primary" title="Permanent link">&para;</a></h1>
+</ol></section><section class="print-page" id="dr-failover" heading-number="7.12.3.5"><h1 id="dr-failover-promote-the-replica-site-to-a-new-primary">Promote the replica site to a new primary<a class="headerlink" href="#dr-failover-promote-the-replica-site-to-a-new-primary" title="Permanent link">&para;</a></h1>
 <p>Let&rsquo;s say the primary site with <code>cluster1</code> is down. The client applications have automatically switched to the replica site. Now you need to reconfigure your setup to make <code>cluster2</code> on the replica site a new primary and have it handle the load.</p>
-<p>Here&rsquo;s how to do it:</p>
+<h2 id="dr-failover-check-the-replica-before-you-promote-it">Check the replica before you promote it<a class="headerlink" href="#dr-failover-check-the-replica-before-you-promote-it" title="Permanent link">&para;</a></h2>
+<p>Before you promote <code>cluster2</code>, confirm it applied everything <code>cluster1</code> sent it, and that the cluster itself is healthy.</p>
+<ol>
+<li>
+<p>Check the replication status on <code>cluster2</code>:</p>
+<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; SHOW REPLICA STATUS\G
+</code></pre></div>
+<p>Confirm <code>Executed_Gtid_Set</code> matches <code>Retrieved_Gtid_Set</code>. This shows <code>cluster2</code> already applied every event it retrieved from <code>cluster1</code>, with nothing left queued.</p>
+</li>
+<li>
+<p>Check the Galera status on every node of <code>cluster2</code>, not just one:</p>
+<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; SHOW STATUS LIKE 'wsrep_cluster_status';
+mysql&gt; SHOW STATUS LIKE 'wsrep_local_state_comment';
+mysql&gt; SHOW STATUS LIKE 'wsrep_ready';
+mysql&gt; SHOW VARIABLES LIKE 'read_only';
+</code></pre></div>
+<p>Look for the following on every node:</p>
+<ul>
+<li><code>wsrep_cluster_status = Primary</code></li>
+<li><code>wsrep_local_state_comment = Synced</code></li>
+<li><code>wsrep_ready = ON</code></li>
+<li><code>read_only = ON</code></li>
+</ul>
+<p><code>read_only = ON</code> is expected here, since <code>cluster2</code> is still running as the replica.</p>
+</li>
+</ol>
+<h2 id="dr-failover-promote-the-replica-to-primary">Promote the replica to primary<a class="headerlink" href="#dr-failover-promote-the-replica-to-primary" title="Permanent link">&para;</a></h2>
 <ol>
 <li>
 <p>Modify the replication channel for <code>cluster2</code> within the <code>deploy/cr.yaml</code> file:</p>
@@ -14564,10 +14891,31 @@ cluster1-pxc-2                    LoadBalancer   34.118.236.170   35.222.208.249
 </code></pre></div>
 <p>Now <code>cluster2</code> acts as the primary site.</p>
 </li>
-<li>
-<p>While the old primary site is unavailable, <code>cluster1</code> no longer has up-to-date data. So you can delete it. Refer to the <a href="#delete-delete-the-database-cluster">Delete the database cluster</a> tutorial for the steps how to do it.</p>
-</li>
-</ol></section><section class="print-page" id="dr-restore" heading-number="7.12.6"><h1 id="dr-restore-restore-the-previous-primary-site">Restore the previous primary site<a class="headerlink" href="#dr-restore-restore-the-previous-primary-site" title="Permanent link">&para;</a></h1>
+</ol>
+<h2 id="dr-failover-check-that-the-promotion-is-successful">Check that the promotion is successful<a class="headerlink" href="#dr-failover-check-that-the-promotion-is-successful" title="Permanent link">&para;</a></h2>
+<p>Confirm that <code>cluster2</code> is genuinely serving as the primary before you do anything irreversible to <code>cluster1</code>.</p>
+<p>Check the Galera status on every node of <code>cluster2</code>, not just one:</p>
+<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; SHOW STATUS LIKE 'wsrep_cluster_status';
+mysql&gt; SHOW STATUS LIKE 'wsrep_local_state_comment';
+mysql&gt; SHOW STATUS LIKE 'wsrep_ready';
+mysql&gt; SHOW VARIABLES LIKE 'read_only';
+</code></pre></div>
+<p>Look for the following on every node:</p>
+<ul>
+<li><code>wsrep_cluster_status = Primary</code></li>
+<li><code>wsrep_local_state_comment = Synced</code></li>
+<li><code>wsrep_ready = ON</code></li>
+<li><code>read_only = OFF</code> </li>
+</ul>
+<p>Then confirm that a write succeeds through the client-facing endpoint your application uses, not a direct connection to a single Pod:</p>
+<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; INSERT INTO &lt;your_table&gt; VALUES (...);
+</code></pre></div>
+<h2 id="dr-failover-delete-the-previous-primary">Delete the previous primary<a class="headerlink" href="#dr-failover-delete-the-previous-primary" title="Permanent link">&para;</a></h2>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Do this step only after you confirmed that the new primary is successfully promoted and correctly serves the write requests.</p>
+</div>
+<p>While the old primary site is unavailable, <code>cluster1</code> no longer has up-to-date data. Once you&rsquo;ve confirmed <code>cluster2</code> is serving writes correctly, you can delete it. Refer to the <a href="#delete-delete-the-database-cluster">Delete the database cluster</a> tutorial for the steps how to do it.</p></section><section class="print-page" id="dr-restore" heading-number="7.12.3.6"><h1 id="dr-restore-restore-the-previous-primary-site">Restore the previous primary site<a class="headerlink" href="#dr-restore-restore-the-previous-primary-site" title="Permanent link">&para;</a></h1>
 <p>Let&rsquo;s say the root of the outage is no longer present. You can now install a new database cluster on this site. Let&rsquo;s use the previous name <code>cluster1</code> for it.</p>
 <h2 id="dr-restore-install-a-new-database-cluster-on-the-previous-primary-site">Install a new database cluster on the previous primary site<a class="headerlink" href="#dr-restore-install-a-new-database-cluster-on-the-previous-primary-site" title="Permanent link">&para;</a></h2>
 <p>The new <code>cluster1</code> must be the exact copy of the current primary <code>cluster2</code>. We will use the same approach as we did when creating <code>cluster2</code>: make a backup from <code>cluster2</code> and restore it on <code>cluster1</code>.</p>
@@ -14663,7 +15011,58 @@ backup1   cluster2   s3-us-west   s3://mybucket/cluster2-2025-03-21-12:05:37-ful
 </ol>
 <h2 id="dr-restore-promote-the-new-database-cluster-as-the-primary">Promote the new database cluster as the primary<a class="headerlink" href="#dr-restore-promote-the-new-database-cluster-as-the-primary" title="Permanent link">&para;</a></h2>
 <p>The newly deployed site with <code>cluster1</code> is now the working copy of the current primary <code>cluster2</code>. It&rsquo;s time to configure it back as the primary site.</p>
-<p>To do this, configure the replication channels on both sites. Refer to the <a href="#dr-replication">Configure replication between the sites</a> section for the steps.</p></section></section>
+<h3 id="dr-restore-check-the-replica-before-you-promote-it">Check the replica before you promote it<a class="headerlink" href="#dr-restore-check-the-replica-before-you-promote-it" title="Permanent link">&para;</a></h3>
+<p>Before you promote <code>cluster1</code>, confirm it applied everything <code>cluster2</code> sent it, and that the cluster itself is healthy.</p>
+<ol>
+<li>
+<p>Check the replication status on <code>cluster1</code>:</p>
+<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; SHOW REPLICA STATUS\G
+</code></pre></div>
+<p>Confirm <code>Executed_Gtid_Set</code> matches <code>Retrieved_Gtid_Set</code>. This shows <code>cluster1</code> already applied every event it retrieved from <code>cluster2</code>, with nothing left queued.</p>
+</li>
+<li>
+<p>Check the Galera status on every node of <code>cluster1</code>, not just one:</p>
+<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; SHOW STATUS LIKE 'wsrep_cluster_status';
+mysql&gt; SHOW STATUS LIKE 'wsrep_local_state_comment';
+mysql&gt; SHOW STATUS LIKE 'wsrep_ready';
+mysql&gt; SHOW VARIABLES LIKE 'read_only';
+</code></pre></div>
+<p>Look for the following on every node:</p>
+<ul>
+<li><code>wsrep_cluster_status = Primary</code></li>
+<li><code>wsrep_local_state_comment = Synced</code></li>
+<li><code>wsrep_ready = ON</code></li>
+<li><code>read_only = ON</code></li>
+</ul>
+<p><code>read_only = ON</code> is expected here, since <code>cluster1</code> is still running as the replica.</p>
+</li>
+</ol>
+<h3 id="dr-restore-promote-cluster1-to-primary">Promote cluster1 to primary<a class="headerlink" href="#dr-restore-promote-cluster1-to-primary" title="Permanent link">&para;</a></h3>
+<p>To do this, configure the replication channels on both sites. Refer to the <a href="#dr-replication">Configure replication between the sites</a> section for the steps.</p>
+<h3 id="dr-restore-check-that-the-promotion-is-successful">Check that the promotion is successful<a class="headerlink" href="#dr-restore-check-that-the-promotion-is-successful" title="Permanent link">&para;</a></h3>
+<p>Before using <code>cluster1</code> as the new primary, make sure its promotion was successful. </p>
+<ol>
+<li>
+<p>Check the Galera status on every node of <code>cluster1</code>, not just one:</p>
+<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; SHOW STATUS LIKE 'wsrep_cluster_status';
+mysql&gt; SHOW STATUS LIKE 'wsrep_local_state_comment';
+mysql&gt; SHOW STATUS LIKE 'wsrep_ready';
+mysql&gt; SHOW VARIABLES LIKE 'read_only';
+</code></pre></div>
+<p>Make sure every node reports the following:</p>
+<ul>
+<li><code>wsrep_cluster_status = Primary</code></li>
+<li><code>wsrep_local_state_comment = Synced</code></li>
+<li><code>wsrep_ready = ON</code></li>
+<li><code>read_only = OFF</code></li>
+</ul>
+</li>
+<li>
+<p>Confirm a write succeeds through the client-facing endpoint your application uses, not a direct connection to a single Pod:</p>
+<div class="highlight" data-prompt="mysql> "><pre><span></span><code>mysql&gt; INSERT INTO &lt;your_table&gt; VALUES (...);
+</code></pre></div>
+</li>
+</ol></section></section></section>
                     <section class='print-page md-section' id='section-7-13' heading-number='7.13'>
                         <h1>Transport Encryption (TLS/SSL)<a class='headerlink' href='#section-7-13' title='Permanent link'></a>
                         </h1>
@@ -35237,17 +35636,22 @@ Percona XtraBackup.</p>
 .print-site-enumerate-headings #log-rotation > h1:before { content: '7.11.2 ' }
 
 .print-site-enumerate-headings #section-7-12 > h1:before { content: '7.12 ' }
-.print-site-enumerate-headings #dr > h1:before { content: '7.12.1 ' }
+.print-site-enumerate-headings #failover-about > h1:before { content: '7.12.1 ' }
 
-.print-site-enumerate-headings #dr-primary > h1:before { content: '7.12.2 ' }
+.print-site-enumerate-headings #failover-in-cluster > h1:before { content: '7.12.2 ' }
 
-.print-site-enumerate-headings #dr-replica > h1:before { content: '7.12.3 ' }
+.print-site-enumerate-headings #section-7-12-3 > h1:before { content: '7.12.3 ' }
+.print-site-enumerate-headings #dr > h1:before { content: '7.12.3.1 ' }
 
-.print-site-enumerate-headings #dr-replication > h1:before { content: '7.12.4 ' }
+.print-site-enumerate-headings #dr-primary > h1:before { content: '7.12.3.2 ' }
 
-.print-site-enumerate-headings #dr-failover > h1:before { content: '7.12.5 ' }
+.print-site-enumerate-headings #dr-replica > h1:before { content: '7.12.3.3 ' }
 
-.print-site-enumerate-headings #dr-restore > h1:before { content: '7.12.6 ' }
+.print-site-enumerate-headings #dr-replication > h1:before { content: '7.12.3.4 ' }
+
+.print-site-enumerate-headings #dr-failover > h1:before { content: '7.12.3.5 ' }
+
+.print-site-enumerate-headings #dr-restore > h1:before { content: '7.12.3.6 ' }
 
 .print-site-enumerate-headings #section-7-13 > h1:before { content: '7.13 ' }
 .print-site-enumerate-headings #tls > h1:before { content: '7.13.1 ' }

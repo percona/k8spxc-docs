@@ -2292,7 +2292,7 @@
   <span class="md-ellipsis">
     
   
-    Workload transfer and disaster recovery
+    Failover and high availability
   
 
     
@@ -2308,7 +2308,112 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Workload transfer and disaster recovery
+    Failover and high availability
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="failover-about.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="failover-in-cluster.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    In-cluster failover
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_12_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7_12_3" id="__nav_7_12_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-site disaster recovery
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_7_12_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7_12_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Multi-site disaster recovery
   
 
           </label>
@@ -2557,6 +2662,14 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -5790,7 +5903,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </li>
 <li>
 <p>Create the Secrets object with the user credentials for the replica site. The Operator uses this Secret object when installing Percona XtraDB Cluster. As a result, the users in both sites have the same credentials. This is required to restore the backup from the main site on the replica.</p>
-<p>Edit the <code>pxcsecret.yaml</code> file that you exported from the primary site, if you haven&rsquo;t done it before. Remove the <code>annotations</code>, <code>creationTimestamp</code>, <code>resourceVersion</code>, <code>selfLink</code>, and <code>uid</code> metadata fields. </p>
+<p>Edit the <code>pxcsecret.yaml</code> file that you exported from the primary site, if you haven&rsquo;t done it before. Remove the <code>annotations</code>, <code>creationTimestamp</code>, <code>resourceVersion</code>, <code>selfLink</code>, and <code>uid</code> metadata fields. Change the <code>namespace</code> value to match the namespace where your replica cluster will run.</p>
 <p>You can create the replica site with the same name as the primary. In our setup we differentiate the clusters and must change the name in the Secret.</p>
 <p>The resulting Secret file must resemble the following:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
@@ -5895,7 +6008,7 @@ cluster2   cluster2-haproxy.&lt;namespace&gt;   ready    3                3     
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="February 9, 2026 13:11:35 UTC">February 9, 2026</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 30, 2026 09:09:08 UTC">September 30, 2026</span>
       
         <br>
         Created:
