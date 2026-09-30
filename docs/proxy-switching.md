@@ -55,8 +55,6 @@ When switching proxies, adjust your resource requests and limits accordingly:
 
     Switching from ProxySQL to HAProxy will cause the downtime because the Operator needs to reconfigure the proxy Pods.
 
-You can switch from proxy to another on an existing cluster:
-
 === "From ProxySQL to HAProxy"
 
     ```bash
@@ -64,8 +62,7 @@ You can switch from proxy to another on an existing cluster:
       "spec": {
          "haproxy": {
             "enabled": true,
-            "size": 3,
-            "image": "percona/percona-xtradb-cluster-operator:{{ release }}-haproxy" },
+            "size": 3 },
          "proxysql": { "enabled": false }
       }}'
     ```
@@ -80,8 +77,7 @@ You can switch from proxy to another on an existing cluster:
          "haproxy": { "enabled": false },
          "proxysql": {
             "enabled": true,
-            "size": 3,
-            "image": "percona/percona-xtradb-cluster-operator:{{ release }}-proxysql"
+            "size": 3
          }
       }}'
     ```

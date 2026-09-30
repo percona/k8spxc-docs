@@ -3,34 +3,56 @@
 The Percona Operator for MySQL uses Transport Layer
 Security (TLS) cryptographic protocol for the following types of communication:
 
-* External - communication between the client application and ProxySQL.
+| Certificate | Secures | Used by |
+| --- | --- | --- |
+| External (`sslSecretName`) | Client-to-proxy connections | ProxySQL only |
+| Internal (`sslInternalSecretName`) | Node-to-node Galera traffic. This certificate also serves as an authorization method | Every Percona XtraDB Cluster node and HAProxy. HAProxy passes the TLS handshake through to the PXC node instead of terminating it, so client connections through HAProxy are secured by the internal certificate, not the external one. |
 
-* Internal - communication between Percona XtraDB Cluster instances. 
-The internal certificate is also used as an authorization method.
+## TLS certificates
 
-## TLS Certificates 
+Choose one of three ways to provision TLS certificates, depending on how much control you need over certificate generation and renewal:
 
-You can configure TLS security in several ways.
-
-* By default, the Operator **generates long-term certificates** automatically during the cluster creation if there are no certificate secrets available. If you need new certificates, you must renew them manually.
-
-* The Operator can use a *cert-manager*, which will automatically **generate and renew short-term TLS certificates**. You must explicitly install cert-manager for this scenario.
-
-    The *cert-manager* acts as a self-signed issuer and generates certificates allowing you to deploy and use the
-    Percona Operator without a separate certificate issuer.
-
-* You can generate TLS certificates manually or obtain them from some other issuer and provide to the Operator.
+| Method | Renewal | Best for |
+| --- | --- | --- |
+| Operator-generated (default) | Manual. Generate and apply new certificates yourself | Getting started without installing extra components |
+| [cert-manager](tls-cert-manager.md) | Automatic. Short-term certificates renewed on schedule | Clusters that need automated certificate lifecycle management |
+| [Custom certificates](tls-manual.md) | Manual. You control the validity period and renewal | Environments with an existing PKI or specific security and compliance requirements |
 
 **For testing purposes**, you can use pre-generated certificates available in the `deploy/ssl-secrets.yaml` file. But we strongly recommend
 **to not use them on any production system**!
 
-## TLS configuration
+## Connect your application using TLS
 
-The following sections provide guidelines how to:
+To verify server identity when connecting with TLS, use `--ssl-mode=VERIFY_CA` or `--ssl-mode=VERIFY_IDENTITY` (or your driver's equivalent) with the CA certificate that matches the proxy you connect through:
 
-* [Configure TLS security with the Operator using cert-manager](tls-cert-manager.md)
-* [Generate certificates manually](tls-manual.md)
+* **HAProxy** (the default): use the CA from the *internal* certificate Secret. It is referenced in the `sslInternalSecretName` Custom Resource option (`cluster1-ssl-internal` by default).
+* **ProxySQL**: use the CA from the *external* certificate Secret. It is referenced in the `sslSecretName` Custom Resource option (`cluster1-ssl` by default).
+
+Get the CA certificate for your proxy. This example is for HAProxy:
+
+```bash
+kubectl get secret cluster1-ssl-internal -n <namespace> -o jsonpath='{.data.ca\.crt}' | base64 -d > ca.pem
+```
+
+Then connect with it, using the same host as [Connect to Percona XtraDB Cluster](connect.md):
+
+=== "with HAProxy (default)"
+
+    ```bash
+    mysql -h cluster1-haproxy -uroot -p'<root_password>' --ssl-mode=VERIFY_IDENTITY --ssl-ca=path/to/ca.pem
+    ```
+
+=== "with ProxySQL"
+
+    ```bash
+    mysql -h cluster1-proxysql -uroot -p'<root_password>' --ssl-mode=VERIFY_IDENTITY --ssl-ca=path/to/ca.pem
+    ```
+
+`--ssl-mode=VERIFY_IDENTITY` also checks the hostname you connect with against the certificate's Subject Alternative Names (SANs). If the connection fails, confirm which certificate is actually being served. See [Verify the certificate is in use](tls-manual.md#verify-the-certificate-is-in-use).
+
+## See also
+
+Related tasks:
+
 * [Update certificates](tls-update.md)
 * [Disable TLS temporarily](tls-disable.md)
-
-
