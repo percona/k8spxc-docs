@@ -1,4 +1,4 @@
-# Providing Backups
+# Providing backups
 
 It's important to back up your database to keep your data safe.
 Backups help protect your system against data loss and corruption and ensure business stability. They are also a quick way to recover the database if something happens with it.
@@ -10,7 +10,54 @@ A backup starts after you create a Backup object. You can create a Backup object
 
 The Operator does physical backups using the [Percona XtraBackup :octicons-link-external-16:](https://docs.percona.com/percona-xtrabackup/8.0/index.html) tool. By default, it uses the [SST :octicons-link-external-16:](https://galeracluster.com/library/documentation/sst.html) (State Snapshot Transfer) method, which creates a separate backup Pod to perform backups.
 
-Alternatively, you can enable the XtraBackup sidecar method. This method uses a sidecar container running in each PXC Pod that provides better performance and native encryption support. See [Backup methods](#backup-methods) for details.
+Alternatively, you can enable the XtraBackup sidecar method. This method uses a sidecar container running in each PXC Pod that provides better performance and native encryption support. See [Backup methods](backups-methods.md) for details.
+
+Use the following table to find what you need: a backup type, storage, or the right restore path.
+
+## Choose a path
+
+| Goal | Use | Next step |
+| --- | --- | --- |
+| Protect data on a regular schedule | Scheduled backup | [Configure storage](backups-storage.md), then set up a [scheduled backup](backups-scheduled.md) |
+| Take a one-off backup before a risky change | On-demand backup | [Configure storage](backups-storage.md), then make an [on-demand backup](backups-ondemand.md) |
+| Undo a mistake on the cluster that made the backup | Restore in-place | [Restore to the same cluster](backups-restore.md) |
+| Test or inspect data without touching production | Restore to a side cluster | [Restore to a side cluster](backups-restore-side-cluster.md) |
+| Migrate or copy data to a different Kubernetes cluster | Restore to a new cluster | [Restore to a new cluster](backups-restore-to-new-cluster.md) |
+| Recover after losing the cluster and its Kubernetes environment | Restore after a disaster | [Restore the cluster after a disaster](backups-disaster-restore.md) |
+| Land on an exact time or transaction instead of the last full backup | Point-in-time recovery | [Enable PITR](backups-pitr.md), then [restore with PITR](backups-pitr-restore.md) |
+| Bring an existing non-Kubernetes database into the cluster | Migrate in | [Use a backup to move an external database into Kubernetes](backups-move-from-external-db.md) |
+| Use a backup to move the database off the cluster onto a local machine | Migrate out | [Move a backup out of the cluster](backups-copy.md) |
+
+## Restore options
+
+You can restore a backup:
+
+* [to the same cluster it was made from](backups-restore.md) (in-place)
+* [to a side cluster](backups-restore-side-cluster.md) — a new cluster on the same Kubernetes cluster, in the same or a new namespace
+* [to a new cluster](backups-restore-to-new-cluster.md) — a new cluster on a different Kubernetes cluster
+* [after a disaster](backups-disaster-restore.md) — when nothing but the backup survived
+
+Any of these can also land on an exact time or transaction with point-in-time recovery. 
+
+[Restore from a backup](backups-restore.md){.md-button}
+
+## Migrate data
+
+Moving data across the Kubernetes boundary doesn't go through the Operator's Restore object the way the options above do:
+
+* [migrate an external, non-Kubernetes database into the cluster](backups-move-from-external-db.md) — combines a manual backup, a restore, and asynchronous replication for a low-downtime cutover
+* [migrate a backup out of the cluster to a local machine](backups-copy.md) — a manual restore outside Kubernetes, with no Operator involved
+
+## Point-in-time recovery
+
+Point-in-time recovery (PITR) replays binary logs on top of a full backup, so you can land on an exact moment or transaction instead of just the moment the last full backup finished.
+
+For point-in-time recovery, the Operator needs two things:
+
+* **Binary log collection enabled** — the Operator runs a separate Pod that continuously uploads binary logs to storage while the cluster is running.
+* **At least one successful full backup** — the Operator always restores a full backup first, then replays binary logs forward from it. Binary logs by themselves can't be restored, and the Operator can't report how far forward you can recover until a full backup exists.
+
+[Enable point-in-time recovery](backups-pitr.md){.md-button}
 
 ## Backup storage
 
@@ -24,48 +71,6 @@ You can store backups outside of Kubernetes cluster in one of the supported clou
 If you're running a Kubernetes cluster on premises, you can  store backups inside it using a [Persistent Volume :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/persistent-volumes/). For example, if you don't use a remote backup storage or if storage costs are high for you.
 
 ![image](assets/images/backup-pv.svg)
-
-## Backup methods
-
-The Operator supports two backup methods:
-
-### SST method (default)
-
-The default backup method uses State Snapshot Transfer (SST). When you create a Backup object, the Operator:
-
-1. Sets up a backup Pod that runs Percona XtraBackup inside and creates a backup Job
-2. Creates a path in the storage to save the backup data
-3. Starts copying the data files from the Percona XtraDB Cluster to the backup storage
-4. The Percona XtraDB Cluster Pod that serves the data enters the Donor state and stops receiving all requests
-
-The backup task is resource-consuming and can affect performance. That's why the Operator uses one of the secondary Percona XtraDB Cluster Pods for backups. The exception is a one-pod deployment, where the same Pod is used for all tasks.
-
-After the data files are copied and uploaded to the [remote backup storage](backups-storage.md), the Operator marks the backup Pod as 'Completed' and deletes it. The Operator also updates the status of the Backup object.
-
-### XtraBackup sidecar method (tech preview)
-
-When you enable the `XtrabackupSidecar` feature gate, the Operator uses a different backup approach:
-
-1. An XtraBackup sidecar container runs in each Percona XtraDB Cluster Pod, providing a gRPC server interface for making backups. 
-2. When you create a Backup object, the Operator creates a Job that acts like a client and sends requests directly to the sidecar. 
-3. The sidecar performs the backup and uploads it to the cloud storage (S3, Azure, or GCP). The database Pod doesn't change its state to Donor and continues processing all requests.
-
-As with the SST method, the Operator uses one of the secondary Percona XtraDB Cluster Pods for backups to not overload the primary Pod. 
-
-**Benefits of the XtraBackup sidecar method:**
-
-* **Better performance**: Direct access to data files without network overhead
-* **Easier troubleshooting**: The sidecar container runs continuously in the Percona XtraDB Cluster Pod, so you can check backup logs and status at any time. SST backups may fail with cryptic errors when a network issue occurs. This makes it difficult to diagnose the root cause or intervene to resolve problems.
-* **Native encryption**: Built-in support for encrypted backups with proper key management. This functionality is not yet available in version 1.19.0 but will be added in future releases.
-* **Incremental backups**: Make your backups more efficient by saving only the data that has changed since the last backup, rather than copying the entire database each time. This reduces the amount of backup storage required and allows you to take backups more frequently with less impact on performance. This functionality is not yet available in version 1.19.0 but will be added in future releases.
-
-**Limitations:**
-
-* PVC (Persistent Volume Claim) backups are not supported when this feature is enabled. This support is planned to be implemented in future releases.
-* Only cloud storage backups (S3, Azure, GCP) are available
-* IAM profiles are not yet supported. The support for IAM profiles is planned to be added in future releases.
-
-To enable this method, set `PXCO_FEATURE_GATES=XtrabackupSidecar=true` in the Operator Deployment. See [Configure Operator environment variables](env-vars-operator.md#pxco_feature_gates) for detailed instructions.
 
 ## Multiple backups
 
@@ -100,3 +105,13 @@ Otherwise, after the cluster is recovered and reports the Ready status, the Oper
 Note that if some files were already saved on the storage when a backup was suspended, the Operator deletes them and reruns the backup.
 
 If you want to run backups in an unhealthy cluster, set the `spec.unsafeFlags.backupIfUnhealthy` option in the `deploy/cr.yaml` file to `true`. Use this option with caution because it can affect the cluster performance.
+
+## Limits you should know
+
+* Restoring from an `emptyDir` or `hostPath` volume isn't supported, and a Persistent Volume restore only works within the same Kubernetes cluster — see [Restore limitations](backups-restore.md#restore-limitations) for the full breakdown by destination.
+* A point-in-time restore always requires a Secret with the same passwords used at backup time; a full-backup restore tolerates changed passwords since Operator 1.18.0 — see [Restore limitations](backups-restore.md#restore-limitations).
+* The XtraBackup sidecar backup method doesn't yet support Persistent Volume backups, IAM profiles, or built-in encryption — see [Backup methods](backups-methods.md#xtrabackup-sidecar-method-tech-preview).
+
+## Next step
+
+[Backup methods](backups-methods.md){.md-button}
