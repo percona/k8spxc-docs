@@ -66,17 +66,7 @@ Use this page when the original cluster and its Kubernetes environment are both 
 
 ## Verify the restore
 
-1. Confirm the Restore object reports `Succeeded`:
-
-    ```bash
-    kubectl get pxc-restore -n $NAMESPACE
-    ```
-
-2. Confirm the cluster reports the `ready` status:
-
-    ```bash
-    kubectl get pxc -n $NAMESPACE
-    ```
+--8<-- "verify-restore.md"
 
 3. Connect to the cluster and spot-check the data you expected the backup to contain — row counts on a known table, or the latest timestamped record you expect to see.
 

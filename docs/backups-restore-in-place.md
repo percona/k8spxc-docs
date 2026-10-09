@@ -88,19 +88,9 @@ kubectl apply -f deploy/backup/restore.yaml -n $NAMESPACE
 
 ## Verify the restore
 
-1. Confirm the Restore object reports `Succeeded`:
+--8<-- "verify-restore.md"
 
-    ```bash
-    kubectl get pxc-restore -n $NAMESPACE
-    ```
-
-2. Confirm the cluster is back to the `ready` status:
-
-    ```bash
-    kubectl get pxc -n $NAMESPACE
-    ```
-
-3. Spot-check the data you expected the backup to contain.
+1. Spot-check the data you expected the backup to contain.
 
 ## Restore with point-in-time recovery
 

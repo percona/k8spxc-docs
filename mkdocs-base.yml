@@ -276,10 +276,11 @@ nav:
                   - "On the same cluster (in-place)": backups-restore-in-place.md
                   - "To a side cluster (same Kubernetes cluster)": backups-restore-side-cluster.md
                   - "To a new cluster (different Kubernetes cluster)": backups-restore-to-new-cluster.md
-              - Point-in-time recovery: 
+                  - "After a disaster": backups-restore-disaster.md
+              - Point-in-time recovery:
                 - "Enable point-in-time recovery": backups-pitr.md
-                - "Restore to a point in time": backups-pitr-restore.md
-              - "Restore the cluster after a disaster": backups-disaster-restore.md
+                - "Restore with point-in-time recovery": backups-pitr-restore.md
+                - "Find a GTID for point-in-time recovery": backups-pitr-find-gtid.md
               - Migrate data:
                   - "Use backups to move an external database to Kubernetes": backups-move-from-external-db.md
                   - "Move a backup out of the cluster": backups-copy.md

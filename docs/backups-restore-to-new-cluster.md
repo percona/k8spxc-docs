@@ -126,17 +126,7 @@ You can [already define](backups-storage.md) the storage where the backup is sto
 
 ### Verify the restore
 
-1. Confirm the Restore object reports `Succeeded`:
-
-    ```bash
-    kubectl get pxc-restore -n <namespace>
-    ```
-
-2. Confirm the new cluster is at the `ready` status:
-
-    ```bash
-    kubectl get pxc -n <namespace>
-    ```
+--8<-- "verify-restore.md"
 
 3. Spot-check the data you expected the backup to contain, then configure the main storage within the target cluster's `cr.yaml` so you can make subsequent backups from the new cluster.
 
