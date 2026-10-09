@@ -43,31 +43,18 @@ backup:
   ...
 ```
 
-!!! note
+## Verify a scheduled backup ran
 
-    Before the Operator version 1.10 scheduled backups were based on [Kubernetes CronJobs :octicons-link-external-16:](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/), while newer Operator versions take care about scheduled backups itself. Clusters upgraded from the Operator version 1.9 may need manual deletion of scheduled backups CronJobs, if any existed prior to the upgrade (otherwise backups will run twice).
-
-    You can check if there are any CronJobs in the namespace of your cluster related to scheduled backups as follows:
+1. List backups for the cluster and confirm the latest scheduled run shows `Succeeded`:
 
     ```bash
-    kubectl get cronjobs -n <namespace>
+    kubectl get pxc-backup -n <namespace>
     ```
 
-    ??? example "Expected output"
+2. For more detail on a specific backup, including the error message if it failed:
 
-        ```{.text .no-copy}
-        NAME SCHEDULE SUSPEND ACTIVE LAST SCHEDULE AGE
-        sat-night-backup 0 0 * * 6 False 0 <none> 4m36s
-        ```
-
-    Deleting CronJob is straightforward:
-    
     ```bash
-    kubectl delete cronjob sat-night-backup -n <namespace>
+    kubectl describe pxc-backup <backup-name> -n <namespace>
     ```
 
-    ??? example "Expected output"
-
-        ```{.text .no-copy}
-        cronjob.batch "sat-night-backup" deleted
-        ```
+3. If the cluster has [point-in-time recovery enabled](backups-pitr.md), also confirm the backup doesn't have binlog gaps before relying on it for a PITR restore — see [Binlog gaps](backups-pitr-restore.md#binlog-gaps).

@@ -2478,7 +2478,7 @@ file contains configuration options for [Fluent Bit Log Collector :octicons-link
 
 ### `logcollector.enabled`
 
-Enables or disables [cluster-level logging with Fluent Bit](debug-logs.md#cluster-level-logging).
+Enables or disables [cluster-level logging with Fluent Bit](persistent-logging.md).
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -2881,7 +2881,9 @@ The [Amazon S3 bucket :octicons-link-external-16:](https://docs.aws.amazon.com/A
 
 ### `backup.storages.STORAGE-NAME.s3.region`
 
-The [AWS region :octicons-link-external-16:](https://docs.aws.amazon.com/general/latest/gr/rande.html) to use. Please note **this option is mandatory** for Amazon and all S3-compatible storages.
+The [AWS region :octicons-link-external-16:](https://docs.aws.amazon.com/general/latest/gr/rande.html) to use. Set this explicitly for Amazon S3 and S3-compatible storage alike — the Operator derives the storage endpoint from it whenever you don't also set `endpointUrl`, and a real cloud provider rejects a request signed for the wrong region.
+
+If you leave `region` unset, the fallback depends on which component reads it: the backup and restore Jobs fall back to `us-west-2`, while [point-in-time recovery](backups-pitr.md) requires the value explicitly and fails to start without it. Don't rely on either fallback — set `region` to the value your storage actually uses.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -2906,6 +2908,14 @@ If you enforce the path style and specify the bucket name both in the `endpointU
 | ----------- | ---------- |
 | :material-toggle-switch-outline: boolean     | `false` |
 
+### `backup.storages.STORAGE-NAME.s3.skipBucketExistsCheck`
+
+Set to `true` when the credentials cannot check that the bucket exists, for example a scoped policy without that permission. Otherwise the Operator's default check fails before the backup starts.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-toggle-switch-outline: boolean     | `false` |
+
 ### `backup.storages.STORAGE-NAME.s3.prefix`
 
 The path to the data directory in the bucket. If the `bucket` value already contains the prefix, the Operator appends the `prefix` value to the end of the bucket path. 
@@ -2922,7 +2932,7 @@ Enables you to specify the checksum algorithm used to verify data integrity duri
 
 See the [list of supported checksum algorithms :octicons-link-external-16:](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html).
 
-This option is supported for binary log collection and uploads.
+This option applies to [point-in-time recovery](backups-pitr.md) binary log uploads and to backups made with the [XtraBackup sidecar method](backups-methods.md). The default SST backup method doesn't use it.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -2930,7 +2940,7 @@ This option is supported for binary log collection and uploads.
 
 ### `backup.storages.STORAGE-NAME.s3.caBundle.name`
 
-The name of the Secret that stores custom TLS certificates for TLS communication with S3 storage. See [Configure TLS verification with custom certificates for S3 storage](backups-storage.md#configure-storage-for-backups) for more information.
+The name of the Secret that stores custom TLS certificates for TLS communication with S3 storage. See [Configure TLS verification with custom certificates](backups-storage-s3.md#configure-tls-verification-with-custom-certificates) for more information.
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -2938,11 +2948,43 @@ The name of the Secret that stores custom TLS certificates for TLS communication
 
 ### `backup.storages.STORAGE-NAME.s3.caBundle.key`
 
-The custom CA certificate for TLS communication with S3 storage. See [Configure TLS verification with custom certificates for S3 storage](backups-storage.md#configure-storage-for-backups) for more information.
+The custom CA certificate for TLS communication with S3 storage. See [Configure TLS verification with custom certificates](backups-storage-s3.md#configure-tls-verification-with-custom-certificates) for more information.
 
 | Value type  | Example    |
 | ----------- | ---------- |
 | :material-code-string: string     | `ca.crt` |
+
+### `backup.storages.STORAGE-NAME.azure.endpointUrl`
+
+The endpoint URL of the Azure Blob storage service to use, instead of the default Azure endpoint. Set this for an Azure-compatible emulator or a sovereign cloud, such as Azure Government or Azure China. If you leave it unset, the Operator derives the endpoint from your storage account name.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | |
+
+### `backup.storages.STORAGE-NAME.azure.storageClass`
+
+The [Azure Blob storage access tier :octicons-link-external-16:](https://learn.microsoft.com/en-us/azure/storage/blobs/access-tiers-overview) to store the backup in.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-code-string: string     | `Cool` |
+
+### `backup.storages.STORAGE-NAME.azure.blockSize`
+
+The block size, in bytes, the Operator uses when uploading backup data to Azure Blob storage. Consider raising this for large backups to reduce the number of blocks per blob.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric: int     | `4194304` |
+
+### `backup.storages.STORAGE-NAME.azure.concurrency`
+
+The number of concurrent upload operations the Operator uses when writing backup data to Azure Blob storage.
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-numeric: int     | `4` |
 
 ### `backup.storages.STORAGE-NAME.volume.persistentVolumeClaim.type`
 
