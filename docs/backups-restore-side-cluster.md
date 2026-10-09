@@ -23,7 +23,7 @@ Use a side cluster to:
 
 Use `backupName` when the Backup object is in the same namespace as the target cluster. See [Choose `backupName` or `backupSource`](backups-restore.md#choose-backupname-or-backupsource) for the general rule.
 
-1. Edit the `deploy/backup/backup.yaml` and set the following keys:
+1. Edit `deploy/backup/restore.yaml` and set the following keys:
 
     * `backupName` - the backup name you restore from
     * `pxcCluster` - the name of the cluster you restore to. The name must differ from the name of the source cluster.
@@ -50,18 +50,18 @@ The Operator doesn't check that `backup1` was originally made from `cluster2`. I
 
 Use this when restoring into a different namespace than the one containing the Backup object, or when you'd rather point directly at the storage destination instead of relying on a Backup object existing in the target namespace.
 
-When using the `backupSource`, you also need to specify the destination — where the backup is stored. Take this value from the output of the `kubectl get pxc-backup -n $NAMESPACE` command.
+When using `backupSource`, you also need to specify the destination — where the backup is stored. Take this value from the output of `kubectl get pxc-backup -n <source-namespace>`.
 
 === "Persistent Volume backup"
 
-    A Persistent Volume is a cluster-scoped Kubernetes resource. PV names are unique across the entire cluster, so the Operator can identify it if you reference it by name Any namespace on this cluster can reference it by name in the restore object.
+    A Persistent Volume backup can be restored to a side cluster only when the target is in the same namespace as the source. For a side cluster in a different namespace, use cloud storage.
 
     ```yaml
     spec:
       pxcCluster: cluster2
       storageName: pvc-fs
       backupSource:
-        destination: pvc-fs/PVC_VOLUME_NAME
+        destination: pvc/PVC_VOLUME_NAME
     ```
 
 === "Cloud storage backup"
@@ -109,4 +109,4 @@ Connect with the side cluster's own credentials, not the source cluster's.
 
 Application users you created yourself likely keep the passwords they had on the source cluster at backup time, since the Operator's post-restore password reset only covers the system users listed above. If an application user's password doesn't work after the restore, try the source cluster's password for that user.
 
-This only applies to a full-backup restore. If you're making a [point-in-time recovery](backups-pitr-restore.md), the Operator still requires a Secret with the same passwords used at backup time. See [Restore the cluster when backup has different passwords](backups-restore.md#restore-the-cluster-when-backup-has-different-passwords).
+This only applies to a full-backup restore. If you're making a [point-in-time recovery](backups-pitr-restore.md), the Operator still requires a Secret with the same passwords used at backup time. See [Restore the cluster when backup has different passwords](backups-restore.md#restore-the-cluster-when-a-backup-has-different-passwords).

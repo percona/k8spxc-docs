@@ -2476,7 +2476,7 @@ file contains configuration options for [Fluent Bit Log Collector :octicons-link
 
 ### `logcollector.enabled`
 
-Enables or disables [cluster-level logging with Fluent Bit](debug-logs.md#cluster-level-logging).
+Enables or disables [cluster-level logging with Fluent Bit](persistent-logging.md).
 
 | Value type  | Example    |
 | ----------- | ---------- |
@@ -2901,6 +2901,14 @@ Enforces the use of path style access to the storage, where the bucket name is i
 
 If you enforce the path style and specify the bucket name both in the `endpointURL` path and in the `bucket` option, the Operator will use the bucket name from the `endpointURL` and ignore the value specified in `bucket`.
 
+
+| Value type  | Example    |
+| ----------- | ---------- |
+| :material-toggle-switch-outline: boolean     | `false` |
+
+### `backup.storages.STORAGE-NAME.s3.skipBucketExistsCheck`
+
+Set to `true` when the credentials cannot check that the bucket exists, for example a scoped policy without that permission. Otherwise the Operator's default check fails before the backup starts.
 
 | Value type  | Example    |
 | ----------- | ---------- |

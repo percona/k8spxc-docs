@@ -13,11 +13,11 @@ Use this page when the original cluster and its Kubernetes environment are both 
 1. Set up the namespace and install the Operator, if they don't already exist. Use the [Quickstart](kubectl.md) for the installation steps.
 2. Export the namespace where the cluster runs as an environment variable. Replace the `<namespace>` with your value:
 
-    ```bash
+     ```bash
     kubectl get pxc-backup -n $NAMESPACE
     ```
 
-3. Create the Secrets object with the user credentials for the new cluster. Use the same credentials as the original cluster if you have them, or new ones if a full-backup-only restore is all you need. Use the [Create a Secret for s3 storage](backups-storage-s3.md#create-the-s3-credentials-secret) or [Create a Secret for Azure storage](backups-storage-azure.md#create-a-secret) guides for the steps.
+3. Create the Secret with the new cluster's system-user credentials as described in [System Users](users.md#system-users). Separately, recreate the cloud-storage credentials Secret by following [Create the S3 credentials Secret](backups-storage-s3.md#create-the-s3-credentials-secret) or [Create a Secret for Azure](backups-storage-azure.md#create-a-secret).
 
 4. Deploy a fresh Percona XtraDB Cluster with the name you want to restore into:
 
@@ -48,7 +48,7 @@ Use this page when the original cluster and its Kubernetes environment are both 
     spec:
       pxcCluster: cluster1
       backupSource:
-        destination: s3://mybucketcluster1-2025-03-21-12:05:37-full
+        destination: s3://mybucket/cluster1-2025-03-21-12:05:37-full
         s3:
           bucket: mybucket
           credentialsSecret: my-cluster-name-backup-s3

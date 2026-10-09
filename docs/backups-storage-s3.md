@@ -1,6 +1,6 @@
 # Configure Amazon S3 or S3-compatible storage for backups
 
-This document guides you how to configure backups to an Amazon S3 bucket, an S3-compatible service or Google Cloud Service.
+This document guides you through configuring backups to an Amazon S3 bucket, an S3-compatible service, or Google Cloud Storage.
 
 ## Create the S3 credentials Secret
 

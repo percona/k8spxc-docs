@@ -11,7 +11,7 @@ To restore your Percona XtraDB Cluster from a backup, define a `PerconaXtraDBClu
 * `spec.pxcCluster`: the name of the target cluster
 * `spec.backupName`: the name of your backup
 
-If the target cluster's passwords differ from the backup's, see [Restore the cluster when backup has different passwords](backups-restore.md#restore-the-cluster-when-backup-has-different-passwords) before you continue.
+If the target cluster's passwords differ from the backup's, see [Restore the cluster when backup has different passwords](backups-restore.md#restore-the-cluster-when-a-backup-has-different-passwords) before you continue.
 
 Pass this configuration to the Operator:
 
@@ -66,7 +66,7 @@ spec:
   pxcCluster: cluster1
   storageName: pvc-fs
   backupSource:
-    destination: pvc-fs/PVC_VOLUME_NAME
+    destination: pvc/PVC_VOLUME_NAME
   ...
 ```
 

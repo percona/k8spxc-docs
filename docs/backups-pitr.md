@@ -18,7 +18,7 @@ After you [enable point-in-time recovery](#enable-point-in-time-recovery), the O
 
 ## Considerations
 
-1. Use either s3-compatible or Azure-compatible storage storage for both the binlog and the full backup. Point-in-time recovery doesn't work with other storage types.
+1. Use either S3-compatible or Azure-compatible storage for both the binlog and the full backup. Point-in-time recovery doesn't work with other storage types.
 
 2. The Operator saves binlogs without any
     cluster-based filtering. Use a separate folder per cluster on the same bucket, or use a different bucket per cluster.

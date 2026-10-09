@@ -6,7 +6,7 @@ To restore your Percona XtraDB Cluster from a backup, you create a `PerconaXtraD
 
 | Destination | Use it when... | Tutorial |
 | --- | --- | --- |
-| The same cluster (in-place) | You want to roll the cluster back to an earlier state if a mistake happens. For example, afetr a bad `DELETE` or a failed upgrade. | [Restore to the same cluster](backups-restore-in-place.md) |
+| The same cluster (in-place) | You want to roll the cluster back to an earlier state if a mistake happens. For example, after a bad `DELETE` or a failed upgrade. | [Restore to the same cluster](backups-restore-in-place.md) |
 | A side cluster | You want to test a change or inspect data without touching production on the same Kubernetes cluster. | [Restore to a side cluster](backups-restore-side-cluster.md) |
 | A new cluster | You're migrating or copying data to a different Kubernetes cluster or environment. | [Restore to a new cluster](backups-restore-to-new-cluster.md) |
 | After a disaster | The original cluster and its Kubernetes environment are both gone. | [Restore the cluster after a disaster](backups-restore-disaster.md) |
@@ -20,7 +20,7 @@ Every restore names its source in one of two ways. Use exactly one - setting bot
 | | `backupName` | `backupSource` |
 | --- | --- | --- |
 | Use it when | A Backup object for that backup already exists in the namespace you're restoring into. | No Backup object exists in the target namespace. |
-| Typical case | - An in-place restore to the same cluster, `,br> - A restore to a side cluster in the same namespace as the source. | - A side cluster in a different namespace, <br> - A new cluster on a different Kubernetes environment, <br> - A disaster restore. |
+| Typical case | - An in-place restore to the same cluster, <br> - A restore to a side cluster in the same namespace as the source. | - A side cluster in a different namespace, <br> - A new cluster on a different Kubernetes environment, <br> - A disaster restore. |
 
 `backupSource` still has to say where the backup files are. Point it at storage in one of two places:
 
@@ -67,7 +67,7 @@ Every restore names its source in one of two ways. Use exactly one - setting bot
 ## Restore limitations
 
 * **Storage type.** Restoring from an `emptyDir` or `hostPath` volume isn't supported — back up from one if you need to, then restore the result onto a Persistent Volume instead. A Persistent Volume restore only works within the same Kubernetes cluster ([in-place](backups-restore-in-place.md) or a [side cluster](backups-restore-side-cluster.md)). A [new cluster on a different Kubernetes environment](backups-restore-to-new-cluster.md), a [disaster restore](backups-restore-disaster.md), and any [point-in-time recovery](backups-pitr-restore.md) restore all require the full backup to be in cloud storage (S3 or Azure).
-* **User passwords.** A full-backup restore tolerates changed passwords since Operator 1.18.0 — see [Restore the cluster when backup has different passwords](#restore-the-cluster-when-backup-has-different-passwords). A point-in-time restore doesn't: it still requires a Secret with the passwords that were in effect at backup time. This is a known limitation.
+* **User passwords.** A full-backup restore tolerates changed passwords since Operator 1.18.0 — see [Restore the cluster when backup has different passwords](#restore-the-cluster-when-a-backup-has-different-passwords). A point-in-time restore doesn't: it still requires a Secret with the passwords that were in effect at backup time. This is a known limitation.
 
 ## Restore the cluster when a backup has different passwords
 
