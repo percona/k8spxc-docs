@@ -2843,6 +2843,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#verify-the-certificate-is-in-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify the certificate is in use
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#additional-resources" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5943,6 +5954,17 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </li>
       
         <li class="md-nav__item">
+  <a href="#verify-the-certificate-is-in-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify the certificate is in use
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#additional-resources" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -6059,7 +6081,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <span class="w">  </span>--from-file<span class="o">=</span>tls.crt<span class="o">=</span>server.pem<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--from-file<span class="o">=</span>tls.key<span class="o">=</span>server-key.pem<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--from-file<span class="o">=</span>ca.crt<span class="o">=</span>ca.pem<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--type<span class="o">=</span>Opague<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span>
+<span class="w">  </span>--type<span class="o">=</span>kubernetes.io/tls<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span>
 </code></pre></div>
 </li>
 <li>
@@ -6087,7 +6109,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <span class="w">  </span>--from-file<span class="o">=</span>tls.crt<span class="o">=</span>server-internal.pem<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--from-file<span class="o">=</span>tls.key<span class="o">=</span>server-internal-key.pem<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--from-file<span class="o">=</span>ca.crt<span class="o">=</span>ca.pem<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--type<span class="o">=</span>Opague<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span>
+<span class="w">  </span>--type<span class="o">=</span>kubernetes.io/tls<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span>
 </code></pre></div>
 </li>
 </ol>
@@ -6098,6 +6120,34 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <span class="w">  </span><span class="nt">sslSecretName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster1-ssl</span>
 <span class="w">  </span><span class="nt">sslInternalSecretName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster1-ssl-internal</span>
 </code></pre></div>
+<p>Once your cluster is running with these certificates, see <a href="tls-update.html">Update certificates</a> for how to check their expiration and renew or rotate them, since manually generated certificates are not renewed automatically.</p>
+<h2 id="verify-the-certificate-is-in-use">Verify the certificate is in use<a class="headerlink" href="#verify-the-certificate-is-in-use" title="Permanent link">&para;</a></h2>
+<p>The Operator applies whatever Secret <code>sslSecretName</code> and <code>sslInternalSecretName</code> point to without validating it, and without logging or reporting whether the certificate is well-formed or correctly paired with its CA. A malformed certificate, or one that doesn&rsquo;t match its CA or private key, can be accepted silently — the cluster can report <code>Ready</code> with nothing in the logs or Kubernetes Events to indicate a problem.</p>
+<p>Always confirm the certificate actually served matches what you provided. Check what the proxy presents during a live handshake. The cluster&rsquo;s hostnames only resolve from inside the cluster&rsquo;s network, so run the check from a temporary pod:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>-i<span class="w"> </span>--rm<span class="w"> </span>--tty<span class="w"> </span>tls-debug<span class="w"> </span>--image<span class="o">=</span>percona/percona-xtradb-cluster:8.4.8-8.1<span class="w"> </span>--restart<span class="o">=</span>Never<span class="w"> </span>--<span class="w"> </span>bash<span class="w"> </span>-il
+</code></pre></div>
+<p>Inside that pod, run:</p>
+<div class="highlight"><pre><span></span><code>openssl<span class="w"> </span>s_client<span class="w"> </span>-starttls<span class="w"> </span>mysql<span class="w"> </span>-connect<span class="w"> </span>cluster1-haproxy.&lt;namespace&gt;:3306<span class="w"> </span>-showcerts<span class="w"> </span>&lt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>openssl<span class="w"> </span>x509<span class="w"> </span>-noout<span class="w"> </span>-subject<span class="w"> </span>-serial<span class="w"> </span>-fingerprint<span class="w"> </span>-sha256
+</code></pre></div>
+<p>Compare the output against the certificate in your Secret. Which Secret to check depends on the proxy deployed in your cluster:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">HAProxy</label><label for="__tabbed_1_2">ProxySQL</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>With HAProxy, client connections are served the internal certificate, not the external one. HAProxy passes the TLS handshake through to the PXC node itself instead of terminating it, so the node&rsquo;s own (internal) certificate is what the client sees. Compare against the Secret you set in <code>sslInternalSecretName</code>:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>cluster1-ssl-internal<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.data.tls\.crt}'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span><span class="p">|</span><span class="w"> </span>openssl<span class="w"> </span>x509<span class="w"> </span>-noout<span class="w"> </span>-subject<span class="w"> </span>-serial<span class="w"> </span>-fingerprint<span class="w"> </span>-sha256
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>With ProxySQL, client connections are served the external certificate. Compare against the Secret you set in <code>sslSecretName</code>:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>cluster1-ssl<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.data.tls\.crt}'</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span><span class="p">|</span><span class="w"> </span>openssl<span class="w"> </span>x509<span class="w"> </span>-noout<span class="w"> </span>-subject<span class="w"> </span>-serial<span class="w"> </span>-fingerprint<span class="w"> </span>-sha256
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>The subject, serial, and fingerprint must match. If they don&rsquo;t, check your Secret for a mismatched CA, certificate, or key before assuming the configuration is broken elsewhere.</p>
 <h2 id="additional-resources">Additional resources<a class="headerlink" href="#additional-resources" title="Permanent link">&para;</a></h2>
 <p>Check the sample certificates in <code>deploy/ssl-secrets.yaml</code> for reference</p>
 <hr>
@@ -6105,7 +6155,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="February 9, 2026 13:11:35 UTC">February 9, 2026</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 9, 2026 08:31:09 UTC">October 9, 2026</span>
       
         <br>
         Created:

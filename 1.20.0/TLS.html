@@ -2719,7 +2719,7 @@ Security (TLS) cryptographic protocol for the following types of communication:"
   <a href="#tls-certificates" class="md-nav__link">
     <span class="md-ellipsis">
       
-        TLS Certificates
+        TLS certificates
       
     </span>
   </a>
@@ -2727,10 +2727,21 @@ Security (TLS) cryptographic protocol for the following types of communication:"
 </li>
       
         <li class="md-nav__item">
-  <a href="#tls-configuration" class="md-nav__link">
+  <a href="#connect-your-application-using-tls" class="md-nav__link">
     <span class="md-ellipsis">
       
-        TLS configuration
+        Connect your application using TLS
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See also
       
     </span>
   </a>
@@ -5814,7 +5825,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   <a href="#tls-certificates" class="md-nav__link">
     <span class="md-ellipsis">
       
-        TLS Certificates
+        TLS certificates
       
     </span>
   </a>
@@ -5822,10 +5833,21 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </li>
       
         <li class="md-nav__item">
-  <a href="#tls-configuration" class="md-nav__link">
+  <a href="#connect-your-application-using-tls" class="md-nav__link">
     <span class="md-ellipsis">
       
-        TLS configuration
+        Connect your application using TLS
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See also
       
     </span>
   </a>
@@ -5866,37 +5888,83 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <h1 id="transport-layer-security-tls">Transport Layer Security (TLS)<a class="headerlink" href="#transport-layer-security-tls" title="Permanent link">&para;</a></h1>
 <p>The Percona Operator for MySQL uses Transport Layer
 Security (TLS) cryptographic protocol for the following types of communication:</p>
-<ul>
-<li>
-<p>External - communication between the client application and ProxySQL.</p>
-</li>
-<li>
-<p>Internal - communication between Percona XtraDB Cluster instances. 
-The internal certificate is also used as an authorization method.</p>
-</li>
-</ul>
-<h2 id="tls-certificates">TLS Certificates<a class="headerlink" href="#tls-certificates" title="Permanent link">&para;</a></h2>
-<p>You can configure TLS security in several ways.</p>
-<ul>
-<li>
-<p>By default, the Operator <strong>generates long-term certificates</strong> automatically during the cluster creation if there are no certificate secrets available. If you need new certificates, you must renew them manually.</p>
-</li>
-<li>
-<p>The Operator can use a <em>cert-manager</em>, which will automatically <strong>generate and renew short-term TLS certificates</strong>. You must explicitly install cert-manager for this scenario.</p>
-<p>The <em>cert-manager</em> acts as a self-signed issuer and generates certificates allowing you to deploy and use the
-Percona Operator without a separate certificate issuer.</p>
-</li>
-<li>
-<p>You can generate TLS certificates manually or obtain them from some other issuer and provide to the Operator.</p>
-</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>Certificate</th>
+<th>Secures</th>
+<th>Used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>External (<code>sslSecretName</code>)</td>
+<td>Client-to-proxy connections</td>
+<td>ProxySQL only</td>
+</tr>
+<tr>
+<td>Internal (<code>sslInternalSecretName</code>)</td>
+<td>Node-to-node Galera traffic. This certificate also serves as an authorization method</td>
+<td>Every Percona XtraDB Cluster node and HAProxy. HAProxy passes the TLS handshake through to the PXC node instead of terminating it, so client connections through HAProxy are secured by the internal certificate, not the external one.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tls-certificates">TLS certificates<a class="headerlink" href="#tls-certificates" title="Permanent link">&para;</a></h2>
+<p>Choose one of three ways to provision TLS certificates, depending on how much control you need over certificate generation and renewal:</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Renewal</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Operator-generated (default)</td>
+<td>Manual. Generate and apply new certificates yourself</td>
+<td>Getting started without installing extra components</td>
+</tr>
+<tr>
+<td><a href="tls-cert-manager.html">cert-manager</a></td>
+<td>Automatic. Short-term certificates renewed on schedule</td>
+<td>Clusters that need automated certificate lifecycle management</td>
+</tr>
+<tr>
+<td><a href="tls-manual.html">Custom certificates</a></td>
+<td>Manual. You control the validity period and renewal</td>
+<td>Environments with an existing PKI or specific security and compliance requirements</td>
+</tr>
+</tbody>
+</table>
 <p><strong>For testing purposes</strong>, you can use pre-generated certificates available in the <code>deploy/ssl-secrets.yaml</code> file. But we strongly recommend
 <strong>to not use them on any production system</strong>!</p>
-<h2 id="tls-configuration">TLS configuration<a class="headerlink" href="#tls-configuration" title="Permanent link">&para;</a></h2>
-<p>The following sections provide guidelines how to:</p>
+<h2 id="connect-your-application-using-tls">Connect your application using TLS<a class="headerlink" href="#connect-your-application-using-tls" title="Permanent link">&para;</a></h2>
+<p>To verify server identity when connecting with TLS, use <code>--ssl-mode=VERIFY_CA</code> or <code>--ssl-mode=VERIFY_IDENTITY</code> (or your driver&rsquo;s equivalent) with the CA certificate that matches the proxy you connect through:</p>
 <ul>
-<li><a href="tls-cert-manager.html">Configure TLS security with the Operator using cert-manager</a></li>
-<li><a href="tls-manual.html">Generate certificates manually</a></li>
+<li><strong>HAProxy</strong> (the default): use the CA from the <em>internal</em> certificate Secret. It is referenced in the <code>sslInternalSecretName</code> Custom Resource option (<code>cluster1-ssl-internal</code> by default).</li>
+<li><strong>ProxySQL</strong>: use the CA from the <em>external</em> certificate Secret. It is referenced in the <code>sslSecretName</code> Custom Resource option (<code>cluster1-ssl</code> by default).</li>
+</ul>
+<p>Get the CA certificate for your proxy. This example is for HAProxy:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>cluster1-ssl-internal<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.data.ca\.crt}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span>&gt;<span class="w"> </span>ca.pem
+</code></pre></div>
+<p>Then connect with it, using the same host as <a href="connect.html">Connect to Percona XtraDB Cluster</a>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">with HAProxy (default)</label><label for="__tabbed_1_2">with ProxySQL</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>mysql<span class="w"> </span>-h<span class="w"> </span>cluster1-haproxy<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">'&lt;root_password&gt;'</span><span class="w"> </span>--ssl-mode<span class="o">=</span>VERIFY_IDENTITY<span class="w"> </span>--ssl-ca<span class="o">=</span>path/to/ca.pem
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>mysql<span class="w"> </span>-h<span class="w"> </span>cluster1-proxysql<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">'&lt;root_password&gt;'</span><span class="w"> </span>--ssl-mode<span class="o">=</span>VERIFY_IDENTITY<span class="w"> </span>--ssl-ca<span class="o">=</span>path/to/ca.pem
+</code></pre></div>
+</div>
+</div>
+</div>
+<p><code>--ssl-mode=VERIFY_IDENTITY</code> also checks the hostname you connect with against the certificate&rsquo;s Subject Alternative Names (SANs). If the connection fails, confirm which certificate is actually being served. See <a href="tls-manual.html#verify-the-certificate-is-in-use">Verify the certificate is in use</a>.</p>
+<h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
+<p>Related tasks:</p>
+<ul>
 <li><a href="tls-update.html">Update certificates</a></li>
 <li><a href="tls-disable.html">Disable TLS temporarily</a></li>
 </ul>
@@ -5905,7 +5973,7 @@ Percona Operator without a separate certificate issuer.</p>
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="November 27, 2025 14:06:44 UTC">November 27, 2025</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 9, 2026 08:31:09 UTC">October 9, 2026</span>
       
         <br>
         Created:

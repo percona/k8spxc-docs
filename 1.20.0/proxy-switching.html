@@ -5991,7 +5991,6 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p class="admonition-title">Warning</p>
 <p>Switching from ProxySQL to HAProxy will cause the downtime because the Operator needs to reconfigure the proxy Pods.</p>
 </div>
-<p>You can switch from proxy to another on an existing cluster:</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">From ProxySQL to HAProxy</label><label for="__tabbed_1_2">From HAProxy to ProxySQL</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -5999,8 +5998,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <span class="s1">  "spec": {</span>
 <span class="s1">     "haproxy": {</span>
 <span class="s1">        "enabled": true,</span>
-<span class="s1">        "size": 3,</span>
-<span class="s1">        "image": "percona/percona-xtradb-cluster-operator:1.20.0-haproxy" },</span>
+<span class="s1">        "size": 3 },</span>
 <span class="s1">     "proxysql": { "enabled": false }</span>
 <span class="s1">  }}'</span>
 </code></pre></div>
@@ -6012,8 +6010,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <span class="s1">     "haproxy": { "enabled": false },</span>
 <span class="s1">     "proxysql": {</span>
 <span class="s1">        "enabled": true,</span>
-<span class="s1">        "size": 3,</span>
-<span class="s1">        "image": "percona/percona-xtradb-cluster-operator:1.20.0-proxysql"</span>
+<span class="s1">        "size": 3</span>
 <span class="s1">     }</span>
 <span class="s1">  }}'</span>
 </code></pre></div>
@@ -6025,7 +6022,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="February 9, 2026 13:11:35 UTC">February 9, 2026</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 9, 2026 08:31:09 UTC">October 9, 2026</span>
       
         <br>
         Created:

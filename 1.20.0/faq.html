@@ -6206,11 +6206,7 @@ functionality like read/write split, firewalling and caching.</p>
 <p>From the other side, utilizing HAProxy for the service is the easier way to go,
 and getting use of the ProxySQL level 7 specifics requires good understanding of
 Kubernetes and ProxySQL.</p>
-<p>You can enable ProxySQL only at cluster creation time. Otherwise you will be 
-able to use HAProxy only. The switch from HAProxy to ProxySQL is not possible,
-because ProxySQL does not yet support <a href="https://dev.mysql.com/doc/refman/8.0/en/caching-sha2-pluggable-authentication.html">caching_sha2_password <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a>
-MySQL authentication plugin used by the Operator by default instead of the older
-<a href="https://dev.mysql.com/doc/refman/8.0/en/native-pluggable-authentication.html">mysql_native_password <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> one.</p>
+<p>You can switch between HAProxy and ProxySQL on a running cluster starting with Operator version 1.19.0. See <a href="proxy-switching.html">Switching from one proxy to another</a> for the steps and version requirements.</p>
 <p>See more detailed functionality and performance comparison of using the Operator
 with both solutions in <a href="https://www.percona.com/blog/2021/01/11/percona-kubernetes-operator-for-percona-xtradb-cluster-haproxy-or-proxysql/">this blog post <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a>.</p>
 <h2 id="which-additional-access-permissions-are-used-by-the-custom-resource-validation-webhook">Which additional access permissions are used by the Custom Resource validation webhook?<a class="headerlink" href="#which-additional-access-permissions-are-used-by-the-custom-resource-validation-webhook" title="Permanent link">&para;</a></h2>
@@ -6236,7 +6232,7 @@ due to access restrictions. It uses the following additional <a href="https://ku
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="February 9, 2026 13:11:35 UTC">February 9, 2026</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 9, 2026 08:31:09 UTC">October 9, 2026</span>
       
         <br>
         Created:
