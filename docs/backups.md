@@ -23,7 +23,7 @@ Use the following table to find what you need: a backup type, storage, or the ri
 | Undo a mistake on the cluster that made the backup | Restore in-place | [Restore to the same cluster](backups-restore.md) |
 | Test or inspect data without touching production | Restore to a side cluster | [Restore to a side cluster](backups-restore-side-cluster.md) |
 | Migrate or copy data to a different Kubernetes cluster | Restore to a new cluster | [Restore to a new cluster](backups-restore-to-new-cluster.md) |
-| Recover after losing the cluster and its Kubernetes environment | Restore after a disaster | [Restore the cluster after a disaster](backups-disaster-restore.md) |
+| Recover after losing the cluster and its Kubernetes environment | Restore after a disaster | [Restore the cluster after a disaster](backups-restore-disaster.md) |
 | Land on an exact time or transaction instead of the last full backup | Point-in-time recovery | [Enable PITR](backups-pitr.md), then [restore with PITR](backups-pitr-restore.md) |
 | Bring an existing non-Kubernetes database into the cluster | Migrate in | [Use a backup to move an external database into Kubernetes](backups-move-from-external-db.md) |
 | Use a backup to move the database off the cluster onto a local machine | Migrate out | [Move a backup out of the cluster](backups-copy.md) |
@@ -35,7 +35,7 @@ You can restore a backup:
 * [to the same cluster it was made from](backups-restore.md) (in-place)
 * [to a side cluster](backups-restore-side-cluster.md) — a new cluster on the same Kubernetes cluster, in the same or a new namespace
 * [to a new cluster](backups-restore-to-new-cluster.md) — a new cluster on a different Kubernetes cluster
-* [after a disaster](backups-disaster-restore.md) — when nothing but the backup survived
+* [after a disaster](backups-restore-disaster.md) — when nothing but the backup survived
 
 Any of these can also land on an exact time or transaction with point-in-time recovery. 
 

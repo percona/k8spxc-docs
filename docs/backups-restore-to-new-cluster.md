@@ -16,7 +16,36 @@ Because PVCs are namespace-specific Kubernetes resources tied to a specific Kube
 
 To restore from a backup, you create a `PerconaXtraDBClusterRestore` object using a restore configuration file. The example of such file is [deploy/backup/restore.yaml](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/backup/restore.yaml). You can check available options in the [restore options reference](restore-cr.md).
 
---8<-- "backups-restore.md:backup-prepare"
+## Before you start
+
+1. Make sure that the source cluster is running.
+2. Find the correct cluster name.
+
+    ```bash
+    kubectl get pxc -n <namespace>
+    ```
+
+3. Export the the cluster name and the namespace where it is running as environment variables. Replace the `cluster1` and `<namespace>` with your values:
+
+    ```bash
+    export CLUSTER=cluster1
+    export NAMESPACE=<namespace>
+    ```
+
+4. List backups on the source cluster to retrieve the desired backup name. Replace the `<namespace>` with your value:
+
+    ```bash
+    kubectl get pxc-backup -n $NAMESPACE
+    ```
+
+5. For point-in-time recovery, disable storing binlogs point-in-time functionality on the existing cluster. You must do it regardless of whether you made the backup with point-in-time recovery or without it. Use the following command and replace the cluster name and the `<namespace>` with your values:
+
+    ```bash
+    kubectl patch pxc $CLUSTER \
+      -n $NAMESPACE \
+      --type merge \
+      -p '{"spec":{"backup":{"pitr":{"enabled":false}}}}'
+    ```
 
 ## Restore from a full backup
 

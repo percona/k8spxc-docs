@@ -11,22 +11,27 @@ Use this page when the original cluster and its Kubernetes environment are both 
 ## Rebuild the cluster from a backup
 
 1. Set up the namespace and install the Operator, if they don't already exist. Use the [Quickstart](kubectl.md) for the installation steps.
+2. Export the namespace where the cluster runs as an environment variable. Replace the `<namespace>` with your value:
 
-2. Create the Secrets object with the user credentials for the new cluster. Use the same credentials as the original cluster if you have them, or new ones if a full-backup-only restore is all you need. Use the [Create a Secret for s3 storage](backups-storage-s3.md#create-the-s3-credentials-secret) or [Create a Secret for Azure storage](backups-storage-azure.md#create-a-secret) guides for the steps.
+    ```bash
+    kubectl get pxc-backup -n $NAMESPACE
+    ```
 
-3. Deploy a fresh Percona XtraDB Cluster with the name you want to restore into:
+3. Create the Secrets object with the user credentials for the new cluster. Use the same credentials as the original cluster if you have them, or new ones if a full-backup-only restore is all you need. Use the [Create a Secret for s3 storage](backups-storage-s3.md#create-the-s3-credentials-secret) or [Create a Secret for Azure storage](backups-storage-azure.md#create-a-secret) guides for the steps.
+
+4. Deploy a fresh Percona XtraDB Cluster with the name you want to restore into:
 
     ```bash
     kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{release}}/deploy/cr.yaml -n $NAMESPACE
     ```
 
-4. Confirm the new cluster reports the `ready` status before you restore into it:
+5. Confirm the new cluster reports the `ready` status before you restore into it:
 
     ```bash
     kubectl get pxc -n $NAMESPACE
     ```
 
-5. Create a `PerconaXtraDBClusterRestore` object. Specify the name of the restore object and the cluster where you restore. Configure the `backupSource` section:
+6. Create a `PerconaXtraDBClusterRestore` object. Specify the name of the restore object and the cluster where you restore. Configure the `backupSource` section:
 
     * `destination` - the surviving backup's location. 
     * `<storage-type>.credentialsSecret` - reference the Secret you created earlier here
@@ -58,7 +63,7 @@ Use this page when the original cluster and its Kubernetes environment are both 
             region: us-west-2
     ```
 
-6. Start the restore:
+7. Start the restore:
 
     ```bash
     kubectl apply -f deploy/backup/restore.yaml -n $NAMESPACE

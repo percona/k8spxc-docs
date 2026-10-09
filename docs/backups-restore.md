@@ -9,7 +9,7 @@ To restore your Percona XtraDB Cluster from a backup, you create a `PerconaXtraD
 | The same cluster (in-place) | You want to roll the cluster back to an earlier state if a mistake happens. For example, afetr a bad `DELETE` or a failed upgrade. | [Restore to the same cluster](backups-restore-in-place.md) |
 | A side cluster | You want to test a change or inspect data without touching production on the same Kubernetes cluster. | [Restore to a side cluster](backups-restore-side-cluster.md) |
 | A new cluster | You're migrating or copying data to a different Kubernetes cluster or environment. | [Restore to a new cluster](backups-restore-to-new-cluster.md) |
-| After a disaster | The original cluster and its Kubernetes environment are both gone. | [Restore the cluster after a disaster](backups-disaster-restore.md) |
+| After a disaster | The original cluster and its Kubernetes environment are both gone. | [Restore the cluster after a disaster](backups-restore-disaster.md) |
 
 Any of these can also land on an exact time or transaction instead of the last full backup. Refer to the [Restore with point-in-time recovery](backups-pitr-restore.md) for guidelines.
 
@@ -34,17 +34,17 @@ Every restore names its source in one of two ways. Use exactly one - setting bot
 ## Before you start
 
 1. Make sure that the cluster is running.
-2. Export the the cluster name and the namespace where it is running as environment variables. Replace the `cluster1` and `<namespace>` with your values:
-   
+2. Find the correct cluster name. 
+
+    ```bash
+    kubectl get pxc -n <namespace>
+    ```
+
+3. Export the the cluster name and the namespace where it is running as environment variables. Replace the `cluster1` and `<namespace>` with your values:
+
     ```bash
     export CLUSTER=cluster1
     export NAMESPACE=<namespace>
-    ```
-
-3. List the cluster to find the correct cluster name. 
-
-    ```bash
-    kubectl get pxc -n $NAMESPACE
     ```
 
 4. List backups to retrieve the desired backup name. Replace the `<namespace>` with your value:
@@ -66,7 +66,7 @@ Every restore names its source in one of two ways. Use exactly one - setting bot
 
 ## Restore limitations
 
-* **Storage type.** Restoring from an `emptyDir` or `hostPath` volume isn't supported — back up from one if you need to, then restore the result onto a Persistent Volume instead. A Persistent Volume restore only works within the same Kubernetes cluster ([in-place](backups-restore-in-place.md) or a [side cluster](backups-restore-side-cluster.md)). A [new cluster on a different Kubernetes environment](backups-restore-to-new-cluster.md), a [disaster restore](backups-disaster-restore.md), and any [point-in-time recovery](backups-pitr-restore.md) restore all require the full backup to be in cloud storage (S3 or Azure).
+* **Storage type.** Restoring from an `emptyDir` or `hostPath` volume isn't supported — back up from one if you need to, then restore the result onto a Persistent Volume instead. A Persistent Volume restore only works within the same Kubernetes cluster ([in-place](backups-restore-in-place.md) or a [side cluster](backups-restore-side-cluster.md)). A [new cluster on a different Kubernetes environment](backups-restore-to-new-cluster.md), a [disaster restore](backups-restore-disaster.md), and any [point-in-time recovery](backups-pitr-restore.md) restore all require the full backup to be in cloud storage (S3 or Azure).
 * **User passwords.** A full-backup restore tolerates changed passwords since Operator 1.18.0 — see [Restore the cluster when backup has different passwords](#restore-the-cluster-when-backup-has-different-passwords). A point-in-time restore doesn't: it still requires a Secret with the passwords that were in effect at backup time. This is a known limitation.
 
 ## Restore the cluster when a backup has different passwords
