@@ -10,7 +10,7 @@ The Operator supports the following storage types:
 |---|---|---|
 | Amazon S3 or S3-compatible storage (including Google Cloud Storage) | Keep backups outside the Kubernetes cluster. For example, to restore them to another cluster or environment. | [Configure Amazon S3 or S3-compatible storage](backups-storage-s3.md) |
 | Microsoft Azure Blob storage | Keep backups outside the Kubernetes cluster. For example, to restore them to another cluster or environment. | [Configure Microsoft Azure Blob storage](backups-storage-azure.md) |
-| Persistent Volume | Keep backups in the same Kubernetes cluster and if you donn't need to move them elsewhere. | [Configure Persistent Volume storage](backups-storage-pvc.md) |
+| Persistent Volume | Keep backups in the same Kubernetes cluster and if you don't need to move them elsewhere. | [Configure Persistent Volume storage](backups-storage-pvc.md) |
 
 ## Extra options for XtraBackup
 

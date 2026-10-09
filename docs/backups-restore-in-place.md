@@ -66,7 +66,7 @@ spec:
   pxcCluster: cluster1
   storageName: pvc-fs
   backupSource:
-    destination: pvc-fs/PVC_VOLUME_NAME
+    destination: pvc/PVC_VOLUME_NAME
   ...
 ```
 

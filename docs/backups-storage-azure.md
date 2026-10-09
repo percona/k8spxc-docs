@@ -42,7 +42,7 @@ The steps are:
 3. Create the Kubernetes Secret object as follows:
 
     ```bash
-    kubectl apply -f deploy/backup/backup-secret-azure.yaml
+    kubectl apply -f deploy/backup/backup-secret-azure.yaml -n <namespace>
     ```
 
 ## Configure the storage

@@ -6,7 +6,7 @@ To restore your Percona XtraDB Cluster from a backup, you create a `PerconaXtraD
 
 | Destination | Use it when... | Tutorial |
 | --- | --- | --- |
-| The same cluster (in-place) | You want to roll the cluster back to an earlier state if a mistake happens. For example, afetr a bad `DELETE` or a failed upgrade. | [Restore to the same cluster](backups-restore-in-place.md) |
+| The same cluster (in-place) | You want to roll the cluster back to an earlier state if a mistake happens. For example, after a bad `DELETE` or a failed upgrade. | [Restore to the same cluster](backups-restore-in-place.md) |
 | A side cluster | You want to test a change or inspect data without touching production on the same Kubernetes cluster. | [Restore to a side cluster](backups-restore-side-cluster.md) |
 | A new cluster | You're migrating or copying data to a different Kubernetes cluster or environment. | [Restore to a new cluster](backups-restore-to-new-cluster.md) |
 | After a disaster | The original cluster and its Kubernetes environment are both gone. | [Restore the cluster after a disaster](backups-disaster-restore.md) |
@@ -20,7 +20,7 @@ Every restore names its source in one of two ways. Use exactly one - setting bot
 | | `backupName` | `backupSource` |
 | --- | --- | --- |
 | Use it when | A Backup object for that backup already exists in the namespace you're restoring into. | No Backup object exists in the target namespace. |
-| Typical case | - An in-place restore to the same cluster, `,br> - A restore to a side cluster in the same namespace as the source. | - A side cluster in a different namespace, <br> - A new cluster on a different Kubernetes environment, <br> - A disaster restore. |
+| Typical case | - An in-place restore to the same cluster, <br> - A restore to a side cluster in the same namespace as the source. | - A side cluster in a different namespace, <br> - A new cluster on a different Kubernetes environment, <br> - A disaster restore. |
 
 `backupSource` still has to say where the backup files are. Point it at storage in one of two places:
 
@@ -34,7 +34,7 @@ Every restore names its source in one of two ways. Use exactly one - setting bot
 ## Before you start
 
 1. Make sure that the cluster is running.
-2. Export the the cluster name and the namespace where it is running as environment variables. Replace the `cluster1` and `<namespace>` with your values:
+2. Export the cluster name and the namespace where it is running as environment variables. Replace `cluster1` and `<namespace>` with your values:
    
     ```bash
     export CLUSTER=cluster1

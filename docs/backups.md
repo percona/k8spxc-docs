@@ -20,7 +20,7 @@ Use the following table to find what you need: a backup type, storage, or the ri
 | --- | --- | --- |
 | Protect data on a regular schedule | Scheduled backup | [Configure storage](backups-storage.md), then set up a [scheduled backup](backups-scheduled.md) |
 | Take a one-off backup before a risky change | On-demand backup | [Configure storage](backups-storage.md), then make an [on-demand backup](backups-ondemand.md) |
-| Undo a mistake on the cluster that made the backup | Restore in-place | [Restore to the same cluster](backups-restore.md) |
+| Undo a mistake on the cluster that made the backup | Restore in-place | [Restore to the same cluster](backups-restore-in-place.md) |
 | Test or inspect data without touching production | Restore to a side cluster | [Restore to a side cluster](backups-restore-side-cluster.md) |
 | Migrate or copy data to a different Kubernetes cluster | Restore to a new cluster | [Restore to a new cluster](backups-restore-to-new-cluster.md) |
 | Recover after losing the cluster and its Kubernetes environment | Restore after a disaster | [Restore the cluster after a disaster](backups-disaster-restore.md) |
