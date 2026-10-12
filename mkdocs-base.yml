@@ -261,16 +261,29 @@ nav:
     - Management:
           - Backup and restore:
               - "About backups": backups.md
-              - "Configure storage for backups": backups-storage.md
-              - "Store binary logs for point-in-time recovery": backups-pitr.md
+              - "Backup methods": backups-methods.md
+              - Configure storage for backups:
+                  - "Overview": backups-storage.md
+                  - "Amazon S3 or S3-compatible storage": backups-storage-s3.md
+                  - "Microsoft Azure Blob storage": backups-storage-azure.md
+                  - "Persistent Volume": backups-storage-pvc.md
               - Make a backup:
                   - "Scheduled backup": backups-scheduled.md
                   - "On-demand backup": backups-ondemand.md
               - "Enable compression for backups": backups-compress.md
-              - "Copy backup to a local machine": backups-copy.md
               - Restore from a backup:
-                  - "On the same cluster": backups-restore.md
-                  - "On a new cluster": backups-restore-to-new-cluster.md
+                  - "Overview": backups-restore.md
+                  - "On the same cluster (in-place)": backups-restore-in-place.md
+                  - "To a side cluster (same Kubernetes cluster)": backups-restore-side-cluster.md
+                  - "To a new cluster (different Kubernetes cluster)": backups-restore-to-new-cluster.md
+                  - "After a disaster": backups-restore-disaster.md
+              - Point-in-time recovery:
+                - "Enable point-in-time recovery": backups-pitr.md
+                - "Restore with point-in-time recovery": backups-pitr-restore.md
+                - "Find a GTID for point-in-time recovery": backups-pitr-find-gtid.md
+              - Migrate data:
+                  - "Use backups to move an external database to Kubernetes": backups-move-from-external-db.md
+                  - "Move a backup out of the cluster": backups-copy.md
               - "Delete the unneeded backup": backups-delete.md
           - "Horizontal and vertical scaling": scaling.md
           - "Monitor with Percona Monitoring and Management (PMM)": monitoring.md
@@ -292,7 +305,6 @@ nav:
           - Install the database with customized parameters: custom-install.md
           - "Provide Percona Operator for MySQL single-namespace and multi-namespace deployment": cluster-wide.md
           - "How to use private registry": custom-registry.md
-          - "How to use backups and asynchronous replication to move an external database to Kubernetes": backups-move-from-external-db.md
           - "Monitor Kubernetes": monitor-kubernetes.md
           - "Delete the Operator": delete.md
 
