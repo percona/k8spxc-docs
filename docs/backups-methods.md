@@ -4,16 +4,18 @@ The Operator supports two backup methods. See [Backup and restore](backups.md) f
 
 ## SST method (default)
 
-The default backup method uses State Snapshot Transfer (SST). When you create a Backup object, the Operator:
+The default backup method uses [State Snapshot Transfer (SST) :octicons-link-external-16:](https://docs.percona.com/percona-xtradb-cluster/8.4/state-snapshot-transfer.html). The backup Pod does not run Percona XtraBackup directly. It starts the [Galera Arbitrator (`garbd`) :octicons-link-external-16:](https://mariadb.com/docs/galera-cluster), which joins the cluster only to receive the snapshot. Percona XtraBackup runs in the SST script on the donor Pod.
 
-1. Sets up a backup Pod that runs Percona XtraBackup inside and creates a backup Job
-2. Creates a path in the storage to save the backup data
-3. Starts copying the data files from the Percona XtraDB Cluster to the backup storage
-4. The Percona XtraDB Cluster Pod that serves the data enters the Donor state and stops receiving all requests
+When you create a Backup object:
 
-The backup task is resource-consuming and can affect performance. That's why the Operator uses one of the secondary Percona XtraDB Cluster Pods for backups. The exception is a one-pod deployment, where the same Pod is used for all tasks.
+1. The Operator creates a backup Job, which creates a backup Pod according to the table. The backup Pod starts `garbd` and prepares the path in the backup storage.
+2. `garbd` requests the snapshot from a synced Pod. That Pod becomes the donor, enters the Donor state, and stops receiving requests.
+3. The donor's SST script runs Percona XtraBackup and streams the data to `garbd`.
+4. A receive script that `garbd` starts writes the stream to the backup storage.
 
-After the data files are copied and uploaded to the [remote backup storage](backups-storage.md), the Operator marks the backup Pod as 'Completed' and deletes it. The Operator also updates the status of the Backup object.
+The backup is resource-consuming and can affect performance. The Operator chooses a secondary Pod as the donor when the cluster has more than one Pod. A one-Pod cluster uses that same Pod.
+
+After the backup is stored in the [backup storage](backups-storage.md), the Operator marks the backup Pod Completed, deletes it, and updates the Backup object status.
 
 ## XtraBackup sidecar method (tech preview)
 
@@ -39,6 +41,10 @@ As with the SST method, the Operator uses one of the secondary Percona XtraDB Cl
 * IAM profiles are not yet supported. The support for IAM profiles is planned to be added in future releases.
 
 To enable this method, set `PXCO_FEATURE_GATES=XtrabackupSidecar=true` in the Operator Deployment. See [Configure Operator environment variables](env-vars-operator.md#pxco_feature_gates) for detailed instructions.
+
+!!! important
+    
+    Enabling the `PXCO_FEATURE_GATES=XtrabackupSidecar=true` affects all clusters managed by this Operator.
 
 ## Next step
 
