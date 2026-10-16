@@ -127,15 +127,15 @@ How certificates are renewed depends on who created them. See [Transport Layer S
 
 **What you still do:**
 
-**If cert-manager is not installed, nothing renews your certificates.** The Operator generates a self-signed CA valid for three years and leaf certificates valid for **90 days**, and then never looks at them again. There is no expiry tracking and no renewal on this path. When those certificates expire, the nodes stop trusting each other and the cluster stops replicating.
+**If cert-manager is not installed, Operator-generated certificates are not renewed automatically.** These certificates are long-term; check their actual [expiration dates](tls-update.md#check-your-certificates-for-expiration) and provide replacements before they expire. Expired certificates can prevent nodes from trusting each other and stop replication.
 
-**If you supplied the TLS Secret yourself, the Operator will not touch it.** It only manages certificates it created. Renewal is entirely yours. See [Generate certificates manually](tls-manual.md).
+**If you supplied the TLS Secret yourself, renewal is your responsibility.** The Operator does not renew those certificates automatically, but it can apply replacements you provide through the `<secret-name>-new` rotation procedure. See [Generate certificates manually](tls-manual.md) and [Update certificates](tls-update.md#update-valid-certificates-without-downtime).
 
 Watch expiry dates in both of these cases, and rotate before they are reached.
 
 !!! note ""
 
-    **Recommendation:** install [cert-manager](tls-cert-manager.md). It is the only configuration in which certificate renewal is automatic. If you cannot install it, put a calendar reminder well inside the 90-day leaf certificate lifetime and rotate with the `-new` Secret procedure in [Update certificates](tls-update.md).
+    **Recommendation:** install [cert-manager](tls-cert-manager.md) for automatic certificate renewal. Otherwise, schedule a reminder based on your certificates' actual expiration dates and rotate well before expiry with the `-new` Secret procedure in [Update certificates](tls-update.md).
 
 **Never do this manually:**
 
@@ -143,7 +143,7 @@ Watch expiry dates in both of these cases, and rotate before they are reached.
 | --- | --- | --- |
 | Edit `tls.crt` or `tls.key` in the `ssl` or `ssl-internal` Secret directly | Nodes pick up a new certificate at different times. The nodes that have not restarted cannot talk to the nodes that have | Create the `<secret-name>-new` Secret and let the Operator roll it out |
 | Delete the TLS Secrets to force a re-issue | The cluster loses the ability to communicate between nodes until new certificates exist and every node has restarted. On a running cluster, this is an outage | Use the `-new` Secret rotation procedure |
-| Set `unsafeFlags.tls: true` to work around an expired certificate | This disables encryption for all replication traffic, and it does not fix the expired certificate | Rotate the certificate |
+| Set `unsafeFlags.tls: true` to work around an expired certificate | This only permits TLS to be disabled; it does not renew certificates or change `spec.tls.enabled`. Disabling TLS removes encryption and causes downtime on a running cluster | Rotate the certificate |
 | Change the CA without rotating the leaf certificates | Nodes reject each other's certificates | Rotate both. The Operator does this for you when cert-manager issued them |
 
 ## Users and Secrets
@@ -233,7 +233,7 @@ The Operator rejects a CR that breaks the Percona XtraDB Cluster size limits or 
 | `spec.pxc.size` | At least 3 | Galera needs three nodes to hold quorum when one is lost |
 | `spec.pxc.size` | At most 5 | Write latency grows with every node that must certify a transaction |
 | `spec.pxc.size` | An odd number | An even-sized cluster can split into two halves with no majority |
-| `spec.haproxy.size` / `spec.proxysql.size` | At least 3 | A single proxy is a single point of failure in front of a highly available cluster |
+| `spec.haproxy.size` / `spec.proxysql.size` | At least 2 | A single proxy is a single point of failure in front of a highly available cluster |
 | `spec.tls.enabled` | `true` | Replication traffic between nodes is otherwise unencrypted |
 
 Read more about node count in [Design and architecture](architecture.md).
