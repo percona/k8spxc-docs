@@ -54,12 +54,51 @@ step-by-step procedures, see [Resize storage](scaling-storage-resize.md).
 
 ## Verify a scaling change
 
+View the cluster:
+
 ```bash
 kubectl get pxc <cluster-name> -n <namespace>
+```
+
+??? example "Sample output"
+
+    ```{.text .no-copy}
+    NAME       ENDPOINT               STATUS   PXC   PROXYSQL   HAPROXY   AGE
+    cluster1   cluster1-haproxy.pxc   ready    3                3         6m32s
+    ```
+
+   The `PXC` and `PROXYSQL` columns show the new size. 
+   
+Confirm the cluster finished reconciling:
+
+```bash
+kubectl get pxc <cluster-name> -n <namespace> -o jsonpath='{.status.state}{"\n"}'
+```
+
+`.status.state` must return `ready` when the change has completed.
+
+Get information about the PVC:
+
+```bash
 kubectl get pvc -n <namespace>
 ```
 
-`.status.state` must return `ready`. After a storage change, PVC capacity must show the new size. A PVC stuck at the old size with the cluster otherwise healthy means the storage class didn't accept the expansion — check the PVC events.
+??? example "Sample output"
+
+    ```{.text .no-copy}
+    NAME                     STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+    datadir-cluster1-pxc-0   Bound    pvc-d2b24b0d-32d3-470c-ad8b-232196d2e16c   6G         RWO            local-path     9m14s
+    datadir-cluster1-pxc-1   Bound    pvc-1d95369d-604f-4d44-b6c1-8dfb608010f1   6G         RWO            local-path     7m37s
+    datadir-cluster1-pxc-2   Bound    pvc-e7bd8f23-6239-4870-8f6f-a7ca173706de   6G         RWO            local-path     6m1s
+    ```
+
+After a storage change, PVC `CAPACITY` must show the new size. 
+
+A PVC stuck at the old size with the cluster otherwise healthy means the storage class didn't accept the expansion. In this case, check the PVC events. For example, if  PVC  `datadir-cluster1-pxc-0` is stuck, run this command to check PVC events:
+
+```bash
+kubectl events pvc/datadir-cluster1-pxc-0 -n <namespace>
+```
 
 ## See also
 

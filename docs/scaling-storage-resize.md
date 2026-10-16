@@ -11,7 +11,23 @@ Operator monitors storage usage and resizes storage automatically
 * [Storage resizing with Volume Expansion capability](#storage-resizing-with-volume-expansion-capability) (Operator 1.14.0+) - you set the new size in the Custom Resource and the Operator resizes the storage to match the desired size
 * [Manual resizing](#manual-resizing-without-volume-expansion-capability) — you resize storage when Volume Expansion is unavailable
 
-You can also use an external autoscaler with the Operator. To enable it, set the `spec.storageScaling.enableExternalAutoscaling` to `true`.
+You can also use an external autoscaler with the Operator. To enable it, set the `spec.storageScaling.enableExternalAutoscaling` to `true`:
+
+```bash
+$ kubectl patch pxc/cluster1 -n pxc --type=merge -p '{
+    "spec":{
+        "storageScaling":{
+            "enableExternalAutoscaling":true
+        }
+    }
+}'
+```
+
+??? example "Expected output"
+
+    ```{.text .no-copy}
+    perconaxtradbcluster.pxc.percona.com/cluster1 patched
+    ```
 
 Enabling an external autoscaler
 disables the Operator's own automatic storage resizing. Choose one method based on your
@@ -157,13 +173,21 @@ spec:
 Apply changes as usual:
 
 ```bash
-kubectl apply -f cr.yaml
+kubectl apply -f cr.yaml -n <namespace>
 ```
 
 The storage size change takes some time. When it starts, the Operator automatically adds
 the `pvc-resize-in-progress` annotation to the `PerconaXtraDBCluster` Custom Resource. The
 annotation contains the timestamp of the resize start and indicates that the resize
-operation is running. After the resize finishes, the Operator deletes this annotation.
+operation is running. 
+
+You can check it with:
+
+```bash
+kubectl get pxc cluster1 -n <namespace> -o jsonpath='{.metadata.annotations}'
+```
+
+After the resize finishes, the Operator deletes this annotation.
 
 #### If storage scaling cannot complete
 
@@ -175,8 +199,24 @@ each case:
 * If storage resizing only partially succeeds (for example, two out of three Pods have their PVCs expanded) and you turn off `enableVolumeScaling` while this is happening, the Operator rolls back the storage size in the Custom Resource to the previous value. Since Kubernetes doesn't allow shrinking storage, though, PVCs keep the size they had when scaling was interrupted.
 
 If you later re-enable `enableVolumeScaling`, check the actual storage size of your PVCs
-first. Set the storage size in the Custom Resource to be equal to or greater than the
-largest current PVC size.
+first:
+
+```bash
+kubectl get pvc -n <namespace> -o jsonpath='{..spec.resources.requests.storage}'
+```
+
+Set the storage size in the Custom Resource to be equal to or greater than the
+largest current PVC size:
+
+```yaml title="deploy/cr.yaml"
+spec:
+  pxc:
+    volumeSpec:
+      persistentVolumeClaim:
+        resources:
+          requests:
+            storage: 6G
+```
 
 ## Manual resizing without Volume Expansion capability
 
