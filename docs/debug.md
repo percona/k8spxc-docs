@@ -6,6 +6,20 @@ Percona Operator for MySQL uses [Custom Resources :octicons-link-external-16:](h
 
 * `PerconaXtraDBClusterBackup` and `PerconaXtraDBClusterRestore` Custom Resources contain options for Percona XtraBackup used to backup Percona XtraDB Cluster and to restore it from backups (`pxc-backup` and `pxc-restore` shortnames are available for them).
 
+## Where to look first
+
+Problems can come from four layers: your configuration, the Operator, Kubernetes, or Percona XtraDB Cluster itself. Use this table to choose where to start, and see [Who owns what](architecture-responsibilities.md#who-owns-this-failure) for a full list of symptoms.
+
+| Symptom | Look here first |
+| --- | --- |
+| Cluster status is `error` | `kubectl get pxc <cluster> -o yaml`, the `status` section |
+| A Pod is `Pending` | `kubectl describe pod <pod>` and [events](debug-events.md) |
+| A Pod is `Running` but not `Ready`, or keeps restarting | The `pxc` container [logs](debug-logs.md) |
+| A change in the Custom Resource has no effect, or a rolling restart is stuck | The Operator [logs](debug-logs.md) |
+| A backup or restore fails | The backup or restore object status, then the logs of its Job |
+
+## Check the Custom Resource
+
 The first thing you can check for the Custom Resource is to query it with `kubectl get` command:
 
 
