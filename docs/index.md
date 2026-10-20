@@ -59,7 +59,7 @@ The **Percona Operator for MySQL** is ideal for various scenarios such as provid
 Being part of the open-source ecosystem, the Percona Operator benefits from community contributions and support, ensuring that it remains stable and robust over time. 
 
 If you're interested in contributing, feel free to:
-- [Open an issue :octicons-link-external-16:](https://github.com/percona/percona-operator/issues)
-- Submit a [pull request :octicons-link-external-16:](https://github.com/percona/percona-operator/pulls)
+- [Open an issue :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/issues)
+- Submit a [pull request :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/pulls)
 
 For support or inquiries, [contact Percona :octicons-link-external-16:](https://www.percona.com/support).

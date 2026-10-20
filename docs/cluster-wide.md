@@ -136,7 +136,7 @@ Kubernetes.
     kubectl create namespace pxc
     ```
 
-3. Edit the ``deploy/cw-bundle.yaml`` configuration file to set proper
+3. Edit the `deploy/cw-bundle.yaml` configuration file to set proper
     namespaces:
 
     ```yaml
@@ -203,7 +203,7 @@ to the cluster.
     `percona-client`:
 
     ```bash
-    kubectl run -i --rm --tty percona-client --image=percona:5.7 --restart=Never --env="POD_NAMESPACE=pxc" -- bash -il
+    kubectl run -i --rm --tty percona-client --image=percona/percona-xtradb-cluster:{{pxc84recommended}} --restart=Never --env="POD_NAMESPACE=pxc" -- bash -il
     ```
     
     Executing it may require some time to deploy the correspondent Pod.

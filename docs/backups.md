@@ -48,7 +48,7 @@ When you enable the `XtrabackupSidecar` feature gate, the Operator uses a differ
 
 1. An XtraBackup sidecar container runs in each Percona XtraDB Cluster Pod, providing a gRPC server interface for making backups. 
 2. When you create a Backup object, the Operator creates a Job that acts like a client and sends requests directly to the sidecar. 
-3. The sidecar performs the backup and uploads it to the cloud storage (S3, Azure, or GCP). The database Pod doesn't change its state to Donor and continues processing all requests.
+3. The sidecar performs the backup and uploads it to the cloud storage (Azure, S3 or S3-compatible storage). The database Pod doesn't change its state to Donor and continues processing all requests.
 
 As with the SST method, the Operator uses one of the secondary Percona XtraDB Cluster Pods for backups to not overload the primary Pod. 
 
@@ -56,13 +56,13 @@ As with the SST method, the Operator uses one of the secondary Percona XtraDB Cl
 
 * **Better performance**: Direct access to data files without network overhead
 * **Easier troubleshooting**: The sidecar container runs continuously in the Percona XtraDB Cluster Pod, so you can check backup logs and status at any time. SST backups may fail with cryptic errors when a network issue occurs. This makes it difficult to diagnose the root cause or intervene to resolve problems.
-* **Native encryption**: Built-in support for encrypted backups with proper key management. This functionality is not yet available in version 1.19.0 but will be added in future releases.
-* **Incremental backups**: Make your backups more efficient by saving only the data that has changed since the last backup, rather than copying the entire database each time. This reduces the amount of backup storage required and allows you to take backups more frequently with less impact on performance. This functionality is not yet available in version 1.19.0 but will be added in future releases.
+* **Native encryption**: Built-in support for encrypted backups with proper key management. This functionality is not yet available but is planned for future releases.
+* **Incremental backups**: Make your backups more efficient by saving only the data that has changed since the last backup, rather than copying the entire database each time. This reduces the amount of backup storage required and allows you to take backups more frequently with less impact on performance. This functionality is not yet available but is planned for future releases.
 
 **Limitations:**
 
 * PVC (Persistent Volume Claim) backups are not supported when this feature is enabled. This support is planned to be implemented in future releases.
-* Only cloud storage backups (S3, Azure, GCP) are available
+* Only cloud storage backups (S3, S3-compatible storage, and Azure) are available
 * IAM profiles are not yet supported. The support for IAM profiles is planned to be added in future releases.
 
 To enable this method, set `PXCO_FEATURE_GATES=XtrabackupSidecar=true` in the Operator Deployment. See [Configure Operator environment variables](env-vars-operator.md#pxco_feature_gates) for detailed instructions.

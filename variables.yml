@@ -1,6 +1,8 @@
 # Variables used across the documentation
 
 release: 1.20.0
+# Helm chart version for pxc-operator and pxc-db (appVersion = release)
+helm_chart_version: '1.20.1'
 #pruned_version: 1.19.0
 
 commandName: 'kubectl'

@@ -1,6 +1,6 @@
 # System requirements
 
-The Operator was developed and tested with Percona XtraDB Cluster versions {{pxc84recommended}} (Tech preview), {{pxc80recommended}}, and {{pxc57recommended}}.
+The Operator was developed and tested with Percona XtraDB Cluster versions {{pxc84recommended}}, {{pxc80recommended}}, and {{pxc57recommended}}.
 
 Other options may also work but have not been tested.
 
