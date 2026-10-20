@@ -91,12 +91,12 @@ Create backups through a schedule on the cluster CR or through a `PerconaXtraDBC
 * Runs the whole restore sequence: pauses the cluster, runs the restore, starts the cluster, verifies that it is Ready, and marks the restore succeeded.
 * Restores to a point in time by GTID, transaction, or timestamp.
 * **Refuses concurrent restores.** A second restore against the same cluster fails immediately, so it does not corrupt the first.
-* **Detects binary log gaps.** If the log collector finds that binary logs it needs are missing, it marks the most recent successful backup with the condition `PITRReady: False` and the reason `BinlogGapDetected`.
+* **Detects binary log gaps.** If the binlog collector finds that binary logs it needs are missing, it marks the most recent successful backup with the condition `PITRReady: False` and the reason `BinlogGapDetected`.
 
 **What you still do:**
 
 * Choose the restore target, and accept the data loss between that target and now.
-* Tell users about the outage. A restore stops the cluster.
+* Plan the maintenance window. A restore stops the cluster.
 * **Take a new full backup after a binlog gap is reported.** The gap means PITR from that backup is no longer possible, and the window it covers is unrecoverable. Nothing restores that window. Take a fresh full backup to start a new PITR chain.
 
 **Never do this manually:**
