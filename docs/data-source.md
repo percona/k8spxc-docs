@@ -6,7 +6,7 @@ The [`dataSource` :octicons-link-external-16:](https://kubernetes.io/docs/concep
 
 For example, you have the production Percona XtraDB Cluster `cluster1`. To test a new feature in your app, you need a staging cluster `cluster2` with the data set from `cluster1`. 
 
-To create it, create the `cluster2-cr.yaml` Custom Resource manifest. You can use the existing [`deploy/cr.yaml` ](https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/{{release}}/deploy/cr.yaml) for convenience. Specify the PVC from `cluster1` as the `dataSource` for it:
+To create it, create the `cluster2-cr.yaml` Custom Resource manifest. You can use the existing [`deploy/cr.yaml` ](https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v{{release}}/deploy/cr.yaml) for convenience. Specify the PVC from `cluster1` as the `dataSource` for it:
 
 ```yaml
 pxc:

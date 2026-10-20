@@ -25,7 +25,7 @@ from MySQL clients and forwards it to backend MySQL servers.
 !!! note
 
     Optionally the Operator allows using ProxySQL daemon instead of HAProxy,
-    which provides [SQL-aware database workload management :octicons-link-external-16:](https://proxysql.com/compare)
+    which provides [SQL-aware database workload management :octicons-link-external-16:](https://proxysql.com/)
     and can be more more efficient in comparison with other load balancers.
 
 To provide high availability operator uses [node affinity :octicons-link-external-16:](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity)
