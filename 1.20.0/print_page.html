@@ -3528,6 +3528,81 @@
   
   
   
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scaling and storage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Scaling and storage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="scaling-about.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About scaling and storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="scaling.html" class="md-nav__link">
         
@@ -3545,6 +3620,42 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="scaling-storage-resize.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resize storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -6886,6 +6997,29 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </li>
         
           <li class="md-nav__item">
+  <a href="#section-8-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scaling and storage
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Scaling and storage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scaling-about" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        About scaling and storage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#scaling" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -6893,6 +7027,22 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
       
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scaling-storage-resize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resize storage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -18438,54 +18588,289 @@ by the following command:</p>
 </code></pre></div>
 <p>When the name is known, backup can be deleted as follows:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>pxc-backup/&lt;backup-name&gt;
-</code></pre></div></section></section><section class="print-page" id="scaling" heading-number="8.2"><h1 id="scaling-scale-mysql-on-kubernetes-and-openshift">Scale MySQL on Kubernetes and OpenShift<a class="headerlink" href="#scaling-scale-mysql-on-kubernetes-and-openshift" title="Permanent link">&para;</a></h1>
-<p>One of the great advantages brought by Kubernetes and the OpenShift
-platform is the ease of an application scaling. Scaling an application
-results in adding resources or Pods and scheduling them to available
-Kubernetes nodes.</p>
-<p>Scaling can be <a href="#scaling-vertical-scaling">vertical</a> and <a href="#scaling-horizontal-scaling">horizontal</a>. Vertical scaling adds more
-compute or storage resources to MySQL nodes; horizontal scaling is
-about adding more nodes to the cluster.</p>
-<h2 id="scaling-vertical-scaling">Vertical scaling<a class="headerlink" href="#scaling-vertical-scaling" title="Permanent link">&para;</a></h2>
-<h3 id="scaling-scale-compute-resources">Scale compute resources<a class="headerlink" href="#scaling-scale-compute-resources" title="Permanent link">&para;</a></h3>
-<p>The Operator deploys and manages multiple components, such as Percona
-XtraDB Cluster (PXC), HAProxy or ProxySQL, etc. You can manage CPU or memory for every component separately by editing corresponding sections in the Custom Resource. We follow<br />
-the structure for <code>requests</code> and <code>limits</code> that Kubernetes <a href="https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/">provides <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a>.</p>
-<p>To add more resources to your MySQL nodes in PXC edit the following section in
-the Custom Resource:</p>
+</code></pre></div></section></section>
+                    <section class='print-page md-section' id='section-8-2' heading-number='8.2'>
+                        <h1>Scaling and storage<a class='headerlink' href='#section-8-2' title='Permanent link'></a>
+                        </h1>
+                    <section class="print-page" id="scaling-about" heading-number="8.2.1"><h1 id="scaling-about-about-scaling-and-storage">About scaling and storage<a class="headerlink" href="#scaling-about-about-scaling-and-storage" title="Permanent link">&para;</a></h1>
+<p>A cluster rarely stays the size you first deployed it at. You can grow your cluster in different ways:  </p>
+<ul>
+<li>add database nodes, </li>
+<li>increase CPU and memory for a component, </li>
+<li>scale HAProxy or ProxySQL Pods, </li>
+<li>expand storage as your workload grows. </li>
+</ul>
+<p>This page describes each approach and which one to plan before you deploy.</p>
+<h2 id="scaling-about-ways-to-scale">Ways to scale<a class="headerlink" href="#scaling-about-ways-to-scale" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>What changes</th>
+<th>Choose it when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>Vertical scaling</em></td>
+<td>CPU and memory requests and limits for a component (<code>resources</code>).</td>
+<td>A component is resource-bound rather than too small in number.</td>
+</tr>
+<tr>
+<td><em>Horizontal scaling</em></td>
+<td>The number of Percona XtraDB Cluster nodes (<code>pxc.size</code>).</td>
+<td>You need more redundancy or more read capacity.</td>
+</tr>
+<tr>
+<td><em>Proxy sizing</em></td>
+<td>The number of HAProxy or ProxySQL Pods (<code>haproxy.size</code> / <code>proxysql.size</code>).</td>
+<td>You&rsquo;re hitting connection bottlenecks or need proxy redundancy.</td>
+</tr>
+<tr>
+<td><em>Storage scaling</em></td>
+<td>The size of the persistent volumes behind the database nodes (<code>pxc.volumeSpec</code>).</td>
+<td>The dataset outgrows the disks.</td>
+</tr>
+</tbody>
+</table>
+<p>These approaches can complement each other — a growing workload often needs more than one at once.
+Vertical scaling, horizontal scaling, and proxy sizing are covered in
+<a href="#scaling">Horizontal and vertical scaling</a>. Storage is covered on this page and in
+<a href="#scaling-storage-resize">Resize storage</a>.</p>
+<h2 id="scaling-about-storage">Storage<a class="headerlink" href="#scaling-about-storage" title="Permanent link">&para;</a></h2>
+<p>Each Percona XtraDB Cluster node gets its own persistent volume, defined in
+<code>pxc.volumeSpec</code>. Kubernetes manages this storage through two objects: </p>
+<ul>
+<li>a PersistentVolume (PV) - a segment of storage the Kubernetes administrator supplies, </li>
+<li>a PersistentVolumeClaim (PVC) - a request for storage from a user.</li>
+</ul>
+<p>Starting from version 1.14.0, you can increase the size of an existing PVC (stable since
+Kubernetes v1.24). You cannot shrink an existing PVC.</p>
+<p>The Operator supports three ways to grow storage: automatic resizing based on usage
+thresholds, resizing through Kubernetes&rsquo; Volume Expansion capability, and manual resizing
+for volume types or Operator versions that don&rsquo;t support Volume Expansion. For the full
+step-by-step procedures, see <a href="#scaling-storage-resize">Resize storage</a>.</p>
+<h2 id="scaling-about-limitations">Limitations<a class="headerlink" href="#scaling-about-limitations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Volumes cannot shrink.</strong> Kubernetes can expand a PersistentVolumeClaim, but it cannot reduce
+  it. When Volume Expansion is unavailable, use
+  <a href="#scaling-storage-resize-manual-resizing-without-volume-expansion-capability">Manual resizing</a>
+  to recreate PVCs one at a time. Otherwise create a new cluster and restore your data.</li>
+<li>Expansion depends on the storage class. A <code>StorageClass</code> without
+  <code>allowVolumeExpansion: true</code> cannot grow its volumes at all. Check this before you need
+  it, not during an incident.</li>
+<li>Changing <code>pxc.size</code> changes the cluster&rsquo;s Galera quorum voting membership. Review
+  <a href="#scaling-choose-a-safe-node-count">Choose a safe node count</a> before changing node
+  counts.</li>
+</ul>
+<h2 id="scaling-about-verify-a-scaling-change">Verify a scaling change<a class="headerlink" href="#scaling-about-verify-a-scaling-change" title="Permanent link">&para;</a></h2>
+<p>View the cluster:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pxc<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
+</code></pre></div>
+<details class="example">
+<summary>Sample output</summary>
+<div class="no-copy highlight"><pre><span></span><code>NAME       ENDPOINT               STATUS   PXC   PROXYSQL   HAPROXY   AGE
+cluster1   cluster1-haproxy.pxc   ready    3                3         6m32s
+</code></pre></div>
+</details>
+<p>The <code>PXC</code> and <code>PROXYSQL</code> columns show the new size. </p>
+<p>Confirm the cluster finished reconciling:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pxc<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.state}{"\n"}'</span>
+</code></pre></div>
+<p><code>.status.state</code> must return <code>ready</code> when the change has completed.</p>
+<p>Get information about the PVC:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pvc<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
+</code></pre></div>
+<details class="example">
+<summary>Sample output</summary>
+<div class="no-copy highlight"><pre><span></span><code>NAME                     STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+datadir-cluster1-pxc-0   Bound    pvc-d2b24b0d-32d3-470c-ad8b-232196d2e16c   6G         RWO            local-path     9m14s
+datadir-cluster1-pxc-1   Bound    pvc-1d95369d-604f-4d44-b6c1-8dfb608010f1   6G         RWO            local-path     7m37s
+datadir-cluster1-pxc-2   Bound    pvc-e7bd8f23-6239-4870-8f6f-a7ca173706de   6G         RWO            local-path     6m1s
+</code></pre></div>
+</details>
+<p>After a storage change, PVC <code>CAPACITY</code> must show the new size. </p>
+<p>A PVC stuck at the old size with the cluster otherwise healthy means the storage class didn&rsquo;t accept the expansion. In this case, check the PVC events. For example, if  PVC  <code>datadir-cluster1-pxc-0</code> is stuck, run this command to check PVC events:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>events<span class="w"> </span>pvc/datadir-cluster1-pxc-0<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
+</code></pre></div>
+<h2 id="scaling-about-see-also">See also<a class="headerlink" href="#scaling-about-see-also" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="#scaling">Horizontal and vertical scaling</a></li>
+<li><a href="#scaling-storage-resize">Resize storage</a></li>
+<li><a href="#debug-storage">Troubleshoot storage resizing</a></li>
+</ul></section><section class="print-page" id="scaling" heading-number="8.2.2"><h1 id="scaling-horizontal-and-vertical-scaling">Horizontal and vertical scaling<a class="headerlink" href="#scaling-horizontal-and-vertical-scaling" title="Permanent link">&para;</a></h1>
+<p>This page covers scaling compute resources, Percona XtraDB Cluster (PXC) node count, and
+proxy Pod count. For scaling storage, see <a href="#scaling-storage-resize">Resize storage</a>. For
+an overview of all available ways to scale, see <a href="#scaling-about">About scaling and storage</a>.</p>
+<h2 id="scaling-scale-compute-resources">Scale compute resources<a class="headerlink" href="#scaling-scale-compute-resources" title="Permanent link">&para;</a></h2>
+<p>The Operator deploys and manages multiple components, such as Percona XtraDB Cluster,
+HAProxy, and ProxySQL. Manage CPU or memory for each component separately by editing its
+section in the Custom Resource, following the <code>requests</code>/<code>limits</code> structure
+<a href="https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/">Kubernetes provides <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a>.</p>
+<p>To add more resources to your PXC nodes, edit the following section in the Custom Resource:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
-<span class="nn">...</span>
 <span class="w">  </span><span class="nt">pxc</span><span class="p">:</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">resources</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="nt">requests</span><span class="p">:</span><span class="w"> </span>
+<span class="w">    </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">requests</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4G</span>
 <span class="w">        </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="w">      </span><span class="nt">limits</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4G</span>
 <span class="w">        </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 </code></pre></div>
-<p>Use our reference documentation for the <a href="#operator">Custom Resource options</a> 
-for more details about other components.</p>
-<h3 id="scaling-scale-storage">Scale storage<a class="headerlink" href="#scaling-scale-storage" title="Permanent link">&para;</a></h3>
-<p>Kubernetes manages storage with the following components:</p>
+<p>See the <a href="#operator">Custom Resource options</a> reference for the equivalent fields on
+other components.</p>
+<p><strong>Verify that the change took effect:</strong></p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pxc<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>-o<span class="w"> </span>yaml
+</code></pre></div>
+<p>Check the following fields in the output:</p>
 <ul>
-<li>a PersistentVolume (PV) - a segment of
-storage supplied by the Kubernetes administrator,</li>
-<li>a PersistentVolumeClaim
-(PVC) - a request for storage from a user.</li>
+<li><code>.status.state</code> is <code>ready</code> (not <code>error</code> or stuck in <code>initializing</code>) </li>
+<li>the <code>.ready</code> value under <code>.status.pxc</code>, <code>.status.haproxy</code>, or <code>.status.proxysql</code> matches the expected count for the corresponding component.</li>
 </ul>
-<p>Starting from the version 1.14.0, you can increase the size of an existing PVC object (considered stable since Kubernetes v1.24).
-Note that you <strong>cannot</strong> shrink the size of an existing PVC object.</p>
-<p>Use storage scaling to keep up with growing data while keeping the cluster online. The Operator supports the following scaling options:</p>
+<p>A resource change triggers a
+rolling restart of the affected component&rsquo;s Pods. During the restart, <code>.status.state</code>
+shows <code>initializing</code> until every Pod comes back up.</p>
+<p>If you set <code>requests</code>/<code>limits</code> too low for what the database actually needs, Pods can be
+OOMKilled or fail to schedule. Check <code>kubectl get pods -n &lt;namespace&gt;</code> for <code>OOMKilled</code> or
+<code>Pending</code> status, and <code>kubectl describe pod &lt;pod-name&gt; -n &lt;namespace&gt;</code> for scheduling
+failures.</p>
+<h2 id="scaling-horizontal-scaling">Horizontal scaling<a class="headerlink" href="#scaling-horizontal-scaling" title="Permanent link">&para;</a></h2>
+<p>The size of the cluster is controlled by the <a href="#operator-pxcsize"><code>pxc.size</code></a> key in the
+Custom Resource. Changing this option and applying it adds or removes PXC nodes.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">pxc</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+</code></pre></div>
+<p>Apply the change:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deploy/cr.yaml
+</code></pre></div>
+<p>Alternatively, scale on the fly using the <code>kubectl scale</code> command. This works because the
+<code>PerconaXtraDBCluster</code> Custom Resource defines a <code>scale</code> subresource tied to <code>pxc.size</code>:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>scale<span class="w"> </span>--replicas<span class="o">=</span><span class="m">5</span><span class="w"> </span>pxc/&lt;cluster-name&gt;<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
+</code></pre></div>
+<h3 id="scaling-choose-a-safe-node-count">Choose a safe node count<a class="headerlink" href="#scaling-choose-a-safe-node-count" title="Permanent link">&para;</a></h3>
+<p>By default, the Operator accepts only odd numbers for <code>pxc.size</code>. The recommended range is <strong>3 or 5</strong>. This restriction is by
+design: Galera quorum voting needs an odd count so that if the network splits, one side
+always has a majority. An even count can tie the vote and leave the cluster without a
+clear primary. See <a href="#architecture">Design overview</a> for how quorum voting works. If you
+set the <code>pxc.size</code> to an even number or outside the 3–5 range via <code>kubectl apply</code> or
+<code>kubectl scale</code>, the change gets accepted. But the Operator refuses
+to reconcile the cluster:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pxc<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.state}'</span>
+<span class="c1"># error</span>
+kubectl<span class="w"> </span>get<span class="w"> </span>pxc<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.message}'</span>
+<span class="c1"># Error: check safe defaults: PXC size must be an odd number. Set spec.unsafeFlags.pxcSize to true to disable this check</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code>kubectl describe pxc &lt;cluster-name&gt;</code> does <strong>not</strong> show this as a Kubernetes Event —
+the <code>Events:</code> section stays empty. Check <code>.status.state</code> and <code>.status.message</code>
+directly (as above), not the Events list, to see why a scaling change didn&rsquo;t take
+effect.</p>
+</div>
+<p>If you need a cluster with an even number of members or outside
+the 3–5 node range, set the
+<a href="#operator-unsafeflagspxcsize"><code>unsafeFlags.pxcSize</code></a> flag to
+<code>true</code>. Read the following section before you apply this unsafe configuration.</p>
+<p><strong>Do:</strong></p>
 <ul>
-<li>automatic scaling - Starting with Operator version 1.20.0, the Operator monitors storage usage and scales the storage automatically</li>
-<li>storage resizing with Volume Expansion capability - Starting with the Operator version 1.14.0, you can instruct the Operator to scale the storage by updating the Custom Resource manifest</li>
-<li>manual scaling - scale the storage manually.</li>
+<li>Keep <code>pxc.size</code> at 3 or 5 unless you&rsquo;ve read <a href="#operator-unsafeflagspxcsize"><code>unsafeFlags.
+pxcSize</code></a> and accept the
+tradeoffs.</li>
+<li>Confirm the <code>.status.state</code> returns <code>ready</code> after every size change.</li>
+<li>Always change <code>pxc.size</code> in the Custom Resource, never the generated StatefulSet.</li>
 </ul>
-<p>You can also use an external autoscaler with the Operator. Enabling an external autoscaler disables the Operator&rsquo;s internal logic for automatic storage resizing. Choose one method based on your environment and requirements; using both simultaneously is not supported.</p>
-<p>For either option, the volume type must support PVC expansion.
-To check if your storage supports the expansion capability, run the following command:</p>
+<p><strong>Don&rsquo;t:</strong></p>
+<ul>
+<li>Don&rsquo;t scale the StatefulSet directly. The Operator does not
+automatically reconcile a manually-scaled StatefulSet back to
+match the Custom Resource. This can leave the running cluster out
+  of sync with the Custom Resource with no error until the Operator reconciles <code>pxc.size</code>
+  again.</li>
+<li>Don&rsquo;t use an even node count in production. The risk surfaces during a network
+  partition, not under normal load.</li>
+</ul>
+<h2 id="scaling-scale-proxy-pods">Scale proxy Pods<a class="headerlink" href="#scaling-scale-proxy-pods" title="Permanent link">&para;</a></h2>
+<p>HAProxy and ProxySQL Pods scale independently of the PXC database nodes. You can change the number of proxy Pods only via the Custom Resource directly. There&rsquo;s no <code>kubectl scale</code> shortcut for proxy size — the Custom Resource&rsquo;s scale
+subresource only covers <code>pxc.size</code> (see <a href="#scaling-horizontal-scaling">Horizontal scaling</a>).</p>
+<p>Use the
+<a href="#operator-haproxysize"><code>haproxy.size</code></a> or <a href="#operator-proxysqlsize"><code>proxysql.size</code></a> options
+depending on which proxy your cluster uses (check <code>spec.haproxy.enabled</code> /
+<code>spec.proxysql.enabled</code> — only one is active at a time).</p>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">haproxy</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+</code></pre></div>
+<p>Apply the change:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deploy/cr.yaml
+</code></pre></div>
+<p>Check <code>.status.state</code> is <code>ready</code> and, under <code>.status.haproxy</code> (or <code>.status.proxysql</code>),
+that <code>.ready</code> matches your new <code>size</code>.</p>
+<h3 id="scaling-considerations">Considerations<a class="headerlink" href="#scaling-considerations" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><strong>Choose a safe proxy count:</strong> by default, HAProxy and ProxySQL must each have <strong>at least
+2</strong> Pods. Setting a lower value is accepted by <code>kubectl apply</code> but the Operator refuses to
+reconcile it, the same way an unsafe <code>pxc.size</code> does:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pxc<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.message}'</span>
+<span class="c1"># Error: check safe defaults: HAProxy size must be at least 2. Set spec.unsafeFlags.proxySize to true to disable this check</span>
+</code></pre></div>
+<p>To go below 2, set <a href="#operator-unsafeflagsproxysize"><code>unsafeFlags.proxySize</code></a> to <code>true</code>.</p>
+</li>
+<li>
+<p><strong>Don&rsquo;t</strong> scale the proxy StatefulSet directly. The Operator doesn&rsquo;t automatically reconcile manual changes to match the Custom Resource. This leaves the cluster out of sync with the Custom Resource until the <code>haproxy.size</code> or <code>proxysql.size</code> are changed and the Operator reconciles.</p>
+</li>
+</ul>
+<h2 id="scaling-automated-scaling">Automated scaling<a class="headerlink" href="#scaling-automated-scaling" title="Permanent link">&para;</a></h2>
+<p>To automate horizontal scaling of PXC nodes, use
+<a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/">Horizontal Pod Autoscaler (HPA) <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a>
+or
+<a href="https://keda.sh/">Kubernetes Event-driven Autoscaling (KEDA) <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a>
+targeting the <code>PerconaXtraDBCluster</code> Custom Resource. HPA and KEDA both scale through the
+Custom Resource&rsquo;s <code>scale</code> subresource, and the <code>PerconaXtraDBCluster</code> CRD defines that
+subresource against <code>pxc.size</code> only. Scaling the Custom Resource this way changes
+<code>pxc.size</code>, and the Operator handles the rest. The same <a href="#scaling-choose-a-safe-node-count">safe node count</a>
+rules apply to an autoscaler-driven change as to a manual one.</p>
+<p><strong>This doesn&rsquo;t extend to proxy Pods.</strong> The CRD defines only one <code>scale</code> subresource for
+the whole <code>PerconaXtraDBCluster</code> resource. There&rsquo;s no
+equivalent target for <code>haproxy.size</code>/<code>proxysql.size</code>, so an HPA or KEDA <code>ScaledObject</code>
+can&rsquo;t point at the Custom Resource to scale proxy Pods. Pointing an autoscaler directly at
+the generated proxy StatefulSet instead works technically, but carries the same drift risk
+as <a href="#scaling-scale-proxy-pods">scaling that StatefulSet manually</a>: the Custom Resource&rsquo;s own
+<code>haproxy.size</code>/<code>proxysql.size</code> won&rsquo;t reflect the autoscaler&rsquo;s changes, and the Operator
+overwrites the StatefulSet back to the CR-declared value the next time that field changes.</p>
+<p>Vertical Pod Autoscaler (VPA) isn&rsquo;t currently supported with the Operator, due to the
+limitations it introduces for objects with owner references.</p></section><section class="print-page" id="scaling-storage-resize" heading-number="8.2.3"><h1 id="scaling-storage-resize-resize-storage">Resize storage<a class="headerlink" href="#scaling-storage-resize-resize-storage" title="Permanent link">&para;</a></h1>
+<p>Each Percona XtraDB Cluster node stores data in a PVC defined in <code>pxc.volumeSpec</code>. For
+background on how Kubernetes storage works and what you can and cannot resize, see
+<a href="#scaling-about-storage">About scaling and storage — Storage</a>.</p>
+<p>You can resize storage in these ways: </p>
+<ul>
+<li><a href="#scaling-storage-resize-automatic-storage-resizing">Automatic resizing</a> (Operator 1.20.0+) — the 
+Operator monitors storage usage and resizes storage automatically</li>
+<li><a href="#scaling-storage-resize-storage-resizing-with-volume-expansion-capability">Storage resizing with Volume Expansion capability</a> (Operator 1.14.0+) - you set the new size in the Custom Resource and the Operator resizes the storage to match the desired size</li>
+<li><a href="#scaling-storage-resize-manual-resizing-without-volume-expansion-capability">Manual resizing</a> — you resize storage when Volume Expansion is unavailable</li>
+</ul>
+<p>You can also use an external autoscaler with the Operator. To enable it, set the <code>spec.storageScaling.enableExternalAutoscaling</code> to <code>true</code>:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>patch<span class="w"> </span>pxc/cluster1<span class="w"> </span>-n<span class="w"> </span>pxc<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>-p<span class="w"> </span><span class="s1">'{</span>
+<span class="s1">    "spec":{</span>
+<span class="s1">        "storageScaling":{</span>
+<span class="s1">            "enableExternalAutoscaling":true</span>
+<span class="s1">        }</span>
+<span class="s1">    }</span>
+<span class="s1">}'</span>
+</code></pre></div>
+<details class="example">
+<summary>Expected output</summary>
+<div class="no-copy highlight"><pre><span></span><code>perconaxtradbcluster.pxc.percona.com/cluster1 patched
+</code></pre></div>
+</details>
+<p>Enabling an external autoscaler
+disables the Operator&rsquo;s own automatic storage resizing. Choose one method based on your
+environment and requirements. Using both together isn&rsquo;t supported.</p>
+<p>Automatic resizing and resizing through Volume Expansion require a volume type that supports PVC expansion. Manual resizing is available when Volume Expansion is unavailable. To check whether your storage 
+supports volume expansion, run:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>sc<span class="w"> </span>&lt;storage<span class="w"> </span>class<span class="w"> </span>name&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>AllowVolumeExpansion
 </code></pre></div>
 <details class="example">
@@ -18493,24 +18878,30 @@ To check if your storage supports the expansion capability, run the following co
 <div class="no-copy highlight"><pre><span></span><code>AllowVolumeExpansion: true
 </code></pre></div>
 </details>
-<p>Find exact details about
-PVCs and the supported volume types in <a href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/#expanding-persistent-volumes-claims">Kubernetes
-documentation <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a>.</p>
-<h4 id="scaling-automatic-storage-resizing">Automatic storage resizing<a class="headerlink" href="#scaling-automatic-storage-resizing" title="Permanent link">&para;</a></h4>
-<p>Starting with version 1.20.0, the Operator can automatically resize Persistent Volume Claims (PVCs) for Percona XtraDB Cluster Pods based on your configured thresholds. The Operator monitors storage usage of all PVCs and when it exceeds the defined threshold, triggers resizing until the storage size reaches the maximum limit.</p>
+<p>Find exact details about PVCs and the supported volume types in
+<a href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/#expanding-persistent-volumes-claims">Kubernetes documentation <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a>.</p>
+<h2 id="scaling-storage-resize-automatic-storage-resizing">Automatic storage resizing<a class="headerlink" href="#scaling-storage-resize-automatic-storage-resizing" title="Permanent link">&para;</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Version added: <a href="#releasenotes-kubernetes-operator-for-pxc-rn1.20.0">1.20.0</a></p>
+</div>
+<p>The Operator can automatically resize Persistent Volume
+Claims (PVCs) for Percona XtraDB Cluster Pods based on your configured thresholds. The
+Operator monitors storage usage across all PVCs. When usage exceeds the configured
+threshold, the Operator resizes storage until it reaches the maximum limit.</p>
 <p>This feature gives you:</p>
 <ul>
 <li>fewer outages from full disks because storage grows with demand</li>
 <li>less guesswork on capacity planning and fewer last-minute fixes</li>
 <li>lower operational effort for developers and platform engineers</li>
-<li>cost control by expanding only when needed</li>
-<li>a more predictable environment so teams can focus on delivery</li>
+<li>lower costs, since storage only expands when needed</li>
+<li>more predictable operations so teams can focus on delivery</li>
 </ul>
-<p class="power-number">To enable automatic storage resizing, edit the <code>deploy/cr.yaml</code> Custom Resource manifest as follows:</p>
+<p class="power-number">To enable automatic storage resizing, edit the <code>deploy/cr.yaml</code> Custom Resource manifest
+as follows:</p>
 <ol>
 <li>
 <p>Make sure each Percona XtraDB Cluster container has a storage size set.</p>
-<p>Example for a replica set container:</p>
+<p>Example:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">pxc</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">volumeSpec</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">persistentVolumeClaim</span><span class="p">:</span>
@@ -18524,9 +18915,9 @@ documentation <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" view
 <ul>
 <li><code>enableVolumeScaling</code> - set to <code>true</code></li>
 <li><code>autoscaling.enabled</code> - set to <code>true</code></li>
-<li><code>autoscaling.triggerThresholdPercent</code> - specify the usage percentage. When the usage exceeds this threshold, this triggers autoscaling</li>
-<li><code>autoscaling.growthStep</code> - specify how much to increase the storage on</li>
-<li><code>autoscaling.maxSize</code> - specify the upper limit for storage growth. When this limit is reached, scaling is no longer possible.</li>
+<li><code>autoscaling.triggerThresholdPercent</code> - the usage percentage that triggers autoscaling when exceeded</li>
+<li><code>autoscaling.growthStep</code> - how much to increase the storage on each resize</li>
+<li><code>autoscaling.maxSize</code> - the upper limit for storage growth; the Operator stops scaling once this limit is reached</li>
 </ul>
 <p>Example configuration:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
@@ -18545,13 +18936,14 @@ documentation <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" view
 </code></pre></div>
 </li>
 </ol>
-<p>When the Operator changes the storage size, it updates the Custom Resource status as follows:</p>
+<p>When the Operator changes the storage size, it updates the Custom Resource status as
+follows:</p>
 <ul>
 <li>adds the <code>pvc-resize-in-progress</code> annotation. The annotation contains the timestamp of the resize start and indicates that the resize operation is running. After the resize finishes, the Operator deletes this annotation.</li>
 <li>records the new size in the <code>currentSize</code> field</li>
-<li>updates the <code>resizeCount</code> field.</li>
+<li>updates the <code>resizeCount</code> field</li>
 </ul>
-<p>Run the <code>kubectl get pxc -o yaml -n &lt;namespace&gt;</code> to check the current cluster state.</p>
+<p>Run <code>kubectl get pxc -o yaml -n &lt;namespace&gt;</code> to check the current cluster state.</p>
 <details class="example">
 <summary>Sample output</summary>
 <div class="no-copy highlight"><pre><span></span><code>storageAutoscaling:
@@ -18562,9 +18954,12 @@ documentation <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" view
 </code></pre></div>
 </details>
 <p>The <code>storageAutoscaling</code> section appears under <code>.status</code> in the Custom Resource.</p>
-<p>When the storage size reaches the limit, no further resizing is done and this event is recorded in the logs. You can either clean up the data or set a new limit based on your organization&rsquo;s policies and requirements. For help with common issues, see <a href="#debug-storage">Troubleshooting storage</a>.</p>
-<h4 id="scaling-storage-resizing-with-volume-expansion-capability">Storage resizing with Volume Expansion capability<a class="headerlink" href="#scaling-storage-resizing-with-volume-expansion-capability" title="Permanent link">&para;</a></h4>
-<p>Certain volume types support PVCs expansion. You can run the following command to check if your storage supports the expansion capability:</p>
+<p>When storage reaches the limit, the Operator stops resizing and logs the event. Clean up
+the data or set a new limit based on your organization&rsquo;s policies and requirements. For
+help with common issues, see <a href="#debug-storage">Troubleshoot storage resizing</a>.</p>
+<h2 id="scaling-storage-resize-storage-resizing-with-volume-expansion-capability">Storage resizing with Volume Expansion capability<a class="headerlink" href="#scaling-storage-resize-storage-resizing-with-volume-expansion-capability" title="Permanent link">&para;</a></h2>
+<p>Certain volume types support PVC expansion. Run the following command to check if your
+storage supports the expansion capability:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>sc<span class="w"> </span>&lt;storage<span class="w"> </span>class<span class="w"> </span>name&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>AllowVolumeExpansion
 </code></pre></div>
 <details class="example">
@@ -18572,58 +18967,70 @@ documentation <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" view
 <div class="no-copy highlight"><pre><span></span><code>AllowVolumeExpansion: true
 </code></pre></div>
 </details>
-<p>To enable storage resizing via volume expansion, set the <a href="#operator-storagescalingenablevolumescaling">storageScaling.enableVolumeScaling</a> Custom Resource option to <code>true</code> and set the new storage size in the
-<code>pxc.volumeSpec.persistentVolumeClaim.resources.requests.storage</code> option in the Custom Resource. The Operator will automatically expand the storage for all database Pods to the new value.</p>
+<p>To enable storage resizing through volume expansion, set
+<a href="#operator-storagescalingenablevolumescaling">storageScaling.enableVolumeScaling</a> to
+<code>true</code> and set the new storage size in
+<code>pxc.volumeSpec.persistentVolumeClaim.resources.requests.storage</code>. The Operator expands
+storage for all database Pods to the new value.</p>
 <p>For example, edit the <code>deploy/cr.yaml</code> file:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">storageScaling</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">enableVolumeScaling</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">  </span><span class="nt">pxc</span><span class="p">:</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">volumeSpec</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">...</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">persistentVolumeClaim</span><span class="p p-Indicator">:</span>
+<span class="w">    </span><span class="nt">volumeSpec</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">persistentVolumeClaim</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">resources</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">requests</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;NEW STORAGE SIZE&gt;</span>
 </code></pre></div>
 <p>Apply changes as usual:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>cr.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>cr.yaml<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
 </code></pre></div>
-<p>The storage size change takes some time. When it starts, the Operator automatically adds the <code>pvc-resize-in-progress</code> annotation to the <code>PerconaXtraDBCluster</code> Custom Resource. The annotation contains the timestamp of the resize start and indicates that the resize operation is running. After the resize finishes, the Operator deletes this annotation.</p>
-<h5 id="scaling-if-storage-scaling-cannot-complete">If storage scaling cannot complete<a class="headerlink" href="#scaling-if-storage-scaling-cannot-complete" title="Permanent link">&para;</a></h5>
-<p>Sometimes resizing storage does not finish as expected. Here are common situations and what the Operator does:</p>
+<p>The storage size change takes some time. When it starts, the Operator automatically adds
+the <code>pvc-resize-in-progress</code> annotation to the <code>PerconaXtraDBCluster</code> Custom Resource. The
+annotation contains the timestamp of the resize start and indicates that the resize
+operation is running. </p>
+<p>You can check it with:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pxc<span class="w"> </span>cluster1<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.metadata.annotations}'</span>
+</code></pre></div>
+<p>After the resize finishes, the Operator deletes this annotation.</p>
+<h4 id="scaling-storage-resize-if-storage-scaling-cannot-complete">If storage scaling cannot complete<a class="headerlink" href="#scaling-storage-resize-if-storage-scaling-cannot-complete" title="Permanent link">&para;</a></h4>
+<p>Sometimes resizing storage doesn&rsquo;t finish as expected. Here&rsquo;s what the Operator does in
+each case:</p>
 <ul>
-<li>
-<p><strong>If there is a resource quota</strong> that prevents your PersistentVolumeClaim (PVC) from growing to the new size, the Operator will detect this right away. In this case, no scaling will be attempted and the storage size in the Custom Resource  will be changed back to the previous value automatically.</p>
-</li>
-<li>
-<p>If no quota is set but <strong>you request a storage size that is too large for your environment</strong>, the resize may still fail. The Operator will again detect the failure and revert the storage size in the Custom Resource back to its original value. However, Kubernetes may keep trying to finish the resize until the issue is <a href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/#recovering-from-failure-when-expanding-volumes">fixed manually by an administrator</a>.</p>
-</li>
-<li>
-<p>If storage resizing is only partially successful (for example, two out of three pods have their PVCs expanded) and you turn off the <code>enableVolumeScaling</code> option while this is happening, the Operator rolls back the storage size in the Custom Resource to the previous value. However, since Kubernetes doesn&rsquo;t allow shrinking the storage, PVCs remain with the size they had when scaling was interrupted.</p>
-</li>
+<li>If a resource quota prevents your PersistentVolumeClaim (PVC) from growing to the new size, the Operator detects this immediately, skips the resize, and reverts the storage size in the Custom Resource to its previous value automatically.</li>
+<li>If no quota is set but you request a storage size that&rsquo;s too large for your environment, the resize can still fail. The Operator detects the failure and reverts the storage size in the Custom Resource to its original value. Kubernetes, however, can keep trying to finish the resize until <a href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/#recovering-from-failure-when-expanding-volumes">an administrator fixes the issue manually</a>.</li>
+<li>If storage resizing only partially succeeds (for example, two out of three Pods have their PVCs expanded) and you turn off <code>enableVolumeScaling</code> while this is happening, the Operator rolls back the storage size in the Custom Resource to the previous value. Since Kubernetes doesn&rsquo;t allow shrinking storage, though, PVCs keep the size they had when scaling was interrupted.</li>
 </ul>
-<p>If you later re-enable the <code>enableVolumeScaling</code> option, always check the actual storage size of your PVCs. Make sure to set the storage size in the Custom Resource to be equal to or greater than the largest current PVC size.</p>
-<h4 id="scaling-manual-resizing-without-volume-expansion-capability">Manual resizing without Volume Expansion capability<a class="headerlink" href="#scaling-manual-resizing-without-volume-expansion-capability" title="Permanent link">&para;</a></h4>
-<p>Manual resizing is the way to go if:</p>
+<p>If you later re-enable <code>enableVolumeScaling</code>, check the actual storage size of your PVCs
+first:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pvc<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{..spec.resources.requests.storage}'</span>
+</code></pre></div>
+<p>Set the storage size in the Custom Resource to be equal to or greater than the
+largest current PVC size:</p>
+<div class="highlight"><span class="filename">deploy/cr.yaml</span><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">pxc</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">volumeSpec</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">persistentVolumeClaim</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6G</span>
+</code></pre></div>
+<h2 id="scaling-storage-resize-manual-resizing-without-volume-expansion-capability">Manual resizing without Volume Expansion capability<a class="headerlink" href="#scaling-storage-resize-manual-resizing-without-volume-expansion-capability" title="Permanent link">&para;</a></h2>
+<p>Use manual resizing when:</p>
 <ul>
 <li>your version of the Operator is older than 1.14.0,</li>
-<li>your volumes have a type that does not support Volume Expansion, or</li>
-<li>you do not rely on automated scaling.</li>
+<li>your volumes have a type that doesn&rsquo;t support Volume Expansion, or</li>
+<li>you don&rsquo;t rely on automated scaling.</li>
 </ul>
-<p>You will need to delete Pods and their persistent volumes one by one to resync
-the data to the new volumes. <strong>This way you can also shrink the storage.</strong></p>
+<p>Delete Pods and their persistent volumes one by one to resync data onto the new volumes.
+<strong>This method also lets you shrink storage.</strong></p>
 <p class="power-number">Here&rsquo;s how to resize the storage:</p>
 <ol>
 <li>
-<p>Update the Custom Resource with the new storage size by editing and applying
-    the <code>deploy/cr.yaml</code> file:</p>
+<p>Update the Custom Resource with the new storage size by editing and applying the <code>deploy/cr.yaml</code> file:</p>
 <div class="no-copy highlight"><pre><span></span><code>spec:
-...
   pxc:
-    ...
     volumeSpec:
       persistentVolumeClaim:
         resources:
@@ -18632,16 +19039,15 @@ the data to the new volumes. <strong>This way you can also shrink the storage.</
 </code></pre></div>
 </li>
 <li>
-<p>Apply the Custom Resource update for the changes to come into effect:</p>
+<p>Apply the updated Custom Resource:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deploy/cr.yaml
 </code></pre></div>
 </li>
 <li>
-<p>Delete the StatefulSet with the <code>orphan</code> option</p>
+<p>Delete the StatefulSet with the <code>orphan</code> option:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>sts<span class="w"> </span>&lt;statefulset-name&gt;<span class="w"> </span>--cascade<span class="o">=</span>orphan
 </code></pre></div>
-<p>The Pods will not go down and the Operator is going to recreate
-the StatefulSet:</p>
+<p>The Pods stay running, and the Operator recreates the StatefulSet:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>sts<span class="w"> </span>&lt;statefulset-name&gt;
 </code></pre></div>
 <details class="example">
@@ -18651,22 +19057,18 @@ the StatefulSet:</p>
 </details>
 </li>
 <li>
-<p>Scale up the cluster (Optional)</p>
-<p>Changing the storage size would require us to terminate the Pods, which 
-decreases the computational power of the cluster and might cause performance 
-issues. To improve performance during the operation we are going to 
-change the size of the cluster from 3 to 5 nodes:</p>
-<div class="highlight"><pre><span></span><code><span class="nn">...</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="nn">...</span>
+<p>Scale up the cluster (optional).</p>
+<p>Changing the storage size terminates Pods one at a time, which temporarily reduces the
+cluster&rsquo;s compute capacity and can affect performance. To reduce that impact during the
+resize, increase the cluster size from 3 to 5 nodes:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">pxc</span><span class="p">:</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">size</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">    </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
 </code></pre></div>
 <p>Apply the change:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deploy/cr.yaml
 </code></pre></div>
-<p>New Pods will already have the new storage:</p>
+<p>New Pods already have the new storage:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pvc
 </code></pre></div>
 <details class="example">
@@ -18681,43 +19083,23 @@ datadir-cluster1-pxc-4   Bound    pvc-2d4f3a60-4ec4-48a0-96cd-5243e2f05234   19G
 </details>
 </li>
 <li>
-<p>Delete PVCs and Pods with the old storage size one by one. Wait for data to sync
-    before you proceed to the next node.</p>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>pvc<span class="w"> </span>&lt;PVC<span class="w"> </span>NAME&gt;
+<p>Delete PVCs and Pods with the old storage size one by one. Wait for data to sync before you proceed to the next node.</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>pvc<span class="w"> </span>&lt;PVC<span class="w"> </span>NAME&gt;
 kubectl<span class="w"> </span>delete<span class="w"> </span>pod<span class="w"> </span>&lt;POD<span class="w"> </span>NAME&gt;
 </code></pre></div>
-The new PVC is going to be created along with the Pod. </p>
+<p>A new PVC is created along with the Pod.</p>
 </li>
 </ol>
-<p>The storage size change takes some time. When it starts, the Operator automatically adds the <code>pvc-resize-in-progress</code> annotation to the <code>PerconaXtraDBCluster</code> Custom Resource. The annotation contains the timestamp of the resize start and indicates that the resize operation is running.. After the resize finishes, the Operator deletes this annotation.</p>
-<h2 id="scaling-horizontal-scaling">Horizontal scaling<a class="headerlink" href="#scaling-horizontal-scaling" title="Permanent link">&para;</a></h2>
-<p>Size of the cluster is controlled by a <a href="#operator-pxcsize">size key</a> in the <a href="#operator">Custom Resource options</a> configuration. That’s why scaling the cluster needs
-nothing more but changing this option and applying the updated
-configuration file. This may be done in a specifically saved config:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
-<span class="nn">...</span>
-<span class="w">  </span><span class="nt">pxc</span><span class="p">:</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">size</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
-</code></pre></div>
-<p>Apply the change:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deploy/cr.yaml
-</code></pre></div>
-<p>Alternatively, you cana do it on the fly, using the following command:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>scale<span class="w"> </span>--replicas<span class="o">=</span><span class="m">5</span><span class="w"> </span>pxc/&lt;CLUSTER<span class="w"> </span>NAME&gt;
-</code></pre></div>
-<p>In this example we have changed the size of the Percona XtraDB Cluster
-to <code>5</code> instances.</p>
-<h2 id="scaling-automated-scaling">Automated scaling<a class="headerlink" href="#scaling-automated-scaling" title="Permanent link">&para;</a></h2>
-<p>To automate horizontal scaling it is possible to use <a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/">Horizontal 
-Pod Autoscaler (HPA) <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a>. 
-It will scale the Custom Resource itself, letting Operator to deal 
-with everything else.</p>
-<p>It is also possible to use <a href="https://keda.sh/">Kubernetes Event-driven Autoscaling (KEDA) <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a>, 
-where you can apply more sophisticated logic for decision making on scaling.</p>
-<p>For now it is not possible to use Vertical Pod Autoscaler (VPA) with 
-the Operator due to the limitations it introduces for objects with 
-owner references.</p></section><section class="print-page" id="monitoring" heading-number="8.3"><h1 id="monitoring-monitor-database-with-percona-monitoring-and-management-pmm">Monitor database with Percona Monitoring and Management (PMM)<a class="headerlink" href="#monitoring-monitor-database-with-percona-monitoring-and-management-pmm" title="Permanent link">&para;</a></h1>
+<p>The storage size change takes some time. When it starts, the Operator automatically adds
+the <code>pvc-resize-in-progress</code> annotation to the <code>PerconaXtraDBCluster</code> Custom Resource. The
+annotation contains the timestamp of the resize start and indicates that the resize
+operation is running. After the resize finishes, the Operator deletes this annotation.</p>
+<h2 id="scaling-storage-resize-see-also">See also<a class="headerlink" href="#scaling-storage-resize-see-also" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="#scaling-about">About scaling and storage</a></li>
+<li><a href="#scaling">Horizontal and vertical scaling</a></li>
+<li><a href="#debug-storage">Troubleshoot storage resizing</a></li>
+</ul></section></section><section class="print-page" id="monitoring" heading-number="8.3"><h1 id="monitoring-monitor-database-with-percona-monitoring-and-management-pmm">Monitor database with Percona Monitoring and Management (PMM)<a class="headerlink" href="#monitoring-monitor-database-with-percona-monitoring-and-management-pmm" title="Permanent link">&para;</a></h1>
 <p>The Operator integrates natively with <a href="https://docs.percona.com/percona-monitoring-and-management/3/index.html">Percona Monitoring and Management (PMM) <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> for comprehensive database monitoring. While <a href="#monitoring-implement-custom-monitoring-solution-without-pmm">custom monitoring solutions</a> solutions are also supported, they require manual setup and are not automated by the Operator.</p>
 <p>The Operator is compatible with both PMM versions 2 and 3. We recommend using the latest PMM version 3 for optimal monitoring capabilities.</p>
 <p>In this section, you&rsquo;ll learn how to monitor Percona XtraDB Cluster using PMM.</p>
@@ -35769,7 +36151,12 @@ Percona XtraBackup.</p>
 
 .print-site-enumerate-headings #backups-delete > h1:before { content: '8.1.8 ' }
 
-.print-site-enumerate-headings #scaling > h1:before { content: '8.2 ' }
+.print-site-enumerate-headings #section-8-2 > h1:before { content: '8.2 ' }
+.print-site-enumerate-headings #scaling-about > h1:before { content: '8.2.1 ' }
+
+.print-site-enumerate-headings #scaling > h1:before { content: '8.2.2 ' }
+
+.print-site-enumerate-headings #scaling-storage-resize > h1:before { content: '8.2.3 ' }
 
 .print-site-enumerate-headings #monitoring > h1:before { content: '8.3 ' }
 
