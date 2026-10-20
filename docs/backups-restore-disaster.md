@@ -14,7 +14,7 @@ Use this page when the original cluster and its Kubernetes environment are both 
 2. Export the namespace where the cluster runs as an environment variable. Replace the `<namespace>` with your value:
 
      ```bash
-    kubectl get pxc-backup -n $NAMESPACE
+    export NAMESPACE=<namespace>
     ```
 
 3. Create the Secret with the new cluster's system-user credentials as described in [System Users](users.md#system-users). Separately, recreate the cloud-storage credentials Secret by following [Create the S3 credentials Secret](backups-storage-s3.md#create-the-s3-credentials-secret) or [Create a Secret for Azure](backups-storage-azure.md#create-a-secret).
