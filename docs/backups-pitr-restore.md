@@ -118,7 +118,7 @@ Use this when restoring to a side cluster in a different namespace, or to a new 
 1. Set the following keys for the `PerconaXtraDBClusterRestore` Custom Resource:
 
     * `spec.pxcCluster`: the name of the target cluster
-    * `spec.storageName`: the name matching the `backup.storages` subsection of the target cluster's `deploy/cr.yaml`
+    * `spec.backupSource.storageName`: the name matching the `backup.storages` subsection of the target cluster's `deploy/cr.yaml`
     * `spec.backupSource.destination`: the backup's location, from `kubectl get pxc-backup` on the source cluster
     * `spec.pitr`: the recovery target you [chose above](#choose-a-recovery-target), plus `pitr.backupSource.storageName` for the binlog storage
 
