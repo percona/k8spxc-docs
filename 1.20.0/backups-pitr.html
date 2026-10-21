@@ -10,8 +10,8 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Point-in-time recovery allows users to roll back the cluster to a
-specific transaction or time. You can even skip a transaction if you don’t need it anymore. To make a point-in-time recovery, the Operator needs a backup and binary logs (binlogs) of the server to.">
+        <meta name="description" content="Point-in-time recovery allows you to roll back the cluster to a
+specific transaction or time. You can also skip a specific transaction instead of replaying it.">
       
       
         <meta name="author" content="Percona LLC">
@@ -20,10 +20,10 @@ specific transaction or time. You can even skip a transaction if you don’t nee
         <link rel="canonical" href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/backups-pitr.html">
       
       
-        <link rel="prev" href="backups-storage.html">
+        <link rel="prev" href="backups-restore-disaster.html">
       
       
-        <link rel="next" href="backups-scheduled.html">
+        <link rel="next" href="backups-pitr-restore.html">
       
       
         
@@ -51,7 +51,7 @@ specific transaction or time. You can even skip a transaction if you don’t nee
 
     
       
-        <title>Store binary logs for point-in-time recovery - Percona Operator for MySQL based on Percona XtraDB Cluster</title>
+        <title>Enable point-in-time recovery - Percona Operator for MySQL based on Percona XtraDB Cluster</title>
       
     
     
@@ -121,7 +121,7 @@ specific transaction or time. You can even skip a transaction if you don’t nee
                  
                  
                   <meta property="og:type" content="website" />
-                  <meta property="og:title" content="Percona Operator for MySQL based on Percona XtraDB Cluster - Store binary logs for point-in-time recovery" />
+                  <meta property="og:title" content="Percona Operator for MySQL based on Percona XtraDB Cluster - Enable point-in-time recovery" />
                   <meta property="og:image"
                     content="https://docs.percona.com/percona-operator-for-xtradb-cluster/assets/images/kubernetes-operators.png">
                   <meta property="og:url" content="https://docs.percona.com/percona-operator-for-xtradb-cluster/">
@@ -149,7 +149,7 @@ specific transaction or time. You can even skip a transaction if you don’t nee
     <div data-md-component="skip">
       
         
-        <a href="#store-binary-logs-for-point-in-time-recovery" class="md-skip">
+        <a href="#point-in-time-recovery-pitr" class="md-skip">
           Skip to content
         </a>
       
@@ -226,7 +226,7 @@ specific transaction or time. You can even skip a transaction if you don’t nee
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Store binary logs for point-in-time recovery
+              Enable point-in-time recovery
             
           </span>
         </div>
@@ -3156,14 +3156,14 @@ specific transaction or time. You can even skip a transaction if you don’t nee
   
   
     <li class="md-nav__item">
-      <a href="backups-storage.html" class="md-nav__link">
+      <a href="backups-methods.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Configure storage for backups
+    Backup methods
   
 
     
@@ -3181,26 +3181,28 @@ specific transaction or time. You can even skip a transaction if you don’t nee
                 
   
   
+  
+  
     
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
       
         
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_3" >
+        
           
+          <label class="md-nav__link" for="__nav_8_1_3" id="__nav_8_1_3_label" tabindex="0">
+            
   
   
   <span class="md-ellipsis">
     
   
-    Store binary logs for point-in-time recovery
+    Configure storage for backups
   
 
     
@@ -3208,17 +3210,35 @@ specific transaction or time. You can even skip a transaction if you don’t nee
   
   
 
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="backups-pitr.html" class="md-nav__link md-nav__link--active">
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Configure storage for backups
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-storage.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Store binary logs for point-in-time recovery
+    Overview
   
 
     
@@ -3227,103 +3247,97 @@ specific transaction or time. You can even skip a transaction if you don’t nee
   
 
       </a>
-      
-        
+    </li>
+  
 
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+              
+            
+              
+                
   
   
   
+  
+    <li class="md-nav__item">
+      <a href="backups-storage-s3.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
     
   
+    Amazon S3 or S3-compatible storage
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#considerations" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Considerations
-      
-    </span>
-  </a>
+
+    
+  </span>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#enable-point-in-time-recovery" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Enable point-in-time recovery
-      
-    </span>
-  </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#binary-logs-statistics" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Binary logs statistics
-      
-    </span>
-  </a>
+
+      </a>
+    </li>
   
-    <nav class="md-nav" aria-label="Binary logs statistics">
-      <ul class="md-nav__list">
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-storage-azure.html" class="md-nav__link">
         
-          <li class="md-nav__item">
-  <a href="#gather-metrics-data" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Gather metrics data
-      
-    </span>
-  </a>
   
-    <nav class="md-nav" aria-label="Gather metrics data">
-      <ul class="md-nav__list">
+  
+  <span class="md-ellipsis">
+    
+  
+    Microsoft Azure Blob storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-storage-pvc.html" class="md-nav__link">
         
-          <li class="md-nav__item">
-  <a href="#access-locally-via-port-forwarding" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Access locally via port forwarding
-      
-    </span>
-  </a>
   
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#access-directly-from-a-pod" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Access directly from a Pod
-      
-    </span>
-  </a>
   
-</li>
-        
-      </ul>
-    </nav>
+  <span class="md-ellipsis">
+    
   
-</li>
-        
-      </ul>
-    </nav>
+    Persistent Volume
   
-</li>
-      
-    </ul>
+
+    
+  </span>
   
-</nav>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -3475,34 +3489,6 @@ specific transaction or time. You can even skip a transaction if you don’t nee
   
   
   
-    <li class="md-nav__item">
-      <a href="backups-copy.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Copy backup to a local machine
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
     
     
     
@@ -3512,10 +3498,10 @@ specific transaction or time. You can even skip a transaction if you don’t nee
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_6" >
         
           
-          <label class="md-nav__link" for="__nav_8_1_7" id="__nav_8_1_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8_1_6" id="__nav_8_1_6_label" tabindex="0">
             
   
   
@@ -3533,8 +3519,8 @@ specific transaction or time. You can even skip a transaction if you don’t nee
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8_1_7">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -3558,7 +3544,63 @@ specific transaction or time. You can even skip a transaction if you don’t nee
   <span class="md-ellipsis">
     
   
-    On the same cluster
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-restore-in-place.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    On the same cluster (in-place)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-restore-side-cluster.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    To a side cluster (same Kubernetes cluster)
   
 
     
@@ -3586,7 +3628,412 @@ specific transaction or time. You can even skip a transaction if you don’t nee
   <span class="md-ellipsis">
     
   
-    On a new cluster
+    To a new cluster (different Kubernetes cluster)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-restore-disaster.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    After a disaster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_7" id="__nav_8_1_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Point-in-time recovery
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8_1_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Point-in-time recovery
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enable point-in-time recovery
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="backups-pitr.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enable point-in-time recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Considerations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enable-point-in-time-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enable point-in-time recovery
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#binary-logs-statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binary logs statistics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Binary logs statistics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gather-metrics-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gather metrics data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Gather metrics data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#access-locally-via-port-forwarding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Access locally via port forwarding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#access-directly-from-a-pod" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Access directly from a Pod
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-pitr-restore.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Restore with point-in-time recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-pitr-find-gtid.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Find a GTID for point-in-time recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_8" id="__nav_8_1_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Migrate data
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Migrate data
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-move-from-external-db.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use backups to move an external database to Kubernetes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-copy.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Move a backup out of the cluster
   
 
     
@@ -4298,34 +4745,6 @@ specific transaction or time. You can even skip a transaction if you don’t nee
     
   
     How to use private registry
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="backups-move-from-external-db.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    How to use backups and asynchronous replication to move an external database to Kubernetes
   
 
     
@@ -6086,33 +6505,41 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="store-binary-logs-for-point-in-time-recovery">Store binary logs for point-in-time recovery<a class="headerlink" href="#store-binary-logs-for-point-in-time-recovery" title="Permanent link">&para;</a></h1>
-<p>Point-in-time recovery allows users to roll back the cluster to a
-specific transaction or time. You can even skip a transaction if you don&rsquo;t need it anymore. To make a point-in-time recovery, the Operator needs a backup and binary logs (binlogs) of the server to. </p>
-<p>A binary log records all changes made to the database, such as updates, inserts, and deletes. It is used to synchronize data across servers for and point-in-time recovery. </p>
+<h1 id="point-in-time-recovery-pitr">Point-in-time recovery (PITR)<a class="headerlink" href="#point-in-time-recovery-pitr" title="Permanent link">&para;</a></h1>
+<p>Point-in-time recovery allows you to roll back the cluster to a
+specific transaction or time. You can also skip a specific transaction instead of replaying it. </p>
+<p>For point-in-time recovery, the Operator needs two things:</p>
+<ul>
+<li>at least one successful full backup </li>
+<li>binary logs (binlogs) of the server. </li>
+</ul>
+<p>A binary log records all changes made to the database, such as updates, inserts, and deletes. The Operator already uses binlogs to synchronize data across cluster nodes. Point-in-time recovery reuses the same mechanism and extends it to a separate storage location so the log survives independently of the cluster.</p>
 <p>Point-in-time recovery is off by
-default and is supported by the Operator with Percona XtraDB Cluster
-versions starting from 8.0.21-12.1.</p>
+default and is supported starting with Percona XtraDB Cluster 8.0.21-12.1.</p>
 <p>After you <a href="#enable-point-in-time-recovery">enable point-in-time recovery</a>, the Operator spins up a separate point-in-time recovery Pod, which starts saving binary log updates
 <a href="backups-storage.html">to the backup storage</a>. </p>
 <h2 id="considerations">Considerations<a class="headerlink" href="#considerations" title="Permanent link">&para;</a></h2>
 <ol>
 <li>
-<p>You must use either s3-compatible or Azure-compatible storage for both binlog and full backup to make the point-in-time recovery work</p>
+<p>Use either S3-compatible or Azure-compatible storage for both the binlog and the full backup. Point-in-time recovery doesn&rsquo;t work with other storage types.</p>
 </li>
 <li>
 <p>The Operator saves binlogs without any
-    cluster-based filtering. Therefore, either use a separate folder per cluster on the same bucket or use different buckets for binlogs. </p>
-<p>Also,we recommend to have an empty bucket or a folder on a bucket for binlogs when you enable point-in-time recovery. This bucket/folder should not contain no binlogs nor files from previous attempts or other clusters. </p>
+    cluster-based filtering. Use a separate folder per cluster on the same bucket, or use a different bucket per cluster.</p>
+<p>Also, we recommend to use an empty bucket or a folder on a bucket for binlogs when you enable point-in-time recovery. This bucket/folder should not contain binlogs or files from previous attempts or other clusters.</p>
 </li>
 <li>
 <p>Don&rsquo;t <a href="https://dev.mysql.com/doc/refman/8.0/en/purge-binary-logs.html">purge binlogs <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> before they are transferred to the backup storage. Doing so breaks point-in-time recovery.</p>
 </li>
 <li>
-<p>Disable the <a href="operator.html#backupschedulekeep">retention policy</a> as it is incompatible with the point-in-time recovery. To clean up the storage, configure the <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/how-to-set-lifecycle-configuration-intro.html">Bucket lifecycle <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> on the storage</p>
+<p>Disable the <a href="operator.html#backupschedulekeep">retention policy</a> as it is incompatible with the point-in-time recovery. To clean up the storage, configure the <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/how-to-set-lifecycle-configuration-intro.html">Bucket lifecycle <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> on the storage.</p>
+</li>
+<li>
+<p>Optionally set <a href="operator.html#backupstoragesstorage-names3checksumalgorithm"><code>s3.checksumAlgorithm</code></a> on the binlog storage to verify data integrity during uploads. This option also applies if you make backups with the <a href="backups-methods.html">XtraBackup sidecar method</a>; the default SST backup method doesn&rsquo;t use it.</p>
 </li>
 </ol>
 <h2 id="enable-point-in-time-recovery">Enable point-in-time recovery<a class="headerlink" href="#enable-point-in-time-recovery" title="Permanent link">&para;</a></h2>
+<p>Before you start, make sure you <a href="backups-storage.html">have configured the storage for binlogs</a>.</p>
 <p>To use point-in-time recovery, set the following keys in the <code>pitr</code> subsection
 under the <code>backup</code> section of the <a href="https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.20.0/deploy/cr.yaml">deploy/cr.yaml <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> manifest:</p>
 <ul>
@@ -6135,7 +6562,7 @@ under the <code>backup</code> section of the <a href="https://github.com/percona
 <span class="w">    </span><span class="nt">storageName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3-us-west</span>
 <span class="w">    </span><span class="nt">timeBetweenUploads</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60</span>
 </code></pre></div>
-<p>For how to restore a database to a specific point in time, see <a href="backups-restore.html#restore-with-point-in-time-recovery">Restore the cluster with point-in-time recovery</a>.</p>
+<p>For how to restore a database to a specific point in time, see <a href="backups-pitr-restore.html">Restore with point-in-time recovery</a>.</p>
 <h2 id="binary-logs-statistics">Binary logs statistics<a class="headerlink" href="#binary-logs-statistics" title="Permanent link">&para;</a></h2>
 <p>The point-in-time recovery Pod has statistics metrics for binlogs. They provide insights into the success and failure rates of binlog operations, timeliness of processing and uploads and potential gaps or inconsistencies in binlog data.</p>
 <p>The available metrics are:</p>
@@ -6488,7 +6915,7 @@ pxc_binlog_collector_uploaded_total 1
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="May 6, 2026 08:52:15 UTC">May 6, 2026</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 21, 2026 13:07:41 UTC">October 21, 2026</span>
       
         <br>
         Created:

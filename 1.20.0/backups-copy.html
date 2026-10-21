@@ -21,10 +21,10 @@ backups returned by the following command:">
         <link rel="canonical" href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/backups-copy.html">
       
       
-        <link rel="prev" href="backups-compress.html">
+        <link rel="prev" href="backups-move-from-external-db.html">
       
       
-        <link rel="next" href="backups-restore.html">
+        <link rel="next" href="backups-delete.html">
       
       
         
@@ -52,7 +52,7 @@ backups returned by the following command:">
 
     
       
-        <title>Copy backup to a local machine - Percona Operator for MySQL based on Percona XtraDB Cluster</title>
+        <title>Move a backup out of the cluster - Percona Operator for MySQL based on Percona XtraDB Cluster</title>
       
     
     
@@ -122,7 +122,7 @@ backups returned by the following command:">
                  
                  
                   <meta property="og:type" content="website" />
-                  <meta property="og:title" content="Percona Operator for MySQL based on Percona XtraDB Cluster - Copy backup to a local machine" />
+                  <meta property="og:title" content="Percona Operator for MySQL based on Percona XtraDB Cluster - Move a backup out of the cluster" />
                   <meta property="og:image"
                     content="https://docs.percona.com/percona-operator-for-xtradb-cluster/assets/images/kubernetes-operators.png">
                   <meta property="og:url" content="https://docs.percona.com/percona-operator-for-xtradb-cluster/">
@@ -227,7 +227,7 @@ backups returned by the following command:">
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Copy backup to a local machine
+              Move a backup out of the cluster
             
           </span>
         </div>
@@ -3157,6 +3157,81 @@ backups returned by the following command:">
   
   
     <li class="md-nav__item">
+      <a href="backups-methods.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backup methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_3" id="__nav_8_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configure storage for backups
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Configure storage for backups
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="backups-storage.html" class="md-nav__link">
         
   
@@ -3164,7 +3239,7 @@ backups returned by the following command:">
   <span class="md-ellipsis">
     
   
-    Configure storage for backups
+    Overview
   
 
     
@@ -3185,14 +3260,14 @@ backups returned by the following command:">
   
   
     <li class="md-nav__item">
-      <a href="backups-pitr.html" class="md-nav__link">
+      <a href="backups-storage-s3.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Store binary logs for point-in-time recovery
+    Amazon S3 or S3-compatible storage
   
 
     
@@ -3201,6 +3276,70 @@ backups returned by the following command:">
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-storage-azure.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Microsoft Azure Blob storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-storage-pvc.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Persistent Volume
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -3349,26 +3488,64 @@ backups returned by the following command:">
                 
   
   
+  
+  
     
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
       
         
-      
-      
-      <a href="backups-copy.html" class="md-nav__link md-nav__link--active">
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_6" id="__nav_8_1_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Restore from a backup
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Restore from a backup
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-restore.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Copy backup to a local machine
+    Overview
   
 
     
@@ -3377,6 +3554,125 @@ backups returned by the following command:">
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-restore-in-place.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    On the same cluster (in-place)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-restore-side-cluster.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    To a side cluster (same Kubernetes cluster)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-restore-to-new-cluster.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    To a new cluster (different Kubernetes cluster)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-restore-disaster.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    After a disaster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -3408,7 +3704,7 @@ backups returned by the following command:">
   <span class="md-ellipsis">
     
   
-    Restore from a backup
+    Point-in-time recovery
   
 
     
@@ -3424,7 +3720,7 @@ backups returned by the following command:">
             <span class="md-nav__icon md-icon"></span>
             
   
-    Restore from a backup
+    Point-in-time recovery
   
 
           </label>
@@ -3437,14 +3733,14 @@ backups returned by the following command:">
   
   
     <li class="md-nav__item">
-      <a href="backups-restore.html" class="md-nav__link">
+      <a href="backups-pitr.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    On the same cluster
+    Enable point-in-time recovery
   
 
     
@@ -3465,14 +3761,14 @@ backups returned by the following command:">
   
   
     <li class="md-nav__item">
-      <a href="backups-restore-to-new-cluster.html" class="md-nav__link">
+      <a href="backups-pitr-restore.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    On a new cluster
+    Restore with point-in-time recovery
   
 
     
@@ -3481,6 +3777,157 @@ backups returned by the following command:">
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-pitr-find-gtid.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Find a GTID for point-in-time recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_8" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_8" id="__nav_8_1_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Migrate data
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8_1_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Migrate data
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-move-from-external-db.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use backups to move an external database to Kubernetes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="backups-copy.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Move a backup out of the cluster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
     </li>
   
 
@@ -4184,34 +4631,6 @@ backups returned by the following command:">
     
   
     How to use private registry
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="backups-move-from-external-db.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    How to use backups and asynchronous replication to move an external database to Kubernetes
   
 
     

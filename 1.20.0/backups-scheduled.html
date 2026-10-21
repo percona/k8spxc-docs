@@ -21,7 +21,7 @@ file.">
         <link rel="canonical" href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/backups-scheduled.html">
       
       
-        <link rel="prev" href="backups-pitr.html">
+        <link rel="prev" href="backups-storage-pvc.html">
       
       
         <link rel="next" href="backups-ondemand.html">
@@ -3157,6 +3157,81 @@ file.">
   
   
     <li class="md-nav__item">
+      <a href="backups-methods.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backup methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_3" id="__nav_8_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configure storage for backups
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Configure storage for backups
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="backups-storage.html" class="md-nav__link">
         
   
@@ -3164,7 +3239,7 @@ file.">
   <span class="md-ellipsis">
     
   
-    Configure storage for backups
+    Overview
   
 
     
@@ -3185,14 +3260,14 @@ file.">
   
   
     <li class="md-nav__item">
-      <a href="backups-pitr.html" class="md-nav__link">
+      <a href="backups-storage-s3.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Store binary logs for point-in-time recovery
+    Amazon S3 or S3-compatible storage
   
 
     
@@ -3201,6 +3276,70 @@ file.">
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-storage-azure.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Microsoft Azure Blob storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-storage-pvc.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Persistent Volume
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -3271,6 +3410,24 @@ file.">
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scheduled backup
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="backups-scheduled.html" class="md-nav__link md-nav__link--active">
         
   
@@ -3287,6 +3444,36 @@ file.">
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#verify-a-scheduled-backup-ran" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify a scheduled backup ran
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -3363,15 +3550,62 @@ file.">
   
   
   
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_6" id="__nav_8_1_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Restore from a backup
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Restore from a backup
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
-      <a href="backups-copy.html" class="md-nav__link">
+      <a href="backups-restore.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Copy backup to a local machine
+    Overview
   
 
     
@@ -3380,6 +3614,126 @@ file.">
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-restore-in-place.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    On the same cluster (in-place)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-restore-side-cluster.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    To a side cluster (same Kubernetes cluster)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-restore-to-new-cluster.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    To a new cluster (different Kubernetes cluster)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-restore-disaster.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    After a disaster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -3410,7 +3764,7 @@ file.">
   <span class="md-ellipsis">
     
   
-    Restore from a backup
+    Point-in-time recovery
   
 
     
@@ -3426,7 +3780,7 @@ file.">
             <span class="md-nav__icon md-icon"></span>
             
   
-    Restore from a backup
+    Point-in-time recovery
   
 
           </label>
@@ -3439,14 +3793,14 @@ file.">
   
   
     <li class="md-nav__item">
-      <a href="backups-restore.html" class="md-nav__link">
+      <a href="backups-pitr.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    On the same cluster
+    Enable point-in-time recovery
   
 
     
@@ -3467,14 +3821,153 @@ file.">
   
   
     <li class="md-nav__item">
-      <a href="backups-restore-to-new-cluster.html" class="md-nav__link">
+      <a href="backups-pitr-restore.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    On a new cluster
+    Restore with point-in-time recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-pitr-find-gtid.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Find a GTID for point-in-time recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_8" id="__nav_8_1_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Migrate data
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Migrate data
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-move-from-external-db.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use backups to move an external database to Kubernetes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-copy.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Move a backup out of the cluster
   
 
     
@@ -4186,34 +4679,6 @@ file.">
     
   
     How to use private registry
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="backups-move-from-external-db.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    How to use backups and asynchronous replication to move an external database to Kubernetes
   
 
     
@@ -5859,6 +6324,25 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#verify-a-scheduled-backup-ran" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify a scheduled backup ran
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -5938,33 +6422,28 @@ backup kept on the Amazon S3 storage:</p>
 <span class="w">     </span><span class="nt">storageName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3-us-west</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 </code></pre></div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Before the Operator version 1.10 scheduled backups were based on <a href="https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/">Kubernetes CronJobs <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a>, while newer Operator versions take care about scheduled backups itself. Clusters upgraded from the Operator version 1.9 may need manual deletion of scheduled backups CronJobs, if any existed prior to the upgrade (otherwise backups will run twice).</p>
-<p>You can check if there are any CronJobs in the namespace of your cluster related to scheduled backups as follows:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>cronjobs<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
+<h2 id="verify-a-scheduled-backup-ran">Verify a scheduled backup ran<a class="headerlink" href="#verify-a-scheduled-backup-ran" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>List backups for the cluster and confirm the latest scheduled run shows <code>Succeeded</code>:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pxc-backup<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
 </code></pre></div>
-<details class="example">
-<summary>Expected output</summary>
-<div class="no-copy highlight"><pre><span></span><code>NAME SCHEDULE SUSPEND ACTIVE LAST SCHEDULE AGE
-sat-night-backup 0 0 * * 6 False 0 &lt;none&gt; 4m36s
+</li>
+<li>
+<p>For more detail on a specific backup, including the error message if it failed:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>pxc-backup<span class="w"> </span>&lt;backup-name&gt;<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
 </code></pre></div>
-</details>
-<p>Deleting CronJob is straightforward:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>cronjob<span class="w"> </span>sat-night-backup<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
-</code></pre></div>
-<details class="example">
-<summary>Expected output</summary>
-<div class="no-copy highlight"><pre><span></span><code>cronjob.batch "sat-night-backup" deleted
-</code></pre></div>
-</details>
-</div>
+</li>
+<li>
+<p>If the cluster has <a href="backups-pitr.html">point-in-time recovery enabled</a>, also confirm the backup doesn&rsquo;t have binlog gaps before relying on it for a PITR restore — see <a href="backups-pitr-restore.html#binlog-gaps">Binlog gaps</a>.</p>
+</li>
+</ol>
 <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="February 9, 2026 13:11:35 UTC">February 9, 2026</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 21, 2026 13:07:41 UTC">October 21, 2026</span>
       
         <br>
         Created:

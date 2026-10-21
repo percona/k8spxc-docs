@@ -10,7 +10,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="You can restore from a backup as follows:">
+        <meta name="description" content="This page covers restoring a backup to a new cluster on a different Kubernetes cluster or environment. For example, if you migrate to another cloud provider or region. For the other restore paths, see Restore scenarios.">
       
       
         <meta name="author" content="Percona LLC">
@@ -19,10 +19,10 @@
         <link rel="canonical" href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/backups-restore-to-new-cluster.html">
       
       
-        <link rel="prev" href="backups-restore.html">
+        <link rel="prev" href="backups-restore-side-cluster.html">
       
       
-        <link rel="next" href="backups-delete.html">
+        <link rel="next" href="backups-restore-disaster.html">
       
       
         
@@ -50,7 +50,7 @@
 
     
       
-        <title>On a new cluster - Percona Operator for MySQL based on Percona XtraDB Cluster</title>
+        <title>To a new cluster (different Kubernetes cluster) - Percona Operator for MySQL based on Percona XtraDB Cluster</title>
       
     
     
@@ -120,7 +120,7 @@
                  
                  
                   <meta property="og:type" content="website" />
-                  <meta property="og:title" content="Percona Operator for MySQL based on Percona XtraDB Cluster - On a new cluster" />
+                  <meta property="og:title" content="Percona Operator for MySQL based on Percona XtraDB Cluster - To a new cluster (different Kubernetes cluster)" />
                   <meta property="og:image"
                     content="https://docs.percona.com/percona-operator-for-xtradb-cluster/assets/images/kubernetes-operators.png">
                   <meta property="og:url" content="https://docs.percona.com/percona-operator-for-xtradb-cluster/">
@@ -225,7 +225,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              On a new cluster
+              To a new cluster (different Kubernetes cluster)
             
           </span>
         </div>
@@ -3155,6 +3155,81 @@
   
   
     <li class="md-nav__item">
+      <a href="backups-methods.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backup methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_3" id="__nav_8_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configure storage for backups
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Configure storage for backups
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="backups-storage.html" class="md-nav__link">
         
   
@@ -3162,7 +3237,7 @@
   <span class="md-ellipsis">
     
   
-    Configure storage for backups
+    Overview
   
 
     
@@ -3183,14 +3258,14 @@
   
   
     <li class="md-nav__item">
-      <a href="backups-pitr.html" class="md-nav__link">
+      <a href="backups-storage-s3.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Store binary logs for point-in-time recovery
+    Amazon S3 or S3-compatible storage
   
 
     
@@ -3199,6 +3274,70 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-storage-azure.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Microsoft Azure Blob storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-storage-pvc.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Persistent Volume
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -3347,34 +3486,6 @@
                 
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="backups-copy.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Copy backup to a local machine
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
     
   
   
@@ -3388,10 +3499,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_7" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_6" checked>
         
           
-          <label class="md-nav__link" for="__nav_8_1_7" id="__nav_8_1_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8_1_6" id="__nav_8_1_6_label" tabindex="0">
             
   
   
@@ -3409,8 +3520,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_7_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_8_1_7">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8_1_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -3434,7 +3545,63 @@
   <span class="md-ellipsis">
     
   
-    On the same cluster
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-restore-in-place.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    On the same cluster (in-place)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-restore-side-cluster.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    To a side cluster (same Kubernetes cluster)
   
 
     
@@ -3471,7 +3638,7 @@
   <span class="md-ellipsis">
     
   
-    On a new cluster
+    To a new cluster (different Kubernetes cluster)
   
 
     
@@ -3489,7 +3656,7 @@
   <span class="md-ellipsis">
     
   
-    On a new cluster
+    To a new cluster (different Kubernetes cluster)
   
 
     
@@ -3513,17 +3680,6 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#restore-scenarios" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Restore scenarios
-      
-    </span>
-  </a>
-  
-</li>
       
         <li class="md-nav__item">
   <a href="#before-you-start" class="md-nav__link">
@@ -3570,6 +3726,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#verify-the-restore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify the restore
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3584,40 +3751,290 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Restore the cluster with point-in-time recovery">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#approach-1-define-storage-configuration-in-the-restore-object_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Approach 1: Define storage configuration in the restore object
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#approach-2-the-storage-is-defined-on-target" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Approach 2: The storage is defined on target
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
     </ul>
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-restore-disaster.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    After a disaster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_7" id="__nav_8_1_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Point-in-time recovery
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Point-in-time recovery
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-pitr.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enable point-in-time recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-pitr-restore.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Restore with point-in-time recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-pitr-find-gtid.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Find a GTID for point-in-time recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_8" id="__nav_8_1_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Migrate data
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Migrate data
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-move-from-external-db.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use backups to move an external database to Kubernetes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-copy.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Move a backup out of the cluster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -4321,34 +4738,6 @@
     
   
     How to use private registry
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="backups-move-from-external-db.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    How to use backups and asynchronous replication to move an external database to Kubernetes
   
 
     
@@ -6001,17 +6390,6 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#restore-scenarios" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Restore scenarios
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#before-you-start" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -6056,6 +6434,17 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#verify-the-restore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify the restore
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -6069,34 +6458,6 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Restore the cluster with point-in-time recovery">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#approach-1-define-storage-configuration-in-the-restore-object_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Approach 1: Define storage configuration in the restore object
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#approach-2-the-storage-is-defined-on-target" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Approach 2: The storage is defined on target
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -6132,13 +6493,8 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 
 
 <h1 id="restore-from-a-backup-to-a-new-kubernetes-based-environment">Restore from a backup to a new Kubernetes-based environment<a class="headerlink" href="#restore-from-a-backup-to-a-new-kubernetes-based-environment" title="Permanent link">&para;</a></h1>
-<p>You can restore from a backup as follows:</p>
-<ul>
-<li><a href="backups-restore.html">On the same cluster where you made a backup</a></li>
-<li>On a new cluster deployed in a different Kubernetes-based environment.</li>
-</ul>
-<p>This document focuses on the restore on a new cluster deployed in a different Kubernetes environment. </p>
-<p>Note that you can restore on a new cluster only from backups stored in a cloud backup storage, such as S3 or Azure. Since PVCs are namespace-specific Kubernetes resources, you can restore from Persistent volume backups only to the same namespace. See the <a href="backups-restore.html">Restore on the same cluster where you made a backup</a> chapter for the steps.  </p>
+<p>This page covers restoring a backup to a new cluster on a <strong>different</strong> Kubernetes cluster or environment. For example, if you migrate to another cloud provider or region. For the other restore paths, see <a href="backups-restore.html#restore-scenarios">Restore scenarios</a>.</p>
+<p>Because PVCs are namespace-specific Kubernetes resources tied to a specific Kubernetes cluster, restoring to a different Kubernetes cluster only works from backups stored in cloud storage, such as S3 or Azure. See <a href="backups-restore.html#restore-limitations">Restore limitations</a>. </p>
 <div class="admonition admonition">
 <p class="admonition-title">For Operator version 1.17.0 and earlier</p>
 <p>When restoring to a new Kubernetes-based environment, make sure it has a Secrets
@@ -6146,51 +6502,51 @@ object with the same <strong>user passwords</strong> as in the source cluster. F
 about secrets in <a href="users.html#system-users">System Users</a>.
 Find the name of the required Secrets object in the
 <code>spec.secretsName</code> key in the <code>deploy/cr.yaml</code>. The default Secret name is <code>cluster1-secrets</code>.</p>
+<p>This differs for a point-in-time restore — see <a href="backups-restore.html#restore-limitations">Restore limitations</a>.</p>
 </div>
-<h2 id="restore-scenarios">Restore scenarios<a class="headerlink" href="#restore-scenarios" title="Permanent link">&para;</a></h2>
-<p>This document covers the following restore scenarios:</p>
-<ul>
-<li><a href="#restore-from-a-full-backup">Restore from a full backup</a> - the restore from a backup without point-in-time</li>
-<li><a href="#restore-the-cluster-with-point-in-time-recovery">Point-in-time recovery</a> - restore to a specific time, a specific or  latest transaction or skip a specific transaction during a restore. This ability requires that you <a href="backups-pitr.html">configure storing binlogs for point-in-time recovery</a></li>
-</ul>
-<p>To restore from a backup, you create a <code>PerconaXtraDBClusterRestore</code> object using a restore configuration file. The example of such file is <a href="https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.20.0/deploy/backup/restore.yaml">deploy/backup/restore.yaml</a>.</p>
-<p>You can check available options in the <a href="restore-cr.html">restore options reference</a>.</p>
+<p>To restore from a backup, you create a <code>PerconaXtraDBClusterRestore</code> object using a restore configuration file. The example of such file is <a href="https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.20.0/deploy/backup/restore.yaml">deploy/backup/restore.yaml</a>. You can check available options in the <a href="restore-cr.html">restore options reference</a>.</p>
 <h2 id="before-you-start">Before you start<a class="headerlink" href="#before-you-start" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Make sure that the cluster is running.</li>
+<li>Make sure that the source cluster is running.</li>
 <li>
-<p>List the cluster to find the correct cluster name. Replace the <code>&lt;namespace&gt;</code> with your value:</p>
+<p>Find the correct cluster name.</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pxc<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
 </code></pre></div>
 </li>
 <li>
-<p>List backups to retrieve the desired backup name. Replace the <code>&lt;namespace&gt;</code> with your value:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pxc-backup<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
+<p>Export the cluster name and the namespace where it is running as environment variables. Replace the <code>cluster1</code> and <code>&lt;namespace&gt;</code> with your values:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">CLUSTER</span><span class="o">=</span>cluster1
+<span class="nb">export</span><span class="w"> </span><span class="nv">NAMESPACE</span><span class="o">=</span>&lt;namespace&gt;
+</code></pre></div>
+</li>
+<li>
+<p>List backups on the source cluster to retrieve the desired backup name. Replace the <code>&lt;namespace&gt;</code> with your value:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pxc-backup<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span>
 </code></pre></div>
 </li>
 <li>
 <p>For point-in-time recovery, disable storing binlogs point-in-time functionality on the existing cluster. You must do it regardless of whether you made the backup with point-in-time recovery or without it. Use the following command and replace the cluster name and the <code>&lt;namespace&gt;</code> with your values:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>pxc<span class="w"> </span>cluster1<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>pxc<span class="w"> </span><span class="nv">$CLUSTER</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--type<span class="w"> </span>merge<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-p<span class="w"> </span><span class="s1">'{"spec":{"backup":{"pitr":{"enabled":false}}}}'</span>
 </code></pre></div>
 </li>
 </ol>
 <h2 id="restore-from-a-full-backup">Restore from a full backup<a class="headerlink" href="#restore-from-a-full-backup" title="Permanent link">&para;</a></h2>
-<p>To restore from a backup Percona XtraDB Cluster must know where to take the backup from and have access to that storage.</p>
+<p>To restore from a backup Percona XtraDB Cluster must know where to take the backup from and have access to that storage. See <a href="backups-restore.html#choose-backupname-or-backupsource">Choose backupName or backupSource</a> for the general rule. A new cluster has no Backup object, so the procedures in this document use <code>backupSource</code>.</p>
 <p>You can define the backup storage in two ways: within the restore object configuration or pre-configure it within the target cluster&rsquo;s Custom Resource manifest.</p>
 <h3 id="approach-1-define-storage-configuration-in-the-restore-object">Approach 1: Define storage configuration in the Restore object<a class="headerlink" href="#approach-1-define-storage-configuration-in-the-restore-object" title="Permanent link">&para;</a></h3>
 <p>If you haven&rsquo;t defined storage in the target cluster&rsquo;s <code>cr.yaml</code> file, you can configure it directly in the restore object.</p>
 <ol>
 <li>
-<p>Configure the <code>PerconaXtraDBClusterRestore</code> Custom Resource. Specify the following keys in the <a href="https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.20.0/deploy/backup/restore.yaml">deploy/backup/restore.yaml <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> file:</p>
+<p>Configure the <code>PerconaXtraDBClusterRestore</code> Custom Resource. Specify the following keys:</p>
 <ul>
 <li>
 <p>set <code>spec.pxcCluster</code> key to the name of the target cluster to restore the backup on,</p>
 </li>
 <li>
-<p>configure the <code>spec.backupSource</code> subsection to point to the cloud storage where the backup is stored. </p>
+<p>configure the <code>spec.backupSource</code> subsection to point to the cloud storage where the backup is stored.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">S3-compatible storage</label><label for="__tabbed_1_2">Azure Blob storage</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -6198,9 +6554,9 @@ Find the name of the required Secrets object in the
 <ul>
 <li>a destination key. Take it from the output of the <code>kubectl get pxc-backup</code> command. The destination consists of the <code>s3://</code> prefix, the S3 bucket name
     and the backup name.</li>
-<li>the necessary <a href="backups-storage.html#configure-storage-for-backups">storage configuration keys</a>, just like in the <code>deploy/cr.yaml</code> file of the source cluster.</li>
+<li>the necessary <a href="backups-storage-s3.html">storage configuration keys</a>, just like in the <code>deploy/cr.yaml</code> file of the source cluster.</li>
 <li><code>verifyTLS</code> to verify the storage server TLS certificate</li>
-<li>the custom TLS configuration if you use it for backups. Refer to the <a href="backups-storage.html#configure-tls-verification-with-custom-certificates-for-s3-storage">Configure TLS verification with custom certificates for S3 storage</a> section for more information.</li>
+<li>the custom TLS configuration if you use it for backups. Refer to the <a href="backups-storage-s3.html#configure-tls-verification-with-custom-certificates">Configure TLS verification with custom certificates</a> section for more information.</li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">pxcCluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster1</span>
@@ -6221,7 +6577,7 @@ Find the name of the required Secrets object in the
 <p>Specify the following keys in the <code>spec.backupSource</code> subsection:</p>
 <ul>
 <li>The <code>destination</code> key. Take the value from the output of the <code>kubectl get pxc-backup</code> command.</li>
-<li>The necessary <a href="backups-storage.html">Azure storage configuration keys</a>, just like in the <code>deploy/cr.yaml</code> file of the source cluster.:</li>
+<li>The necessary <a href="backups-storage-azure.html">Azure storage configuration keys</a>, just like in the <code>deploy/cr.yaml</code> file of the source cluster.</li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">pxcCluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster1</span>
@@ -6240,7 +6596,7 @@ Find the name of the required Secrets object in the
 </li>
 <li>
 <p>Start the restore process:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deploy/backup/restore.yaml<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deploy/backup/restore.yaml<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span>
 </code></pre></div>
 </li>
 </ol>
@@ -6248,13 +6604,13 @@ Find the name of the required Secrets object in the
 <p>You can <a href="backups-storage.html">already define</a> the storage where the backup is stored in the <code>backup.storages</code> subsection of your target cluster&rsquo;s <code>deploy/cr.yaml</code> file. In this case, reference it by name within the restore configuration.</p>
 <ol>
 <li>
-<p>Configure the <code>PerconaXtraDBClusterRestore</code> Custom Resource. Specify the following keys in the <a href="https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.20.0/deploy/backup/restore.yaml">deploy/backup/restore.yaml <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> file:</p>
+<p>Configure the <code>PerconaXtraDBClusterRestore</code> Custom Resource. Specify the following keys:</p>
 <ul>
 <li>
 <p>set <code>spec.pxcCluster</code> key to the name of the target cluster to restore the backup on</p>
 </li>
 <li>
-<p>specify the storage name in the <code>storageName</code> key. The name must match the name in the <code>backup.storages</code> subsection of the <code>deploy/cr.yaml</code> file</p>
+<p>specify the storage name in the <code>backupSource.storageName</code> key. The name must match the name in the <code>backup.storages</code> subsection of the <code>deploy/cr.yaml</code> file</p>
 </li>
 <li>
 <p>configure the <code>spec.backupSource</code> subsection with the backup destination</p>
@@ -6264,17 +6620,17 @@ Find the name of the required Secrets object in the
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">pxcCluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster1</span>
-<span class="w">  </span><span class="nt">storageName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3-us-west</span>
 <span class="w">  </span><span class="nt">backupSource</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">destination</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3://S3-BUCKET-NAME/BACKUP-NAME</span>
+<span class="w">    </span><span class="nt">storageName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3-us-west</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
 <span class="w">   </span><span class="nt">pxcCluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster1</span>
-<span class="w">   </span><span class="nt">storageName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azure</span>
 <span class="w">   </span><span class="nt">backupSource</span><span class="p">:</span>
 <span class="w">     </span><span class="nt">destination</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azure://AZURE-CONTAINER-NAME/BACKUP-NAME</span>
+<span class="w">     </span><span class="nt">storageName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azure</span>
 </code></pre></div>
 </div>
 </div>
@@ -6284,220 +6640,34 @@ Find the name of the required Secrets object in the
 </li>
 <li>
 <p>Run the restore process:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deploy/backup/restore.yaml<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deploy/backup/restore.yaml<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span>
 </code></pre></div>
+</li>
+</ol>
+<h3 id="verify-the-restore">Verify the restore<a class="headerlink" href="#verify-the-restore" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Confirm the Restore object reports <code>Succeeded</code>:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pxc-restore<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span>
+</code></pre></div>
+</li>
+<li>
+<p>Confirm the cluster reports the <code>ready</code> status:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pxc<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span>
+</code></pre></div>
+</li>
+<li>
+<p>Spot-check the data you expected the backup to contain, then configure the main storage within the target cluster&rsquo;s <code>cr.yaml</code> so you can make subsequent backups from the new cluster.</p>
 </li>
 </ol>
 <h2 id="restore-the-cluster-with-point-in-time-recovery">Restore the cluster with point-in-time recovery<a class="headerlink" href="#restore-the-cluster-with-point-in-time-recovery" title="Permanent link">&para;</a></h2>
-<p>As with the restore from a backup, the Operator must know where to take the backup from and have access to the storage. You can define the backup storage in two ways: within the restore object configuration or pre-configure it on the target cluster&rsquo;s <code>cr.yaml</code> file.</p>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<ol>
-<li>
-<p>The Operator still requires the Secret containing the same user passwords as those used at the time of the backup. This is a known limitation and it will be addressed in future releases. If your user passwords have changed and no longer match the backup, please follow the manual steps described in the <a href="backups-restore.html#restore-the-cluster-when-backup-has-different-passwords">Restore the cluster when backup has different passwords</a> section to update them before the restore.</p>
-</li>
-<li>
-<p>Disable the point-in-time functionality on the existing cluster before restoring a backup on it, regardless of whether the backup was made with point-in-time recovery or without it.</p>
-</li>
-</ol>
-</div>
-<h3 id="approach-1-define-storage-configuration-in-the-restore-object_1">Approach 1: Define storage configuration in the restore object<a class="headerlink" href="#approach-1-define-storage-configuration-in-the-restore-object_1" title="Permanent link">&para;</a></h3>
-<p>You can configure the storage within the restore object configuration:</p>
-<ol>
-<li>
-<p>Set appropriate keys in the <a href="https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml">deploy/backup/restore.yaml</a> file:</p>
-<ul>
-<li>
-<p>Set <code>spec.pxcCluster</code> key to the name of the target cluster to restore the backup on.</p>
-</li>
-<li>
-<p>Put additional restoration parameters to the <code>pitr</code> section:</p>
-<ul>
-<li>
-<p><code>type</code> - set one of the following options:</p>
-<ul>
-<li><code>date</code> - roll back to specific date</li>
-<li><code>transaction</code> - roll back to a specific transaction (available since Operator 1.8.0)</li>
-<li><code>latest</code> - recover to the latest possible transaction.</li>
-<li><code>skip</code> - skip a specific transaction (available since Operator 1.7.0)</li>
-</ul>
-</li>
-<li>
-<p>For the <code>type=date</code> option, set the <code>date</code> key in the datetime format following the pattern <code>"YYYY-MM-DD HH:MM:SS"</code>.</p>
-</li>
-<li>For the <code>type=transaction</code> option, set the <code>gtid</code> key to be the exact GTID of a transaction <strong>which follows</strong> the last transaction included into the recovery.</li>
-<li>For the <code>type=skip</code> option, set the <code>gtid</code> key to be the exact GTID or GTID set of transactions that will be <strong>excluded</strong> from the restore. </li>
-<li>In the <code>pitr.backupSource.s3</code> subsection, specify the storage location settings for the binlogs on the source cluster. The Operator requires access to this binlogs storage in order to perform point-in-time recovery, so the settings (including credentials, endpoint, bucket name, etc.) must exactly match those used on the source cluster.</li>
-</ul>
-</li>
-<li>
-<p>Configure the <code>spec.backupSource</code> subsection to point to the cloud storage where the backup is stored. This subsection should include:</p>
-<ul>
-<li>A <code>destination</code> key. Take it from the output of the <code>kubectl get pxc-backup -n &lt;namespace&gt;</code> command.</li>
-<li>The <a href="backups-storage.html">necessary storage configuration keys</a>, just like in the <code>deploy/cr.yaml</code> file of the source cluster.</li>
-</ul>
-</li>
-</ul>
-<p>The resulting <code>restore.yaml</code> file may look as follows:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">S3-compatible storage</label><label for="__tabbed_3_2">Azure Blob storage</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pxc.percona.com/v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PerconaXtraDBClusterRestore</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">restore1</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">pxcCluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster1</span>
-<span class="w">  </span><span class="nt">backupName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">backup1</span>
-<span class="w">  </span><span class="nt">pitr</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">date</span>
-<span class="w">    </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="s">"2020-12-31</span><span class="nv"> </span><span class="s">09:37:13"</span>
-<span class="w">    </span><span class="nt">backupSource</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">s3</span><span class="p">:</span>
-<span class="w">       </span><span class="nt">bucket</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">S3-BINLOG-BACKUP-BUCKET-NAME-HERE</span>
-<span class="w">       </span><span class="nt">credentialsSecret</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-cluster-name-backup-s3</span>
-<span class="w">       </span><span class="nt">endpointUrl</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://URL-OF-THE-S3-COMPATIBLE-STORAGE</span>
-<span class="w">       </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">us-west-2</span>
-<span class="w">  </span><span class="nt">backupSource</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">verifyTLS</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">    </span><span class="nt">destination</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3://S3-BUCKET-NAME/BACKUP-NAME</span>
-<span class="w">    </span><span class="nt">s3</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">bucket</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">S3-BUCKET-NAME</span>
-<span class="w">      </span><span class="nt">credentialsSecret</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-cluster-name-backup-s3</span>
-<span class="w">      </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">us-west-2</span>
-<span class="w">      </span><span class="nt">endpointUrl</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://URL-OF-THE-S3-COMPATIBLE-STORAGE</span>
-<span class="w">      </span><span class="nt">caBundle</span><span class="p">:</span><span class="w"> </span><span class="c1">#If you use custom TLS certificates for S3 storage</span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio-ca-bundle</span>
-<span class="w">        </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ca.crt</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pxc.percona.com/v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PerconaXtraDBClusterRestore</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">restore1</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">pxcCluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster1</span>
-<span class="w">  </span><span class="nt">backupName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">backup1</span>
-<span class="w">  </span><span class="nt">pitr</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">date</span>
-<span class="w">    </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="s">"2020-12-31</span><span class="nv"> </span><span class="s">09:37:13"</span>
-<span class="w">    </span><span class="nt">backupSource</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">s3</span><span class="p">:</span>
-<span class="w">       </span><span class="nt">bucket</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">S3-BINLOG-BACKUP-BUCKET-NAME-HERE</span>
-<span class="w">       </span><span class="nt">credentialsSecret</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-cluster-name-backup-s3</span>
-<span class="w">       </span><span class="nt">endpointUrl</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://URL-OF-THE-S3-COMPATIBLE-STORAGE</span>
-<span class="w">  </span><span class="nt">backupSource</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">destination</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azure://AZURE-CONTAINER-NAME/BACKUP-NAME</span>
-<span class="w">    </span><span class="nt">azure</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">container</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AZURE-CONTAINER-NAME</span>
-<span class="w">      </span><span class="nt">credentialsSecret</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-cluster-azure-secret</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">...</span>
-</code></pre></div>
-</div>
-</div>
-</div>
-</li>
-<li>
-<p>Run the actual restore process:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deploy/backup/restore.yaml<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
-</code></pre></div>
-</li>
-<li>
-<p>As a post-restore step, configure the main storage within the target cluster&rsquo;s <code>cr.yaml</code> to be able to make subsequent backups.</p>
-</li>
-<li>
-<p>Make a new full backup after the restore, because your restored database is now the new baseline for future recoveries.</p>
-</li>
-</ol>
-<h3 id="approach-2-the-storage-is-defined-on-target">Approach 2: The storage is defined on target<a class="headerlink" href="#approach-2-the-storage-is-defined-on-target" title="Permanent link">&para;</a></h3>
-<p>You can define the storage where the backup is stored in the <code>backup.storages</code> subsection of your target cluster&rsquo;s <code>deploy/cr.yaml</code> file. In this case, reference it by name within the restore configuration.</p>
-<ol>
-<li>
-<p>Set appropriate keys in the <a href="https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml">deploy/backup/restore.yaml</a> file:</p>
-<ul>
-<li>
-<p>Set <code>spec.pxcCluster</code> key to the name of the target cluster to restore the backup on.</p>
-</li>
-<li>
-<p>Put additional restoration parameters to the <code>pitr</code> section:</p>
-<ul>
-<li>
-<p><code>type</code> - set one of the following options:</p>
-<ul>
-<li><code>date</code> - roll back to specific date</li>
-<li><code>transaction</code> - roll back to a specific transaction (available since Operator 1.8.0)</li>
-<li><code>latest</code> - recover to the latest possible transaction</li>
-<li><code>skip</code> - skip a specific transaction (available since Operator 1.7.0)</li>
-</ul>
-</li>
-<li>
-<p>For the <code>type=date</code> option, set the <code>date</code> key in the datetime format following the pattern <code>"YYYY-MM-DD HH:MM:SS"</code>.</p>
-</li>
-<li>For the <code>type=transaction</code> or <code>type=skip</code> option, set the <code>gtid</code> key (available since the Operator 1.8.0) to be the exact GTID of a transaction <strong>which follows</strong> the last transaction included into the recovery.</li>
-</ul>
-</li>
-<li>
-<p>Specify the storage name in the <code>storageName</code> key. The name must match the name in the <code>backup.storages</code> subsection of the <code>deploy/cr.yaml</code> file.</p>
-</li>
-<li>
-<p>Configure the <code>spec.backupSource</code> subsection with the backup destination. Take it from the output of the <code>kubectl get pxc-backup</code> command on the source cluster.</p>
-</li>
-</ul>
-<p>Here are example configurations:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">S3-compatible storage</label><label for="__tabbed_4_2">Azure Blob storage</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pxc.percona.com/v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PerconaXtraDBClusterRestore</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">restore1</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">pxcCluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster1</span>
-<span class="w">  </span><span class="nt">storageName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3-us-west</span>
-<span class="w">  </span><span class="nt">pitr</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">date</span>
-<span class="w">    </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="s">"2020-12-31</span><span class="nv"> </span><span class="s">09:37:13"</span>
-<span class="w">  </span><span class="nt">backupSource</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">destination</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3://S3-BUCKET-NAME/BACKUP-NAME</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pxc.percona.com/v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PerconaXtraDBClusterRestore</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">restore1</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">pxcCluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster1</span>
-<span class="w">  </span><span class="nt">storageName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azure</span>
-<span class="w">  </span><span class="nt">backupSource</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">destination</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azure://AZURE-CONTAINER-NAME/BACKUP-NAME</span>
-<span class="w">  </span><span class="nt">pitr</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">date</span>
-<span class="w">    </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="s">"2020-12-31</span><span class="nv"> </span><span class="s">09:37:13"</span>
-</code></pre></div>
-</div>
-</div>
-</div>
-</li>
-<li>
-<p>Start the restore process:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deploy/backup/restore.yaml<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
-</code></pre></div>
-</li>
-<li>
-<p>As a post-restore step, configure the main storage within the target cluster&rsquo;s <code>cr.yaml</code> to be able to make subsequent backups.</p>
-</li>
-<li>
-<p>Make a new full backup after the restore, because your restored database is now the new baseline for future recoveries.</p>
-</li>
-</ol>
+<p>See <a href="backups-pitr-restore.html">Restore with point-in-time recovery</a>. The storage requirements on this page still apply — PITR to a different Kubernetes cluster needs the binlogs in cloud storage, the same as the full backup.</p>
 <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="May 28, 2026 15:16:23 UTC">May 28, 2026</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 21, 2026 13:07:41 UTC">October 21, 2026</span>
       
         <br>
         Created:

@@ -23,7 +23,7 @@ for backups if you run Percona XtraDB Cluster 8.0.34 and higher.">
         <link rel="prev" href="backups-ondemand.html">
       
       
-        <link rel="next" href="backups-copy.html">
+        <link rel="next" href="backups-restore.html">
       
       
         
@@ -3156,6 +3156,81 @@ for backups if you run Percona XtraDB Cluster 8.0.34 and higher.">
   
   
     <li class="md-nav__item">
+      <a href="backups-methods.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backup methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_3" id="__nav_8_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configure storage for backups
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Configure storage for backups
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="backups-storage.html" class="md-nav__link">
         
   
@@ -3163,7 +3238,7 @@ for backups if you run Percona XtraDB Cluster 8.0.34 and higher.">
   <span class="md-ellipsis">
     
   
-    Configure storage for backups
+    Overview
   
 
     
@@ -3184,14 +3259,14 @@ for backups if you run Percona XtraDB Cluster 8.0.34 and higher.">
   
   
     <li class="md-nav__item">
-      <a href="backups-pitr.html" class="md-nav__link">
+      <a href="backups-storage-s3.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Store binary logs for point-in-time recovery
+    Amazon S3 or S3-compatible storage
   
 
     
@@ -3200,6 +3275,70 @@ for backups if you run Percona XtraDB Cluster 8.0.34 and higher.">
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-storage-azure.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Microsoft Azure Blob storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-storage-pvc.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Persistent Volume
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -3360,15 +3499,62 @@ for backups if you run Percona XtraDB Cluster 8.0.34 and higher.">
   
   
   
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_6" id="__nav_8_1_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Restore from a backup
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Restore from a backup
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
-      <a href="backups-copy.html" class="md-nav__link">
+      <a href="backups-restore.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Copy backup to a local machine
+    Overview
   
 
     
@@ -3377,6 +3563,126 @@ for backups if you run Percona XtraDB Cluster 8.0.34 and higher.">
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-restore-in-place.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    On the same cluster (in-place)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-restore-side-cluster.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    To a side cluster (same Kubernetes cluster)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-restore-to-new-cluster.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    To a new cluster (different Kubernetes cluster)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-restore-disaster.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    After a disaster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -3407,7 +3713,7 @@ for backups if you run Percona XtraDB Cluster 8.0.34 and higher.">
   <span class="md-ellipsis">
     
   
-    Restore from a backup
+    Point-in-time recovery
   
 
     
@@ -3423,7 +3729,7 @@ for backups if you run Percona XtraDB Cluster 8.0.34 and higher.">
             <span class="md-nav__icon md-icon"></span>
             
   
-    Restore from a backup
+    Point-in-time recovery
   
 
           </label>
@@ -3436,14 +3742,14 @@ for backups if you run Percona XtraDB Cluster 8.0.34 and higher.">
   
   
     <li class="md-nav__item">
-      <a href="backups-restore.html" class="md-nav__link">
+      <a href="backups-pitr.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    On the same cluster
+    Enable point-in-time recovery
   
 
     
@@ -3464,14 +3770,153 @@ for backups if you run Percona XtraDB Cluster 8.0.34 and higher.">
   
   
     <li class="md-nav__item">
-      <a href="backups-restore-to-new-cluster.html" class="md-nav__link">
+      <a href="backups-pitr-restore.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    On a new cluster
+    Restore with point-in-time recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-pitr-find-gtid.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Find a GTID for point-in-time recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_8" id="__nav_8_1_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Migrate data
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Migrate data
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-move-from-external-db.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use backups to move an external database to Kubernetes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-copy.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Move a backup out of the cluster
   
 
     
@@ -4183,34 +4628,6 @@ for backups if you run Percona XtraDB Cluster 8.0.34 and higher.">
     
   
     How to use private registry
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="backups-move-from-external-db.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    How to use backups and asynchronous replication to move an external database to Kubernetes
   
 
     

@@ -23,7 +23,7 @@ Backups help protect your system against data loss and corruption and ensure bus
         <link rel="prev" href="reconciliation-concurrency.html">
       
       
-        <link rel="next" href="backups-storage.html">
+        <link rel="next" href="backups-methods.html">
       
       
         
@@ -3188,10 +3188,10 @@ Backups help protect your system against data loss and corruption and ensure bus
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#backup-storage" class="md-nav__link">
+  <a href="#choose-a-path" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Backup storage
+        Choose a path
       
     </span>
   </a>
@@ -3199,41 +3199,46 @@ Backups help protect your system against data loss and corruption and ensure bus
 </li>
       
         <li class="md-nav__item">
-  <a href="#backup-methods" class="md-nav__link">
+  <a href="#restore-options" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Backup methods
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Backup methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#sst-method-default" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        SST method (default)
+        Restore options
       
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#xtrabackup-sidecar-method-tech-preview" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#migrate-data" class="md-nav__link">
     <span class="md-ellipsis">
       
-        XtraBackup sidecar method (tech preview)
+        Migrate data
       
     </span>
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#point-in-time-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Point-in-time recovery
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backup-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backup storage
+      
+    </span>
+  </a>
   
 </li>
       
@@ -3270,6 +3275,28 @@ Backups help protect your system against data loss and corruption and ensure bus
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#limits-you-should-know" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limits you should know
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next step
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3286,6 +3313,81 @@ Backups help protect your system against data loss and corruption and ensure bus
   
   
     <li class="md-nav__item">
+      <a href="backups-methods.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backup methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_3" id="__nav_8_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configure storage for backups
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Configure storage for backups
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="backups-storage.html" class="md-nav__link">
         
   
@@ -3293,7 +3395,7 @@ Backups help protect your system against data loss and corruption and ensure bus
   <span class="md-ellipsis">
     
   
-    Configure storage for backups
+    Overview
   
 
     
@@ -3314,14 +3416,14 @@ Backups help protect your system against data loss and corruption and ensure bus
   
   
     <li class="md-nav__item">
-      <a href="backups-pitr.html" class="md-nav__link">
+      <a href="backups-storage-s3.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Store binary logs for point-in-time recovery
+    Amazon S3 or S3-compatible storage
   
 
     
@@ -3330,6 +3432,70 @@ Backups help protect your system against data loss and corruption and ensure bus
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-storage-azure.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Microsoft Azure Blob storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-storage-pvc.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Persistent Volume
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -3480,15 +3646,62 @@ Backups help protect your system against data loss and corruption and ensure bus
   
   
   
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_6" id="__nav_8_1_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Restore from a backup
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Restore from a backup
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
-      <a href="backups-copy.html" class="md-nav__link">
+      <a href="backups-restore.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Copy backup to a local machine
+    Overview
   
 
     
@@ -3497,6 +3710,126 @@ Backups help protect your system against data loss and corruption and ensure bus
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-restore-in-place.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    On the same cluster (in-place)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-restore-side-cluster.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    To a side cluster (same Kubernetes cluster)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-restore-to-new-cluster.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    To a new cluster (different Kubernetes cluster)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-restore-disaster.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    After a disaster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -3527,7 +3860,7 @@ Backups help protect your system against data loss and corruption and ensure bus
   <span class="md-ellipsis">
     
   
-    Restore from a backup
+    Point-in-time recovery
   
 
     
@@ -3543,7 +3876,7 @@ Backups help protect your system against data loss and corruption and ensure bus
             <span class="md-nav__icon md-icon"></span>
             
   
-    Restore from a backup
+    Point-in-time recovery
   
 
           </label>
@@ -3556,14 +3889,14 @@ Backups help protect your system against data loss and corruption and ensure bus
   
   
     <li class="md-nav__item">
-      <a href="backups-restore.html" class="md-nav__link">
+      <a href="backups-pitr.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    On the same cluster
+    Enable point-in-time recovery
   
 
     
@@ -3584,14 +3917,153 @@ Backups help protect your system against data loss and corruption and ensure bus
   
   
     <li class="md-nav__item">
-      <a href="backups-restore-to-new-cluster.html" class="md-nav__link">
+      <a href="backups-pitr-restore.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    On a new cluster
+    Restore with point-in-time recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-pitr-find-gtid.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Find a GTID for point-in-time recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_8" id="__nav_8_1_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Migrate data
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Migrate data
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-move-from-external-db.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use backups to move an external database to Kubernetes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-copy.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Move a backup out of the cluster
   
 
     
@@ -4303,34 +4775,6 @@ Backups help protect your system against data loss and corruption and ensure bus
     
   
     How to use private registry
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="backups-move-from-external-db.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    How to use backups and asynchronous replication to move an external database to Kubernetes
   
 
     
@@ -5983,10 +6427,10 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#backup-storage" class="md-nav__link">
+  <a href="#choose-a-path" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Backup storage
+        Choose a path
       
     </span>
   </a>
@@ -5994,41 +6438,46 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </li>
       
         <li class="md-nav__item">
-  <a href="#backup-methods" class="md-nav__link">
+  <a href="#restore-options" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Backup methods
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Backup methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#sst-method-default" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        SST method (default)
+        Restore options
       
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#xtrabackup-sidecar-method-tech-preview" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#migrate-data" class="md-nav__link">
     <span class="md-ellipsis">
       
-        XtraBackup sidecar method (tech preview)
+        Migrate data
       
     </span>
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#point-in-time-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Point-in-time recovery
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backup-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backup storage
+      
+    </span>
+  </a>
   
 </li>
       
@@ -6059,6 +6508,28 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     <span class="md-ellipsis">
       
         Backup suspension for an unhealthy database cluster
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limits-you-should-know" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limits you should know
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next step
       
     </span>
   </a>
@@ -6096,7 +6567,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="providing-backups">Providing Backups<a class="headerlink" href="#providing-backups" title="Permanent link">&para;</a></h1>
+<h1 id="providing-backups">Providing backups<a class="headerlink" href="#providing-backups" title="Permanent link">&para;</a></h1>
 <p>It&rsquo;s important to back up your database to keep your data safe.
 Backups help protect your system against data loss and corruption and ensure business stability. They are also a quick way to recover the database if something happens with it.</p>
 <p>A backup starts after you create a Backup object. You can create a Backup object in two ways:</p>
@@ -6104,8 +6575,90 @@ Backups help protect your system against data loss and corruption and ensure bus
 <li>manually at any moment. This way you start an <a href="backups-ondemand.html">on-demand backup</a>.</li>
 <li>instruct the Operator to create it automatically according to a schedule that you define for it. This is a <a href="backups-scheduled.html">scheduled backup</a>.</li>
 </ul>
-<p>The Operator does physical backups using the <a href="https://docs.percona.com/percona-xtrabackup/8.0/index.html">Percona XtraBackup <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> tool. By default, it uses the <a href="https://galeracluster.com/library/documentation/sst.html">SST <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> (State Snapshot Transfer) method, which creates a separate backup Pod to perform backups.</p>
-<p>Alternatively, you can enable the XtraBackup sidecar method. This method uses a sidecar container running in each PXC Pod that provides better performance and native encryption support. See <a href="#backup-methods">Backup methods</a> for details.</p>
+<p>The Operator does physical backups using the <a href="https://docs.percona.com/percona-xtrabackup/latest/index.html">Percona XtraBackup <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> tool. By default, it uses the <a href="https://galeracluster.com/library/documentation/sst.html">SST <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> (State Snapshot Transfer) method, which creates a separate backup Pod to perform backups.</p>
+<p>Alternatively, you can enable the XtraBackup sidecar method. This method uses a sidecar container running in each PXC Pod that provides better performance and native encryption support. See <a href="backups-methods.html">Backup methods</a> for details.</p>
+<p>Use the following table to find what you need: a backup type, storage, or the right restore path.</p>
+<h2 id="choose-a-path">Choose a path<a class="headerlink" href="#choose-a-path" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Goal</th>
+<th>Use</th>
+<th>Next step</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Protect data on a regular schedule</td>
+<td>Scheduled backup</td>
+<td><a href="backups-storage.html">Configure storage</a>, then set up a <a href="backups-scheduled.html">scheduled backup</a></td>
+</tr>
+<tr>
+<td>Take a one-off backup before a risky change</td>
+<td>On-demand backup</td>
+<td><a href="backups-storage.html">Configure storage</a>, then make an <a href="backups-ondemand.html">on-demand backup</a></td>
+</tr>
+<tr>
+<td>Undo a mistake on the cluster that made the backup</td>
+<td>Restore in-place</td>
+<td><a href="backups-restore-in-place.html">Restore to the same cluster</a></td>
+</tr>
+<tr>
+<td>Test or inspect data without touching production</td>
+<td>Restore to a side cluster</td>
+<td><a href="backups-restore-side-cluster.html">Restore to a side cluster</a></td>
+</tr>
+<tr>
+<td>Migrate or copy data to a different Kubernetes cluster</td>
+<td>Restore to a new cluster</td>
+<td><a href="backups-restore-to-new-cluster.html">Restore to a new cluster</a></td>
+</tr>
+<tr>
+<td>Recover after losing the cluster and its Kubernetes environment</td>
+<td>Restore after a disaster</td>
+<td><a href="backups-restore-disaster.html">Restore the cluster after a disaster</a></td>
+</tr>
+<tr>
+<td>Land on an exact time or transaction instead of the last full backup</td>
+<td>Point-in-time recovery</td>
+<td><a href="backups-pitr.html">Enable PITR</a>, then <a href="backups-pitr-restore.html">restore with PITR</a></td>
+</tr>
+<tr>
+<td>Bring an existing non-Kubernetes database into the cluster</td>
+<td>Migrate in</td>
+<td><a href="backups-move-from-external-db.html">Use a backup to move an external database into Kubernetes</a></td>
+</tr>
+<tr>
+<td>Use a backup to move the database off the cluster onto a local machine</td>
+<td>Migrate out</td>
+<td><a href="backups-copy.html">Move a backup out of the cluster</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="restore-options">Restore options<a class="headerlink" href="#restore-options" title="Permanent link">&para;</a></h2>
+<p>You can restore a backup:</p>
+<ul>
+<li><a href="backups-restore.html">to the same cluster it was made from</a> (in-place)</li>
+<li><a href="backups-restore-side-cluster.html">to a side cluster</a> — a new cluster on the same Kubernetes cluster, in the same or a new namespace</li>
+<li><a href="backups-restore-to-new-cluster.html">to a new cluster</a> — a new cluster on a different Kubernetes cluster</li>
+<li><a href="backups-restore-disaster.html">after a disaster</a> — when nothing but the backup survived</li>
+</ul>
+<p>Any of these can also land on an exact time or transaction with point-in-time recovery. </p>
+<p><a class="md-button" href="backups-restore.html">Restore from a backup</a></p>
+<h2 id="migrate-data">Migrate data<a class="headerlink" href="#migrate-data" title="Permanent link">&para;</a></h2>
+<p>Moving data across the Kubernetes boundary doesn&rsquo;t go through the Operator&rsquo;s Restore object the way the options above do:</p>
+<ul>
+<li><a href="backups-move-from-external-db.html">migrate an external, non-Kubernetes database into the cluster</a> — combines a manual backup, a restore, and asynchronous replication for a low-downtime cutover</li>
+<li><a href="backups-copy.html">migrate a backup out of the cluster to a local machine</a> — a manual restore outside Kubernetes, with no Operator involved</li>
+</ul>
+<h2 id="point-in-time-recovery">Point-in-time recovery<a class="headerlink" href="#point-in-time-recovery" title="Permanent link">&para;</a></h2>
+<p>Point-in-time recovery (PITR) replays binary logs on top of a full backup, so you can land on an exact moment or transaction instead of just the moment the last full backup finished.</p>
+<p>For point-in-time recovery, the Operator needs two things:</p>
+<ul>
+<li><strong>Binary log collection enabled</strong> — the Operator runs a separate Pod that continuously uploads binary logs to storage while the cluster is running.</li>
+<li><strong>At least one successful full backup</strong> — the Operator always restores a full backup first, then replays binary logs forward from it. Binary logs by themselves can&rsquo;t be restored, and the Operator can&rsquo;t report how far forward you can recover until a full backup exists.</li>
+</ul>
+<p><a class="md-button" href="backups-pitr.html">Enable point-in-time recovery</a></p>
 <h2 id="backup-storage">Backup storage<a class="headerlink" href="#backup-storage" title="Permanent link">&para;</a></h2>
 <p>You can store backups outside of Kubernetes cluster in one of the supported cloud storages:</p>
 <ul>
@@ -6115,40 +6668,6 @@ Backups help protect your system against data loss and corruption and ensure bus
 <p><img alt="image" src="assets/images/backup-cloud.svg" /></p>
 <p>If you&rsquo;re running a Kubernetes cluster on premises, you can  store backups inside it using a <a href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/">Persistent Volume <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a>. For example, if you don&rsquo;t use a remote backup storage or if storage costs are high for you.</p>
 <p><img alt="image" src="assets/images/backup-pv.svg" /></p>
-<h2 id="backup-methods">Backup methods<a class="headerlink" href="#backup-methods" title="Permanent link">&para;</a></h2>
-<p>The Operator supports two backup methods:</p>
-<h3 id="sst-method-default">SST method (default)<a class="headerlink" href="#sst-method-default" title="Permanent link">&para;</a></h3>
-<p>The default backup method uses State Snapshot Transfer (SST). When you create a Backup object, the Operator:</p>
-<ol>
-<li>Sets up a backup Pod that runs Percona XtraBackup inside and creates a backup Job</li>
-<li>Creates a path in the storage to save the backup data</li>
-<li>Starts copying the data files from the Percona XtraDB Cluster to the backup storage</li>
-<li>The Percona XtraDB Cluster Pod that serves the data enters the Donor state and stops receiving all requests</li>
-</ol>
-<p>The backup task is resource-consuming and can affect performance. That&rsquo;s why the Operator uses one of the secondary Percona XtraDB Cluster Pods for backups. The exception is a one-pod deployment, where the same Pod is used for all tasks.</p>
-<p>After the data files are copied and uploaded to the <a href="backups-storage.html">remote backup storage</a>, the Operator marks the backup Pod as &lsquo;Completed&rsquo; and deletes it. The Operator also updates the status of the Backup object.</p>
-<h3 id="xtrabackup-sidecar-method-tech-preview">XtraBackup sidecar method (tech preview)<a class="headerlink" href="#xtrabackup-sidecar-method-tech-preview" title="Permanent link">&para;</a></h3>
-<p>When you enable the <code>XtrabackupSidecar</code> feature gate, the Operator uses a different backup approach:</p>
-<ol>
-<li>An XtraBackup sidecar container runs in each Percona XtraDB Cluster Pod, providing a gRPC server interface for making backups. </li>
-<li>When you create a Backup object, the Operator creates a Job that acts like a client and sends requests directly to the sidecar. </li>
-<li>The sidecar performs the backup and uploads it to the cloud storage (S3, Azure, or GCP). The database Pod doesn&rsquo;t change its state to Donor and continues processing all requests.</li>
-</ol>
-<p>As with the SST method, the Operator uses one of the secondary Percona XtraDB Cluster Pods for backups to not overload the primary Pod. </p>
-<p><strong>Benefits of the XtraBackup sidecar method:</strong></p>
-<ul>
-<li><strong>Better performance</strong>: Direct access to data files without network overhead</li>
-<li><strong>Easier troubleshooting</strong>: The sidecar container runs continuously in the Percona XtraDB Cluster Pod, so you can check backup logs and status at any time. SST backups may fail with cryptic errors when a network issue occurs. This makes it difficult to diagnose the root cause or intervene to resolve problems.</li>
-<li><strong>Native encryption</strong>: Built-in support for encrypted backups with proper key management. This functionality is not yet available in version 1.19.0 but will be added in future releases.</li>
-<li><strong>Incremental backups</strong>: Make your backups more efficient by saving only the data that has changed since the last backup, rather than copying the entire database each time. This reduces the amount of backup storage required and allows you to take backups more frequently with less impact on performance. This functionality is not yet available in version 1.19.0 but will be added in future releases.</li>
-</ul>
-<p><strong>Limitations:</strong></p>
-<ul>
-<li>PVC (Persistent Volume Claim) backups are not supported when this feature is enabled. This support is planned to be implemented in future releases.</li>
-<li>Only cloud storage backups (S3, Azure, GCP) are available</li>
-<li>IAM profiles are not yet supported. The support for IAM profiles is planned to be added in future releases.</li>
-</ul>
-<p>To enable this method, set <code>PXCO_FEATURE_GATES=XtrabackupSidecar=true</code> in the Operator Deployment. See <a href="env-vars-operator.html#pxco_feature_gates">Configure Operator environment variables</a> for detailed instructions.</p>
 <h2 id="multiple-backups">Multiple backups<a class="headerlink" href="#multiple-backups" title="Permanent link">&para;</a></h2>
 <p>You can run several backups. For example, schedule weekly backups on one storage and daily backups on another one. You can also run an on-demand backup to be on the safe side before you do some maintenance work.</p>
 <p>Several backups run in parallel by default if they happen at the same time. If they overload your cluster, you can turn off parallel backups with the <code>backup.allowParallel</code> configuration option in the <code>cr.yaml</code> file. Then, the Operator queues the backups and runs them sequentially.</p>
@@ -6166,12 +6685,20 @@ Backups help protect your system against data loss and corruption and ensure bus
 <p>Otherwise, after the cluster is recovered and reports the Ready status, the Operator resumes the backup and tries to finish it.</p>
 <p>Note that if some files were already saved on the storage when a backup was suspended, the Operator deletes them and reruns the backup.</p>
 <p>If you want to run backups in an unhealthy cluster, set the <code>spec.unsafeFlags.backupIfUnhealthy</code> option in the <code>deploy/cr.yaml</code> file to <code>true</code>. Use this option with caution because it can affect the cluster performance.</p>
+<h2 id="limits-you-should-know">Limits you should know<a class="headerlink" href="#limits-you-should-know" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Restoring from an <code>emptyDir</code> or <code>hostPath</code> volume isn&rsquo;t supported, and a Persistent Volume restore only works within the same Kubernetes cluster — see <a href="backups-restore.html#restore-limitations">Restore limitations</a> for the full breakdown by destination.</li>
+<li>A point-in-time restore always requires a Secret with the same passwords used at backup time; a full-backup restore tolerates changed passwords since Operator 1.18.0 — see <a href="backups-restore.html#restore-limitations">Restore limitations</a>.</li>
+<li>The XtraBackup sidecar backup method doesn&rsquo;t yet support Persistent Volume backups, IAM profiles, or built-in encryption — see <a href="backups-methods.html#xtrabackup-sidecar-method-tech-preview">Backup methods</a>.</li>
+</ul>
+<h2 id="next-step">Next step<a class="headerlink" href="#next-step" title="Permanent link">&para;</a></h2>
+<p><a class="md-button" href="backups-methods.html">Backup methods</a></p>
 <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 3, 2026 13:20:50 UTC">June 3, 2026</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 21, 2026 13:07:41 UTC">October 21, 2026</span>
       
         <br>
         Created:

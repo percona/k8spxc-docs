@@ -10,7 +10,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="You can restore from a backup as follows:">
+        <meta name="description" content="To restore your Percona XtraDB Cluster from a backup, you create a PerconaXtraDBClusterRestore object using a restore configuration file. The example of such file is deploy/backup/restore.yaml . You can check available options in the restore options reference.">
       
       
         <meta name="author" content="Percona LLC">
@@ -19,10 +19,10 @@
         <link rel="canonical" href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/backups-restore.html">
       
       
-        <link rel="prev" href="backups-copy.html">
+        <link rel="prev" href="backups-compress.html">
       
       
-        <link rel="next" href="backups-restore-to-new-cluster.html">
+        <link rel="next" href="backups-restore-in-place.html">
       
       
         
@@ -50,7 +50,7 @@
 
     
       
-        <title>On the same cluster - Percona Operator for MySQL based on Percona XtraDB Cluster</title>
+        <title>Overview - Percona Operator for MySQL based on Percona XtraDB Cluster</title>
       
     
     
@@ -120,7 +120,7 @@
                  
                  
                   <meta property="og:type" content="website" />
-                  <meta property="og:title" content="Percona Operator for MySQL based on Percona XtraDB Cluster - On the same cluster" />
+                  <meta property="og:title" content="Percona Operator for MySQL based on Percona XtraDB Cluster - Overview" />
                   <meta property="og:image"
                     content="https://docs.percona.com/percona-operator-for-xtradb-cluster/assets/images/kubernetes-operators.png">
                   <meta property="og:url" content="https://docs.percona.com/percona-operator-for-xtradb-cluster/">
@@ -148,7 +148,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#restore-the-cluster-from-a-previously-saved-backup" class="md-skip">
+        <a href="#restore-from-a-backup" class="md-skip">
           Skip to content
         </a>
       
@@ -225,7 +225,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              On the same cluster
+              Overview
             
           </span>
         </div>
@@ -3155,6 +3155,81 @@
   
   
     <li class="md-nav__item">
+      <a href="backups-methods.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backup methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_3" id="__nav_8_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configure storage for backups
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Configure storage for backups
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="backups-storage.html" class="md-nav__link">
         
   
@@ -3162,7 +3237,7 @@
   <span class="md-ellipsis">
     
   
-    Configure storage for backups
+    Overview
   
 
     
@@ -3183,14 +3258,14 @@
   
   
     <li class="md-nav__item">
-      <a href="backups-pitr.html" class="md-nav__link">
+      <a href="backups-storage-s3.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Store binary logs for point-in-time recovery
+    Amazon S3 or S3-compatible storage
   
 
     
@@ -3199,6 +3274,70 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-storage-azure.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Microsoft Azure Blob storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-storage-pvc.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Persistent Volume
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -3347,34 +3486,6 @@
                 
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="backups-copy.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Copy backup to a local machine
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
     
   
   
@@ -3388,10 +3499,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_7" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_6" checked>
         
           
-          <label class="md-nav__link" for="__nav_8_1_7" id="__nav_8_1_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8_1_6" id="__nav_8_1_6_label" tabindex="0">
             
   
   
@@ -3409,8 +3520,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_7_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_8_1_7">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8_1_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -3443,7 +3554,7 @@
   <span class="md-ellipsis">
     
   
-    On the same cluster
+    Overview
   
 
     
@@ -3461,7 +3572,7 @@
   <span class="md-ellipsis">
     
   
-    On the same cluster
+    Overview
   
 
     
@@ -3495,33 +3606,16 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Restore scenarios">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#specifying-the-backup-source" class="md-nav__link">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choose-backupname-or-backupsource" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Specifying the backup source
+        Choose backupName or backupSource
       
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#storage-limitations" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Storage limitations
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -3537,66 +3631,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#restore-from-a-full-backup" class="md-nav__link">
+  <a href="#restore-limitations" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Restore from a full backup
+        Restore limitations
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Restore from a full backup">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#restore-from-a-backup-using-the-backupsource-option" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Restore from a backup using the backupSource option
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#restore-with-point-in-time-recovery" class="md-nav__link">
+  <a href="#restore-the-cluster-when-a-backup-has-different-passwords" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Restore with point-in-time recovery
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Restore with point-in-time recovery">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#binlog-gaps" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Binlog gaps
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#restore-the-cluster-when-backup-has-different-passwords" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Restore the cluster when backup has different passwords
+        Restore the cluster when a backup has different passwords
       
     </span>
   </a>
@@ -3619,6 +3668,62 @@
   
   
     <li class="md-nav__item">
+      <a href="backups-restore-in-place.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    On the same cluster (in-place)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-restore-side-cluster.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    To a side cluster (same Kubernetes cluster)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="backups-restore-to-new-cluster.html" class="md-nav__link">
         
   
@@ -3626,7 +3731,285 @@
   <span class="md-ellipsis">
     
   
-    On a new cluster
+    To a new cluster (different Kubernetes cluster)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-restore-disaster.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    After a disaster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_7" id="__nav_8_1_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Point-in-time recovery
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Point-in-time recovery
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-pitr.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enable point-in-time recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-pitr-restore.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Restore with point-in-time recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-pitr-find-gtid.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Find a GTID for point-in-time recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1_8" id="__nav_8_1_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Migrate data
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_8_1_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Migrate data
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-move-from-external-db.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use backups to move an external database to Kubernetes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="backups-copy.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Move a backup out of the cluster
   
 
     
@@ -4338,34 +4721,6 @@
     
   
     How to use private registry
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="backups-move-from-external-db.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    How to use backups and asynchronous replication to move an external database to Kubernetes
   
 
     
@@ -6026,33 +6381,16 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Restore scenarios">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#specifying-the-backup-source" class="md-nav__link">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choose-backupname-or-backupsource" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Specifying the backup source
+        Choose backupName or backupSource
       
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#storage-limitations" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Storage limitations
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -6068,66 +6406,21 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </li>
       
         <li class="md-nav__item">
-  <a href="#restore-from-a-full-backup" class="md-nav__link">
+  <a href="#restore-limitations" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Restore from a full backup
+        Restore limitations
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Restore from a full backup">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#restore-from-a-backup-using-the-backupsource-option" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Restore from a backup using the backupSource option
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#restore-with-point-in-time-recovery" class="md-nav__link">
+  <a href="#restore-the-cluster-when-a-backup-has-different-passwords" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Restore with point-in-time recovery
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Restore with point-in-time recovery">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#binlog-gaps" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Binlog gaps
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#restore-the-cluster-when-backup-has-different-passwords" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Restore the cluster when backup has different passwords
+        Restore the cluster when a backup has different passwords
       
     </span>
   </a>
@@ -6165,277 +6458,125 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="restore-the-cluster-from-a-previously-saved-backup">Restore the cluster from a previously saved backup<a class="headerlink" href="#restore-the-cluster-from-a-previously-saved-backup" title="Permanent link">&para;</a></h1>
-<p>You can restore from a backup as follows:</p>
-<ul>
-<li>On the same cluster where you made a backup</li>
-<li>On <a href="backups-restore-to-new-cluster.html">a new cluster deployed in a different Kubernetes-based environment</a>.</li>
-</ul>
-<p>This document focuses on the restore to the same cluster.</p>
+<h1 id="restore-from-a-backup">Restore from a backup<a class="headerlink" href="#restore-from-a-backup" title="Permanent link">&para;</a></h1>
+<p>To restore your Percona XtraDB Cluster from a backup, you create a <code>PerconaXtraDBClusterRestore</code> object using a restore configuration file. The example of such file is <a href="https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.20.0/deploy/backup/restore.yaml">deploy/backup/restore.yaml <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a>. You can check available options in the <a href="restore-cr.html">restore options reference</a>.</p>
 <h2 id="restore-scenarios">Restore scenarios<a class="headerlink" href="#restore-scenarios" title="Permanent link">&para;</a></h2>
-<p>This document covers the following restore scenarios:</p>
-<ul>
-<li><a href="#restore-from-a-full-backup">Restore from a full backup</a> - restore from a backup without point-in-time recovery</li>
-<li><a href="#restore-with-point-in-time-recovery">Point-in-time recovery</a> - restore to a specific time, a specific or latest transaction, or skip a specific transaction during a restore. This ability requires that you <a href="backups-pitr.html">configure storing binlogs for point-in-time recovery</a></li>
-<li><a href="#restore-the-cluster-when-backup-has-different-passwords">Restore when a backup has different passwords</a></li>
-</ul>
-<p>To restore from a backup, you create a <code>PerconaXtraDBClusterRestore</code> object using a restore configuration file. The example of such file is <a href="https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.20.0/deploy/backup/restore.yaml">deploy/backup/restore.yaml</a>.</p>
-<p>You can check available options in the <a href="restore-cr.html">restore options reference</a>.</p>
-<h3 id="specifying-the-backup-source">Specifying the backup source<a class="headerlink" href="#specifying-the-backup-source" title="Permanent link">&para;</a></h3>
-<p>You can specify the backup to restore from in two ways: using the <code>backupName</code> or the <code>backupSource</code> keys. You must use only one of these options in your restore configuration. Specifying them both together is not allowed.</p>
-<ul>
-<li>
-<p>Use the <strong><code>backupName</code></strong> option when backup objects exist in the cluster, such as for restoring to the same cluster where the backup was created.</p>
-</li>
-<li>
-<p>Use the <strong><code>backupSource</code></strong> option for the following scenarios:</p>
-<ul>
-<li>
-<p>when there are no backup objects in the cluster, such as when restoring to a new cluster. </p>
-</li>
-<li>
-<p>for restores to the same cluster, instead of <code>backupName</code>. If the backup storage is configured in the target cluster&rsquo;s configuration, you can use <code>backupSource</code> with <code>storageName</code> (for example, for restores from Persistent volume backups). If the storage is not defined in the cluster, you must manually specify all required storage details within the restore configuration.</p>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="storage-limitations">Storage limitations<a class="headerlink" href="#storage-limitations" title="Permanent link">&para;</a></h3>
-<p>You <strong>cannot restore</strong> to <a href="storage.html">emptyDir and hostPath volumes</a>. However, you can make a backup from such storage (for example, from emptyDir/hostPath to S3) and later restore it to a <a href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/">Persistent Volume</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Destination</th>
+<th>Use it when&hellip;</th>
+<th>Tutorial</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The same cluster (in-place)</td>
+<td>You want to roll the cluster back to an earlier state if a mistake happens. For example, after a bad <code>DELETE</code> or a failed upgrade.</td>
+<td><a href="backups-restore-in-place.html">Restore to the same cluster</a></td>
+</tr>
+<tr>
+<td>A side cluster</td>
+<td>You want to test a change or inspect data without touching production on the same Kubernetes cluster.</td>
+<td><a href="backups-restore-side-cluster.html">Restore to a side cluster</a></td>
+</tr>
+<tr>
+<td>A new cluster</td>
+<td>You&rsquo;re migrating or copying data to a different Kubernetes cluster or environment.</td>
+<td><a href="backups-restore-to-new-cluster.html">Restore to a new cluster</a></td>
+</tr>
+<tr>
+<td>After a disaster</td>
+<td>The original cluster and its Kubernetes environment are both gone.</td>
+<td><a href="backups-restore-disaster.html">Restore the cluster after a disaster</a></td>
+</tr>
+</tbody>
+</table>
+<p>Any of these can also land on an exact time or transaction instead of the last full backup. Refer to the <a href="backups-pitr-restore.html">Restore with point-in-time recovery</a> for guidelines.</p>
+<h2 id="choose-backupname-or-backupsource">Choose <code>backupName</code> or <code>backupSource</code><a class="headerlink" href="#choose-backupname-or-backupsource" title="Permanent link">&para;</a></h2>
+<p>Every restore names its source in one of two ways. Use exactly one - setting both is not allowed.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><code>backupName</code></th>
+<th><code>backupSource</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Use it when</td>
+<td>A Backup object for that backup already exists in the namespace you&rsquo;re restoring into.</td>
+<td>No Backup object exists in the target namespace.</td>
+</tr>
+<tr>
+<td>Typical case</td>
+<td>- An in-place restore to the same cluster, <br> - A restore to a side cluster in the same namespace as the source.</td>
+<td>- A side cluster in a different namespace, <br> - A new cluster on a different Kubernetes environment, <br> - A disaster restore.</td>
+</tr>
+</tbody>
+</table>
+<p><code>backupSource</code> still has to say where the backup files are. Point it at storage in one of two places:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><code>storageName</code></th>
+<th>Storage fields on the restore object</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Use it when</td>
+<td>That storage is already defined in the target cluster&rsquo;s <code>cr.yaml</code>.</td>
+<td>The target cluster has no matching storage yet.</td>
+</tr>
+<tr>
+<td>What you set</td>
+<td><code>storageName</code> and <code>destination</code>.</td>
+<td>The bucket, credentials, region, and other storage details.</td>
+</tr>
+</tbody>
+</table>
 <h2 id="before-you-start">Before you start<a class="headerlink" href="#before-you-start" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Make sure that the cluster is running.</li>
 <li>
-<p>List the cluster to find the correct cluster name. Replace the <code>&lt;namespace&gt;</code> with your value:</p>
+<p>Find the correct cluster name. </p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pxc<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
 </code></pre></div>
 </li>
 <li>
+<p>Export the the cluster name and the namespace where it is running as environment variables. Replace the <code>cluster1</code> and <code>&lt;namespace&gt;</code> with your values:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">CLUSTER</span><span class="o">=</span>cluster1
+<span class="nb">export</span><span class="w"> </span><span class="nv">NAMESPACE</span><span class="o">=</span>&lt;namespace&gt;
+</code></pre></div>
+</li>
+<li>
 <p>List backups to retrieve the desired backup name. Replace the <code>&lt;namespace&gt;</code> with your value:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pxc-backup<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pxc-backup<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span>
 </code></pre></div>
 </li>
 <li>
 <p>For point-in-time recovery, disable storing binlogs point-in-time functionality on the existing cluster. You must do it regardless of whether you made the backup with point-in-time recovery or without it. Use the following command and replace the cluster name and the <code>&lt;namespace&gt;</code> with your values:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>pxc<span class="w"> </span>cluster1<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>pxc<span class="w"> </span><span class="nv">$CLUSTER</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--type<span class="w"> </span>merge<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-p<span class="w"> </span><span class="s1">'{"spec":{"backup":{"pitr":{"enabled":false}}}}'</span>
 </code></pre></div>
 </li>
 </ol>
-<h2 id="restore-from-a-full-backup">Restore from a full backup<a class="headerlink" href="#restore-from-a-full-backup" title="Permanent link">&para;</a></h2>
-<p>To restore your Percona XtraDB cluster from a backup, define a <code>PerconaXtraDBClusterRestore</code> custom resource. Set the following keys:</p>
+<h2 id="restore-limitations">Restore limitations<a class="headerlink" href="#restore-limitations" title="Permanent link">&para;</a></h2>
 <ul>
-<li><code>spec.pxcCluster</code>: the name of the target cluster </li>
-<li><code>spec.backupName</code>: the name of your backup,</li>
+<li><strong>Storage type.</strong> Restoring from an <code>emptyDir</code> or <code>hostPath</code> volume isn&rsquo;t supported — back up from one if you need to, then restore the result onto a Persistent Volume instead. A Persistent Volume restore only works within the same Kubernetes cluster (<a href="backups-restore-in-place.html">in-place</a> or a <a href="backups-restore-side-cluster.html">side cluster</a>). A <a href="backups-restore-to-new-cluster.html">new cluster on a different Kubernetes environment</a>, a <a href="backups-restore-disaster.html">disaster restore</a>, and any <a href="backups-pitr-restore.html">point-in-time recovery</a> restore all require the full backup to be in cloud storage (S3 or Azure).</li>
+<li><strong>User passwords.</strong> A full-backup restore tolerates changed passwords since Operator 1.18.0 — see <a href="#restore-the-cluster-when-a-backup-has-different-passwords">Restore the cluster when backup has different passwords</a>. A point-in-time restore doesn&rsquo;t: it still requires a Secret with the passwords that were in effect at backup time. This is a known limitation.</li>
 </ul>
-<p>Pass this configuration to the Operator: </p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">via the YAML manifest</label><label for="__tabbed_1_2">via the command line</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<ol>
-<li>
-<p>Edit the <a href="https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml">deploy/backup/restore.yaml <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> file and specify the following keys:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pxc.percona.com/v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PerconaXtraDBClusterRestore</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">restore1</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">pxcCluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster1</span>
-<span class="w">  </span><span class="nt">backupName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">backup1</span>
-</code></pre></div>
-</li>
-<li>
-<p>Start the restore with this command:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deploy/backup/restore.yaml<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
-</code></pre></div>
-</li>
-</ol>
-</div>
-<div class="tabbed-block">
-<p>You can skip creating a separate file by passing YAML content directly:</p>
-<div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | kubectl apply -f-</span>
-<span class="s">apiVersion: "pxc.percona.com/v1"</span>
-<span class="s">kind: "PerconaXtraDBClusterRestore"</span>
-<span class="s">metadata:</span>
-<span class="s">  name: "restore1"</span>
-<span class="s">spec:</span>
-<span class="s">  pxcCluster: "cluster1"</span>
-<span class="s">  backupName: "backup1"</span>
-<span class="s">EOF</span>
-</code></pre></div>
-</div>
-</div>
-</div>
-<h3 id="restore-from-a-backup-using-the-backupsource-option">Restore from a backup using the <code>backupSource</code> option<a class="headerlink" href="#restore-from-a-backup-using-the-backupsource-option" title="Permanent link">&para;</a></h3>
-<p>You can use the <code>backupSource</code> option instead of the <code>backupName</code>. In this case you also need to specify the destination - where the backup is stored. Take this value from the output of the <code>kubectl get pxc-backup -n &lt;namespace&gt;</code> command.</p>
-<p>When restoring to the same cluster, the backup storage is already defined in the cluster&rsquo;s configuration and you can reference it by name.</p>
-<p>Here&rsquo;s the example configuration for the restore from a Persistent volume backup:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">pxcCluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster1</span>
-<span class="w">  </span><span class="nt">storageName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pvc-fs</span>
-<span class="w">  </span><span class="nt">backupSource</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">destination</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pvc-fs/PVC_VOLUME_NAME</span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
-</code></pre></div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p><a name="backups-headless-service"> If you need a <a href="https://kubernetes.io/docs/concepts/services-networking/service/#headless-services">headless Service <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> for the restore Pod (i.e. restoring from a Persistent Volume in a tenant network), mention this in the <code>metadata.annotations</code> as follows:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">annotations</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">percona.com/headless-service</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
-<span class="nn">...</span>
-</code></pre></div>
-</div>
-<p>Apply the configuration to start the restore:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deploy/backup/restore.yaml<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
-</code></pre></div>
-<h2 id="restore-with-point-in-time-recovery">Restore with point-in-time recovery<a class="headerlink" href="#restore-with-point-in-time-recovery" title="Permanent link">&para;</a></h2>
-<ol>
-<li>
-<p>Check a time to restore for a backup. Use the command below to find the latest restorable timestamp:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>get<span class="w"> </span>pxc-backup<span class="w"> </span>&lt;backup_name&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.latestRestorableTime}'</span>
-</code></pre></div>
-</li>
-<li>
-<p>Set the following keys for the <code>PerconaXtraDBClusterRestore</code> custom resource:</p>
-<ul>
-<li>
-<p><code>spec.pxcCluster</code>: the name of the target cluster</p>
-</li>
-<li>
-<p><code>spec.backupName</code>: the name of your backup</p>
-</li>
-<li>
-<p>for the <code>pitr</code> section:</p>
-</li>
-<li>
-<p><code>type</code>: one of the following values:</p>
-<ul>
-<li><code>date</code> - roll back to specific date. Note that the date must not be later than the <code>status.latestRestorableTime</code> value.</li>
-<li><code>transaction</code> - roll back to a specific transaction (available since Operator 1.8.0),</li>
-<li><code>latest</code> - recover the most recent transaction,</li>
-<li><code>skip</code> - skip a specific transaction (available since Operator 1.7.0).</li>
-</ul>
-</li>
-<li>
-<p>For the <code>type=date</code> option, set the <code>date</code> key in the datetime format following the pattern <code>"YYYY-MM-DD HH:MM:SS"</code>.</p>
-</li>
-<li>For the <code>type=transaction</code> option, set the <code>gtid</code> key to be the exact GTID of a transaction <strong>which follows</strong> the last transaction included into the recovery.</li>
-<li>
-<p>For the <code>type=skip</code> option, set the <code>gtid</code> key to be the exact GTID or GTID set of transactions that will be <strong>excluded</strong> from the restore.</p>
-</li>
-<li>
-<p>In the <code>backupSource</code> subsection, specify the storage where binlogs are stored for point-in-time recovery. You can do this either by referencing the storage using <code>storageName</code>, or by providing the storage settings directly in the restore manifest:</p>
-<ul>
-<li>If you have <a href="backups-pitr.html#enable-point-in-time-recovery">already defined the storage</a> for binlogs in the <code>pitr.storages</code> section of your <code>deploy/cr.yaml</code> file, specify the storage name in the <code>storageName</code> option.</li>
-<li>If you have not configured the binlog storage in your cluster CR, specify the storage settings directly for the <code>s3</code> subsection in your restore configuration.</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>Pass this configuration to the Operator:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">via the YAML manifest</label><label for="__tabbed_2_2">via the command line</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<ol>
-<li>
-<p>Edit the <a href="https://github.com/percona/percona-xtradb-cluster-operator/blob/main/deploy/backup/restore.yaml">deploy/backup/restore.yaml <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> file.</p>
-<p>The sample configuration may look as follows:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pxc.percona.com/v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PerconaXtraDBClusterRestore</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">restore1</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">pxcCluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster1</span>
-<span class="w">  </span><span class="nt">backupName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">backup1</span>
-<span class="w">  </span><span class="nt">pitr</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">date</span>
-<span class="w">    </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="s">"2020-12-31</span><span class="nv"> </span><span class="s">09:37:13"</span>
-<span class="w">    </span><span class="nt">backupSource</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">storageName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3-us-west</span>
-</code></pre></div>
-</li>
-<li>
-<p>Start the restore:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deploy/backup/restore.yaml
-</code></pre></div>
-</li>
-</ol>
-</div>
-<div class="tabbed-block">
-<p>You can skip editing the YAML file and pass its contents to the Operator via the command line. For example:</p>
-<div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | kubectl apply -f-</span>
-<span class="s">apiVersion: "pxc.percona.com/v1"</span>
-<span class="s">kind: "PerconaXtraDBClusterRestore"</span>
-<span class="s">metadata:</span>
-<span class="s">  name: "restore1"</span>
-<span class="s">spec:</span>
-<span class="s">  pxcCluster: "cluster1"</span>
-<span class="s">  backupName: "backup1"</span>
-<span class="s">  pitr:</span>
-<span class="s">    type: date</span>
-<span class="s">    date: "2020-12-31 09:37:13"</span>
-<span class="s">    backupSource:</span>
-<span class="s">      storageName: "s3-us-west"</span>
-<span class="s">EOF</span>
-</code></pre></div>
-</div>
-</div>
-</div>
-</li>
-<li>
-<p>Make a new full backup after the restore, because your restored database is now the new baseline for future recoveries</p>
-</li>
-</ol>
-<h3 id="binlog-gaps">Binlog gaps<a class="headerlink" href="#binlog-gaps" title="Permanent link">&para;</a></h3>
-<p>The Operator monitors the binlog gaps detected by
-binlog collector, if any. If a backup contains such gaps, the Operator will mark
-the status of the latest successful backup with a new condition field that
-indicates backup can&rsquo;t guarantee consistent point-in-time recovery. This
-condition looks as follows:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pxc.percona.com/v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PerconaXtraDBClusterBackup</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">backup1</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">pxcCluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pitr</span>
-<span class="w">  </span><span class="nt">storageName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio</span>
-<span class="nt">status</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">completed</span><span class="p">:</span><span class="w"> </span><span class="s">"2022-11-25T15:57:29Z"</span>
-<span class="w">  </span><span class="nt">conditions</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">lastTransitionTime</span><span class="p">:</span><span class="w"> </span><span class="s">"2022-11-25T15:57:48Z"</span>
-<span class="w">    </span><span class="nt">message</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Binlog with GTID set e41eb219-6cd8-11ed-94c8-9ebf697d3d20:21-22 not found</span>
-<span class="w">    </span><span class="nt">reason</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">BinlogGapDetected</span>
-<span class="w">    </span><span class="nt">status</span><span class="p">:</span><span class="w"> </span><span class="s">"False"</span>
-<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PITRReady</span>
-<span class="w">  </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Succeeded</span>
-</code></pre></div>
-<p>Trying a point-in-time restore from such backup (with the condition value &ldquo;False&rdquo;) results in the following error: </p>
-<div class="highlight"><pre><span></span><code>Backup doesn't guarantee consistent recovery with PITR. Annotate PerconaXtraDBClusterRestore with percona.com/unsafe-pitr to force it.
-</code></pre></div>
-<p>You can bypass this check and force the restore by annotating it with
-<code>pxc.percona.com/unsafe-pitr</code> as follows:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pxc.percona.com/v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PerconaXtraDBClusterRestore</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">percona.com/unsafe-pitr</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">restore2</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">pxcCluster</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pitr</span>
-<span class="w">  </span><span class="nt">backupName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">backup1</span>
-<span class="w">  </span><span class="nt">pitr</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">latest</span>
-<span class="w">    </span><span class="nt">backupSource</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">storageName</span><span class="p">:</span><span class="w"> </span><span class="s">"minio-binlogs"</span>
-</code></pre></div>
-<h2 id="restore-the-cluster-when-backup-has-different-passwords">Restore the cluster when backup has different passwords<a class="headerlink" href="#restore-the-cluster-when-backup-has-different-passwords" title="Permanent link">&para;</a></h2>
+<h2 id="restore-the-cluster-when-a-backup-has-different-passwords">Restore the cluster when a backup has different passwords<a class="headerlink" href="#restore-the-cluster-when-a-backup-has-different-passwords" title="Permanent link">&para;</a></h2>
 <p>User passwords on the target cluster may have changed and now differ from the ones in a backup.</p>
-<p>Starting with version 1.18.0, the Operator no longer requires matching secrets between the backup and the target cluster. After the restore, it changes user passwords using the local Secret as a source. It also creates missing system users and adds missing grants. So you can <a href="#restore-from-a-full-backup">restore from a full backup</a> as usual.</p>
+<p>Starting with version 1.18.0, the Operator no longer requires matching secrets between the backup and the target cluster. After the restore, it changes user passwords using the local Secret as a source. It also creates missing system users and adds missing grants. So you can restore from a full backup as usual.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>To run a <a href="#restore-with-point-in-time-recovery">point-in-time restore</a> you still require a Secret object with the same user passwords. This is a known limitation and will be addressed in a future release. Please refer to the flow described below for now.</p>
+<p>To run a <a href="backups-pitr-restore.html">point-in-time restore</a> you still require a Secret object with the same user passwords. This is a known limitation and will be addressed in a future release. Please refer to the flow described below for now.</p>
 </div>
 <p><strong>For the Operator versions 1.17.0 and earlier</strong>, read on.</p>
 <p>If the cluster is restored to a backup which has different user passwords,
@@ -6467,7 +6608,7 @@ your own with the latest passwords as follows.</p>
 <li>
 <p>Make a base64-encoded string with needed SQL statements (substitute each
     <code>&lt;latestPass&gt;</code> with the password of the appropriate user):</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">in Linux</label><label for="__tabbed_3_2">in macOS</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">in Linux</label><label for="__tabbed_1_2">in macOS</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | base64 --wrap=0</span>
@@ -6506,7 +6647,7 @@ your own with the latest passwords as follows.</p>
 <span class="s">kind: Secret</span>
 <span class="s">type: Opaque</span>
 <span class="s">metadata:</span>
-<span class="s">  name: cluster1-mysql-init</span>
+<span class="s">  name: $CLUSTER-mysql-init</span>
 <span class="s">data:</span>
 <span class="s">  init.sql: &lt;base64encodedstring&gt;</span>
 <span class="s">EOF</span>
@@ -6521,7 +6662,7 @@ your own with the latest passwords as follows.</p>
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="May 28, 2026 15:16:23 UTC">May 28, 2026</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 21, 2026 13:07:41 UTC">October 21, 2026</span>
       
         <br>
         Created:
