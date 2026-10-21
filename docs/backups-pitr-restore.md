@@ -279,7 +279,7 @@ Trying a point-in-time restore from such a backup results in the following error
 Backup doesn't guarantee consistent recovery with PITR. Annotate PerconaXtraDBClusterRestore with percona.com/unsafe-pitr to force it.
 ```
 
-You can bypass this check and force the restore by annotating the Restore object with `pxc.percona.com/unsafe-pitr`:
+You can bypass this check and force the restore by annotating the Restore object with `percona.com/unsafe-pitr`:
 
 ```yaml
 apiVersion: pxc.percona.com/v1
