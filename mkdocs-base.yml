@@ -181,6 +181,7 @@ nav:
               - "Who owns what": architecture-responsibilities.md
               - "How the Operator reacts to changes": architecture-reconciliation.md
               - "Key workflows": architecture-workflows.md
+              - "Health checks and probes": architecture-probes.md
           - "What the Operator manages": operator-boundaries.md
           - "Comparison with other solutions": compare.md
 

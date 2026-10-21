@@ -53,7 +53,8 @@ For an overview of the layers, see [Design and architecture](architecture.md#the
 **Health as the Pod probes see it:**
 
 * A database Pod is *ready* only when its node belongs to the primary component and is `Synced`. A node that is a donor counts as ready only when this is allowed.
-* The liveness probe tolerates long startups, SST and recovery, so a node that is busy catching up is not killed.
+* The liveness probe tolerates long startups, SST and recovery, so a node that is busy catching up is not killed. A node that stays outside the primary component for about 30 seconds is restarted.
+* See [Health checks and probes](architecture-probes.md) for what the probes check and who acts on their result.
 
 **What this means in practice:**
 
@@ -74,7 +75,7 @@ For an overview of the layers, see [Design and architecture](architecture.md#the
 
 **Kubernetes does not:**
 
-* Know anything about Galera beyond the readiness probe. A native StatefulSet rolling update waits for each Pod to become ready, but it doesn't pause for a running backup, doesn't wait for ProxySQL to bring the node back online, and doesn't stop early when a Pod can't start.
+* Know anything about Galera beyond the [probes](architecture-probes.md). A native StatefulSet rolling update waits for each Pod to become ready, but it doesn't pause for a running backup, doesn't wait for ProxySQL to bring the node back online, and doesn't stop early when a Pod can't start.
 * Expand a volume whose StorageClass doesn't allow it, or beyond your storage quota.
 
 ## You, the user

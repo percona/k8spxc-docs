@@ -158,3 +158,4 @@ If cert-manager is installed, the Operator also creates cert-manager Issuers and
 * [Who owns what](architecture-responsibilities.md){.md-button}
 * [How the Operator reacts to changes](architecture-reconciliation.md){.md-button}
 * [Key workflows](architecture-workflows.md){.md-button}
+* [Health checks and probes](architecture-probes.md){.md-button}

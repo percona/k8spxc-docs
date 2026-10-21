@@ -16,7 +16,7 @@ Even though recovery is automatic, there are some behaviors that affect your app
 
 ### Pod recreation
 
-Kubernetes probes drive recovery independently of the proxy. The `readiness-check.sh` script removes a Pod from the Service as soon as it stops being the Primary or a synced or donor node. The `liveness-check.sh` script restarts a Pod that stays stuck in that state.
+Kubernetes probes drive recovery independently of the proxy. The readiness probe removes a Pod from the `cluster1-pxc` Service, and so from the proxy configuration, after the node has been out of the primary component, or neither `Synced` nor a donor, for about 2.5 minutes. The liveness probe restarts the `pxc` container when the node stays outside the primary component for about 30 seconds. See [Health checks and probes](architecture-probes.md).
 
 ### Rejoining the cluster
 
