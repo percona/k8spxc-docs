@@ -43,7 +43,9 @@ To make an on-demand backup, use
     kubectl apply -f deploy/backup/backup.yaml -n $NAMESPACE
     ```
 
-3. Track the backup process by checking the status of the Backup object:
+## Verify the backup
+
+1. Track the backup process by checking the status of the Backup object:
 
     ```bash
     kubectl get pxc-backup -n $NAMESPACE -w
@@ -58,7 +60,7 @@ To make an on-demand backup, use
         backup1   cluster1   fs-pvc    pvc/xb-backup1-20251201102237-8f7b3390   Succeeded   3s          76s
         ```
 
-4. View detailed information about the backup using the `kubectl describe` command:
+2. View detailed information about the backup using the `kubectl describe` command:
     
     ```bash
     kubectl describe pxc-backup -n $NAMESPACE 
@@ -97,3 +99,5 @@ To make an on-demand backup, use
             Volume Mode:             Filesystem
             Volume Name:             pvc-5238d6db-f40a-4608-8f8e-d0d74f328de9
         ```
+
+3. If the cluster has [point-in-time recovery enabled](backups-pitr.md), also confirm the backup doesn't have binlog gaps before relying on it for a PITR restore. Check the Backup object's `status.conditions` for a `PITRReady` condition set to `False` — see [Binlog gaps](backups-pitr-restore.md#binlog-gaps) for what this means and how to proceed anyway if needed.
