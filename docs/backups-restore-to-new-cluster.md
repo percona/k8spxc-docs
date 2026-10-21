@@ -121,7 +121,7 @@ You can [already define](backups-storage.md) the storage where the backup is sto
 
     * set `spec.pxcCluster` key to the name of the target cluster to restore the backup on
 
-    * specify the storage name in the `storageName` key. The name must match the name in the `backup.storages` subsection of the `deploy/cr.yaml` file
+    * specify the storage name in the `backupSource.storageName` key. The name must match the name in the `backup.storages` subsection of the `deploy/cr.yaml` file
 
     * configure the `spec.backupSource` subsection with the backup destination
 
@@ -132,9 +132,9 @@ You can [already define](backups-storage.md) the storage where the backup is sto
             ```yaml
             spec:
               pxcCluster: cluster1
-              storageName: s3-us-west
               backupSource:
                 destination: s3://S3-BUCKET-NAME/BACKUP-NAME
+                storageName: s3-us-west
             ```
 
         === "Azure Blob storage"
@@ -142,9 +142,9 @@ You can [already define](backups-storage.md) the storage where the backup is sto
             ```yaml
             spec:
                pxcCluster: cluster1
-               storageName: azure
                backupSource:
                  destination: azure://AZURE-CONTAINER-NAME/BACKUP-NAME
+                 storageName: azure
             ```
 
 2. Run the restore process:

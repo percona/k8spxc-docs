@@ -64,9 +64,9 @@ Here's the example configuration for the restore from a Persistent Volume backup
 ```yaml
 spec:
   pxcCluster: cluster1
-  storageName: pvc-fs
   backupSource:
     destination: pvc/PVC_VOLUME_NAME
+    storageName: pvc-fs
   ...
 ```
 

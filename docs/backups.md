@@ -8,7 +8,7 @@ A backup starts after you create a Backup object. You can create a Backup object
 * manually at any moment. This way you start an [on-demand backup](backups-ondemand.md).
 * instruct the Operator to create it automatically according to a schedule that you define for it. This is a [scheduled backup](backups-scheduled.md).
 
-The Operator does physical backups using the [Percona XtraBackup :octicons-link-external-16:](https://docs.percona.com/percona-xtrabackup/8.0/index.html) tool. By default, it uses the [SST :octicons-link-external-16:](https://galeracluster.com/library/documentation/sst.html) (State Snapshot Transfer) method, which creates a separate backup Pod to perform backups.
+The Operator does physical backups using the [Percona XtraBackup :octicons-link-external-16:](https://docs.percona.com/percona-xtrabackup/latest/index.html) tool. By default, it uses the [SST :octicons-link-external-16:](https://galeracluster.com/library/documentation/sst.html) (State Snapshot Transfer) method, which creates a separate backup Pod to perform backups.
 
 Alternatively, you can enable the XtraBackup sidecar method. This method uses a sidecar container running in each PXC Pod that provides better performance and native encryption support. See [Backup methods](backups-methods.md) for details.
 

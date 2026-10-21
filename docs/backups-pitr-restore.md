@@ -118,7 +118,7 @@ Use this when restoring to a side cluster in a different namespace, or to a new 
 1. Set the following keys for the `PerconaXtraDBClusterRestore` Custom Resource:
 
     * `spec.pxcCluster`: the name of the target cluster
-    * `spec.storageName`: the name matching the `backup.storages` subsection of the target cluster's `deploy/cr.yaml`
+    * `spec.backupSource.storageName`: the name matching the `backup.storages` subsection of the target cluster's `deploy/cr.yaml`
     * `spec.backupSource.destination`: the backup's location, from `kubectl get pxc-backup` on the source cluster
     * `spec.pitr`: the recovery target you [chose above](#choose-a-recovery-target), plus `pitr.backupSource.storageName` for the binlog storage
 
@@ -133,8 +133,8 @@ Use this when restoring to a side cluster in a different namespace, or to a new 
           name: restore1
         spec:
           pxcCluster: cluster2
-          storageName: s3-us-west
           backupSource:
+            storageName: s3-us-west
             destination: s3://S3-BUCKET-NAME/BACKUP-NAME
           pitr:
             type: date
@@ -152,8 +152,8 @@ Use this when restoring to a side cluster in a different namespace, or to a new 
           name: restore1
         spec:
           pxcCluster: cluster1
-          storageName: azure
           backupSource:
+            storageName: azure
             destination: azure://AZURE-CONTAINER-NAME/BACKUP-NAME
           pitr:
             type: date
@@ -225,6 +225,8 @@ Use this when the target cluster has no storage configuration to reference — r
                 container: AZURE-BINLOG-CONTAINER-NAME-HERE
                 credentialsSecret: my-cluster-azure-secret
         ```
+
+3. Apply the configuration to start the restore:
 
     ```bash
     kubectl apply -f deploy/backup/restore.yaml -n <namespace>

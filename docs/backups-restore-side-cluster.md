@@ -59,8 +59,8 @@ When using `backupSource`, you also need to specify the destination — where th
     ```yaml
     spec:
       pxcCluster: cluster2
-      storageName: pvc-fs
       backupSource:
+        storageName: pvc-fs
         destination: pvc/PVC_VOLUME_NAME
     ```
 
