@@ -25,7 +25,7 @@ To restore from a backup, you create a `PerconaXtraDBClusterRestore` object usin
     kubectl get pxc -n <namespace>
     ```
 
-3. Export the the cluster name and the namespace where it is running as environment variables. Replace the `cluster1` and `<namespace>` with your values:
+3. Export the cluster name and the namespace where it is running as environment variables. Replace the `cluster1` and `<namespace>` with your values:
 
     ```bash
     export CLUSTER=cluster1
