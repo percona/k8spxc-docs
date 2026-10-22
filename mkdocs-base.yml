@@ -175,8 +175,9 @@ not_in_nav: |
 nav:
     - Welcome: index.md
     - get-help.md
-    - Features:
+    - About:
           - "Design and architecture": architecture.md
+          - "What the Operator manages": operator-boundaries.md
           - "Comparison with other solutions": compare.md
 
     - Quickstart guides:
