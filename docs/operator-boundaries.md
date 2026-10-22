@@ -51,7 +51,6 @@ Change cluster size, pause state, and deletion through the CR. Direct edits to t
 | Do not | What goes wrong | Do this instead |
 | --- | --- | --- |
 | Run `kubectl scale` or `kubectl edit` on the Percona XtraDB Cluster StatefulSet | The next reconcile reverts the change. If the change takes effect first, nodes can leave the cluster in the wrong order | Change `spec.pxc.size` in the CR |
-| Delete a Pod to restart a node | Galera may need a full state transfer to resynchronize the node. That transfer is slow and loads a donor node | [Pause and unpause](pause.md) the cluster, or let the Operator restart the node |
 | Remove a finalizer to finish a stuck delete | Finalizers shut nodes down in order and clean up PVCs and certificates. Removing one abandons that cleanup and can orphan data | Find out why the finalizer is blocked. The four finalizers are: `percona.com/delete-pxc-pods-in-order`, `percona.com/delete-pxc-pvc`, `percona.com/delete-proxysql-pvc`, and `percona.com/delete-ssl` |
 | Run `kubectl delete pxc` to reset a misbehaving cluster | Depending on the finalizers set, this deletes the PVCs and the data on them | Pause the cluster and investigate |
 | Bootstrap Galera by hand while the Operator is running | The Operator is also trying to recover. Two bootstraps mean two clusters and a split brain | Let auto-recovery run. Recover manually only after the Operator has refused and reported that refusal |
