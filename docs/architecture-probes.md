@@ -67,7 +67,8 @@ A Pod's readiness is read by several parties, each for its own purpose:
 
 ```mermaid
 flowchart LR
-  probe["readiness probe<br/>Primary and Synced?"] --> ready{{"Pod ready"}}
+  %% Hexagon braces are escaped so the MkDocs macros plugin leaves them in place
+  probe["readiness probe<br/>Primary and Synced?"] --> ready{{"{{"}}Pod ready{{"}}"}}
   ready --> svc["cluster1-pxc Service<br/>(DNS lists ready Pods only)"]
   svc --> monit["pxc-monit in proxy Pods"]
   monit --> proxy["HAProxy / ProxySQL backends"]
