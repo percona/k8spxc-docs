@@ -471,7 +471,7 @@
   <span class="md-ellipsis">
     
   
-    Features
+    About
   
 
     
@@ -487,7 +487,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Features
+    About
   
 
           </label>
@@ -508,6 +508,34 @@
     
   
     Design and architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="operator-boundaries.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What the Operator manages
   
 
     
@@ -6296,12 +6324,12 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   <a href="#section-3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Features
+        About
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Features">
+    <nav class="md-nav" aria-label="About">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -6309,6 +6337,17 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     <span class="md-ellipsis">
       
         Design and architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operator-boundaries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the Operator manages
       
     </span>
   </a>
@@ -8437,7 +8476,7 @@ Check upcoming releases on the <a href="https://github.com/orgs/percona/projects
 </table>
 <p>We&rsquo;re here to help you every step of the way. Whether you need a quick fix or a long-term partnership, we&rsquo;re ready to provide your expertise and support.</p></section>
                     <section class='print-page md-section' id='section-3' heading-number='3'>
-                        <h1>Features<a class='headerlink' href='#section-3' title='Permanent link'></a>
+                        <h1>About<a class='headerlink' href='#section-3' title='Permanent link'></a>
                         </h1>
                     <section class="print-page" id="architecture" heading-number="3.1"><h1 id="architecture-design-overview">Design overview<a class="headerlink" href="#architecture-design-overview" title="Permanent link">&para;</a></h1>
 <p><em>Percona XtraDB Cluster</em> integrates <em>Percona Server for MySQL</em> running
@@ -8479,7 +8518,506 @@ XtraDB Cluster setup. The Operator listens to all events on the created objects.
 When a new PerconaXtraDBCluster object is created, or an existing one undergoes
 some changes or deletion, the operator automatically
 creates/changes/deletes all needed Kubernetes objects with the
-appropriate settings to provide a proper Percona XtraDB Cluster operation.</p></section><section class="print-page" id="compare" heading-number="3.2"><h1 id="compare-compare-various-solutions-to-deploy-mysql-in-kubernetes">Compare various solutions to deploy MySQL in Kubernetes<a class="headerlink" href="#compare-compare-various-solutions-to-deploy-mysql-in-kubernetes" title="Permanent link">&para;</a></h1>
+appropriate settings to provide a proper Percona XtraDB Cluster operation.</p></section><section class="print-page" id="operator-boundaries" heading-number="3.2"><h1 id="operator-boundaries-what-the-operator-manages">What the Operator manages<a class="headerlink" href="#operator-boundaries-what-the-operator-manages" title="Permanent link">&para;</a></h1>
+<p>This page describes what the Operator does for you, what you must still do yourself and which manual actions can damage a running cluster. </p>
+<h2 id="operator-boundaries-change-the-cluster-through-the-custom-resource">Change the cluster through the Custom Resource<a class="headerlink" href="#operator-boundaries-change-the-cluster-through-the-custom-resource" title="Permanent link">&para;</a></h2>
+<p>A <a href="https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/">Custom Resource <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> (CR) is the Kubernetes object that describes the cluster you want. It is a blueprint that the Operator uses to deploy and manage your cluster.</p>
+<p><strong>The Custom Resource is the source of truth. Change the cluster by editing the CR.</strong></p>
+<p>The Operator compares the CR against what is running about every five seconds and corrects any difference it finds. A change you make directly to a StatefulSet, a Service, a Pod, or a managed Secret is drift. The Operator overwrites it, usually within seconds. If a change survives, this means the Operator does not manage that field yet. This doesn&rsquo;t mean the change was accepted.</p>
+<ul>
+<li><strong>Edits outside the CR do not persist.</strong> The Operator reverts them silently.</li>
+<li><strong>Edits outside the CR can still cause damage before they are reverted.</strong></li>
+</ul>
+<h2 id="operator-boundaries-review-responsibilities-at-a-glance">Review responsibilities at a glance<a class="headerlink" href="#operator-boundaries-review-responsibilities-at-a-glance" title="Permanent link">&para;</a></h2>
+<p>The following table shows what the Operator handles and what stays with you:</p>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Operator</th>
+<th>You</th>
+<th>Don&rsquo;t do manually</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#operator-boundaries-cluster-lifecycle">Cluster lifecycle</a></td>
+<td>- Creates and heals StatefulSets, Services, and PodDisruptionBudgets.<br>- Restarts failed nodes.<br>- Recovers from a full cluster crash.</td>
+<td>- Choose the cluster size.<br>- Decide when to pause.<br>- Plan maintenance windows.</td>
+<td>- Scale or edit the StatefulSet.<br>- Delete Pods to restart a node.<br>- Remove finalizers.</td>
+</tr>
+<tr>
+<td><a href="#operator-boundaries-back-up-the-database">Backups</a></td>
+<td>- Runs scheduled and on-demand backups.<br>- Enforces deadlines.<br>- Suspends backups on an unhealthy cluster.</td>
+<td>- Verify that backups restore.<br>- Set retention.<br>- Keep off-cluster copies.</td>
+<td>- Delete a running backup Job.<br>- Run <code>xtrabackup</code> by hand against a node.</td>
+</tr>
+<tr>
+<td><a href="#operator-boundaries-restore-the-database">Restore and point-in-time recovery (PITR)</a></td>
+<td>- Pauses the cluster, restores, and restarts it.<br>- Detects binary log gaps.</td>
+<td>- Take a new full backup after a gap.<br>- Pick the restore target.</td>
+<td>- Edit the cluster CR during a restore.<br>- Run two restores at once.</td>
+</tr>
+<tr>
+<td><a href="#operator-boundaries-manage-certificates">TLS</a></td>
+<td>- Issues certificates.<br>- Renews them <strong>only via cert-manager</strong>.<br>- Applies rotations without downtime.</td>
+<td>- Rotate certificates yourself if cert-manager is not installed.<br>- Manage any certificate you supplied.</td>
+<td>- Edit the <code>ssl</code> or <code>ssl-internal</code> Secrets in place.<br>- Delete them to re-issue certificates.</td>
+</tr>
+<tr>
+<td><a href="#operator-boundaries-manage-users-and-passwords">Users and secrets</a></td>
+<td>- Creates and rotates the system users.<br>- Propagates password changes to MySQL and the proxies.</td>
+<td>- Set passwords in the user Secret.<br>- Manage your own application users.</td>
+<td>- Run <code>ALTER USER</code> on a system user in MySQL.<br>- Edit the <code>internal-</code> Secret.<br>- Drop a system user.</td>
+</tr>
+<tr>
+<td><a href="#operator-boundaries-resize-storage">Storage</a></td>
+<td>- Grows Persistent Volume Claims (PVCs) when the CR asks, and automatically when autoscaling is on.</td>
+<td>- Pick a StorageClass that supports expansion.<br>- Watch capacity.</td>
+<td>- Resize or delete PVCs by hand.<br>- Shrink storage.</td>
+</tr>
+<tr>
+<td><a href="#operator-boundaries-upgrade-the-database">Upgrades</a></td>
+<td>- Coordinates version upgrades node by node and keeps quorum.</td>
+<td>- Decide when to upgrade.<br>- Run major version upgrades as a planned change.</td>
+<td>- Bypass SmartUpdate.<br>- Edit image tags to jump a major version.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="operator-boundaries-cluster-lifecycle">Cluster lifecycle<a class="headerlink" href="#operator-boundaries-cluster-lifecycle" title="Permanent link">&para;</a></h2>
+<p>Change cluster size, pause state, and deletion through the CR. Direct edits to the StatefulSet fight the next reconcile.</p>
+<p><strong>What the Operator does:</strong></p>
+<ul>
+<li>Creates and reconciles the Percona XtraDB Cluster StatefulSet, the HAProxy or ProxySQL StatefulSet, their Services, and a PodDisruptionBudget for Percona XtraDB Cluster.</li>
+<li>Restarts failed nodes and lets Galera resynchronize them.</li>
+<li>Shuts the cluster down in order when you set <code>spec.pause: true</code>, and brings it back when you set it to <code>false</code>. Data is retained. See <a href="#pause">Pause/resume Percona XtraDB Cluster</a>.</li>
+<li>Deletes resources in a safe order on cluster deletion, using finalizers. See <a href="#delete-delete-the-database-cluster">Delete the database cluster</a>.</li>
+<li>Handles <strong>full cluster crash recovery.</strong> When every node is down and waiting, the Operator finds the node with the highest transaction sequence number and bootstraps from it. This behavior is on by default (<code>spec.pxc.autoRecovery</code>). See <a href="#recovery">Crash recovery</a>.</li>
+</ul>
+<p><strong>What you still do:</strong></p>
+<ul>
+<li>Choose the cluster size. Stay inside the limits in <a href="#operator-boundaries-stay-inside-safe-operating-limits">Stay inside safe operating limits</a>.</li>
+<li>Decide when to pause a cluster, and for how long.</li>
+<li>Plan capacity, node size, and maintenance windows for any change that restarts Pods.</li>
+<li><strong>Manual recovery when the Operator refuses to recover automatically.</strong> The Operator does not bootstrap from a node when the cluster UUID or sequence number has regressed since the last recovery, because that bootstrap can lose data. It emits an <code>AutomaticRecoveryRefused</code> event and stops. That handover is deliberate. Follow <a href="#recovery-manual-crash-recovery">Manual crash recovery</a> instead of forcing a bootstrap.</li>
+</ul>
+<p><strong>Never do this manually:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Do not</th>
+<th>What goes wrong</th>
+<th>Do this instead</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Run <code>kubectl scale</code> or <code>kubectl edit</code> on the Percona XtraDB Cluster StatefulSet</td>
+<td>The next reconcile reverts the change. If the change takes effect first, nodes can leave the cluster in the wrong order</td>
+<td>Change <code>spec.pxc.size</code> in the CR</td>
+</tr>
+<tr>
+<td>Remove a finalizer to finish a stuck delete</td>
+<td>Finalizers shut nodes down in order and clean up PVCs and certificates. Removing one abandons that cleanup and can orphan data</td>
+<td>Find out why the finalizer is blocked. The four finalizers are: <code>percona.com/delete-pxc-pods-in-order</code>, <code>percona.com/delete-pxc-pvc</code>, <code>percona.com/delete-proxysql-pvc</code>, and <code>percona.com/delete-ssl</code></td>
+</tr>
+<tr>
+<td>Run <code>kubectl delete pxc</code> to reset a misbehaving cluster</td>
+<td>Depending on the finalizers set, this deletes the PVCs and the data on them</td>
+<td>Pause the cluster and investigate</td>
+</tr>
+<tr>
+<td>Bootstrap Galera by hand while the Operator is running</td>
+<td>The Operator is also trying to recover. Two bootstraps mean two clusters and a split brain</td>
+<td>Let auto-recovery run. Recover manually only after the Operator has refused and reported that refusal</td>
+</tr>
+</tbody>
+</table>
+<h2 id="operator-boundaries-back-up-the-database">Back up the database<a class="headerlink" href="#operator-boundaries-back-up-the-database" title="Permanent link">&para;</a></h2>
+<p>Create backups through a schedule on the cluster CR or through a <code>PerconaXtraDBClusterBackup</code> resource. See <a href="#backups">About backups</a>.</p>
+<p><strong>What the Operator does:</strong></p>
+<ul>
+<li>Runs scheduled backups from <code>spec.backup.schedule</code>, and on-demand backups from a <code>PerconaXtraDBClusterBackup</code> resource.</li>
+<li>Enforces deadlines so a backup cannot hang forever: <code>startingDeadlineSeconds</code>, <code>runningDeadlineSeconds</code>, and <code>suspendedDeadlineSeconds</code>. A backup that exceeds one is marked failed.</li>
+<li>Collects binary logs continuously for point-in-time recovery when <code>spec.backup.pitr</code> is enabled. See <a href="#backups-pitr">Store binary logs for point-in-time recovery</a>.</li>
+<li><strong>Refuses to back up an unhealthy cluster.</strong> If the cluster is not Ready, the backup does not start. A backup that is already running is suspended until the cluster recovers.</li>
+</ul>
+<p><strong>What you still do:</strong></p>
+<ul>
+<li><strong>Verify that your backups restore.</strong> The Operator confirms that a backup completed. It does not confirm that the backup is usable. Restore-test on a schedule. See <a href="#backups-restore">Restore the cluster from a previously saved backup</a>.</li>
+<li>Set retention, and keep any copies outside the cluster storage target.</li>
+<li>Manage credentials and lifecycle policies on the S3 or Azure bucket.</li>
+<li>Decide whether a backup during a degraded window is worth the risk.</li>
+</ul>
+<p><strong>Never do this manually:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Do not</th>
+<th>What goes wrong</th>
+<th>Do this instead</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Delete the backup Job to clear a stuck backup</td>
+<td>The backup resource still reports that it is running, and storage may hold a partial backup that looks complete</td>
+<td>Let the deadline fail it, or delete the <code>PerconaXtraDBClusterBackup</code> resource. See <a href="#backups-delete">Delete the unneeded backup</a></td>
+</tr>
+<tr>
+<td>Raise or remove the deadlines so backups stop failing</td>
+<td>Deadlines are what stop a wedged backup from blocking upgrades indefinitely. SmartUpdate does not start while a backup is running</td>
+<td>Find out why the backup is slow or stuck</td>
+</tr>
+<tr>
+<td>Set <code>unsafeFlags.backupIfUnhealthy</code> to get a backup from a broken cluster</td>
+<td>A backup from a cluster that is not in sync may be inconsistent and may not restore</td>
+<td>Repair the cluster, then back up. If you must take the backup, treat the result as best-effort only</td>
+</tr>
+<tr>
+<td>Run <code>xtrabackup</code> by hand against a Pod</td>
+<td>The manual backup competes with the Operator backup lock and can stall writes</td>
+<td>Create a <code>PerconaXtraDBClusterBackup</code> resource</td>
+</tr>
+<tr>
+<td>Delete objects from the backup storage bucket by hand</td>
+<td>The PITR chain between a full backup and its binary logs breaks</td>
+<td>Delete the <code>PerconaXtraDBClusterBackup</code> resource and let the finalizer clean up</td>
+</tr>
+</tbody>
+</table>
+<h2 id="operator-boundaries-restore-and-point-in-time-recovery">Restore and point-in-time recovery<a class="headerlink" href="#operator-boundaries-restore-and-point-in-time-recovery" title="Permanent link">&para;</a></h2>
+<p><strong>What the Operator does:</strong></p>
+<ul>
+<li>Runs the whole restore sequence: pauses the cluster, runs the restore, starts the cluster, verifies that it is Ready, and marks the restore succeeded.</li>
+<li>Restores to a point in time by GTID, transaction, or timestamp.</li>
+<li><strong>Refuses concurrent restores.</strong> A second restore against the same cluster fails immediately, so it does not corrupt the first.</li>
+<li><strong>Detects binary log gaps.</strong> If the binlog collector finds that binary logs it needs are missing, it marks the most recent successful backup with the condition <code>PITRReady: False</code> and the reason <code>BinlogGapDetected</code>.</li>
+</ul>
+<p><strong>What you still do:</strong></p>
+<ul>
+<li>Choose the restore target, and accept the data loss between that target and now.</li>
+<li>Plan the maintenance window. A restore stops the cluster.</li>
+<li><strong>Take a new full backup after a binlog gap is reported.</strong> The gap means PITR from that backup is no longer possible, and the window it covers is unrecoverable. Nothing restores that window. Take a fresh full backup to start a new PITR chain.</li>
+</ul>
+<p><strong>Never do this manually:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Do not</th>
+<th>What goes wrong</th>
+<th>Do this instead</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Edit the cluster CR while a restore is running</td>
+<td><strong>The restore controller writes to your CR.</strong> It sets <code>spec.pause</code>, sets the Percona XtraDB Cluster and proxy sizes to zero, and restores your original values from the restore resource status afterwards. An edit in that window is overwritten, or it is merged into a cluster that does not match the restore recorded state</td>
+<td>Wait until the restore reaches <code>Succeeded</code> or <code>Failed</code></td>
+</tr>
+<tr>
+<td>Unpause the cluster during a restore</td>
+<td>The restore is operating on the data directory of stopped nodes. Starting them mid-restore can leave inconsistent data</td>
+<td>Wait</td>
+</tr>
+<tr>
+<td>Start a second restore because the first looks stuck</td>
+<td>The Operator rejects the second restore and marks it failed</td>
+<td>Wait for the previous restore</td>
+</tr>
+<tr>
+<td>Delete the restore resource mid-flight</td>
+<td>The cluster stays paused and sized to zero, with nothing left to restore it</td>
+<td>Let the restore finish, then delete the resource</td>
+</tr>
+<tr>
+<td>Ignore <code>PITRReady: False</code></td>
+<td>You believe you have point-in-time coverage that does not exist. You find out during an incident</td>
+<td>Take a new full backup, then confirm that the condition clears</td>
+</tr>
+</tbody>
+</table>
+<h2 id="operator-boundaries-manage-certificates">Manage certificates<a class="headerlink" href="#operator-boundaries-manage-certificates" title="Permanent link">&para;</a></h2>
+<p>How certificates are renewed depends on who created them. See <a href="#tls">Transport Layer Security (TLS)</a>.</p>
+<p><strong>What the Operator does:</strong></p>
+<ul>
+<li>Issues certificates when the cluster is created: through cert-manager when it is available, and self-signed when it is not.</li>
+<li><strong>Renews certificates automatically — but only when cert-manager manages them.</strong></li>
+<li>Re-issues leaf certificates when the CA changes, for cert-manager-managed certificates.</li>
+<li>
+<p>Applies a certificate rotation to a running cluster without downtime. You place the new material in a Secret named <code>&lt;secret-name&gt;-new</code>. The Operator moves through the rotation in steps: </p>
+<ul>
+<li>combines the old and new certificate authority (CA), </li>
+<li>swaps the leaf certificate and key, </li>
+<li>drops the old CA.</li>
+</ul>
+<p>See <a href="#tls-update-update-valid-certificates-without-downtime">Update certificates</a>.</p>
+</li>
+</ul>
+<p><strong>What you still do:</strong></p>
+<p><strong>If cert-manager is not installed, Operator-generated certificates are not renewed automatically.</strong> These certificates are long-term; check their actual <a href="#tls-update-check-your-certificates-for-expiration">expiration dates</a> and provide replacements before they expire. Expired certificates can prevent nodes from trusting each other and stop replication.</p>
+<p><strong>If you supplied the TLS Secret yourself, renewal is your responsibility.</strong> The Operator does not renew those certificates automatically, but it can apply replacements you provide through the <code>&lt;secret-name&gt;-new</code> rotation procedure. See <a href="#tls-manual">Generate certificates manually</a> and <a href="#tls-update-update-valid-certificates-without-downtime">Update certificates</a>.</p>
+<p>Watch expiry dates in both of these cases, and rotate before they are reached.</p>
+<div class="admonition note">
+<p><strong>Recommendation:</strong> install <a href="#tls-cert-manager">cert-manager</a> for automatic certificate renewal. Otherwise, schedule a reminder based on your certificates&rsquo; actual expiration dates and rotate well before expiry with the <code>-new</code> Secret procedure in <a href="#tls-update">Update certificates</a>.</p>
+</div>
+<p><strong>Never do this manually:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Do not</th>
+<th>What goes wrong</th>
+<th>Do this instead</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Edit <code>tls.crt</code> or <code>tls.key</code> in the <code>ssl</code> or <code>ssl-internal</code> Secret directly</td>
+<td>Nodes pick up a new certificate at different times. The nodes that have not restarted cannot talk to the nodes that have</td>
+<td>Create the <code>&lt;secret-name&gt;-new</code> Secret and let the Operator roll it out</td>
+</tr>
+<tr>
+<td>Delete the TLS Secrets to force a re-issue</td>
+<td>The cluster loses the ability to communicate between nodes until new certificates exist and every node has restarted. On a running cluster, this is an outage</td>
+<td>Use the <code>-new</code> Secret rotation procedure</td>
+</tr>
+<tr>
+<td>Set <code>unsafeFlags.tls: true</code> to work around an expired certificate</td>
+<td>This only permits TLS to be disabled; it does not renew certificates or change <code>spec.tls.enabled</code>. Disabling TLS removes encryption and causes downtime on a running cluster</td>
+<td>Rotate the certificate</td>
+</tr>
+<tr>
+<td>Change the CA without rotating the leaf certificates</td>
+<td>Nodes reject each other&rsquo;s certificates</td>
+<td>Rotate both. The Operator does this for you when cert-manager issued them</td>
+</tr>
+</tbody>
+</table>
+<h2 id="operator-boundaries-users-and-secrets">Users and Secrets<a class="headerlink" href="#operator-boundaries-users-and-secrets" title="Permanent link">&para;</a></h2>
+<p><strong>What the Operator does:</strong></p>
+<ul>
+<li>Creates and manages the system users <code>root</code>, <code>operator</code>, <code>monitor</code>, <code>xtrabackup</code>, and <code>replication</code>. It also manages <code>proxyadmin</code> and the PMM users. See <a href="#users-system-users">System users</a>.</li>
+<li>Propagates a password change. You edit the Secret named in <code>spec.secretsName</code>, and the Operator applies it in MySQL, updates the proxies, and restarts what needs restarting. It tracks what it has already applied in a separate Secret named <code>internal-&lt;cluster-name&gt;</code>.</li>
+<li>Manages application users declared in <code>spec.users</code>, including their grants and the databases they can reach.</li>
+<li>Rejects a user in <code>spec.users</code> whose name collides with a system user.</li>
+</ul>
+<p><strong>What you still do:</strong></p>
+<ul>
+<li>Generate and store strong passwords, and decide when to rotate them.</li>
+<li><strong>Schedule password rotations.</strong> Changing a system user&rsquo;s password causes a rolling restart of the affected components. Treat it as a maintenance operation, not a routine edit.</li>
+<li>Change system-user passwords in the Secret named by <code>spec.secretsName</code>. See <a href="#users">Users</a>.</li>
+<li>Declare application users in <code>spec.users</code>.</li>
+<li>Manage application users you create directly in MySQL, outside <code>spec.users</code>. The Operator does not know about them and does not recreate them after a restore.</li>
+</ul>
+<p><strong>Never do this manually:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Do not</th>
+<th>What goes wrong</th>
+<th>Do this instead</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Run <code>ALTER USER</code> on a system user inside MySQL</td>
+<td>The Operator still holds the old password, loses access to the cluster, and reconciliation starts failing. Monitoring and backups fail with it</td>
+<td>Edit the Secret named in <code>spec.secretsName</code></td>
+</tr>
+<tr>
+<td>Edit the <code>internal-&lt;cluster-name&gt;</code> Secret</td>
+<td>That Secret is the Operator record of what it has already applied. Editing it makes the Operator believe a password is in place that MySQL does not have</td>
+<td>Leave it unchanged. Edit the user Secret instead</td>
+</tr>
+<tr>
+<td>Run <code>DROP USER</code> or rename a system user</td>
+<td>Backups, monitoring, the proxies, and the Operator itself authenticate as these users</td>
+<td>Leave the system users in place. They are not optional</td>
+</tr>
+<tr>
+<td>Delete the user Secret to regenerate passwords</td>
+<td>The Operator cannot authenticate to apply new passwords</td>
+<td>Edit the password values in place</td>
+</tr>
+<tr>
+<td>Grant application privileges to <code>root</code> or <code>operator</code> and use them from your application</td>
+<td>Password rotation then takes your application down with the cluster</td>
+<td>Declare an application user in <code>spec.users</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="operator-boundaries-storage">Storage<a class="headerlink" href="#operator-boundaries-storage" title="Permanent link">&para;</a></h2>
+<p>Request a larger volume in the CR. The Operator grows the PVCs when volume expansion is enabled and the StorageClass supports it. See <a href="#scaling-scale-storage">Scale storage</a>.</p>
+<p><strong>What the Operator does:</strong></p>
+<ul>
+<li>Grows PVCs when you increase the size in the CR, when <code>storageScaling.enableVolumeScaling</code> is on and the StorageClass supports expansion.</li>
+<li>Grows storage automatically when <code>spec.storageScaling.autoscaling</code> is enabled. When disk usage crosses the trigger threshold (80% by default), storage grows by the configured step, up to the configured maximum.</li>
+<li>Detects a failed resize and reverts the volume template so the CR matches reality again.</li>
+</ul>
+<p><strong>What you still do:</strong></p>
+<ul>
+<li>Choose a StorageClass with <code>allowVolumeExpansion: true</code>. Without it, the size in the CR and the size on disk never agree.</li>
+<li>Watch disk usage, and set a maximum that your quota can satisfy.</li>
+<li>Take over PVC sizes yourself if you set <code>enableExternalAutoscaling</code>. The Operator then stops managing PVC sizes and leaves them to your external controller.</li>
+</ul>
+<p><strong>Never do this manually:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Do not</th>
+<th>What goes wrong</th>
+<th>Do this instead</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Edit or patch a PVC directly</td>
+<td>The Operator reconciles PVC sizes against the CR. Your change is reverted, or it conflicts with a resize in progress</td>
+<td>Change the storage size in the CR</td>
+</tr>
+<tr>
+<td>Try to shrink storage</td>
+<td>The Operator rejects the shrink. It reverts the volume template and reports that the requested size is below the actual size</td>
+<td>Shrinking is not supported. Back up, recreate the cluster with smaller volumes, and restore</td>
+</tr>
+<tr>
+<td>Delete a PVC to reclaim space or reset a node</td>
+<td>The data is gone. The replacement node needs a full state transfer from a healthy donor, which loads that donor. If the cluster was already degraded, this can remove the last good copy</td>
+<td>Grow the volume, or remove data from inside the database</td>
+</tr>
+</tbody>
+</table>
+<h2 id="operator-boundaries-database-upgrades">Database upgrades<a class="headerlink" href="#operator-boundaries-database-upgrades" title="Permanent link">&para;</a></h2>
+<p>Let the Operator move nodes one at a time. See <a href="#update">About upgrades</a> and <a href="#update-db">Upgrade Percona XtraDB Cluster</a>.</p>
+<p><strong>What the Operator does:</strong></p>
+<ul>
+<li><strong>SmartUpdate.</strong> The Operator upgrades Percona XtraDB Cluster nodes one at a time, keeps quorum, and restarts the primary last to minimize connection disruption.</li>
+<li>Waits for the proxies to be Ready before it begins.</li>
+<li>Checks the Percona Version Service for available versions when <code>spec.upgradeOptions.apply</code> enables that check.</li>
+<li><strong>Refuses to start an upgrade while a backup is running.</strong></li>
+</ul>
+<p><strong>What you still do:</strong></p>
+<ul>
+<li>Decide when to upgrade, and test the target version first.</li>
+<li>Review release notes for changes that affect your configuration.</li>
+<li>Choose whether automatic version updates are appropriate. For production clusters, pin a version and upgrade deliberately.</li>
+<li><strong>Major version upgrades.</strong> Treat a major version upgrade as a planned operation with its own procedure. Follow <a href="#update-db">Upgrade Percona XtraDB Cluster</a>.</li>
+</ul>
+<p><strong>Never do this manually:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Do not</th>
+<th>What goes wrong</th>
+<th>Do this instead</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Change <code>spec.updateStrategy</code> to <code>RollingUpdate</code> to make an upgrade go faster</td>
+<td>Kubernetes restarts nodes without waiting for Galera to resynchronize each one. You can lose quorum mid-upgrade</td>
+<td>Leave the strategy on <code>SmartUpdate</code> and find out what the upgrade is waiting for</td>
+</tr>
+<tr>
+<td>Edit the image tag to jump a major version</td>
+<td>Skipping the documented upgrade path can leave the data dictionary in a state the new version cannot read</td>
+<td>Follow the database upgrade procedure</td>
+</tr>
+<tr>
+<td>Delete Pods during an upgrade to unstick it</td>
+<td>SmartUpdate tracks which node it has reached. Restarting nodes underneath it breaks that sequence</td>
+<td>Check the Operator logs. An upgrade that waits on a running backup, or on a proxy that is not Ready, is working as intended. See <a href="#debug-logs">Check the logs</a></td>
+</tr>
+<tr>
+<td>Run different Percona XtraDB Cluster versions across nodes for an extended period</td>
+<td>Mixed-version clusters are safe only for the duration of an upgrade</td>
+<td>Complete the upgrade</td>
+</tr>
+</tbody>
+</table>
+<h2 id="operator-boundaries-stay-inside-safe-operating-limits">Stay inside safe operating limits<a class="headerlink" href="#operator-boundaries-stay-inside-safe-operating-limits" title="Permanent link">&para;</a></h2>
+<p>The Operator rejects a CR that breaks the Percona XtraDB Cluster size limits or runs without TLS. </p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Safe limit</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>spec.pxc.size</code></td>
+<td>At least 3</td>
+<td>Galera needs three nodes to hold quorum when one is lost</td>
+</tr>
+<tr>
+<td><code>spec.pxc.size</code></td>
+<td>At most 5</td>
+<td>Write latency grows with every node that must certify a transaction</td>
+</tr>
+<tr>
+<td><code>spec.pxc.size</code></td>
+<td>An odd number</td>
+<td>An even-sized cluster can split into two halves with no majority</td>
+</tr>
+<tr>
+<td><code>spec.haproxy.size</code> / <code>spec.proxysql.size</code></td>
+<td>At least 2</td>
+<td>A single proxy is a single point of failure in front of a highly available cluster</td>
+</tr>
+<tr>
+<td><code>spec.tls.enabled</code></td>
+<td><code>true</code></td>
+<td>Replication traffic between nodes is otherwise unencrypted</td>
+</tr>
+</tbody>
+</table>
+<p>Read more about node count in <a href="#architecture">Design and architecture</a>.</p>
+<p>You can turn each check off individually under <code>spec.unsafeFlags</code>. See <a href="#operator-boundaries-override-a-safety-check">Override a safety check</a>. Do not turn a check off to clear an error message.</p>
+<h2 id="operator-boundaries-override-a-safety-check">Override a safety check<a class="headerlink" href="#operator-boundaries-override-a-safety-check" title="Permanent link">&para;</a></h2>
+<p><code>spec.unsafeFlags</code> turns off individual safety checks. Each check exists because turning it off can lose data or availability. Field details are in the <a href="#operator-operator-unsafeflags-section">Unsafe flags section</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Enables</th>
+<th>What you give up</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>unsafeFlags.pxcSize</code></td>
+<td>Fewer than three, more than five, or an even number of Percona XtraDB Cluster nodes</td>
+<td>Quorum guarantees. A cluster with one or two nodes is not highly available</td>
+</tr>
+<tr>
+<td><code>unsafeFlags.proxySize</code></td>
+<td>A single HAProxy or ProxySQL Pod</td>
+<td>Proxy redundancy. A proxy restart is an outage</td>
+</tr>
+<tr>
+<td><code>unsafeFlags.tls</code></td>
+<td>Running without TLS</td>
+<td>Encryption of replication and client traffic</td>
+</tr>
+<tr>
+<td><code>unsafeFlags.backupIfUnhealthy</code></td>
+<td>Backups from a cluster that is not Ready</td>
+<td>Confidence that the backup is consistent and restorable</td>
+</tr>
+</tbody>
+</table>
+<p>Use these flags for a development cluster, a local test, or a deliberate single-node setup for continuous integration. On a production cluster, an Operator rejection describes a real risk in the configuration you asked for.</p>
+<h2 id="operator-boundaries-check-before-you-intervene">Check before you intervene<a class="headerlink" href="#operator-boundaries-check-before-you-intervene" title="Permanent link">&para;</a></h2>
+<p>When a manual change looks necessary, do the following:</p>
+<ol>
+<li>Check whether the CR already exposes what you want. Most requests for manual changes are covered by a field.</li>
+<li>Reproduce the change on a non-production cluster first.</li>
+<li>Capture the Operator logs and the resource status before you change anything. See <a href="#debug-logs">Check the logs</a>.</li>
+<li>Contact <a href="#get-help">Percona Support</a> before you act on a production cluster.</li>
+</ol>
+<p>Manual intervention on a running database cluster is recoverable far less often than it looks from the outside.</p></section><section class="print-page" id="compare" heading-number="3.3"><h1 id="compare-compare-various-solutions-to-deploy-mysql-in-kubernetes">Compare various solutions to deploy MySQL in Kubernetes<a class="headerlink" href="#compare-compare-various-solutions-to-deploy-mysql-in-kubernetes" title="Permanent link">&para;</a></h1>
 <p>There are multiple ways to deploy and manage MySQL in Kubernetes. Here we will focus on comparing the following open source solutions:</p>
 <ul>
 <li><a href="https://github.com/kubedb">KubeDB <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a></li>
@@ -37126,7 +37664,9 @@ Percona XtraBackup.</p>
 .print-site-enumerate-headings #section-3 > h1:before { content: '3 ' }
 .print-site-enumerate-headings #architecture > h1:before { content: '3.1 ' }
 
-.print-site-enumerate-headings #compare > h1:before { content: '3.2 ' }
+.print-site-enumerate-headings #operator-boundaries > h1:before { content: '3.2 ' }
+
+.print-site-enumerate-headings #compare > h1:before { content: '3.3 ' }
 
 .print-site-enumerate-headings #section-4 > h1:before { content: '4 ' }
 .print-site-enumerate-headings #quickstart > h1:before { content: '4.1 ' }
