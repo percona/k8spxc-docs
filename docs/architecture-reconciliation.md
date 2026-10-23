@@ -57,7 +57,7 @@ flowchart TD
 | `pxc.configuration` | Updates the ConfigMap. The `percona.com/configuration-hash` annotation on the Pods changes | Yes |
 | Contents of the TLS Secrets, the Vault Secret, or the environment variables Secret | The hash annotations on the Pods change | Yes |
 | A system user password in the users Secret | Changes the password in the database, then restarts only the components that use this user. See [System users](users.md#system-users) | Yes, selectively |
-| Storage size, `pxc.volumeSpec.persistentVolumeClaim.resources.requests.storage` (larger only) | Patches the PVCs and recreates the StatefulSet without deleting its Pods. Requires `storageScaling.enableVolumeScaling`. See [Scale storage](scaling.md#scale-storage) | No |
+| Storage size, `pxc.volumeSpec.persistentVolumeClaim.resources.requests.storage` (larger only) | Patches the PVCs and recreates the StatefulSet without deleting its Pods. Requires `storageScaling.enableVolumeScaling`. See [Resize storage](scaling-storage-resize.md) | No |
 | `haproxy.enabled`, `proxysql.enabled` | Creates or deletes the proxy StatefulSet and Services. HAProxy has no PVCs. The ProxySQL PVCs are kept unless the `percona.com/delete-proxysql-pvc` finalizer is set. See [Switch the proxy](proxy-switching.md) | Proxy Pods only |
 | `pause: true` | Scales all components to 0 and removes the binlog collector | Pods stop |
 | `tls.enabled` | Pauses the cluster, changes the certificates, and starts the cluster again | Full stop and start |
@@ -133,7 +133,7 @@ If the cluster stays in `initializing` for a long time, one of the conditions ab
 * **No endpoint has been assigned.** The `LoadBalancer` Service is waiting for the cloud provider. Check `kubectl get svc`.
 * **A Pod cannot be scheduled.** The status message shows the scheduler's reason.
 
-The status does not show everything. If the state looks wrong but there is no message, read the Operator logs. See [How to tell which layer it is](architecture-responsibilities.md#how-to-tell-which-layer-it-is).
+The status does not show everything. If the state looks wrong but there is no message, read the Operator logs. See [Which layer is it?](debug.md#which-layer-is-it).
 
 ## Pause
 

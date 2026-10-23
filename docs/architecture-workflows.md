@@ -46,6 +46,7 @@ Both proxies learn about the database nodes the same way. The `pxc-monit` contai
 * `kubectl logs cluster1-haproxy-0 -c pxc-monit` (or `cluster1-proxysql-0`) shows the node list and configuration reloads.
 * `kubectl logs cluster1-haproxy-0 -c haproxy` shows health check results.
 * See also [In-cluster failover](failover-in-cluster.md) and [Configure load balancing](load-balancing.md).
+* More symptoms and the layer that owns each: [Initial troubleshooting](debug.md#where-to-look-first).
 
 ## On-demand backup
 
@@ -92,7 +93,7 @@ When you delete a backup object, the `percona.com/delete-backup` finalizer remov
 
 !!! note "XtraBackup sidecar method (tech preview)"
 
-    With the `XtrabackupSidecar` feature gate turned on, each database Pod runs an `xtrabackup` sidecar container. The backup Job asks the sidecar on a non-primary ready Pod to make the backup, and the node doesn't enter the `Donor` state. See [XtraBackup sidecar method](backups.md#xtrabackup-sidecar-method-tech-preview).
+    With the `XtrabackupSidecar` feature gate turned on, each database Pod runs an `xtrabackup` sidecar container. The backup Job asks the sidecar on a non-primary ready Pod to make the backup, and the node doesn't enter the `Donor` state. See [XtraBackup sidecar method](backups-methods.md#xtrabackup-sidecar-method-tech-preview).
 
 **Where to look if it fails:**
 
@@ -100,6 +101,7 @@ When you delete a backup object, the `percona.com/delete-backup` finalizer remov
 * `kubectl logs job/xb-backup1`: errors from the backup itself, such as wrong storage credentials or an unreachable endpoint.
 * `kubectl get lease pxc-cluster1-backup-lock -o yaml`: which backup holds the lock.
 * Operator logs: `Cluster is not ready for backup` means the backup waits for the cluster.
+* More symptoms and the layer that owns each: [Initial troubleshooting](debug.md#where-to-look-first).
 
 ## Scheduled backups
 
@@ -113,6 +115,7 @@ Scheduled backups are not Kubernetes CronJobs. The Operator keeps the schedules 
 
 * `kubectl get pxc-backup`: the `cron-*` backups and their states.
 * Operator logs: skipped runs and errors creating backups.
+* More symptoms and the layer that owns each: [Initial troubleshooting](debug.md#where-to-look-first).
 
 ## Point-in-time recovery
 
@@ -138,7 +141,8 @@ See [Store binary logs for point-in-time recovery](backups-pitr.md).
 
 * `kubectl get pxc-backup <backup> -o yaml`: the `PITRReady` condition and `latestRestorableTime`.
 * `kubectl logs deployment/cluster1-pitr`: collector errors, such as storage access problems.
-* See [Binlog gaps](backups-restore.md#binlog-gaps).
+* See [Binlog gaps](backups-pitr-restore.md#binlog-gaps).
+* More symptoms and the layer that owns each: [Initial troubleshooting](debug.md#where-to-look-first).
 
 ## Restore
 
@@ -189,6 +193,7 @@ stateDiagram-v2
 * `kubectl get pxc-restore <restore> -o yaml`: the `state` and the error in `status.comments`.
 * `kubectl logs job/restore-job-<restore>-cluster1`, then the logs of the `prepare-job-*` and `pitr-job-*` Jobs, depending on the state where the restore stopped.
 * Operator logs.
+* More symptoms and the layer that owns each: [Initial troubleshooting](debug.md#where-to-look-first).
 
 ## Full cluster crash recovery
 
@@ -235,5 +240,6 @@ On the next full crash, the Operator compares the new values with this record. I
 * `kubectl get pxc cluster1 -o jsonpath='{.status.recovery}'`: the previous recovery the Operator compares against.
 * `kubectl logs cluster1-pxc-N -c pxc`: the `FULL_PXC_CLUSTER_CRASH` messages and the `seqno` of each node.
 * Operator logs.
+* More symptoms and the layer that owns each: [Initial troubleshooting](debug.md#where-to-look-first).
 
 See also [Failover and high availability](failover-about.md).

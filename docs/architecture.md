@@ -1,6 +1,6 @@
 # Design and architecture
 
-This section explains how Percona Operator for MySQL based on Percona XtraDB Cluster is built: what runs in your Kubernetes cluster, which component is responsible for what, and how the pieces interact. Read it to build a mental model of the system, and come back to it when something fails and you need to know where to look first.
+This section explains how Percona Operator for MySQL based on Percona XtraDB Cluster is built: what runs in your Kubernetes cluster, which component is responsible for what, and how the pieces interact. Read it to build a mental model of the system, and come back to it when something fails and you need to know where to look first. If something is failing now, start with [Initial troubleshooting](debug.md).
 
 ## Percona XtraDB Cluster in brief
 
@@ -13,10 +13,16 @@ Use 3 to 5 nodes in production:
 
 With 3 nodes, the cluster keeps working when any one node goes down.
 
-A proxy sits in front of the nodes and routes client connections. You choose one of two:
+## How clients connect
 
-* **HAProxy** (default) is a TCP load balancer. It sends writes to one node and can spread reads across all nodes.
-* **ProxySQL** is SQL-aware. It understands MySQL traffic and can route queries by rules. See [What load balancer to use?](load-balancing.md#what-load-balancer-to-use).
+Applications don't connect to the database Pods directly. A proxy sits in front of the nodes and routes client connections.
+
+Clients connect to a Kubernetes Service that sends traffic to a proxy, and the proxy routes it to the database nodes. You choose one of two proxies:
+
+* **HAProxy** (default) is a TCP load balancer. It sends writes to one node and can spread reads across all nodes. Applications use the `cluster1-haproxy` Service for read-write traffic and `cluster1-haproxy-replicas` for reads.
+* **ProxySQL** is SQL-aware. It understands MySQL traffic and can route queries by rules. Applications use the `cluster1-proxysql` Service for both reads and writes. See [What load balancer to use?](load-balancing.md#what-load-balancer-to-use).
+
+The Operator creates more Services for its own use, such as the headless Services that the cluster components use to find each other. See [Services and ports](services.md) for every Service, its ports and when it exists.
 
 ## The four layers
 
@@ -64,7 +70,7 @@ Each node Pod has its own PersistentVolumeClaim (PVC) for the data directory. Ga
 
 Here is how a client request reaches the data:
 
-1. A client connects to the `cluster1-haproxy` Service on port 3306 for read-write traffic, or to `cluster1-haproxy-replicas` on port 3306 for reads. The replicas Service forwards port 3306 to port 3307 in the HAProxy Pods.
+1. A client connects to the `cluster1-haproxy` Service on port 3306 for read-write traffic, or to `cluster1-haproxy-replicas` on port 3306 for reads. The replicas Service forwards port 3306 to port 3307 in the HAProxy Pods. See [Services and ports](services.md).
 2. The Service forwards the connection to one of the HAProxy Pods.
 3. HAProxy sends writes to `cluster1-pxc-0`. If that node fails its health check, HAProxy sends writes to another node. Read connections from the replicas Service are spread across nodes.
 4. HAProxy learns which nodes exist through the headless `cluster1-pxc` Service. The `pxc-monit` container in each HAProxy Pod watches that Service in DNS and regenerates the HAProxy configuration when the set of nodes changes.
@@ -81,9 +87,9 @@ Two more components appear around the nodes:
 
 * **The binlog collector** (`cluster1-pitr` Deployment) exists only when point-in-time recovery is turned on. It reads binary logs from one node and uploads them to backup storage. At the start of each upload cycle, it looks up the nodes through `cluster1-pxc`, keeps those that are `Synced` and in the primary component, and picks the one whose oldest binlog is the oldest. This node most likely still has every binlog the collector hasn't uploaded yet. If the current node becomes unhealthy, or another node has older binlogs, the collector switches to it and logs the reason. See [Point-in-time recovery](architecture-workflows.md#point-in-time-recovery).
 
-* **Backup Jobs** (`xb-<backup-name>`) exist only while a backup runs. By default, the Job joins the cluster as a Galera arbitrator and receives a full copy of the data from a donor node through SST, then uploads it to storage. With the `XtrabackupSidecar` [feature gate](env-vars-operator.md#pxco_feature_gates) turned on, each database Pod runs an extra `xtrabackup` container instead. The backup Job asks this sidecar on a non-primary node to run XtraBackup on the local data, so no node enters the `Donor` state. See [Backup methods](backups.md#backup-methods).
+* **Backup Jobs** (`xb-<backup-name>`) exist only while a backup runs. By default, the Job joins the cluster as a Galera arbitrator and receives a full copy of the data from a donor node through SST, then uploads it to storage. With the `XtrabackupSidecar` [feature gate](env-vars-operator.md#pxco_feature_gates) turned on, each database Pod runs an extra `xtrabackup` container instead. The backup Job asks this sidecar on a non-primary node to run XtraBackup on the local data, so no node enters the `Donor` state. See [Backup methods](backups-methods.md).
 
-If you use ProxySQL instead of HAProxy, the picture is the same with `cluster1-proxysql` in place of `cluster1-haproxy`. There is no separate replicas Service, because ProxySQL splits reads and writes by its own rules.
+If you use ProxySQL instead of HAProxy, the picture is the same with `cluster1-proxysql` in place of `cluster1-haproxy`. There is no separate replicas Service, because ProxySQL splits reads and writes by its own rules. See [Services and ports](services.md).
 
 With `proxysql.scheduler.enabled`, ProxySQL uses the external [`pxc_scheduler_handler` :octicons-link-external-16:](https://docs.percona.com/proxysql/psh-overview.html) instead of its built-in Galera support. The scheduler checks the nodes, keeps exactly one writer, and spreads `SELECT` queries across all nodes, or across all nodes except the writer when `proxysql.scheduler.writerIsAlsoReader` is `false`. With the scheduler enabled, the ProxySQL instances no longer form a ProxySQL cluster, and the `proxysql-monit` container is not created. See [ProxySQL scheduler](proxysql-conf.md#proxysql-scheduler-tech-preview).
 
@@ -97,61 +103,12 @@ If a Kubernetes node fails, Kubernetes can recreate the Pod on another node, but
 
 ## What gets created
 
-For a cluster named `cluster1`, the Operator creates and manages the following Kubernetes objects. Some exist only when the related feature is turned on.
+For a cluster named `cluster1`, the Operator creates StatefulSets for the database and the proxy, Services, Secrets, ConfigMaps, PodDisruptionBudgets and PersistentVolumeClaims. Jobs and the binlog collector exist only while a backup, a restore or point-in-time recovery needs them. PVCs and Secrets are not owned by the Custom Resource, so deleting the cluster doesn't delete them.
 
-| Kind | Name | Purpose |
-| --- | --- | --- |
-| StatefulSet | `cluster1-pxc` | Database nodes |
-| StatefulSet | `cluster1-haproxy` or `cluster1-proxysql` | Proxy, depending on which one is enabled |
-| Service | `cluster1-pxc` | Headless Service with the ready database Pods. Used for node discovery |
-| Service | `cluster1-pxc-unready` | Headless Service that includes database Pods that are not ready yet |
-| Service | `cluster1-haproxy`, `cluster1-haproxy-replicas` | Client entry points for HAProxy: read-write and read-only |
-| Service | `cluster1-proxysql`, `cluster1-proxysql-unready` | Client entry point for ProxySQL, and a Service for ProxySQL instances to find each other |
-| Service | `cluster1-pxc-0`, `cluster1-pxc-1`, ... | Per-Pod Services, only when `pxc.expose.enabled` is set for [cross-site replication](replication.md) |
-| Deployment and Service | `cluster1-pitr` | Binlog collector, only when [point-in-time recovery](backups-pitr.md) is turned on |
-| Secret | `cluster1-secrets` | Passwords of system users. You can edit it to change passwords |
-| Secret | `internal-cluster1` | Passwords the Operator has actually applied to the database. Do not edit it |
-| Secret | `cluster1-ssl`, `cluster1-ssl-internal` | TLS certificates for client and internal traffic |
-| ConfigMap | `cluster1-pxc`, `cluster1-haproxy`, `cluster1-proxysql` | Your custom configuration from the CR |
-| ConfigMap | `auto-cluster1-pxc` | MySQL options the Operator calculates from the memory limit |
-| PodDisruptionBudget | one per component | Limits voluntary disruptions, such as node drains, to one Pod at a time by default |
-| PersistentVolumeClaim | `datadir-cluster1-pxc-N`, `proxydata-cluster1-proxysql-N` | Data volumes, created by the StatefulSets |
-| Lease | `pxc-cluster1-backup-lock` | Makes backups run one at a time. Created only when `backup.allowParallel` is `false` |
-| Job | `xb-<backup>` | Makes a backup and uploads it to storage. Created for each backup |
-| Job | `restore-job-<restore>-cluster1` | Writes the backup into the data volume of `cluster1-pxc-0`. Created for each restore |
-| Job | `prepare-job-<restore>-cluster1` | Prepares the restored data so that the node can bootstrap a new cluster. Created for each restore |
-| Job | `pitr-job-<restore>-cluster1` | Replays binlogs up to the target. Created only for a [point-in-time restore](backups-restore.md) |
+<a name="containers-in-each-pod"></a>
 
-If cert-manager is installed, the Operator also creates cert-manager Issuers and Certificates that produce the TLS Secrets.
-
-!!! note
-
-    Scheduled backups are not Kubernetes CronJobs. The Operator keeps the schedule itself and creates a backup object when a run is due. See [Scheduled backups](architecture-workflows.md#scheduled-backups).
-
-!!! warning "Objects that survive cluster deletion"
-
-    PVCs and Secrets are not owned by the Custom Resource, so deleting the CR does not delete them. This lets you recreate the cluster with its data and credentials. To delete them together with the cluster, set the `percona.com/delete-pxc-pvc` and `percona.com/delete-ssl` finalizers. See [Delete the database cluster](delete.md#delete-the-database-cluster).
-
-## Containers in each Pod
-
-**Percona XtraDB Cluster Pod** (`cluster1-pxc-N`):
-
-* `pxc-init` (init container) copies the Operator's entrypoint, probe and helper scripts into the data volume.
-* `pxc` runs `mysqld`. It listens on 3306 (MySQL), 33062 (admin), 33060 (MySQL X protocol), and on 4567, 4568 and 4444 for Galera replication, IST and SST.
-* Optional sidecars: `logs` and `logrotate` for [log collection](persistent-logging.md), `pmm-client` for [monitoring](monitoring.md), `xtrabackup` when the `XtrabackupSidecar` feature gate is on, and your own [sidecar containers](sidecar.md).
-
-**HAProxy Pod** (`cluster1-haproxy-N`):
-
-* `haproxy` routes client traffic.
-* `pxc-monit` watches the `cluster1-pxc` Service and regenerates the HAProxy configuration when nodes join or leave.
-* Optional: `pmm-client`.
-
-**ProxySQL Pod** (`cluster1-proxysql-N`):
-
-* `proxysql` routes client traffic.
-* `pxc-monit` watches the `cluster1-pxc` Service and adds or removes database nodes in ProxySQL.
-* `proxysql-monit` watches the `cluster1-proxysql-unready` Service so that ProxySQL instances form a ProxySQL cluster. It is not created when the ProxySQL scheduler is enabled.
-* Optional: `pmm-client`.
+* [Services and ports](services.md) lists every Service, its ports, and when it exists.
+* [Objects the Operator creates](objects-created.md) lists all other objects, the finalizers that clean them up, and the containers in each Pod.
 
 ## Next steps
 

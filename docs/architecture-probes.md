@@ -134,10 +134,11 @@ Change the probe settings in the Custom Resource with the `pxc.readinessProbes`,
 * If heavy load makes the liveness probe time out, raise `pxc.livenessProbes.timeoutSeconds` or `failureThreshold` rather than turning the probe off. The scripts use the new timeout for their query, too.
 * If `mysqld` needs more than 5 minutes to start and the start-up isn't covered by the probe exceptions above, raise `pxc.livenessProbes.initialDelaySeconds`. Note that this value also limits how long the Smart Update waits for each Pod.
 
-## Where to look
+## Where to look if probes fail
 
 * `kubectl describe pod cluster1-pxc-0` shows the probe settings and, under `Events`, the `Readiness probe failed` and `Liveness probe failed` messages.
 * `kubectl get pod cluster1-pxc-0` shows the restart count. If the events contain `Container pxc failed liveness probe, will be restarted`, the kubelet restarted the container; it was not a `mysqld` crash.
 * `kubectl get events --sort-by=.lastTimestamp | grep -i probe` lists probe failures across the cluster.
 * `kubectl get endpoints cluster1-pxc` shows which database Pods are ready and visible to the proxies.
 * `kubectl get pdb` shows how many disruptions each PodDisruptionBudget allows right now.
+* More symptoms and the layer that owns each: [Initial troubleshooting](debug.md#where-to-look-first).

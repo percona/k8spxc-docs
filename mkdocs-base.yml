@@ -184,10 +184,10 @@ nav:
           - Design and architecture:
               - "Overview": architecture.md
               - "Who owns what": architecture-responsibilities.md
+              - "Responsibilities by area": operator-boundaries.md
               - "How the Operator reacts to changes": architecture-reconciliation.md
               - "Key workflows": architecture-workflows.md
               - "Health checks and probes": architecture-probes.md
-          - "What the Operator manages": operator-boundaries.md
           - "Comparison with other solutions": compare.md
 
     - Quickstart guides:
@@ -326,6 +326,8 @@ nav:
           - "Custom Resource options": operator.md
           - "Backup Custom Resource options": backup-cr.md
           - "Restore Custom Resource options": restore-cr.md
+          - "Services and ports": services.md
+          - "Objects the Operator creates": objects-created.md
           - "Percona certified images": images.md
           - "Versions compatibility": versions.md
           - "Operator API": api.md

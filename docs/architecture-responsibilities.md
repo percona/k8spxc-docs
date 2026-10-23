@@ -1,26 +1,57 @@
 # Who owns what
 
-When something goes wrong, the first question is which layer is responsible: the Operator, Percona XtraDB Cluster (Galera), Kubernetes, or you. This page lists what each layer does and, just as important, what it does *not* do. It ends with a table that maps common symptoms to the layer that owns them.
+When something happens in the cluster, the question is which layer reacts: the Operator, Percona XtraDB Cluster (Galera), Kubernetes, or you. This page answers it at a glance. For the detail of what you do and what the Operator does in each area, and for what never to change by hand, see [Responsibilities by area](operator-boundaries.md). For an overview of the layers, see [Design and architecture](architecture.md#the-four-layers).
 
-For an overview of the layers, see [Design and architecture](architecture.md#the-four-layers).
+Two rules explain most of the behavior:
+
+* **You change the cluster only through the Custom Resource and the user Secrets.** The Operator turns them into Kubernetes objects, and reverts manual changes to the fields it manages.
+* **Each layer keeps its own part alive.** Kubernetes keeps Pods running, Galera keeps the data consistent, and the Operator keeps the objects and the day-2 tasks matching the Custom Resource.
+
+## Who reacts when something happens
+
+| Event | Who reacts | Where it is explained |
+| --- | --- | --- |
+| A container crashes or fails its liveness probe | The kubelet restarts the container | [Health checks and probes](architecture-probes.md) |
+| A Pod is deleted or evicted | The StatefulSet controller recreates it. The Operator isn't involved | [In-cluster failover](failover-in-cluster.md) |
+| A Kubernetes node fails | Kubernetes. A StatefulSet Pod is recreated elsewhere only after the Node object is removed or the stuck Pod is force-deleted, which is up to you or your platform | [Kubernetes](#kubernetes) |
+| A database node falls behind or rejoins | Galera, with IST or SST | [Rejoining the cluster](failover-in-cluster.md#rejoining-the-cluster) |
+| A proxy loses a database node | The proxy health check. The `pxc-monit` container updates the proxy configuration | [Key workflows](architecture-workflows.md#client-traffic-and-proxy-failover) |
+| The survivor of a 2-of-3 loss is outside the primary component | Liveness restarts it. When no node is in a primary component, the Operator starts the node with the highest `seqno` as a new one | [Full cluster crash recovery](architecture-workflows.md#full-cluster-crash-recovery) |
+| You edit the Custom Resource | The Operator reconciles the change | [How the Operator reacts to changes](architecture-reconciliation.md) |
+| Someone edits an object the Operator manages | The Operator reverts the fields it manages | [Change the cluster through the Custom Resource](#change-the-cluster-through-the-custom-resource) |
+| A scheduled backup is due | The Operator creates the backup object, and a Job runs it | [Scheduled backups](architecture-workflows.md#scheduled-backups) |
+| A certificate expires and cert-manager isn't used | You | [Update certificates](tls-update.md) |
+| A disk fills up | You. With storage autoscaling on, the Operator grows the volume | [Automatic storage resizing](scaling-storage-resize.md#automatic-storage-resizing) |
+
+## Change the cluster through the Custom Resource
+
+A [Custom Resource :octicons-link-external-16:](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) (CR) is the Kubernetes object that describes the cluster you want. It is a blueprint that the Operator uses to deploy and manage your cluster.
+
+**The Custom Resource is the source of truth. Change the cluster by editing the CR.**
+
+The Operator compares the CR against what is running about every five seconds and corrects any difference it finds. A change you make directly to a StatefulSet, a Service, a Pod, or a managed Secret is drift. The Operator overwrites it, usually within seconds. If a change survives, this means the Operator does not manage that field yet. This doesn't mean the change was accepted.
+
+* **Edits to the fields the Operator manages do not persist.** The Operator reverts them and doesn't raise an event.
+* **Edits outside the CR can still cause damage before they are reverted.**
+
+## Review responsibilities at a glance
+
+The following table shows what the Operator handles and what stays with you. Select an area for the details and the list of manual actions to avoid.
+
+| Area | Operator  | You | Don't do manually |
+| --- | --- | --- | --- |
+| [Cluster lifecycle](operator-boundaries.md#cluster-lifecycle) | - Creates and heals StatefulSets, Services, and PodDisruptionBudgets.<br>- Rolls out changes with ordered restarts. Kubernetes restarts failed Pods.<br>- Recovers from a full cluster crash. | - Choose the cluster size.<br>- Decide when to pause.<br>- Plan maintenance windows. | - Scale or edit the StatefulSet.<br>- Delete Pods to restart a node.<br>- Remove finalizers. |
+| [Backups](operator-boundaries.md#back-up-the-database) | - Runs scheduled and on-demand backups.<br>- Enforces deadlines.<br>- Suspends backups on an unhealthy cluster. | - Verify that backups restore.<br>- Set retention.<br>- Keep off-cluster copies. | - Delete a running backup Job.<br>- Run `xtrabackup` by hand against a node. |
+| [Restore and point-in-time recovery (PITR)](operator-boundaries.md#restore-and-point-in-time-recovery) | - Pauses the cluster, restores, and restarts it.<br>- Detects binary log gaps. | - Take a new full backup after a gap.<br>- Pick the restore target. | - Edit the cluster CR during a restore.<br>- Run two restores at once. |
+| [TLS](operator-boundaries.md#manage-certificates) | - Issues certificates.<br>- Renews them **only via cert-manager**.<br>- Applies rotations without downtime. | - Rotate certificates yourself if cert-manager is not installed.<br>- Manage any certificate you supplied. | - Edit the `ssl` or `ssl-internal` Secrets in place.<br>- Delete them to re-issue certificates. |
+| [Users and secrets](operator-boundaries.md#users-and-secrets) | - Creates and rotates the system users.<br>- Propagates password changes to MySQL and the proxies. | - Set passwords in the user Secret.<br>- Manage your own application users. | - Run `ALTER USER` on a system user in MySQL.<br>- Edit the `internal-` Secret.<br>- Drop a system user. |
+| [Storage](operator-boundaries.md#storage) | - Grows Persistent Volume Claims (PVCs) when the CR asks, and automatically when autoscaling is on. | - Pick a StorageClass that supports expansion.<br>- Watch capacity. | - Resize or delete PVCs by hand.<br>- Shrink storage. |
+| [Cross-site replication](operator-boundaries.md#cross-site-replication) | - Sets up the replication channels from the CR.<br>- Removes channels that are not in the CR.<br>- Logs when a channel isn't running. | - Provide routable endpoints and matching replication passwords.<br>- Monitor replication and repair it. | - Create replication channels in MySQL by hand. |
+| [Upgrades](operator-boundaries.md#database-upgrades) | - Coordinates version upgrades node by node and keeps quorum. | - Decide when to upgrade.<br>- Run major version upgrades as a planned change. | - Bypass SmartUpdate.<br>- Edit image tags to jump a major version. |
 
 ## The Operator
 
-**The Operator does:**
-
-* Create and update the StatefulSets, Services, ConfigMaps, Secrets and PodDisruptionBudgets for the cluster. See [What gets created](architecture.md#what-gets-created).
-* Revert manual changes to the objects it manages. It re-checks the cluster every few seconds and restores the state described in the Custom Resource.
-* Restart database Pods in a safe order when their configuration changes ([Smart Update](architecture-reconciliation.md#update-strategies)).
-* Change system user passwords in the database when you edit the users Secret, and restart only the components that use the changed user. See [System users](users.md#system-users).
-* Create the custom users you list in `spec.users`.
-* Generate TLS certificates if you don't provide them, or have cert-manager issue and renew them.
-* Resize PVCs when you increase the storage size and volume scaling is turned on, and grow them automatically if you turn on [storage autoscaling](scaling.md#automatic-storage-resizing).
-* Detect a full cluster crash and bootstrap the cluster from the most advanced node. See [Full cluster crash recovery](architecture-workflows.md#full-cluster-crash-recovery).
-* Configure asynchronous replication channels for [cross-site replication](replication.md).
-* Run backups on demand and on a schedule, apply retention, and run the binlog collector for point-in-time recovery.
-* Run restores.
-* Upgrade database images automatically, if you turn this on with `upgradeOptions.apply`.
-* Delete Pods in order, PVCs, and TLS objects on cluster deletion, if the matching finalizers are set.
+The Operator reads the Custom Resource, compares it with what exists in Kubernetes about every five seconds, and creates, updates or deletes objects to close the gap. It also runs the day-2 tasks: ordered restarts ([Smart Update](architecture-reconciliation.md#update-strategies)), password changes, certificates, storage resizing, backups, restores, point-in-time recovery, cross-site replication channels, and [recovery after a full cluster crash](architecture-workflows.md#full-cluster-crash-recovery).
 
 **The Operator does not:**
 
@@ -32,6 +63,8 @@ For an overview of the layers, see [Design and architecture](architecture.md#the
 * Repair broken cross-site replication. It only logs that the replication channel is not running.
 * Renew self-signed certificates it generated without cert-manager.
 * Report most problems as Kubernetes events. It emits events only for full cluster crash recovery, CA certificate rotation, and volume resize. Everything else is in the Operator logs and the Custom Resource status.
+
+For each area in detail, see [Responsibilities by area](operator-boundaries.md). For the objects the Operator creates, see [Objects the Operator creates](objects-created.md) and [Services and ports](services.md).
 
 ## Percona XtraDB Cluster and Galera
 
@@ -80,71 +113,32 @@ For an overview of the layers, see [Design and architecture](architecture.md#the
 
 ## You, the user
 
-You are responsible for:
+The Operator keeps the cluster matching the Custom Resource. Everything it cannot create or decide for you stays with you:
 
-* **CRDs and RBAC.** Install and upgrade them. The Operator never applies CRDs.
-* **Upgrade order.** Upgrade the Operator first, then raise `spec.crVersion` in the Custom Resource. Upgrading the Operator alone does not change the database images. The Operator also keeps some behavior of an existing cluster tied to its `crVersion`, so new behavior of those features starts only after you raise it. See [Upgrade CRD and the Operator](update-operator.md).
-* **Automatic upgrade policy.** `upgradeOptions.apply` is `Disabled` by default. Set it to `Recommended`, `Latest` or an exact version to let the Operator upgrade the database. See [Automatic minor upgrades](update-automatic.md).
-* **Capacity.** Enough nodes to satisfy anti-affinity, a StorageClass that supports expansion and your zone layout, and resource requests and limits.
-* **Credentials.** Backup storage credentials (S3 or Azure Secrets, or an IAM role), the PMM token, and a CA bundle for custom S3 endpoints.
-* **MySQL options.** Check options before you put them in `spec.pxc.configuration`. See [Changing MySQL options](options.md).
-* **Storage size changes.** A larger `storage` value in the Custom Resource does nothing unless `storageScaling.enableVolumeScaling` is turned on. Shrinking a volume is refused and reverted. See [Scale storage](scaling.md#scale-storage).
-* **Certificate renewal without cert-manager.** See the warning below.
-* **Custom users.** The Operator creates users from `spec.users` only when the cluster is `ready`. Removing an entry does not drop the user from the database; drop it yourself. See [Users](users.md).
-* **Cross-site replication.** Routable endpoints between sites, matching replication passwords, and monitoring the replication health. If replication breaks, you fix it. See [Set up cross-site replication](replication.md).
-* **Point-in-time recovery.** Keep binary logs on the servers long enough for the collector to upload them. When the Operator reports a gap in the binlogs, take a new full backup. See [Store binary logs for point-in-time recovery](backups-pitr.md).
-* **Data cleanup.** Decide whether to set the `percona.com/delete-pxc-pvc` and `percona.com/delete-ssl` finalizers. Without them, PVCs, Secrets and certificates remain after you delete the cluster, and you delete them yourself. If you use ProxySQL, its PVCs are kept, also when you disable ProxySQL, unless you set the `percona.com/delete-proxysql-pvc` finalizer. See [Clean up resources](delete.md#clean-up-resources).
-* **Disk usage and MySQL tuning.** Storage autoscaling can grow volumes for you. Beyond that, monitoring disk usage and tuning MySQL is the DBA's job.
+* Install and upgrade the CRDs and RBAC, which the Operator never applies. See [Upgrade CRD and the Operator](update-operator.md).
+* Provide capacity: enough schedulable nodes for the anti-affinity rules, and a StorageClass that allows volume expansion. See [Cluster lifecycle](operator-boundaries.md#cluster-lifecycle) and [Storage](operator-boundaries.md#storage).
+* Provide credentials: the passwords in the user Secret, the backup storage credentials, and the PMM token. See [Users and Secrets](operator-boundaries.md#users-and-secrets).
+* Renew certificates when cert-manager isn't installed, or when you supplied them. See [Manage certificates](operator-boundaries.md#manage-certificates).
+* Verify that backups restore, set retention, and keep copies outside the cluster storage. See [Back up the database](operator-boundaries.md#back-up-the-database).
+* Monitor cross-site replication, and repair it when it breaks. See [Cross-site replication](operator-boundaries.md#cross-site-replication).
+* Decide when to pause, upgrade, and restore. See [Database upgrades](operator-boundaries.md#database-upgrades) and [Restore and point-in-time recovery](operator-boundaries.md#restore-and-point-in-time-recovery).
 
-!!! warning "Certificates expire without cert-manager"
+## Unsafe configurations
 
-    If cert-manager is not installed, the Operator generates self-signed certificates once, when the cluster is created. Starting with version 1.19.0, they are valid for 90 days (the CA for three years), and the Operator does not renew them. Plan their renewal, or [use cert-manager](tls-cert-manager.md). See [Update certificates](tls-update.md).
-
-### Unsafe configurations
-
-The Operator refuses configurations that put availability or data at risk. To use one anyway, you opt in explicitly with a flag in the `spec.unsafeFlags` subsection:
-
-| Flag | What it allows |
-| --- | --- |
-| `unsafeFlags.tls` | Running the cluster with TLS turned off |
-| `unsafeFlags.pxcSize` | A database cluster with fewer than 3 nodes, more than 5 nodes, or an even number of nodes |
-| `unsafeFlags.proxySize` | Fewer than 2 proxy Pods |
-| `unsafeFlags.backupIfUnhealthy` | Starting backups when the cluster is not `ready` |
-
-The older `allowUnsafeConfigurations` option turns on all four at once.
-
-!!! warning
-
-    Each flag removes a safeguard. A single-node or even-sized cluster can lose quorum, a single proxy Pod is a single point of failure, and a backup of an unhealthy cluster puts extra load on the remaining nodes. Use these flags for testing, or when you understand the consequences. See [Unsafe flags section](operator.md#operator-unsafeflags-section).
+The Operator refuses configurations that put availability or data at risk, such as fewer than three database nodes or running without TLS. See [Stay inside safe operating limits](operator-boundaries.md#stay-inside-safe-operating-limits). To use one anyway, you opt in with a flag in the `spec.unsafeFlags` subsection. See [Override a safety check](operator-boundaries.md#override-a-safety-check).
 
 ## Who owns this failure?
 
 Find the symptom, check the place named in the second column, and follow the link for the fix.
 
-| Symptom | Look here first | Usually owned by | What to do |
-| --- | --- | --- | --- |
-| Cluster status is `error` with a message like `wrong PXC options: ...` | `kubectl get pxc cluster1 -o yaml`, the `status` section | User: invalid spec, such as an even size without `unsafeFlags.pxcSize`, both proxies enabled, or Smart Update without a proxy | Fix the Custom Resource. See [Custom Resource options](operator.md) |
-| Pod is `Pending`; the cluster status shows a scheduling message | `kubectl describe pod <pod>`, events | Kubernetes and your capacity: required anti-affinity, resource requests, or a volume in another zone | Add nodes or relax the rules. See [Control Pod scheduling](constraints.md) |
-| Pod is `Running` but not `Ready` | `kubectl logs <pod> -c pxc` | Galera: the node is not `Synced` or not in the primary component, an SST is in progress, or the SST retry limit is reached | See [Limit SST retries](sst-retry-limit.md) and [Check the logs](debug-logs.md) |
-| `FULL_PXC_CLUSTER_CRASH` in the logs; events `FullClusterCrashDetected` or `AutomaticRecoveryRefused` | Events, the `pxc` container logs | Galera; recovered by the Operator, or by you if automatic recovery is off or refused | See [Crash recovery](recovery.md) |
-| `mysqld` fails to start after a configuration change | `kubectl logs <pod> -c pxc` | User: `spec.pxc.configuration` is not validated | Fix the option. See [Changing MySQL options](options.md) |
-| A storage size change does nothing | The `storage` value in the Custom Resource compared with the PVC size; events | User, if `storageScaling.enableVolumeScaling` is off. Kubernetes or CSI, for `StorageClassNotSupportResize`, `ExceededQuota` or `VolumeResizeFailed` events | See [Scale storage](scaling.md#scale-storage) and [Troubleshoot storage resizing](debug-storage.md#troubleshoot-storage-resizing) |
-| Nodes can't join the cluster; the proxy has no backends | `kubectl logs <proxy-pod> -c pxc-monit`, cluster DNS | Kubernetes networking and DNS | Check that DNS resolves the `cluster1-pxc` Service. See [Exec into the containers](debug-shell.md) |
-| A rolling restart is stuck | Operator logs | Operator, waiting for a node to become `Synced`, for a backup to finish, or for a Pod to be scheduled | See [Update strategies](architecture-reconciliation.md#update-strategies) |
-| A backup has an empty state, or is stuck in `Starting` or `Suspended` | `kubectl get pxc-backup <name> -o yaml`, Operator logs (`Cluster is not ready for backup`, `Another backup is holding the lock`), and with `backup.allowParallel: false`, the `pxc-cluster1-backup-lock` Lease | Cluster health, or, with `allowParallel: false`, another backup holding the lock. An empty state means the Job isn't created yet | Restore cluster health. See [Backup suspension](backups.md#backup-suspension-for-an-unhealthy-database-cluster) |
-| A backup is `Failed` | `kubectl logs job/xb-<backup>` | User: storage credentials or endpoint. Galera: the donor node left the cluster | See [Configure storage for backups](backups-storage.md) |
-| Backup condition `PITRReady=False` with reason `BinlogGapDetected` | Backup conditions, `kubectl logs deployment/cluster1-pitr` | User: binlog retention on the servers is too short | Take a new full backup. See [Binlog gaps](backups-restore.md#binlog-gaps) |
-| A restore is `Failed` | `kubectl get pxc-restore <name> -o yaml` (`status.comments`), logs of the `restore-job-*`, `prepare-job-*` and `pitr-job-*` Jobs | Varies: often the backup source or storage access | See [Restore](architecture-workflows.md#restore) |
-| A scheduled backup didn't run | Operator logs | The cluster wasn't `ready` when the run was due, so the run was skipped; or the Operator wasn't running at that time | See [Scheduled backups](architecture-workflows.md#scheduled-backups) |
-| A cross-site replica is lagging or broken | Operator logs (`Replication for channel is not running`), `SHOW REPLICA STATUS` on the replica | MySQL replication; you fix it | See [Set up cross-site replication](replication.md) |
-| TLS errors after about 90 days, without cert-manager | Certificate expiry date in the `cluster1-ssl` Secret | User: certificates need manual renewal | See [Update certificates](tls-update.md) |
-| A backup object is stuck in `Terminating` | Operator logs | The backup files could not be deleted from storage, so the `percona.com/delete-backup` finalizer is not removed | Check storage access. See [Delete the unneeded backup](backups-delete.md) |
+--8<-- "symptoms-table.md"
 
 ## How to tell which layer it is
 
-Check these sources in order. Each one narrows down the layer.
+--8<-- "triage-steps.md"
 
-1. **Custom Resource status and conditions.** `kubectl get pxc cluster1 -o yaml` shows the cluster state, the reconcile error message if any, and scheduling problems. An `error` state with a spec message points to the user. See [Status](architecture-reconciliation.md#status).
-2. **Events.** `kubectl get events --sort-by=.lastTimestamp` shows Kubernetes problems: scheduling, volume attachment and resize, image pulls, probe failures. The Operator itself adds events only for full cluster crash recovery, CA rotation and volume resize. See [Check the events](debug-events.md).
-3. **Operator logs.** `kubectl logs deployment/percona-xtradb-cluster-operator` shows what the Operator is doing or waiting for: a stuck rolling restart, a skipped backup, broken replication. Most Operator problems appear only here.
-4. **Pod and container logs.** `kubectl logs cluster1-pxc-0 -c pxc` shows Galera and MySQL problems: SST failures, quorum loss, `mysqld` start failures. For backup and restore problems, read the logs of the Job. See [Check the logs](debug-logs.md).
+## See also
+
+* [Responsibilities by area](operator-boundaries.md)
+* [Objects the Operator creates](objects-created.md)
+* [Services and ports](services.md)
