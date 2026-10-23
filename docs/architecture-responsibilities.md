@@ -48,11 +48,11 @@ For an overview of the layers, see [Design and architecture](architecture.md#the
 * A preferred list of SST donors that excludes `cluster1-pxc-0` (the HAProxy writer) and the node with the highest number.
 * `pc.weight=10`, unless you set it yourself.
 * Encryption of replication traffic when internal TLS certificates exist.
-* `innodb_buffer_pool_size` and `max_connections` calculated from the Pod resources, unless you set them yourself. This requires a memory request. See [Auto-tuning MySQL options](options.md#auto-tuning-mysql-options).
+* `innodb_buffer_pool_size` and `max_connections` calculated from the Pod resources, unless you set them yourself. This requires a memory limit (`pxc.resources.limits.memory`). See [Auto-tuning MySQL options](options.md#auto-tuning-mysql-options).
 
 **Health as the Pod probes see it:**
 
-* A database Pod is *ready* only when its node belongs to the primary component and is `Synced`. A node that is a donor counts as ready only when this is allowed.
+* A database Pod is *ready* only when its node belongs to the primary component and is `Synced`. A node that is a donor counts as ready by default. Set the `AVAILABLE_WHEN_DONOR` environment variable of the `pxc` container to a value other than `1` to make a donor not ready.
 * The liveness probe tolerates long startups, SST and recovery, so a node that is busy catching up is not killed. A node that stays outside the primary component for about 30 seconds is restarted.
 * See [Health checks and probes](architecture-probes.md) for what the probes check and who acts on their result.
 
@@ -83,7 +83,7 @@ For an overview of the layers, see [Design and architecture](architecture.md#the
 You are responsible for:
 
 * **CRDs and RBAC.** Install and upgrade them. The Operator never applies CRDs.
-* **Upgrade order.** Upgrade the Operator first, then raise `spec.crVersion` in the Custom Resource. Upgrading the Operator alone does not change database images or how the Operator handles an existing cluster, because the behavior depends on `crVersion`. See [Upgrade CRD and the Operator](update-operator.md).
+* **Upgrade order.** Upgrade the Operator first, then raise `spec.crVersion` in the Custom Resource. Upgrading the Operator alone does not change the database images. The Operator also keeps some behavior of an existing cluster tied to its `crVersion`, so new behavior of those features starts only after you raise it. See [Upgrade CRD and the Operator](update-operator.md).
 * **Automatic upgrade policy.** `upgradeOptions.apply` is `Disabled` by default. Set it to `Recommended`, `Latest` or an exact version to let the Operator upgrade the database. See [Automatic minor upgrades](update-automatic.md).
 * **Capacity.** Enough nodes to satisfy anti-affinity, a StorageClass that supports expansion and your zone layout, and resource requests and limits.
 * **Credentials.** Backup storage credentials (S3 or Azure Secrets, or an IAM role), the PMM token, and a CA bundle for custom S3 endpoints.
@@ -93,7 +93,7 @@ You are responsible for:
 * **Custom users.** The Operator creates users from `spec.users` only when the cluster is `ready`. Removing an entry does not drop the user from the database; drop it yourself. See [Users](users.md).
 * **Cross-site replication.** Routable endpoints between sites, matching replication passwords, and monitoring the replication health. If replication breaks, you fix it. See [Set up cross-site replication](replication.md).
 * **Point-in-time recovery.** Keep binary logs on the servers long enough for the collector to upload them. When the Operator reports a gap in the binlogs, take a new full backup. See [Store binary logs for point-in-time recovery](backups-pitr.md).
-* **Data cleanup.** Decide whether to set the `percona.com/delete-pxc-pvc` and `percona.com/delete-ssl` finalizers. Without them, PVCs, Secrets and certificates remain after you delete the cluster, and you delete them yourself. See [Clean up resources](delete.md#clean-up-resources).
+* **Data cleanup.** Decide whether to set the `percona.com/delete-pxc-pvc` and `percona.com/delete-ssl` finalizers. Without them, PVCs, Secrets and certificates remain after you delete the cluster, and you delete them yourself. If you use ProxySQL, its PVCs are kept, also when you disable ProxySQL, unless you set the `percona.com/delete-proxysql-pvc` finalizer. See [Clean up resources](delete.md#clean-up-resources).
 * **Disk usage and MySQL tuning.** Storage autoscaling can grow volumes for you. Beyond that, monitoring disk usage and tuning MySQL is the DBA's job.
 
 !!! warning "Certificates expire without cert-manager"
@@ -131,7 +131,7 @@ Find the symptom, check the place named in the second column, and follow the lin
 | A storage size change does nothing | The `storage` value in the Custom Resource compared with the PVC size; events | User, if `storageScaling.enableVolumeScaling` is off. Kubernetes or CSI, for `StorageClassNotSupportResize`, `ExceededQuota` or `VolumeResizeFailed` events | See [Scale storage](scaling.md#scale-storage) and [Troubleshoot storage resizing](debug-storage.md#troubleshoot-storage-resizing) |
 | Nodes can't join the cluster; the proxy has no backends | `kubectl logs <proxy-pod> -c pxc-monit`, cluster DNS | Kubernetes networking and DNS | Check that DNS resolves the `cluster1-pxc` Service. See [Exec into the containers](debug-shell.md) |
 | A rolling restart is stuck | Operator logs | Operator, waiting for a node to become `Synced`, for a backup to finish, or for a Pod to be scheduled | See [Update strategies](architecture-reconciliation.md#update-strategies) |
-| A backup is stuck in `Starting` or `Suspended` | `kubectl get pxc-backup <name> -o yaml`, the `pxc-cluster1-backup-lock` Lease, Operator logs (`Cluster is not ready for backup`) | Cluster health, or another backup holding the lock | Restore cluster health. See [Backup suspension](backups.md#backup-suspension-for-an-unhealthy-database-cluster) |
+| A backup has an empty state, or is stuck in `Starting` or `Suspended` | `kubectl get pxc-backup <name> -o yaml`, Operator logs (`Cluster is not ready for backup`, `Another backup is holding the lock`), and with `backup.allowParallel: false`, the `pxc-cluster1-backup-lock` Lease | Cluster health, or, with `allowParallel: false`, another backup holding the lock. An empty state means the Job isn't created yet | Restore cluster health. See [Backup suspension](backups.md#backup-suspension-for-an-unhealthy-database-cluster) |
 | A backup is `Failed` | `kubectl logs job/xb-<backup>` | User: storage credentials or endpoint. Galera: the donor node left the cluster | See [Configure storage for backups](backups-storage.md) |
 | Backup condition `PITRReady=False` with reason `BinlogGapDetected` | Backup conditions, `kubectl logs deployment/cluster1-pitr` | User: binlog retention on the servers is too short | Take a new full backup. See [Binlog gaps](backups-restore.md#binlog-gaps) |
 | A restore is `Failed` | `kubectl get pxc-restore <name> -o yaml` (`status.comments`), logs of the `restore-job-*`, `prepare-job-*` and `pitr-job-*` Jobs | Varies: often the backup source or storage access | See [Restore](architecture-workflows.md#restore) |

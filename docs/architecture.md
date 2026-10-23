@@ -113,10 +113,10 @@ For a cluster named `cluster1`, the Operator creates and manages the following K
 | Secret | `internal-cluster1` | Passwords the Operator has actually applied to the database. Do not edit it |
 | Secret | `cluster1-ssl`, `cluster1-ssl-internal` | TLS certificates for client and internal traffic |
 | ConfigMap | `cluster1-pxc`, `cluster1-haproxy`, `cluster1-proxysql` | Your custom configuration from the CR |
-| ConfigMap | `auto-cluster1-pxc` | MySQL options the Operator calculates from resource requests |
+| ConfigMap | `auto-cluster1-pxc` | MySQL options the Operator calculates from the memory limit |
 | PodDisruptionBudget | one per component | Limits voluntary disruptions, such as node drains, to one Pod at a time by default |
 | PersistentVolumeClaim | `datadir-cluster1-pxc-N`, `proxydata-cluster1-proxysql-N` | Data volumes, created by the StatefulSets |
-| Lease | `pxc-cluster1-backup-lock` | Makes backups run one at a time |
+| Lease | `pxc-cluster1-backup-lock` | Makes backups run one at a time. Created only when `backup.allowParallel` is `false` |
 | Job | `xb-<backup>` | Makes a backup and uploads it to storage. Created for each backup |
 | Job | `restore-job-<restore>-cluster1` | Writes the backup into the data volume of `cluster1-pxc-0`. Created for each restore |
 | Job | `prepare-job-<restore>-cluster1` | Prepares the restored data so that the node can bootstrap a new cluster. Created for each restore |

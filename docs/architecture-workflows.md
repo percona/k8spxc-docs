@@ -53,7 +53,7 @@ Both proxies learn about the database nodes the same way. The `pxc-monit` contai
 sequenceDiagram
   participant U as User
   participant O as Operator
-  participant L as Lease backup-lock
+  participant L as Lease backup-lock<br/>(only if allowParallel is false)
   participant J as Job xb-backup1
   participant D as Donor node
   participant S as Storage
@@ -73,19 +73,20 @@ sequenceDiagram
 
 1. You create a `PerconaXtraDBClusterBackup` object. See [Make on-demand backup](backups-ondemand.md).
 2. The Operator checks the storage configuration and waits until the cluster is `ready`. To back up a cluster that isn't `ready`, set `unsafeFlags.backupIfUnhealthy`.
-3. The Operator takes the `pxc-cluster1-backup-lock` Lease, so that backups don't overlap. Other backups wait in the `Starting` state until the lock is free. See [Multiple backups](backups.md#multiple-backups).
-4. The Operator creates the Job `xb-backup1`. The Job runs the Galera arbitrator (`garbd`), joins the cluster, and requests a full SST. The donor is a `Synced` node other than `cluster1-pxc-0`, the writer, usually the node with the highest number. While it sends the data, the donor node is in the `Donor` state.
+3. Backups run in parallel by default. If you set [`backup.allowParallel`](operator.md#backupallowparallel) to `false`, the Operator takes the `pxc-cluster1-backup-lock` Lease, so that backups don't overlap. Other backups wait with an empty `status.state` until the lock is free. See [Multiple backups](backups.md#multiple-backups).
+4. The Operator creates the Job `xb-backup1` and sets the state to `Starting`. The Job runs the Galera arbitrator (`garbd`), joins the cluster, and requests a full SST. The donor is a `Synced` node other than the writer `cluster1-pxc-0`, usually the node with the highest number. While it sends the data, the donor node is in the `Donor` state.
 5. The Job streams the data to S3-compatible storage or Azure, or to a new PVC.
-6. The Operator releases the lock and sets the backup status.
+6. The Operator releases the lock, if it took one, and sets the backup status.
 
 The backup goes through these states:
 
-* `Starting`: waiting for the lock or for the cluster to be `ready`.
+* Empty: the backup object exists, but the Job isn't created yet. The Operator waits for the cluster to be `ready` or, with `allowParallel: false`, for the lock.
+* `Starting`: the Job is created and waits to start copying data.
 * `Suspended`: the cluster became unhealthy, so the Operator suspended the Job. It resumes when the cluster is `ready` again. See [Backup suspension](backups.md#backup-suspension-for-an-unhealthy-database-cluster).
 * `Running`: the Job is copying data.
 * `Succeeded` or `Failed`.
 
-`startingDeadlineSeconds` limits the time from backup object creation until the backup reaches `Starting`. `runningDeadlineSeconds` limits the time from Job creation until the backup reaches `Running`, and `suspendedDeadlineSeconds` limits time spent suspended. The Job's `activeDeadlineSeconds` limits its active duration. When a configured deadline is exceeded, the backup is marked `Failed`. See [Backup Custom Resource options](backup-cr.md).
+`startingDeadlineSeconds` limits the time from backup object creation until the Job is created, that is, while the state is empty. It has no default, so without it a backup waits without a time limit. `runningDeadlineSeconds` limits the time from Job creation until the backup reaches `Running`. Its default is 1200 seconds. `suspendedDeadlineSeconds` limits time spent suspended. The Job's `activeDeadlineSeconds` limits its active duration. When a configured deadline is exceeded, the backup is marked `Failed`. See [Backup Custom Resource options](backup-cr.md).
 
 When you delete a backup object, the `percona.com/delete-backup` finalizer removes the backup files from storage first.
 
@@ -102,7 +103,7 @@ When you delete a backup object, the `percona.com/delete-backup` finalizer remov
 
 ## Scheduled backups
 
-Scheduled backups are not Kubernetes CronJobs. The Operator keeps the schedules from `backup.schedule` in its own memory and, when a run is due, creates a regular backup object named `cron-cluster1-<storage>-<timestamp>-<hash>`. From there, the backup follows the [on-demand workflow](#on-demand-backup).
+Scheduled backups are not Kubernetes CronJobs. The Operator keeps the schedules from `backup.schedule` in its own memory and, when a run is due, creates a regular backup object named `cron-cluster1-<storage>-<timestamp>-<hash>`, where the hash is calculated from the schedule expression. From there, the backup follows the [on-demand workflow](#on-demand-backup).
 
 * **If the cluster isn't `ready` when a run is due, the run is skipped.** No backup object and no event is created. Only the Operator log shows it, with the message `Cluster is not ready for backup. Scheduled backup is not created`.
 * **The schedule runs only while the Operator runs.** No backups are created while the Operator is stopped.
@@ -161,21 +162,23 @@ stateDiagram-v2
   StartingCluster --> Succeeded: cluster ready
   Succeeded --> [*]
   Starting --> Failed
+  Stopping --> Failed
   Restoring --> Failed
   Preparing --> Failed
   PITR --> Failed
+  StartingCluster --> Failed
   Failed --> [*]
 ```
 
 **What happens:**
 
-1. **Starting.** The Operator checks the backup, the Secrets, the storage, and the point-in-time target if you set one. Only one restore can run on a cluster at a time.
+1. **Starting.** The Operator checks the backup, the Secrets, the storage, and the point-in-time target if you set one. Only one restore can run on a cluster at a time. The Operator repeats the basic checks on every pass, so a restore can fail in any state, for example when the cluster or the backup object is deleted while the restore runs.
 2. **Stopping Cluster.** The Operator sets `spec.pause: true` on the cluster and waits until all Pods are gone. Then it deletes the PVCs of all database Pods except `datadir-cluster1-pxc-0`.
 3. **Restoring.** The Job `restore-job-<restore>-cluster1` writes the backup into the data volume of `cluster1-pxc-0`.
 4. **Preparing Cluster.** The Job `prepare-job-*` starts `mysqld` on the restored data, resets the system user passwords to the ones in the cluster's internal Secret, and removes the Galera state files so that the node starts a new cluster.
 5. **Point-in-time recovering** (only with a `pitr` section in the restore). The Operator starts the cluster with one database node and no proxies, so clients cannot connect. The Job `pitr-job-*` replays binlogs up to the target.
 6. **Starting Cluster.** The Operator restores the original sizes and unpauses the cluster. The other nodes start with empty volumes and get the data from `cluster1-pxc-0` through SST.
-7. **Succeeded** when the cluster is `ready`, or **Failed**.
+7. **Succeeded** when the cluster has the original sizes, the Operator has applied the latest Custom Resource generation, and the cluster is `ready`. Until then, the restore waits in **Starting Cluster**, with no time limit. **Failed** when a check fails.
 
 !!! warning "A restore deletes data volumes and stops the cluster"
 

@@ -22,9 +22,9 @@ The Operator sets the probes for the `pxc` and `haproxy` containers. The probe s
 **Readiness** (`readiness-check.sh`). The Pod is ready when the node:
 
 * belongs to the primary component (`wsrep_cluster_status` is `Primary`), and
-* is `Synced` (`wsrep_local_state` is `4`), or is a donor or desynced (`wsrep_local_state` is `2`).
+* is `Synced` (`wsrep_local_state` is `4`), or is a donor or desynced (`wsrep_local_state` is `2`) and the `AVAILABLE_WHEN_DONOR` environment variable is `1`, the default.
 
-The probe doesn't check `pxc_maint_mode` or `wsrep_reject_queries`. A donor and a node desynced with `wsrep_desync=ON` stay ready.
+The probe doesn't check `pxc_maint_mode` or `wsrep_reject_queries`. By default, a donor and a node desynced with `wsrep_desync=ON` stay ready. If you set `AVAILABLE_WHEN_DONOR` to another value, they become not ready.
 
 **Liveness** (`liveness-check.sh`). The container is alive when the node belongs to the primary component. It doesn't need to be `Synced`. The probe also passes while the node:
 

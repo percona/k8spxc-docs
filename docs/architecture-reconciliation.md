@@ -95,7 +95,7 @@ sequenceDiagram
 4. After each restart, it waits until the Pod is ready and its node is `Synced` with the cluster. With ProxySQL, it also waits until the node is back in its hostgroup (the writer hostgroup for `cluster1-pxc-0`, the reader hostgroup for the others) and ProxySQL marks it `ONLINE`.
 5. It restarts the writer last, so writes fail over only once during the rollout.
 
-Smart Update requires an enabled proxy (HAProxy or ProxySQL) that is ready. It stops waiting and reports a failure if a restarted Pod is in `ImagePullBackOff` or `CrashLoopBackOff`, or cannot be scheduled for more than 2 minutes. If a node does not become `Synced`, the Operator keeps waiting for up to 2 hours, or for `pxc.livenessProbes.initialDelaySeconds` seconds if you changed that value from the default. While it waits, the Operator logs show what it is waiting for.
+Smart Update requires an enabled proxy (HAProxy or ProxySQL) that is ready. It stops waiting and reports a failure if a restarted Pod is in `ImagePullBackOff`, `ErrImagePull` or `CrashLoopBackOff`, or cannot be scheduled for more than 2 minutes. If a node does not become `Synced`, the Operator keeps waiting for up to 2 hours, or for `pxc.livenessProbes.initialDelaySeconds` seconds if you changed that value from the default. While it waits, the Operator logs show what it is waiting for.
 
 ### Automatic upgrades
 
