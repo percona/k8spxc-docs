@@ -50,7 +50,7 @@ Both probes run `SELECT 1` through HAProxy itself, on its admin port 33062. HAPr
 
 The ProxySQL containers have no readiness or liveness probes. A ProxySQL Pod is ready as soon as its containers are running.
 
-### Default timings
+## Default timings
 
 | Container | Probe | First check after | Period | Timeout | Failures before acting | Time to act |
 | --- | --- | --- | --- | --- | --- | --- |
