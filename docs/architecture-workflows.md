@@ -34,7 +34,7 @@ sequenceDiagram
 
 ### ProxySQL
 
-ProxySQL works in single-writer mode with four hostgroups: 11 for the writer, 10 for readers, 12 for backup writers, and 13 for offline nodes. The writer is `cluster1-pxc-0`, with a higher weight than the others. The ProxySQL Pods form a ProxySQL cluster with each other, so they share this configuration. See [Configuring load balancing with ProxySQL](proxysql-conf.md) and [ProxySQL scheduler](proxysql-conf.md#proxysql-scheduler-tech-preview).
+In native mode, ProxySQL works in single-writer mode with four hostgroups: 11 for the writer, 10 for readers, 12 for backup writers, and 13 for offline nodes. The writer is `cluster1-pxc-0`, with a higher weight than the others. The ProxySQL Pods form a ProxySQL cluster and share their configuration. With the external scheduler enabled, weighted writer selection prefers `cluster1-pxc-0`, and ProxySQL clustering is disabled. See [Configuring load balancing with ProxySQL](proxysql-conf.md) and [ProxySQL scheduler](proxysql-conf.md#proxysql-scheduler-tech-preview).
 
 ### Node discovery
 
@@ -102,7 +102,7 @@ When you delete a backup object, the `percona.com/delete-backup` finalizer remov
 
 ## Scheduled backups
 
-Scheduled backups are not Kubernetes CronJobs. The Operator keeps the schedules from `backup.schedule` in its own memory and, when a run is due, creates a regular backup object named `cron-cluster1-<storage>-<timestamp>`. From there, the backup follows the [on-demand workflow](#on-demand-backup).
+Scheduled backups are not Kubernetes CronJobs. The Operator keeps the schedules from `backup.schedule` in its own memory and, when a run is due, creates a regular backup object named `cron-cluster1-<storage>-<timestamp>-<hash>`. From there, the backup follows the [on-demand workflow](#on-demand-backup).
 
 * **If the cluster isn't `ready` when a run is due, the run is skipped.** No backup object and no event is created. Only the Operator log shows it, with the message `Cluster is not ready for backup. Scheduled backup is not created`.
 * **The schedule runs only while the Operator runs.** No backups are created while the Operator is stopped.
