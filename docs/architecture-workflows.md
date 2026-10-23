@@ -38,7 +38,7 @@ ProxySQL works in single-writer mode with four hostgroups: 11 for the writer, 10
 
 ### Node discovery
 
-Both proxies learn about the database nodes the same way. The `pxc-monit` container in each proxy Pod looks up the headless `cluster1-pxc` Service in DNS every second. The Service lists only ready database Pods. When the list changes and stays stable for 30 seconds, `pxc-monit` regenerates the proxy configuration and reloads the proxy. As a result, a node that leaves or joins the cluster is added to or removed from the proxy about half a minute later.
+Both proxies learn about the database nodes the same way. The `pxc-monit` container in each proxy Pod looks up the headless `cluster1-pxc` Service in DNS every second. The Service lists only ready database Pods. The first update is applied immediately. After that, updates are applied at most once every 30 seconds, so a node that leaves or joins the cluster is reflected in the proxy configuration about half a minute later.
 
 **Where to look if it fails:**
 
