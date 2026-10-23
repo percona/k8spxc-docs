@@ -85,7 +85,7 @@ The backup goes through these states:
 * `Running`: the Job is copying data.
 * `Succeeded` or `Failed`.
 
-Deadlines limit how long a backup may stay in each state: `startingDeadlineSeconds`, `suspendedDeadlineSeconds` and `runningDeadlineSeconds`, plus the Job's `activeDeadlineSeconds`. When a deadline passes, the backup is marked `Failed`. See [Backup Custom Resource options](backup-cr.md).
+`startingDeadlineSeconds` limits the time from backup object creation until the backup reaches `Starting`. `runningDeadlineSeconds` limits the time from Job creation until the backup reaches `Running`, and `suspendedDeadlineSeconds` limits time spent suspended. The Job's `activeDeadlineSeconds` limits its active duration. When a configured deadline is exceeded, the backup is marked `Failed`. See [Backup Custom Resource options](backup-cr.md).
 
 When you delete a backup object, the `percona.com/delete-backup` finalizer removes the backup files from storage first.
 
