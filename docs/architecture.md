@@ -112,7 +112,10 @@ For a cluster named `cluster1`, the Operator creates StatefulSets for the databa
 
 ## Next steps
 
-* [Who owns what](architecture-responsibilities.md){.md-button}
-* [How the Operator reacts to changes](architecture-reconciliation.md){.md-button}
-* [Key workflows](architecture-workflows.md){.md-button}
-* [Health checks and probes](architecture-probes.md){.md-button}
+[Who owns what](architecture-responsibilities.md){.md-button}
+## See also
+
+* [Services and ports](services.md)
+* [Objects the Operator creates](objects-created.md)
+* [Glossary](glossary.md)
+* [Comparison with other solutions](compare.md)

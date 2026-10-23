@@ -269,6 +269,9 @@ When a manual change looks necessary, do the following:
 
 Manual intervention on a running database cluster is recoverable far less often than it looks from the outside.
 
+## Next steps
+
+[How the Operator reacts to changes](architecture-reconciliation.md){.md-button}
 ## See also
 
 * [Who owns what](architecture-responsibilities.md)

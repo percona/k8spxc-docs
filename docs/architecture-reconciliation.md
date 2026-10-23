@@ -145,3 +145,12 @@ Setting `spec.pause: true` stops the cluster gracefully:
 * The status changes to `paused` when all Pods have stopped.
 
 Set `spec.pause: false` to start the cluster again. The Operator also pauses the cluster itself during a restore and when you turn TLS on or off. See [Pause/resume Percona XtraDB Cluster](pause.md).
+
+## Next steps
+
+[Key workflows](architecture-workflows.md){.md-button}
+## See also
+
+* [Custom Resource options](operator.md)
+* [Pause/resume Percona XtraDB Cluster](pause.md)
+* [Initial troubleshooting](debug.md)

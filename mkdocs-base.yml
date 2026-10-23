@@ -184,7 +184,7 @@ nav:
           - Design and architecture:
               - "Overview": architecture.md
               - "Who owns what": architecture-responsibilities.md
-              - "Responsibilities by area": operator-boundaries.md
+              - "Operator responsibilities by area": operator-boundaries.md
               - "How the Operator reacts to changes": architecture-reconciliation.md
               - "Key workflows": architecture-workflows.md
               - "Health checks and probes": architecture-probes.md

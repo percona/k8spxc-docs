@@ -242,4 +242,11 @@ On the next full crash, the Operator compares the new values with this record. I
 * Operator logs.
 * More symptoms and the layer that owns each: [Initial troubleshooting](debug.md#where-to-look-first).
 
-See also [Failover and high availability](failover-about.md).
+## Next steps
+
+[Health checks and probes](architecture-probes.md){.md-button}
+## See also
+
+* [Failover and high availability](failover-about.md)
+* [Backup and restore](backups.md)
+* [Crash recovery](recovery.md)

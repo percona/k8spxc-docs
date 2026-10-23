@@ -137,8 +137,11 @@ Find the symptom, check the place named in the second column, and follow the lin
 
 --8<-- "triage-steps.md"
 
+## Next steps
+
+[Responsibilities by area](operator-boundaries.md){.md-button}
 ## See also
 
-* [Responsibilities by area](operator-boundaries.md)
 * [Objects the Operator creates](objects-created.md)
 * [Services and ports](services.md)
+* [Initial troubleshooting](debug.md)

@@ -142,3 +142,12 @@ Change the probe settings in the [Custom Resource](glossary.md#custom-resource) 
 * `kubectl get endpoints cluster1-pxc` shows which database Pods are ready and visible to the proxies.
 * `kubectl get pdb` shows how many disruptions each PodDisruptionBudget allows right now.
 * More symptoms and the layer that owns each: [Initial troubleshooting](debug.md#where-to-look-first).
+
+## Next steps
+
+[Initial troubleshooting](debug.md){.md-button}
+## See also
+
+* [In-cluster failover](failover-in-cluster.md)
+* [Crash recovery](recovery.md)
+* [Who owns what](architecture-responsibilities.md)
