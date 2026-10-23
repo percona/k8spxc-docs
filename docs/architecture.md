@@ -4,7 +4,7 @@ This section explains how Percona Operator for MySQL based on Percona XtraDB Clu
 
 ## Percona XtraDB Cluster in brief
 
-*Percona XtraDB Cluster* combines *Percona Server for MySQL* with the XtraDB storage engine, *Percona XtraBackup*, and the *Galera library*. Galera provides synchronous multi-primary replication: every node holds the full data set, and a transaction is committed only after all nodes certify it.
+*Percona XtraDB Cluster* combines *Percona Server for MySQL* with the XtraDB storage engine, *Percona XtraBackup*, and the *Galera library*. Galera provides virtually synchronous multi-primary replication: every node holds the full data set. A transaction commits after its write set is delivered to all nodes and passes certification. The other nodes apply it a moment later, so a read on another node can briefly return older data, unless you set the `wsrep_sync_wait` variable.
 
 Use 3 to 5 nodes in production:
 

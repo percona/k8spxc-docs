@@ -19,7 +19,7 @@ The following table shows what the Operator handles and what stays with you:
 
 | Area | Operator  | You | Don't do manually |
 | --- | --- | --- | --- |
-| [Cluster lifecycle](#cluster-lifecycle) | - Creates and heals StatefulSets, Services, and PodDisruptionBudgets.<br>- Restarts failed nodes.<br>- Recovers from a full cluster crash. | - Choose the cluster size.<br>- Decide when to pause.<br>- Plan maintenance windows. | - Scale or edit the StatefulSet.<br>- Delete Pods to restart a node.<br>- Remove finalizers. |
+| [Cluster lifecycle](#cluster-lifecycle) | - Creates and heals StatefulSets, Services, and PodDisruptionBudgets.<br>- Rolls out changes with ordered restarts. Kubernetes restarts failed Pods.<br>- Recovers from a full cluster crash. | - Choose the cluster size.<br>- Decide when to pause.<br>- Plan maintenance windows. | - Scale or edit the StatefulSet.<br>- Delete Pods to restart a node.<br>- Remove finalizers. |
 | [Backups](#back-up-the-database) | - Runs scheduled and on-demand backups.<br>- Enforces deadlines.<br>- Suspends backups on an unhealthy cluster. | - Verify that backups restore.<br>- Set retention.<br>- Keep off-cluster copies. | - Delete a running backup Job.<br>- Run `xtrabackup` by hand against a node. |
 | [Restore and point-in-time recovery (PITR)](#restore-the-database) | - Pauses the cluster, restores, and restarts it.<br>- Detects binary log gaps. | - Take a new full backup after a gap.<br>- Pick the restore target. | - Edit the cluster CR during a restore.<br>- Run two restores at once. |
 | [TLS](#manage-certificates) | - Issues certificates.<br>- Renews them **only via cert-manager**.<br>- Applies rotations without downtime. | - Rotate certificates yourself if cert-manager is not installed.<br>- Manage any certificate you supplied. | - Edit the `ssl` or `ssl-internal` Secrets in place.<br>- Delete them to re-issue certificates. |
@@ -33,8 +33,8 @@ Change cluster size, pause state, and deletion through the CR. Direct edits to t
 
 **What the Operator does:**
 
-* Creates and reconciles the Percona XtraDB Cluster StatefulSet, the HAProxy or ProxySQL StatefulSet, their Services, and a PodDisruptionBudget for Percona XtraDB Cluster.
-* Restarts failed nodes and lets Galera resynchronize them.
+* Creates and reconciles the Percona XtraDB Cluster StatefulSet, the HAProxy or ProxySQL StatefulSet, their Services, and a PodDisruptionBudget for each of them.
+* Leaves restarting failed Pods and containers to Kubernetes, and resynchronizing nodes to Galera. The Operator itself steps in only for a full cluster crash and for the rolling restarts it starts.
 * Shuts the cluster down in order when you set `spec.pause: true`, and brings it back when you set it to `false`. Data is retained. See [Pause/resume Percona XtraDB Cluster](pause.md).
 * Deletes resources in a safe order on cluster deletion, using finalizers. See [Delete the database cluster](delete.md#delete-the-database-cluster).
 * Handles **full cluster crash recovery.** When every node is down and waiting, the Operator finds the node with the highest transaction sequence number and bootstraps from it. This behavior is on by default (`spec.pxc.autoRecovery`). See [Crash recovery](recovery.md).
@@ -80,7 +80,7 @@ Create backups through a schedule on the cluster CR or through a `PerconaXtraDBC
 | Delete the backup Job to clear a stuck backup | The backup resource still reports that it is running, and storage may hold a partial backup that looks complete | Let the deadline fail it, or delete the `PerconaXtraDBClusterBackup` resource. See [Delete the unneeded backup](backups-delete.md) |
 | Raise or remove the deadlines so backups stop failing | Deadlines are what stop a wedged backup from blocking upgrades indefinitely. SmartUpdate does not start while a backup is running | Find out why the backup is slow or stuck |
 | Set `unsafeFlags.backupIfUnhealthy` to get a backup from a broken cluster | A backup from a cluster that is not in sync may be inconsistent and may not restore | Repair the cluster, then back up. If you must take the backup, treat the result as best-effort only |
-| Run `xtrabackup` by hand against a Pod | The manual backup competes with the Operator backup lock and can stall writes | Create a `PerconaXtraDBClusterBackup` resource |
+| Run `xtrabackup` by hand against a Pod | The manual backup runs outside the Operator's control. It can overlap with an Operator backup, because the backup lock exists only with `backup.allowParallel: false` and a manual run doesn't take it, and it loads a node the cluster depends on | Create a `PerconaXtraDBClusterBackup` resource |
 | Delete objects from the backup storage bucket by hand | The PITR chain between a full backup and its binary logs breaks | Delete the `PerconaXtraDBClusterBackup` resource and let the finalizer clean up |
 
 ## Restore and point-in-time recovery
@@ -126,7 +126,7 @@ How certificates are renewed depends on who created them. See [Transport Layer S
 
 **What you still do:**
 
-**If cert-manager is not installed, Operator-generated certificates are not renewed automatically.** These certificates are long-term; check their actual [expiration dates](tls-update.md#check-your-certificates-for-expiration) and provide replacements before they expire. Expired certificates can prevent nodes from trusting each other and stop replication.
+**If cert-manager is not installed, Operator-generated certificates are not renewed automatically.** Starting with version 1.19.0, these certificates are valid for 90 days, and the CA for three years. Check their actual [expiration dates](tls-update.md#check-your-certificates-for-expiration) and provide replacements before they expire. Expired certificates can prevent nodes from trusting each other and stop replication.
 
 **If you supplied the TLS Secret yourself, renewal is your responsibility.** The Operator does not renew those certificates automatically, but it can apply replacements you provide through the `<secret-name>-new` rotation procedure. See [Generate certificates manually](tls-manual.md) and [Update certificates](tls-update.md#update-valid-certificates-without-downtime).
 

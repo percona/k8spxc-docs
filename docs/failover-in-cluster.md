@@ -1,6 +1,6 @@
 # In-cluster failover
 
-A node running Percona XtraDB Cluster can fail at any time — a Pod restart, a node drain, or the primary Pod going down. The rest of the cluster stays up, and the Operator and the proxy in front of it recover the failed node automatically in most cases.
+A node running Percona XtraDB Cluster can fail at any time — a Pod restart, a node drain, or the primary Pod going down. The rest of the cluster stays up, and Kubernetes, Galera and the proxy in front of the cluster recover the failed node automatically in most cases. The Operator takes part only in [full cluster crash recovery](architecture-workflows.md#full-cluster-crash-recovery).
 
 This page covers what to expect when a node fails and how to confirm recovery completed. For failover when an entire site goes down, see [Set up disaster recovery](dr.md) instead.
 
@@ -8,9 +8,9 @@ This page covers what to expect when a node fails and how to confirm recovery co
 
 Restoring a single failed node is fully automatic:
 
-1. The Operator detects the failure and recreates the failed Pod.
+1. The StatefulSet controller recreates the failed Pod. If the Pod ran on a failed Kubernetes node, the controller recreates it only after the Node object is removed or the stuck Pod is force-deleted. See [Who owns what](architecture-responsibilities.md#kubernetes).
 2. The recreated Pod rejoins the cluster and catches up on the data it missed while it was down.
-3. The proxy reroutes writes to the surviving nodes.
+3. The proxy reroutes writes to a surviving node after its health check marks the failed node down.
 
 Even though recovery is automatic, there are some behaviors that affect your application. See [What to expect](#what-to-expect) for more details, and [Verify a failover completed](#verify-a-failover-completed) to confirm recovery actually completed.
 
@@ -22,7 +22,7 @@ Kubernetes probes drive recovery independently of the proxy. The readiness probe
 
 The recreated Pod rejoins the cluster and catches up on the data it missed while it was down. Galera does this via SST (State Snapshot Transfer), making a full data copy from a healthy node acting as donor. When the gap is small enough, Galera uses IST (Incremental State Transfer) as a faster way to catch up. The time it takes to catch up depends on the size of the gap and the network conditions.
 
-The node providing SST is called the *donor*. While it is donating, its `wsrep_local_state_comment` shows `Donor/Desynced`. This also matters during a typical single-node restart. If the gap is large enough to require a full SST, the healthy node that the Operator selects as donor will temporarily fail HAProxy's health check. As a result, this donor node can drop out of HAProxy rotation for the entire duration of the SST. This issue affects not only the node that is rejoining, but also the donor node itself.
+The node providing SST is called the *donor*. While it is donating, its `wsrep_local_state_comment` shows `Donor/Desynced`. This also matters during a typical single-node restart. If the gap is large enough to require a full SST, the healthy node that Galera selects as donor will temporarily fail HAProxy's health check, unless it is the only node the proxy knows about or you set `OK_IF_DONOR`. As a result, this donor node can drop out of HAProxy rotation for the entire duration of the SST. This issue affects not only the node that is rejoining, but also the donor node itself.
 
 ### Traffic rerouting
 
@@ -32,20 +32,21 @@ Traffic rerouting depends on which proxy is in use.
 
     HAProxy always treats `<cluster>-pxc-0` as the only non-backup server. Every other node is a `backup` server that receives traffic only if `pxc-0` fails its health check.
 
-    Two different things happen on two different timelines:
+    HAProxy decides only by its health check, an external script. It doesn't mark a node down because a connection attempt failed, and it doesn't resend a failed connection to another node. The check is `check inter 10000 rise 1 fall 2`:
 
-    - HAProxy reroutes the *next new connection attempt* as soon as `pxc-0` stops accepting connections — this is what your application actually feels, and it happens immediately, before any formal check completes.
-    - The health check itself (`check inter 10000 rise 1 fall 2`) requires the node to be the Galera primary component and synced, or an eligible donor. It runs roughly every ten seconds, so formally marking a failed node down takes up to about 12 seconds in the worst case.
+    - It runs every 10 seconds, and HAProxy marks a node down after two failed checks in a row. Expect new connections to keep going to a failed `pxc-0`, and fail, for 10 to 20 seconds. If `mysqld` hangs instead of refusing connections, each check can take up to its timeout, 10 seconds by default (`HA_CONNECTION_TIMEOUT` in the Secret named in `haproxy.envVarsSecret`).
+    - A node passes the check only when it is in the primary component, `Synced`, has `pxc_maint_mode` set to `DISABLED`, and doesn't reject queries (`wsrep_reject_queries` is `NONE` and `wsrep_sst_donor_rejects_queries` is `OFF`). A donor passes only if it is the only node the proxy knows about, or you set `OK_IF_DONOR` to `1` in the same Secret.
+    - When HAProxy marks a node down, it closes the sessions to that node.
 
 === "ProxySQL, native scheduler mode"
 
     ProxySQL uses its own built-in Galera support for load balancing: a monitor thread checks each node's state roughly once a second and moves nodes between hostgroups accordingly. ProxySQL always configures a backup-writer hostgroup containing every non-writer node, so a promotion candidate is always available.
 
-    Unlike HAProxy, this mode does not pin a preferred Pod. All nodes get equal connection weight, and the Operator elects the initial writer automatically — do not assume it will be `pxc-0`.
+    As with HAProxy, the writer is predictable. The Operator sets the weights: `cluster1-pxc-0` gets the highest write weight (1000000), and every other node gets 1000 minus its Pod number. So `pxc-0` is the writer while it is healthy, and the weights decide which node takes over. Reads are weighted the other way: `pxc-0` has the lowest read weight (600, against about 1000 for the others), so it receives fewer reads.
 
 === "ProxySQL, external scheduler mode"
 
-    When an [external scheduler](proxysql-conf.md#proxysql-scheduler-tech-preview) is enabled, ProxySQL elects a single writer dynamically instead of relying on native Galera hostgroups. It uses settings such as `activeFailover=1`, `singlePrimary=true`, and `maxNumWriters=1`.
+    When an [external scheduler](proxysql-conf.md#proxysql-scheduler-tech-preview) is enabled, ProxySQL elects a single writer dynamically instead of relying on native Galera hostgroups. It uses settings such as `activeFailover=1`, `singlePrimary=true`, and `maxNumWriters=1`. The same weights as in native mode apply, so `cluster1-pxc-0` is preferred as the writer.
 
     This mode's single-writer guarantee is not absolute at every instant. During a failover cycle, there can be a brief window where two nodes are both marked online as writer at once. This is a normal, transient part of how the scheduler re-elects a writer, not a malfunction. However, an application that assumes exactly one writer is reachable at all times should not treat this mode's guarantee as instantaneous.
 
@@ -53,7 +54,7 @@ Traffic rerouting depends on which proxy is in use.
 
 Automatic recovery handles the failure itself. Two behaviors are not obvious from the mechanics above, and both can affect your application directly.
 
-**Failback forcibly closes the active session.** When `pxc-0` recovers, HAProxy does not leave traffic on the backup node it failed over to. It forcibly closes the session using the backup node and forces reconnection to `pxc-0`, typically within about two seconds of `pxc-0` being marked healthy again. You may see the following error for a client that wasconnected to the backup node and then failed:
+**Failback forcibly closes the active session.** When `pxc-0` recovers, HAProxy does not leave traffic on the backup node it failed over to. It forcibly closes the session using the backup node and forces reconnection to `pxc-0`, typically within about two seconds of `pxc-0` being marked healthy again. You may see the following error for a client that was connected to the backup node and then failed:
 
 ```{.text .no-copy}
 ERROR 2013 (HY000): Lost connection to MySQL server during query
@@ -67,15 +68,21 @@ This can happen *after* `kubectl get pxc` already reports the cluster as `ready`
 ERROR 1047 (08S01): WSREP has not yet prepared node for application use
 ```
 
-Once the survivor node rejoins a Primary Component and starts acting as SST donor for the returning nodes, it enters the `Donor` state. HAProxy's default health check won't route to a Donor node. You can set the `OK_IF_DONOR` environment variable to allow HAProxy to route to a Donor node. However, this does nothing while the survivor is still non-Primary. This is a Galera quorum issue, and no proxy setting can route around a node refusing queries at the database layer.
+This is a Galera quorum issue, and no proxy setting can route around a node that refuses queries at the database layer. What happens next is driven by the probes and the Operator, not by the survivor alone:
 
-Recovery from the non-Primary state is usually automatic. Once the other two nodes are recreated and can reach the survivor again, the cluster reassesses quorum and re-forms a Primary Component on its own. If the other nodes are confirmed down rather than just slow to return, you can force the survivor to form a new primary by itself:
+1. The survivor's liveness probe fails, because the node is outside the primary component. After about 30 seconds, Kubernetes restarts the `pxc` container. See [Health checks and probes](architecture-probes.md#what-this-means-for-users).
+2. If no database node is in a primary component when the restarted container starts, and the node has Galera state on its volume, it doesn't start `mysqld`. It logs `FULL_PXC_CLUSTER_CRASH` and its `seqno`, and waits. The recreated Pods do the same.
+3. The Operator starts recovery only when all database Pods are `Running` and every one of them is waiting like this. A Pod that is still `Pending`, for example because its Kubernetes node is gone, blocks recovery. Then the Operator picks the node with the highest `seqno` and starts it as a new primary component. The other nodes join it. See [Full cluster crash recovery workflow](architecture-workflows.md#full-cluster-crash-recovery).
 
-```{sql data-prompt="mysql> "}
-mysql> SET GLOBAL wsrep_provider_options='pc.bootstrap=YES';
-```
+This is automatic with `pxc.autoRecovery: true`, the default. If you turned automatic recovery off, or the Operator refused it, follow [Crash recovery](recovery.md).
 
-Only do this once you've confirmed the other nodes are actually down. If one of them is still up and serving as Primary elsewhere — for example, after a network split — bootstrapping a second primary creates two independent clusters with diverging data.
+If the other nodes are still running as a primary component, for example after a network partition, the restarted node finds them and rejoins with IST or SST.
+
+While the recovered node sends an SST to the others, it is in the `Donor` state. HAProxy's health check accepts a Donor node only when it is the only node the proxy knows about, or when you set `OK_IF_DONOR` to `1`. See [Rejoining the cluster](#rejoining-the-cluster).
+
+!!! warning
+
+    Don't force a primary component with `SET GLOBAL wsrep_provider_options='pc.bootstrap=YES'` while the Operator is running. The container restart discards the setting, and a manual bootstrap races with the Operator's own recovery. If one of the other nodes is still up as a primary elsewhere, you create two independent clusters with diverging data.
 
 ## Take a node out of rotation for maintenance
 
@@ -105,7 +112,7 @@ mysql> SET GLOBAL wsrep_desync=ON;
 mysql> SET GLOBAL wsrep_desync=OFF;
 ```
 
-`wsrep_desync` is not a drain command. It doesn't remove the node from the Kubernetes Service or from either proxy's rotation. Clients can still be routed to it while it's set. It only lets the node fall behind on replication without blocking the rest of the cluster's flow control, which is what makes it safe to run a long operation on that node without stalling everyone else's writes.
+`wsrep_desync` is not a drain command. It doesn't remove the node from the Kubernetes Service, and the Pod stays `Ready`. The node reports the `Donor/Desynced` state, which HAProxy's health check rejects by default, so HAProxy takes the node out of rotation unless it is the only node available or you set `OK_IF_DONOR` to `1`. It lets the node fall behind on replication without blocking the rest of the cluster's flow control, which is what makes it safe to run a long operation on that node without stalling everyone else's writes.
 
 ## Verify a failover completed
 
@@ -144,7 +151,7 @@ mysql> SET GLOBAL wsrep_desync=OFF;
 ## What not to do
 
 * Do not assume `kubectl get pxc` reporting `ready` means every existing connection is still valid, or that every node has rejoined. See [What to expect](#what-to-expect) and [Verify a failover completed](#verify-a-failover-completed).
-* Do not run `pc.bootstrap=YES` unless you've confirmed the other nodes are actually down. Running it while another node is still Primary elsewhere causes a split-brain.
+* Do not run `pc.bootstrap=YES` or bootstrap a node by hand while the Operator is running. Follow [Crash recovery](recovery.md) instead. A second primary component causes a split brain.
 
 ## See also
 

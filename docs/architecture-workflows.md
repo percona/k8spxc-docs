@@ -26,7 +26,7 @@ sequenceDiagram
 **What happens:**
 
 * The writer is always `cluster1-pxc-0`. HAProxy chooses it by its number, not by its Galera state. The other nodes are backup servers, listed from the highest number down.
-* HAProxy checks every node every 10 seconds. A node passes the check when it belongs to the primary component, is `Synced` (or a donor, if allowed), has `pxc_maint_mode` set to `DISABLED`, and accepts queries. After two failed checks, the node is marked down.
+* HAProxy checks every node every 10 seconds. A node passes the check when it belongs to the primary component, is `Synced` (or a donor, when it is the only node the proxy knows about or you set `OK_IF_DONOR` to `1`), has `pxc_maint_mode` set to `DISABLED`, and accepts queries. After two failed checks in a row, the node is marked down and HAProxy closes its sessions, so a failure is noticed after 10 to 20 seconds. HAProxy doesn't mark a node down because a connection failed.
 * When `cluster1-pxc-0` is down, writes go to the node with the highest number, for example `cluster1-pxc-2`.
 * When `cluster1-pxc-0` passes the check again, HAProxy closes the connections to the backup server and new connections go to `cluster1-pxc-0`. Applications must reconnect.
 * The `cluster1-haproxy-replicas` Service (port 3306 on the Service, 3307 in HAProxy) spreads connections across all nodes in round-robin. To exclude `cluster1-pxc-0` from reads, set [`haproxy.exposeReplicas.onlyReaders`](operator.md#haproxyexposereplicasonlyreaders).
@@ -34,7 +34,7 @@ sequenceDiagram
 
 ### ProxySQL
 
-In native mode, ProxySQL works in single-writer mode with four hostgroups: 11 for the writer, 10 for readers, 12 for backup writers, and 13 for offline nodes. The writer is `cluster1-pxc-0`, with a higher weight than the others. The ProxySQL Pods form a ProxySQL cluster and share their configuration. With the external scheduler enabled, weighted writer selection prefers `cluster1-pxc-0`, and ProxySQL clustering is disabled. See [Configuring load balancing with ProxySQL](proxysql-conf.md) and [ProxySQL scheduler](proxysql-conf.md#proxysql-scheduler-tech-preview).
+In native mode, ProxySQL works in single-writer mode with four hostgroups: 11 for the writer, 10 for readers, 12 for backup writers, and 13 for offline nodes. The writer is `cluster1-pxc-0`, with the highest write weight (1000000, against 1000 minus the Pod number for the others) and the lowest read weight. The ProxySQL Pods form a ProxySQL cluster and share their configuration. With the external scheduler enabled, weighted writer selection prefers `cluster1-pxc-0`, and ProxySQL clustering is disabled. See [Configuring load balancing with ProxySQL](proxysql-conf.md) and [ProxySQL scheduler](proxysql-conf.md#proxysql-scheduler-tech-preview).
 
 ### Node discovery
 

@@ -52,7 +52,7 @@ For an overview of the layers, see [Design and architecture](architecture.md#the
 
 **Health as the Pod probes see it:**
 
-* A database Pod is *ready* only when its node belongs to the primary component and is `Synced`. A node that is a donor counts as ready by default. Set the `AVAILABLE_WHEN_DONOR` environment variable of the `pxc` container to a value other than `1` to make a donor not ready.
+* A database Pod is *ready* only when its node belongs to the primary component and is `Synced`. A node that is a donor counts as ready by default. Set the `AVAILABLE_WHEN_DONOR` environment variable of the `pxc` container to a value other than `1` to make a donor not ready. HAProxy's own health check has a separate switch, `OK_IF_DONOR`, which is off by default. See [In-cluster failover](failover-in-cluster.md#traffic-rerouting).
 * The liveness probe tolerates long startups, SST and recovery, so a node that is busy catching up is not killed. A node that stays outside the primary component for about 30 seconds is restarted.
 * See [Health checks and probes](architecture-probes.md) for what the probes check and who acts on their result.
 
@@ -98,7 +98,7 @@ You are responsible for:
 
 !!! warning "Certificates expire without cert-manager"
 
-    If cert-manager is not installed, the Operator generates self-signed certificates once, when the cluster is created. They are valid for 90 days, and the Operator does not renew them. Plan their renewal, or [use cert-manager](tls-cert-manager.md). See [Update certificates](tls-update.md).
+    If cert-manager is not installed, the Operator generates self-signed certificates once, when the cluster is created. Starting with version 1.19.0, they are valid for 90 days (the CA for three years), and the Operator does not renew them. Plan their renewal, or [use cert-manager](tls-cert-manager.md). See [Update certificates](tls-update.md).
 
 ### Unsafe configurations
 
