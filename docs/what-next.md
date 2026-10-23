@@ -2,7 +2,14 @@
 
 Congratulations! You have completed all the steps in the Get started guide. 
 
-You have the following options to move forward with the Operator:
+Prepare the cluster for real use:
+
+* Create a separate user for your application, so that it doesn't connect as `root`. See [Create users in the Custom Resource](users.md#create-users-in-the-custom-resource)
+* Back up on a schedule. See [Make scheduled backups](backups-scheduled.md)
+* Learn how encryption and certificates work in [Transport Layer Security (TLS)](TLS.md)
+* Understand what the Operator does and what stays with you. See [Design and architecture](architecture.md)
+
+You also have the following options to move forward with the Operator:
 
 * Deepen your monitoring insights by setting up [Kubernetes monitoring with PMM](monitor-kubernetes.md)
 * Control Pods assignment on specific Kubernetes Nodes by setting up [affinity / anti-affinity](constraints.md)

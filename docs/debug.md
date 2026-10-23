@@ -6,6 +6,20 @@ Percona Operator for MySQL uses [Custom Resources :octicons-link-external-16:](h
 
 * `PerconaXtraDBClusterBackup` and `PerconaXtraDBClusterRestore` Custom Resources contain options for Percona XtraBackup used to backup Percona XtraDB Cluster and to restore it from backups (`pxc-backup` and `pxc-restore` shortnames are available for them).
 
+## Which layer is it?
+
+Problems can come from four layers: your configuration, the Operator, Kubernetes, or Percona XtraDB Cluster itself. See [Who owns what](architecture-responsibilities.md) for what each layer does.
+
+--8<-- "triage-steps.md"
+
+## Where to look first
+
+Find the symptom, check the place named in the second column, and follow the link for the fix. The same table is in [Who owns what](architecture-responsibilities.md#who-owns-this-failure).
+
+--8<-- "symptoms-table.md"
+
+## Check the Custom Resource
+
 The first thing you can check for the Custom Resource is to query it with `kubectl get` command:
 
 
