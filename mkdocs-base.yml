@@ -332,6 +332,7 @@ nav:
           - "Versions compatibility": versions.md
           - "Operator API": api.md
           - "Frequently Asked Questions": faq.md
+          - "Glossary": glossary.md
           - "Old releases (documentation archive)": https://docs.percona.com/legacy-documentation/
           - Development documentation:
               - "Building and testing the Operator": https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.18.0/e2e-tests/README.md

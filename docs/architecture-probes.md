@@ -1,8 +1,8 @@
 # Health checks and probes
 
-Kubernetes decides whether a container is healthy by running *probes*: small checks it runs on a schedule. It acts on the results without asking the Operator or Galera:
+Kubernetes decides whether a container is healthy by running *probes*: small checks it runs on a schedule. It acts on the results without asking the Operator or [Galera](glossary.md#galera):
 
-* The **readiness probe** decides whether a Pod is *ready*. Only a ready Pod receives traffic through a Service: Kubernetes adds it to the endpoints of the Services that select it and removes it when the probe fails. Ready Pods also count as available and let the next Pod of a StatefulSet start.
+* The **readiness probe** decides whether a Pod is *ready*. Only a ready Pod receives traffic through a Service: Kubernetes adds it to the endpoints of the Services that select it and removes it when the probe fails. Ready Pods also count as available and let the next Pod of a [StatefulSet](glossary.md#statefulset) start.
 * The **liveness probe** decides whether a container is *alive*. When it fails, the kubelet restarts the container.
 
 !!! note "What is the kubelet"
@@ -21,15 +21,15 @@ The Operator sets the probes for the `pxc` and `haproxy` containers. The probe s
 
 **Readiness** (`readiness-check.sh`). The Pod is ready when the node:
 
-* belongs to the primary component (`wsrep_cluster_status` is `Primary`), and
-* is `Synced` (`wsrep_local_state` is `4`), or is a donor or desynced (`wsrep_local_state` is `2`) and the `AVAILABLE_WHEN_DONOR` environment variable is `1`, the default.
+* belongs to the [primary component](glossary.md#primary-component) (`wsrep_cluster_status` is `Primary`), and
+* is `Synced` (`wsrep_local_state` is `4`), or is a [donor](glossary.md#donor) or desynced (`wsrep_local_state` is `2`) and the `AVAILABLE_WHEN_DONOR` environment variable is `1`, the default.
 
 The probe doesn't check `pxc_maint_mode` or `wsrep_reject_queries`. By default, a donor and a node desynced with `wsrep_desync=ON` stay ready. If you set `AVAILABLE_WHEN_DONOR` to another value, they become not ready.
 
 **Liveness** (`liveness-check.sh`). The container is alive when the node belongs to the primary component. It doesn't need to be `Synced`. The probe also passes while the node:
 
 * is starting up: `mysqld` reports its start-up progress, including InnoDB crash recovery, and the probe doesn't kill a server that is still starting;
-* receives an SST, or recovers its Galera position at start;
+* receives an [SST](glossary.md#sst), or recovers its Galera position at start;
 * has reached the [SST retry limit](sst-retry-limit.md).
 
 **Special cases.** Two situations override both checks:
@@ -79,7 +79,7 @@ flowchart LR
 
 ### Proxy backends
 
-The `cluster1-pxc` headless Service lists only ready database Pods. The proxies [discover database nodes](architecture-workflows.md#node-discovery) from this Service. So a node that is not ready is removed from the proxy configuration, and a node that becomes ready is added, about half a minute after the change.
+The `cluster1-pxc` [headless Service](glossary.md#headless-service) lists only ready database Pods. The proxies [discover database nodes](architecture-workflows.md#node-discovery) from this Service. So a node that is not ready is removed from the proxy configuration, and a node that becomes ready is added, about half a minute after the change.
 
 The database nodes find each other through a different Service, `cluster1-pxc-unready`, which lists all Pods whether they are ready or not. A node that is not ready yet can still find its peers and join the cluster.
 
@@ -97,7 +97,7 @@ This is why a node waiting for full cluster crash recovery reports itself as rea
 
 ### Node drains
 
-The default PodDisruptionBudget allows one database Pod to be unavailable (`pxc.podDisruptionBudget.maxUnavailable: 1`). A Pod that is not ready counts as unavailable. While one database Pod is not ready, for example during a long SST, Kubernetes refuses to evict another one: `kubectl drain` keeps retrying, and managed node pool upgrades wait. Some cloud providers evict the Pod anyway after their own timeout.
+The default [PodDisruptionBudget](glossary.md#pdb) allows one database Pod to be unavailable (`pxc.podDisruptionBudget.maxUnavailable: 1`). A Pod that is not ready counts as unavailable. While one database Pod is not ready, for example during a long SST, Kubernetes refuses to evict another one: `kubectl drain` keeps retrying, and managed node pool upgrades wait. Some cloud providers evict the Pod anyway after their own timeout.
 
 The same applies to HAProxy and ProxySQL Pods with their PodDisruptionBudgets.
 
@@ -106,20 +106,20 @@ The same applies to HAProxy and ProxySQL Pods with their PodDisruptionBudgets.
 The Operator reads Pod readiness, too:
 
 * **Cluster status.** The cluster is `ready` only when every database and proxy Pod is ready. When one Pod becomes not ready, the cluster goes back to `initializing`, and everything that waits for a `ready` cluster waits as well: scheduled backups, creation of custom users, automatic upgrades. See [What `ready` means](architecture-reconciliation.md#what-ready-means).
-* **Smart Update.** After it restarts a Pod, the Operator waits until the `pxc` container is ready, and then until the node is `Synced`, before it moves on. It waits for up to 2 hours, or for `pxc.livenessProbes.initialDelaySeconds` seconds if you changed that value from the default 300. See [How Smart Update works](architecture-reconciliation.md#how-smart-update-works).
+* **[Smart Update](glossary.md#smart-update).** After it restarts a Pod, the Operator waits until the `pxc` container is ready, and then until the node is `Synced`, before it moves on. It waits for up to 2 hours, or for `pxc.livenessProbes.initialDelaySeconds` seconds if you changed that value from the default 300. See [How Smart Update works](architecture-reconciliation.md#how-smart-update-works).
 * **Database connections.** When the Operator needs to query the database directly, for example to read the server version or to set up [cross-site replication](replication.md), it connects only to ready Pods.
 
 ## Who acts on liveness
 
 Only the kubelet. When the liveness probe fails, the kubelet stops the `pxc` container, with the usual grace period, and starts it again. After repeated restarts, the Pod goes into `CrashLoopBackOff`, and the kubelet waits longer before each next start, up to 5 minutes.
 
-A restarted node rejoins the cluster with IST, or with a full SST if the donor's gcache doesn't cover the gap. A liveness restart can turn a short problem into a long state transfer.
+A restarted node rejoins the cluster with [IST](glossary.md#ist), or with a full SST if the donor's [gcache](glossary.md#gcache) doesn't cover the gap. A liveness restart can turn a short problem into a long state transfer.
 
 ## What this means for users
 
 The probes act on their own, and they don't know what you are doing on the node. Keep them in mind in these situations:
 
-* **Network partition or quorum loss.** A node outside the primary component fails its liveness probe and is restarted after about 30 seconds. Galera alone would let the node wait and rejoin when the network comes back; on Kubernetes, the node restarts instead. If the cluster lost quorum, all remaining nodes restart, find no primary component to join, and wait for [full cluster crash recovery](architecture-workflows.md#full-cluster-crash-recovery).
+* **Network partition or [quorum](glossary.md#quorum) loss.** A node outside the primary component fails its liveness probe and is restarted after about 30 seconds. Galera alone would let the node wait and rejoin when the network comes back; on Kubernetes, the node restarts instead. If the cluster lost quorum, all remaining nodes restart, find no primary component to join, and wait for [full cluster crash recovery](architecture-workflows.md#full-cluster-crash-recovery).
 * **A slow or stalled server.** If `mysqld` doesn't answer the liveness query within 4 seconds, the liveness probe fails and the container is restarted. Common causes are a stalled disk, CPU throttling by the container's CPU limit, and an overloaded server. Check the Pod events for `Liveness probe failed` before you look for a crash in the MySQL error log.
 * **Manual maintenance on a running node.** Anything that takes the node out of the primary component for more than about 30 seconds gets the container restarted: disconnecting the node from the cluster, changing the Galera provider settings, or stopping `mysqld`. To work on a node without `mysqld` running, use the `sleep-forever` file. See [Avoid the restart-on-fail loop](debug-shell.md#avoid-the-restart-on-fail-loop-for-percona-xtradb-cluster-containers).
 * **The `monitor` user.** Every probe logs in as `monitor` through the admin port 33062. If you change its password directly in MySQL instead of in the users Secret, drop it, or lock it, the probes fail on every node: all database Pods become not ready and are restarted one after another. Change system user passwords only through the Secret. See [System users](users.md#system-users).
@@ -128,7 +128,7 @@ The probes act on their own, and they don't know what you are doing on the node.
 
 ## Tune the probes
 
-Change the probe settings in the Custom Resource with the `pxc.readinessProbes`, `pxc.livenessProbes`, `haproxy.readinessProbes` and `haproxy.livenessProbes` subsections. See [Custom Resource options](operator.md#pxcreadinessprobesinitialdelayseconds).
+Change the probe settings in the [Custom Resource](glossary.md#custom-resource) with the `pxc.readinessProbes`, `pxc.livenessProbes`, `haproxy.readinessProbes` and `haproxy.livenessProbes` subsections. See [Custom Resource options](operator.md#pxcreadinessprobesinitialdelayseconds).
 
 * Probe settings are part of the Pod template. Changing them restarts the Pods with your [update strategy](architecture-reconciliation.md#update-strategies).
 * If heavy load makes the liveness probe time out, raise `pxc.livenessProbes.timeoutSeconds` or `failureThreshold` rather than turning the probe off. The scripts use the new timeout for their query, too.

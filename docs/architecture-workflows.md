@@ -25,8 +25,8 @@ sequenceDiagram
 
 **What happens:**
 
-* The writer is always `cluster1-pxc-0`. HAProxy chooses it by its number, not by its Galera state. The other nodes are backup servers, listed from the highest number down.
-* HAProxy checks every node every 10 seconds. A node passes the check when it belongs to the primary component, is `Synced` (or a donor, when it is the only node the proxy knows about or you set `OK_IF_DONOR` to `1`), has `pxc_maint_mode` set to `DISABLED`, and accepts queries. After two failed checks in a row, the node is marked down and HAProxy closes its sessions, so a failure is noticed after 10 to 20 seconds. HAProxy doesn't mark a node down because a connection failed.
+* The writer is always `cluster1-pxc-0`. HAProxy chooses it by its number, not by its [Galera](glossary.md#galera) state. The other nodes are backup servers, listed from the highest number down.
+* HAProxy checks every node every 10 seconds. A node passes the check when it belongs to the [primary component](glossary.md#primary-component), is `Synced` (or a [donor](glossary.md#donor), when it is the only node the proxy knows about or you set `OK_IF_DONOR` to `1`), has `pxc_maint_mode` set to `DISABLED`, and accepts queries. After two failed checks in a row, the node is marked down and HAProxy closes its sessions, so a failure is noticed after 10 to 20 seconds. HAProxy doesn't mark a node down because a connection failed.
 * When `cluster1-pxc-0` is down, writes go to the node with the highest number, for example `cluster1-pxc-2`.
 * When `cluster1-pxc-0` passes the check again, HAProxy closes the connections to the backup server and new connections go to `cluster1-pxc-0`. Applications must reconnect.
 * The `cluster1-haproxy-replicas` Service (port 3306 on the Service, 3307 in HAProxy) spreads connections across all nodes in round-robin. To exclude `cluster1-pxc-0` from reads, set [`haproxy.exposeReplicas.onlyReaders`](operator.md#haproxyexposereplicasonlyreaders).
@@ -74,9 +74,9 @@ sequenceDiagram
 
 1. You create a `PerconaXtraDBClusterBackup` object. See [Make on-demand backup](backups-ondemand.md).
 2. The Operator checks the storage configuration and waits until the cluster is `ready`. To back up a cluster that isn't `ready`, set `unsafeFlags.backupIfUnhealthy`.
-3. Backups run in parallel by default. If you set [`backup.allowParallel`](operator.md#backupallowparallel) to `false`, the Operator takes the `pxc-cluster1-backup-lock` Lease, so that backups don't overlap. Other backups wait with an empty `status.state` until the lock is free. See [Multiple backups](backups.md#multiple-backups).
-4. The Operator creates the Job `xb-backup1` and sets the state to `Starting`. The Job runs the Galera arbitrator (`garbd`), joins the cluster, and requests a full SST. The donor is a `Synced` node other than the writer `cluster1-pxc-0`, usually the node with the highest number. While it sends the data, the donor node is in the `Donor` state.
-5. The Job streams the data to S3-compatible storage or Azure, or to a new PVC.
+3. Backups run in parallel by default. If you set [`backup.allowParallel`](operator.md#backupallowparallel) to `false`, the Operator takes the `pxc-cluster1-backup-lock` [Lease](glossary.md#lease), so that backups don't overlap. Other backups wait with an empty `status.state` until the lock is free. See [Multiple backups](backups.md#multiple-backups).
+4. The Operator creates the Job `xb-backup1` and sets the state to `Starting`. The Job runs the Galera [arbitrator](glossary.md#arbitrator) (`garbd`), joins the cluster, and requests a full [SST](glossary.md#sst). The donor is a `Synced` node other than the writer `cluster1-pxc-0`, usually the node with the highest number. While it sends the data, the donor node is in the `Donor` state.
+5. The Job streams the data to S3-compatible storage or Azure, or to a new [PVC](glossary.md#pvc).
 6. The Operator releases the lock, if it took one, and sets the backup status.
 
 The backup goes through these states:
@@ -89,7 +89,7 @@ The backup goes through these states:
 
 `startingDeadlineSeconds` limits the time from backup object creation until the Job is created, that is, while the state is empty. It has no default, so without it a backup waits without a time limit. `runningDeadlineSeconds` limits the time from Job creation until the backup reaches `Running`. Its default is 1200 seconds. `suspendedDeadlineSeconds` limits time spent suspended. The Job's `activeDeadlineSeconds` limits its active duration. When a configured deadline is exceeded, the backup is marked `Failed`. See [Backup Custom Resource options](backup-cr.md).
 
-When you delete a backup object, the `percona.com/delete-backup` finalizer removes the backup files from storage first.
+When you delete a backup object, the `percona.com/delete-backup` [finalizer](glossary.md#finalizer) removes the backup files from storage first.
 
 !!! note "XtraBackup sidecar method (tech preview)"
 
@@ -182,7 +182,7 @@ stateDiagram-v2
 4. **Preparing Cluster.** The Job `prepare-job-*` starts `mysqld` on the restored data, resets the system user passwords to the ones in the cluster's internal Secret, and removes the Galera state files so that the node starts a new cluster.
 5. **Point-in-time recovering** (only with a `pitr` section in the restore). The Operator starts the cluster with one database node and no proxies, so clients cannot connect. The Job `pitr-job-*` replays binlogs up to the target.
 6. **Starting Cluster.** The Operator restores the original sizes and unpauses the cluster. The other nodes start with empty volumes and get the data from `cluster1-pxc-0` through SST.
-7. **Succeeded** when the cluster has the original sizes, the Operator has applied the latest Custom Resource generation, and the cluster is `ready`. Until then, the restore waits in **Starting Cluster**, with no time limit. **Failed** when a check fails.
+7. **Succeeded** when the cluster has the original sizes, the Operator has applied the latest [Custom Resource](glossary.md#custom-resource) generation, and the cluster is `ready`. Until then, the restore waits in **Starting Cluster**, with no time limit. **Failed** when a check fails.
 
 !!! warning "A restore deletes data volumes and stops the cluster"
 

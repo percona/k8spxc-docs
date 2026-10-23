@@ -1,10 +1,10 @@
 # Who owns what
 
-When something happens in the cluster, the question is which layer reacts: the Operator, Percona XtraDB Cluster (Galera), Kubernetes, or you. This page answers it at a glance. For the detail of what you do and what the Operator does in each area, and for what never to change by hand, see [Responsibilities by area](operator-boundaries.md). For an overview of the layers, see [Design and architecture](architecture.md#the-four-layers).
+When something happens in the cluster, the question is which layer reacts: the Operator, Percona XtraDB Cluster ([Galera](glossary.md#galera)), Kubernetes, or you. This page answers it at a glance. For the detail of what you do and what the Operator does in each area, and for what never to change by hand, see [Responsibilities by area](operator-boundaries.md). For an overview of the layers, see [Design and architecture](architecture.md#the-four-layers).
 
 Two rules explain most of the behavior:
 
-* **You change the cluster only through the Custom Resource and the user Secrets.** The Operator turns them into Kubernetes objects, and reverts manual changes to the fields it manages.
+* **You change the cluster only through the [Custom Resource](glossary.md#custom-resource) and the user Secrets.** The Operator turns them into Kubernetes objects, and reverts manual changes to the fields it manages.
 * **Each layer keeps its own part alive.** Kubernetes keeps Pods running, Galera keeps the data consistent, and the Operator keeps the objects and the day-2 tasks matching the Custom Resource.
 
 ## Who reacts when something happens
@@ -29,7 +29,7 @@ A [Custom Resource :octicons-link-external-16:](https://kubernetes.io/docs/conce
 
 **The Custom Resource is the source of truth. Change the cluster by editing the CR.**
 
-The Operator compares the CR against what is running about every five seconds and corrects any difference it finds. A change you make directly to a StatefulSet, a Service, a Pod, or a managed Secret is drift. The Operator overwrites it, usually within seconds. If a change survives, this means the Operator does not manage that field yet. This doesn't mean the change was accepted.
+The Operator compares the CR against what is running about every five seconds and corrects any difference it finds. A change you make directly to a [StatefulSet](glossary.md#statefulset), a Service, a Pod, or a managed Secret is drift. The Operator overwrites it, usually within seconds. If a change survives, this means the Operator does not manage that field yet. This doesn't mean the change was accepted.
 
 * **Edits to the fields the Operator manages do not persist.** The Operator reverts them and doesn't raise an event.
 * **Edits outside the CR can still cause damage before they are reverted.**
@@ -44,7 +44,7 @@ The following table shows what the Operator handles and what stays with you. Sel
 | [Backups](operator-boundaries.md#back-up-the-database) | - Runs scheduled and on-demand backups.<br>- Enforces deadlines.<br>- Suspends backups on an unhealthy cluster. | - Verify that backups restore.<br>- Set retention.<br>- Keep off-cluster copies. | - Delete a running backup Job.<br>- Run `xtrabackup` by hand against a node. |
 | [Restore and point-in-time recovery (PITR)](operator-boundaries.md#restore-and-point-in-time-recovery) | - Pauses the cluster, restores, and restarts it.<br>- Detects binary log gaps. | - Take a new full backup after a gap.<br>- Pick the restore target. | - Edit the cluster CR during a restore.<br>- Run two restores at once. |
 | [TLS](operator-boundaries.md#manage-certificates) | - Issues certificates.<br>- Renews them **only via cert-manager**.<br>- Applies rotations without downtime. | - Rotate certificates yourself if cert-manager is not installed.<br>- Manage any certificate you supplied. | - Edit the `ssl` or `ssl-internal` Secrets in place.<br>- Delete them to re-issue certificates. |
-| [Users and secrets](operator-boundaries.md#users-and-secrets) | - Creates and rotates the system users.<br>- Propagates password changes to MySQL and the proxies. | - Set passwords in the user Secret.<br>- Manage your own application users. | - Run `ALTER USER` on a system user in MySQL.<br>- Edit the `internal-` Secret.<br>- Drop a system user. |
+| [Users and secrets](operator-boundaries.md#users-and-secrets) | - Creates the system users with the cluster.<br>- Applies the passwords you change in the Secret to MySQL and the proxies. | - Set passwords in the user Secret.<br>- Manage your own application users. | - Run `ALTER USER` on a system user in MySQL.<br>- Edit the `internal-` Secret.<br>- Drop a system user. |
 | [Storage](operator-boundaries.md#storage) | - Grows Persistent Volume Claims (PVCs) when the CR asks, and automatically when autoscaling is on. | - Pick a StorageClass that supports expansion.<br>- Watch capacity. | - Resize or delete PVCs by hand.<br>- Shrink storage. |
 | [Cross-site replication](operator-boundaries.md#cross-site-replication) | - Sets up the replication channels from the CR.<br>- Removes channels that are not in the CR.<br>- Logs when a channel isn't running. | - Provide routable endpoints and matching replication passwords.<br>- Monitor replication and repair it. | - Create replication channels in MySQL by hand. |
 | [Upgrades](operator-boundaries.md#database-upgrades) | - Coordinates version upgrades node by node and keeps quorum. | - Decide when to upgrade.<br>- Run major version upgrades as a planned change. | - Bypass SmartUpdate.<br>- Edit image tags to jump a major version. |
@@ -55,7 +55,7 @@ The Operator reads the Custom Resource, compares it with what exists in Kubernet
 
 **The Operator does not:**
 
-* Control Galera at runtime. It writes the Galera configuration, but quorum, SST and IST, and donor selection are handled by Galera itself.
+* Control Galera at runtime. It writes the Galera configuration, but [quorum](glossary.md#quorum), [SST](glossary.md#sst) and [IST](glossary.md#ist), and [donor](glossary.md#donor) selection are handled by Galera itself.
 * Handle Kubernetes node failures. It does not force-delete Pods stuck on a failed node or react to node taints. Kubernetes recreates a Pod from an unreachable node elsewhere only after the Node object is removed or the stuck Pod is force-deleted.
 * Validate MySQL options. The contents of `spec.pxc.configuration` go into a ConfigMap as is.
 * Install or upgrade CRDs and RBAC.
@@ -71,9 +71,9 @@ For each area in detail, see [Responsibilities by area](operator-boundaries.md).
 **Galera does:**
 
 * Replicate every transaction to all nodes and certify it, resolving write conflicts.
-* Maintain quorum and decide which nodes form the primary component that serves queries.
+* Maintain quorum and decide which nodes form the [primary component](glossary.md#primary-component) that serves queries.
 * Slow down writes with flow control when a node falls behind.
-* Bring a joining node up to date: with IST from another node's write-set cache (gcache) if possible, or with a full SST through Percona XtraBackup otherwise. Galera also chooses the donor node.
+* Bring a joining node up to date: with IST from another node's write-set cache ([gcache](glossary.md#gcache)) if possible, or with a full SST through Percona XtraBackup otherwise. Galera also chooses the donor node.
 
 **What the Operator sets up for Galera:**
 
@@ -101,9 +101,9 @@ For each area in detail, see [Responsibilities by area](operator-boundaries.md).
 
 * **Schedule Pods.** The Operator only writes the affinity rules, node selectors, tolerations, priority class and topology spread constraints you specify. The default anti-affinity is *required* on `kubernetes.io/hostname`: three database Pods need three schedulable nodes. Otherwise a Pod stays `Pending`, and after about a minute the Custom Resource status shows the scheduler's message.
 * **Provide storage.** The CSI driver and StorageClass provision volumes, bind them to zones, and expand file systems. A ReadWriteOnce volume ties the Pod to the node or zone where the volume can attach.
-* **Run the network and DNS.** The database nodes find each other, and the proxies find the database nodes, by looking up the headless Services in cluster DNS. If DNS is broken, nodes cannot form or join the cluster, proxies lose their backends, and crash detection stops working.
+* **Run the network and DNS.** The database nodes find each other, and the proxies find the database nodes, by looking up the [headless Services](glossary.md#headless-service) in cluster DNS. If DNS is broken, nodes cannot form or join the cluster, proxies lose their backends, and crash detection stops working.
 * **Provision load balancers.** For `LoadBalancer` Services, the cloud provider creates the load balancer. Firewalls and source ranges are yours and the provider's to manage.
-* **Manage the Pod lifecycle.** Run probes, restart failed containers, enforce PodDisruptionBudgets during node drains, and retry failed Jobs.
+* **Manage the Pod lifecycle.** Run probes, restart failed containers, enforce [PodDisruptionBudgets](glossary.md#pdb) during node drains, and retry failed Jobs.
 * **Collect garbage.** Delete objects owned by the Custom Resource when you delete it.
 
 **Kubernetes does not:**

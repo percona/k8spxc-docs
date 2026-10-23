@@ -1,6 +1,6 @@
 # How the Operator reacts to changes
 
-This page explains what the Operator does after you change the Custom Resource: when it acts, in which order, which changes restart Pods, and what the cluster status tells you while the change is applied.
+This page explains what the Operator does after you change the [Custom Resource](glossary.md#custom-resource): when it acts, in which order, which changes restart Pods, and what the cluster status tells you while the change is applied.
 
 ## What a reconcile is
 
@@ -9,7 +9,7 @@ The `PerconaXtraDBCluster` Custom Resource describes the *desired state* of the 
 ## What triggers a reconcile
 
 * **A change to the Custom Resource**, or to the users Secret named in `spec.secretsName`.
-* **A periodic re-check.** After each successful pass, the Operator reconciles the cluster again about 5 seconds later. Because of this, manual edits to the objects the Operator manages, such as a StatefulSet or a Service, are reverted within seconds. Make changes in the Custom Resource instead.
+* **A periodic re-check.** After each successful pass, the Operator reconciles the cluster again about 5 seconds later. Because of this, manual edits to the objects the Operator manages, such as a [StatefulSet](glossary.md#statefulset) or a Service, are reverted within seconds. Make changes in the Custom Resource instead.
 * **A retry after an error.** If a pass fails, the Operator retries it with an increasing delay.
 
 !!! note "Why the Operator seems to do nothing after an error"
@@ -68,7 +68,7 @@ flowchart TD
 When a change requires restarting Pods, the `updateStrategy` option in the Custom Resource decides how it happens. See also [Update strategies](update.md#update-strategies).
 
 * **`SmartUpdate`** (default). The Operator restarts database Pods itself, one at a time, and is aware of the client traffic: it asks the proxy which node currently receives writes and restarts that node last. With ProxySQL, it also waits until each restarted node is back in its hostgroup before it moves on. Proxy Pods use a regular Kubernetes rolling update.
-* **`RollingUpdate`**. Kubernetes restarts the Pods with a native StatefulSet rolling update, without Galera awareness. It waits for each Pod to become ready, but it doesn't pause for a running backup, doesn't wait for ProxySQL to bring the node online, doesn't require a ready proxy, and doesn't stop early when a Pod can't start.
+* **`RollingUpdate`**. Kubernetes restarts the Pods with a native StatefulSet rolling update, without [Galera](glossary.md#galera) awareness. It waits for each Pod to become ready, but it doesn't pause for a running backup, doesn't wait for ProxySQL to bring the node online, doesn't require a ready proxy, and doesn't stop early when a Pod can't start.
 * **`OnDelete`**. Nothing restarts until you delete a Pod; Kubernetes then recreates it with the new configuration. See [Manual upgrade](update_manually.md).
 
 ### How Smart Update works
@@ -128,8 +128,8 @@ The cluster is `ready` only when all of the following are true:
 If the cluster stays in `initializing` for a long time, one of the conditions above is not met. A `ready` cluster also goes back to `initializing` as soon as one of its Pods becomes unready, for example after a container restart. Compare `status.pxc.ready` with `status.pxc.size`, and the same fields under `status.haproxy` or `status.proxysql`, to see which component is affected. The usual causes:
 
 * **A rollout is pending.** Some Pods still run the previous revision, for example because a Smart Update is waiting for a backup to finish or for a node to become `Synced`. Check the Operator logs.
-* **A database node isn't `Synced`.** The node is still receiving an SST, or it cannot join the cluster. Check the `pxc` container logs.
-* **A PVC resize is in progress.** The cluster stays in `initializing` until the resize finishes. Check the PVC events.
+* **A database node isn't `Synced`.** The node is still receiving an [SST](glossary.md#sst), or it cannot join the cluster. Check the `pxc` container logs.
+* **A [PVC](glossary.md#pvc) resize is in progress.** The cluster stays in `initializing` until the resize finishes. Check the PVC events.
 * **No endpoint has been assigned.** The `LoadBalancer` Service is waiting for the cloud provider. Check `kubectl get svc`.
 * **A Pod cannot be scheduled.** The status message shows the scheduler's reason.
 

@@ -30,7 +30,7 @@ Change cluster size, pause state, and deletion through the CR. Direct edits to t
 | Do not | What goes wrong | Do this instead |
 | --- | --- | --- |
 | Run `kubectl scale` or `kubectl edit` on the Percona XtraDB Cluster StatefulSet | The next reconcile reverts the change. If the change takes effect first, nodes can leave the cluster in the wrong order | Change `spec.pxc.size` in the CR |
-| Remove a finalizer to finish a stuck delete | Finalizers shut nodes down in order and clean up PVCs and certificates. Removing one abandons that cleanup and can orphan data | Find out why the finalizer is blocked. The four finalizers are: `percona.com/delete-pxc-pods-in-order`, `percona.com/delete-pxc-pvc`, `percona.com/delete-proxysql-pvc`, and `percona.com/delete-ssl` |
+| Remove a finalizer to finish a stuck delete | Finalizers on the cluster shut nodes down in order and clean up PVCs and certificates. The `percona.com/delete-backup` finalizer on a backup removes the backup files from storage. Removing a finalizer abandons that cleanup and can orphan data or backup files | Find out why the finalizer is blocked. The cluster has four finalizers: `percona.com/delete-pxc-pods-in-order`, `percona.com/delete-pxc-pvc`, `percona.com/delete-proxysql-pvc`, and `percona.com/delete-ssl`. A backup can carry `percona.com/delete-backup`. Don't remove the `internal.percona.com` finalizers either: the Operator adds and removes them itself |
 | Run `kubectl delete pxc` to reset a misbehaving cluster | Depending on the finalizers set, this deletes the PVCs and the data on them | Pause the cluster and investigate |
 | Bootstrap Galera by hand while the Operator is running | The Operator is also trying to recover. Two bootstraps mean two clusters and a split brain | Let auto-recovery run. Recover manually only after the Operator has refused and reported that refusal, or when `pxc.autoRecovery` is `false` |
 
@@ -130,7 +130,7 @@ Watch expiry dates in both of these cases, and rotate before they are reached.
 
 **What the Operator does:**
 
-* Creates and manages the system users `root`, `operator`, `monitor`, `xtrabackup`, and `replication`. It also manages `proxyadmin` and the PMM users. See [System users](users.md#system-users).
+* Creates the system users `root`, `operator`, `monitor`, `xtrabackup`, and `replication` when it creates the cluster. It also manages `proxyadmin` and the PMM users. See [System users](users.md#system-users).
 * Propagates a password change. You edit the Secret named in `spec.secretsName`, and the Operator applies it in MySQL, updates the proxies, and restarts what needs restarting. It tracks what it has already applied in a separate Secret named `internal-<cluster-name>`.
 * Manages application users declared in `spec.users`, including their grants and the databases they can reach.
 * Rejects a user in `spec.users` whose name collides with a system user.
