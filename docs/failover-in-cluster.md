@@ -16,7 +16,7 @@ Even though recovery is automatic, there are some behaviors that affect your app
 
 ### Pod recreation
 
-Kubernetes probes drive recovery independently of the proxy. The readiness probe removes a Pod from the `cluster1-pxc` Service, and so from the proxy configuration, after the node has been out of the primary component, or neither `Synced` nor a donor, for about 2.5 minutes. The liveness probe restarts the `pxc` container when the node stays outside the primary component for about 30 seconds. See [Health checks and probes](architecture-probes.md).
+Kubernetes probes drive recovery independently of the proxy. The readiness probe removes a Pod from the `cluster1-pxc` Service, and so from the proxy configuration, after the node has been out of the primary component, or neither `Synced` nor a donor, for about 2.5 minutes. The liveness probe restarts the `pxc` container when the node stays outside the primary component for about 30 seconds. The probe starts 5 minutes after the container starts (`pxc.livenessProbes.initialDelaySeconds: 300`). A node whose container started less than 5 minutes ago can stay outside the primary component until then. See [Health checks and probes](architecture-probes.md).
 
 ### Rejoining the cluster
 
@@ -34,9 +34,11 @@ Traffic rerouting depends on which proxy is in use.
 
     HAProxy decides only by its health check, an external script. It doesn't mark a node down because a connection attempt failed, and it doesn't resend a failed connection to another node. The check is `check inter 10000 rise 1 fall 2`:
 
-    - It runs every 10 seconds, and HAProxy marks a node down after two failed checks in a row. Expect new connections to keep going to a failed `pxc-0`, and fail, for 10 to 20 seconds. If `mysqld` hangs instead of refusing connections, each check can take up to its timeout, 10 seconds by default (`HA_CONNECTION_TIMEOUT` in the Secret named in `haproxy.envVarsSecret`).
+    - It runs every 10 seconds, and HAProxy marks a node down after two failed checks in a row. The check fails only once Galera reports the node as outside the primary component, about 5 seconds after a network failure. Until HAProxy marks the node down 10 to 20 seconds after that, new and existing connections still go to the node and fail with `ERROR 1047 (08S01): WSREP has not yet prepared node for application use`. Queries that don't read a table, such as `SELECT 1`, still succeed on such a node, so don't use them to check whether a connection is usable. If `mysqld` hangs instead of refusing connections, each check can take up to its timeout, 10 seconds by default (`HA_CONNECTION_TIMEOUT` in the Secret named in `haproxy.envVarsSecret`).
     - A node passes the check only when it is in the primary component, `Synced`, has `pxc_maint_mode` set to `DISABLED`, and doesn't reject queries (`wsrep_reject_queries` is `NONE` and `wsrep_sst_donor_rejects_queries` is `OFF`). A donor passes only if it is the only node the proxy knows about, or you set `OK_IF_DONOR` to `1` in the same Secret.
     - When HAProxy marks a node down, it closes the sessions to that node.
+    - HAProxy also follows the list of ready database Pods. When a database Pod is deleted, restarted or becomes not ready, the `pxc-monit` container removes it from the HAProxy configuration and reloads HAProxy, usually 2 to 15 seconds later (up to about 35 seconds). When the Pod is ready again, `pxc-monit` adds it back the same way. After a reload, HAProxy closes all sessions still open on the previous configuration after 10 seconds (`hard-stop-after 10s`), including sessions to healthy nodes.
+    - Each HAProxy Pod checks the nodes and reloads on its own. For a few seconds during a failover or failback, connections that go through different HAProxy Pods can reach different writers.
 
 === "ProxySQL, native scheduler mode"
 
@@ -54,7 +56,7 @@ Traffic rerouting depends on which proxy is in use.
 
 Automatic recovery handles the failure itself. Two behaviors are not obvious from the mechanics above, and both can affect your application directly.
 
-**Failback forcibly closes the active session.** When `pxc-0` recovers, HAProxy does not leave traffic on the backup node it failed over to. It forcibly closes the session using the backup node and forces reconnection to `pxc-0`, typically within about two seconds of `pxc-0` being marked healthy again. You may see the following error for a client that was connected to the backup node and then failed:
+**Failback forcibly closes the active session.** When `pxc-0` recovers, HAProxy does not leave traffic on the backup node it failed over to. It closes the sessions to the backup node as soon as it marks `pxc-0` up again. HAProxy does that at its next check, up to 10 seconds after `pxc-0` is `Synced`. If the `pxc-0` Pod was restarted, failback happens when `pxc-monit` adds the Pod back, 2 to 15 seconds after it becomes ready. Each HAProxy Pod fails back on its own, so the session drops can be spread over several seconds. You may see the following error for a client that was connected to the backup node and then failed:
 
 ```{.text .no-copy}
 ERROR 2013 (HY000): Lost connection to MySQL server during query
@@ -70,11 +72,15 @@ ERROR 1047 (08S01): WSREP has not yet prepared node for application use
 
 This is a Galera quorum issue, and no proxy setting can route around a node that refuses queries at the database layer. What happens next is driven by the probes and the Operator, not by the survivor alone:
 
-1. The survivor's liveness probe fails, because the node is outside the primary component. After about 30 seconds, Kubernetes restarts the `pxc` container. See [Health checks and probes](architecture-probes.md#what-this-means-for-users).
+1. The survivor's liveness probe fails, because the node is outside the primary component. After about 30 seconds (or, if the container started less than 5 minutes ago, once those 5 minutes have passed), Kubernetes restarts the `pxc` container. See [Health checks and probes](architecture-probes.md#what-this-means-for-users).
 2. If no database node is in a primary component when the restarted container starts, and the node has Galera state on its volume, it doesn't start `mysqld`. It logs `FULL_PXC_CLUSTER_CRASH` and its `seqno`, and waits. The recreated Pods do the same.
 3. The Operator starts recovery only when all database Pods are `Running` and every one of them is waiting like this. A Pod that is still `Pending`, for example because its Kubernetes node is gone, blocks recovery. Then the Operator picks the node with the highest `seqno` and starts it as a new primary component. The other nodes join it. See [Full cluster crash recovery workflow](architecture-workflows.md#full-cluster-crash-recovery).
 
+The database Pods are recreated one at a time (`OrderedReady`). A Pod that waits for recovery counts as ready, so the next Pod starts. 
+
 This is automatic with `pxc.autoRecovery: true`, the default. If you turned automatic recovery off, or the Operator refused it, follow [Crash recovery](recovery.md).
+
+With `autoRecovery: false`, the Operator emits no events and `kubectl get pxc` stays `initializing`. All database Pods show `Ready` while they wait. The Pod logs still say "Cluster will recover automatically from the crash now". Ignore that line and follow [Crash recovery](recovery.md).
 
 If the other nodes are still running as a primary component, for example after a network partition, the restarted node finds them and rejoins with IST or SST.
 
@@ -88,15 +94,17 @@ While the recovered node sends an SST to the others, it is in the `Donor` state.
 
 The behavior above applies to an unplanned failure. To perform maintenance without triggering one, take a node out of rotation deliberately instead of stopping MySQL and forcing a failover.
 
-**With HAProxy**, expect maintenance to be treated as an unplanned failure. There's no supported way to drain a node ahead of time. Perform your maintenance, and if it requires stopping MySQL, HAProxy's health check will react to it as a failure. This includes the failback session drop when the node comes back (see [What to expect](#what-to-expect) above).
-
-**With ProxySQL** in either mode, use `pxc_maint_mode`:
+**With either proxy**, use `pxc_maint_mode`:
 
 ```{sql data-prompt="mysql> "}
 mysql> SET GLOBAL pxc_maint_mode='MAINTENANCE';
 ```
 
-ProxySQL stops routing new connections to the node once it is in maintenance mode. The node itself stays online. If it is the current writer, ProxySQL routes writes to a backup-writer node instead. Once maintenance is complete, restore the node to normal operation:
+With ProxySQL, the proxy stops routing new connections to the node once it is in maintenance mode. The node itself stays online. If it is the current writer, ProxySQL routes writes to a backup-writer node instead.
+
+With HAProxy, the health check fails for a node in maintenance mode, and HAProxy marks the node down 10 to 20 seconds later. From then on, HAProxy sends no new connections to it. When HAProxy marks the node down, it closes the connections that are still open to that node, so your application sees `ERROR 2013 (HY000): Lost connection to MySQL server during query` and must reconnect. The `SET` statement returns after `pxc_maint_transition_period` (10 seconds), which can be before HAProxy has reacted. Wait at least 20 seconds before you stop MySQL. If you maintain `cluster1-pxc-0`, expect the failback session drop when it comes back (see [What to expect](#what-to-expect) above).
+
+Once maintenance is complete, restore the node to normal operation:
 
 ```{sql data-prompt="mysql> "}
 mysql> SET GLOBAL pxc_maint_mode='DISABLED';
@@ -112,7 +120,7 @@ mysql> SET GLOBAL wsrep_desync=ON;
 mysql> SET GLOBAL wsrep_desync=OFF;
 ```
 
-`wsrep_desync` is not a drain command. It doesn't remove the node from the Kubernetes Service, and the Pod stays `Ready`. The node reports the `Donor/Desynced` state, which HAProxy's health check rejects by default, so HAProxy takes the node out of rotation unless it is the only node available or you set `OK_IF_DONOR` to `1`. It lets the node fall behind on replication without blocking the rest of the cluster's flow control, which is what makes it safe to run a long operation on that node without stalling everyone else's writes.
+`wsrep_desync` is not a drain command. It doesn't remove the node from the Kubernetes Service, and the Pod stays `Ready`. The node reports the `Donor/Desynced` state. HAProxy's health check rejects it by default, so HAProxy takes the node out of rotation unless it is the only node available or you set `OK_IF_DONOR` to `1`. HAProxy takes such a node out of rotation 10 to 20 seconds after you set `wsrep_desync=ON` and closes its open connections, the same as for maintenance mode. It lets the node fall behind on replication without blocking the rest of the cluster's flow control, which is what makes it safe to run a long operation on that node without stalling everyone else's writes.
 
 ## Verify a failover completed
 

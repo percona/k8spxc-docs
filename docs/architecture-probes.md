@@ -55,7 +55,7 @@ The ProxySQL containers have no readiness or liveness probes. A ProxySQL Pod is 
 | Container | Probe | First check after | Period | Timeout | Failures before acting | Time to act |
 | --- | --- | --- | --- | --- | --- | --- |
 | `pxc` | Readiness | 15 s | 30 s | 15 s | 5 | about 2.5 minutes |
-| `pxc` | Liveness | 300 s | 10 s | 5 s | 3 | about 30 seconds |
+| `pxc` | Liveness | 300 s | 10 s | 5 s | 3 | about 30 seconds, counted after the initial delay |
 | `haproxy` | Readiness | 15 s | 5 s | 1 s | 3 | about 15 seconds |
 | `haproxy` | Liveness | 60 s | 30 s | 5 s | 4 | about 2 minutes |
 
@@ -119,7 +119,7 @@ A restarted node rejoins the cluster with [IST](glossary.md#ist), or with a full
 
 The probes act on their own, and they don't know what you are doing on the node. Keep them in mind in these situations:
 
-* **Network partition or [quorum](glossary.md#quorum) loss.** A node outside the primary component fails its liveness probe and is restarted after about 30 seconds. Galera alone would let the node wait and rejoin when the network comes back; on Kubernetes, the node restarts instead. If the cluster lost quorum, all remaining nodes restart, find no primary component to join, and wait for [full cluster crash recovery](architecture-workflows.md#full-cluster-crash-recovery).
+* **Network partition or [quorum](glossary.md#quorum) loss.** A node outside the primary component fails its liveness probe and is restarted after about 30 seconds, unless its container started less than 5 minutes ago. Galera alone would let the node wait and rejoin when the network comes back; on Kubernetes, the node restarts instead. If the cluster lost quorum, all remaining nodes restart, find no primary component to join, and wait for [full cluster crash recovery](architecture-workflows.md#full-cluster-crash-recovery).
 * **A slow or stalled server.** If `mysqld` doesn't answer the liveness query within 4 seconds, the liveness probe fails and the container is restarted. Common causes are a stalled disk, CPU throttling by the container's CPU limit, and an overloaded server. Check the Pod events for `Liveness probe failed` before you look for a crash in the MySQL error log.
 * **Manual maintenance on a running node.** Anything that takes the node out of the primary component for more than about 30 seconds gets the container restarted: disconnecting the node from the cluster, changing the Galera provider settings, or stopping `mysqld`. To work on a node without `mysqld` running, use the `sleep-forever` file. See [Avoid the restart-on-fail loop](debug-shell.md#avoid-the-restart-on-fail-loop-for-percona-xtradb-cluster-containers).
 * **The `monitor` user.** Every probe logs in as `monitor` through the admin port 33062. If you change its password directly in MySQL instead of in the users Secret, drop it, or lock it, the probes fail on every node: all database Pods become not ready and are restarted one after another. Change system user passwords only through the Secret. See [System users](users.md#system-users).

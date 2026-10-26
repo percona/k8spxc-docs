@@ -26,9 +26,9 @@ sequenceDiagram
 **What happens:**
 
 * The writer is always `cluster1-pxc-0`. HAProxy chooses it by its number, not by its [Galera](glossary.md#galera) state. The other nodes are backup servers, listed from the highest number down.
-* HAProxy checks every node every 10 seconds. A node passes the check when it belongs to the [primary component](glossary.md#primary-component), is `Synced` (or a [donor](glossary.md#donor), when it is the only node the proxy knows about or you set `OK_IF_DONOR` to `1`), has `pxc_maint_mode` set to `DISABLED`, and accepts queries. After two failed checks in a row, the node is marked down and HAProxy closes its sessions, so a failure is noticed after 10 to 20 seconds. HAProxy doesn't mark a node down because a connection failed.
+* HAProxy checks every node every 10 seconds. A node passes the check when it belongs to the [primary component](glossary.md#primary-component), is `Synced` (or a [donor](glossary.md#donor), when it is the only node the proxy knows about or you set `OK_IF_DONOR` to `1`), has `pxc_maint_mode` set to `DISABLED`, and accepts queries. After two failed checks in a row, the node is marked down and HAProxy closes its sessions, so a failure is noticed 10 to 20 seconds after the node stops passing the check (about 15 to 25 seconds after a network failure). HAProxy doesn't mark a node down because a connection failed.
 * When `cluster1-pxc-0` is down, writes go to the node with the highest number, for example `cluster1-pxc-2`.
-* When `cluster1-pxc-0` passes the check again, HAProxy closes the connections to the backup server and new connections go to `cluster1-pxc-0`. Applications must reconnect.
+* When `cluster1-pxc-0` passes the check again, HAProxy closes the connections to the backup server and new connections go to `cluster1-pxc-0`. Applications must reconnect. If `cluster1-pxc-0` was restarted, the failback happens when `pxc-monit` adds it back to the configuration (see [Node discovery](#node-discovery)).
 * The `cluster1-haproxy-replicas` Service (port 3306 on the Service, 3307 in HAProxy) spreads connections across all nodes in round-robin. To exclude `cluster1-pxc-0` from reads, set [`haproxy.exposeReplicas.onlyReaders`](operator.md#haproxyexposereplicasonlyreaders).
 * Port 3309 accepts connections that use the [proxy protocol](haproxy-conf.md#enabling-the-proxy-protocol).
 
@@ -38,7 +38,7 @@ In native mode, ProxySQL works in single-writer mode with four hostgroups: 11 fo
 
 ### Node discovery
 
-Both proxies learn about the database nodes the same way. The `pxc-monit` container in each proxy Pod looks up the headless `cluster1-pxc` Service in DNS every second. The Service lists only ready database Pods. The first update is applied immediately. After that, updates are applied at most once every 30 seconds, so a node that leaves or joins the cluster is reflected in the proxy configuration about half a minute later.
+Both proxies learn about the database nodes the same way. The `pxc-monit` container in each proxy Pod looks up the headless `cluster1-pxc` Service in DNS every second. The Service lists only ready database Pods. The first update is applied immediately. After that, updates are applied at most once every 30 seconds, so a node that leaves or joins the cluster is reflected in the proxy configuration within about 2 to 35 seconds. After each reload, HAProxy closes the sessions still open on the previous configuration after 10 seconds (`hard-stop-after 10s`), including sessions to healthy nodes.
 
 **Where to look if it fails:**
 
