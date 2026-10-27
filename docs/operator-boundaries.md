@@ -222,7 +222,7 @@ Let the Operator move nodes one at a time. See [About upgrades](update.md) and [
 
 | Do not | What goes wrong | Do this instead |
 | --- | --- | --- |
-| Change `spec.updateStrategy` to `RollingUpdate` to make an upgrade go faster | Kubernetes restarts nodes without waiting for Galera to resynchronize each one. You can lose quorum mid-upgrade | Leave the strategy on `SmartUpdate` and find out what the upgrade is waiting for |
+| Change `spec.updateStrategy` to `RollingUpdate` to make an upgrade go faster | Kubernetes still restarts the Pods in order and waits for each one to be ready. But it doesn't wait for a running backup or for ProxySQL, doesn't require a ready proxy, and doesn't stop when a Pod can't start. The Operator's checks are skipped | Leave the strategy on `SmartUpdate` and find out what the upgrade is waiting for |
 | Edit the image tag to jump a major version | Skipping the documented upgrade path can leave the data dictionary in a state the new version cannot read | Follow the database upgrade procedure |
 | Delete Pods during an upgrade to unstick it | SmartUpdate tracks which node it has reached. Restarting nodes underneath it breaks that sequence | Check the Operator logs. An upgrade that waits on a running backup, or on a proxy that is not Ready, is working as intended. See [Check the logs](debug-logs.md) |
 | Run different Percona XtraDB Cluster versions across nodes for an extended period | Mixed-version clusters are safe only for the duration of an upgrade | Complete the upgrade |

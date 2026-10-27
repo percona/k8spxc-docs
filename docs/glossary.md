@@ -2,9 +2,9 @@
 
 This page explains the Kubernetes and Galera terms used in the Operator documentation. The examples use a cluster named `cluster1`.
 
-## Arbitrator {: #arbitrator}
+## Arbitrator (garbd) {: #arbitrator}
 
-A member of the Galera group that doesn't run a database server. In the default backup method, the backup Job joins the cluster as an arbitrator to receive a copy of the data through [SST](#sst).
+The Galera Arbitrator daemon, `garbd`. A member of the Galera group that doesn't run a database server. In the default backup method, the backup Job joins the cluster as an arbitrator to receive a copy of the data through [SST](#sst).
 
 See [Backup methods](backups-methods.md).
 
@@ -14,11 +14,13 @@ The word *cluster* has two meanings in these docs. A *Kubernetes cluster* is the
 
 See [Design and architecture](architecture.md).
 
-## Custom Resource (CR) {: #custom-resource}
+## Custom Resource (CR, cr.yaml) {: #custom-resource}
 
 The Kubernetes object that describes the cluster you want, for example `PerconaXtraDBCluster`. The Operator reads it and makes the cluster match. The CustomResourceDefinition (CRD) tells Kubernetes that this object type exists.
 
-See [Change the cluster through the Custom Resource](architecture-responsibilities.md#change-the-cluster-through-the-custom-resource).
+The `deploy/cr.yaml` file in the Operator repository is the example manifest of this object. See [Change the cluster through the Custom Resource](architecture-responsibilities.md#change-the-cluster-through-the-custom-resource). 
+
+For all options, see the [Custom Resource options reference](operator.md).
 
 ## Donor {: #donor}
 
