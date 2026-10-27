@@ -4,3 +4,5 @@ Pipfile.lock
 __pycache__/
 __pycache__/main.cpython-311.pyc
 Claude outputs/
+.lycheecache
+lychee/

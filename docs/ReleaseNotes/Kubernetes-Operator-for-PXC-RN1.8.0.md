@@ -62,7 +62,7 @@ local machine
 with the oldest binary log in the cluster to ensure log consistency
 
 
-* [K8SPXC-618](https://jira.percona.com/browse/K8SPXC-618): Add debug symbols from the [percona-xtradb-cluster-server-debuginfo :octicons-link-external-16:](https://www.percona.com/doc/percona-server/8.0/installation/yum_repo.html#what-s-in-each-rpm-package)
+* [K8SPXC-618](https://jira.percona.com/browse/K8SPXC-618): Add debug symbols from the [percona-xtradb-cluster-server-debuginfo :octicons-link-external-16:](https://docs.percona.com/percona-xtradb-cluster/8.0/apt.html)
 package to the Percona XtraDB Cluster debug docker image to simplify
 troubleshooting
 

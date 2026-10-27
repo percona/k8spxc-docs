@@ -79,7 +79,7 @@ This document provides the steps how to migrate Percona Server for MySQL 8.0 dep
 
 ## Prepare the source environment
 
-1. Use official installation instructions for either [Percona Server for MySQL :octicons-link-external-16:](https://docs.percona.com/percona-server/8.0/quickstart-overview.html#install-percona-server-for-mysql) or [Percona XtraDB Cluster :octicons-link-external-16:](https://docs.percona.com/percona-xtradb-cluster/8.0/install/index.html)
+1. Use official installation instructions for either [Percona Server for MySQL :octicons-link-external-16:](https://docs.percona.com/percona-server/8.0/quickstart-overview.html#install-percona-server-for-mysql) or [Percona XtraDB Cluster :octicons-link-external-16:](https://docs.percona.com/percona-xtradb-cluster/8.4/install-index.html)
     to have the database up and running in your source environment (skip this
     step if one of them is already installed).
 
@@ -147,7 +147,7 @@ This document provides the steps how to migrate Percona Server for MySQL 8.0 dep
 If your source database didn't have any data, skip this step and proceed with the [asynchronous replication configuration](#configure-asynchronous-replication-in-the-kubernetes-cluster). Otherwise, restore the database in the target environment.
 
 1. To restore a backup, you will use the special restore configuration file.
-   The example of such file is [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/{{release}}/deploy/backup/restore.yaml).
+   The example of such file is [deploy/backup/restore.yaml :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator/blob/v{{release}}/deploy/backup/restore.yaml).
    For example. your `restore.yaml` file may have the following contents:
 
     ```yaml title='restore.yaml'

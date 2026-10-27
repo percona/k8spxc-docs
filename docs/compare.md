@@ -8,7 +8,7 @@ There are multiple ways to deploy and manage MySQL in Kubernetes. Here we will f
 * [Moco :octicons-link-external-16:](https://github.com/cybozu-go/moco) by Cybozu
 * [Vitess Operator :octicons-link-external-16:](https://github.com/planetscale/vitess-operator) by PlanetScale
 * Percona Operator for MySQL
-    * [based on Percona XtraDB Cluster :octicons-link-external-16:](https:///)
+    * [based on Percona XtraDB Cluster :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator)
     * [based on Percona Server for MySQL :octicons-link-external-16:](https://github.com/percona/percona-server-mysql-operator/)
 
 ## Generic
@@ -21,7 +21,7 @@ The review of generic features, such as supported MySQL versions, open source mo
 | MySQL versions         |                  5.7, 8.0                  |                    8.0                   |           5.7          |       8.0      |          8.0          |    5.7, 8.0    |
 | Kubernetes conformance |         Various versions are tested        |        Various versions are tested       |     Not guaranteed     | Not guaranteed |     Not guaranteed    | Not guaranteed |
 | Paid support           |             :white_check_mark:             |            :white_check_mark:            |     :no_entry_sign:    | :no_entry_sign:|  :white_check_mark:   | :no_entry_sign:|
-| Web-based GUI          |  [Percona Everest](https://docs.percona.com/everest/index.html) |   :no_entry_sign:   |     :no_entry_sign:    | :no_entry_sign:| [Oracle Enterprise Manager](https://www.mysql.com/products/enterprise/em.html) | :no_entry_sign:|
+| Web-based GUI          |  [Open Everest](http://openeverest.io/) |   :no_entry_sign:   |     :no_entry_sign:    | :no_entry_sign:| [Oracle Enterprise Manager](https://www.mysql.com/products/enterprise/em.html) | :no_entry_sign:|
 
 ## MySQL Topologies
 
