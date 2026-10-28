@@ -29,7 +29,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.7.7">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -54,10 +54,10 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -5137,7 +5137,7 @@
   
   
     <li class="md-nav__item">
-      <a href="https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.18.0/e2e-tests/README.md" class="md-nav__link">
+      <a href="https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.20.0/e2e-tests/README.md" class="md-nav__link">
         
   
   
@@ -5165,7 +5165,7 @@
   
   
     <li class="md-nav__item">
-      <a href="https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.18.0/CONTRIBUTING.md" class="md-nav__link">
+      <a href="https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.20.0/CONTRIBUTING.md" class="md-nav__link">
         
   
   
@@ -6464,14 +6464,14 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 
 <h1 id="install-percona-xtradb-cluster-using-kubectl">Install Percona XtraDB Cluster using kubectl<a class="headerlink" href="#install-percona-xtradb-cluster-using-kubectl" title="Permanent link">&para;</a></h1>
 <p>A Kubernetes Operator is a special type of controller introduced to simplify complex deployments. The Operator extends the Kubernetes API with custom resources.</p>
-<p>The <a href="compare.html">Percona Operator for MySQL based on XtraDB Cluster</a> is based on best practices for configuration and setup of a <a href="https://www.percona.com/mysql/software/percona-xtradb-cluster">Percona Server for MySQL <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> in a Kubernetes-based environment on-premises or in the cloud.</p>
+<p>The <a href="compare.html">Percona Operator for MySQL based on XtraDB Cluster</a> is based on best practices for configuration and setup of a <a href="https://www.percona.com/mysql/software/percona-xtradb-cluster">Percona XtraDB Cluster <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> in a Kubernetes-based environment on-premises or in the cloud.</p>
 <p>We recommend installing the Operator with the <a href="https://kubernetes.io/docs/tasks/tools/">kubectl <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> command line utility. It is the universal way to interact with Kubernetes. Alternatively, you can install it using the <a href="https://github.com/helm/helm">Helm <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> package manager.</p>
 <p><a class="md-button" href="#prerequisites">Install with kubectl <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 4h2v12l5.5-5.5 1.42 1.42L12 19.84l-7.92-7.92L5.5 10.5 11 16z"/></svg></span></a> <a class="md-button" href="helm.html">Install with Helm <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg></span></a></p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <p>To install Percona XtraDB Cluster, you need the following:</p>
 <ol>
 <li>
-<p>The <strong>kubectl</strong> tool to manage and deploy applications on Kubernetes, included in most Kubernetes distributions. Install not already installed, <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">follow its official installation instructions <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a>.</p>
+<p>The <strong>kubectl</strong> tool to manage and deploy applications on Kubernetes, included in most Kubernetes distributions. If it is not installed, <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">follow its official installation instructions <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a>.</p>
 </li>
 <li>
 <p>A Kubernetes environment. You can deploy it on <a href="https://github.com/kubernetes/minikube">Minikube <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> for testing purposes or using any cloud provider of your choice. Check the list of our <a href="System-Requirements.html#supported-platforms">officially supported platforms</a>.</p>
@@ -6495,7 +6495,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </code></pre></div>
 <details class="example">
 <summary>Expected output</summary>
-<div class="no-copy highlight"><pre><span></span><code>namespace/&lt;namespace&gt; was created
+<div class="no-copy highlight"><pre><span></span><code>namespace/&lt;namespace&gt; created
 </code></pre></div>
 </details>
 </li>
@@ -6505,14 +6505,13 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </code></pre></div>
 <details class="example">
 <summary>Expected output</summary>
-<div class="no-copy highlight"><pre><span></span><code>customresourcedefinition.apiextensions.k8s.io/perconaxtradbclusters.pxc.percona.com created
-customresourcedefinition.apiextensions.k8s.io/perconaxtradbclusterbackups.pxc.percona.com created
-customresourcedefinition.apiextensions.k8s.io/perconaxtradbclusterrestores.pxc.percona.com created
-customresourcedefinition.apiextensions.k8s.io/perconaxtradbbackups.pxc.percona.com created
-role.rbac.authorization.k8s.io/percona-xtradb-cluster-operator created
-serviceaccount/percona-xtradb-cluster-operator created
-rolebinding.rbac.authorization.k8s.io/service-account-percona-xtradb-cluster-operator created
-deployment.apps/percona-xtradb-cluster-operator created
+<div class="no-copy highlight"><pre><span></span><code>customresourcedefinition.apiextensions.k8s.io/perconaxtradbclusters.pxc.percona.com serverside-applied
+customresourcedefinition.apiextensions.k8s.io/perconaxtradbclusterbackups.pxc.percona.com serverside-applied
+customresourcedefinition.apiextensions.k8s.io/perconaxtradbclusterrestores.pxc.percona.com serverside-applied
+role.rbac.authorization.k8s.io/percona-xtradb-cluster-operator serverside-applied
+serviceaccount/percona-xtradb-cluster-operator serverside-applied
+rolebinding.rbac.authorization.k8s.io/service-account-percona-xtradb-cluster-operator serverside-applied
+deployment.apps/percona-xtradb-cluster-operator serverside-applied
 </code></pre></div>
 </details>
 <p>As the result you will have the Operator Pod up and running.</p>
@@ -6521,9 +6520,14 @@ deployment.apps/percona-xtradb-cluster-operator created
 <p>Deploy Percona XtraDB Cluster:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v1.20.0/deploy/cr.yaml<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The default <code>deploy/cr.yaml</code> deploys three Percona XtraDB Cluster Pods and three HAProxy Pods. The Operator spreads them across different nodes, so the cluster needs at least three schedulable Kubernetes nodes. For a single-node environment such as Minikube, deploy the <code>deploy/cr-minimal.yaml</code> file instead. See <a href="minikube.html">Set up Minikube</a>.</p>
+<p>The default <code>deploy/cr.yaml</code> also defines a daily backup schedule (<code>daily-backup</code>) that stores backups on a Persistent Volume Claim (PVC) and keeps the last five.</p>
+</div>
 <details class="example">
 <summary>Expected output</summary>
-<div class="no-copy highlight"><pre><span></span><code>perconaxtradbcluster.pxc.percona.com/ cluster1 created
+<div class="no-copy highlight"><pre><span></span><code>perconaxtradbcluster.pxc.percona.com/cluster1 created
 </code></pre></div>
 </details>
 </li>
@@ -6554,7 +6558,7 @@ three XtraDB Cluster instances. </p>
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="February 9, 2026 13:11:35 UTC">February 9, 2026</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 28, 2026 10:24:39 UTC">October 28, 2026</span>
       
         <br>
         Created:
@@ -6645,11 +6649,11 @@ window.addEventListener('afterprint', (event) => {
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["search.highlight", "navigation.top", "navigation.tracking", "content.tabs.link", "content.action.view", "content.code.copy"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["search.highlight", "navigation.top", "navigation.tracking", "content.tabs.link", "content.action.view", "content.code.copy"], "search": "assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
 
-      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

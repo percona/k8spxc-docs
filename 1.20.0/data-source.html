@@ -29,7 +29,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.7.7">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -54,10 +54,10 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -5054,7 +5054,7 @@
   
   
     <li class="md-nav__item">
-      <a href="https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.18.0/e2e-tests/README.md" class="md-nav__link">
+      <a href="https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.20.0/e2e-tests/README.md" class="md-nav__link">
         
   
   
@@ -5082,7 +5082,7 @@
   
   
     <li class="md-nav__item">
-      <a href="https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.18.0/CONTRIBUTING.md" class="md-nav__link">
+      <a href="https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.20.0/CONTRIBUTING.md" class="md-nav__link">
         
   
   
@@ -6331,7 +6331,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p>A good practice is to test a new functionality or an upgraded version of the database in a testing / staging environment. As a developer, you would want the data in the staging database cluster, so that your applications can start immediately. </p>
 <p>The <a href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/#volume-cloning"><code>dataSource</code> <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> functionality allows doing just that. Instead of creating a new PVC for a new cluster, you can clone the existing one. This enables you to spin up a new cluster with the data in it almost in no time which is especially beneficial if you use CI/CD for that.</p>
 <p>For example, you have the production Percona XtraDB Cluster <code>cluster1</code>. To test a new feature in your app, you need a staging cluster <code>cluster2</code> with the data set from <code>cluster1</code>. </p>
-<p>To create it, create the <code>cluster2-cr.yaml</code> Custom Resource manifest. You can use the existing <a href="https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/1.20.0/deploy/cr.yaml"><code>deploy/cr.yaml</code> </a> for convenience. Specify the PVC from <code>cluster1</code> as the <code>dataSource</code> for it:</p>
+<p>To create it, create the <code>cluster2-cr.yaml</code> Custom Resource manifest. You can use the existing <a href="https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v1.20.0/deploy/cr.yaml"><code>deploy/cr.yaml</code> </a> for convenience. Specify the PVC from <code>cluster1</code> as the <code>dataSource</code> for it:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">pxc</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">volumeSpec</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">persistentVolumeClaim</span><span class="p">:</span>
@@ -6352,7 +6352,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="April 14, 2025 17:40:07 UTC">April 14, 2025</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 28, 2026 10:24:39 UTC">October 28, 2026</span>
       
         <br>
         Created:
@@ -6443,11 +6443,11 @@ window.addEventListener('afterprint', (event) => {
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["search.highlight", "navigation.top", "navigation.tracking", "content.tabs.link", "content.action.view", "content.code.copy"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["search.highlight", "navigation.top", "navigation.tracking", "content.tabs.link", "content.action.view", "content.code.copy"], "search": "assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
 
-      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
       
         <script src="js/print-site.js"></script>
       
