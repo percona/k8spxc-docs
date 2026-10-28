@@ -151,7 +151,7 @@ Enables you to turn on specific features for the Operator.
 
 **Supported values:**
 
-* `XtrabackupSidecar` - Enables the XtraBackup sidecar method for backups instead of the default SST (State Snapshot Transfer) method. Read more about [backup methods the Operator uses](backups.md#backup-methods). Disabled by default.
+* `XtrabackupSidecar` - Enables the XtraBackup sidecar method for backups instead of the default SST (State Snapshot Transfer) method. Read more about [backup methods the Operator uses](backups-methods.md). Disabled by default.
 
 **When to use:**
 
