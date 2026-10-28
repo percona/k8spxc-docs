@@ -109,7 +109,7 @@ To create a user manually, use separate statements to create the account and gra
 1. Connect to your cluster. Replace `cluster1` with your actual cluster name and `root_password` with your root password:
 
     ```bash
-    kubectl run -it --rm percona-client --image=percona/percona-xtradb-cluster:8.4 --restart=Never -- mysql -hcluster1-pxc -uroot -proot_password
+    kubectl run -it --rm percona-client --image=percona/percona-xtradb-cluster:{{pxc84recommended}} --restart=Never -- mysql -hcluster1-pxc -uroot -proot_password
     ```
 
 2. Create the user account:
@@ -133,7 +133,7 @@ To create a user manually, use separate statements to create the account and gra
 After creating the user, verify that it was created successfully and can connect to the database. The following example connects to the cluster via HAProxy and executes a simple query:
 
 ```bash
-kubectl run -it --rm percona-client --image=percona/percona-xtradb-cluster:8.4 --restart=Never -- bash -il
+kubectl run -it --rm percona-client --image=percona/percona-xtradb-cluster:{{pxc84recommended}} --restart=Never -- bash -il
 percona-client:/$ mysql -h cluster1-haproxy -uuser1 -ppassword1
 mysql> SELECT * FROM database1.table1 LIMIT 1;
 ```
