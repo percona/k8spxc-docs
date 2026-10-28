@@ -1,31 +1,8 @@
-# What the Operator manages
+# Operator responsibilities by area
 
-This page describes what the Operator does for you, what you must still do yourself and which manual actions can damage a running cluster. 
+For each area, this page lists what the Operator does, what you still do, and which manual actions can damage a running cluster. For the layers, the events that trigger each one, and a table of all areas, see [Who owns what](architecture-responsibilities.md).
 
-## Change the cluster through the Custom Resource
-
-A [Custom Resource :octicons-link-external-16:](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) (CR) is the Kubernetes object that describes the cluster you want. It is a blueprint that the Operator uses to deploy and manage your cluster.
-
-**The Custom Resource is the source of truth. Change the cluster by editing the CR.**
-
-The Operator compares the CR against what is running about every five seconds and corrects any difference it finds. A change you make directly to a StatefulSet, a Service, a Pod, or a managed Secret is drift. The Operator overwrites it, usually within seconds. If a change survives, this means the Operator does not manage that field yet. This doesn't mean the change was accepted.
-
-* **Edits outside the CR do not persist.** The Operator reverts them silently.
-* **Edits outside the CR can still cause damage before they are reverted.**
-
-## Review responsibilities at a glance
-
-The following table shows what the Operator handles and what stays with you:
-
-| Area | Operator  | You | Don't do manually |
-| --- | --- | --- | --- |
-| [Cluster lifecycle](#cluster-lifecycle) | - Creates and heals StatefulSets, Services, and PodDisruptionBudgets.<br>- Restarts failed nodes.<br>- Recovers from a full cluster crash. | - Choose the cluster size.<br>- Decide when to pause.<br>- Plan maintenance windows. | - Scale or edit the StatefulSet.<br>- Delete Pods to restart a node.<br>- Remove finalizers. |
-| [Backups](#back-up-the-database) | - Runs scheduled and on-demand backups.<br>- Enforces deadlines.<br>- Suspends backups on an unhealthy cluster. | - Verify that backups restore.<br>- Set retention.<br>- Keep off-cluster copies. | - Delete a running backup Job.<br>- Run `xtrabackup` by hand against a node. |
-| [Restore and point-in-time recovery (PITR)](#restore-the-database) | - Pauses the cluster, restores, and restarts it.<br>- Detects binary log gaps. | - Take a new full backup after a gap.<br>- Pick the restore target. | - Edit the cluster CR during a restore.<br>- Run two restores at once. |
-| [TLS](#manage-certificates) | - Issues certificates.<br>- Renews them **only via cert-manager**.<br>- Applies rotations without downtime. | - Rotate certificates yourself if cert-manager is not installed.<br>- Manage any certificate you supplied. | - Edit the `ssl` or `ssl-internal` Secrets in place.<br>- Delete them to re-issue certificates. |
-| [Users and secrets](#manage-users-and-passwords) | - Creates and rotates the system users.<br>- Propagates password changes to MySQL and the proxies. | - Set passwords in the user Secret.<br>- Manage your own application users. | - Run `ALTER USER` on a system user in MySQL.<br>- Edit the `internal-` Secret.<br>- Drop a system user. |
-| [Storage](#resize-storage) | - Grows Persistent Volume Claims (PVCs) when the CR asks, and automatically when autoscaling is on. | - Pick a StorageClass that supports expansion.<br>- Watch capacity. | - Resize or delete PVCs by hand.<br>- Shrink storage. |
-| [Upgrades](#upgrade-the-database) | - Coordinates version upgrades node by node and keeps quorum. | - Decide when to upgrade.<br>- Run major version upgrades as a planned change. | - Bypass SmartUpdate.<br>- Edit image tags to jump a major version. |
+The Custom Resource is the source of truth: change the cluster by editing it. See [Change the cluster through the Custom Resource](architecture-responsibilities.md#change-the-cluster-through-the-custom-resource).
 
 ## Cluster lifecycle
 
@@ -33,8 +10,8 @@ Change cluster size, pause state, and deletion through the CR. Direct edits to t
 
 **What the Operator does:**
 
-* Creates and reconciles the Percona XtraDB Cluster StatefulSet, the HAProxy or ProxySQL StatefulSet, their Services, and a PodDisruptionBudget for Percona XtraDB Cluster.
-* Restarts failed nodes and lets Galera resynchronize them.
+* Creates and reconciles the Percona XtraDB Cluster StatefulSet, the HAProxy or ProxySQL StatefulSet, their Services, and a PodDisruptionBudget for each of them.
+* Leaves restarting failed Pods and containers to Kubernetes, and resynchronizing nodes to Galera. The Operator itself steps in only for a full cluster crash and for the rolling restarts it starts.
 * Shuts the cluster down in order when you set `spec.pause: true`, and brings it back when you set it to `false`. Data is retained. See [Pause/resume Percona XtraDB Cluster](pause.md).
 * Deletes resources in a safe order on cluster deletion, using finalizers. See [Delete the database cluster](delete.md#delete-the-database-cluster).
 * Handles **full cluster crash recovery.** When every node is down and waiting, the Operator finds the node with the highest transaction sequence number and bootstraps from it. This behavior is on by default (`spec.pxc.autoRecovery`). See [Crash recovery](recovery.md).
@@ -43,17 +20,19 @@ Change cluster size, pause state, and deletion through the CR. Direct edits to t
 
 * Choose the cluster size. Stay inside the limits in [Stay inside safe operating limits](#stay-inside-safe-operating-limits).
 * Decide when to pause a cluster, and for how long.
-* Plan capacity, node size, and maintenance windows for any change that restarts Pods.
-* **Manual recovery when the Operator refuses to recover automatically.** The Operator does not bootstrap from a node when the cluster UUID or sequence number has regressed since the last recovery, because that bootstrap can lose data. It emits an `AutomaticRecoveryRefused` event and stops. That handover is deliberate. Follow [Manual crash recovery](recovery.md#manual-crash-recovery) instead of forcing a bootstrap.
+* Plan capacity, node size, and maintenance windows for any change that restarts Pods. Provide enough schedulable nodes for the Pod anti-affinity rules (by default, three database Pods need three nodes), and resource requests and limits that fit them. See [Control Pod scheduling](constraints.md).
+* Check and tune MySQL options before you put them in `spec.pxc.configuration`. The Operator doesn't validate them. See [Changing MySQL options](options.md).
+* Decide whether to set the deletion finalizers. Without `percona.com/delete-pxc-pvc` and `percona.com/delete-ssl`, PVCs, Secrets and certificates remain after you delete the cluster, and you delete them yourself. ProxySQL PVCs are kept, also when you disable ProxySQL, unless you set `percona.com/delete-proxysql-pvc`. See [Clean up resources](delete.md#clean-up-resources).
+* **Manual recovery when the Operator refuses to recover automatically.** The Operator does not bootstrap from a node when the cluster UUID or sequence number has regressed since the last recovery, because that bootstrap can lose data. It emits an `AutomaticRecoveryRefused` event and stops. That handover is deliberate. A restore also triggers it, because a restore creates a new UUID. See [When the Operator refuses automatic recovery](recovery.md#when-the-operator-refuses-automatic-recovery). Don't force a bootstrap. If you are not sure why the UUID changed, follow [Manual crash recovery](recovery.md#manual-crash-recovery).
 
 **Never do this manually:**
 
 | Do not | What goes wrong | Do this instead |
 | --- | --- | --- |
 | Run `kubectl scale` or `kubectl edit` on the Percona XtraDB Cluster StatefulSet | The next reconcile reverts the change. If the change takes effect first, nodes can leave the cluster in the wrong order | Change `spec.pxc.size` in the CR |
-| Remove a finalizer to finish a stuck delete | Finalizers shut nodes down in order and clean up PVCs and certificates. Removing one abandons that cleanup and can orphan data | Find out why the finalizer is blocked. The four finalizers are: `percona.com/delete-pxc-pods-in-order`, `percona.com/delete-pxc-pvc`, `percona.com/delete-proxysql-pvc`, and `percona.com/delete-ssl` |
+| Remove a finalizer to finish a stuck delete | Finalizers on the cluster shut nodes down in order and clean up PVCs and certificates. The `percona.com/delete-backup` finalizer on a backup removes the backup files from storage. Removing a finalizer abandons that cleanup and can orphan data or backup files | Find out why the finalizer is blocked. The cluster has four finalizers: `percona.com/delete-pxc-pods-in-order`, `percona.com/delete-pxc-pvc`, `percona.com/delete-proxysql-pvc`, and `percona.com/delete-ssl`. A backup can carry `percona.com/delete-backup`. Don't remove the `internal.percona.com` finalizers either: the Operator adds and removes them itself |
 | Run `kubectl delete pxc` to reset a misbehaving cluster | Depending on the finalizers set, this deletes the PVCs and the data on them | Pause the cluster and investigate |
-| Bootstrap Galera by hand while the Operator is running | The Operator is also trying to recover. Two bootstraps mean two clusters and a split brain | Let auto-recovery run. Recover manually only after the Operator has refused and reported that refusal |
+| Bootstrap Galera by hand while the Operator is running | The Operator is also trying to recover. Two bootstraps mean two clusters and a split brain | Let auto-recovery run. Recover manually only after the Operator has refused and reported that refusal, or when `pxc.autoRecovery` is `false` |
 
 ## Back up the database
 
@@ -62,6 +41,7 @@ Create backups through a schedule on the cluster CR or through a `PerconaXtraDBC
 **What the Operator does:**
 
 * Runs scheduled backups from `spec.backup.schedule`, and on-demand backups from a `PerconaXtraDBClusterBackup` resource.
+* Applies retention to scheduled backups. With `retention` set, it deletes the oldest `Succeeded` backups beyond the configured count.
 * Enforces deadlines so a backup cannot hang forever: `startingDeadlineSeconds`, `runningDeadlineSeconds`, and `suspendedDeadlineSeconds`. A backup that exceeds one is marked failed.
 * Collects binary logs continuously for point-in-time recovery when `spec.backup.pitr` is enabled. See [Store binary logs for point-in-time recovery](backups-pitr.md).
 * **Refuses to back up an unhealthy cluster.** If the cluster is not Ready, the backup does not start. A backup that is already running is suspended until the cluster recovers.
@@ -70,7 +50,8 @@ Create backups through a schedule on the cluster CR or through a `PerconaXtraDBC
 
 * **Verify that your backups restore.** The Operator confirms that a backup completed. It does not confirm that the backup is usable. Restore-test on a schedule. See [Restore the cluster from a previously saved backup](backups-restore.md).
 * Set retention, and keep any copies outside the cluster storage target.
-* Manage credentials and lifecycle policies on the S3 or Azure bucket.
+* Manage credentials and lifecycle policies on the S3 or Azure bucket. Provide the storage credentials (S3 or Azure Secrets, or an IAM role), and a CA bundle for custom S3 endpoints.
+* Keep binary logs on the servers long enough for the collector to upload them, if you use point-in-time recovery. See [Store binary logs for point-in-time recovery](backups-pitr.md).
 * Decide whether a backup during a degraded window is worth the risk.
 
 **Never do this manually:**
@@ -80,7 +61,7 @@ Create backups through a schedule on the cluster CR or through a `PerconaXtraDBC
 | Delete the backup Job to clear a stuck backup | The backup resource still reports that it is running, and storage may hold a partial backup that looks complete | Let the deadline fail it, or delete the `PerconaXtraDBClusterBackup` resource. See [Delete the unneeded backup](backups-delete.md) |
 | Raise or remove the deadlines so backups stop failing | Deadlines are what stop a wedged backup from blocking upgrades indefinitely. SmartUpdate does not start while a backup is running | Find out why the backup is slow or stuck |
 | Set `unsafeFlags.backupIfUnhealthy` to get a backup from a broken cluster | A backup from a cluster that is not in sync may be inconsistent and may not restore | Repair the cluster, then back up. If you must take the backup, treat the result as best-effort only |
-| Run `xtrabackup` by hand against a Pod | The manual backup competes with the Operator backup lock and can stall writes | Create a `PerconaXtraDBClusterBackup` resource |
+| Run `xtrabackup` by hand against a Pod | The manual backup runs outside the Operator's control. It can overlap with an Operator backup, because the backup lock exists only with `backup.allowParallel: false` and a manual run doesn't take it, and it loads a node the cluster depends on | Create a `PerconaXtraDBClusterBackup` resource |
 | Delete objects from the backup storage bucket by hand | The PITR chain between a full backup and its binary logs breaks | Delete the `PerconaXtraDBClusterBackup` resource and let the finalizer clean up |
 
 ## Restore and point-in-time recovery
@@ -96,16 +77,17 @@ Create backups through a schedule on the cluster CR or through a `PerconaXtraDBC
 
 * Choose the restore target, and accept the data loss between that target and now.
 * Plan the maintenance window. A restore stops the cluster.
+* **Remove the recovery record after a restore.** A restore starts a new Galera cluster with a new UUID, and the Operator doesn't reset `status.recovery`. If the Operator recovered the cluster automatically before, the next full cluster crash is refused until you remove the record. See [Remove the recovery record after the restore](backups-restore-in-place.md#remove-the-recovery-record-after-the-restore).
 * **Take a new full backup after a binlog gap is reported.** The gap means PITR from that backup is no longer possible, and the window it covers is unrecoverable. Nothing restores that window. Take a fresh full backup to start a new PITR chain.
 
 **Never do this manually:**
 
 | Do not | What goes wrong | Do this instead |
 | --- | --- | --- |
-| Edit the cluster CR while a restore is running | **The restore controller writes to your CR.** It sets `spec.pause`, sets the Percona XtraDB Cluster and proxy sizes to zero, and restores your original values from the restore resource status afterwards. An edit in that window is overwritten, or it is merged into a cluster that does not match the restore recorded state | Wait until the restore reaches `Succeeded` or `Failed` |
+| Edit the cluster CR while a restore is running | **The restore controller writes to your CR.** It sets `spec.pause` to `true` to stop the cluster. During a point-in-time restore, it also sets `spec.pxc.size` to 1, the proxy sizes to 0, and `unsafeFlags.pxcSize` and `unsafeFlags.proxySize` to `true`. It writes your original values back from the restore resource status afterwards. An edit in that window is overwritten, or it is merged into a cluster that does not match the restore recorded state | Wait until the restore reaches `Succeeded` or `Failed` |
 | Unpause the cluster during a restore | The restore is operating on the data directory of stopped nodes. Starting them mid-restore can leave inconsistent data | Wait |
 | Start a second restore because the first looks stuck | The Operator rejects the second restore and marks it failed | Wait for the previous restore |
-| Delete the restore resource mid-flight | The cluster stays paused and sized to zero, with nothing left to restore it | Let the restore finish, then delete the resource |
+| Delete the restore resource mid-flight | The cluster stays paused. In a point-in-time restore, it can also stay at one database node with no proxies and the unsafe flags set. The Operator keeps your original values in the restore resource status, so deleting the resource deletes them too | Let the restore finish, then delete the resource |
 | Ignore `PITRReady: False` | You believe you have point-in-time coverage that does not exist. You find out during an incident | Take a new full backup, then confirm that the condition clears |
 
 ## Manage certificates
@@ -126,7 +108,7 @@ How certificates are renewed depends on who created them. See [Transport Layer S
 
 **What you still do:**
 
-**If cert-manager is not installed, Operator-generated certificates are not renewed automatically.** These certificates are long-term; check their actual [expiration dates](tls-update.md#check-your-certificates-for-expiration) and provide replacements before they expire. Expired certificates can prevent nodes from trusting each other and stop replication.
+**If cert-manager is not installed, Operator-generated certificates are not renewed automatically.** Starting with version 1.19.0, these certificates are valid for 90 days, and the CA for three years. Check their actual [expiration dates](tls-update.md#check-your-certificates-for-expiration) and provide replacements before they expire. Expired certificates can prevent nodes from trusting each other and stop replication.
 
 **If you supplied the TLS Secret yourself, renewal is your responsibility.** The Operator does not renew those certificates automatically, but it can apply replacements you provide through the `<secret-name>-new` rotation procedure. See [Generate certificates manually](tls-manual.md) and [Update certificates](tls-update.md#update-valid-certificates-without-downtime).
 
@@ -149,7 +131,7 @@ Watch expiry dates in both of these cases, and rotate before they are reached.
 
 **What the Operator does:**
 
-* Creates and manages the system users `root`, `operator`, `monitor`, `xtrabackup`, and `replication`. It also manages `proxyadmin` and the PMM users. See [System users](users.md#system-users).
+* Creates the system users `root`, `operator`, `monitor`, `xtrabackup`, and `replication` when it creates the cluster. It also manages `proxyadmin` and the PMM users. See [System users](users.md#system-users).
 * Propagates a password change. You edit the Secret named in `spec.secretsName`, and the Operator applies it in MySQL, updates the proxies, and restarts what needs restarting. It tracks what it has already applied in a separate Secret named `internal-<cluster-name>`.
 * Manages application users declared in `spec.users`, including their grants and the databases they can reach.
 * Rejects a user in `spec.users` whose name collides with a system user.
@@ -159,7 +141,8 @@ Watch expiry dates in both of these cases, and rotate before they are reached.
 * Generate and store strong passwords, and decide when to rotate them.
 * **Schedule password rotations.** Changing a system user's password causes a rolling restart of the affected components. Treat it as a maintenance operation, not a routine edit.
 * Change system-user passwords in the Secret named by `spec.secretsName`. See [Users](users.md).
-* Declare application users in `spec.users`.
+* Declare application users in `spec.users`. The Operator creates them only when the cluster is `ready`. Removing an entry doesn't drop the user from the database, so drop it yourself. See [Users](users.md).
+* Provide the PMM token, if you use Percona Monitoring and Management. See [Monitor with PMM](monitoring.md).
 * Manage application users you create directly in MySQL, outside `spec.users`. The Operator does not know about them and does not recreate them after a restore.
 
 **Never do this manually:**
@@ -174,7 +157,7 @@ Watch expiry dates in both of these cases, and rotate before they are reached.
 
 ## Storage
 
-Request a larger volume in the CR. The Operator grows the PVCs when volume expansion is enabled and the StorageClass supports it. See [Scale storage](scaling.md#scale-storage).
+Request a larger volume in the CR. The Operator grows the PVCs when volume expansion is enabled and the StorageClass supports it. See [Resize storage](scaling-storage-resize.md).
 
 **What the Operator does:**
 
@@ -196,6 +179,27 @@ Request a larger volume in the CR. The Operator grows the PVCs when volume expan
 | Try to shrink storage | The Operator rejects the shrink. It reverts the volume template and reports that the requested size is below the actual size | Shrinking is not supported. Back up, recreate the cluster with smaller volumes, and restore |
 | Delete a PVC to reclaim space or reset a node | The data is gone. The replacement node needs a full state transfer from a healthy donor, which loads that donor. If the cluster was already degraded, this can remove the last good copy | Grow the volume, or remove data from inside the database |
 
+## Cross-site replication
+
+Describe the replication channels in the CR. See [Set up cross-site replication](replication.md).
+
+**What the Operator does:**
+
+* Sets up the asynchronous replication channels you list in `spec.pxc.replicationChannels`.
+* Stops and removes replication channels that are not in the list.
+* Logs `Replication for channel is not running` when a channel stops. It doesn't repair the channel.
+
+**What you still do:**
+
+* Provide routable endpoints between the sites, and matching replication passwords.
+* Monitor replication. If it breaks, you fix it.
+
+**Never do this manually:**
+
+| Do not | What goes wrong | Do this instead |
+| --- | --- | --- |
+| Create a replication channel in MySQL on a cluster the Operator manages | The Operator stops the channel and removes its sources, because it is not in `spec.pxc.replicationChannels` | Add the channel to the CR |
+
 ## Database upgrades
 
 Let the Operator move nodes one at a time. See [About upgrades](update.md) and [Upgrade Percona XtraDB Cluster](update-db.md).
@@ -211,14 +215,15 @@ Let the Operator move nodes one at a time. See [About upgrades](update.md) and [
 
 * Decide when to upgrade, and test the target version first.
 * Review release notes for changes that affect your configuration.
-* Choose whether automatic version updates are appropriate. For production clusters, pin a version and upgrade deliberately.
+* **Upgrade in order.** Upgrade the Operator first, then raise `spec.crVersion` in the Custom Resource. Upgrading the Operator alone does not change the database images. The Operator also keeps some behavior of an existing cluster tied to its `crVersion`, so new behavior of those features starts only after you raise it. See [Upgrade CRD and the Operator](update-operator.md).
+* Choose whether automatic version updates are appropriate. `upgradeOptions.apply` is `Disabled` by default. Set it to `Recommended`, `Latest` or an exact version to let the Operator upgrade the database. For production clusters, pin a version and upgrade deliberately. See [Automatic minor upgrades](update-automatic.md).
 * **Major version upgrades.** Treat a major version upgrade as a planned operation with its own procedure. Follow [Upgrade Percona XtraDB Cluster](update-db.md).
 
 **Never do this manually:**
 
 | Do not | What goes wrong | Do this instead |
 | --- | --- | --- |
-| Change `spec.updateStrategy` to `RollingUpdate` to make an upgrade go faster | Kubernetes restarts nodes without waiting for Galera to resynchronize each one. You can lose quorum mid-upgrade | Leave the strategy on `SmartUpdate` and find out what the upgrade is waiting for |
+| Change `spec.updateStrategy` to `RollingUpdate` to make an upgrade go faster | Kubernetes still restarts the Pods in order and waits for each one to be ready. But it doesn't wait for a running backup or for ProxySQL, doesn't require a ready proxy, and doesn't stop when a Pod can't start. The Operator's checks are skipped | Leave the strategy on `SmartUpdate` and find out what the upgrade is waiting for |
 | Edit the image tag to jump a major version | Skipping the documented upgrade path can leave the data dictionary in a state the new version cannot read | Follow the database upgrade procedure |
 | Delete Pods during an upgrade to unstick it | SmartUpdate tracks which node it has reached. Restarting nodes underneath it breaks that sequence | Check the Operator logs. An upgrade that waits on a running backup, or on a proxy that is not Ready, is working as intended. See [Check the logs](debug-logs.md) |
 | Run different Percona XtraDB Cluster versions across nodes for an extended period | Mixed-version clusters are safe only for the duration of an upgrade | Complete the upgrade |
@@ -250,6 +255,8 @@ You can turn each check off individually under `spec.unsafeFlags`. See [Override
 | `unsafeFlags.tls` | Running without TLS | Encryption of replication and client traffic |
 | `unsafeFlags.backupIfUnhealthy` | Backups from a cluster that is not Ready | Confidence that the backup is consistent and restorable |
 
+The older `allowUnsafeConfigurations` option turns on all four flags at once.
+
 Use these flags for a development cluster, a local test, or a deliberate single-node setup for continuous integration. On a production cluster, an Operator rejection describes a real risk in the configuration you asked for.
 
 ## Check before you intervene
@@ -262,3 +269,11 @@ When a manual change looks necessary, do the following:
 4. Contact [Percona Support](get-help.md) before you act on a production cluster.
 
 Manual intervention on a running database cluster is recoverable far less often than it looks from the outside.
+
+## Next steps
+
+[How the Operator reacts to changes](architecture-reconciliation.md){.md-button}
+## See also
+
+* [Who owns what](architecture-responsibilities.md)
+* [Initial troubleshooting](debug.md#where-to-look-first)

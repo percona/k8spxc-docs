@@ -196,11 +196,11 @@ Important things to observe here are the following ones:
 
 * Check if the provisioner and parameters are indicating the type of storage you intend to provision.
 * Check the [volumeBindingMode :octicons-link-external-16:](https://kubernetes.io/docs/concepts/storage/storage-classes/#volume-binding-mode) especially if the storage cannot be accessed across availability zones. “WaitForFirstConsumer” volumeBindingMode ensures volume is provisioned only after a Pod requesting the Volume is created.
-* If you are going to rely on the Operator [storage scaling functionality](scaling.md#storage-resizing-with-volume-expansion-capability), ensure the storage class supports PVC expansion (it should have  `allowVolumeExpansion: true` in the output of the above command).
+* If you are going to rely on the Operator [storage scaling functionality](scaling-storage-resize.md#storage-resizing-with-volume-expansion-capability), ensure the storage class supports PVC expansion (it should have  `allowVolumeExpansion: true` in the output of the above command).
 
 ## Troubleshoot storage resizing
 
-Use this guidance if [storage resizing](scaling.md#scale-storage) does not behave as expected.
+Use this guidance if [storage resizing](scaling-storage-resize.md) does not behave as expected.
 
 ### Storage does not scale when you expect it
 

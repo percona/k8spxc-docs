@@ -62,6 +62,60 @@ Now execute the following commands to start this instance:
 kubectl exec cluster1-pxc-2 -c pxc -- sh -c 'kill -s USR1 1'
 ```
 
+## When the Operator refuses automatic recovery
+
+Every time the Operator recovers the cluster automatically, it records the result in the `status.recovery` field of the Custom Resource:
+
+* `clusterUUID` - the Galera cluster UUID of the node it bootstrapped from,
+* `lastRecoveryPod` - the Pod it bootstrapped from,
+* `lastRecoverySeqNo` - the sequence number (`seqno`) of that Pod,
+* `lastRecoveryTime` - when the recovery started.
+
+You can check it with the following command:
+
+```bash
+kubectl get pxc cluster1 -o jsonpath='{.status.recovery}'
+```
+
+On the next full cluster crash, the Operator uses this record as a guardrail against data loss. It relies on the fact that within one cluster UUID, the `seqno` only grows. The Operator doesn't change the cluster UUID when it recovers the cluster. The UUID changes only when a new Galera cluster is created, such as during a restore. If the node the Operator would bootstrap from reports a different cluster UUID, or a `seqno` lower than `lastRecoverySeqNo`, bootstrapping from it could discard committed transactions. In this case, the Operator doesn't recover the cluster. It emits the `AutomaticRecoveryRefused` event with both the recorded and the current values, and the Pods keep waiting:
+
+```bash
+kubectl get events --field-selector reason=AutomaticRecoveryRefused
+```
+
+The event message looks like this:
+
+```{.text .no-copy}
+automatic recovery refused: cluster UUID or seqno regressed since last recovery (last uuid=f2bf3215-d296-11f1-bfc4-ba01f4b3c974, last seqno=51; current uuid=2278238c-d29b-11f1-8044-f2ed9b3d176b, current seqno=3). Follow the documented manual bootstrap/recovery procedure
+```
+
+The UUID or the `seqno` changes when a new Galera cluster starts without a recovery by the Operator. For example:
+
+* you restored a backup into the cluster. A restore removes the Galera state files, so the restored cluster starts with a new UUID. The Operator doesn't reset `status.recovery` when the restore finishes. If it had recovered the cluster automatically before the restore, the first full cluster crash after the restore is refused. See [Restore to the same cluster](backups-restore-in-place.md#remove-the-recovery-record-after-the-restore),
+* you bootstrapped a new cluster manually, after removing or editing the `grastate.dat` files,
+* you copied a data directory from another cluster into the PVCs,
+* you bootstrapped manually from a node that wasn't the one with the highest `seqno`.
+
+If you did one of these on purpose, the record in `status.recovery` is outdated, and you need to clean it up or update it before automatic recovery can work again:
+
+1. Make sure the data on the nodes is what you expect. After a restore, a new UUID and a lower `seqno` are expected. If you are not sure why the UUID or the `seqno` changed, don't continue. Recover the cluster [manually](#manual-crash-recovery) from the node you trust.
+
+2. Remove the outdated record. The `status` is a subresource, so you need `kubectl` 1.24 or newer:
+
+    ```bash
+    kubectl patch pxc cluster1 --subresource=status --type=merge -p '{"status":{"recovery":null}}'
+    ```
+
+3. Check that the record is gone:
+
+    ```bash
+    kubectl get pxc cluster1 -o jsonpath='{.status.recovery}'
+    ```
+
+    A reconcile that was already running when you patched the status can write the old record back. If the output is not empty, run the patch again.
+
+Without the record, the Operator treats the next recovery as the first one: it bootstraps from the node with the highest `seqno` and records the new values. Instead of removing the record, you can also update `clusterUUID` and `lastRecoverySeqNo` to the current values with the same `kubectl patch` command.
+
 ## Manual Crash Recovery
 
 !!! warning

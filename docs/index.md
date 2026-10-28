@@ -2,7 +2,7 @@
 
 The **[Percona Operator for MySQL :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator)** is a Kubernetes-native solution designed to simplify the deployment, management, and scaling of MySQL clusters built on Percona XtraDB Cluster (PXC). The Operator leverages Kubernetes' orchestration capabilities to automate critical database management tasks, including cluster provisioning, backups, failover, and scaling.
 
-**[Percona XtraDB Cluster (PXC) :octicons-link-external-16:](https://www.percona.com/software/mysql-database/percona-xtradb-cluster)** is an open-source, enterprise-grade MySQL solution designed for high availability and data consistency. It uses synchronous replication to ensure that data is consistent across all nodes in the cluster. PXC provides fault tolerance, automated failover, and scalability, making it ideal for running highly available MySQL databases in mission-critical environments.
+**[Percona XtraDB Cluster (PXC) :octicons-link-external-16:](https://www.percona.com/software/mysql-database/percona-xtradb-cluster)** is an open-source, enterprise-grade MySQL solution designed for high availability and data consistency. It uses virtually synchronous replication, so every node holds the same data. PXC provides fault tolerance, automated failover, and scalability, making it ideal for running highly available MySQL databases in mission-critical environments.
 
 This provides the foundation for the Percona Operator for MySQL, enabling simplified deployment and management of Percona XtraDB Cluster within Kubernetes environments.
 
@@ -19,8 +19,8 @@ This provides the foundation for the Percona Operator for MySQL, enabling simpli
    - Dynamically scales instances based on workload demands, optimizing resource usage.
 
 #### 2. **High Availability**  
-   - Guarantees zero downtime with automated failover mechanisms.
-   - Utilizes synchronous replication to maintain data consistency across nodes.
+   - Keeps the cluster serving when a node fails: with three nodes, the cluster continues after one node is lost, and the proxy reroutes traffic. Clients may need to reconnect.
+   - Uses virtually synchronous replication to keep all nodes consistent.
 
 #### 3. **Self-Healing**  
    - Detects and recovers from node failures automatically to maintain cluster health.

@@ -248,7 +248,9 @@ Use this when the target cluster has no storage configuration to reference — r
 
 1. Configure the main storage within the target cluster's `cr.yaml`, then [re-enable point-in-time recovery](backups-pitr.md#enable-point-in-time-recovery) to start binlog collection again.
 
-2. Make a new full backup once you've confirmed the restore is correct. The restored database is now the new baseline for future recoveries — don't rely on replaying binlogs past this point from the old backup chain.
+2. If you restored in-place, [remove the recovery record](backups-restore-in-place.md#remove-the-recovery-record-after-the-restore). The restore creates a new Galera cluster UUID, and without this step the next full cluster crash can be refused.
+
+3. Make a new full backup once you've confirmed the restore is correct. The restored database is now the new baseline for future recoveries — don't rely on replaying binlogs past this point from the old backup chain.
 
 ## Binlog gaps
 

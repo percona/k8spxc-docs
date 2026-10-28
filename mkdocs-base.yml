@@ -67,6 +67,7 @@ extra_javascript:
    - js/kapa.js
    - js/posthog-search.js
    - js/posthog-version.js
+   - js/diagram-zoom.js
 #   - js/version-select.js
 #  - js/toctree.js
 #  - js/lightgallery.min.js
@@ -122,6 +123,10 @@ plugins:
     repository: percona/k8spxc-docs
     branch: "main"
   open-in-new-tab: {}
+  # Image lightbox. Mermaid diagrams are wired up in docs/js/diagram-zoom.js.
+  glightbox:
+    zoomable: true
+    draggable: true
   meta-descriptions:
     export_csv: false
     quiet: false
@@ -176,8 +181,13 @@ nav:
     - Welcome: index.md
     - get-help.md
     - About:
-          - "Design and architecture": architecture.md
-          - "What the Operator manages": operator-boundaries.md
+          - Design and architecture:
+              - "Overview": architecture.md
+              - "Who owns what": architecture-responsibilities.md
+              - "Operator responsibilities by area": operator-boundaries.md
+              - "How the Operator reacts to changes": architecture-reconciliation.md
+              - "Key workflows": architecture-workflows.md
+              - "Health checks and probes": architecture-probes.md
           - "Comparison with other solutions": compare.md
 
     - Quickstart guides:
@@ -316,10 +326,13 @@ nav:
           - "Custom Resource options": operator.md
           - "Backup Custom Resource options": backup-cr.md
           - "Restore Custom Resource options": restore-cr.md
+          - "Services and ports": services.md
+          - "Objects the Operator creates": objects-created.md
           - "Percona certified images": images.md
           - "Versions compatibility": versions.md
           - "Operator API": api.md
           - "Frequently Asked Questions": faq.md
+          - "Glossary": glossary.md
           - "Old releases (documentation archive)": https://docs.percona.com/legacy-documentation/
           - Development documentation:
               - "Building and testing the Operator": https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.18.0/e2e-tests/README.md

@@ -59,7 +59,15 @@ Here's how to get it:
         mysql -h <cluster_name>-proxysql -uroot -p'<root_password>'
         ```
 
-Congratulations! You have connected to Percona XtraDB Cluster. 
+Congratulations! You have connected to Percona XtraDB Cluster.
+
+!!! note "Which Service your application connects to"
+
+    `<cluster_name>-haproxy` sends reads and writes to one database node and switches to another node if that node fails. For read-only traffic, use `<cluster_name>-haproxy-replicas`. Never send writes to it. With ProxySQL, `<cluster_name>-proxysql` handles both reads and writes. See [Which Service to connect to](services.md#which-service-to-connect-to).
+
+!!! warning "Don't use `root` in your application"
+
+    `root` is a system user that the Operator itself uses, so a password change affects everything that connects with it. Create a separate user for your application. See [Create users in the Custom Resource](users.md#create-users-in-the-custom-resource).
 
 ## Next steps
 
