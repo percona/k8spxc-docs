@@ -77,21 +77,28 @@ You can check it with the following command:
 kubectl get pxc cluster1 -o jsonpath='{.status.recovery}'
 ```
 
-On the next full cluster crash, the Operator uses this record as a guardrail against data loss. It relies on the fact that within one cluster UUID, the `seqno` only grows. The Operator always recovers the cluster with the same UUID, so the UUID stays the same for the whole lifecycle of the cluster. If the node the Operator would bootstrap from reports a different cluster UUID, or a `seqno` lower than `lastRecoverySeqNo`, bootstrapping from it could discard committed transactions. In this case, the Operator doesn't recover the cluster. It emits the `AutomaticRecoveryRefused` event with both the recorded and the current values, and the Pods keep waiting:
+On the next full cluster crash, the Operator uses this record as a guardrail against data loss. It relies on the fact that within one cluster UUID, the `seqno` only grows. The Operator doesn't change the cluster UUID when it recovers the cluster. The UUID changes only when a new Galera cluster is created, such as during a restore. If the node the Operator would bootstrap from reports a different cluster UUID, or a `seqno` lower than `lastRecoverySeqNo`, bootstrapping from it could discard committed transactions. In this case, the Operator doesn't recover the cluster. It emits the `AutomaticRecoveryRefused` event with both the recorded and the current values, and the Pods keep waiting:
 
 ```bash
 kubectl get events --field-selector reason=AutomaticRecoveryRefused
 ```
 
-The UUID or the `seqno` changes only if something outside the Operator changes the Galera state. For example:
+The event message looks like this:
 
+```{.text .no-copy}
+automatic recovery refused: cluster UUID or seqno regressed since last recovery (last uuid=f2bf3215-d296-11f1-bfc4-ba01f4b3c974, last seqno=51; current uuid=2278238c-d29b-11f1-8044-f2ed9b3d176b, current seqno=3). Follow the documented manual bootstrap/recovery procedure
+```
+
+The UUID or the `seqno` changes when a new Galera cluster starts without a recovery by the Operator. For example:
+
+* you restored a backup into the cluster. A restore removes the Galera state files, so the restored cluster starts with a new UUID. The Operator doesn't reset `status.recovery` when the restore finishes. If it had recovered the cluster automatically before the restore, the first full cluster crash after the restore is refused. See [Restore to the same cluster](backups-restore-in-place.md#remove-the-recovery-record-after-the-restore),
 * you bootstrapped a new cluster manually, after removing or editing the `grastate.dat` files,
 * you copied a data directory from another cluster into the PVCs,
 * you bootstrapped manually from a node that wasn't the one with the highest `seqno`.
 
 If you did one of these on purpose, the record in `status.recovery` is outdated, and you need to clean it up or update it before automatic recovery can work again:
 
-1. Make sure the data on the nodes is what you expect. If you are not sure why the UUID or the `seqno` changed, don't continue. Recover the cluster [manually](#manual-crash-recovery) from the node you trust.
+1. Make sure the data on the nodes is what you expect. After a restore, a new UUID and a lower `seqno` are expected. If you are not sure why the UUID or the `seqno` changed, don't continue. Recover the cluster [manually](#manual-crash-recovery) from the node you trust.
 
 2. Remove the outdated record. The `status` is a subresource, so you need `kubectl` 1.24 or newer:
 

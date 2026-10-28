@@ -184,9 +184,11 @@ stateDiagram-v2
 6. **Starting Cluster.** The Operator restores the original sizes and unpauses the cluster. The other nodes start with empty volumes and get the data from `cluster1-pxc-0` through SST.
 7. **Succeeded** when the cluster has the original sizes, the Operator has applied the latest [Custom Resource](glossary.md#custom-resource) generation, and the cluster is `ready`. Until then, the restore waits in **Starting Cluster**, with no time limit. **Failed** when a check fails.
 
-!!! warning "A restore deletes data volumes and stops the cluster"
+!!! warning "Restore considerations"
 
-    The cluster is unavailable for the whole restore. The PVCs of all database Pods except `cluster1-pxc-0` are deleted, and the data on `cluster1-pxc-0` is overwritten. Any data written after the backup, and not covered by point-in-time recovery, is lost.
+    **A restore deletes data volumes and stops the cluster** The cluster is unavailable for the whole restore. The Operator deletes the PVCs of all database Pods except `cluster1-pxc-0`, overwrites the data on that Pod, and any writes after the backup that point-in-time recovery does not cover are lost.
+
+    **A restore doesn't reset the recovery record.** The restored cluster gets a new Galera cluster UUID, but the Operator keeps the previous `status.recovery` record. [Remove the recovery record after every restore](backups-restore-in-place.md#remove-the-recovery-record-after-the-restore), or the Operator refuses the next full cluster crash recovery.
 
 **Where to look if it fails:**
 
@@ -230,7 +232,7 @@ After it signals the node, the Operator records the recovery in the `status.reco
 * `lastRecoverySeqNo`: the `seqno` of that Pod.
 * `lastRecoveryTime`: when the recovery started.
 
-On the next full crash, the Operator compares the new values with this record. It refuses automatic recovery, and emits the `AutomaticRecoveryRefused` event, if the recovery would risk data loss: if the cluster UUID differs from `clusterUUID`, or the highest `seqno` is lower than `lastRecoverySeqNo`. The event message shows both the recorded and the current values. The Operator never changes the cluster UUID itself, so this happens only after manual changes to the Galera state. See [When the Operator refuses automatic recovery](recovery.md#when-the-operator-refuses-automatic-recovery) to clean up the record.
+On the next full crash, the Operator compares the new values with this record. It refuses automatic recovery, and emits the `AutomaticRecoveryRefused` event, if the recovery would risk data loss: if the cluster UUID differs from `clusterUUID`, or the highest `seqno` is lower than `lastRecoverySeqNo`. The event message shows both the recorded and the current values. The Operator doesn't change the cluster UUID when it recovers the cluster. A [restore](#restore) does: it starts a new Galera cluster with a new UUID and doesn't reset the record. If the Operator recovered the cluster automatically before the restore, the first full crash after the restore is refused until you remove the record. The same happens after manual changes to the Galera state. See [When the Operator refuses automatic recovery](recovery.md#when-the-operator-refuses-automatic-recovery) to clean up the record.
 
 **When you recover manually.** If `pxc.autoRecovery` is `false`, or the Operator refused automatic recovery, the nodes keep waiting. You find the node with the highest `seqno` in the `pxc` container logs and tell it to bootstrap. If the data needs repair first, you can make a node wait instead of restarting by creating a `sleep-forever` file in its data directory. The steps are in [Crash recovery](recovery.md) and [Avoid the restart-on-fail loop](debug-shell.md#avoid-the-restart-on-fail-loop-for-percona-xtradb-cluster-containers).
 

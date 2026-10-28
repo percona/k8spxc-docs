@@ -23,7 +23,7 @@ Change cluster size, pause state, and deletion through the CR. Direct edits to t
 * Plan capacity, node size, and maintenance windows for any change that restarts Pods. Provide enough schedulable nodes for the Pod anti-affinity rules (by default, three database Pods need three nodes), and resource requests and limits that fit them. See [Control Pod scheduling](constraints.md).
 * Check and tune MySQL options before you put them in `spec.pxc.configuration`. The Operator doesn't validate them. See [Changing MySQL options](options.md).
 * Decide whether to set the deletion finalizers. Without `percona.com/delete-pxc-pvc` and `percona.com/delete-ssl`, PVCs, Secrets and certificates remain after you delete the cluster, and you delete them yourself. ProxySQL PVCs are kept, also when you disable ProxySQL, unless you set `percona.com/delete-proxysql-pvc`. See [Clean up resources](delete.md#clean-up-resources).
-* **Manual recovery when the Operator refuses to recover automatically.** The Operator does not bootstrap from a node when the cluster UUID or sequence number has regressed since the last recovery, because that bootstrap can lose data. It emits an `AutomaticRecoveryRefused` event and stops. That handover is deliberate. Follow [Manual crash recovery](recovery.md#manual-crash-recovery) instead of forcing a bootstrap.
+* **Manual recovery when the Operator refuses to recover automatically.** The Operator does not bootstrap from a node when the cluster UUID or sequence number has regressed since the last recovery, because that bootstrap can lose data. It emits an `AutomaticRecoveryRefused` event and stops. That handover is deliberate. A restore also triggers it, because a restore creates a new UUID. See [When the Operator refuses automatic recovery](recovery.md#when-the-operator-refuses-automatic-recovery). Don't force a bootstrap. If you are not sure why the UUID changed, follow [Manual crash recovery](recovery.md#manual-crash-recovery).
 
 **Never do this manually:**
 
@@ -77,6 +77,7 @@ Create backups through a schedule on the cluster CR or through a `PerconaXtraDBC
 
 * Choose the restore target, and accept the data loss between that target and now.
 * Plan the maintenance window. A restore stops the cluster.
+* **Remove the recovery record after a restore.** A restore starts a new Galera cluster with a new UUID, and the Operator doesn't reset `status.recovery`. If the Operator recovered the cluster automatically before, the next full cluster crash is refused until you remove the record. See [Remove the recovery record after the restore](backups-restore-in-place.md#remove-the-recovery-record-after-the-restore).
 * **Take a new full backup after a binlog gap is reported.** The gap means PITR from that backup is no longer possible, and the window it covers is unrecoverable. Nothing restores that window. Take a fresh full backup to start a new PITR chain.
 
 **Never do this manually:**
