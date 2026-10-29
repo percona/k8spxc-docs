@@ -9045,7 +9045,6 @@ appropriate settings to provide a proper Percona XtraDB Cluster operation.</p></
 <th style="text-align: center;">Bitpoke MySQL Operator</th>
 <th style="text-align: center;">Moco</th>
 <th style="text-align: center;">Oracle MySQL Operator</th>
-<th style="text-align: center;">MariaDB Operator</th>
 <th style="text-align: center;">Vitess</th>
 </tr>
 </thead>
@@ -9056,18 +9055,16 @@ appropriate settings to provide a proper Percona XtraDB Cluster operation.</p></
 <td style="text-align: center;">Apache 2.0</td>
 <td style="text-align: center;">Apache 2.0</td>
 <td style="text-align: center;">Apache 2.0</td>
-<td style="text-align: center;">UPL 1.0</td>
-<td style="text-align: center;">MIT</td>
+<td style="text-align: center;">Apache 2.0</td>
 <td style="text-align: center;">Apache 2.0</td>
 </tr>
 <tr>
 <td>MySQL versions</td>
-<td style="text-align: center;">5.7, 8.0, 8.4</td>
-<td style="text-align: center;">8.0, 8.4</td>
+<td style="text-align: center;">5.7, 8.0</td>
+<td style="text-align: center;">8.0</td>
 <td style="text-align: center;">5.7</td>
 <td style="text-align: center;">8.0</td>
-<td style="text-align: center;">8.4, 9.7, 26.7</td>
-<td style="text-align: center;">MariaDB 10.6 and newer (not MySQL)</td>
+<td style="text-align: center;">8.0</td>
 <td style="text-align: center;">5.7, 8.0</td>
 </tr>
 <tr>
@@ -9077,7 +9074,6 @@ appropriate settings to provide a proper Percona XtraDB Cluster operation.</p></
 <td style="text-align: center;">Not guaranteed</td>
 <td style="text-align: center;">Not guaranteed</td>
 <td style="text-align: center;">Not guaranteed</td>
-<td style="text-align: center;">Not documented</td>
 <td style="text-align: center;">Not guaranteed</td>
 </tr>
 <tr>
@@ -9087,17 +9083,15 @@ appropriate settings to provide a proper Percona XtraDB Cluster operation.</p></
 <td style="text-align: center;"><img alt="🚫" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f6ab.svg" title=":no_entry_sign:" /></td>
 <td style="text-align: center;"><img alt="🚫" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f6ab.svg" title=":no_entry_sign:" /></td>
 <td style="text-align: center;"><img alt="✅" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" title=":white_check_mark:" /></td>
-<td style="text-align: center;">MariaDB plc (separate Enterprise Operator)</td>
 <td style="text-align: center;"><img alt="🚫" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f6ab.svg" title=":no_entry_sign:" /></td>
 </tr>
 <tr>
 <td>Web-based GUI</td>
-<td style="text-align: center;"><a href="https://docs.percona.com/everest/index.html">Percona Everest</a></td>
+<td style="text-align: center;"><a href="http://openeverest.io/">Open Everest</a></td>
 <td style="text-align: center;"><img alt="🚫" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f6ab.svg" title=":no_entry_sign:" /></td>
 <td style="text-align: center;"><img alt="🚫" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f6ab.svg" title=":no_entry_sign:" /></td>
 <td style="text-align: center;"><img alt="🚫" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f6ab.svg" title=":no_entry_sign:" /></td>
 <td style="text-align: center;"><a href="https://www.mysql.com/products/enterprise/em.html">Oracle Enterprise Manager</a></td>
-<td style="text-align: center;">MaxScale GUI (requires MaxScale)</td>
 <td style="text-align: center;"><img alt="🚫" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f6ab.svg" title=":no_entry_sign:" /></td>
 </tr>
 </tbody>
@@ -9976,7 +9970,7 @@ metrics.</p>
 <li>Deepen your monitoring insights by setting up <a href="#monitor-kubernetes">Kubernetes monitoring with PMM</a></li>
 <li>Control Pods assignment on specific Kubernetes Nodes by setting up <a href="#constraints">affinity / anti-affinity</a></li>
 <li>Ready to adopt the Operator for production use and need to delete the testing deployment? Use <a href="#delete">this guide</a> to do it</li>
-<li>You can also try operating the Operator and database clusters via the web interface with <a href="https://openeverest.io/">Open Everest <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> - an open-source web-based database provisioning tool which supports Percona Operators. Refer to <a href="https://openeverest.io/documentation/current/quick-install.html">Open Everest documentation <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> on how to start using it.</li>
+<li>You can also try operating the Operator and database clusters via the web interface with <a href="https://openeverest.io/documentation/current/index.html">OpenEverest <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> - an open-source web-based database provisioning tool based on Percona Operators. See <a href="https://openeverest.io/documentation/current/quick-install.html">Get started with OpenEverest <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> on how to start using it</li>
 </ul></section></section>
                     <section class='print-page md-section' id='section-5' heading-number='5'>
                         <h1>Installation<a class='headerlink' href='#section-5' title='Permanent link'></a>
@@ -36509,7 +36503,7 @@ Being a technical preview, Percona XtraDB Cluster 8.4 is not yet recommended for
 <p><a href="https://jira.percona.com/browse/K8SPXC-625">K8SPXC-625</a>: Print the total number of binlogs and the number of remaining binlogs in the restore log while point-in-time recovery in progress</p>
 </li>
 <li>
-<p><a href="https://jira.percona.com/browse/K8SPXC-920">K8SPXC-920</a>: Using the new <a href="https://docs.percona.com/percona-xtrabackup/8.0/xbcloud/xbcloud_exbackoff.html">Percona XtraBackup Exponential Backoff feature <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> decreases the number of occasional unsuccessful backups due to more effective retries timing (Thanks to Dustin Falgout for reporting this issue)</p>
+<p><a href="https://jira.percona.com/browse/K8SPXC-920">K8SPXC-920</a>: Using the new <a href="https://docs.percona.com/percona-xtrabackup/8.0/xbcloud-exbackoff.html">Percona XtraBackup Exponential Backoff feature <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> decreases the number of occasional unsuccessful backups due to more effective retries timing (Thanks to Dustin Falgout for reporting this issue)</p>
 </li>
 <li>
 <p><a href="https://jira.percona.com/browse/K8SPXC-823">K8SPXC-823</a>: Make it possible <a href="#monitoring-configure-authentication">to use API Key</a> to authorize within Percona Monitoring and Management Server</p>
@@ -36955,7 +36949,7 @@ local machine</p>
 with the oldest binary log in the cluster to ensure log consistency</p>
 </li>
 <li>
-<p><a href="https://jira.percona.com/browse/K8SPXC-618">K8SPXC-618</a>: Add debug symbols from the <a href="https://www.percona.com/doc/percona-server/8.0/installation/yum_repo.html#what-s-in-each-rpm-package">percona-xtradb-cluster-server-debuginfo <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a>
+<p><a href="https://jira.percona.com/browse/K8SPXC-618">K8SPXC-618</a>: Add debug symbols from the <a href="https://docs.percona.com/percona-xtradb-cluster/8.0/apt.html">percona-xtradb-cluster-server-debuginfo <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a>
 package to the Percona XtraDB Cluster debug docker image to simplify
 troubleshooting</p>
 </li>
