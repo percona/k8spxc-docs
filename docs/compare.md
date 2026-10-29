@@ -9,7 +9,7 @@ There are multiple ways to deploy and manage MySQL in Kubernetes. Here we will f
 * [Moco :octicons-link-external-16:](https://github.com/cybozu-go/moco) by Cybozu
 * [Vitess Operator :octicons-link-external-16:](https://github.com/planetscale/vitess-operator) by PlanetScale
 * Percona Operator for MySQL:
-  
+
     * [based on Percona XtraDB Cluster :octicons-link-external-16:](https://github.com/percona/percona-xtradb-cluster-operator)
     * [based on Percona Server for MySQL :octicons-link-external-16:](https://github.com/percona/percona-server-mysql-operator/)
 
@@ -17,13 +17,13 @@ There are multiple ways to deploy and manage MySQL in Kubernetes. Here we will f
 
 The review of generic features, such as supported MySQL versions, open source models and more.
 
-| Feature/Product        | Percona Operator for MySQL  (based on PXC) | Percona Operator for MySQL (based on PS) | Bitpoke MySQL Operator |      Moco       | Oracle MySQL Operator | MariaDB Operator |    Vitess      |
-|------------------------|:------------------------------------------:|:----------------------------------------:|:----------------------:|:--------------:|:---------------------:|:---:|:--------------:|
-| Open source model      |                 Apache 2.0                 |                Apache 2.0                |       Apache 2.0       |   Apache 2.0   | UPL 1.0 | MIT |   Apache 2.0   |
-| MySQL versions         |                5.7, 8.0, 8.4                | 8.0, 8.4 |           5.7          |       8.0      | 8.4, 9.7, 26.7 | MariaDB 10.6 and newer (not MySQL) |    5.7, 8.0    |
-| Kubernetes conformance |         Various versions are tested        |        Various versions are tested       |     Not guaranteed     | Not guaranteed |     Not guaranteed    | Not documented | Not guaranteed |
-| Paid support           |             :white_check_mark:             |            :white_check_mark:            |     :no_entry_sign:    | :no_entry_sign:|  :white_check_mark:   | MariaDB plc (separate Enterprise Operator) | :no_entry_sign:|
-| Web-based GUI          |  [Percona Everest](https://docs.percona.com/everest/index.html) |   :no_entry_sign:   |     :no_entry_sign:    | :no_entry_sign:| [Oracle Enterprise Manager](https://www.mysql.com/products/enterprise/em.html) | MaxScale GUI (requires MaxScale) | :no_entry_sign:|
+| Feature/Product        | Percona Operator for MySQL  (based on PXC) | Percona Operator for MySQL (based on PS) | Bitpoke MySQL Operator |      Moco      | Oracle MySQL Operator |    Vitess      |
+|------------------------|:------------------------------------------:|:----------------------------------------:|:----------------------:|:--------------:|:---------------------:|:--------------:|
+| Open source model      |                 Apache 2.0                 |                Apache 2.0                |       Apache 2.0       |   Apache 2.0   |       Apache 2.0      |   Apache 2.0   |
+| MySQL versions         |                  5.7, 8.0                  |                    8.0                   |           5.7          |       8.0      |          8.0          |    5.7, 8.0    |
+| Kubernetes conformance |         Various versions are tested        |        Various versions are tested       |     Not guaranteed     | Not guaranteed |     Not guaranteed    | Not guaranteed |
+| Paid support           |             :white_check_mark:             |            :white_check_mark:            |     :no_entry_sign:    | :no_entry_sign:|  :white_check_mark:   | :no_entry_sign:|
+| Web-based GUI          |  [Open Everest](http://openeverest.io/) |   :no_entry_sign:   |     :no_entry_sign:    | :no_entry_sign:| [Oracle Enterprise Manager](https://www.mysql.com/products/enterprise/em.html) | :no_entry_sign:|
 
 ## MySQL Topologies
 
