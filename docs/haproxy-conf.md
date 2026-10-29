@@ -330,7 +330,7 @@ kubectl create -f deploy/my-haproxy-secret.yaml
 
 ## Enabling the Proxy protocol
 
-The Proxy protocol [allows :octicons-link-external-16:](https://docs.percona.com/percona-server/8.4/proxy-protocol-support.html)
+The Proxy protocol [allows :octicons-link-external-16:](https://docs.percona.com/percona-server/latest/proxy-protocol-support.html)
 HAProxy to provide a real client address to Percona XtraDB Cluster.
 
 !!! note
@@ -345,7 +345,7 @@ XtraDB Cluster is important: e.g. it allows to have privilege grants based on
 client/application address, and significantly enhance auditing.
 
 You can enable Proxy protocol on Percona XtraDB Cluster by adding
-[proxy_protocol_networks :octicons-link-external-16:](https://docs.percona.com/percona-server/8.4/proxy-protocol-support.html#proxy_protocol_networks)
+[proxy_protocol_networks :octicons-link-external-16:](https://docs.percona.com/percona-server/latest/proxy-protocol-support.html#proxy_protocol_networks)
 option to [pxc.configuration](operator.md#pxcconfiguration) key in the `deploy/cr.yaml` configuration
 file.
 
