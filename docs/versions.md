@@ -6,7 +6,7 @@ Versions of the cluster components and platforms tested with different Operator 
 
 | Operator | [MySQL :octicons-link-external-16:](https://www.percona.com/software/mysql-database/percona-server) | [Percona XtraBackup :octicons-link-external-16:](https://www.percona.com/software/mysql-database/percona-xtrabackup) | [HA Proxy :octicons-link-external-16:](https://www.haproxy.org/) | [ProxySQL :octicons-link-external-16:](https://proxysql.com/) |
 |:--------|:--------|:-----|:-------|:-------|
-|[1.20.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.20.0.md)  | 8.4.8-8.1, 8.0.45-36.1, 5.7.44-31.65 | 8.4.0-5.1 for MySQL 8.4, 8.0.35-35.1 for MySQL 8.0, 2.4.29 for MySQL 5.7 | 2.8.18-1    | 2.7.3-1.3    |
+|[1.20.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.20.0.md)  | 8.4.8-8.1, 8.0.45-36.1, 5.7.44-31.65 | 8.4.0-5.1 for MySQL 8.4, 8.0.35-35.1 for MySQL 8.0, 2.4.29 for MySQL 5.7 | 2.8.18-1    | 2.7.3-1.3, 3.0.6-1.1    |
 |[1.19.1](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.19.1.md)  | 8.4, 8.0, 5.7      | 8.4.0-5.1 for MySQL 8.4, 8.0.35-34.1 for MySQL 8.0, 2.4.29 for MySQL 5.7 | 2.8.17    | 2.7.3-1.2    |
 |[1.19.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.19.0.md)  | 8.4, 8.0, 5.7      | 8.4.0-5.1 for MySQL 8.4, 8.0.35-34.1 for MySQL 8.0, 2.4.29 for MySQL 5.7 | 2.8.17    | 2.7.3-1.2    |
 |[1.18.0](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.18.0.md)  | 8.4 (Tech preview), 8.0, 5.7      | 8.4.0-3 for MySQL 8.4, 8.0.35-34.1 for MySQL 8.0, 2.4.29 for MySQL 5.7 | 2.8.15    | 2.7.3    |

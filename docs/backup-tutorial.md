@@ -1,6 +1,6 @@
 # 4. Make a backup
 
-In this tutorial, you will learn how to make a logical backup of your data manually. To learn more about backups, see the [Backup and restore](backups.md) section.
+In this tutorial, you will learn how to make a backup of your data manually. To learn more about backups, see the [Backup and restore](backups.md) section.
 
 ## Considerations and prerequisites
 

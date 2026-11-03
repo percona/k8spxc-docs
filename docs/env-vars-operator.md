@@ -158,7 +158,7 @@ Enables you to turn on specific features for the Operator.
 Using the XtraBackup sidecar method is an alternative backup approach with different characteristics. You might want to use it if:
 
 * You need better performance for large databases. The XtraBackup sidecar accesses data files directly without network overhead
-* You require native encryption support for backups and/or incremental backups. These functionalities are not yet available in version 1.19.0 and will be added in future releases.
+* You require native encryption support for backups and/or incremental backups. These functionalities are not yet available and will be added in future releases.
 
 **Example configuration:**
 

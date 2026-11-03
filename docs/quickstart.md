@@ -5,7 +5,7 @@ Ready to get started with the Percona Operator for MySQL? In this section, you w
 -	Install and deploy an Operator
 -	Connect to MySQL instance in Percona XtraDB Cluster
 -	Insert sample data to the database
--	Set up and make a logical backup
+-	Set up and make a backup
 -	Monitor the database health with Percona Monitoring and Management (PMM)
 
 ## Next steps
