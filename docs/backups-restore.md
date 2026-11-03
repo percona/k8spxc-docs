@@ -68,6 +68,7 @@ Every restore names its source in one of two ways. Use exactly one - setting bot
 
 * **Storage type.** Restoring from an `emptyDir` or `hostPath` volume isn't supported — back up from one if you need to, then restore the result onto a Persistent Volume instead. A Persistent Volume restore only works within the same Kubernetes cluster ([in-place](backups-restore-in-place.md) or a [side cluster](backups-restore-side-cluster.md)). A [new cluster on a different Kubernetes environment](backups-restore-to-new-cluster.md), a [disaster restore](backups-restore-disaster.md), and any [point-in-time recovery](backups-pitr-restore.md) restore all require the full backup to be in cloud storage (S3 or Azure).
 * **User passwords.** A full-backup restore tolerates changed passwords since Operator 1.18.0 — see [Restore the cluster when backup has different passwords](#restore-the-cluster-when-a-backup-has-different-passwords). A point-in-time restore doesn't: it still requires a Secret with the passwords that were in effect at backup time. This is a known limitation.
+* **Automatic crash recovery after a restore.** A restore starts a new Galera cluster with a new cluster UUID. The Operator doesn't reset the `status.recovery` record of its previous automatic recovery, so the next full cluster crash can be refused. After a restore into a cluster that the Operator recovered before, [remove the recovery record](backups-restore-in-place.md#remove-the-recovery-record-after-the-restore).
 
 ## Restore the cluster when a backup has different passwords
 

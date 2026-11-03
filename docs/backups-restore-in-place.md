@@ -92,6 +92,32 @@ kubectl apply -f deploy/backup/restore.yaml -n $NAMESPACE
 
 1. Spot-check the data you expected the backup to contain.
 
+## Remove the recovery record after the restore
+
+!!! warning
+
+    A restore starts a new Galera cluster with a new cluster UUID, but the Operator keeps the `status.recovery` record of its last automatic recovery. On the next full cluster crash, the Operator compares the new UUID and `seqno` with the old record, refuses automatic recovery, and emits the `AutomaticRecoveryRefused` event. The Pods keep waiting until you intervene.
+
+To avoid this, remove the record after the restore:
+
+1. Wait until the restore is `Succeeded` and the cluster is `ready`.
+
+2. Check whether the cluster has a record:
+
+    ```bash
+    kubectl get pxc $CLUSTER -n $NAMESPACE -o jsonpath='{.status.recovery}'
+    ```
+
+    If the output is empty, the Operator hasn't recovered this cluster automatically yet and you have nothing to do.
+
+3. Remove the record. The `status` is a subresource, so you need `kubectl` 1.24 or newer:
+
+    ```bash
+    kubectl patch pxc $CLUSTER -n $NAMESPACE --type=merge --subresource=status -p '{"status":{"recovery":null}}'
+    ```
+
+The Operator records the new UUID and `seqno` the next time it recovers the cluster. If a full cluster crash has already been refused, see [When the Operator refuses automatic recovery](recovery.md#when-the-operator-refuses-automatic-recovery).
+
 ## Restore with point-in-time recovery
 
 See [Restore with point-in-time recovery](backups-pitr-restore.md) for recovery-target options (date, GTID, or latest), how to find the GTID you need, and verification steps.

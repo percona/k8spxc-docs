@@ -14,3 +14,4 @@ mkdocs-print-site-plugin
 mkdocs-git-committers-plugin-2
 mkdocs-git-revision-date-localized-plugin
 mkdocs-open-in-new-tab
+mkdocs-glightbox

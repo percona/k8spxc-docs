@@ -8,6 +8,8 @@ configured by the Operator.
 This document describes the usage of [Custom Resource manifest options](operator.md)
 to expose the clusters deployed with the Operator.
 
+To see which Service your application should connect to, and every Service the Operator creates with its ports, see [Services and ports](services.md).
+
 ### Exposing cluster with HAProxy or ProxySQL
 
 The Operator provides a choice of two cluster components to
