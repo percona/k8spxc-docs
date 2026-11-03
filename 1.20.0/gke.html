@@ -1,10 +1,4 @@
-
-
-
-
-<!doctype html>
-<html lang="en" class="no-js">
-  <head>
+<!DOCTYPE html><html lang="en" class="no-js"><head>
     
   
       <meta charset="utf-8">
@@ -70,8 +64,8 @@
       
         
         
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
@@ -119,17 +113,22 @@
                  
                  
                  
-                  <meta property="og:type" content="website" />
-                  <meta property="og:title" content="Percona Operator for MySQL based on Percona XtraDB Cluster - Install on Google Kubernetes Engine (GKE)" />
-                  <meta property="og:image"
-                    content="https://docs.percona.com/percona-operator-for-xtradb-cluster/assets/images/kubernetes-operators.png">
+                  <meta property="og:type" content="website">
+                  <meta property="og:title" content="Percona Operator for MySQL based on Percona XtraDB Cluster - Install on Google Kubernetes Engine (GKE)">
+                  <meta property="og:image" content="https://docs.percona.com/percona-operator-for-xtradb-cluster/assets/images/kubernetes-operators.png">
                   <meta property="og:url" content="https://docs.percona.com/percona-operator-for-xtradb-cluster/">
-                  </head>
-                <body>
-                </body>
-              </html>
 
-  </head>
+  <link href="assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
   
   
     
@@ -157,7 +156,7 @@
       
     </div>
     
-      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden="">
         
       </div>
     
@@ -177,10 +176,10 @@
       <a href="https://docs.percona.com/percona-operators/" title="Percona Documentation home page">
         <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <mask id="a" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
-            <path d="M0 0h24v24H0z"/>
+            <path d="M0 0h24v24H0z"></path>
           </mask>
           <g mask="url(#a)">
-            <path d="m7.825 13 5.6 5.6L12 20l-8-8 8-8 1.425 1.4-5.6 5.6H20v2H7.825Z"/>
+            <path d="m7.825 13 5.6 5.6L12 20l-8-8 8-8 1.425 1.4-5.6 5.6H20v2H7.825Z"></path>
           </g>
         </svg>
         <span>Percona Operators Documentation</span>
@@ -188,19 +187,10 @@
     </div>
   </div>
 
-  <nav
-    class="md-header__inner md-grid"
-    aria-label="Header"
-  >
+  <nav class="md-header__inner md-grid" aria-label="Header">
 
     <!-- Link to home -->
-    <a
-      href="index.html"
-      title="Percona Operator for MySQL based on Percona XtraDB Cluster"
-      class="md-header__button md-logo"
-      aria-label="Percona Operator for MySQL based on Percona XtraDB Cluster"
-      data-md-component="logo"
-    >
+    <a href="index.html" title="Percona Operator for MySQL based on Percona XtraDB Cluster" class="md-header__button md-logo" aria-label="Percona Operator for MySQL based on Percona XtraDB Cluster" data-md-component="logo">
       
   <img src="assets/operators-logo.svg" alt="logo">
 
@@ -209,7 +199,7 @@
     <!-- Button to open drawer -->
     <label class="md-header__button md-icon" for="__drawer">
       
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
     </label>
 
   <!-- Header title -->
@@ -240,30 +230,30 @@
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Color theme set to Automatic. Click to change"  type="radio" name="__palette" id="__palette_0">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="Color theme set to Automatic. Click to change" type="radio" name="__palette" id="__palette_0">
     
-      <label class="md-header__button md-icon" title="Color theme set to Automatic. Click to change" for="__palette_1" hidden>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      <label class="md-header__button md-icon" title="Color theme set to Automatic. Click to change" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"></path></svg>
       </label>
     
   
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Color theme set to Light Mode. Click to change"  type="radio" name="__palette" id="__palette_1">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Color theme set to Light Mode. Click to change" type="radio" name="__palette" id="__palette_1">
     
-      <label class="md-header__button md-icon" title="Color theme set to Light Mode. Click to change" for="__palette_2" hidden>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      <label class="md-header__button md-icon" title="Color theme set to Light Mode. Click to change" for="__palette_2" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
       </label>
     
   
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Color theme set to Dark Mode. Click to change"  type="radio" name="__palette" id="__palette_2">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Color theme set to Dark Mode. Click to change" type="radio" name="__palette" id="__palette_2">
     
-      <label class="md-header__button md-icon" title="Color theme set to Dark Mode. Click to change" for="__palette_0" hidden>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      <label class="md-header__button md-icon" title="Color theme set to Dark Mode. Click to change" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
       </label>
     
   
@@ -283,7 +273,7 @@
     
       <label class="md-header__button md-icon" for="__search">
         
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
       </label>
 
       <!-- Search interface -->
@@ -291,24 +281,24 @@
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
       <label class="md-search__icon md-icon" for="__search">
         
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
         
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
       </label>
       <nav class="md-search__options" aria-label="Search">
         
         <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
           
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
         </button>
       </nav>
       
     </form>
     <div class="md-search__output">
-      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
             Initializing search
@@ -327,7 +317,7 @@
         <a href="https://github.com/percona/k8spxc-docs" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
   </div>
   <div class="md-source__repository">
     percona/k8spxc-docs
@@ -353,7 +343,7 @@
           
             
               
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -374,7 +364,7 @@
       <a href="https://github.com/percona/k8spxc-docs" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
   </div>
   <div class="md-source__repository">
     percona/k8spxc-docs
@@ -382,7 +372,7 @@
 </a>
     </div>
   
-  <ul class="md-nav__list" data-md-scrollfix>
+  <ul class="md-nav__list" data-md-scrollfix="">
     
       
       
@@ -453,7 +443,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3">
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -483,7 +473,54 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1">
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design and architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Design and architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -499,7 +536,35 @@
   <span class="md-ellipsis">
     
   
-    Design and architecture
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="architecture-responsibilities.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Who owns what
   
 
     
@@ -527,7 +592,7 @@
   <span class="md-ellipsis">
     
   
-    What the Operator manages
+    Operator responsibilities by area
   
 
     
@@ -536,6 +601,98 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="architecture-reconciliation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How the Operator reacts to changes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="architecture-workflows.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Key workflows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="architecture-probes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Health checks and probes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -591,7 +748,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4">
         
           
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
@@ -621,7 +778,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -666,7 +823,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2">
         
           
           <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
@@ -696,7 +853,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -888,7 +1045,7 @@
   <span class="md-ellipsis">
     
   
-    What&rsquo;s next?
+    What’s next?
   
 
     
@@ -926,7 +1083,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked="">
         
           
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
@@ -956,7 +1113,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -1106,7 +1263,7 @@
       <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
   <a href="#prerequisites" class="md-nav__link">
@@ -1345,7 +1502,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6">
         
           
           <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
@@ -1375,7 +1532,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -1476,7 +1633,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_4">
         
           
           <label class="md-nav__link" for="__nav_6_4" id="__nav_6_4_label" tabindex="0">
@@ -1506,7 +1663,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -1650,7 +1807,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7">
         
           
           <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
@@ -1680,7 +1837,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -1781,7 +1938,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_4">
         
           
           <label class="md-nav__link" for="__nav_7_4" id="__nav_7_4_label" tabindex="0">
@@ -1811,7 +1968,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -2004,7 +2161,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_9" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_9">
         
           
           <label class="md-nav__link" for="__nav_7_9" id="__nav_7_9_label" tabindex="0">
@@ -2034,7 +2191,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -2143,7 +2300,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_10" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_10">
         
           
           <label class="md-nav__link" for="__nav_7_10" id="__nav_7_10_label" tabindex="0">
@@ -2173,7 +2330,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -2310,7 +2467,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_11" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_11">
         
           
           <label class="md-nav__link" for="__nav_7_11" id="__nav_7_11_label" tabindex="0">
@@ -2340,7 +2497,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -2421,7 +2578,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_12" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_12">
         
           
           <label class="md-nav__link" for="__nav_7_12" id="__nav_7_12_label" tabindex="0">
@@ -2451,7 +2608,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -2524,7 +2681,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_12_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_12_3">
         
           
           <label class="md-nav__link" for="__nav_7_12_3" id="__nav_7_12_3_label" tabindex="0">
@@ -2554,7 +2711,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -2755,7 +2912,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_13" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_13">
         
           
           <label class="md-nav__link" for="__nav_7_13" id="__nav_7_13_label" tabindex="0">
@@ -2785,7 +2942,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -2978,7 +3135,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_14" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_14">
         
           
           <label class="md-nav__link" for="__nav_7_14" id="__nav_7_14_label" tabindex="0">
@@ -3008,7 +3165,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -3180,7 +3337,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8">
         
           
           <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
@@ -3210,7 +3367,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -3227,7 +3384,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1">
         
           
           <label class="md-nav__link" for="__nav_8_1" id="__nav_8_1_label" tabindex="0">
@@ -3257,7 +3414,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -3330,7 +3487,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_3">
         
           
           <label class="md-nav__link" for="__nav_8_1_3" id="__nav_8_1_3_label" tabindex="0">
@@ -3360,7 +3517,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -3497,7 +3654,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_4">
         
           
           <label class="md-nav__link" for="__nav_8_1_4" id="__nav_8_1_4_label" tabindex="0">
@@ -3527,7 +3684,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -3636,7 +3793,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_6">
         
           
           <label class="md-nav__link" for="__nav_8_1_6" id="__nav_8_1_6_label" tabindex="0">
@@ -3666,7 +3823,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -3831,7 +3988,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_7">
         
           
           <label class="md-nav__link" for="__nav_8_1_7" id="__nav_8_1_7_label" tabindex="0">
@@ -3861,7 +4018,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -3970,7 +4127,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_8" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_8">
         
           
           <label class="md-nav__link" for="__nav_8_1_8" id="__nav_8_1_8_label" tabindex="0">
@@ -4000,7 +4157,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -4117,7 +4274,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2">
         
           
           <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
@@ -4147,7 +4304,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -4431,7 +4588,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9">
         
           
           <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
@@ -4461,7 +4618,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -4653,7 +4810,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10">
         
           
           <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
@@ -4683,7 +4840,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -4847,7 +5004,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11">
         
           
           <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
@@ -4877,7 +5034,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -4950,6 +5107,62 @@
     
   
     Restore Custom Resource options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="services.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services and ports
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="objects-created.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Objects the Operator creates
   
 
     
@@ -5082,6 +5295,34 @@
   
   
     <li class="md-nav__item">
+      <a href="glossary.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="https://docs.percona.com/legacy-documentation/" class="md-nav__link">
         
   
@@ -5118,10 +5359,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11_9" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11_12">
         
           
-          <label class="md-nav__link" for="__nav_11_9" id="__nav_11_9_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_11_12" id="__nav_11_12_label" tabindex="0">
             
   
   
@@ -5139,8 +5380,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_11_9_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_11_9">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_11_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11_12">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -5148,7 +5389,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -5348,7 +5589,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12">
         
           
           <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
@@ -5378,7 +5619,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -6129,7 +6370,7 @@
             
             
               
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     <!-- Feedback Widget -->
@@ -6273,7 +6514,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
       color: var(--md-default-fg-color);
       background: var(--md-default-bg-color);
       border: 0.05rem solid var(--md-default-fg-color--lightest);
-    " />
+    ">
 
         <button id="submit-feedback" style="
   padding: 5px 10px;
@@ -6361,7 +6602,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
       <a href="https://github.com/percona/k8spxc-docs/edit/main/docs/gke.md" title="Edit this page on GitHub" class="edit-page-link">
         <span class="edit-page-icon">
           
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
         </span>
         <span class="edit-page-text">Edit this page on GitHub</span>
       </a>
@@ -6370,11 +6611,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
       <div class="banner-divider"></div>
   
       <!-- Contributing Guide below, smaller -->
-      <a href="https://github.com/percona/k8spxc-docs/blob/main/CONTRIBUTING.md"
-         title="Contributing guide"
-         class="contrib-link"
-         target="_blank"
-         rel="noopener">
+      <a href="https://github.com/percona/k8spxc-docs/blob/main/CONTRIBUTING.md" title="Contributing guide" class="contrib-link" target="_blank" rel="noopener">
         Contributing guide
       </a>
     </div>
@@ -6405,7 +6642,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
       <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
   <a href="#prerequisites" class="md-nav__link">
@@ -6499,30 +6736,30 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     
     <a href="https://github.com/percona/k8spxc-docs/raw/main/docs/gke.md" title="View source of this page" class="md-content__button md-icon">
       
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"></path></svg>
     </a>
   
 
 
-<h1 id="install-percona-xtradb-cluster-on-google-kubernetes-engine-gke">Install Percona XtraDB Cluster on Google Kubernetes Engine (GKE)<a class="headerlink" href="#install-percona-xtradb-cluster-on-google-kubernetes-engine-gke" title="Permanent link">&para;</a></h1>
-<p>This quickstart shows you how to configure the Percona Operator for MySQL based on Percona XtraDB Cluster with the Google Kubernetes Engine. The document assumes some experience with Google Kubernetes Engine (GKE). For more information on the GKE, see the <a href="https://cloud.google.com/kubernetes-engine/docs/quickstart">Kubernetes Engine Quickstart <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a>.</p>
-<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<h1 id="install-percona-xtradb-cluster-on-google-kubernetes-engine-gke">Install Percona XtraDB Cluster on Google Kubernetes Engine (GKE)<a class="headerlink" href="#install-percona-xtradb-cluster-on-google-kubernetes-engine-gke" title="Permanent link">¶</a></h1>
+<p>This quickstart shows you how to configure the Percona Operator for MySQL based on Percona XtraDB Cluster with the Google Kubernetes Engine. The document assumes some experience with Google Kubernetes Engine (GKE). For more information on the GKE, see the <a href="https://cloud.google.com/kubernetes-engine/docs/quickstart">Kubernetes Engine Quickstart <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>.</p>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h2>
 <p>All commands from this quickstart can be run either in the <strong>Google Cloud shell</strong> or in <strong>your local shell</strong>.</p>
 <p>To use <em>Google Cloud shell</em>, you need nothing but a modern web browser.</p>
 <p>If you would like to use <em>your local shell</em>, install the following:</p>
 <ol>
 <li>
-<p><a href="https://cloud.google.com/sdk/docs/quickstarts">gcloud <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a>. This tool is part of the Google Cloud SDK. To install it, select your operating system on the <a href="https://cloud.google.com/sdk/docs">official Google Cloud SDK documentation page <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> and then follow the instructions.</p>
+<p><a href="https://cloud.google.com/sdk/docs/quickstarts">gcloud <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>. This tool is part of the Google Cloud SDK. To install it, select your operating system on the <a href="https://cloud.google.com/sdk/docs">official Google Cloud SDK documentation page <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> and then follow the instructions.</p>
 </li>
 <li>
-<p><a href="https://cloud.google.com/kubernetes-engine/docs/quickstart#choosing_a_shell">kubectl <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a>. It is the Kubernetes command-line tool you will use to manage and deploy applications. To install the tool, run the following command:</p>
+<p><a href="https://cloud.google.com/kubernetes-engine/docs/quickstart#choosing_a_shell">kubectl <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>. It is the Kubernetes command-line tool you will use to manage and deploy applications. To install the tool, run the following command:</p>
 <div class="highlight"><pre><span></span><code>gcloud<span class="w"> </span>auth<span class="w"> </span>login
 gcloud<span class="w"> </span>components<span class="w"> </span>install<span class="w"> </span>kubectl
 </code></pre></div>
 </li>
 </ol>
-<h2 id="configuring-default-settings-for-the-cluster">Configuring default settings for the cluster<a class="headerlink" href="#configuring-default-settings-for-the-cluster" title="Permanent link">&para;</a></h2>
-<p>You can configure the settings using the <code>gcloud</code> tool. You can run it either in the <a href="https://cloud.google.com/shell/docs/quickstart">Cloud Shell <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> or in your local shell (if you have installed Google Cloud SDK locally on the previous step). The following command will create a cluster named <code>my-cluster-1</code>:</p>
+<h2 id="configuring-default-settings-for-the-cluster">Configuring default settings for the cluster<a class="headerlink" href="#configuring-default-settings-for-the-cluster" title="Permanent link">¶</a></h2>
+<p>You can configure the settings using the <code>gcloud</code> tool. You can run it either in the <a href="https://cloud.google.com/shell/docs/quickstart">Cloud Shell <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> or in your local shell (if you have installed Google Cloud SDK locally on the previous step). The following command will create a cluster named <code>my-cluster-1</code>:</p>
 <div class="highlight"><pre><span></span><code>gcloud<span class="w"> </span>container<span class="w"> </span>clusters<span class="w"> </span>create<span class="w"> </span>my-cluster-1<span class="w"> </span>--project<span class="w"> </span>&lt;project<span class="w"> </span>ID&gt;<span class="w"> </span>--zone<span class="w"> </span>us-central1-a<span class="w"> </span>--cluster-version<span class="w"> </span><span class="m">1</span>.35<span class="w"> </span>--machine-type<span class="w"> </span>n1-standard-4<span class="w"> </span>--num-nodes<span class="o">=</span><span class="m">3</span>
 </code></pre></div>
 <div class="admonition note">
@@ -6530,15 +6767,15 @@ gcloud<span class="w"> </span>components<span class="w"> </span>install<span cla
 <p>You must edit the above command and other command-line statements to replace the <code>&lt;project ID&gt;</code> placeholder with your project ID (see available projects with <code>gcloud projects list</code> command). You may also be required to edit the <em>zone location</em>, which is set to <code>us-central1-a</code> in the above example. Other parameters specify that we are creating a cluster with 3 nodes and with machine type of 4 vCPUs.</p>
 </div>
 <p>You may wait a few minutes for the cluster to be generated, and then you will see it listed in the Google Cloud console (select <em>Kubernetes Engine</em> → <em>Clusters</em> in the left menu panel):</p>
-<p><img alt="image" src="assets/images/gke-quickstart-cluster-connect.png" /></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/images/gke-quickstart-cluster-connect.png" data-desc-position="bottom"><img alt="image" src="assets/images/gke-quickstart-cluster-connect.png"></a></p>
 <p>Now you should configure the command-line access to your newly created cluster to make <code>kubectl</code> be able to use it.</p>
 <p>In the Google Cloud Console, select your cluster and then click the <em>Connect</em> shown on the above image. You will see the connect statement configures command-line access. After you have edited the statement, you may run the command in your local shell:</p>
 <div class="highlight"><pre><span></span><code>gcloud<span class="w"> </span>container<span class="w"> </span>clusters<span class="w"> </span>get-credentials<span class="w"> </span>my-cluster-1<span class="w"> </span>--zone<span class="w"> </span>us-central1-a<span class="w"> </span>--project<span class="w"> </span>&lt;project<span class="w"> </span>name&gt;
 </code></pre></div>
-<h2 id="installing-the-operator">Installing the Operator<a class="headerlink" href="#installing-the-operator" title="Permanent link">&para;</a></h2>
+<h2 id="installing-the-operator">Installing the Operator<a class="headerlink" href="#installing-the-operator" title="Permanent link">¶</a></h2>
 <ol>
 <li>
-<p>First of all, use your <a href="https://cloud.google.com/iam">Cloud Identity and Access Management (Cloud IAM) <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> to control access to the cluster. The following command will give you the ability to create Roles and RoleBindings:</p>
+<p>First of all, use your <a href="https://cloud.google.com/iam">Cloud Identity and Access Management (Cloud IAM) <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> to control access to the cluster. The following command will give you the ability to create Roles and RoleBindings:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>clusterrolebinding<span class="w"> </span>cluster-admin-binding<span class="w"> </span>--clusterrole<span class="w"> </span>cluster-admin<span class="w"> </span>--user<span class="w"> </span><span class="k">$(</span>gcloud<span class="w"> </span>config<span class="w"> </span>get-value<span class="w"> </span>core/account<span class="k">)</span>
 </code></pre></div>
 <p>The return statement confirms the creation:</p>
@@ -6551,7 +6788,7 @@ gcloud<span class="w"> </span>components<span class="w"> </span>install<span cla
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>namespace<span class="w"> </span>&lt;namespace<span class="w"> </span>name&gt;
 kubectl<span class="w"> </span>config<span class="w"> </span>set-context<span class="w"> </span><span class="k">$(</span>kubectl<span class="w"> </span>config<span class="w"> </span>current-context<span class="k">)</span><span class="w"> </span>--namespace<span class="o">=</span>&lt;namespace<span class="w"> </span>name&gt;
 </code></pre></div>
-<p>At success, you will see the message that namespace/<namespace name> was created, and the context (gke_<project name><em><zone location></em><cluster name>) was modified.</p>
+<p>At success, you will see the message that namespace/<namespace name=""> was created, and the context (gke_<project name=""><em><zone location=""></zone></em><cluster name="">) was modified.</cluster></project></namespace></p>
 <p>Deploy the Operator using the following command:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>--server-side<span class="w"> </span>-f<span class="w"> </span>https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v1.20.0/deploy/bundle.yaml
 </code></pre></div>
@@ -6581,7 +6818,7 @@ deployment.apps/percona-xtradb-cluster-operator created
 <p class="admonition-title">Note</p>
 <p>This deploys default Percona XtraDB Cluster configuration with three
 HAProxy and three XtraDB Cluster instances. Please see
-<a href="https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v1.20.0/deploy/cr.yaml">deploy/cr.yaml <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a>
+<a href="https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v1.20.0/deploy/cr.yaml">deploy/cr.yaml <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>
 and <a href="operator.html">Custom Resource Options</a> for the configuration
 options. You can clone the repository with all manifests and source code
 by executing the following command:</p>
@@ -6604,7 +6841,7 @@ cluster1   cluster1-haproxy.default   ready    3                3         5m51s
 </details>
 </li>
 </ol>
-<h2 id="verifying-the-cluster-operation">Verifying the cluster operation<a class="headerlink" href="#verifying-the-cluster-operation" title="Permanent link">&para;</a></h2>
+<h2 id="verifying-the-cluster-operation">Verifying the cluster operation<a class="headerlink" href="#verifying-the-cluster-operation" title="Permanent link">¶</a></h2>
 <p>It may take ten minutes to get the cluster started. When <code>kubectl get pxc</code>
 command finally shows you the cluster status as <code>ready</code>, you can try to connect
 to the cluster.</p>
@@ -6613,10 +6850,10 @@ to the cluster.</p>
 <ol>
 <li>
 <p>List the Secrets objects.</p>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>secrets
+<p></p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>secrets
 </code></pre></div>
 The Secrets object you are interested in has the
-<code>cluster1-secrets</code> name by default.</p>
+<code>cluster1-secrets</code> name by default.<p></p>
 </li>
 <li>
 <p>Use the following command to get the password of the <code>root</code>
@@ -6640,7 +6877,7 @@ The Secrets object you are interested in has the
     The command will look different depending on whether your cluster provides
     load balancing with <a href="haproxy-conf.html">HAProxy</a> (the default choice) or
     <a href="proxysql-conf.html">ProxySQL</a>:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">with HAProxy (default)</label><label for="__tabbed_1_2">with ProxySQL</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">with HAProxy (default)</label><label for="__tabbed_1_2">with ProxySQL</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>mysql<span class="w"> </span>-h<span class="w"> </span>cluster1-haproxy<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">'&lt;root_password&gt;'</span>
@@ -6655,8 +6892,8 @@ The Secrets object you are interested in has the
 <p>This command will connect you to the MySQL server.</p>
 </li>
 </ol>
-<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
-<p>If <code>kubectl get pxc</code> command doesn&rsquo;t show <code>ready</code> status too long, you can 
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
+<p>If <code>kubectl get pxc</code> command doesn’t show <code>ready</code> status too long, you can 
 check the creation process with the <code>kubectl get pods</code> command:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods
 </code></pre></div>
@@ -6673,7 +6910,7 @@ percona-xtradb-cluster-operator-79966668bd-rswbk   1/1     Running   0          
 </code></pre></div>
 </details>
 <p>Also, you can see the same information when browsing Pods of your cluster in Google Cloud console via the <em>Object Browser</em>:</p>
-<p><img alt="image" src="assets/images/gke-quickstart-object-browser.png" /></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/images/gke-quickstart-object-browser.png" data-desc-position="bottom"><img alt="image" src="assets/images/gke-quickstart-object-browser.png"></a></p>
 <p>If the command output had shown some errors, you can examine the problematic
 Pod with the <code>kubectl describe &lt;pod name&gt;</code> command as follows:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>pod<span class="w">  </span>cluster1-pxc-2
@@ -6682,10 +6919,10 @@ Pod with the <code>kubectl describe &lt;pod name&gt;</code> command as follows:<
 configuration. An example of a warning is as follows:</p>
 <p><code>Warning  FailedScheduling  68s (x4 over 2m22s)  default-scheduler  0/1 nodes are available: 1 node(s) didn’t match pod affinity/anti-affinity, 1 node(s) didn’t satisfy existing pods anti-affinity rules.</code></p>
 <p>Alternatively, you can examine your Pods via the <em>object browser</em>. Errors will look as follows:</p>
-<p><img alt="image" src="assets/images/gke-quickstart-object-browser-error.png" /></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/images/gke-quickstart-object-browser-error.png" data-desc-position="bottom"><img alt="image" src="assets/images/gke-quickstart-object-browser-error.png"></a></p>
 <p>Clicking the problematic Pod will bring you to the details page with the same warning:</p>
-<p><img alt="image" src="assets/images/gke-quickstart-object-browser-details.png" /></p>
-<h2 id="removing-the-gke-cluster">Removing the GKE cluster<a class="headerlink" href="#removing-the-gke-cluster" title="Permanent link">&para;</a></h2>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/images/gke-quickstart-object-browser-details.png" data-desc-position="bottom"><img alt="image" src="assets/images/gke-quickstart-object-browser-details.png"></a></p>
+<h2 id="removing-the-gke-cluster">Removing the GKE cluster<a class="headerlink" href="#removing-the-gke-cluster" title="Permanent link">¶</a></h2>
 <p>There are several ways that you can delete the cluster.</p>
 <p>You can clean up the cluster with the <code>gcloud container clusters delete &lt;cluster name&gt; --zone &lt;zone location&gt;</code> command. The return statement requests your confirmation of the deletion. Type <code>y</code> to confirm.</p>
 <div class="highlight"><pre><span></span><code>gcloud<span class="w"> </span>container<span class="w"> </span>clusters<span class="w"> </span>delete<span class="w"> </span>my-cluster-1<span class="w"> </span>--zone<span class="w"> </span>us-central1-a<span class="w"> </span>--project<span class="w"> </span>&lt;project<span class="w"> </span>ID&gt;
@@ -6701,7 +6938,7 @@ Deleting cluster my-cluster-1...⠧
 </code></pre></div>
 </details>
 <p>Also, you can delete your cluster via the GKE console. Just click the appropriate trashcan icon in the clusters list:</p>
-<p><img alt="image" src="assets/images/gke-quickstart-cluster-connect.png" /></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/images/gke-quickstart-cluster-connect.png" data-desc-position="bottom"><img alt="image" src="assets/images/gke-quickstart-cluster-connect.png"></a></p>
 <p>The cluster deletion may take time.</p>
 <hr>
 <div class="md-source-file">
@@ -6761,9 +6998,9 @@ window.addEventListener('afterprint', (event) => {
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
-          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
   Back to top
 </button>
         
@@ -6775,7 +7012,7 @@ window.addEventListener('afterprint', (event) => {
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
     <div class="md-copyright__highlight">
- <a href='https://percona.com' target='_blank'>Percona LLC and/or its affiliates, </a> &copy; 2026
+ <a href="https://percona.com" target="_blank">Percona LLC and/or its affiliates, </a> © 2026
  — <a href="#" onclick="Osano.cm.showDrawer('osano-cm-dom-info-dialog-open')">Cookie Preferences</a>
     </div>
   
@@ -6821,24 +7058,15 @@ window.addEventListener('afterprint', (event) => {
       
         <script src="js/posthog-version.js"></script>
       
+        <script src="js/diagram-zoom.js"></script>
+      
         <script src="js/open_in_new_tab.js"></script>
       
     
-<script
-  id="kapa-widget-script"
-  async
-  data-osano="ESSENTIAL"
-  src="https://widget.kapa.ai/kapa-widget.bundle.js"
-  data-website-id="0e0d55cf-6370-4a6d-a987-96670a7fe935"
-  data-button-hide="true"
-  data-project-name="Percona"
-  data-modal-title="Percona AI Assistant"
-  font-size="0.875rem"
-  data-modal-disclaimer="The **Percona AI Assistant** helps you find simple, clear answers to your Percona questions using [official documentation](https://docs.percona.com/), resolved [forum posts](https://forums.percona.com/) and [blog posts](https://www.percona.com/blog/). Note, do not enter personal or confidential information. Before using Percona AI assistant, read the [Legal Notice](https://docs.percona.com/percona-operator-for-xtradb-cluster/latest/legal-notice.html)."
-  data-modal-example-questions="How do I deploy Percona Operator for MySQL based on Percona XtraDB Cluster?, How do I connect my application to the Percona XtraDB Cluster?, How do I upgrade Percona Operator for MySQL?, How do I configure automated backups?, What's new in the latest release?"
-  data-project-logo="https://docs.percona.com/percona-operator-for-xtradb-cluster/latest/assets/percona-logomark-one-color-dark.png"
-></script>
+<script id="kapa-widget-script" async="" data-osano="ESSENTIAL" src="https://widget.kapa.ai/kapa-widget.bundle.js" data-website-id="0e0d55cf-6370-4a6d-a987-96670a7fe935" data-button-hide="true" data-project-name="Percona" data-modal-title="Percona AI Assistant" font-size="0.875rem" data-modal-disclaimer="The **Percona AI Assistant** helps you find simple, clear answers to your Percona questions using [official documentation](https://docs.percona.com/), resolved [forum posts](https://forums.percona.com/) and [blog posts](https://www.percona.com/blog/). Note, do not enter personal or confidential information. Before using Percona AI assistant, read the [Legal Notice](https://docs.percona.com/percona-operator-for-xtradb-cluster/latest/legal-notice.html)." data-modal-example-questions="How do I deploy Percona Operator for MySQL based on Percona XtraDB Cluster?, How do I connect my application to the Percona XtraDB Cluster?, How do I upgrade Percona Operator for MySQL?, How do I configure automated backups?, What's new in the latest release?" data-project-logo="https://docs.percona.com/percona-operator-for-xtradb-cluster/latest/assets/percona-logomark-one-color-dark.png"></script>
 
 
-  </body>
-</html>
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

@@ -1,16 +1,10 @@
-
-
-
-
-<!doctype html>
-<html lang="en" class="no-js">
-  <head>
+<!DOCTYPE html><html lang="en" class="no-js"><head>
     
   
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="This page describes what the Operator does for you, what you must still do yourself and which manual actions can damage a running cluster.">
+        <meta name="description" content="For each area, this page lists what the Operator does, what you still do, and which manual actions can damage a running cluster. For the layers, the events that trigger each one, and a table of all areas, see Who owns what.">
       
       
         <meta name="author" content="Percona LLC">
@@ -19,10 +13,10 @@
         <link rel="canonical" href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/operator-boundaries.html">
       
       
-        <link rel="prev" href="architecture.html">
+        <link rel="prev" href="architecture-responsibilities.html">
       
       
-        <link rel="next" href="compare.html">
+        <link rel="next" href="architecture-reconciliation.html">
       
       
         
@@ -50,7 +44,7 @@
 
     
       
-        <title>What the Operator manages - Percona Operator for MySQL based on Percona XtraDB Cluster</title>
+        <title>Operator responsibilities by area - Percona Operator for MySQL based on Percona XtraDB Cluster</title>
       
     
     
@@ -70,8 +64,8 @@
       
         
         
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
@@ -119,17 +113,22 @@
                  
                  
                  
-                  <meta property="og:type" content="website" />
-                  <meta property="og:title" content="Percona Operator for MySQL based on Percona XtraDB Cluster - What the Operator manages" />
-                  <meta property="og:image"
-                    content="https://docs.percona.com/percona-operator-for-xtradb-cluster/assets/images/kubernetes-operators.png">
+                  <meta property="og:type" content="website">
+                  <meta property="og:title" content="Percona Operator for MySQL based on Percona XtraDB Cluster - Operator responsibilities by area">
+                  <meta property="og:image" content="https://docs.percona.com/percona-operator-for-xtradb-cluster/assets/images/kubernetes-operators.png">
                   <meta property="og:url" content="https://docs.percona.com/percona-operator-for-xtradb-cluster/">
-                  </head>
-                <body>
-                </body>
-              </html>
 
-  </head>
+  <link href="assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
   
   
     
@@ -148,7 +147,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#what-the-operator-manages" class="md-skip">
+        <a href="#operator-responsibilities-by-area" class="md-skip">
           Skip to content
         </a>
       
@@ -157,7 +156,7 @@
       
     </div>
     
-      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden="">
         
       </div>
     
@@ -177,10 +176,10 @@
       <a href="https://docs.percona.com/percona-operators/" title="Percona Documentation home page">
         <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <mask id="a" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
-            <path d="M0 0h24v24H0z"/>
+            <path d="M0 0h24v24H0z"></path>
           </mask>
           <g mask="url(#a)">
-            <path d="m7.825 13 5.6 5.6L12 20l-8-8 8-8 1.425 1.4-5.6 5.6H20v2H7.825Z"/>
+            <path d="m7.825 13 5.6 5.6L12 20l-8-8 8-8 1.425 1.4-5.6 5.6H20v2H7.825Z"></path>
           </g>
         </svg>
         <span>Percona Operators Documentation</span>
@@ -188,19 +187,10 @@
     </div>
   </div>
 
-  <nav
-    class="md-header__inner md-grid"
-    aria-label="Header"
-  >
+  <nav class="md-header__inner md-grid" aria-label="Header">
 
     <!-- Link to home -->
-    <a
-      href="index.html"
-      title="Percona Operator for MySQL based on Percona XtraDB Cluster"
-      class="md-header__button md-logo"
-      aria-label="Percona Operator for MySQL based on Percona XtraDB Cluster"
-      data-md-component="logo"
-    >
+    <a href="index.html" title="Percona Operator for MySQL based on Percona XtraDB Cluster" class="md-header__button md-logo" aria-label="Percona Operator for MySQL based on Percona XtraDB Cluster" data-md-component="logo">
       
   <img src="assets/operators-logo.svg" alt="logo">
 
@@ -209,7 +199,7 @@
     <!-- Button to open drawer -->
     <label class="md-header__button md-icon" for="__drawer">
       
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
     </label>
 
   <!-- Header title -->
@@ -225,7 +215,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              What the Operator manages
+              Operator responsibilities by area
             
           </span>
         </div>
@@ -240,30 +230,30 @@
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Color theme set to Automatic. Click to change"  type="radio" name="__palette" id="__palette_0">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="Color theme set to Automatic. Click to change" type="radio" name="__palette" id="__palette_0">
     
-      <label class="md-header__button md-icon" title="Color theme set to Automatic. Click to change" for="__palette_1" hidden>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      <label class="md-header__button md-icon" title="Color theme set to Automatic. Click to change" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"></path></svg>
       </label>
     
   
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Color theme set to Light Mode. Click to change"  type="radio" name="__palette" id="__palette_1">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Color theme set to Light Mode. Click to change" type="radio" name="__palette" id="__palette_1">
     
-      <label class="md-header__button md-icon" title="Color theme set to Light Mode. Click to change" for="__palette_2" hidden>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      <label class="md-header__button md-icon" title="Color theme set to Light Mode. Click to change" for="__palette_2" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
       </label>
     
   
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Color theme set to Dark Mode. Click to change"  type="radio" name="__palette" id="__palette_2">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Color theme set to Dark Mode. Click to change" type="radio" name="__palette" id="__palette_2">
     
-      <label class="md-header__button md-icon" title="Color theme set to Dark Mode. Click to change" for="__palette_0" hidden>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      <label class="md-header__button md-icon" title="Color theme set to Dark Mode. Click to change" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
       </label>
     
   
@@ -283,7 +273,7 @@
     
       <label class="md-header__button md-icon" for="__search">
         
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
       </label>
 
       <!-- Search interface -->
@@ -291,24 +281,24 @@
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
       <label class="md-search__icon md-icon" for="__search">
         
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
         
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
       </label>
       <nav class="md-search__options" aria-label="Search">
         
         <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
           
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
         </button>
       </nav>
       
     </form>
     <div class="md-search__output">
-      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
             Initializing search
@@ -327,7 +317,7 @@
         <a href="https://github.com/percona/k8spxc-docs" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
   </div>
   <div class="md-source__repository">
     percona/k8spxc-docs
@@ -353,7 +343,7 @@
           
             
               
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -374,7 +364,7 @@
       <a href="https://github.com/percona/k8spxc-docs" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
   </div>
   <div class="md-source__repository">
     percona/k8spxc-docs
@@ -382,7 +372,7 @@
 </a>
     </div>
   
-  <ul class="md-nav__list" data-md-scrollfix>
+  <ul class="md-nav__list" data-md-scrollfix="">
     
       
       
@@ -455,7 +445,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked="">
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -485,7 +475,56 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design and architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Design and architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -501,7 +540,35 @@
   <span class="md-ellipsis">
     
   
-    Design and architecture
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="architecture-responsibilities.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Who owns what
   
 
     
@@ -538,7 +605,7 @@
   <span class="md-ellipsis">
     
   
-    What the Operator manages
+    Operator responsibilities by area
   
 
     
@@ -556,7 +623,7 @@
   <span class="md-ellipsis">
     
   
-    What the Operator manages
+    Operator responsibilities by area
   
 
     
@@ -579,29 +646,7 @@
       <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#change-the-cluster-through-the-custom-resource" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Change the cluster through the Custom Resource
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#review-responsibilities-at-a-glance" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Review responsibilities at a glance
-      
-    </span>
-  </a>
-  
-</li>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
   <a href="#cluster-lifecycle" class="md-nav__link">
@@ -670,6 +715,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#cross-site-replication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-site replication
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#database-upgrades" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -713,9 +769,123 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next steps
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See also
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="architecture-reconciliation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How the Operator reacts to changes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="architecture-workflows.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Key workflows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="architecture-probes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Health checks and probes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -772,7 +942,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4">
         
           
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
@@ -802,7 +972,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -847,7 +1017,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2">
         
           
           <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
@@ -877,7 +1047,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -1069,7 +1239,7 @@
   <span class="md-ellipsis">
     
   
-    What&rsquo;s next?
+    What’s next?
   
 
     
@@ -1105,7 +1275,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5">
         
           
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
@@ -1135,7 +1305,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -1411,7 +1581,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6">
         
           
           <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
@@ -1441,7 +1611,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -1542,7 +1712,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_4">
         
           
           <label class="md-nav__link" for="__nav_6_4" id="__nav_6_4_label" tabindex="0">
@@ -1572,7 +1742,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -1716,7 +1886,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7">
         
           
           <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
@@ -1746,7 +1916,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -1847,7 +2017,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_4">
         
           
           <label class="md-nav__link" for="__nav_7_4" id="__nav_7_4_label" tabindex="0">
@@ -1877,7 +2047,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -2070,7 +2240,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_9" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_9">
         
           
           <label class="md-nav__link" for="__nav_7_9" id="__nav_7_9_label" tabindex="0">
@@ -2100,7 +2270,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -2209,7 +2379,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_10" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_10">
         
           
           <label class="md-nav__link" for="__nav_7_10" id="__nav_7_10_label" tabindex="0">
@@ -2239,7 +2409,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -2376,7 +2546,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_11" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_11">
         
           
           <label class="md-nav__link" for="__nav_7_11" id="__nav_7_11_label" tabindex="0">
@@ -2406,7 +2576,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -2487,7 +2657,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_12" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_12">
         
           
           <label class="md-nav__link" for="__nav_7_12" id="__nav_7_12_label" tabindex="0">
@@ -2517,7 +2687,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -2590,7 +2760,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_12_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_12_3">
         
           
           <label class="md-nav__link" for="__nav_7_12_3" id="__nav_7_12_3_label" tabindex="0">
@@ -2620,7 +2790,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -2821,7 +2991,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_13" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_13">
         
           
           <label class="md-nav__link" for="__nav_7_13" id="__nav_7_13_label" tabindex="0">
@@ -2851,7 +3021,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -3044,7 +3214,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_14" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_14">
         
           
           <label class="md-nav__link" for="__nav_7_14" id="__nav_7_14_label" tabindex="0">
@@ -3074,7 +3244,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -3246,7 +3416,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8">
         
           
           <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
@@ -3276,7 +3446,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -3293,7 +3463,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1">
         
           
           <label class="md-nav__link" for="__nav_8_1" id="__nav_8_1_label" tabindex="0">
@@ -3323,7 +3493,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -3396,7 +3566,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_3">
         
           
           <label class="md-nav__link" for="__nav_8_1_3" id="__nav_8_1_3_label" tabindex="0">
@@ -3426,7 +3596,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -3563,7 +3733,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_4">
         
           
           <label class="md-nav__link" for="__nav_8_1_4" id="__nav_8_1_4_label" tabindex="0">
@@ -3593,7 +3763,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -3702,7 +3872,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_6">
         
           
           <label class="md-nav__link" for="__nav_8_1_6" id="__nav_8_1_6_label" tabindex="0">
@@ -3732,7 +3902,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -3897,7 +4067,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_7">
         
           
           <label class="md-nav__link" for="__nav_8_1_7" id="__nav_8_1_7_label" tabindex="0">
@@ -3927,7 +4097,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -4036,7 +4206,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_8" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1_8">
         
           
           <label class="md-nav__link" for="__nav_8_1_8" id="__nav_8_1_8_label" tabindex="0">
@@ -4066,7 +4236,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -4183,7 +4353,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2">
         
           
           <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
@@ -4213,7 +4383,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -4497,7 +4667,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9">
         
           
           <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
@@ -4527,7 +4697,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -4719,7 +4889,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10">
         
           
           <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
@@ -4749,7 +4919,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -4913,7 +5083,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11">
         
           
           <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
@@ -4943,7 +5113,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -5016,6 +5186,62 @@
     
   
     Restore Custom Resource options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="services.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services and ports
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="objects-created.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Objects the Operator creates
   
 
     
@@ -5148,6 +5374,34 @@
   
   
     <li class="md-nav__item">
+      <a href="glossary.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="https://docs.percona.com/legacy-documentation/" class="md-nav__link">
         
   
@@ -5184,10 +5438,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11_9" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11_12">
         
           
-          <label class="md-nav__link" for="__nav_11_9" id="__nav_11_9_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_11_12" id="__nav_11_12_label" tabindex="0">
             
   
   
@@ -5205,8 +5459,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_11_9_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_11_9">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_11_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11_12">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -5214,7 +5468,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -5414,7 +5668,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12">
         
           
           <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
@@ -5444,7 +5698,7 @@
   
 
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
                 
@@ -6195,7 +6449,7 @@
             
             
               
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     <!-- Feedback Widget -->
@@ -6339,7 +6593,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
       color: var(--md-default-fg-color);
       background: var(--md-default-bg-color);
       border: 0.05rem solid var(--md-default-fg-color--lightest);
-    " />
+    ">
 
         <button id="submit-feedback" style="
   padding: 5px 10px;
@@ -6427,7 +6681,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
       <a href="https://github.com/percona/k8spxc-docs/edit/main/docs/operator-boundaries.md" title="Edit this page on GitHub" class="edit-page-link">
         <span class="edit-page-icon">
           
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
         </span>
         <span class="edit-page-text">Edit this page on GitHub</span>
       </a>
@@ -6436,11 +6690,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
       <div class="banner-divider"></div>
   
       <!-- Contributing Guide below, smaller -->
-      <a href="https://github.com/percona/k8spxc-docs/blob/main/CONTRIBUTING.md"
-         title="Contributing guide"
-         class="contrib-link"
-         target="_blank"
-         rel="noopener">
+      <a href="https://github.com/percona/k8spxc-docs/blob/main/CONTRIBUTING.md" title="Contributing guide" class="contrib-link" target="_blank" rel="noopener">
         Contributing guide
       </a>
     </div>
@@ -6471,29 +6721,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
       <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#change-the-cluster-through-the-custom-resource" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Change the cluster through the Custom Resource
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#review-responsibilities-at-a-glance" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Review responsibilities at a glance
-      
-    </span>
-  </a>
-  
-</li>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
   <a href="#cluster-lifecycle" class="md-nav__link">
@@ -6562,6 +6790,17 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </li>
       
         <li class="md-nav__item">
+  <a href="#cross-site-replication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-site replication
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#database-upgrades" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -6605,6 +6844,28 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next steps
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See also
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -6631,83 +6892,20 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     
     <a href="https://github.com/percona/k8spxc-docs/raw/main/docs/operator-boundaries.md" title="View source of this page" class="md-content__button md-icon">
       
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"></path></svg>
     </a>
   
 
 
-<h1 id="what-the-operator-manages">What the Operator manages<a class="headerlink" href="#what-the-operator-manages" title="Permanent link">&para;</a></h1>
-<p>This page describes what the Operator does for you, what you must still do yourself and which manual actions can damage a running cluster. </p>
-<h2 id="change-the-cluster-through-the-custom-resource">Change the cluster through the Custom Resource<a class="headerlink" href="#change-the-cluster-through-the-custom-resource" title="Permanent link">&para;</a></h2>
-<p>A <a href="https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/">Custom Resource <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"/></svg></span></a> (CR) is the Kubernetes object that describes the cluster you want. It is a blueprint that the Operator uses to deploy and manage your cluster.</p>
-<p><strong>The Custom Resource is the source of truth. Change the cluster by editing the CR.</strong></p>
-<p>The Operator compares the CR against what is running about every five seconds and corrects any difference it finds. A change you make directly to a StatefulSet, a Service, a Pod, or a managed Secret is drift. The Operator overwrites it, usually within seconds. If a change survives, this means the Operator does not manage that field yet. This doesn&rsquo;t mean the change was accepted.</p>
-<ul>
-<li><strong>Edits outside the CR do not persist.</strong> The Operator reverts them silently.</li>
-<li><strong>Edits outside the CR can still cause damage before they are reverted.</strong></li>
-</ul>
-<h2 id="review-responsibilities-at-a-glance">Review responsibilities at a glance<a class="headerlink" href="#review-responsibilities-at-a-glance" title="Permanent link">&para;</a></h2>
-<p>The following table shows what the Operator handles and what stays with you:</p>
-<table>
-<thead>
-<tr>
-<th>Area</th>
-<th>Operator</th>
-<th>You</th>
-<th>Don&rsquo;t do manually</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#cluster-lifecycle">Cluster lifecycle</a></td>
-<td>- Creates and heals StatefulSets, Services, and PodDisruptionBudgets.<br>- Restarts failed nodes.<br>- Recovers from a full cluster crash.</td>
-<td>- Choose the cluster size.<br>- Decide when to pause.<br>- Plan maintenance windows.</td>
-<td>- Scale or edit the StatefulSet.<br>- Delete Pods to restart a node.<br>- Remove finalizers.</td>
-</tr>
-<tr>
-<td><a href="#back-up-the-database">Backups</a></td>
-<td>- Runs scheduled and on-demand backups.<br>- Enforces deadlines.<br>- Suspends backups on an unhealthy cluster.</td>
-<td>- Verify that backups restore.<br>- Set retention.<br>- Keep off-cluster copies.</td>
-<td>- Delete a running backup Job.<br>- Run <code>xtrabackup</code> by hand against a node.</td>
-</tr>
-<tr>
-<td><a href="#restore-the-database">Restore and point-in-time recovery (PITR)</a></td>
-<td>- Pauses the cluster, restores, and restarts it.<br>- Detects binary log gaps.</td>
-<td>- Take a new full backup after a gap.<br>- Pick the restore target.</td>
-<td>- Edit the cluster CR during a restore.<br>- Run two restores at once.</td>
-</tr>
-<tr>
-<td><a href="#manage-certificates">TLS</a></td>
-<td>- Issues certificates.<br>- Renews them <strong>only via cert-manager</strong>.<br>- Applies rotations without downtime.</td>
-<td>- Rotate certificates yourself if cert-manager is not installed.<br>- Manage any certificate you supplied.</td>
-<td>- Edit the <code>ssl</code> or <code>ssl-internal</code> Secrets in place.<br>- Delete them to re-issue certificates.</td>
-</tr>
-<tr>
-<td><a href="#manage-users-and-passwords">Users and secrets</a></td>
-<td>- Creates and rotates the system users.<br>- Propagates password changes to MySQL and the proxies.</td>
-<td>- Set passwords in the user Secret.<br>- Manage your own application users.</td>
-<td>- Run <code>ALTER USER</code> on a system user in MySQL.<br>- Edit the <code>internal-</code> Secret.<br>- Drop a system user.</td>
-</tr>
-<tr>
-<td><a href="#resize-storage">Storage</a></td>
-<td>- Grows Persistent Volume Claims (PVCs) when the CR asks, and automatically when autoscaling is on.</td>
-<td>- Pick a StorageClass that supports expansion.<br>- Watch capacity.</td>
-<td>- Resize or delete PVCs by hand.<br>- Shrink storage.</td>
-</tr>
-<tr>
-<td><a href="#upgrade-the-database">Upgrades</a></td>
-<td>- Coordinates version upgrades node by node and keeps quorum.</td>
-<td>- Decide when to upgrade.<br>- Run major version upgrades as a planned change.</td>
-<td>- Bypass SmartUpdate.<br>- Edit image tags to jump a major version.</td>
-</tr>
-</tbody>
-</table>
-<h2 id="cluster-lifecycle">Cluster lifecycle<a class="headerlink" href="#cluster-lifecycle" title="Permanent link">&para;</a></h2>
+<h1 id="operator-responsibilities-by-area">Operator responsibilities by area<a class="headerlink" href="#operator-responsibilities-by-area" title="Permanent link">¶</a></h1>
+<p>For each area, this page lists what the Operator does, what you still do, and which manual actions can damage a running cluster. For the layers, the events that trigger each one, and a table of all areas, see <a href="architecture-responsibilities.html">Who owns what</a>.</p>
+<p>The Custom Resource is the source of truth: change the cluster by editing it. See <a href="architecture-responsibilities.html#change-the-cluster-through-the-custom-resource">Change the cluster through the Custom Resource</a>.</p>
+<h2 id="cluster-lifecycle">Cluster lifecycle<a class="headerlink" href="#cluster-lifecycle" title="Permanent link">¶</a></h2>
 <p>Change cluster size, pause state, and deletion through the CR. Direct edits to the StatefulSet fight the next reconcile.</p>
 <p><strong>What the Operator does:</strong></p>
 <ul>
-<li>Creates and reconciles the Percona XtraDB Cluster StatefulSet, the HAProxy or ProxySQL StatefulSet, their Services, and a PodDisruptionBudget for Percona XtraDB Cluster.</li>
-<li>Restarts failed nodes and lets Galera resynchronize them.</li>
+<li>Creates and reconciles the Percona XtraDB Cluster StatefulSet, the HAProxy or ProxySQL StatefulSet, their Services, and a PodDisruptionBudget for each of them.</li>
+<li>Leaves restarting failed Pods and containers to Kubernetes, and resynchronizing nodes to Galera. The Operator itself steps in only for a full cluster crash and for the rolling restarts it starts.</li>
 <li>Shuts the cluster down in order when you set <code>spec.pause: true</code>, and brings it back when you set it to <code>false</code>. Data is retained. See <a href="pause.html">Pause/resume Percona XtraDB Cluster</a>.</li>
 <li>Deletes resources in a safe order on cluster deletion, using finalizers. See <a href="delete.html#delete-the-database-cluster">Delete the database cluster</a>.</li>
 <li>Handles <strong>full cluster crash recovery.</strong> When every node is down and waiting, the Operator finds the node with the highest transaction sequence number and bootstraps from it. This behavior is on by default (<code>spec.pxc.autoRecovery</code>). See <a href="recovery.html">Crash recovery</a>.</li>
@@ -6716,8 +6914,10 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <ul>
 <li>Choose the cluster size. Stay inside the limits in <a href="#stay-inside-safe-operating-limits">Stay inside safe operating limits</a>.</li>
 <li>Decide when to pause a cluster, and for how long.</li>
-<li>Plan capacity, node size, and maintenance windows for any change that restarts Pods.</li>
-<li><strong>Manual recovery when the Operator refuses to recover automatically.</strong> The Operator does not bootstrap from a node when the cluster UUID or sequence number has regressed since the last recovery, because that bootstrap can lose data. It emits an <code>AutomaticRecoveryRefused</code> event and stops. That handover is deliberate. Follow <a href="recovery.html#manual-crash-recovery">Manual crash recovery</a> instead of forcing a bootstrap.</li>
+<li>Plan capacity, node size, and maintenance windows for any change that restarts Pods. Provide enough schedulable nodes for the Pod anti-affinity rules (by default, three database Pods need three nodes), and resource requests and limits that fit them. See <a href="constraints.html">Control Pod scheduling</a>.</li>
+<li>Check and tune MySQL options before you put them in <code>spec.pxc.configuration</code>. The Operator doesn’t validate them. See <a href="options.html">Changing MySQL options</a>.</li>
+<li>Decide whether to set the deletion finalizers. Without <code>percona.com/delete-pxc-pvc</code> and <code>percona.com/delete-ssl</code>, PVCs, Secrets and certificates remain after you delete the cluster, and you delete them yourself. ProxySQL PVCs are kept, also when you disable ProxySQL, unless you set <code>percona.com/delete-proxysql-pvc</code>. See <a href="delete.html#clean-up-resources">Clean up resources</a>.</li>
+<li><strong>Manual recovery when the Operator refuses to recover automatically.</strong> The Operator does not bootstrap from a node when the cluster UUID or sequence number has regressed since the last recovery, because that bootstrap can lose data. It emits an <code>AutomaticRecoveryRefused</code> event and stops. That handover is deliberate. A restore also triggers it, because a restore creates a new UUID. See <a href="recovery.html#when-the-operator-refuses-automatic-recovery">When the Operator refuses automatic recovery</a>. Don’t force a bootstrap. If you are not sure why the UUID changed, follow <a href="recovery.html#manual-crash-recovery">Manual crash recovery</a>.</li>
 </ul>
 <p><strong>Never do this manually:</strong></p>
 <table>
@@ -6736,8 +6936,8 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 <tr>
 <td>Remove a finalizer to finish a stuck delete</td>
-<td>Finalizers shut nodes down in order and clean up PVCs and certificates. Removing one abandons that cleanup and can orphan data</td>
-<td>Find out why the finalizer is blocked. The four finalizers are: <code>percona.com/delete-pxc-pods-in-order</code>, <code>percona.com/delete-pxc-pvc</code>, <code>percona.com/delete-proxysql-pvc</code>, and <code>percona.com/delete-ssl</code></td>
+<td>Finalizers on the cluster shut nodes down in order and clean up PVCs and certificates. The <code>percona.com/delete-backup</code> finalizer on a backup removes the backup files from storage. Removing a finalizer abandons that cleanup and can orphan data or backup files</td>
+<td>Find out why the finalizer is blocked. The cluster has four finalizers: <code>percona.com/delete-pxc-pods-in-order</code>, <code>percona.com/delete-pxc-pvc</code>, <code>percona.com/delete-proxysql-pvc</code>, and <code>percona.com/delete-ssl</code>. A backup can carry <code>percona.com/delete-backup</code>. Don’t remove the <code>internal.percona.com</code> finalizers either: the Operator adds and removes them itself</td>
 </tr>
 <tr>
 <td>Run <code>kubectl delete pxc</code> to reset a misbehaving cluster</td>
@@ -6747,15 +6947,16 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <tr>
 <td>Bootstrap Galera by hand while the Operator is running</td>
 <td>The Operator is also trying to recover. Two bootstraps mean two clusters and a split brain</td>
-<td>Let auto-recovery run. Recover manually only after the Operator has refused and reported that refusal</td>
+<td>Let auto-recovery run. Recover manually only after the Operator has refused and reported that refusal, or when <code>pxc.autoRecovery</code> is <code>false</code></td>
 </tr>
 </tbody>
 </table>
-<h2 id="back-up-the-database">Back up the database<a class="headerlink" href="#back-up-the-database" title="Permanent link">&para;</a></h2>
+<h2 id="back-up-the-database">Back up the database<a class="headerlink" href="#back-up-the-database" title="Permanent link">¶</a></h2>
 <p>Create backups through a schedule on the cluster CR or through a <code>PerconaXtraDBClusterBackup</code> resource. See <a href="backups.html">About backups</a>.</p>
 <p><strong>What the Operator does:</strong></p>
 <ul>
 <li>Runs scheduled backups from <code>spec.backup.schedule</code>, and on-demand backups from a <code>PerconaXtraDBClusterBackup</code> resource.</li>
+<li>Applies retention to scheduled backups. With <code>retention</code> set, it deletes the oldest <code>Succeeded</code> backups beyond the configured count.</li>
 <li>Enforces deadlines so a backup cannot hang forever: <code>startingDeadlineSeconds</code>, <code>runningDeadlineSeconds</code>, and <code>suspendedDeadlineSeconds</code>. A backup that exceeds one is marked failed.</li>
 <li>Collects binary logs continuously for point-in-time recovery when <code>spec.backup.pitr</code> is enabled. See <a href="backups-pitr.html">Store binary logs for point-in-time recovery</a>.</li>
 <li><strong>Refuses to back up an unhealthy cluster.</strong> If the cluster is not Ready, the backup does not start. A backup that is already running is suspended until the cluster recovers.</li>
@@ -6764,7 +6965,8 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <ul>
 <li><strong>Verify that your backups restore.</strong> The Operator confirms that a backup completed. It does not confirm that the backup is usable. Restore-test on a schedule. See <a href="backups-restore.html">Restore the cluster from a previously saved backup</a>.</li>
 <li>Set retention, and keep any copies outside the cluster storage target.</li>
-<li>Manage credentials and lifecycle policies on the S3 or Azure bucket.</li>
+<li>Manage credentials and lifecycle policies on the S3 or Azure bucket. Provide the storage credentials (S3 or Azure Secrets, or an IAM role), and a CA bundle for custom S3 endpoints.</li>
+<li>Keep binary logs on the servers long enough for the collector to upload them, if you use point-in-time recovery. See <a href="backups-pitr.html">Store binary logs for point-in-time recovery</a>.</li>
 <li>Decide whether a backup during a degraded window is worth the risk.</li>
 </ul>
 <p><strong>Never do this manually:</strong></p>
@@ -6794,7 +6996,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 <tr>
 <td>Run <code>xtrabackup</code> by hand against a Pod</td>
-<td>The manual backup competes with the Operator backup lock and can stall writes</td>
+<td>The manual backup runs outside the Operator’s control. It can overlap with an Operator backup, because the backup lock exists only with <code>backup.allowParallel: false</code> and a manual run doesn’t take it, and it loads a node the cluster depends on</td>
 <td>Create a <code>PerconaXtraDBClusterBackup</code> resource</td>
 </tr>
 <tr>
@@ -6804,7 +7006,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
-<h2 id="restore-and-point-in-time-recovery">Restore and point-in-time recovery<a class="headerlink" href="#restore-and-point-in-time-recovery" title="Permanent link">&para;</a></h2>
+<h2 id="restore-and-point-in-time-recovery">Restore and point-in-time recovery<a class="headerlink" href="#restore-and-point-in-time-recovery" title="Permanent link">¶</a></h2>
 <p><strong>What the Operator does:</strong></p>
 <ul>
 <li>Runs the whole restore sequence: pauses the cluster, runs the restore, starts the cluster, verifies that it is Ready, and marks the restore succeeded.</li>
@@ -6816,6 +7018,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <ul>
 <li>Choose the restore target, and accept the data loss between that target and now.</li>
 <li>Plan the maintenance window. A restore stops the cluster.</li>
+<li><strong>Remove the recovery record after a restore.</strong> A restore starts a new Galera cluster with a new UUID, and the Operator doesn’t reset <code>status.recovery</code>. If the Operator recovered the cluster automatically before, the next full cluster crash is refused until you remove the record. See <a href="backups-restore-in-place.html#remove-the-recovery-record-after-the-restore">Remove the recovery record after the restore</a>.</li>
 <li><strong>Take a new full backup after a binlog gap is reported.</strong> The gap means PITR from that backup is no longer possible, and the window it covers is unrecoverable. Nothing restores that window. Take a fresh full backup to start a new PITR chain.</li>
 </ul>
 <p><strong>Never do this manually:</strong></p>
@@ -6830,7 +7033,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <tbody>
 <tr>
 <td>Edit the cluster CR while a restore is running</td>
-<td><strong>The restore controller writes to your CR.</strong> It sets <code>spec.pause</code>, sets the Percona XtraDB Cluster and proxy sizes to zero, and restores your original values from the restore resource status afterwards. An edit in that window is overwritten, or it is merged into a cluster that does not match the restore recorded state</td>
+<td><strong>The restore controller writes to your CR.</strong> It sets <code>spec.pause</code> to <code>true</code> to stop the cluster. During a point-in-time restore, it also sets <code>spec.pxc.size</code> to 1, the proxy sizes to 0, and <code>unsafeFlags.pxcSize</code> and <code>unsafeFlags.proxySize</code> to <code>true</code>. It writes your original values back from the restore resource status afterwards. An edit in that window is overwritten, or it is merged into a cluster that does not match the restore recorded state</td>
 <td>Wait until the restore reaches <code>Succeeded</code> or <code>Failed</code></td>
 </tr>
 <tr>
@@ -6845,7 +7048,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 <tr>
 <td>Delete the restore resource mid-flight</td>
-<td>The cluster stays paused and sized to zero, with nothing left to restore it</td>
+<td>The cluster stays paused. In a point-in-time restore, it can also stay at one database node with no proxies and the unsafe flags set. The Operator keeps your original values in the restore resource status, so deleting the resource deletes them too</td>
 <td>Let the restore finish, then delete the resource</td>
 </tr>
 <tr>
@@ -6855,7 +7058,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
-<h2 id="manage-certificates">Manage certificates<a class="headerlink" href="#manage-certificates" title="Permanent link">&para;</a></h2>
+<h2 id="manage-certificates">Manage certificates<a class="headerlink" href="#manage-certificates" title="Permanent link">¶</a></h2>
 <p>How certificates are renewed depends on who created them. See <a href="TLS.html">Transport Layer Security (TLS)</a>.</p>
 <p><strong>What the Operator does:</strong></p>
 <ul>
@@ -6873,11 +7076,11 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </li>
 </ul>
 <p><strong>What you still do:</strong></p>
-<p><strong>If cert-manager is not installed, Operator-generated certificates are not renewed automatically.</strong> These certificates are long-term; check their actual <a href="tls-update.html#check-your-certificates-for-expiration">expiration dates</a> and provide replacements before they expire. Expired certificates can prevent nodes from trusting each other and stop replication.</p>
+<p><strong>If cert-manager is not installed, Operator-generated certificates are not renewed automatically.</strong> Starting with version 1.19.0, these certificates are valid for 90 days, and the CA for three years. Check their actual <a href="tls-update.html#check-your-certificates-for-expiration">expiration dates</a> and provide replacements before they expire. Expired certificates can prevent nodes from trusting each other and stop replication.</p>
 <p><strong>If you supplied the TLS Secret yourself, renewal is your responsibility.</strong> The Operator does not renew those certificates automatically, but it can apply replacements you provide through the <code>&lt;secret-name&gt;-new</code> rotation procedure. See <a href="tls-manual.html">Generate certificates manually</a> and <a href="tls-update.html#update-valid-certificates-without-downtime">Update certificates</a>.</p>
 <p>Watch expiry dates in both of these cases, and rotate before they are reached.</p>
 <div class="admonition note">
-<p><strong>Recommendation:</strong> install <a href="tls-cert-manager.html">cert-manager</a> for automatic certificate renewal. Otherwise, schedule a reminder based on your certificates&rsquo; actual expiration dates and rotate well before expiry with the <code>-new</code> Secret procedure in <a href="tls-update.html">Update certificates</a>.</p>
+<p><strong>Recommendation:</strong> install <a href="tls-cert-manager.html">cert-manager</a> for automatic certificate renewal. Otherwise, schedule a reminder based on your certificates’ actual expiration dates and rotate well before expiry with the <code>-new</code> Secret procedure in <a href="tls-update.html">Update certificates</a>.</p>
 </div>
 <p><strong>Never do this manually:</strong></p>
 <table>
@@ -6906,15 +7109,15 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 <tr>
 <td>Change the CA without rotating the leaf certificates</td>
-<td>Nodes reject each other&rsquo;s certificates</td>
+<td>Nodes reject each other’s certificates</td>
 <td>Rotate both. The Operator does this for you when cert-manager issued them</td>
 </tr>
 </tbody>
 </table>
-<h2 id="users-and-secrets">Users and Secrets<a class="headerlink" href="#users-and-secrets" title="Permanent link">&para;</a></h2>
+<h2 id="users-and-secrets">Users and Secrets<a class="headerlink" href="#users-and-secrets" title="Permanent link">¶</a></h2>
 <p><strong>What the Operator does:</strong></p>
 <ul>
-<li>Creates and manages the system users <code>root</code>, <code>operator</code>, <code>monitor</code>, <code>xtrabackup</code>, and <code>replication</code>. It also manages <code>proxyadmin</code> and the PMM users. See <a href="users.html#system-users">System users</a>.</li>
+<li>Creates the system users <code>root</code>, <code>operator</code>, <code>monitor</code>, <code>xtrabackup</code>, and <code>replication</code> when it creates the cluster. It also manages <code>proxyadmin</code> and the PMM users. See <a href="users.html#system-users">System users</a>.</li>
 <li>Propagates a password change. You edit the Secret named in <code>spec.secretsName</code>, and the Operator applies it in MySQL, updates the proxies, and restarts what needs restarting. It tracks what it has already applied in a separate Secret named <code>internal-&lt;cluster-name&gt;</code>.</li>
 <li>Manages application users declared in <code>spec.users</code>, including their grants and the databases they can reach.</li>
 <li>Rejects a user in <code>spec.users</code> whose name collides with a system user.</li>
@@ -6922,9 +7125,10 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p><strong>What you still do:</strong></p>
 <ul>
 <li>Generate and store strong passwords, and decide when to rotate them.</li>
-<li><strong>Schedule password rotations.</strong> Changing a system user&rsquo;s password causes a rolling restart of the affected components. Treat it as a maintenance operation, not a routine edit.</li>
+<li><strong>Schedule password rotations.</strong> Changing a system user’s password causes a rolling restart of the affected components. Treat it as a maintenance operation, not a routine edit.</li>
 <li>Change system-user passwords in the Secret named by <code>spec.secretsName</code>. See <a href="users.html">Users</a>.</li>
-<li>Declare application users in <code>spec.users</code>.</li>
+<li>Declare application users in <code>spec.users</code>. The Operator creates them only when the cluster is <code>ready</code>. Removing an entry doesn’t drop the user from the database, so drop it yourself. See <a href="users.html">Users</a>.</li>
+<li>Provide the PMM token, if you use Percona Monitoring and Management. See <a href="monitoring.html">Monitor with PMM</a>.</li>
 <li>Manage application users you create directly in MySQL, outside <code>spec.users</code>. The Operator does not know about them and does not recreate them after a restore.</li>
 </ul>
 <p><strong>Never do this manually:</strong></p>
@@ -6964,8 +7168,8 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
-<h2 id="storage">Storage<a class="headerlink" href="#storage" title="Permanent link">&para;</a></h2>
-<p>Request a larger volume in the CR. The Operator grows the PVCs when volume expansion is enabled and the StorageClass supports it. See <a href="scaling.html#scale-storage">Scale storage</a>.</p>
+<h2 id="storage">Storage<a class="headerlink" href="#storage" title="Permanent link">¶</a></h2>
+<p>Request a larger volume in the CR. The Operator grows the PVCs when volume expansion is enabled and the StorageClass supports it. See <a href="scaling-storage-resize.html">Resize storage</a>.</p>
 <p><strong>What the Operator does:</strong></p>
 <ul>
 <li>Grows PVCs when you increase the size in the CR, when <code>storageScaling.enableVolumeScaling</code> is on and the StorageClass supports expansion.</li>
@@ -7005,7 +7209,37 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
-<h2 id="database-upgrades">Database upgrades<a class="headerlink" href="#database-upgrades" title="Permanent link">&para;</a></h2>
+<h2 id="cross-site-replication">Cross-site replication<a class="headerlink" href="#cross-site-replication" title="Permanent link">¶</a></h2>
+<p>Describe the replication channels in the CR. See <a href="replication.html">Set up cross-site replication</a>.</p>
+<p><strong>What the Operator does:</strong></p>
+<ul>
+<li>Sets up the asynchronous replication channels you list in <code>spec.pxc.replicationChannels</code>.</li>
+<li>Stops and removes replication channels that are not in the list.</li>
+<li>Logs <code>Replication for channel is not running</code> when a channel stops. It doesn’t repair the channel.</li>
+</ul>
+<p><strong>What you still do:</strong></p>
+<ul>
+<li>Provide routable endpoints between the sites, and matching replication passwords.</li>
+<li>Monitor replication. If it breaks, you fix it.</li>
+</ul>
+<p><strong>Never do this manually:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Do not</th>
+<th>What goes wrong</th>
+<th>Do this instead</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Create a replication channel in MySQL on a cluster the Operator manages</td>
+<td>The Operator stops the channel and removes its sources, because it is not in <code>spec.pxc.replicationChannels</code></td>
+<td>Add the channel to the CR</td>
+</tr>
+</tbody>
+</table>
+<h2 id="database-upgrades">Database upgrades<a class="headerlink" href="#database-upgrades" title="Permanent link">¶</a></h2>
 <p>Let the Operator move nodes one at a time. See <a href="update.html">About upgrades</a> and <a href="update-db.html">Upgrade Percona XtraDB Cluster</a>.</p>
 <p><strong>What the Operator does:</strong></p>
 <ul>
@@ -7018,7 +7252,8 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <ul>
 <li>Decide when to upgrade, and test the target version first.</li>
 <li>Review release notes for changes that affect your configuration.</li>
-<li>Choose whether automatic version updates are appropriate. For production clusters, pin a version and upgrade deliberately.</li>
+<li><strong>Upgrade in order.</strong> Upgrade the Operator first, then raise <code>spec.crVersion</code> in the Custom Resource. Upgrading the Operator alone does not change the database images. The Operator also keeps some behavior of an existing cluster tied to its <code>crVersion</code>, so new behavior of those features starts only after you raise it. See <a href="update-operator.html">Upgrade CRD and the Operator</a>.</li>
+<li>Choose whether automatic version updates are appropriate. <code>upgradeOptions.apply</code> is <code>Disabled</code> by default. Set it to <code>Recommended</code>, <code>Latest</code> or an exact version to let the Operator upgrade the database. For production clusters, pin a version and upgrade deliberately. See <a href="update-automatic.html">Automatic minor upgrades</a>.</li>
 <li><strong>Major version upgrades.</strong> Treat a major version upgrade as a planned operation with its own procedure. Follow <a href="update-db.html">Upgrade Percona XtraDB Cluster</a>.</li>
 </ul>
 <p><strong>Never do this manually:</strong></p>
@@ -7033,7 +7268,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <tbody>
 <tr>
 <td>Change <code>spec.updateStrategy</code> to <code>RollingUpdate</code> to make an upgrade go faster</td>
-<td>Kubernetes restarts nodes without waiting for Galera to resynchronize each one. You can lose quorum mid-upgrade</td>
+<td>Kubernetes still restarts the Pods in order and waits for each one to be ready. But it doesn’t wait for a running backup or for ProxySQL, doesn’t require a ready proxy, and doesn’t stop when a Pod can’t start. The Operator’s checks are skipped</td>
 <td>Leave the strategy on <code>SmartUpdate</code> and find out what the upgrade is waiting for</td>
 </tr>
 <tr>
@@ -7053,7 +7288,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
-<h2 id="stay-inside-safe-operating-limits">Stay inside safe operating limits<a class="headerlink" href="#stay-inside-safe-operating-limits" title="Permanent link">&para;</a></h2>
+<h2 id="stay-inside-safe-operating-limits">Stay inside safe operating limits<a class="headerlink" href="#stay-inside-safe-operating-limits" title="Permanent link">¶</a></h2>
 <p>The Operator rejects a CR that breaks the Percona XtraDB Cluster size limits or runs without TLS. </p>
 <table>
 <thead>
@@ -7093,7 +7328,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </table>
 <p>Read more about node count in <a href="architecture.html">Design and architecture</a>.</p>
 <p>You can turn each check off individually under <code>spec.unsafeFlags</code>. See <a href="#override-a-safety-check">Override a safety check</a>. Do not turn a check off to clear an error message.</p>
-<h2 id="override-a-safety-check">Override a safety check<a class="headerlink" href="#override-a-safety-check" title="Permanent link">&para;</a></h2>
+<h2 id="override-a-safety-check">Override a safety check<a class="headerlink" href="#override-a-safety-check" title="Permanent link">¶</a></h2>
 <p><code>spec.unsafeFlags</code> turns off individual safety checks. Each check exists because turning it off can lose data or availability. Field details are in the <a href="operator.html#operator-unsafeflags-section">Unsafe flags section</a>.</p>
 <table>
 <thead>
@@ -7126,8 +7361,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
+<p>The older <code>allowUnsafeConfigurations</code> option turns on all four flags at once.</p>
 <p>Use these flags for a development cluster, a local test, or a deliberate single-node setup for continuous integration. On a production cluster, an Operator rejection describes a real risk in the configuration you asked for.</p>
-<h2 id="check-before-you-intervene">Check before you intervene<a class="headerlink" href="#check-before-you-intervene" title="Permanent link">&para;</a></h2>
+<h2 id="check-before-you-intervene">Check before you intervene<a class="headerlink" href="#check-before-you-intervene" title="Permanent link">¶</a></h2>
 <p>When a manual change looks necessary, do the following:</p>
 <ol>
 <li>Check whether the CR already exposes what you want. Most requests for manual changes are covered by a field.</li>
@@ -7136,12 +7372,19 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li>Contact <a href="get-help.html">Percona Support</a> before you act on a production cluster.</li>
 </ol>
 <p>Manual intervention on a running database cluster is recoverable far less often than it looks from the outside.</p>
+<h2 id="next-steps">Next steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
+<p><a class="md-button" href="architecture-reconciliation.html">How the Operator reacts to changes</a></p>
+<h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="architecture-responsibilities.html">Who owns what</a></li>
+<li><a href="debug.html#where-to-look-first">Initial troubleshooting</a></li>
+</ul>
 <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="October 22, 2026 15:21:56 UTC">October 22, 2026</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="November 3, 2026 11:18:20 UTC">November 3, 2026</span>
       
         <br>
         Created:
@@ -7194,9 +7437,9 @@ window.addEventListener('afterprint', (event) => {
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
-          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
   Back to top
 </button>
         
@@ -7208,7 +7451,7 @@ window.addEventListener('afterprint', (event) => {
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
     <div class="md-copyright__highlight">
- <a href='https://percona.com' target='_blank'>Percona LLC and/or its affiliates, </a> &copy; 2026
+ <a href="https://percona.com" target="_blank">Percona LLC and/or its affiliates, </a> © 2026
  — <a href="#" onclick="Osano.cm.showDrawer('osano-cm-dom-info-dialog-open')">Cookie Preferences</a>
     </div>
   
@@ -7254,24 +7497,15 @@ window.addEventListener('afterprint', (event) => {
       
         <script src="js/posthog-version.js"></script>
       
+        <script src="js/diagram-zoom.js"></script>
+      
         <script src="js/open_in_new_tab.js"></script>
       
     
-<script
-  id="kapa-widget-script"
-  async
-  data-osano="ESSENTIAL"
-  src="https://widget.kapa.ai/kapa-widget.bundle.js"
-  data-website-id="0e0d55cf-6370-4a6d-a987-96670a7fe935"
-  data-button-hide="true"
-  data-project-name="Percona"
-  data-modal-title="Percona AI Assistant"
-  font-size="0.875rem"
-  data-modal-disclaimer="The **Percona AI Assistant** helps you find simple, clear answers to your Percona questions using [official documentation](https://docs.percona.com/), resolved [forum posts](https://forums.percona.com/) and [blog posts](https://www.percona.com/blog/). Note, do not enter personal or confidential information. Before using Percona AI assistant, read the [Legal Notice](https://docs.percona.com/percona-operator-for-xtradb-cluster/latest/legal-notice.html)."
-  data-modal-example-questions="How do I deploy Percona Operator for MySQL based on Percona XtraDB Cluster?, How do I connect my application to the Percona XtraDB Cluster?, How do I upgrade Percona Operator for MySQL?, How do I configure automated backups?, What's new in the latest release?"
-  data-project-logo="https://docs.percona.com/percona-operator-for-xtradb-cluster/latest/assets/percona-logomark-one-color-dark.png"
-></script>
+<script id="kapa-widget-script" async="" data-osano="ESSENTIAL" src="https://widget.kapa.ai/kapa-widget.bundle.js" data-website-id="0e0d55cf-6370-4a6d-a987-96670a7fe935" data-button-hide="true" data-project-name="Percona" data-modal-title="Percona AI Assistant" font-size="0.875rem" data-modal-disclaimer="The **Percona AI Assistant** helps you find simple, clear answers to your Percona questions using [official documentation](https://docs.percona.com/), resolved [forum posts](https://forums.percona.com/) and [blog posts](https://www.percona.com/blog/). Note, do not enter personal or confidential information. Before using Percona AI assistant, read the [Legal Notice](https://docs.percona.com/percona-operator-for-xtradb-cluster/latest/legal-notice.html)." data-modal-example-questions="How do I deploy Percona Operator for MySQL based on Percona XtraDB Cluster?, How do I connect my application to the Percona XtraDB Cluster?, How do I upgrade Percona Operator for MySQL?, How do I configure automated backups?, What's new in the latest release?" data-project-logo="https://docs.percona.com/percona-operator-for-xtradb-cluster/latest/assets/percona-logomark-one-color-dark.png"></script>
 
 
-  </body>
-</html>
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
