@@ -89,28 +89,16 @@ Here's how to do it:
 
 ### Encode the LD_PRELOAD value
 
-The path to the `jemalloc` library depends on your MySQL version:
+The `jemalloc` shared library version depends on the CPU architecture :
 
-* For **Percona XtraDB Cluster MySQL 8.4 and newer**, use `/usr/lib64/libjemalloc.so.2`
-* For **Percona XtraDB Cluster MySQL 8.0**, use `/usr/lib64/libjemalloc.so.1`
+* On **x86_64** (AMD64), use `/usr/lib64/libjemalloc.so.1` for every Percona XtraDB Cluster version.
+* On **ARM64**, use `/usr/lib64/libjemalloc.so.2` for every Percona XtraDB Cluster version.
 
-Set the appropriate path as the value for the `LD_PRELOAD` environment variable. Encode it with base64 before including it in your Secret.
+Starting with version 1.21.0, when you set `pxc.mysqlAllocator` to `jemalloc` and `crVersion` is 1.21.0 or later, the Operator sets `LD_PRELOAD` to both paths. The dynamic linker loads the library that exists on the node. Use the steps below only when you set `LD_PRELOAD` yourself.
 
-=== "8.4 and newer"
+Set the path that matches your node architecture as the value of `LD_PRELOAD`. Encode it with base64 before you add it to the Secret.
 
-    === "On Linux"
-
-        ```bash
-        echo -n "/usr/lib64/libjemalloc.so.2" | base64 --wrap=0
-        ```
-
-    === "On macOS"
-
-        ```bash
-        echo -n "/usr/lib64/libjemalloc.so.2" | base64
-        ```
-
-=== "8.0"
+=== "x86_64 (AMD64)"
 
     === "On Linux"
 
@@ -122,6 +110,20 @@ Set the appropriate path as the value for the `LD_PRELOAD` environment variable.
 
         ```bash
         echo -n "/usr/lib64/libjemalloc.so.1" | base64
+        ```
+
+=== "ARM64"
+
+    === "On Linux"
+
+        ```bash
+        echo -n "/usr/lib64/libjemalloc.so.2" | base64 --wrap=0
+        ```
+
+    === "On macOS"
+
+        ```bash
+        echo -n "/usr/lib64/libjemalloc.so.2" | base64
         ```
 
 ### Create the memory allocator Secret

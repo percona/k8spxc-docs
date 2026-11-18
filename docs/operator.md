@@ -745,7 +745,14 @@ Specifies which memory allocator to use for the MySQL process. Available since O
 
 Supported values: `jemalloc`, `tcmalloc`. When left empty or omitted, the default `libc` allocator is used.
 
-For how the Operator handles `jemalloc` memory allocator, see [Correct `jemalloc` path on ARM64 based on Percona XtraDB Cluster version](ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.20.0.md#version-aware-jemalloc-path-selection-on-arm64-architectures-for-optimized-memory-usage).
+The `jemalloc` library path depends on CPU architecture of the Percona XtraDB Cluster image:
+
+* **x86_64** (AMD64): `/usr/lib64/libjemalloc.so.1` for every Percona XtraDB Cluster version
+* **ARM64**: `/usr/lib64/libjemalloc.so.2` for every Percona XtraDB Cluster version
+
+Starting with version 1.21.0, when `crVersion` is 1.21.0 or later, the Operator sets `LD_PRELOAD` to both paths. The dynamic linker loads the library that exists on the node. An earlier `crVersion` keeps the previous image-tag path so the StatefulSet is not restarted during the upgrade.
+
+To set `LD_PRELOAD` yourself, see [Configure alternative memory allocator](env-vars-cluster.md#configure-alternative-memory-allocator).
 
 | Value type  | Example    |
 | ----------- | ---------- |
