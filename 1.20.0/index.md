@@ -1,0 +1,73 @@
+> For the complete documentation index, see [llms.txt](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt).
+
+# Percona Operator for MySQL Based on Percona XtraDB Cluster
+
+The **[Percona Operator for MySQL](https://github.com/percona/percona-xtradb-cluster-operator)** is a Kubernetes-native solution designed to simplify the deployment, management, and scaling of MySQL clusters built on Percona XtraDB Cluster (PXC). The Operator leverages Kubernetes’ orchestration capabilities to automate critical database management tasks, including cluster provisioning, backups, failover, and scaling.
+
+**[Percona XtraDB Cluster (PXC)](https://www.percona.com/software/mysql-database/percona-xtradb-cluster)** is an open-source, enterprise-grade MySQL solution designed for high availability and data consistency. It uses virtually synchronous replication, so every node holds the same data. PXC provides fault tolerance, automated failover, and scalability, making it ideal for running highly available MySQL databases in mission-critical environments.
+
+This provides the foundation for the Percona Operator for MySQL, enabling simplified deployment and management of Percona XtraDB Cluster within Kubernetes environments.
+
+[Get started](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/quickstart.html) [What’s new in version 1.20.0](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.20.0.html)
+
+______________________________________________________________________
+
+## Key Features and Benefits
+
+#### 1. **Automated Deployment and Scaling**
+
+- Simplifies the creation of MySQL clusters with minimal configuration.
+- Dynamically scales instances based on workload demands, optimizing resource usage.
+
+#### 2. **High Availability**
+
+- Keeps the cluster serving when a node fails: with three nodes, the cluster continues after one node is lost, and the proxy reroutes traffic. Clients may need to reconnect.
+- Uses virtually synchronous replication to keep all nodes consistent.
+
+#### 3. **Self-Healing**
+
+- Detects and recovers from node failures automatically to maintain cluster health.
+- Ensures operational continuity with minimal manual intervention.
+
+#### 4. **Backup and Restore**
+
+- Provides consistent, automated backups to cloud storage or local volumes.
+- Enables quick recovery, ensuring data safety and business continuity.
+
+#### 5. **Enhanced Security**
+
+- Supports encryption for data at rest and in transit.
+- Integrates with Kubernetes Role-Based Access Control (RBAC) for secure database operations.
+
+#### 6. **Operational Simplification**
+
+- Offers seamless integration with Kubernetes-native tools like [`kubectl`](https://kubernetes.io/docs/reference/kubectl/) .
+- Streamlines database monitoring, management, and troubleshooting.
+
+#### 7. **Flexibility for Cloud-Native Architectures**
+
+- Optimized for public, private, and hybrid cloud deployments.
+- Allows unified management of databases across diverse environments.
+
+______________________________________________________________________
+
+## Stay updated
+
+Explore planned features on the [public roadmap](https://github.com/orgs/percona/projects/10/views/5) . Check upcoming releases on the [release timeline](https://github.com/orgs/percona/projects/10/views/7) .
+
+______________________________________________________________________
+
+## Use Case
+
+The **Percona Operator for MySQL** is ideal for various scenarios such as providing Database as a Service (DBaaS), ensuring high availability for mission-critical applications, scaling cloud-native applications, and implementing disaster recovery strategies. It is particularly useful for organizations with hybrid or multi-cloud infrastructures, where it simplifies the deployment and management of MySQL clusters across multiple environments. The Operator also benefits development and testing teams by enabling quick spin-up of MySQL clusters for testing and development purposes, helping to accelerate product development cycles and reduce operational overhead.
+
+______________________________________________________________________
+
+Being part of the open-source ecosystem, the Percona Operator benefits from community contributions and support, ensuring that it remains stable and robust over time.
+
+If you’re interested in contributing, feel free to:
+
+- [Open an issue](https://github.com/percona/percona-xtradb-cluster-operator/issues)
+- Submit a [pull request](https://github.com/percona/percona-xtradb-cluster-operator/pulls)
+
+For support or inquiries, [contact Percona](https://www.percona.com/support) .

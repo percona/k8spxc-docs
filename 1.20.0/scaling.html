@@ -25,7 +25,7 @@ an overview of all available ways to scale, see About scaling and storage.">
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -140,7 +140,7 @@ an overview of all available ways to scale, see About scaling and storage.">
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6769,11 +6769,11 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="horizontal-and-vertical-scaling">Horizontal and vertical scaling<a class="headerlink" href="#horizontal-and-vertical-scaling" title="Permanent link">¶</a></h1>
+<h1 id="horizontal-and-vertical-scaling">Horizontal and vertical scaling<a data-markdown-ignore class="headerlink" href="#horizontal-and-vertical-scaling" title="Permanent link">¶</a></h1>
 <p>This page covers scaling compute resources, Percona XtraDB Cluster (PXC) node count, and
 proxy Pod count. For scaling storage, see <a href="scaling-storage-resize.html">Resize storage</a>. For
 an overview of all available ways to scale, see <a href="scaling-about.html">About scaling and storage</a>.</p>
-<h2 id="scale-compute-resources">Scale compute resources<a class="headerlink" href="#scale-compute-resources" title="Permanent link">¶</a></h2>
+<h2 id="scale-compute-resources">Scale compute resources<a data-markdown-ignore class="headerlink" href="#scale-compute-resources" title="Permanent link">¶</a></h2>
 <p>The Operator deploys and manages multiple components, such as Percona XtraDB Cluster,
 HAProxy, and ProxySQL. Manage CPU or memory for each component separately by editing its
 section in the Custom Resource, following the <code>requests</code>/<code>limits</code> structure
@@ -6806,7 +6806,7 @@ shows <code>initializing</code> until every Pod comes back up.</p>
 OOMKilled or fail to schedule. Check <code>kubectl get pods -n &lt;namespace&gt;</code> for <code>OOMKilled</code> or
 <code>Pending</code> status, and <code>kubectl describe pod &lt;pod-name&gt; -n &lt;namespace&gt;</code> for scheduling
 failures.</p>
-<h2 id="horizontal-scaling">Horizontal scaling<a class="headerlink" href="#horizontal-scaling" title="Permanent link">¶</a></h2>
+<h2 id="horizontal-scaling">Horizontal scaling<a data-markdown-ignore class="headerlink" href="#horizontal-scaling" title="Permanent link">¶</a></h2>
 <p>The size of the cluster is controlled by the <a href="operator.html#pxcsize"><code>pxc.size</code></a> key in the
 Custom Resource. Changing this option and applying it adds or removes PXC nodes.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
@@ -6820,7 +6820,7 @@ Custom Resource. Changing this option and applying it adds or removes PXC nodes.
 <code>PerconaXtraDBCluster</code> Custom Resource defines a <code>scale</code> subresource tied to <code>pxc.size</code>:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>scale<span class="w"> </span>--replicas<span class="o">=</span><span class="m">5</span><span class="w"> </span>pxc/&lt;cluster-name&gt;<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
 </code></pre></div>
-<h3 id="choose-a-safe-node-count">Choose a safe node count<a class="headerlink" href="#choose-a-safe-node-count" title="Permanent link">¶</a></h3>
+<h3 id="choose-a-safe-node-count">Choose a safe node count<a data-markdown-ignore class="headerlink" href="#choose-a-safe-node-count" title="Permanent link">¶</a></h3>
 <p>By default, the Operator accepts only odd numbers for <code>pxc.size</code>. The recommended range is <strong>3 or 5</strong>. This restriction is by
 design: Galera quorum voting needs an odd count so that if the network splits, one side
 always has a majority. An even count can tie the vote and leave the cluster without a
@@ -6862,7 +6862,7 @@ match the Custom Resource. This can leave the running cluster out
 <li>Don’t use an even node count in production. The risk surfaces during a network
   partition, not under normal load.</li>
 </ul>
-<h2 id="scale-proxy-pods">Scale proxy Pods<a class="headerlink" href="#scale-proxy-pods" title="Permanent link">¶</a></h2>
+<h2 id="scale-proxy-pods">Scale proxy Pods<a data-markdown-ignore class="headerlink" href="#scale-proxy-pods" title="Permanent link">¶</a></h2>
 <p>HAProxy and ProxySQL Pods scale independently of the PXC database nodes. You can change the number of proxy Pods only via the Custom Resource directly. There’s no <code>kubectl scale</code> shortcut for proxy size — the Custom Resource’s scale
 subresource only covers <code>pxc.size</code> (see <a href="#horizontal-scaling">Horizontal scaling</a>).</p>
 <p>Use the
@@ -6878,7 +6878,7 @@ depending on which proxy your cluster uses (check <code>spec.haproxy.enabled</co
 </code></pre></div>
 <p>Check <code>.status.state</code> is <code>ready</code> and, under <code>.status.haproxy</code> (or <code>.status.proxysql</code>),
 that <code>.ready</code> matches your new <code>size</code>.</p>
-<h3 id="considerations">Considerations<a class="headerlink" href="#considerations" title="Permanent link">¶</a></h3>
+<h3 id="considerations">Considerations<a data-markdown-ignore class="headerlink" href="#considerations" title="Permanent link">¶</a></h3>
 <ul>
 <li>
 <p><strong>Choose a safe proxy count:</strong> by default, HAProxy and ProxySQL must each have <strong>at least
@@ -6893,7 +6893,7 @@ reconcile it, the same way an unsafe <code>pxc.size</code> does:</p>
 <p><strong>Don’t</strong> scale the proxy StatefulSet directly. The Operator doesn’t automatically reconcile manual changes to match the Custom Resource. This leaves the cluster out of sync with the Custom Resource until the <code>haproxy.size</code> or <code>proxysql.size</code> are changed and the Operator reconciles.</p>
 </li>
 </ul>
-<h2 id="automated-scaling">Automated scaling<a class="headerlink" href="#automated-scaling" title="Permanent link">¶</a></h2>
+<h2 id="automated-scaling">Automated scaling<a data-markdown-ignore class="headerlink" href="#automated-scaling" title="Permanent link">¶</a></h2>
 <p>To automate horizontal scaling of PXC nodes, use
 <a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/">Horizontal Pod Autoscaler (HPA) <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>
 or
@@ -7013,7 +7013,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

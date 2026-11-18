@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6699,7 +6699,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="data-at-rest-encryption">Data at rest encryption<a class="headerlink" href="#data-at-rest-encryption" title="Permanent link">¶</a></h1>
+<h1 id="data-at-rest-encryption">Data at rest encryption<a data-markdown-ignore class="headerlink" href="#data-at-rest-encryption" title="Permanent link">¶</a></h1>
 <p>Data-at-rest encryption ensures that data stored on disk remains protected even if the underlying storage is compromised. This process is transparent to your applications, meaning you don’t need to change your application code. If an unauthorized user gains access to the storage, they can’t read the data files.</p>
 <p>The Operator supports <a href="https://docs.percona.com/percona-xtradb-cluster/LATEST/data-at-rest-encryption.html">data at rest encryption in Percona XtraDB Cluster <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> since version 1.4.0.</p>
 <p>To encrypt tablespaces, schemas, backups and binlogs, the Operator uses the following tools:</p>
@@ -6712,23 +6712,23 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><a href="https://www.vaultproject.io/">HashiCorp Vault <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> to securely store and manage master encryption keys, perform automatic key rotation, and enable audit logging.</li>
 </ul>
 <p>This setup enhances the overall security posture of your Percona XtraDB cluster on Kubernetes.</p>
-<h2 id="encryption-flow">Encryption flow<a class="headerlink" href="#encryption-flow" title="Permanent link">¶</a></h2>
+<h2 id="encryption-flow">Encryption flow<a data-markdown-ignore class="headerlink" href="#encryption-flow" title="Permanent link">¶</a></h2>
 <p>The encryption mechanism uses a two-tiered key architecture to secure your data:</p>
 <ul>
 <li>Each database instance has a master encryption key to encrypt tablespaces and binlogs. Master encryption key is stored separately from tablespace keys, in an external key management service like HashiCorp Vault.</li>
 <li>Each tablespace has a unique tablespace key to encrypt the data files (tables and indexes).</li>
 </ul>
 <p>The data is encrypted before being written to disk. When you need to read the data, it’s decrypted in memory for use and then re-encrypted before being written back to disk.</p>
-<h2 id="key-rotation">Key rotation<a class="headerlink" href="#key-rotation" title="Permanent link">¶</a></h2>
+<h2 id="key-rotation">Key rotation<a data-markdown-ignore class="headerlink" href="#key-rotation" title="Permanent link">¶</a></h2>
 <p>Key rotation is replacing the old master encryption key with the new one. When a new master encryption key is created, it is stored in Vault and tablespace keys are re-encrypted with it. The entire dataset is not re-encrypted and this makes the key rotation a fast and lightweight operation.</p>
 <p>Read more about key rotation in the <a href="https://docs.percona.com/percona-server/latest/rotate-master-key.html">Rotate the master key <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>.</p>
-<h2 id="backups-and-encryption">Backups and encryption<a class="headerlink" href="#backups-and-encryption" title="Permanent link">¶</a></h2>
+<h2 id="backups-and-encryption">Backups and encryption<a data-markdown-ignore class="headerlink" href="#backups-and-encryption" title="Permanent link">¶</a></h2>
 <p>Percona Operator for MySQL uses <a href="https://docs.percona.com/percona-xtrabackup/latest/index.html">Percona XtraBackup <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span>:</a> for backups and fully supports backing up encrypted data. The backups remain encrypted, ensuring your data is secure both on your live cluster and in your backup storage.</p>
 <div class="admonition warning">
 <p class="admonition-title">Keep your encryption keys safe</p>
 <p>To restore from an encrypted backup, you <strong>must have the original master encryption key</strong>. If the encryption key is lost, your backups will be irrecoverable. Always ensure you have a secure and reliable process for managing and backing up your master encryption keys separately from your database backups.</p>
 </div>
-<h2 id="next-steps">Next steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
+<h2 id="next-steps">Next steps<a data-markdown-ignore class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
 <p>Choose a setup guide based on your security requirements:</p>
 <ul>
 <li><a href="encryption-setup.html">Configure data-at-rest encryption without TLS</a> - For development and testing environments</li>
@@ -6834,7 +6834,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6679,15 +6679,15 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="restore-the-cluster-after-a-disaster">Restore the cluster after a disaster<a class="headerlink" href="#restore-the-cluster-after-a-disaster" title="Permanent link">¶</a></h1>
+<h1 id="restore-the-cluster-after-a-disaster">Restore the cluster after a disaster<a data-markdown-ignore class="headerlink" href="#restore-the-cluster-after-a-disaster" title="Permanent link">¶</a></h1>
 <p>Use this page when the original cluster and its Kubernetes environment are both gone, and a backup in cloud storage is all that survived. For example, the Kubernetes cluster itself was lost or the namespace was deleted. </p>
-<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h2>
+<h2 id="prerequisites">Prerequisites<a data-markdown-ignore class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h2>
 <ul>
 <li>A succeeded backup in the cloud storage (S3 or Azure). A Persistent Volume backup doesn’t survive the loss of its Kubernetes cluster, so it can’t be used here. See <a href="backups-restore.html#restore-limitations">Restore limitations</a>.</li>
 <li>The Secret with the access credentials for that storage. Recreate it if it was lost along with the cluster.</li>
 <li>If you plan to apply <a href="backups-pitr-restore.html">point-in-time recovery</a> as part of this restore, you need the user passwords that were in effect on the source cluster. See <a href="backups-restore.html#restore-limitations">Restore limitations</a>.</li>
 </ul>
-<h2 id="rebuild-the-cluster-from-a-backup">Rebuild the cluster from a backup<a class="headerlink" href="#rebuild-the-cluster-from-a-backup" title="Permanent link">¶</a></h2>
+<h2 id="rebuild-the-cluster-from-a-backup">Rebuild the cluster from a backup<a data-markdown-ignore class="headerlink" href="#rebuild-the-cluster-from-a-backup" title="Permanent link">¶</a></h2>
 <ol>
 <li>Set up the namespace and install the Operator, if they don’t already exist. Use the <a href="kubectl.html">Quickstart</a> for the installation steps.</li>
 <li>
@@ -6745,7 +6745,7 @@ export NAMESPACE=&lt;namespace&gt;</code></p>
 </code></pre></div>
 </li>
 </ol>
-<h2 id="verify-the-restore">Verify the restore<a class="headerlink" href="#verify-the-restore" title="Permanent link">¶</a></h2>
+<h2 id="verify-the-restore">Verify the restore<a data-markdown-ignore class="headerlink" href="#verify-the-restore" title="Permanent link">¶</a></h2>
 <ol>
 <li>
 <p>Confirm the Restore object reports <code>Succeeded</code>:</p>
@@ -6867,7 +6867,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

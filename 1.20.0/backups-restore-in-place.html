@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6757,9 +6757,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="restore-to-the-same-cluster-in-place">Restore to the same cluster (in-place)<a class="headerlink" href="#restore-to-the-same-cluster-in-place" title="Permanent link">¶</a></h1>
+<h1 id="restore-to-the-same-cluster-in-place">Restore to the same cluster (in-place)<a data-markdown-ignore class="headerlink" href="#restore-to-the-same-cluster-in-place" title="Permanent link">¶</a></h1>
 <p>This page covers in-place restore - restoring a backup into the same cluster it was made from. For the other restore paths, see <a href="backups-restore.html#restore-scenarios">Restore scenarios</a>.</p>
-<h2 id="before-you-start">Before you start<a class="headerlink" href="#before-you-start" title="Permanent link">¶</a></h2>
+<h2 id="before-you-start">Before you start<a data-markdown-ignore class="headerlink" href="#before-you-start" title="Permanent link">¶</a></h2>
 <ol>
 <li>Make sure that the cluster is running.</li>
 <li>
@@ -6787,7 +6787,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </code></pre></div>
 </li>
 </ol>
-<h2 id="restore-from-a-full-backup">Restore from a full backup<a class="headerlink" href="#restore-from-a-full-backup" title="Permanent link">¶</a></h2>
+<h2 id="restore-from-a-full-backup">Restore from a full backup<a data-markdown-ignore class="headerlink" href="#restore-from-a-full-backup" title="Permanent link">¶</a></h2>
 <p>To restore your Percona XtraDB Cluster from a backup, define a <code>PerconaXtraDBClusterRestore</code> Custom Resource. Set the following keys:</p>
 <ul>
 <li><code>spec.pxcCluster</code>: the name of the target cluster</li>
@@ -6795,7 +6795,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </ul>
 <p>If the target cluster’s passwords differ from the backup’s, see <a href="backups-restore.html#restore-the-cluster-when-a-backup-has-different-passwords">Restore the cluster when backup has different passwords</a> before you continue.</p>
 <p>Pass this configuration to the Operator:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">via the YAML manifest</label><label for="__tabbed_1_2">via the command line</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_1_1">via the YAML manifest</label><label for="__tabbed_1_2">via the command line</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <ol>
@@ -6832,7 +6832,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </div>
 </div>
 </div>
-<h3 id="restore-from-a-backup-using-the-backupsource-option">Restore from a backup using the <code>backupSource</code> option<a class="headerlink" href="#restore-from-a-backup-using-the-backupsource-option" title="Permanent link">¶</a></h3>
+<h3 id="restore-from-a-backup-using-the-backupsource-option">Restore from a backup using the <code>backupSource</code> option<a data-markdown-ignore class="headerlink" href="#restore-from-a-backup-using-the-backupsource-option" title="Permanent link">¶</a></h3>
 <p>You can use <code>backupSource</code> instead of <code>backupName</code>. See <a href="backups-restore.html#choose-backupname-or-backupsource">Choose backupName or backupSource</a> for when this applies to an in-place restore. </p>
 <p>When using the <code>backupSource</code>, you also need to specify the destination — where the backup is stored. Take this value from the output of the <code>kubectl get pxc-backup -n $NAMESPACE</code> command.</p>
 <p>When restoring to the same cluster, the backup storage is already defined in the cluster’s configuration and you can reference it by name.</p>
@@ -6855,7 +6855,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p>Apply the configuration to start the restore:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deploy/backup/restore.yaml<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span>
 </code></pre></div>
-<h2 id="verify-the-restore">Verify the restore<a class="headerlink" href="#verify-the-restore" title="Permanent link">¶</a></h2>
+<h2 id="verify-the-restore">Verify the restore<a data-markdown-ignore class="headerlink" href="#verify-the-restore" title="Permanent link">¶</a></h2>
 <ol>
 <li>
 <p>Confirm the Restore object reports <code>Succeeded</code>:</p>
@@ -6871,7 +6871,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p>Spot-check the data you expected the backup to contain.</p>
 </li>
 </ol>
-<h2 id="remove-the-recovery-record-after-the-restore">Remove the recovery record after the restore<a class="headerlink" href="#remove-the-recovery-record-after-the-restore" title="Permanent link">¶</a></h2>
+<h2 id="remove-the-recovery-record-after-the-restore">Remove the recovery record after the restore<a data-markdown-ignore class="headerlink" href="#remove-the-recovery-record-after-the-restore" title="Permanent link">¶</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>A restore starts a new Galera cluster with a new cluster UUID, but the Operator keeps the <code>status.recovery</code> record of its last automatic recovery. On the next full cluster crash, the Operator compares the new UUID and <code>seqno</code> with the old record, refuses automatic recovery, and emits the <code>AutomaticRecoveryRefused</code> event. The Pods keep waiting until you intervene.</p>
@@ -6894,7 +6894,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </li>
 </ol>
 <p>The Operator records the new UUID and <code>seqno</code> the next time it recovers the cluster. If a full cluster crash has already been refused, see <a href="recovery.html#when-the-operator-refuses-automatic-recovery">When the Operator refuses automatic recovery</a>.</p>
-<h2 id="restore-with-point-in-time-recovery">Restore with point-in-time recovery<a class="headerlink" href="#restore-with-point-in-time-recovery" title="Permanent link">¶</a></h2>
+<h2 id="restore-with-point-in-time-recovery">Restore with point-in-time recovery<a data-markdown-ignore class="headerlink" href="#restore-with-point-in-time-recovery" title="Permanent link">¶</a></h2>
 <p>See <a href="backups-pitr-restore.html">Restore with point-in-time recovery</a> for recovery-target options (date, GTID, or latest), how to find the GTID you need, and verification steps.</p>
 <hr>
 <div class="md-source-file">
@@ -6996,7 +6996,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6931,7 +6931,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="install-percona-xtradb-cluster-on-openshift">Install Percona XtraDB Cluster on OpenShift<a class="headerlink" href="#install-percona-xtradb-cluster-on-openshift" title="Permanent link">¶</a></h1>
+<h1 id="install-percona-xtradb-cluster-on-openshift">Install Percona XtraDB Cluster on OpenShift<a data-markdown-ignore class="headerlink" href="#install-percona-xtradb-cluster-on-openshift" title="Permanent link">¶</a></h1>
 <p>Percona Operator for Percona XtrabDB Cluster is a <a href="https://connect.redhat.com/en/partner-with-us/red-hat-openshift-certification">Red Hat Certified Operator <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>. This means that Percona Operator is portable across hybrid clouds and fully supports the Red Hat OpenShift lifecycle.</p>
 <p>To install Percona XtraDB Cluster on OpenShift, you need to do the following:</p>
 <ul>
@@ -6942,21 +6942,21 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p>Next, use the Operator to deploy Percona XtraDB Cluster.</p>
 </li>
 </ul>
-<h2 id="installation-options">Installation options<a class="headerlink" href="#installation-options" title="Permanent link">¶</a></h2>
+<h2 id="installation-options">Installation options<a data-markdown-ignore class="headerlink" href="#installation-options" title="Permanent link">¶</a></h2>
 <p>You can install Percona Operator for MySQL on OpenShift in two ways:</p>
 <ul>
 <li><strong>Using the <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.21/html/operators/understanding-operators#operator-lifecycle-manager-olm">Operator Lifecycle Manager (OLM) <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a></strong> via the OpenShift web console</li>
 <li><strong>Using the command-line interface</strong> with <code>oc</code> commands</li>
 </ul>
 <p>Choose the method that best fits your workflow.</p>
-<h2 id="install-via-the-operator-lifecycle-manager-olm">Install via the Operator Lifecycle Manager (OLM)<a class="headerlink" href="#install-via-the-operator-lifecycle-manager-olm" title="Permanent link">¶</a></h2>
-<h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h3>
+<h2 id="install-via-the-operator-lifecycle-manager-olm">Install via the Operator Lifecycle Manager (OLM)<a data-markdown-ignore class="headerlink" href="#install-via-the-operator-lifecycle-manager-olm" title="Permanent link">¶</a></h2>
+<h3 id="prerequisites">Prerequisites<a data-markdown-ignore class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h3>
 <p>Before you start, ensure you have the following:</p>
 <ol>
 <li>You can log in to the OLM console</li>
 <li>You have the ARN role assigned to your OLM user (for OpenShift 4.20).</li>
 </ol>
-<h3 id="install-the-operator-deployment">Install the Operator Deployment<a class="headerlink" href="#install-the-operator-deployment" title="Permanent link">¶</a></h3>
+<h3 id="install-the-operator-deployment">Install the Operator Deployment<a data-markdown-ignore class="headerlink" href="#install-the-operator-deployment" title="Permanent link">¶</a></h3>
 <p>Follow these steps to deploy the Operator:</p>
 <ol>
 <li>Login to the OLM and navigate to the Ecosystem -&gt; Software Catalog.</li>
@@ -6981,7 +6981,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/images/olm3.svg" data-desc-position="bottom"><img alt="image" src="assets/images/olm3.svg"></a></p>
 </li>
 </ol>
-<h3 id="deploy-percona-xtradb-cluster">Deploy Percona XtraDB Cluster<a class="headerlink" href="#deploy-percona-xtradb-cluster" title="Permanent link">¶</a></h3>
+<h3 id="deploy-percona-xtradb-cluster">Deploy Percona XtraDB Cluster<a data-markdown-ignore class="headerlink" href="#deploy-percona-xtradb-cluster" title="Permanent link">¶</a></h3>
 <p>Now you can deploy Percona Server for MySQL</p>
 <ol>
 <li>Click the Operator you installed.</li>
@@ -7000,8 +7000,8 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p>Upon successful installation, you should see the “Ready” status for the database cluster.</p>
 </li>
 </ol>
-<h2 id="install-via-the-command-line-interface">Install via the command-line interface<a class="headerlink" href="#install-via-the-command-line-interface" title="Permanent link">¶</a></h2>
-<h3 id="install-the-operator-deployment_1">Install the Operator Deployment<a class="headerlink" href="#install-the-operator-deployment_1" title="Permanent link">¶</a></h3>
+<h2 id="install-via-the-command-line-interface">Install via the command-line interface<a data-markdown-ignore class="headerlink" href="#install-via-the-command-line-interface" title="Permanent link">¶</a></h2>
+<h3 id="install-the-operator-deployment_1">Install the Operator Deployment<a data-markdown-ignore class="headerlink" href="#install-the-operator-deployment_1" title="Permanent link">¶</a></h3>
 <p>The following steps install the latest version of the Operator with default parameters. To install a specific version, replace the <code>v1.20.0</code> tag with your value. See the full list of tags <a href="https://github.com/percona/percona-xtradb-cluster-operator/tags">in the Operator repository <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> on GitHub.</p>
 <p>To install the Operator with customized parameters, see <a href="custom-install.html">Install Percona XtraDB Cluster with customized parameters</a>.</p>
 <p>Choose the approach that fits your needs:</p>
@@ -7009,7 +7009,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><strong>Quick install</strong> — Apply a single bundle file. Use this when you want to get started quickly with default settings.</li>
 <li><strong>Step-by-step install</strong> — Run each installation step separately. Use this when you want more control over the installation process or you need to customize the installation.</li>
 </ul>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M21.61 2.39S16.66.269 11 5.93c-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.55.56 1.37.74 2.12.46A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61m-7.07 7.07c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"></path></svg></span> Quick install</label><label for="__tabbed_1_2"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 13v-2h14v2zm0 6v-2h14v2zM7 7V5h14v2zM3 8V5H2V4h2v4zm-1 9v-1h3v4H2v-1h2v-.5H3v-1h1V17zm2.25-7a.75.75 0 0 1 .75.75c0 .2-.08.39-.21.52L3.12 13H5v1H2v-.92L4 11H2v-1z"></path></svg></span> Step-by-step installation</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_1_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M21.61 2.39S16.66.269 11 5.93c-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.55.56 1.37.74 2.12.46A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61m-7.07 7.07c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"></path></svg></span> Quick install</label><label for="__tabbed_1_2"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 13v-2h14v2zm0 6v-2h14v2zM7 7V5h14v2zM3 8V5H2V4h2v4zm-1 9v-1h3v4H2v-1h2v-.5H3v-1h1V17zm2.25-7a.75.75 0 0 1 .75.75c0 .2-.08.39-.21.52L3.12 13H5v1H2v-.92L4 11H2v-1z"></path></svg></span> Step-by-step installation</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>For a quick and streamlined installation, you can use the <code>deploy/bundle.yaml</code> file. By applying this file, Kubernetes creates the Custom Resource Definition, sets up role-based access control and installs the Operator in one single action. This method is recommended for most users, as it simplifies the installation process.</p>
@@ -7099,13 +7099,13 @@ oc<span class="w"> </span>adm<span class="w"> </span>policy<span class="w"> </sp
 </div>
 </div>
 </div>
-<h3 id="install-percona-xtradb-cluster">Install Percona XtraDB Cluster<a class="headerlink" href="#install-percona-xtradb-cluster" title="Permanent link">¶</a></h3>
+<h3 id="install-percona-xtradb-cluster">Install Percona XtraDB Cluster<a data-markdown-ignore class="headerlink" href="#install-percona-xtradb-cluster" title="Permanent link">¶</a></h3>
 <p>After installing the Operator, you can deploy Percona XtraDB Cluster. This section guides you through the process of setting up secrets, certificates, and creating your first cluster.</p>
-<h4 id="before-you-start">Before you start<a class="headerlink" href="#before-you-start" title="Permanent link">¶</a></h4>
+<h4 id="before-you-start">Before you start<a data-markdown-ignore class="headerlink" href="#before-you-start" title="Permanent link">¶</a></h4>
 <p>Export the namespace where you deployed the Operator as an environment variable:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">NAMESPACE</span><span class="o">=</span>&lt;new-project&gt;
 </code></pre></div>
-<h4 id="step-1-configure-secrets-optional">Step 1: Configure secrets (optional)<a class="headerlink" href="#step-1-configure-secrets-optional" title="Permanent link">¶</a></h4>
+<h4 id="step-1-configure-secrets-optional">Step 1: Configure secrets (optional)<a data-markdown-ignore class="headerlink" href="#step-1-configure-secrets-optional" title="Permanent link">¶</a></h4>
 <p>By default, the Operator generates users Secrets automatically, so you don’t have to do anything. Yet if you wish to use your own Secrets, here’s how:</p>
 <ol>
 <li>
@@ -7133,7 +7133,7 @@ oc<span class="w"> </span>adm<span class="w"> </span>policy<span class="w"> </sp
 <p>To learn more about secrets, see <a href="users.html">Users</a>.</p>
 </li>
 </ol>
-<h4 id="step-2-configure-certificates-optional">Step 2: Configure certificates (optional)<a class="headerlink" href="#step-2-configure-certificates-optional" title="Permanent link">¶</a></h4>
+<h4 id="step-2-configure-certificates-optional">Step 2: Configure certificates (optional)<a data-markdown-ignore class="headerlink" href="#step-2-configure-certificates-optional" title="Permanent link">¶</a></h4>
 <p>The Operator handles certificate generation automatically so don’t have to do anything. However, if you need custom certificates:</p>
 <ol>
 <li>Generate your certificates</li>
@@ -7141,7 +7141,7 @@ oc<span class="w"> </span>adm<span class="w"> </span>policy<span class="w"> </sp
 <li>Reference the secret in your cluster configuration</li>
 </ol>
 <p>See <a href="tls-manual.html">TLS instructions</a> for the steps.</p>
-<h4 id="step-3-deploy-the-database-cluster">Step 3: Deploy the database cluster<a class="headerlink" href="#step-3-deploy-the-database-cluster" title="Permanent link">¶</a></h4>
+<h4 id="step-3-deploy-the-database-cluster">Step 3: Deploy the database cluster<a data-markdown-ignore class="headerlink" href="#step-3-deploy-the-database-cluster" title="Permanent link">¶</a></h4>
 <ol>
 <li>
 <p>To deploy Percona XtraDB Cluster means to create a Custom Resource for it in OpenShift. The Operator holds a collection of controllers that create and manage this Custom Resource:</p>
@@ -7161,7 +7161,7 @@ cluster1   cluster1-haproxy.default   ready    3                3         5m51s
 </details>
 </li>
 </ol>
-<h2 id="verify-the-cluster-operation">Verify the cluster operation<a class="headerlink" href="#verify-the-cluster-operation" title="Permanent link">¶</a></h2>
+<h2 id="verify-the-cluster-operation">Verify the cluster operation<a data-markdown-ignore class="headerlink" href="#verify-the-cluster-operation" title="Permanent link">¶</a></h2>
 <p>It may take ten minutes to get the cluster started. When the <code>oc get pxc</code>
 command output shows you the cluster status as <code>ready</code>, you can try to connect
 to the cluster.</p>
@@ -7197,7 +7197,7 @@ The Secrets object you are interested in has the
     The command will look different depending on whether your cluster provides
     load balancing with <a href="haproxy-conf.html">HAProxy</a> (the default choice) or
     <a href="proxysql-conf.html">ProxySQL</a>:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">with HAProxy (default)</label><label for="__tabbed_2_2">with ProxySQL</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_2_1">with HAProxy (default)</label><label for="__tabbed_2_2">with ProxySQL</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>mysql<span class="w"> </span>-h<span class="w"> </span>cluster1-haproxy<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">'&lt;root_password&gt;'</span>
@@ -7312,7 +7312,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

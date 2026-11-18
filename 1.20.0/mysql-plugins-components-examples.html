@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6733,13 +6733,13 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="configuration-examples-for-plugins-and-components">Configuration examples for plugins and components<a class="headerlink" href="#configuration-examples-for-plugins-and-components" title="Permanent link">¶</a></h1>
+<h1 id="configuration-examples-for-plugins-and-components">Configuration examples for plugins and components<a data-markdown-ignore class="headerlink" href="#configuration-examples-for-plugins-and-components" title="Permanent link">¶</a></h1>
 <p>This page provides examples for enabling a <strong>plugin</strong> and a <strong>component</strong> in a Percona XtraDB Cluster managed by the Operator. It covers the <code>validate_password</code> and <code>audit_log_filter</code>, which is a component in Percona XtraDB Cluster 8.4 and a plugin in Percona XtraDB Cluster 8.0.</p>
 <p>Examples below show the configuration for both Percona XtraDB Cluster 8.0 and 8.4. For details on the difference between plugins and components, how to enable them and how to use the <code>loose-</code> prefix for their setup, see <a href="mysql-plugins-components.html">MySQL plugins and components</a>.</p>
 <p>Examples use a three-node cluster named <code>cluster1</code>. Replace the cluster name, the namespace and root password with your own values.</p>
-<h2 id="audit_log_filter"><code>audit_log_filter</code><a class="headerlink" href="#audit_log_filter" title="Permanent link">¶</a></h2>
+<h2 id="audit_log_filter"><code>audit_log_filter</code><a data-markdown-ignore class="headerlink" href="#audit_log_filter" title="Permanent link">¶</a></h2>
 <p>The <code>audit_log_filter</code> records database events to an audit log for security monitoring, compliance, and activity tracking.</p>
-<h3 id="percona-xtradb-cluster-84">Percona XtraDB Cluster 8.4<a class="headerlink" href="#percona-xtradb-cluster-84" title="Permanent link">¶</a></h3>
+<h3 id="percona-xtradb-cluster-84">Percona XtraDB Cluster 8.4<a data-markdown-ignore class="headerlink" href="#percona-xtradb-cluster-84" title="Permanent link">¶</a></h3>
 <p>Percona XtraDB Cluster 8.4 container images ship the <code>component_audit_log_filter</code> component along with its install script (<code>audit_log_filter_linux_install.sql</code>).</p>
 <ul>
 <li><strong>Percona Operator for MySQL 1.20.0 and later</strong> runs this install script automatically when the cluster bootstraps. The component is already registered in <code>mysql.component</code> and active. You only need to configure it.</li>
@@ -6795,13 +6795,13 @@ audit_log_filter.strategy           SYNCHRONOUS
 </details>
 </li>
 </ol>
-<h3 id="percona-xtradb-cluster-80">Percona XtraDB Cluster 8.0<a class="headerlink" href="#percona-xtradb-cluster-80" title="Permanent link">¶</a></h3>
+<h3 id="percona-xtradb-cluster-80">Percona XtraDB Cluster 8.0<a data-markdown-ignore class="headerlink" href="#percona-xtradb-cluster-80" title="Permanent link">¶</a></h3>
 <p>In Percona XtraDB Cluster 8.0, the <code>audit_log_filter</code> is a plugin and is not installed by default. You can load it in two ways:</p>
 <ul>
 <li>Add the plugin to the <code>spec.pxc.configuration</code> section in the Custom Resource and have it loaded automatically at startup</li>
 <li>Install it manually at runtime using the <code>INSTALL PLUGIN</code> command</li>
 </ul>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">At startup via Custom Resource</label><label for="__tabbed_1_2">At runtime via <code>INSTALL PLUGIN</code></label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_1_1">At startup via Custom Resource</label><label for="__tabbed_1_2">At runtime via <code>INSTALL PLUGIN</code></label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <ol>
@@ -6907,7 +6907,7 @@ audit_log_filter_rotate_on_size  104857600
 </div>
 </div>
 </div>
-<h2 id="validate_password"><code>validate_password</code><a class="headerlink" href="#validate_password" title="Permanent link">¶</a></h2>
+<h2 id="validate_password"><code>validate_password</code><a data-markdown-ignore class="headerlink" href="#validate_password" title="Permanent link">¶</a></h2>
 <p><code>validate_password</code> enforces password length. It is a component in both Percona XtraDB Cluster 8.0 and 8.4 and is not installed by default in
 either version.</p>
 <p>To enable and configure this component, do the following:</p>
@@ -6964,7 +6964,7 @@ validate_password.special_char_count 1
 </details>
 </li>
 </ol>
-<h2 id="example-of-validate_password-and-audit_log_filter-together">Example of <code>validate_password</code> and <code>audit_log_filter</code> together<a class="headerlink" href="#example-of-validate_password-and-audit_log_filter-together" title="Permanent link">¶</a></h2>
+<h2 id="example-of-validate_password-and-audit_log_filter-together">Example of <code>validate_password</code> and <code>audit_log_filter</code> together<a data-markdown-ignore class="headerlink" href="#example-of-validate_password-and-audit_log_filter-together" title="Permanent link">¶</a></h2>
 <p>This configuration example is for Percona XtraDB Cluster 8.4 and the Operator 1.20.0:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">pxc</span><span class="p">:</span>
@@ -7083,7 +7083,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6655,14 +6655,14 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="failover-and-high-availability">Failover and high availability<a class="headerlink" href="#failover-and-high-availability" title="Permanent link">¶</a></h1>
+<h1 id="failover-and-high-availability">Failover and high availability<a data-markdown-ignore class="headerlink" href="#failover-and-high-availability" title="Permanent link">¶</a></h1>
 <p>Percona XtraDB Cluster handles two different kinds of failure, and the Operator responds to each one differently.</p>
 <ul>
 <li>Losing one or more nodes inside a running cluster, while a majority of nodes stay up. The Operator and the proxy in front of the cluster (HAProxy or ProxySQL) recover from this automatically.</li>
 <li>Losing an entire site. It can be a whole Kubernetes cluster, an availability zone, or a cloud region. To recover, you must promote a replica site and switch over the workload to it manually.</li>
 </ul>
 <p>Use the following table to find the right page for your situation.</p>
-<h2 id="which-situation-are-you-in">Which situation are you in?<a class="headerlink" href="#which-situation-are-you-in" title="Permanent link">¶</a></h2>
+<h2 id="which-situation-are-you-in">Which situation are you in?<a data-markdown-ignore class="headerlink" href="#which-situation-are-you-in" title="Permanent link">¶</a></h2>
 <table>
 <thead>
 <tr>
@@ -6685,7 +6685,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tbody>
 </table>
 <p>These two scenarios are not mutually exclusive. A site-wide outage also takes down every node in that site at once. We recommend you to read both pages: in-cluster failover explains what happens automatically inside each site, and disaster recovery explains how to fail over between sites when that isn’t enough.</p>
-<h2 id="next-steps">Next steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
+<h2 id="next-steps">Next steps<a data-markdown-ignore class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
 <ul>
 <li><a class="md-button" href="failover-in-cluster.html">In-cluster failover</a></li>
 <li><a class="md-button" href="dr.html">Set up disaster recovery</a></li>
@@ -6790,7 +6790,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

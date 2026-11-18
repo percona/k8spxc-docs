@@ -1,0 +1,172 @@
+> For the complete documentation index, see [llms.txt](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt).
+
+# Restore the previous primary site
+
+Let’s say the root of the outage is no longer present. You can now install a new database cluster on this site. Let’s use the previous name `cluster1` for it.
+
+## Install a new database cluster on the previous primary site
+
+The new `cluster1` must be the exact copy of the current primary `cluster2`. We will use the same approach as we did when creating `cluster2`: make a backup from `cluster2` and restore it on `cluster1`.
+
+The steps are the following:
+
+1. Create the namespace
+
+1. If you deleted the Operator, install it. Use the [Quickstart](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/kubectl.html) for the steps.
+
+1. Prepare the Secrets file with the user credentials for `cluster1`. The users on both sites must have the same credentials.
+
+   You can reuse the `pxcsecret.yaml` secrets file or create a new one. Make sure that the passwords in this file match the passwords from the `cluster2-secrets` Secrets object. Check the [Export the database secrets](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/dr-primary.html#export-the-database-secrets) section to refresh your memory how to find the required Secrets object.
+
+   Edit the `pxcsecret.yaml` file and change the name of the cluster to `cluster1`.
+
+   ```
+   apiVersion: v1
+   kind: Secret
+   metadata:
+     name: cluster1-secrets  # The name of the cluster to-be-installed
+   type: Opaque
+   stringData:
+     monitor: <monitor-password>  # Decoded passwords here
+     operator: <operator-password>
+     proxyadmin: <proxyadmin-password>
+     replication: <replication-password>
+     root: <root-password>
+     xtrabackup: <xtrabackup-password>
+   ```
+
+1. Create the Secrets object:
+
+   ```
+   kubectl apply -f path/to/pxcsecret.yaml -n <namespace>
+   ```
+
+1. Install Percona XtraDB Cluster with the `cluster1` name and the default parameters:
+
+   ```
+   kubectl apply -f https://raw.githubusercontent.com/percona/percona-xtradb-cluster-operator/v1.20.0/deploy/cr.yaml -n <namespace>
+   ```
+
+1. Check the status of the cluster:
+
+   ```
+   kubectl get pxc -n <namespace>
+   ```
+
+   Expected output
+
+   ```
+   NAME       ENDPOINT                   STATUS   PXC   PROXYSQL   HAPROXY   AGE
+   cluster1   cluster1-haproxy.<namespace>   ready    3                3         3m
+   ```
+
+## Make a backup on the current primary site
+
+1. Make a backup on the current primary `cluster2`. See the [Create a backup from the primary site](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/dr-primary.html#create-a-backup-from-the-primary-site) section for the steps.
+
+   Expected output
+
+   ```
+   NAME      CLUSTER    STORAGE      DESTINATION                                               STATUS      COMPLETED   AGE
+   backup1   cluster2   s3-us-west   s3://mybucket/cluster2-2025-03-21-12:05:37-full   Succeeded   2m55s       6m6s
+   ```
+
+## Restore the backup on a new database cluster
+
+1. Restore the backup from `cluster2` on `cluster1`. Change the `deploy/backup/restore.yaml` file as follows:
+
+   - Change the `pxcCluster` name to `cluster1`. This is where you make the restore.
+   - Change the `backupSource.destination` to the location of the backup on the backup storage. Run the `kubectl get pxc-backup -n <namespace>` on `cluster2` (the current primary) to check the destination.
+
+   ```
+   apiVersion: pxc.percona.com/v1
+   kind: PerconaXtraDBClusterRestore
+   metadata:
+     name: restore1
+   spec:
+     pxcCluster: cluster1
+     backupSource:
+       destination: s3://mybucket/cluster2-2025-03-21-12:05:37-full
+       s3:
+         bucket: mybucket
+         credentialsSecret: my-cluster-name-backup-s3
+         region: us-west-2
+   ```
+
+1. Start the restore with the following command:
+
+   ```
+   kubectl apply -f deploy/backup/restore.yaml -n <namespace>
+   ```
+
+1. Check the status of the cluster:
+
+   ```
+   kubectl get pxc -n <namespace>
+   ```
+
+   The cluster should report the Ready status.
+
+## Promote the new database cluster as the primary
+
+The newly deployed site with `cluster1` is now the working copy of the current primary `cluster2`. It’s time to configure it back as the primary site.
+
+### Check the replica before you promote it
+
+Before you promote `cluster1`, confirm it applied everything `cluster2` sent it, and that the cluster itself is healthy.
+
+1. Check the replication status on `cluster1`:
+
+   ```
+   mysql> SHOW REPLICA STATUS\G
+   ```
+
+   Confirm `Executed_Gtid_Set` matches `Retrieved_Gtid_Set`. This shows `cluster1` already applied every event it retrieved from `cluster2`, with nothing left queued.
+
+1. Check the Galera status on every node of `cluster1`, not just one:
+
+   ```
+   mysql> SHOW STATUS LIKE 'wsrep_cluster_status';
+   mysql> SHOW STATUS LIKE 'wsrep_local_state_comment';
+   mysql> SHOW STATUS LIKE 'wsrep_ready';
+   mysql> SHOW VARIABLES LIKE 'read_only';
+   ```
+
+   Look for the following on every node:
+
+   - `wsrep_cluster_status = Primary`
+   - `wsrep_local_state_comment = Synced`
+   - `wsrep_ready = ON`
+   - `read_only = ON`
+
+   `read_only = ON` is expected here, since `cluster1` is still running as the replica.
+
+### Promote cluster1 to primary
+
+To do this, configure the replication channels on both sites. Refer to the [Configure replication between the sites](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/dr-replication.html) section for the steps.
+
+### Check that the promotion is successful
+
+Before using `cluster1` as the new primary, make sure its promotion was successful.
+
+1. Check the Galera status on every node of `cluster1`, not just one:
+
+   ```
+   mysql> SHOW STATUS LIKE 'wsrep_cluster_status';
+   mysql> SHOW STATUS LIKE 'wsrep_local_state_comment';
+   mysql> SHOW STATUS LIKE 'wsrep_ready';
+   mysql> SHOW VARIABLES LIKE 'read_only';
+   ```
+
+   Make sure every node reports the following:
+
+   - `wsrep_cluster_status = Primary`
+   - `wsrep_local_state_comment = Synced`
+   - `wsrep_ready = ON`
+   - `read_only = OFF`
+
+1. Confirm a write succeeds through the client-facing endpoint your application uses, not a direct connection to a single Pod:
+
+   ```
+   mysql> INSERT INTO <your_table> VALUES (...);
+   ```

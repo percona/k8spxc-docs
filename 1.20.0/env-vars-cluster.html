@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6811,9 +6811,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="define-environment-variables-for-cluster-components">Define environment variables for cluster components<a class="headerlink" href="#define-environment-variables-for-cluster-components" title="Permanent link">¶</a></h1>
+<h1 id="define-environment-variables-for-cluster-components">Define environment variables for cluster components<a data-markdown-ignore class="headerlink" href="#define-environment-variables-for-cluster-components" title="Permanent link">¶</a></h1>
 <p>Cluster component environment variables let you customize the behavior of Percona XtraDB Cluster, HAProxy, and ProxySQL. These variables are stored in Kubernetes Secrets and referenced in your Custom Resource configuration. Below you’ll find practical examples and steps for configuration.</p>
-<h2 id="configure-haproxy-environment-variables">Configure HAProxy environment variables<a class="headerlink" href="#configure-haproxy-environment-variables" title="Permanent link">¶</a></h2>
+<h2 id="configure-haproxy-environment-variables">Configure HAProxy environment variables<a data-markdown-ignore class="headerlink" href="#configure-haproxy-environment-variables" title="Permanent link">¶</a></h2>
 <p>The following environment variables are available for HAProxy:</p>
 <ul>
 <li>
@@ -6832,10 +6832,10 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p><code>HA_RLIMIT_NOFILE</code>: Sets the soft file descriptor limit in the entrypoint before HAProxy container starts. The default value is <code>1048576</code>. If the set value is invalid, the Operator falls back to the default one.</p>
 </li>
 </ul>
-<h3 id="encode-environment-variable-values">Encode environment variable values<a class="headerlink" href="#encode-environment-variable-values" title="Permanent link">¶</a></h3>
+<h3 id="encode-environment-variable-values">Encode environment variable values<a data-markdown-ignore class="headerlink" href="#encode-environment-variable-values" title="Permanent link">¶</a></h3>
 <p>All environment variable values must be base64-encoded in the Secret’s <code>data</code> section.</p>
 <p>To encode a value, run this command:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">On Linux</label><label for="__tabbed_1_2">On macOS</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_1_1">On Linux</label><label for="__tabbed_1_2">On macOS</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">"1000"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>--wrap<span class="o">=</span><span class="m">0</span>
@@ -6851,7 +6851,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">"MTAwMA=="</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>--decode
 <span class="m">1000</span>
 </code></pre></div>
-<h3 id="create-a-secret">Create a Secret<a class="headerlink" href="#create-a-secret" title="Permanent link">¶</a></h3>
+<h3 id="create-a-secret">Create a Secret<a data-markdown-ignore class="headerlink" href="#create-a-secret" title="Permanent link">¶</a></h3>
 <p>Create a Kubernetes Secret with your encoded environment variables. Here’s an example Secret manifest:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
@@ -6867,7 +6867,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p>Save this manifest to a file (for example, <code>deploy/my-env-secret.yaml</code>) and create the Secret:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>deploy/my-env-secret.yaml<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
 </code></pre></div>
-<h3 id="apply-the-configuration">Apply the configuration<a class="headerlink" href="#apply-the-configuration" title="Permanent link">¶</a></h3>
+<h3 id="apply-the-configuration">Apply the configuration<a data-markdown-ignore class="headerlink" href="#apply-the-configuration" title="Permanent link">¶</a></h3>
 <ol>
 <li>
 <p>Add the Secret name to your cluster configuration. Edit the <code>deploy/cr.yaml</code> file and add the <code>envVarsSecret</code> key to the <code>haproxy</code> section:</p>
@@ -6881,21 +6881,21 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </code></pre></div>
 </li>
 </ol>
-<h2 id="configure-alternative-memory-allocator">Configure alternative memory allocator<a class="headerlink" href="#configure-alternative-memory-allocator" title="Permanent link">¶</a></h2>
+<h2 id="configure-alternative-memory-allocator">Configure alternative memory allocator<a data-markdown-ignore class="headerlink" href="#configure-alternative-memory-allocator" title="Permanent link">¶</a></h2>
 <p>You can use an alternative memory allocator library for <code>mysqld</code> to optimize memory usage. This is often recommended when memory usage is higher than expected.</p>
 <p>The Percona XtraDB Cluster Pods include the <code>jemalloc</code> allocator. You can enable it with the <code>LD_PRELOAD</code> environment variable.</p>
 <p>Here’s how to do it:</p>
-<h3 id="encode-the-ld_preload-value">Encode the LD_PRELOAD value<a class="headerlink" href="#encode-the-ld_preload-value" title="Permanent link">¶</a></h3>
+<h3 id="encode-the-ld_preload-value">Encode the LD_PRELOAD value<a data-markdown-ignore class="headerlink" href="#encode-the-ld_preload-value" title="Permanent link">¶</a></h3>
 <p>The path to the <code>jemalloc</code> library depends on your MySQL version:</p>
 <ul>
 <li>For <strong>Percona XtraDB Cluster MySQL 8.4 and newer</strong>, use <code>/usr/lib64/libjemalloc.so.2</code></li>
 <li>For <strong>Percona XtraDB Cluster MySQL 8.0</strong>, use <code>/usr/lib64/libjemalloc.so.1</code></li>
 </ul>
 <p>Set the appropriate path as the value for the <code>LD_PRELOAD</code> environment variable. Encode it with base64 before including it in your Secret.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">8.4 and newer</label><label for="__tabbed_2_2">8.0</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_2_1">8.4 and newer</label><label for="__tabbed_2_2">8.0</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">On Linux</label><label for="__tabbed_3_2">On macOS</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_3_1">On Linux</label><label for="__tabbed_3_2">On macOS</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">"/usr/lib64/libjemalloc.so.2"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>--wrap<span class="o">=</span><span class="m">0</span>
@@ -6909,7 +6909,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </div>
 </div>
 <div class="tabbed-block">
-<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio"><input id="__tabbed_4_2" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="__tabbed_4_1">On Linux</label><label for="__tabbed_4_2">On macOS</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio"><input id="__tabbed_4_2" name="__tabbed_4" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_4_1">On Linux</label><label for="__tabbed_4_2">On macOS</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">"/usr/lib64/libjemalloc.so.1"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>--wrap<span class="o">=</span><span class="m">0</span>
@@ -6924,7 +6924,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </div>
 </div>
 </div>
-<h3 id="create-the-memory-allocator-secret">Create the memory allocator Secret<a class="headerlink" href="#create-the-memory-allocator-secret" title="Permanent link">¶</a></h3>
+<h3 id="create-the-memory-allocator-secret">Create the memory allocator Secret<a data-markdown-ignore class="headerlink" href="#create-the-memory-allocator-secret" title="Permanent link">¶</a></h3>
 <p>Create a Kubernetes Secret with the encoded value:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
@@ -6937,7 +6937,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p>Save this manifest to a file (for example, <code>deploy/my-new-env-var-secret.yaml</code>) and create the Secret:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>deploy/my-new-env-var-secret.yaml<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
 </code></pre></div>
-<h3 id="apply-the-memory-allocator-configuration">Apply the memory allocator configuration<a class="headerlink" href="#apply-the-memory-allocator-configuration" title="Permanent link">¶</a></h3>
+<h3 id="apply-the-memory-allocator-configuration">Apply the memory allocator configuration<a data-markdown-ignore class="headerlink" href="#apply-the-memory-allocator-configuration" title="Permanent link">¶</a></h3>
 <ol>
 <li>
 <p>Add the Secret to the <code>pxc</code> section in your <code>deploy/cr.yaml</code> file:</p>
@@ -7051,7 +7051,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

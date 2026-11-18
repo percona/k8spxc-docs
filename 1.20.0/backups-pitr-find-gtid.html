@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6568,13 +6568,13 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="find-a-gtid-for-point-in-time-recovery">Find a GTID for point-in-time recovery<a class="headerlink" href="#find-a-gtid-for-point-in-time-recovery" title="Permanent link">¶</a></h1>
+<h1 id="find-a-gtid-for-point-in-time-recovery">Find a GTID for point-in-time recovery<a data-markdown-ignore class="headerlink" href="#find-a-gtid-for-point-in-time-recovery" title="Permanent link">¶</a></h1>
 <p>A <a href="backups-pitr-restore.html#choose-a-recovery-target"><code>transaction</code>-type or <code>skip</code>-type restore</a> needs an exact GTID: the transaction to stop before, or the transaction to exclude. The Operator doesn’t currently filter or search binlogs for you — a Backup object’s status only exposes <code>status.latestRestorableTime</code>, not a list of GTIDs. To find the GTID you need, use one of the following, both built on functionality the Operator already installs or data it already writes.</p>
 <div class="admonition note">
 <p class="admonition-title">GTIDs on a Percona XtraDB Cluster node use the cluster state UUID</p>
 <p>On a Galera cluster, the GTID source UUID you see is the <strong>cluster state UUID</strong> (<code>SHOW STATUS LIKE 'wsrep_cluster_state_uuid'</code>), not <code>@@server_uuid</code>. GTID sequence numbers are the same on every node, but binlog file names and file boundaries are local to each node — the same GTID can sit in a different file depending on which node you query, and a lookup answer is only valid for the node you ran it on. After a restore, the cluster gets a new state UUID and GTID numbering restarts at <code>:1</code>.</p>
 </div>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">The binlogs are still on a live node</label><label for="__tabbed_1_2">The binlogs are only in backup storage</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_1_1">The binlogs are still on a live node</label><label for="__tabbed_1_2">The binlogs are only in backup storage</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>The Operator preinstalls the <a href="https://docs.percona.com/percona-server/8.4/binlogging-replication-improvements.html">binary log user-defined functions <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> (<code>binlog_utils_udf</code>) on every Percona XtraDB Cluster node, so you don’t need to install anything before querying for a GTID with SQL instead of reading raw binlog files. How much of it is ready to use depends on your Percona Server version:</p>
@@ -6721,7 +6721,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

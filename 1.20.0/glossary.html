@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -7049,67 +7049,67 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="glossary">Glossary<a class="headerlink" href="#glossary" title="Permanent link">¶</a></h1>
+<h1 id="glossary">Glossary<a data-markdown-ignore class="headerlink" href="#glossary" title="Permanent link">¶</a></h1>
 <p>This page explains the Kubernetes and Galera terms used in the Operator documentation. The examples use a cluster named <code>cluster1</code>.</p>
-<h2 id="arbitrator">Arbitrator (garbd)<a class="headerlink" href="#arbitrator" title="Permanent link">¶</a></h2>
+<h2 id="arbitrator">Arbitrator (garbd)<a data-markdown-ignore class="headerlink" href="#arbitrator" title="Permanent link">¶</a></h2>
 <p>The Galera Arbitrator daemon, <code>garbd</code>. A member of the Galera group that doesn’t run a database server. In the default backup method, the backup Job joins the cluster as an arbitrator to receive a copy of the data through <a href="#sst">SST</a>.</p>
 <p>See <a href="backups-methods.html">Backup methods</a>.</p>
-<h2 id="cluster">Cluster<a class="headerlink" href="#cluster" title="Permanent link">¶</a></h2>
+<h2 id="cluster">Cluster<a data-markdown-ignore class="headerlink" href="#cluster" title="Permanent link">¶</a></h2>
 <p>The word <em>cluster</em> has two meanings in these docs. A <em>Kubernetes cluster</em> is the set of machines that Kubernetes manages. A <em>Percona XtraDB Cluster</em> is the database cluster that one <a href="#custom-resource">Custom Resource</a> describes: its database nodes and its proxies. One Kubernetes cluster can run several of them. Pages that say “the cluster” mean the database cluster, unless they say “Kubernetes cluster”.</p>
 <p>See <a href="architecture.html">Design and architecture</a>.</p>
-<h2 id="custom-resource">Custom Resource (CR, cr.yaml)<a class="headerlink" href="#custom-resource" title="Permanent link">¶</a></h2>
+<h2 id="custom-resource">Custom Resource (CR, cr.yaml)<a data-markdown-ignore class="headerlink" href="#custom-resource" title="Permanent link">¶</a></h2>
 <p>The Kubernetes object that describes the cluster you want, for example <code>PerconaXtraDBCluster</code>. The Operator reads it and makes the cluster match. The CustomResourceDefinition (CRD) tells Kubernetes that this object type exists.</p>
 <p>The <code>deploy/cr.yaml</code> file in the Operator repository is the example manifest of this object. See <a href="architecture-responsibilities.html#change-the-cluster-through-the-custom-resource">Change the cluster through the Custom Resource</a>. </p>
 <p>For all options, see the <a href="operator.html">Custom Resource options reference</a>.</p>
-<h2 id="donor">Donor<a class="headerlink" href="#donor" title="Permanent link">¶</a></h2>
+<h2 id="donor">Donor<a data-markdown-ignore class="headerlink" href="#donor" title="Permanent link">¶</a></h2>
 <p>The database <a href="#node">node</a> that sends data to a node that joins or rejoins the cluster, through <a href="#ist">IST</a> or <a href="#sst">SST</a>. Galera chooses the donor.</p>
 <p>See <a href="failover-in-cluster.html#rejoining-the-cluster">In-cluster failover</a>.</p>
-<h2 id="finalizer">Finalizer<a class="headerlink" href="#finalizer" title="Permanent link">¶</a></h2>
+<h2 id="finalizer">Finalizer<a data-markdown-ignore class="headerlink" href="#finalizer" title="Permanent link">¶</a></h2>
 <p>A key in <code>metadata.finalizers</code> that makes Kubernetes wait for a cleanup step before it deletes an object. The Operator uses finalizers such as <code>percona.com/delete-pxc-pvc</code> to clean up volumes and certificates.</p>
 <p>See <a href="delete.html#clean-up-resources">Clean up resources</a>.</p>
-<h2 id="galera">Galera<a class="headerlink" href="#galera" title="Permanent link">¶</a></h2>
+<h2 id="galera">Galera<a data-markdown-ignore class="headerlink" href="#galera" title="Permanent link">¶</a></h2>
 <p>The replication library in Percona XtraDB Cluster. It replicates transactions to every node, keeps <a href="#quorum">quorum</a> and brings joining nodes up to date. The Operator doesn’t control it at runtime.</p>
 <p>See <a href="architecture-responsibilities.html#percona-xtradb-cluster-and-galera">Who owns what</a>.</p>
-<h2 id="gcache">gcache<a class="headerlink" href="#gcache" title="Permanent link">¶</a></h2>
+<h2 id="gcache">gcache<a data-markdown-ignore class="headerlink" href="#gcache" title="Permanent link">¶</a></h2>
 <p>The Galera write-set cache on each node. If the missing transactions are still in the <a href="#donor">donor’s</a> gcache, a joining node catches up with <a href="#ist">IST</a>. If not, it needs <a href="#sst">SST</a>.</p>
 <p>See <a href="failover-in-cluster.html#rejoining-the-cluster">In-cluster failover</a>.</p>
-<h2 id="headless-service">Headless Service<a class="headerlink" href="#headless-service" title="Permanent link">¶</a></h2>
+<h2 id="headless-service">Headless Service<a data-markdown-ignore class="headerlink" href="#headless-service" title="Permanent link">¶</a></h2>
 <p>A Kubernetes Service without a cluster IP. DNS returns the addresses of the Pods behind it. The database nodes and the proxies use headless Services such as <code>cluster1-pxc</code> to find each other.</p>
 <p>See <a href="services.html">Services and ports</a>.</p>
-<h2 id="ist">Incremental State Transfer (IST)<a class="headerlink" href="#ist" title="Permanent link">¶</a></h2>
+<h2 id="ist">Incremental State Transfer (IST)<a data-markdown-ignore class="headerlink" href="#ist" title="Permanent link">¶</a></h2>
 <p>A transfer of only the transactions a joining node missed, taken from the <a href="#donor">donor’s</a> <a href="#gcache">gcache</a>. Compare <a href="#sst">SST</a>.</p>
 <p>See <a href="failover-in-cluster.html#rejoining-the-cluster">In-cluster failover</a>.</p>
-<h2 id="lease">Lease<a class="headerlink" href="#lease" title="Permanent link">¶</a></h2>
+<h2 id="lease">Lease<a data-markdown-ignore class="headerlink" href="#lease" title="Permanent link">¶</a></h2>
 <p>A small Kubernetes object that works as a lock. The Operator uses a Lease so that only one backup runs at a time when <code>backup.allowParallel</code> is <code>false</code>.</p>
 <p>See <a href="objects-created.html">Objects the Operator creates</a>.</p>
-<h2 id="node">Node<a class="headerlink" href="#node" title="Permanent link">¶</a></h2>
+<h2 id="node">Node<a data-markdown-ignore class="headerlink" href="#node" title="Permanent link">¶</a></h2>
 <p>The word <em>node</em> has two meanings in these docs. A <em>Kubernetes node</em> is a machine, physical or virtual, where Pods run. A <em>database node</em> is one member of the Percona XtraDB Cluster: a <code>cluster1-pxc-N</code> Pod that runs <code>mysqld</code>. By default, the Operator requires each database Pod to run on a different Kubernetes node.</p>
 <p>See <a href="constraints.html">Control Pod scheduling</a>.</p>
-<h2 id="pvc">PersistentVolumeClaim (PVC)<a class="headerlink" href="#pvc" title="Permanent link">¶</a></h2>
+<h2 id="pvc">PersistentVolumeClaim (PVC)<a data-markdown-ignore class="headerlink" href="#pvc" title="Permanent link">¶</a></h2>
 <p>A request for storage. Each database Pod has a PVC that holds its data. The StorageClass and the Container Storage Interface (CSI) driver provide the actual volume.</p>
 <p>See <a href="scaling-storage-resize.html">Resize storage</a>.</p>
-<h2 id="pdb">PodDisruptionBudget (PDB)<a class="headerlink" href="#pdb" title="Permanent link">¶</a></h2>
+<h2 id="pdb">PodDisruptionBudget (PDB)<a data-markdown-ignore class="headerlink" href="#pdb" title="Permanent link">¶</a></h2>
 <p>A Kubernetes object that limits how many Pods of a component can be unavailable during voluntary disruptions such as a node drain. The Operator creates one for each component.</p>
 <p>See <a href="architecture-probes.html">Health checks and probes</a>.</p>
-<h2 id="primary-component">Primary component<a class="headerlink" href="#primary-component" title="Permanent link">¶</a></h2>
+<h2 id="primary-component">Primary component<a data-markdown-ignore class="headerlink" href="#primary-component" title="Permanent link">¶</a></h2>
 <p>The group of nodes that has <a href="#quorum">quorum</a> and serves queries. A node outside it reports <code>non-Primary</code> and rejects queries.</p>
 <p>See <a href="architecture-probes.html">Health checks and probes</a>.</p>
-<h2 id="quorum">Quorum<a class="headerlink" href="#quorum" title="Permanent link">¶</a></h2>
+<h2 id="quorum">Quorum<a data-markdown-ignore class="headerlink" href="#quorum" title="Permanent link">¶</a></h2>
 <p>A majority of the nodes. A cluster of three nodes keeps quorum when one node is lost. It stops serving when it loses a second one.</p>
 <p>See <a href="architecture.html">Design and architecture</a>.</p>
-<h2 id="reconcile">Reconcile<a class="headerlink" href="#reconcile" title="Permanent link">¶</a></h2>
+<h2 id="reconcile">Reconcile<a data-markdown-ignore class="headerlink" href="#reconcile" title="Permanent link">¶</a></h2>
 <p>One pass of the Operator loop: it compares the Custom Resource with what exists in Kubernetes and corrects the difference. The Operator repeats it about every five seconds.</p>
 <p>See <a href="architecture-reconciliation.html#what-a-reconcile-is">How the Operator reacts to changes</a>.</p>
-<h2 id="seqno">seqno<a class="headerlink" href="#seqno" title="Permanent link">¶</a></h2>
+<h2 id="seqno">seqno<a data-markdown-ignore class="headerlink" href="#seqno" title="Permanent link">¶</a></h2>
 <p>The sequence number of the last transaction a node committed. After a full cluster crash, the Operator starts recovery from the node with the highest <code>seqno</code>.</p>
 <p>See <a href="recovery.html">Crash recovery</a>.</p>
-<h2 id="smart-update">Smart Update<a class="headerlink" href="#smart-update" title="Permanent link">¶</a></h2>
+<h2 id="smart-update">Smart Update<a data-markdown-ignore class="headerlink" href="#smart-update" title="Permanent link">¶</a></h2>
 <p>The Operator update strategy that restarts the database nodes one at a time and keeps quorum. It doesn’t start while a backup is running.</p>
 <p>See <a href="architecture-reconciliation.html#how-smart-update-works">How Smart Update works</a>.</p>
-<h2 id="sst">State Snapshot Transfer (SST)<a class="headerlink" href="#sst" title="Permanent link">¶</a></h2>
+<h2 id="sst">State Snapshot Transfer (SST)<a data-markdown-ignore class="headerlink" href="#sst" title="Permanent link">¶</a></h2>
 <p>A full copy of the data from a <a href="#donor">donor</a> to a joining node, made with Percona XtraBackup. Compare <a href="#ist">IST</a>.</p>
 <p>See <a href="failover-in-cluster.html#rejoining-the-cluster">In-cluster failover</a>.</p>
-<h2 id="statefulset">StatefulSet<a class="headerlink" href="#statefulset" title="Permanent link">¶</a></h2>
+<h2 id="statefulset">StatefulSet<a data-markdown-ignore class="headerlink" href="#statefulset" title="Permanent link">¶</a></h2>
 <p>A Kubernetes workload that gives each Pod a stable name and its own volume, for example <code>cluster1-pxc-0</code>. The Operator runs the database nodes and the proxies as StatefulSets.</p>
 <p>See <a href="objects-created.html">Objects the Operator creates</a>.</p>
 <hr>
@@ -7212,7 +7212,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

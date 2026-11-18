@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6877,7 +6877,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="configuring-load-balancing-with-haproxy">Configuring Load Balancing with HAProxy<a class="headerlink" href="#configuring-load-balancing-with-haproxy" title="Permanent link">¶</a></h1>
+<h1 id="configuring-load-balancing-with-haproxy">Configuring Load Balancing with HAProxy<a data-markdown-ignore class="headerlink" href="#configuring-load-balancing-with-haproxy" title="Permanent link">¶</a></h1>
 <p>This page describes how to configure and customize HAProxy for your Percona XtraDB Cluster. For information about choosing between HAProxy and ProxySQL, see <a href="load-balancing.html">Configure load balancing</a>.</p>
 <p>Use the following command to enable HAProxy:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>pxc<span class="w"> </span>cluster1<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">'{</span>
@@ -6893,9 +6893,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p class="admonition-title">Warning</p>
 <p>Switching from ProxySQL to HAProxy will cause the downtime because the Operator needs to reconfigure the proxy Pods.</p>
 </div>
-<h2 id="haproxy-services">HAProxy services<a class="headerlink" href="#haproxy-services" title="Permanent link">¶</a></h2>
+<h2 id="haproxy-services">HAProxy services<a data-markdown-ignore class="headerlink" href="#haproxy-services" title="Permanent link">¶</a></h2>
 <p>The Operator creates two services for HAProxy:</p>
-<h3 id="cluster1-haproxy-service"><code>cluster1-haproxy</code> service<a class="headerlink" href="#cluster1-haproxy-service" title="Permanent link">¶</a></h3>
+<h3 id="cluster1-haproxy-service"><code>cluster1-haproxy</code> service<a data-markdown-ignore class="headerlink" href="#cluster1-haproxy-service" title="Permanent link">¶</a></h3>
 <p>The <code>cluster1-haproxy</code> service listens on the following ports:</p>
 <ul>
 <li>
@@ -6922,14 +6922,14 @@ can be used for both read and write load, or it can also be used just for
 write load (single writer mode) in setups with split write and read loads.</p>
 <p>The <a href="operator.html#haproxyexposeprimaryenabled">haproxy.exposePrimary.enabled</a>
 Custom Resource option enables or disables the <code>cluster1-haproxy</code> service.</p>
-<h3 id="cluster1-haproxy-replicas-service"><code>cluster1-haproxy-replicas</code> service<a class="headerlink" href="#cluster1-haproxy-replicas-service" title="Permanent link">¶</a></h3>
+<h3 id="cluster1-haproxy-replicas-service"><code>cluster1-haproxy-replicas</code> service<a data-markdown-ignore class="headerlink" href="#cluster1-haproxy-replicas-service" title="Permanent link">¶</a></h3>
 <p>The <code>cluster1-haproxy-replicas</code> service listens on port 3306 (MySQL).</p>
 <p>This service selects Percona XtraDB Cluster members to serve queries following
 the Round Robin load balancing algorithm.</p>
 <p><strong>Don’t use it for write requests</strong>.</p>
 <p>The <a href="operator.html#haproxyexposereplicasenabled">haproxy.exposeReplicas.enabled</a>
 Custom Resource option enables or disables <code>cluster1-haproxy-replicas</code> service (on by default).</p>
-<h3 id="expose-haproxy-as-a-headless-service">Expose HAProxy as a headless service<a class="headerlink" href="#expose-haproxy-as-a-headless-service" title="Permanent link">¶</a></h3>
+<h3 id="expose-haproxy-as-a-headless-service">Expose HAProxy as a headless service<a data-markdown-ignore class="headerlink" href="#expose-haproxy-as-a-headless-service" title="Permanent link">¶</a></h3>
 <p>You may want to configure the HAProxy service as a <a href="https://kubernetes.io/docs/concepts/services-networking/service/#headless-services">headless Service <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>. For example, if you have applications that need direct DNS access to individual HAProxy pods, such as when running in a multi-tenant setup or when handling advanced networking scenarios.</p>
 <p>To enable HAProxy as a headless service, add the <code>percona.com/headless-service: true</code> <a href="annotations.html">annotation</a> to the following options in the Custom Resource:</p>
 <ul>
@@ -6951,13 +6951,13 @@ Custom Resource option enables or disables <code>cluster1-haproxy-replicas</code
 </li>
 </ul>
 <p>This annotation works only at service creation time and can’t be added later.</p>
-<h3 id="upgrade-behavior">Upgrade behavior<a class="headerlink" href="#upgrade-behavior" title="Permanent link">¶</a></h3>
+<h3 id="upgrade-behavior">Upgrade behavior<a data-markdown-ignore class="headerlink" href="#upgrade-behavior" title="Permanent link">¶</a></h3>
 <p>When the cluster with HAProxy is upgraded, the following steps
 take place. First, reader members are upgraded one by one: the Operator waits
 until the upgraded Percona XtraDB Cluster member becomes synced, and then
 proceeds to upgrade the next member. When the upgrade is finished for all
 the readers, then the writer Percona XtraDB Cluster member is finally upgraded.</p>
-<h2 id="exposing-haproxy">Exposing HAProxy<a class="headerlink" href="#exposing-haproxy" title="Permanent link">¶</a></h2>
+<h2 id="exposing-haproxy">Exposing HAProxy<a data-markdown-ignore class="headerlink" href="#exposing-haproxy" title="Permanent link">¶</a></h2>
 <p>You can expose HAProxy, so that clients can connect to your database cluster from the outside. To do so, you need to set the service type <code>LoadBalancer</code> for the <code>haproxy-primary</code> service. </p>
 <p>By default, the HAProxy is available for all clients. If you need to restrict the client IP addresses from which the load balancer should be reachable, list these IP addresses in the <code>loadBalancerSourceRanges</code> option. </p>
 <p>Edit the <code>deploy/cr.yaml</code> Custom Resource manifest and specify the following configuration:</p>
@@ -6976,7 +6976,7 @@ the readers, then the writer Percona XtraDB Cluster member is finally upgraded.<
 <span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LoadBalancer</span>
 </code></pre></div>
-<h2 id="passing-custom-configuration-options-to-haproxy">Passing custom configuration options to HAProxy<a class="headerlink" href="#passing-custom-configuration-options-to-haproxy" title="Permanent link">¶</a></h2>
+<h2 id="passing-custom-configuration-options-to-haproxy">Passing custom configuration options to HAProxy<a data-markdown-ignore class="headerlink" href="#passing-custom-configuration-options-to-haproxy" title="Permanent link">¶</a></h2>
 <p>You can pass custom configuration to HAProxy in one of the following ways:</p>
 <ul>
 <li>edit the <code>deploy/cr.yaml</code> file,</li>
@@ -6994,7 +6994,7 @@ it would be wise to check the
 provided by the Operator and make sure that your custom config is still
 compatible with the new variant.</p>
 </div>
-<h3 id="edit-the-deploycryaml-file">Edit the <code>deploy/cr.yaml</code> file<a class="headerlink" href="#edit-the-deploycryaml-file" title="Permanent link">¶</a></h3>
+<h3 id="edit-the-deploycryaml-file">Edit the <code>deploy/cr.yaml</code> file<a data-markdown-ignore class="headerlink" href="#edit-the-deploycryaml-file" title="Permanent link">¶</a></h3>
 <p>You can add options from the <a href="https://www.haproxy.com/blog/the-four-essential-sections-of-an-haproxy-configuration/">haproxy.cfg <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>
 configuration file by editing  <code>haproxy.configuration</code> key in the
 <code>deploy/cr.yaml</code> file. Here is an example:</p>
@@ -7045,7 +7045,7 @@ configuration file by editing  <code>haproxy.configuration</code> key in the
 <span class="w">        </span><span class="no">mode http</span>
 <span class="w">        </span><span class="no">http-request use-service prometheus-exporter if { path /metrics }</span>
 </code></pre></div>
-<h3 id="use-a-configmap">Use a ConfigMap<a class="headerlink" href="#use-a-configmap" title="Permanent link">¶</a></h3>
+<h3 id="use-a-configmap">Use a ConfigMap<a data-markdown-ignore class="headerlink" href="#use-a-configmap" title="Permanent link">¶</a></h3>
 <p>You can use a configmap and the cluster restart to reset configuration
 options. A configmap allows Kubernetes to pass or update configuration
 data inside a containerized application.</p>
@@ -7108,7 +7108,7 @@ the <code>haproxy.cfg</code> file as the data source:</p>
 <p>To view the created configmap, use the following command:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>configmaps<span class="w"> </span>cluster1-haproxy
 </code></pre></div>
-<h3 id="use-a-secret-object">Use a Secret Object<a class="headerlink" href="#use-a-secret-object" title="Permanent link">¶</a></h3>
+<h3 id="use-a-secret-object">Use a Secret Object<a data-markdown-ignore class="headerlink" href="#use-a-secret-object" title="Permanent link">¶</a></h3>
 <p>The Operator can also store configuration options in <a href="https://kubernetes.io/docs/concepts/configuration/secret/">Kubernetes Secrets <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>.
 This can be useful if you need additional protection for some sensitive data.</p>
 <p>You should create a Secret object with a specific name, composed of your cluster
@@ -7163,7 +7163,7 @@ frontend stats
 </code></pre></div>
 <p>You can get a Base64 encoded string from your options via the command line as
 follows:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">in Linux</label><label for="__tabbed_1_2">in macOS</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_1_1">in Linux</label><label for="__tabbed_1_2">in macOS</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>cat<span class="w"> </span>haproxy.cfg<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>--wrap<span class="o">=</span><span class="m">0</span>
@@ -7214,7 +7214,7 @@ create a <code>deploy/my-haproxy-secret.yaml</code> file with the following cont
 <p>Do not forget to restart Percona XtraDB Cluster to ensure the
 cluster has updated the configuration.</p>
 </div>
-<h2 id="enabling-the-proxy-protocol">Enabling the Proxy protocol<a class="headerlink" href="#enabling-the-proxy-protocol" title="Permanent link">¶</a></h2>
+<h2 id="enabling-the-proxy-protocol">Enabling the Proxy protocol<a data-markdown-ignore class="headerlink" href="#enabling-the-proxy-protocol" title="Permanent link">¶</a></h2>
 <p>The Proxy protocol <a href="https://docs.percona.com/percona-server/latest/proxy-protocol-support.html">allows <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>
 HAProxy to provide a real client address to Percona XtraDB Cluster.</p>
 <div class="admonition note">
@@ -7337,7 +7337,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

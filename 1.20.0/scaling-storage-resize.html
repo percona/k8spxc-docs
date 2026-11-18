@@ -25,7 +25,7 @@ About scaling and storage — Storage.">
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -140,7 +140,7 @@ About scaling and storage — Storage.">
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6735,7 +6735,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="resize-storage">Resize storage<a class="headerlink" href="#resize-storage" title="Permanent link">¶</a></h1>
+<h1 id="resize-storage">Resize storage<a data-markdown-ignore class="headerlink" href="#resize-storage" title="Permanent link">¶</a></h1>
 <p>Each Percona XtraDB Cluster node stores data in a PVC defined in <code>pxc.volumeSpec</code>. For
 background on how Kubernetes storage works and what you can and cannot resize, see
 <a href="scaling-about.html#storage">About scaling and storage — Storage</a>.</p>
@@ -6774,7 +6774,7 @@ supports volume expansion, run:</p>
 </details>
 <p>Find exact details about PVCs and the supported volume types in
 <a href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/#expanding-persistent-volumes-claims">Kubernetes documentation <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>.</p>
-<h2 id="automatic-storage-resizing">Automatic storage resizing<a class="headerlink" href="#automatic-storage-resizing" title="Permanent link">¶</a></h2>
+<h2 id="automatic-storage-resizing">Automatic storage resizing<a data-markdown-ignore class="headerlink" href="#automatic-storage-resizing" title="Permanent link">¶</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Version added: <a href="ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.20.0.html">1.20.0</a></p>
 </div>
@@ -6851,7 +6851,7 @@ follows:</p>
 <p>When storage reaches the limit, the Operator stops resizing and logs the event. Clean up
 the data or set a new limit based on your organization’s policies and requirements. For
 help with common issues, see <a href="debug-storage.html">Troubleshoot storage resizing</a>.</p>
-<h2 id="storage-resizing-with-volume-expansion-capability">Storage resizing with Volume Expansion capability<a class="headerlink" href="#storage-resizing-with-volume-expansion-capability" title="Permanent link">¶</a></h2>
+<h2 id="storage-resizing-with-volume-expansion-capability">Storage resizing with Volume Expansion capability<a data-markdown-ignore class="headerlink" href="#storage-resizing-with-volume-expansion-capability" title="Permanent link">¶</a></h2>
 <p>Certain volume types support PVC expansion. Run the following command to check if your
 storage supports the expansion capability:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>sc<span class="w"> </span>&lt;storage<span class="w"> </span>class<span class="w"> </span>name&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>AllowVolumeExpansion
@@ -6888,7 +6888,7 @@ operation is running. </p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pxc<span class="w"> </span>cluster1<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.metadata.annotations}'</span>
 </code></pre></div>
 <p>After the resize finishes, the Operator deletes this annotation.</p>
-<h4 id="if-storage-scaling-cannot-complete">If storage scaling cannot complete<a class="headerlink" href="#if-storage-scaling-cannot-complete" title="Permanent link">¶</a></h4>
+<h4 id="if-storage-scaling-cannot-complete">If storage scaling cannot complete<a data-markdown-ignore class="headerlink" href="#if-storage-scaling-cannot-complete" title="Permanent link">¶</a></h4>
 <p>Sometimes resizing storage doesn’t finish as expected. Here’s what the Operator does in
 each case:</p>
 <ul>
@@ -6910,7 +6910,7 @@ largest current PVC size:</p>
 <span class="w">          </span><span class="nt">requests</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6G</span>
 </code></pre></div>
-<h2 id="manual-resizing-without-volume-expansion-capability">Manual resizing without Volume Expansion capability<a class="headerlink" href="#manual-resizing-without-volume-expansion-capability" title="Permanent link">¶</a></h2>
+<h2 id="manual-resizing-without-volume-expansion-capability">Manual resizing without Volume Expansion capability<a data-markdown-ignore class="headerlink" href="#manual-resizing-without-volume-expansion-capability" title="Permanent link">¶</a></h2>
 <p>Use manual resizing when:</p>
 <ul>
 <li>your version of the Operator is older than 1.14.0,</li>
@@ -6988,7 +6988,7 @@ kubectl<span class="w"> </span>delete<span class="w"> </span>pod<span class="w">
 the <code>pvc-resize-in-progress</code> annotation to the <code>PerconaXtraDBCluster</code> Custom Resource. The
 annotation contains the timestamp of the resize start and indicates that the resize
 operation is running. After the resize finishes, the Operator deletes this annotation.</p>
-<h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
+<h2 id="see-also">See also<a data-markdown-ignore class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="scaling-about.html">About scaling and storage</a></li>
 <li><a href="scaling.html">Horizontal and vertical scaling</a></li>
@@ -7094,7 +7094,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

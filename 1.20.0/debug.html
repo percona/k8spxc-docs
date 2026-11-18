@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6775,7 +6775,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="initial-troubleshooting">Initial troubleshooting<a class="headerlink" href="#initial-troubleshooting" title="Permanent link">¶</a></h1>
+<h1 id="initial-troubleshooting">Initial troubleshooting<a data-markdown-ignore class="headerlink" href="#initial-troubleshooting" title="Permanent link">¶</a></h1>
 <p>Percona Operator for MySQL uses <a href="https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/">Custom Resources <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> to manage options for the various components of the cluster.</p>
 <ul>
 <li>
@@ -6785,7 +6785,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p><code>PerconaXtraDBClusterBackup</code> and <code>PerconaXtraDBClusterRestore</code> Custom Resources contain options for Percona XtraBackup used to backup Percona XtraDB Cluster and to restore it from backups (<code>pxc-backup</code> and <code>pxc-restore</code> shortnames are available for them).</p>
 </li>
 </ul>
-<h2 id="which-layer-is-it">Which layer is it?<a class="headerlink" href="#which-layer-is-it" title="Permanent link">¶</a></h2>
+<h2 id="which-layer-is-it">Which layer is it?<a data-markdown-ignore class="headerlink" href="#which-layer-is-it" title="Permanent link">¶</a></h2>
 <p>Problems can come from four layers: your configuration, the Operator, Kubernetes, or Percona XtraDB Cluster itself. See <a href="architecture-responsibilities.html">Who owns what</a> for what each layer does.</p>
 <p>Check these sources in order. Each one narrows down the layer.</p>
 <ol>
@@ -6794,9 +6794,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><strong>Operator logs.</strong> <code>kubectl logs deployment/percona-xtradb-cluster-operator</code> shows what the Operator is doing or waiting for: a stuck rolling restart, a skipped backup, broken replication. Most Operator problems appear only here.</li>
 <li><strong>Pod and container logs.</strong> <code>kubectl logs cluster1-pxc-0 -c pxc</code> shows Galera and MySQL problems: SST failures, quorum loss, <code>mysqld</code> start failures. For backup and restore problems, read the logs of the Job. See <a href="debug-logs.html">Check the logs</a>.</li>
 </ol>
-<h2 id="where-to-look-first">Where to look first<a class="headerlink" href="#where-to-look-first" title="Permanent link">¶</a></h2>
+<h2 id="where-to-look-first">Where to look first<a data-markdown-ignore class="headerlink" href="#where-to-look-first" title="Permanent link">¶</a></h2>
 <p>Find the symptom, check the place named in the second column, and follow the link for the fix. The same table is in <a href="architecture-responsibilities.html#who-owns-this-failure">Who owns what</a>.</p>
-<h3 id="cluster-and-pods">Cluster and Pods<a class="headerlink" href="#cluster-and-pods" title="Permanent link">¶</a></h3>
+<h3 id="cluster-and-pods">Cluster and Pods<a data-markdown-ignore class="headerlink" href="#cluster-and-pods" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
@@ -6851,7 +6851,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
-<h3 id="backups-and-restores">Backups and restores<a class="headerlink" href="#backups-and-restores" title="Permanent link">¶</a></h3>
+<h3 id="backups-and-restores">Backups and restores<a data-markdown-ignore class="headerlink" href="#backups-and-restores" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
@@ -6900,7 +6900,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
-<h3 id="storage-replication-and-tls">Storage, replication and TLS<a class="headerlink" href="#storage-replication-and-tls" title="Permanent link">¶</a></h3>
+<h3 id="storage-replication-and-tls">Storage, replication and TLS<a data-markdown-ignore class="headerlink" href="#storage-replication-and-tls" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
@@ -6931,7 +6931,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
-<h2 id="check-the-custom-resource">Check the Custom Resource<a class="headerlink" href="#check-the-custom-resource" title="Permanent link">¶</a></h2>
+<h2 id="check-the-custom-resource">Check the Custom Resource<a data-markdown-ignore class="headerlink" href="#check-the-custom-resource" title="Permanent link">¶</a></h2>
 <p>The first thing you can check for the Custom Resource is to query it with <code>kubectl get</code> command:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pxc
 </code></pre></div>
@@ -6955,7 +6955,7 @@ perconaxtradbclusters             pxc,pxcs                   pxc.percona.com/v1 
 </code></pre></div>
 </details>
 </div>
-<h2 id="check-the-pods">Check the Pods<a class="headerlink" href="#check-the-pods" title="Permanent link">¶</a></h2>
+<h2 id="check-the-pods">Check the Pods<a data-markdown-ignore class="headerlink" href="#check-the-pods" title="Permanent link">¶</a></h2>
 <p>If Custom Resource is not getting <code>Ready</code> status, it makes sense to check
 individual Pods. You can do it as follows:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods
@@ -7130,7 +7130,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

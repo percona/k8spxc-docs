@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6757,7 +6757,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="restore-from-a-backup-to-a-new-kubernetes-based-environment">Restore from a backup to a new Kubernetes-based environment<a class="headerlink" href="#restore-from-a-backup-to-a-new-kubernetes-based-environment" title="Permanent link">¶</a></h1>
+<h1 id="restore-from-a-backup-to-a-new-kubernetes-based-environment">Restore from a backup to a new Kubernetes-based environment<a data-markdown-ignore class="headerlink" href="#restore-from-a-backup-to-a-new-kubernetes-based-environment" title="Permanent link">¶</a></h1>
 <p>This page covers restoring a backup to a new cluster on a <strong>different</strong> Kubernetes cluster or environment. For example, if you migrate to another cloud provider or region. For the other restore paths, see <a href="backups-restore.html#restore-scenarios">Restore scenarios</a>.</p>
 <p>Because PVCs are namespace-specific Kubernetes resources tied to a specific Kubernetes cluster, restoring to a different Kubernetes cluster only works from backups stored in cloud storage, such as S3 or Azure. See <a href="backups-restore.html#restore-limitations">Restore limitations</a>. </p>
 <div class="admonition admonition">
@@ -6770,7 +6770,7 @@ Find the name of the required Secrets object in the
 <p>This differs for a point-in-time restore — see <a href="backups-restore.html#restore-limitations">Restore limitations</a>.</p>
 </div>
 <p>To restore from a backup, you create a <code>PerconaXtraDBClusterRestore</code> object using a restore configuration file. The example of such file is <a href="https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.20.0/deploy/backup/restore.yaml">deploy/backup/restore.yaml</a>. You can check available options in the <a href="restore-cr.html">restore options reference</a>.</p>
-<h2 id="before-you-start">Before you start<a class="headerlink" href="#before-you-start" title="Permanent link">¶</a></h2>
+<h2 id="before-you-start">Before you start<a data-markdown-ignore class="headerlink" href="#before-you-start" title="Permanent link">¶</a></h2>
 <ol>
 <li>Make sure that the source cluster is running.</li>
 <li>
@@ -6798,10 +6798,10 @@ Find the name of the required Secrets object in the
 </code></pre></div>
 </li>
 </ol>
-<h2 id="restore-from-a-full-backup">Restore from a full backup<a class="headerlink" href="#restore-from-a-full-backup" title="Permanent link">¶</a></h2>
+<h2 id="restore-from-a-full-backup">Restore from a full backup<a data-markdown-ignore class="headerlink" href="#restore-from-a-full-backup" title="Permanent link">¶</a></h2>
 <p>To restore from a backup Percona XtraDB Cluster must know where to take the backup from and have access to that storage. See <a href="backups-restore.html#choose-backupname-or-backupsource">Choose backupName or backupSource</a> for the general rule. A new cluster has no Backup object, so the procedures in this document use <code>backupSource</code>.</p>
 <p>You can define the backup storage in two ways: within the restore object configuration or pre-configure it within the target cluster’s Custom Resource manifest.</p>
-<h3 id="approach-1-define-storage-configuration-in-the-restore-object">Approach 1: Define storage configuration in the Restore object<a class="headerlink" href="#approach-1-define-storage-configuration-in-the-restore-object" title="Permanent link">¶</a></h3>
+<h3 id="approach-1-define-storage-configuration-in-the-restore-object">Approach 1: Define storage configuration in the Restore object<a data-markdown-ignore class="headerlink" href="#approach-1-define-storage-configuration-in-the-restore-object" title="Permanent link">¶</a></h3>
 <p>If you haven’t defined storage in the target cluster’s <code>cr.yaml</code> file, you can configure it directly in the restore object.</p>
 <ol>
 <li>
@@ -6812,7 +6812,7 @@ Find the name of the required Secrets object in the
 </li>
 <li>
 <p>configure the <code>spec.backupSource</code> subsection to point to the cloud storage where the backup is stored.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">S3-compatible storage</label><label for="__tabbed_1_2">Azure Blob storage</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_1_1">S3-compatible storage</label><label for="__tabbed_1_2">Azure Blob storage</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>The <code>spec.backupSource</code> subsection should include:</p>
@@ -6865,7 +6865,7 @@ Find the name of the required Secrets object in the
 </code></pre></div>
 </li>
 </ol>
-<h3 id="approach-2-storage-is-configured-on-the-target-cluster">Approach 2: Storage is configured on the target cluster<a class="headerlink" href="#approach-2-storage-is-configured-on-the-target-cluster" title="Permanent link">¶</a></h3>
+<h3 id="approach-2-storage-is-configured-on-the-target-cluster">Approach 2: Storage is configured on the target cluster<a data-markdown-ignore class="headerlink" href="#approach-2-storage-is-configured-on-the-target-cluster" title="Permanent link">¶</a></h3>
 <p>You can <a href="backups-storage.html">already define</a> the storage where the backup is stored in the <code>backup.storages</code> subsection of your target cluster’s <code>deploy/cr.yaml</code> file. In this case, reference it by name within the restore configuration.</p>
 <ol>
 <li>
@@ -6880,7 +6880,7 @@ Find the name of the required Secrets object in the
 <li>
 <p>configure the <code>spec.backupSource</code> subsection with the backup destination</p>
 <p>Here are example configurations:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">S3-compatible storage</label><label for="__tabbed_2_2">Azure Blob storage</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_2_1">S3-compatible storage</label><label for="__tabbed_2_2">Azure Blob storage</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
@@ -6909,7 +6909,7 @@ Find the name of the required Secrets object in the
 </code></pre></div>
 </li>
 </ol>
-<h3 id="verify-the-restore">Verify the restore<a class="headerlink" href="#verify-the-restore" title="Permanent link">¶</a></h3>
+<h3 id="verify-the-restore">Verify the restore<a data-markdown-ignore class="headerlink" href="#verify-the-restore" title="Permanent link">¶</a></h3>
 <ol>
 <li>
 <p>Confirm the Restore object reports <code>Succeeded</code>:</p>
@@ -6925,7 +6925,7 @@ Find the name of the required Secrets object in the
 <p>Spot-check the data you expected the backup to contain, then configure the main storage within the target cluster’s <code>cr.yaml</code> so you can make subsequent backups from the new cluster.</p>
 </li>
 </ol>
-<h2 id="restore-the-cluster-with-point-in-time-recovery">Restore the cluster with point-in-time recovery<a class="headerlink" href="#restore-the-cluster-with-point-in-time-recovery" title="Permanent link">¶</a></h2>
+<h2 id="restore-the-cluster-with-point-in-time-recovery">Restore the cluster with point-in-time recovery<a data-markdown-ignore class="headerlink" href="#restore-the-cluster-with-point-in-time-recovery" title="Permanent link">¶</a></h2>
 <p>See <a href="backups-pitr-restore.html">Restore with point-in-time recovery</a>. The storage requirements on this page still apply — PITR to a different Kubernetes cluster needs the binlogs in cloud storage, the same as the full backup.</p>
 <hr>
 <div class="md-source-file">
@@ -7027,7 +7027,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

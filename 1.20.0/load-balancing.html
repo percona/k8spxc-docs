@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6699,11 +6699,11 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="configure-load-balancing">Configure load balancing<a class="headerlink" href="#configure-load-balancing" title="Permanent link">¶</a></h1>
+<h1 id="configure-load-balancing">Configure load balancing<a data-markdown-ignore class="headerlink" href="#configure-load-balancing" title="Permanent link">¶</a></h1>
 <p>Load balancing is distributing database connections and queries across multiple cluster nodes. This is crucial for ensuring high availability, optimal performance, and seamless scaling by preventing any single node from becoming a bottleneck or point of failure. Load balancing guarantees continued access to the database during node failures and maximizes the use of the cluster’s combined resources.</p>
 <p>You can use either <a href="https://haproxy.org">HAProxy <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> or <a href="https://proxysql.com/">ProxySQL <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> for load balancing and proxy services in Percona Operator for MySQL. This guide helps you understand the differences between these proxies and choose the right one for your deployment.</p>
 <p>You can control which proxy to use by enabling or disabling the <code>haproxy.enabled</code> and <code>proxysql.enabled</code> options in the <code>deploy/cr.yaml</code> configuration file.</p>
-<h2 id="haproxy">HAProxy<a class="headerlink" href="#haproxy" title="Permanent link">¶</a></h2>
+<h2 id="haproxy">HAProxy<a data-markdown-ignore class="headerlink" href="#haproxy" title="Permanent link">¶</a></h2>
 <p>HAProxy serves as a TCP-level load balancer in Percona Operator for MySQL. 
 It sits in front of your Percona XtraDB Cluster, accepts incoming MySQL connections and distributes them evenly across available cluster nodes.</p>
 <p>HAProxy is lightweight and efficient and introduces very little overhead. It has a minimal and straightforwatd configuration which makes it fast and stable.</p>
@@ -6711,7 +6711,7 @@ It sits in front of your Percona XtraDB Cluster, accepts incoming MySQL connecti
 All traffic is routed based only on network and health status.</p>
 <p>You can configure HAProxy to route write requests to the primary node and read requests - to the replica nodes. But you must also adjust your client applications to send read and read/write requests to different HAProxy ports.</p>
 <p>The failover of cluster nodes is handled by the Operator. When a node fails, the Operator detects it and removes it from the HAProxy backend rotation.</p>
-<h2 id="proxysql">ProxySQL<a class="headerlink" href="#proxysql" title="Permanent link">¶</a></h2>
+<h2 id="proxysql">ProxySQL<a data-markdown-ignore class="headerlink" href="#proxysql" title="Permanent link">¶</a></h2>
 <p>ProxySQL is an advanced, SQL-aware proxy included in Percona Operator for MySQL. It sits between applications and the database, providing more intelligent routing and management of queries.</p>
 <p>ProxySQL examines each incoming SQL query and determines whether it is a read (e.g., SELECT) or a write (INSERT, UPDATE, DELETE, or SELECT FOR UPDATE). Then it routes queries as follows, achieving effective read/write splitting:</p>
 <ul>
@@ -6720,7 +6720,7 @@ All traffic is routed based only on network and health status.</p>
 </ul>
 <p>Health and cluster topology awareness are built in, so ProxySQL can adapt to failover situations.</p>
 <p>ProxySQL also offers features such as query rules, result caching, connection pooling, and multiplexing—helping to optimize database performance and reliability for complex workloads.</p>
-<h2 id="what-load-balancer-to-use">What load balancer to use?<a class="headerlink" href="#what-load-balancer-to-use" title="Permanent link">¶</a></h2>
+<h2 id="what-load-balancer-to-use">What load balancer to use?<a data-markdown-ignore class="headerlink" href="#what-load-balancer-to-use" title="Permanent link">¶</a></h2>
 <table>
 <thead>
 <tr>
@@ -6741,7 +6741,7 @@ All traffic is routed based only on network and health status.</p>
 </table>
 <p>In a nutshell, HAProxy is ideal for scenarios where you need a lightweight, stable proxy that efficiently routes connections without analyzing SQL queries. According to <a href="https://www.percona.com/blog/comparisons-of-proxies-for-mysql/">benchmark comparisons</a>, HAProxy excels in resource efficiency and connection throughput, making it the preferred choice for Kubernetes environments where resource optimization is crucial.</p>
 <p>ProxySQL is ideal when you cannot modify your application code to separate read and write connections, but still want to benefit from read scaling. ProxySQL requires no changes to application code — you send all queries to ProxySQL and configure regex rules to route SELECT queries appropriately.</p>
-<h2 id="next-steps">Next steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
+<h2 id="next-steps">Next steps<a data-markdown-ignore class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="haproxy-conf.html">Configure HAProxy</a> — Learn how to configure and customize HAProxy for your cluster</li>
 <li><a href="proxysql-conf.html">Configure ProxySQL</a> — Learn how to configure and customize ProxySQL</li>
@@ -6846,7 +6846,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

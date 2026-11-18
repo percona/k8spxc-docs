@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6719,7 +6719,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="percona-operator-for-mysql-based-on-percona-xtradb-cluster-1120"><em>Percona Operator for MySQL based on Percona XtraDB Cluster</em> 1.12.0<a class="headerlink" href="#percona-operator-for-mysql-based-on-percona-xtradb-cluster-1120" title="Permanent link">¶</a></h1>
+<h1 id="percona-operator-for-mysql-based-on-percona-xtradb-cluster-1120"><em>Percona Operator for MySQL based on Percona XtraDB Cluster</em> 1.12.0<a data-markdown-ignore class="headerlink" href="#percona-operator-for-mysql-based-on-percona-xtradb-cluster-1120" title="Permanent link">¶</a></h1>
 <ul>
 <li><strong>Date</strong></li>
 </ul>
@@ -6728,12 +6728,12 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><strong>Installation</strong></li>
 </ul>
 <p><a href="../System-Requirements.html#installation-guidelines">Installing Percona Operator for MySQL based on Percona XtraDB Cluster</a></p>
-<h2 id="release-highlights">Release Highlights<a class="headerlink" href="#release-highlights" title="Permanent link">¶</a></h2>
+<h2 id="release-highlights">Release Highlights<a data-markdown-ignore class="headerlink" href="#release-highlights" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="../aks.html">Azure Kubernetes Service (AKS)</a> is now officially supported platform, so developers and vendors of the solutions based on the Azure platform can take advantage of the official support from Percona or just use officially certified Percona Operator for MysQL images; also, <a href="../backups-storage.html#__tabbed_1_2">Azure Blob Storage can now be used for backups</a></li>
 <li>This release also includes fixes to the following CVEs (Common Vulnerabilities and Exposures): <a href="https://nvd.nist.gov/vuln/detail/CVE-2021-20329">CVE-2021-20329 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> (potential injections in MongoDB Go Driver used HAProxy, which had no effect on Percona Operator for MySQL), and  <a href="https://access.redhat.com/security/cve/CVE-2022-42898">CVE-2022-42898 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> (images used by the Operator suffering from the unauthenticated denial of service vulnerability). Users of previous Operator versions are advised to <a href="../update.html">upgrade</a> to version 1.12.0 which resolves this issue</li>
 </ul>
-<h2 id="new-features">New Features<a class="headerlink" href="#new-features" title="Permanent link">¶</a></h2>
+<h2 id="new-features">New Features<a data-markdown-ignore class="headerlink" href="#new-features" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1043">K8SPXC-1043</a> and <a href="https://jira.percona.com/browse/K8SPXC-1005">K8SPXC-1005</a>: Add support for the <a href="../aks.html">Azure Kubernetes Service (AKS)</a> platform and allow <a href="../backups-storage.html#__tabbed_1_2">using Azure Blob Storage</a> for backups</li>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1010">K8SPXC-1010</a>: Allow <a href="../options.html#auto-tuning-mysql-options">using templates</a> to define <code>innodb_buffer_pool_size</code> auto-tuning based on container memory limits</li>
@@ -6741,7 +6741,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><a href="https://jira.percona.com/browse/K8SPXC-1120">K8SPXC-1120</a>: Add <a href="https://kubernetes.io/docs/concepts/services-networking/service/#headless-services">headless service <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> support for the restore Pod to <a href="../backups-restore-to-new-cluster.html">make it possible</a> restoring backups from a Persistent Volume on a tenant network (thanks to Zulh for contribution)</li>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1140">K8SPXC-1140</a>: The Operator now <a href="../replication.html#replication-ssl">allows using SSL channel</a> for cross-site replication (thanks to Alvaro Aguilar-Tablada Espinosa for contribution)</li>
 </ul>
-<h2 id="improvements">Improvements<a class="headerlink" href="#improvements" title="Permanent link">¶</a></h2>
+<h2 id="improvements">Improvements<a data-markdown-ignore class="headerlink" href="#improvements" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1104">K8SPXC-1104</a>: Starting from now, the Operator changed its API version to v1 instead of having a separate API version for each release. Three last API version are supported in addition to <code>v1</code>, which substantially reduces the size of Custom Resource Definition to prevent reaching the etcd limit</li>
 <li><a href="https://jira.percona.com/browse/K8SPXC-955">K8SPXC-955</a>: Add Custom Resource options to set static IP-address for the <a href="../operator.html#haproxyexposeprimaryloadbalancerip">HAProxy</a> and <a href="../operator.html#proxysqlexposeloadbalancerip">ProxySQL</a> LoadBalancers</li>
@@ -6753,7 +6753,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><a href="https://jira.percona.com/browse/K8SPXC-1123">K8SPXC-1123</a>: Starting from now, installing the Operator for cluster-wide (multi-namespace) doesn’t require to add Operator’s own namespace to the list of watched namespaces (thanks to Bart Vercoulen for reporting this issue)</li>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1030">K8SPXC-1030</a>: The new <a href="../operator.html#finalizers-delete-ssl">delete-ssl</a> finalizer can now be used to automatically delete objects created for SSL (Secret, certificate, and issuer) in case of cluster deletion</li>
 </ul>
-<h2 id="bugs-fixed">Bugs Fixed<a class="headerlink" href="#bugs-fixed" title="Permanent link">¶</a></h2>
+<h2 id="bugs-fixed">Bugs Fixed<a data-markdown-ignore class="headerlink" href="#bugs-fixed" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1158">K8SPXC-1158</a>: Fix <a href="https://access.redhat.com/security/cve/CVE-2022-42898">CVE-2022-42898 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> vulnerability found in MIT krb5, which made images used by the Operator vulnerable to DoS attacks</li>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1028">K8SPXC-1028</a>: Fix a bug that prevented the Operator to automatically tune <code>innodb_buffer_pool_size</code> and <code>innodb_buffer_pool_chunk_size</code> variables</li>
@@ -6766,7 +6766,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><a href="https://jira.percona.com/browse/K8SPXC-1137">K8SPXC-1137</a>: Fix a bug that prevented adding, deleting or updating ProxySQL Service labels/annotations except at the Service creation time</li>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1138">K8SPXC-1138</a>: Fix a bug due to which not enough responsive scripts for readiness and liveness Probes could be the reason of killing the overloaded database Pods</li>
 </ul>
-<h2 id="supported-platforms">Supported Platforms<a class="headerlink" href="#supported-platforms" title="Permanent link">¶</a></h2>
+<h2 id="supported-platforms">Supported Platforms<a data-markdown-ignore class="headerlink" href="#supported-platforms" title="Permanent link">¶</a></h2>
 <p>The following platforms were tested and are officially supported by the Operator
 1.12.0:</p>
 <ul>
@@ -6887,7 +6887,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="../js/print-site.js"></script>
       

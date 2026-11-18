@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6797,7 +6797,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="percona-operator-for-mysql-based-on-percona-xtradb-cluster-1140"><em>Percona Operator for MySQL based on Percona XtraDB Cluster</em> 1.14.0<a class="headerlink" href="#percona-operator-for-mysql-based-on-percona-xtradb-cluster-1140" title="Permanent link">¶</a></h1>
+<h1 id="percona-operator-for-mysql-based-on-percona-xtradb-cluster-1140"><em>Percona Operator for MySQL based on Percona XtraDB Cluster</em> 1.14.0<a data-markdown-ignore class="headerlink" href="#percona-operator-for-mysql-based-on-percona-xtradb-cluster-1140" title="Permanent link">¶</a></h1>
 <ul>
 <li><strong>Date</strong></li>
 </ul>
@@ -6806,19 +6806,19 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><strong>Installation</strong></li>
 </ul>
 <p><a href="../System-Requirements.html#installation-guidelines">Installing Percona Operator for MySQL based on Percona XtraDB Cluster</a></p>
-<h2 id="release-highlights">Release Highlights<a class="headerlink" href="#release-highlights" title="Permanent link">¶</a></h2>
-<h3 id="quickstart-guide">Quickstart guide<a class="headerlink" href="#quickstart-guide" title="Permanent link">¶</a></h3>
+<h2 id="release-highlights">Release Highlights<a data-markdown-ignore class="headerlink" href="#release-highlights" title="Permanent link">¶</a></h2>
+<h3 id="quickstart-guide">Quickstart guide<a data-markdown-ignore class="headerlink" href="#quickstart-guide" title="Permanent link">¶</a></h3>
 <p>Within this release, a <a href="../quickstart.html">Quickstart guide</a> was added to the Operator docs, that’ll set you up and running in no time! Taking a look at this guide you’ll be guided step by step through quick installing (multiple options), connecting to the database, inserting data, making a backup, and even integrating with Percona Monitoring and Management (PMM) to monitor your cluster.</p>
-<h3 id="automated-volume-resizing">Automated volume resizing<a class="headerlink" href="#automated-volume-resizing" title="Permanent link">¶</a></h3>
+<h3 id="automated-volume-resizing">Automated volume resizing<a data-markdown-ignore class="headerlink" href="#automated-volume-resizing" title="Permanent link">¶</a></h3>
 <p>Kubernetes supports the Persistent Volume expansion as a stable feature since v1.24. Using it with the Operator previously involved manual operations. Now this is automated, and users can resize their PVCs <a href="../scaling.html#scale-storage">by just changing the value</a> of the <code>resources.requests.storage</code> option in the PerconaXtraDBCluster custom resource. This feature is in a technical preview stage and is not recommended for production environments.</p>
 <p><em>Update from  November 24, 2025</em> Though the Operator automates the storage resizing, the users must still trigger the process by modifying the Custom Resource and applying the new configuration.  </p>
-<h2 id="new-features">New Features<a class="headerlink" href="#new-features" title="Permanent link">¶</a></h2>
+<h2 id="new-features">New Features<a data-markdown-ignore class="headerlink" href="#new-features" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1298">K8SPXC-1298</a>: Custom <a href="../containers-conf.html">prefix</a> for Percona Monitoring and Management (PMM) allows using one PMM Server to monitor multiple databases even if they have identical cluster names</li>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1334">K8SPXC-1334</a>: The new <code>lifecycle.postStart</code> and <code>lifecycle.preStop</code> Custom Resource options allow configuring <a href="https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/">postStart and preStop hooks <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> for ProxySQL and HAProxy Pods</li>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1341">K8SPXC-1341</a>: It is now possible to resize Persistent Volume Claims by patching the PerconaXtraDBCluster custom resource. Change  <code>persistentVolumeClaim.resources.requests.storage</code> and let the Operator do the scaling</li>
 </ul>
-<h2 id="improvements">Improvements<a class="headerlink" href="#improvements" title="Permanent link">¶</a></h2>
+<h2 id="improvements">Improvements<a data-markdown-ignore class="headerlink" href="#improvements" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1313">K8SPXC-1313</a>: The <code>kubectl get pxc-backup</code> command now shows Latest restorable time to make it easier to pick a point-in-time recovery target</li>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1237">K8SPXC-1237</a>: The Operator now checks if the needed Secrets exist and connects to the storage to check the existence of a backup before starting the restore process</li>
@@ -6836,7 +6836,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><a href="https://jira.percona.com/browse/K8SPXC-1254">K8SPXC-1254</a>: Upgrade instructions for Percona XtraDB Cluster in multi-namespace (cluster-wide) mode <a href="../cluster-wide.html#upgrading-the-operator-in-cluster-wide-mode">were added to documentation</a></li>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1276">K8SPXC-1276</a> and <a href="https://jira.percona.com/browse/K8SPXC-1277">K8SPXC-1277</a>: HAProxy log format was changed to JSON with additional information such as timestamps to simplify troubleshooting</li>
 </ul>
-<h2 id="bugs-fixed">Bugs Fixed<a class="headerlink" href="#bugs-fixed" title="Permanent link">¶</a></h2>
+<h2 id="bugs-fixed">Bugs Fixed<a data-markdown-ignore class="headerlink" href="#bugs-fixed" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1264">K8SPXC-1264</a>: Liveness probe didn’t work if <code>sql_mode</code> ANSI_QUOTES enabled</li>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1067">K8SPXC-1067</a>: Fix a bug that caused the Operator not tracking changes in a number of Custom Resource options in the <code>haproxy</code> subsection</li>
@@ -6856,13 +6856,13 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><a href="https://jira.percona.com/browse/K8SPXC-1345">K8SPXC-1345</a>: Fix a regression where the Operator was unable to customize readinessProbe of the pxc container</li>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1350">K8SPXC-1350</a>: Fix a bug due to which log rotate could cause locking TOI (<a href="https://galeracluster.com/library/documentation/schema-upgrades.html#toi">Total Order Isolation <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>) DDL operation on the cluster with flush error logs, resulting in unnecessary synchronization on the whole cluster and possible warnings in logs</li>
 </ul>
-<h2 id="deprecation-rename-and-removal">Deprecation, Rename and Removal<a class="headerlink" href="#deprecation-rename-and-removal" title="Permanent link">¶</a></h2>
+<h2 id="deprecation-rename-and-removal">Deprecation, Rename and Removal<a data-markdown-ignore class="headerlink" href="#deprecation-rename-and-removal" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1079">K8SPXC-1079</a>: Custom Resource options for service exposure of Percona XtraDB Cluster HAProxy Primary, HAProxy Replicas, and ProxySQL were moved to dedicated <code>pxc.expose</code>, <code>haproxy.exposePrimary</code>, <code>haproxy.exposeReplicas</code>, and <code>proxysql.expose</code> subsections. This brings more structure to the Custom Resource and implements the same approach across all Percona Operators. Old variants of service exposure options <strong>are now deprecated</strong> and will be removed in next releases</li>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1274">K8SPXC-1274</a>: The <code>initImage</code> Custom Resource option which allows providing an alternative image with various options for the initial Operator installation, was moved to a dedicated subsection and is now available as <code>initContainer.image</code></li>
 <li><a href="https://jira.percona.com/browse/K8SPXC-878">K8SPXC-878</a>: The <code>clustercheck</code> system user deprecated in v1.12.0 was completely removed in this release</li>
 </ul>
-<h2 id="supported-platforms">Supported Platforms<a class="headerlink" href="#supported-platforms" title="Permanent link">¶</a></h2>
+<h2 id="supported-platforms">Supported Platforms<a data-markdown-ignore class="headerlink" href="#supported-platforms" title="Permanent link">¶</a></h2>
 <p>The Operator was developed and tested with Percona XtraDB Cluster versions 8.0.35-27.1 and 5.7.44-31.65. Other options may also work but have not been tested. Other software components include:</p>
 <ul>
 <li>Percona XtraBackup versions 2.4.29-1 and 8.0.35-30.1</li>
@@ -6981,7 +6981,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="../js/print-site.js"></script>
       

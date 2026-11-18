@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6701,9 +6701,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="promote-the-replica-site-to-a-new-primary">Promote the replica site to a new primary<a class="headerlink" href="#promote-the-replica-site-to-a-new-primary" title="Permanent link">¶</a></h1>
+<h1 id="promote-the-replica-site-to-a-new-primary">Promote the replica site to a new primary<a data-markdown-ignore class="headerlink" href="#promote-the-replica-site-to-a-new-primary" title="Permanent link">¶</a></h1>
 <p>Let’s say the primary site with <code>cluster1</code> is down. The client applications have automatically switched to the replica site. Now you need to reconfigure your setup to make <code>cluster2</code> on the replica site a new primary and have it handle the load.</p>
-<h2 id="check-the-replica-before-you-promote-it">Check the replica before you promote it<a class="headerlink" href="#check-the-replica-before-you-promote-it" title="Permanent link">¶</a></h2>
+<h2 id="check-the-replica-before-you-promote-it">Check the replica before you promote it<a data-markdown-ignore class="headerlink" href="#check-the-replica-before-you-promote-it" title="Permanent link">¶</a></h2>
 <p>Before you promote <code>cluster2</code>, confirm it applied everything <code>cluster1</code> sent it, and that the cluster itself is healthy.</p>
 <ol>
 <li>
@@ -6729,7 +6729,7 @@ mysql&gt; SHOW VARIABLES LIKE 'read_only';
 <p><code>read_only = ON</code> is expected here, since <code>cluster2</code> is still running as the replica.</p>
 </li>
 </ol>
-<h2 id="promote-the-replica-to-primary">Promote the replica to primary<a class="headerlink" href="#promote-the-replica-to-primary" title="Permanent link">¶</a></h2>
+<h2 id="promote-the-replica-to-primary">Promote the replica to primary<a data-markdown-ignore class="headerlink" href="#promote-the-replica-to-primary" title="Permanent link">¶</a></h2>
 <ol>
 <li>
 <p>Modify the replication channel for <code>cluster2</code> within the <code>deploy/cr.yaml</code> file:</p>
@@ -6753,7 +6753,7 @@ mysql&gt; SHOW VARIABLES LIKE 'read_only';
 <p>Now <code>cluster2</code> acts as the primary site.</p>
 </li>
 </ol>
-<h2 id="check-that-the-promotion-is-successful">Check that the promotion is successful<a class="headerlink" href="#check-that-the-promotion-is-successful" title="Permanent link">¶</a></h2>
+<h2 id="check-that-the-promotion-is-successful">Check that the promotion is successful<a data-markdown-ignore class="headerlink" href="#check-that-the-promotion-is-successful" title="Permanent link">¶</a></h2>
 <p>Confirm that <code>cluster2</code> is genuinely serving as the primary before you do anything irreversible to <code>cluster1</code>.</p>
 <p>Check the Galera status on every node of <code>cluster2</code>, not just one:</p>
 <div class="highlight" data-prompt="mysql&gt; "><pre><span></span><code>mysql&gt; SHOW STATUS LIKE 'wsrep_cluster_status';
@@ -6771,7 +6771,7 @@ mysql&gt; SHOW VARIABLES LIKE 'read_only';
 <p>Then confirm that a write succeeds through the client-facing endpoint your application uses, not a direct connection to a single Pod:</p>
 <div class="highlight" data-prompt="mysql&gt; "><pre><span></span><code>mysql&gt; INSERT INTO &lt;your_table&gt; VALUES (...);
 </code></pre></div>
-<h2 id="delete-the-previous-primary">Delete the previous primary<a class="headerlink" href="#delete-the-previous-primary" title="Permanent link">¶</a></h2>
+<h2 id="delete-the-previous-primary">Delete the previous primary<a data-markdown-ignore class="headerlink" href="#delete-the-previous-primary" title="Permanent link">¶</a></h2>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Do this step only after you confirmed that the new primary is successfully promoted and correctly serves the write requests.</p>
@@ -6877,7 +6877,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

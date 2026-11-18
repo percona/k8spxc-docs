@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6719,10 +6719,10 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="upgrade-the-operator-and-crd">Upgrade the Operator and CRD<a class="headerlink" href="#upgrade-the-operator-and-crd" title="Permanent link">¶</a></h1>
+<h1 id="upgrade-the-operator-and-crd">Upgrade the Operator and CRD<a data-markdown-ignore class="headerlink" href="#upgrade-the-operator-and-crd" title="Permanent link">¶</a></h1>
 <p>To update the Operator, you need to update the Custom Resource Definition (CRD) and the Operator deployment. Also we recommend to update the Kubernetes database cluster configuration by updating the Custom Resource and the database components to the latest version. This step ensures that all new features that come with the Operator release work in your environment.</p>
 <p>The database cluster upgrade process is similar for all installation methods, including Helm and OLM.</p>
-<h2 id="considerations-for-kubernetes-cluster-versions-and-upgrades">Considerations for Kubernetes Cluster versions and upgrades<a class="headerlink" href="#considerations-for-kubernetes-cluster-versions-and-upgrades" title="Permanent link">¶</a></h2>
+<h2 id="considerations-for-kubernetes-cluster-versions-and-upgrades">Considerations for Kubernetes Cluster versions and upgrades<a data-markdown-ignore class="headerlink" href="#considerations-for-kubernetes-cluster-versions-and-upgrades" title="Permanent link">¶</a></h2>
 <ol>
 <li>
 <p>Before upgrading the Kubernetes cluster, have a disaster recovery plan in place. Ensure that a backup is taken prior to the upgrade, and that point-in-time recovery is enabled to meet your Recovery Point Objective (RPO).</p>
@@ -6742,7 +6742,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p>Regardless of the upgrade approach, pods will be rescheduled or recycled. Plan your Kubernetes cluster upgrade accordingly to minimize downtime and service disruption.</p>
 </li>
 </ol>
-<h2 id="considerations-for-operator-upgrades">Considerations for Operator upgrades<a class="headerlink" href="#considerations-for-operator-upgrades" title="Permanent link">¶</a></h2>
+<h2 id="considerations-for-operator-upgrades">Considerations for Operator upgrades<a data-markdown-ignore class="headerlink" href="#considerations-for-operator-upgrades" title="Permanent link">¶</a></h2>
 <ol>
 <li>
 <p>The Operator version has three digits separated by a dot (<code>.</code>) in the format <code>major.minor.patch</code>. Here’s how you can understand the version <code>1.16.1</code>:</p>
@@ -6797,12 +6797,12 @@ its own namespace, do the following:</p>
 <p>Starting with version 1.18.0, the Operator supports PMM2 and PMM3. If you are using PMM server version 2, use a PMM client image compatible with PMM 2. If you are using PMM server version 3, use a PMM client image compatible with PMM 3. See <a href="https://docs.percona.com/percona-monitoring-and-management/3/pmm-upgrade/migrating_from_pmm_2.html">PMM upgrade documentation <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> for how to migrate from version 2 to version 3.</p>
 </li>
 </ol>
-<h2 id="upgrade-manually">Upgrade manually<a class="headerlink" href="#upgrade-manually" title="Permanent link">¶</a></h2>
+<h2 id="upgrade-manually">Upgrade manually<a data-markdown-ignore class="headerlink" href="#upgrade-manually" title="Permanent link">¶</a></h2>
 <p>The upgrade includes the following steps.</p>
 <ol>
 <li>
 <p><strong>For Operators older than v1.12.0</strong>: Update the API version in the <a href="https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/">Custom Resource Definition <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Manually</label><label for="__tabbed_1_2">Via <code>kubectl patch</code></label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_1_1">Manually</label><label for="__tabbed_1_2">Via <code>kubectl patch</code></label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>proxy<span class="w"> </span><span class="p">&amp;</span><span class="w">  </span><span class="se">\</span>
@@ -6866,10 +6866,10 @@ kubectl<span class="w"> </span>apply<span class="w"> </span>--server-side<span c
 <p>To keep using PMM2, specify the PMM Client version compatible with PMM Server 2.</p>
 <p>If you haven’t updated your PMM Server yet, exclude PMM Client from the list of images to update.</p>
 <p>Since this is a working cluster, the way to update the Custom Resource is to <a href="https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/">apply a patch  <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> with the <code>kubectl patch pxc</code> command.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">With PMM Client</label><label for="__tabbed_2_2">Without PMM Client</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_2_1">With PMM Client</label><label for="__tabbed_2_2">Without PMM Client</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="tabbed-set tabbed-alternate" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><input id="__tabbed_3_3" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">For Percona XtraDB Cluster 8.4</label><label for="__tabbed_3_2">For Percona XtraDB Cluster 8.0</label><label for="__tabbed_3_3">For Percona XtraDB Cluster 5.7</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><input id="__tabbed_3_3" name="__tabbed_3" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_3_1">For Percona XtraDB Cluster 8.4</label><label for="__tabbed_3_2">For Percona XtraDB Cluster 8.0</label><label for="__tabbed_3_3">For Percona XtraDB Cluster 5.7</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>pxc<span class="w"> </span>cluster1<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">'{</span>
@@ -6916,7 +6916,7 @@ kubectl patch pxc cluster1 --type=merge --patch '{
 </div>
 </div>
 <div class="tabbed-block">
-<div class="tabbed-set tabbed-alternate" data-tabs="4:3"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio"><input id="__tabbed_4_2" name="__tabbed_4" type="radio"><input id="__tabbed_4_3" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="__tabbed_4_1">For Percona XtraDB Cluster 8.4</label><label for="__tabbed_4_2">For Percona XtraDB Cluster 8.0</label><label for="__tabbed_4_3">For Percona XtraDB Cluster 5.7</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:3"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio"><input id="__tabbed_4_2" name="__tabbed_4" type="radio"><input id="__tabbed_4_3" name="__tabbed_4" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_4_1">For Percona XtraDB Cluster 8.4</label><label for="__tabbed_4_2">For Percona XtraDB Cluster 8.0</label><label for="__tabbed_4_3">For Percona XtraDB Cluster 5.7</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>pxc<span class="w"> </span>cluster1<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">'{</span>
@@ -6961,7 +6961,7 @@ kubectl patch pxc cluster1 --type=merge --patch '{
 </div>
 </li>
 </ol>
-<h2 id="upgrade-via-helm">Upgrade via Helm<a class="headerlink" href="#upgrade-via-helm" title="Permanent link">¶</a></h2>
+<h2 id="upgrade-via-helm">Upgrade via Helm<a data-markdown-ignore class="headerlink" href="#upgrade-via-helm" title="Permanent link">¶</a></h2>
 <p>If you have <a href="helm.html">installed the Operator using Helm</a>, you can upgrade the
 Operator with the <code>helm upgrade</code> command.</p>
 <ol>
@@ -6975,7 +6975,7 @@ kubectl<span class="w"> </span>apply<span class="w"> </span>--server-side<span c
 </li>
 <li>
 <p>Next, update the Operator deployment. </p>
-<div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio"><input id="__tabbed_5_2" name="__tabbed_5" type="radio"><div class="tabbed-labels"><label for="__tabbed_5_1">With default parameters</label><label for="__tabbed_5_2">With customized parameters</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio"><input id="__tabbed_5_2" name="__tabbed_5" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_5_1">With default parameters</label><label for="__tabbed_5_2">With customized parameters</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>If you installed the Operator with default parameters, the upgrade can be done as follows: </p>
@@ -6994,7 +6994,7 @@ kubectl<span class="w"> </span>apply<span class="w"> </span>--server-side<span c
 which which you have chosen for the Operator when installing its Helm chart.     </p>
 </li>
 </ol>
-<h2 id="upgrade-via-operator-lifecycle-manager-olm">Upgrade via Operator Lifecycle Manager (OLM)<a class="headerlink" href="#upgrade-via-operator-lifecycle-manager-olm" title="Permanent link">¶</a></h2>
+<h2 id="upgrade-via-operator-lifecycle-manager-olm">Upgrade via Operator Lifecycle Manager (OLM)<a data-markdown-ignore class="headerlink" href="#upgrade-via-operator-lifecycle-manager-olm" title="Permanent link">¶</a></h2>
 <p>If you have <a href="openshift.html#install-via-the-operator-lifecycle-manager-olm">installed the Operator on the OpenShift platform using OLM</a>, you can upgrade the Operator within it.</p>
 <ol>
 <li>
@@ -7105,7 +7105,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

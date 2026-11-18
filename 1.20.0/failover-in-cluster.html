@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6821,10 +6821,10 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="in-cluster-failover">In-cluster failover<a class="headerlink" href="#in-cluster-failover" title="Permanent link">¶</a></h1>
+<h1 id="in-cluster-failover">In-cluster failover<a data-markdown-ignore class="headerlink" href="#in-cluster-failover" title="Permanent link">¶</a></h1>
 <p>A node running Percona XtraDB Cluster can fail at any time — a Pod restart, a node drain, or the primary Pod going down. The rest of the cluster stays up, and Kubernetes, Galera and the proxy in front of the cluster recover the failed node automatically in most cases. The Operator takes part only in <a href="architecture-workflows.html#full-cluster-crash-recovery">full cluster crash recovery</a>.</p>
 <p>This page covers what to expect when a node fails and how to confirm recovery completed. For failover when an entire site goes down, see <a href="dr.html">Set up disaster recovery</a> instead.</p>
-<h2 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">¶</a></h2>
+<h2 id="how-it-works">How it works<a data-markdown-ignore class="headerlink" href="#how-it-works" title="Permanent link">¶</a></h2>
 <p>Restoring a single failed node is fully automatic:</p>
 <ol>
 <li>The StatefulSet controller recreates the failed Pod. If the Pod ran on a failed Kubernetes node, the controller recreates it only after the Node object is removed or the stuck Pod is force-deleted. See <a href="architecture-responsibilities.html#kubernetes">Who owns what</a>.</li>
@@ -6832,14 +6832,14 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li>The proxy reroutes writes to a surviving node after its health check marks the failed node down.</li>
 </ol>
 <p>Even though recovery is automatic, there are some behaviors that affect your application. See <a href="#what-to-expect">What to expect</a> for more details, and <a href="#verify-a-failover-completed">Verify a failover completed</a> to confirm recovery actually completed.</p>
-<h3 id="pod-recreation">Pod recreation<a class="headerlink" href="#pod-recreation" title="Permanent link">¶</a></h3>
+<h3 id="pod-recreation">Pod recreation<a data-markdown-ignore class="headerlink" href="#pod-recreation" title="Permanent link">¶</a></h3>
 <p>Kubernetes probes drive recovery independently of the proxy. The readiness probe removes a Pod from the <code>cluster1-pxc</code> Service, and so from the proxy configuration, after the node has been out of the primary component, or neither <code>Synced</code> nor a donor, for about 2.5 minutes. The liveness probe restarts the <code>pxc</code> container when the node stays outside the primary component for about 30 seconds. The probe starts 5 minutes after the container starts (<code>pxc.livenessProbes.initialDelaySeconds: 300</code>). A node whose container started less than 5 minutes ago can stay outside the primary component until then. See <a href="architecture-probes.html">Health checks and probes</a>.</p>
-<h3 id="rejoining-the-cluster">Rejoining the cluster<a class="headerlink" href="#rejoining-the-cluster" title="Permanent link">¶</a></h3>
+<h3 id="rejoining-the-cluster">Rejoining the cluster<a data-markdown-ignore class="headerlink" href="#rejoining-the-cluster" title="Permanent link">¶</a></h3>
 <p>The recreated Pod rejoins the cluster and catches up on the data it missed while it was down. Galera does this via SST (State Snapshot Transfer), making a full data copy from a healthy node acting as donor. When the gap is small enough, Galera uses IST (Incremental State Transfer) as a faster way to catch up. The time it takes to catch up depends on the size of the gap and the network conditions.</p>
 <p>The node providing SST is called the <em>donor</em>. While it is donating, its <code>wsrep_local_state_comment</code> shows <code>Donor/Desynced</code>. This also matters during a typical single-node restart. If the gap is large enough to require a full SST, the healthy node that Galera selects as donor will temporarily fail HAProxy’s health check, unless it is the only node the proxy knows about or you set <code>OK_IF_DONOR</code>. As a result, this donor node can drop out of HAProxy rotation for the entire duration of the SST. This issue affects not only the node that is rejoining, but also the donor node itself.</p>
-<h3 id="traffic-rerouting">Traffic rerouting<a class="headerlink" href="#traffic-rerouting" title="Permanent link">¶</a></h3>
+<h3 id="traffic-rerouting">Traffic rerouting<a data-markdown-ignore class="headerlink" href="#traffic-rerouting" title="Permanent link">¶</a></h3>
 <p>Traffic rerouting depends on which proxy is in use.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">HAProxy</label><label for="__tabbed_1_2">ProxySQL, native scheduler mode</label><label for="__tabbed_1_3">ProxySQL, external scheduler mode</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_1_1">HAProxy</label><label for="__tabbed_1_2">ProxySQL, native scheduler mode</label><label for="__tabbed_1_3">ProxySQL, external scheduler mode</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>HAProxy always treats <code>&lt;cluster&gt;-pxc-0</code> as the only non-backup server. Every other node is a <code>backup</code> server that receives traffic only if <code>pxc-0</code> fails its health check.</p>
@@ -6862,7 +6862,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </div>
 </div>
 </div>
-<h2 id="what-to-expect">What to expect<a class="headerlink" href="#what-to-expect" title="Permanent link">¶</a></h2>
+<h2 id="what-to-expect">What to expect<a data-markdown-ignore class="headerlink" href="#what-to-expect" title="Permanent link">¶</a></h2>
 <p>Automatic recovery handles the failure itself. Two behaviors are not obvious from the mechanics above, and both can affect your application directly.</p>
 <p><strong>Failback forcibly closes the active session.</strong> When <code>pxc-0</code> recovers, HAProxy does not leave traffic on the backup node it failed over to. It closes the sessions to the backup node as soon as it marks <code>pxc-0</code> up again. HAProxy does that at its next check, up to 10 seconds after <code>pxc-0</code> is <code>Synced</code>. If the <code>pxc-0</code> Pod was restarted, failback happens when <code>pxc-monit</code> adds the Pod back, 2 to 15 seconds after it becomes ready. Each HAProxy Pod fails back on its own, so the session drops can be spread over several seconds. You may see the following error for a client that was connected to the backup node and then failed:</p>
 <div class="no-copy highlight"><pre><span></span><code>ERROR 2013 (HY000): Lost connection to MySQL server during query
@@ -6886,7 +6886,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p class="admonition-title">Warning</p>
 <p>Don’t force a primary component with <code>SET GLOBAL wsrep_provider_options='pc.bootstrap=YES'</code> while the Operator is running. The container restart discards the setting, and a manual bootstrap races with the Operator’s own recovery. If one of the other nodes is still up as a primary elsewhere, you create two independent clusters with diverging data.</p>
 </div>
-<h2 id="take-a-node-out-of-rotation-for-maintenance">Take a node out of rotation for maintenance<a class="headerlink" href="#take-a-node-out-of-rotation-for-maintenance" title="Permanent link">¶</a></h2>
+<h2 id="take-a-node-out-of-rotation-for-maintenance">Take a node out of rotation for maintenance<a data-markdown-ignore class="headerlink" href="#take-a-node-out-of-rotation-for-maintenance" title="Permanent link">¶</a></h2>
 <p>The behavior above applies to an unplanned failure. To perform maintenance without triggering one, take a node out of rotation deliberately instead of stopping MySQL and forcing a failover.</p>
 <p><strong>With either proxy</strong>, use <code>pxc_maint_mode</code>:</p>
 <div class="highlight" data-prompt="mysql&gt; "><pre><span></span><code>mysql&gt; SET GLOBAL pxc_maint_mode='MAINTENANCE';
@@ -6903,7 +6903,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 mysql&gt; SET GLOBAL wsrep_desync=OFF;
 </code></pre></div>
 <p><code>wsrep_desync</code> is not a drain command. It doesn’t remove the node from the Kubernetes Service, and the Pod stays <code>Ready</code>. The node reports the <code>Donor/Desynced</code> state. HAProxy’s health check rejects it by default, so HAProxy takes the node out of rotation unless it is the only node available or you set <code>OK_IF_DONOR</code> to <code>1</code>. HAProxy takes such a node out of rotation 10 to 20 seconds after you set <code>wsrep_desync=ON</code> and closes its open connections, the same as for maintenance mode. It lets the node fall behind on replication without blocking the rest of the cluster’s flow control, which is what makes it safe to run a long operation on that node without stalling everyone else’s writes.</p>
-<h2 id="verify-a-failover-completed">Verify a failover completed<a class="headerlink" href="#verify-a-failover-completed" title="Permanent link">¶</a></h2>
+<h2 id="verify-a-failover-completed">Verify a failover completed<a data-markdown-ignore class="headerlink" href="#verify-a-failover-completed" title="Permanent link">¶</a></h2>
 <p><code>kubectl get pxc</code> reporting <code>ready</code> confirms the cluster reconciled, not that every node is healthy and reachable from the application’s point of view. To confirm a node actually recovered and rejoined:</p>
 <ol>
 <li>
@@ -6933,12 +6933,12 @@ mysql&gt; REPLACE INTO healthcheck.failover_probe VALUES (1, NOW());
 <p>A successful write confirms the proxy is routing to a working writer, without touching application tables.</p>
 </li>
 </ol>
-<h2 id="what-not-to-do">What not to do<a class="headerlink" href="#what-not-to-do" title="Permanent link">¶</a></h2>
+<h2 id="what-not-to-do">What not to do<a data-markdown-ignore class="headerlink" href="#what-not-to-do" title="Permanent link">¶</a></h2>
 <ul>
 <li>Do not assume <code>kubectl get pxc</code> reporting <code>ready</code> means every existing connection is still valid, or that every node has rejoined. See <a href="#what-to-expect">What to expect</a> and <a href="#verify-a-failover-completed">Verify a failover completed</a>.</li>
 <li>Do not run <code>pc.bootstrap=YES</code> or bootstrap a node by hand while the Operator is running. Follow <a href="recovery.html">Crash recovery</a> instead. A second primary component causes a split brain.</li>
 </ul>
-<h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
+<h2 id="see-also">See also<a data-markdown-ignore class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="dr.html">Set up disaster recovery</a> — for losing an entire site, not just a node</li>
 <li><a href="load-balancing.html">Configure load balancing</a> — background on how HAProxy and ProxySQL differ</li>
@@ -7043,7 +7043,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

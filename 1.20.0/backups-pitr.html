@@ -24,7 +24,7 @@ specific transaction or time. You can also skip a specific transaction instead o
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -139,7 +139,7 @@ specific transaction or time. You can also skip a specific transaction instead o
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6770,7 +6770,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="point-in-time-recovery-pitr">Point-in-time recovery (PITR)<a class="headerlink" href="#point-in-time-recovery-pitr" title="Permanent link">¶</a></h1>
+<h1 id="point-in-time-recovery-pitr">Point-in-time recovery (PITR)<a data-markdown-ignore class="headerlink" href="#point-in-time-recovery-pitr" title="Permanent link">¶</a></h1>
 <p>Point-in-time recovery allows you to roll back the cluster to a
 specific transaction or time. You can also skip a specific transaction instead of replaying it. </p>
 <p>For point-in-time recovery, the Operator needs two things:</p>
@@ -6783,7 +6783,7 @@ specific transaction or time. You can also skip a specific transaction instead o
 default and is supported starting with Percona XtraDB Cluster 8.0.21-12.1.</p>
 <p>After you <a href="#enable-point-in-time-recovery">enable point-in-time recovery</a>, the Operator spins up a separate point-in-time recovery Pod, which starts saving binary log updates
 <a href="backups-storage.html">to the backup storage</a>. </p>
-<h2 id="considerations">Considerations<a class="headerlink" href="#considerations" title="Permanent link">¶</a></h2>
+<h2 id="considerations">Considerations<a data-markdown-ignore class="headerlink" href="#considerations" title="Permanent link">¶</a></h2>
 <ol>
 <li>
 <p>Use either S3-compatible or Azure-compatible storage for both the binlog and the full backup. Point-in-time recovery doesn’t work with other storage types.</p>
@@ -6803,7 +6803,7 @@ default and is supported starting with Percona XtraDB Cluster 8.0.21-12.1.</p>
 <p>Optionally set <a href="operator.html#backupstoragesstorage-names3checksumalgorithm"><code>s3.checksumAlgorithm</code></a> on the binlog storage to verify data integrity during uploads. This option also applies if you make backups with the <a href="backups-methods.html">XtraBackup sidecar method</a>; the default SST backup method doesn’t use it.</p>
 </li>
 </ol>
-<h2 id="enable-point-in-time-recovery">Enable point-in-time recovery<a class="headerlink" href="#enable-point-in-time-recovery" title="Permanent link">¶</a></h2>
+<h2 id="enable-point-in-time-recovery">Enable point-in-time recovery<a data-markdown-ignore class="headerlink" href="#enable-point-in-time-recovery" title="Permanent link">¶</a></h2>
 <p>Before you start, make sure you <a href="backups-storage.html">have configured the storage for binlogs</a>.</p>
 <p>To use point-in-time recovery, set the following keys in the <code>pitr</code> subsection
 under the <code>backup</code> section of the <a href="https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.20.0/deploy/cr.yaml">deploy/cr.yaml <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> manifest:</p>
@@ -6828,7 +6828,7 @@ under the <code>backup</code> section of the <a href="https://github.com/percona
 <span class="w">    </span><span class="nt">timeBetweenUploads</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60</span>
 </code></pre></div>
 <p>For how to restore a database to a specific point in time, see <a href="backups-pitr-restore.html">Restore with point-in-time recovery</a>.</p>
-<h2 id="binary-logs-statistics">Binary logs statistics<a class="headerlink" href="#binary-logs-statistics" title="Permanent link">¶</a></h2>
+<h2 id="binary-logs-statistics">Binary logs statistics<a data-markdown-ignore class="headerlink" href="#binary-logs-statistics" title="Permanent link">¶</a></h2>
 <p>The point-in-time recovery Pod has statistics metrics for binlogs. They provide insights into the success and failure rates of binlog operations, timeliness of processing and uploads and potential gaps or inconsistencies in binlog data.</p>
 <p>The available metrics are:</p>
 <ul>
@@ -6838,7 +6838,7 @@ under the <code>backup</code> section of the <a href="https://github.com/percona
 <li><code>pxc_binlog_collector_last_upload_timestamp</code> - Records the timestamp of the last successful binlog upload to the storage</li>
 <li><code>pxc_binlog_collector_uploaded_total</code> - The total number of successfully uploaded binlogs</li>
 </ul>
-<h3 id="gather-metrics-data">Gather metrics data<a class="headerlink" href="#gather-metrics-data" title="Permanent link">¶</a></h3>
+<h3 id="gather-metrics-data">Gather metrics data<a data-markdown-ignore class="headerlink" href="#gather-metrics-data" title="Permanent link">¶</a></h3>
 <p>You can connect to the point-in-time recovery Pod using the <code>&lt;pitr-pod-service&gt;:8080/metrics</code> endpoint to gather these metrics and further analyze them.</p>
 <p>List services to get the point-in-time-recovery service name:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>services<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">'pitr'</span>
@@ -6848,7 +6848,7 @@ under the <code>backup</code> section of the <a href="https://github.com/percona
 <div class="no-copy highlight"><pre><span></span><code>cluster1-pitr                         ClusterIP   34.118.225.138   &lt;none&gt;        8080/TCP
 </code></pre></div>
 </details>
-<h4 id="access-locally-via-port-forwarding">Access locally via port forwarding<a class="headerlink" href="#access-locally-via-port-forwarding" title="Permanent link">¶</a></h4>
+<h4 id="access-locally-via-port-forwarding">Access locally via port forwarding<a data-markdown-ignore class="headerlink" href="#access-locally-via-port-forwarding" title="Permanent link">¶</a></h4>
 <p>Use this method to access the metrics from your local machine.</p>
 <ol>
 <li>
@@ -7010,7 +7010,7 @@ pxc_binlog_collector_uploaded_total 1
 </details>
 </li>
 </ol>
-<h4 id="access-directly-from-a-pod">Access directly from a Pod<a class="headerlink" href="#access-directly-from-a-pod" title="Permanent link">¶</a></h4>
+<h4 id="access-directly-from-a-pod">Access directly from a Pod<a data-markdown-ignore class="headerlink" href="#access-directly-from-a-pod" title="Permanent link">¶</a></h4>
 <p>You can gather the metrics from inside a database cluster. </p>
 <ol>
 <li>
@@ -7275,7 +7275,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

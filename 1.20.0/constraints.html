@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6809,7 +6809,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="control-pod-scheduling-on-specific-kubernetes-nodes-with-affinity-antiaffinity-and-tolerations">Control Pod scheduling on specific Kubernetes nodes with affinity, anti‑affinity and tolerations<a class="headerlink" href="#control-pod-scheduling-on-specific-kubernetes-nodes-with-affinity-antiaffinity-and-tolerations" title="Permanent link">¶</a></h1>
+<h1 id="control-pod-scheduling-on-specific-kubernetes-nodes-with-affinity-antiaffinity-and-tolerations">Control Pod scheduling on specific Kubernetes nodes with affinity, anti‑affinity and tolerations<a data-markdown-ignore class="headerlink" href="#control-pod-scheduling-on-specific-kubernetes-nodes-with-affinity-antiaffinity-and-tolerations" title="Permanent link">¶</a></h1>
 <p>The Operator automatically assigns Pods to nodes with sufficient resources for balanced distribution across the cluster. You can configure Pods to be scheduled on specific nodes. For example, for improved performance on the SSD equipped machine or for cost optimization by choosing the nodes in the same availability zone.</p>
 <p>Using the <a href="https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.20.0/deploy/cr.yaml">deploy/cr.yaml <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> Custom Resource manifest, you can configure the following:</p>
 <ul>
@@ -6817,14 +6817,14 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li>Affinity and anti-affinity rules to bind Pods to specific Kubernetes nodes</li>
 <li>Taints and tolerations to ensure that Pods are not scheduled onto inappropriate nodes</li>
 </ul>
-<h2 id="node-selector">Node selector<a class="headerlink" href="#node-selector" title="Permanent link">¶</a></h2>
+<h2 id="node-selector">Node selector<a data-markdown-ignore class="headerlink" href="#node-selector" title="Permanent link">¶</a></h2>
 <p>The <code>nodeSelector</code> field lets you specify a list of key-value labels that a node must have in order for a Pod to be scheduled on it. For example, to ensure Pods land on nodes with SSD storage or in specific availability zones.</p>
 <p>If a node doesn’t have all the labels you specify in <code>nodeSelector</code>, your Pod won’t run on that node. In other words, <code>nodeSelector</code> acts like a filter so that only nodes with the right labels are eligible to host your Pod.</p>
 <p>The following example binds the Pod to any node having a <code>disktype: ssd</code> label:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">nodeSelector</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">disktype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ssd</span>
 </code></pre></div>
-<h2 id="affinity-and-anti-affinity">Affinity and Anti-affinity<a class="headerlink" href="#affinity-and-anti-affinity" title="Permanent link">¶</a></h2>
+<h2 id="affinity-and-anti-affinity">Affinity and Anti-affinity<a data-markdown-ignore class="headerlink" href="#affinity-and-anti-affinity" title="Permanent link">¶</a></h2>
 <p>Affinity controls Pod placement based on nodes which already have Pods with specific labels. Use affinity to:</p>
 <ul>
 <li>Reduce costs by placing Pods in the same availability zone</li>
@@ -6835,7 +6835,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li>Simple - set anti-affinity for Pods using built-in options. You can set anti-affinity for <code>pxc</code>, <code>haproxy</code>, and <code>proxysql</code> Pods, and for the backup storage of the S3 and PVC</li>
 <li>Advanced - using Kubernetes constraints</li>
 </ul>
-<h3 id="simple-anti-affinity">Simple Anti-affinity<a class="headerlink" href="#simple-anti-affinity" title="Permanent link">¶</a></h3>
+<h3 id="simple-anti-affinity">Simple Anti-affinity<a data-markdown-ignore class="headerlink" href="#simple-anti-affinity" title="Permanent link">¶</a></h3>
 <p>This approach does not require the knowledge of how Kubernetes assigns Pods to specific nodes.</p>
 <p>Use the <code>antiAffinityTopologyKey</code> option with these values:</p>
 <ul>
@@ -6849,7 +6849,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <div class="highlight"><pre><span></span><code><span class="nt">affinity</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">antiAffinityTopologyKey</span><span class="p">:</span><span class="w"> </span><span class="s">"kubernetes.io/hostname"</span>
 </code></pre></div>
-<h3 id="advanced-anti-affinity-via-kubernetes-constraints">Advanced anti-affinity via Kubernetes constraints<a class="headerlink" href="#advanced-anti-affinity-via-kubernetes-constraints" title="Permanent link">¶</a></h3>
+<h3 id="advanced-anti-affinity-via-kubernetes-constraints">Advanced anti-affinity via Kubernetes constraints<a data-markdown-ignore class="headerlink" href="#advanced-anti-affinity-via-kubernetes-constraints" title="Permanent link">¶</a></h3>
 <p>For complex scheduling requirements, use the <code>advanced</code> option. This disables the <code>antiAffinityTopologyKey</code> effect and allows the use of standard Kubernetes affinity constraints:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">affinity</span><span class="p">:</span>
 <span class="w">   </span><span class="nt">advanced</span><span class="p">:</span>
@@ -6892,7 +6892,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <span class="w">             </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">another-node-label-value</span>
 </code></pre></div>
 <p>See <a href="https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity">Kubernetes affinity documentation <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> for detailed explanations of these options.</p>
-<h2 id="tolerations">Tolerations<a class="headerlink" href="#tolerations" title="Permanent link">¶</a></h2>
+<h2 id="tolerations">Tolerations<a data-markdown-ignore class="headerlink" href="#tolerations" title="Permanent link">¶</a></h2>
 <p>Tolerations allow Pods to run on nodes with matching taints. A taint is a key-value pair associated with a node that marks the node to repel certain Pods.</p>
 <p>Taints and tolerations work together to ensure Pods are not scheduled onto inappropriate nodes.</p>
 <p>A toleration includes these fields:</p>
@@ -6916,7 +6916,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <span class="w">  </span><span class="nt">effect</span><span class="p">:</span><span class="w"> </span><span class="s">"NoExecute"</span>
 <span class="w">  </span><span class="nt">tolerationSeconds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6000</span>
 </code></pre></div>
-<h3 id="common-use-cases">Common use cases<a class="headerlink" href="#common-use-cases" title="Permanent link">¶</a></h3>
+<h3 id="common-use-cases">Common use cases<a data-markdown-ignore class="headerlink" href="#common-use-cases" title="Permanent link">¶</a></h3>
 <ul>
 <li>
 <p><strong>Dedicated nodes</strong>: Reserve nodes for specific workloads by tainting them and adding corresponding tolerations to authorized Pods.</p>
@@ -6929,7 +6929,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </li>
 </ul>
 <p>See <a href="https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/">Kubernetes Taints and Tolerations <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> for detailed examples and use cases.</p>
-<h2 id="priority-classes">Priority classes<a class="headerlink" href="#priority-classes" title="Permanent link">¶</a></h2>
+<h2 id="priority-classes">Priority classes<a data-markdown-ignore class="headerlink" href="#priority-classes" title="Permanent link">¶</a></h2>
 <p>Pods may belong to some <em>priority classes</em>. Priority classes help the scheduler distinguish important Pods when eviction is needed. To use priority classes:</p>
 <ol>
 <li>Create PriorityClasses in your Kubernetes cluster</li>
@@ -6938,7 +6938,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <div class="highlight"><pre><span></span><code><span class="nt">priorityClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">high-priority</span>
 </code></pre></div>
 <p>See <a href="https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption">Kubernetes Pod Priority documentation <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> for more information on how to define and use priority classes in your cluster.</p>
-<h2 id="pod-disruption-budgets">Pod Disruption Budgets<a class="headerlink" href="#pod-disruption-budgets" title="Permanent link">¶</a></h2>
+<h2 id="pod-disruption-budgets">Pod Disruption Budgets<a data-markdown-ignore class="headerlink" href="#pod-disruption-budgets" title="Permanent link">¶</a></h2>
 <p>A Pod Disruption Budget (PDB) in Kubernetes helps keep your applications available during voluntary disruptions, such as deleting a deployment or draining a node for maintenance by a cluster administrator. A Pod Disruption Budget sets a limit on how many Pods can be unavailable at the same time due to these voluntary actions. </p>
 <p>You can configure Pod disruption budget for Percona XtraDB Cluster, ProxySQL and HAProxy Pods using the <code>podDisruptionBudget</code> option in the Custom Resource.</p>
 <p>This is the example configuration for Percona XtraDB Cluster Pods:</p>
@@ -7051,7 +7051,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6779,7 +6779,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="restore-to-a-side-cluster">Restore to a side cluster<a class="headerlink" href="#restore-to-a-side-cluster" title="Permanent link">¶</a></h1>
+<h1 id="restore-to-a-side-cluster">Restore to a side cluster<a data-markdown-ignore class="headerlink" href="#restore-to-a-side-cluster" title="Permanent link">¶</a></h1>
 <p>A side cluster is a second, independent Percona XtraDB Cluster on the <strong>same</strong> Kubernetes cluster that you restore a backup into. It can run in the same namespace or a different one.</p>
 <p>Unlike <a href="backups-restore-to-new-cluster.html">restoring to a new cluster on a different Kubernetes environment</a>, a side cluster can use Persistent Volume backups as well as cloud storage, since the PVC stays on the same Kubernetes cluster. Compare this with the other restore paths in <a href="backups-restore.html#restore-scenarios">Restore scenarios</a>.</p>
 <p>Use a side cluster to:</p>
@@ -6788,14 +6788,14 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li>Debug or analyze data without affecting the production cluster.</li>
 <li>Keep a throwaway copy around for a one-off investigation.</li>
 </ul>
-<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h2>
+<h2 id="prerequisites">Prerequisites<a data-markdown-ignore class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h2>
 <ul>
 <li>A succeeded backup of the source cluster, either on a Persistent Volume or in cloud storage.</li>
 <li>The target cluster must already exist and be running before you create the Restore object. Restoring doesn’t create a cluster for you. </li>
 <li>If you’re restoring <strong>into the same namespace</strong> as the source cluster, the target <code>PerconaXtraDBCluster</code> cluster needs a different name. The Operator already manages multiple clusters within one namespace, so no extra configuration is needed.</li>
 <li>If you’re restoring <strong>into a different namespace</strong>, the names can match, but the Operator watching the source namespace won’t see a Custom Resource created in the new one. Either deploy a second, separate Operator into that namespace or switch the Operator to the cluster-wide mode so it watches both namespaces. See <a href="cluster-wide.html">Cluster-wide mode</a> for the exact steps.</li>
 </ul>
-<h2 id="before-you-start">Before you start<a class="headerlink" href="#before-you-start" title="Permanent link">¶</a></h2>
+<h2 id="before-you-start">Before you start<a data-markdown-ignore class="headerlink" href="#before-you-start" title="Permanent link">¶</a></h2>
 <ol>
 <li>Make sure that the cluster is running.</li>
 <li>
@@ -6823,7 +6823,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </code></pre></div>
 </li>
 </ol>
-<h2 id="restore-using-backupname">Restore using <code>backupName</code><a class="headerlink" href="#restore-using-backupname" title="Permanent link">¶</a></h2>
+<h2 id="restore-using-backupname">Restore using <code>backupName</code><a data-markdown-ignore class="headerlink" href="#restore-using-backupname" title="Permanent link">¶</a></h2>
 <p>Use <code>backupName</code> when the Backup object is in the same namespace as the target cluster. See <a href="backups-restore.html#choose-backupname-or-backupsource">Choose <code>backupName</code> or <code>backupSource</code></a> for the general rule.</p>
 <ol>
 <li>
@@ -6848,10 +6848,10 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </li>
 </ol>
 <p>The Operator doesn’t check that <code>backup1</code> was originally made from <code>cluster2</code>. It only checks that a succeeded Backup object by that name exists in the Restore object’s namespace. This is what lets you restore a backup from one cluster onto a differently named cluster in the same namespace.</p>
-<h2 id="restore-using-backupsource">Restore using <code>backupSource</code><a class="headerlink" href="#restore-using-backupsource" title="Permanent link">¶</a></h2>
+<h2 id="restore-using-backupsource">Restore using <code>backupSource</code><a data-markdown-ignore class="headerlink" href="#restore-using-backupsource" title="Permanent link">¶</a></h2>
 <p>Use this when restoring into a different namespace than the one containing the Backup object, or when you’d rather point directly at the storage destination instead of relying on a Backup object existing in the target namespace.</p>
 <p>When using <code>backupSource</code>, you also need to specify the destination — where the backup is stored. Take this value from the output of <code>kubectl get pxc-backup -n &lt;source-namespace&gt;</code>.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Persistent Volume backup</label><label for="__tabbed_1_2">Cloud storage backup</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_1_1">Persistent Volume backup</label><label for="__tabbed_1_2">Cloud storage backup</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>A Persistent Volume backup can be restored to a side cluster only when the target is in the same namespace as the source. For a side cluster in a different namespace, use cloud storage.</p>
@@ -6882,9 +6882,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p>Start the restore:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deploy/backup/restore.yaml<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span>
 </code></pre></div>
-<h2 id="point-in-time-recovery">Point-in-time recovery<a class="headerlink" href="#point-in-time-recovery" title="Permanent link">¶</a></h2>
+<h2 id="point-in-time-recovery">Point-in-time recovery<a data-markdown-ignore class="headerlink" href="#point-in-time-recovery" title="Permanent link">¶</a></h2>
 <p>PITR works the same way for a side cluster as it does for an in-place restore. See <a href="backups-pitr-restore.html">Restore with point-in-time recovery</a>.</p>
-<h2 id="verify-the-restore">Verify the restore<a class="headerlink" href="#verify-the-restore" title="Permanent link">¶</a></h2>
+<h2 id="verify-the-restore">Verify the restore<a data-markdown-ignore class="headerlink" href="#verify-the-restore" title="Permanent link">¶</a></h2>
 <ol>
 <li>
 <p>Confirm the Restore object reports <code>Succeeded</code>:</p>
@@ -6900,7 +6900,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p>Connect to the side cluster and spot-check the data you expected the backup to contain.</p>
 </li>
 </ol>
-<h3 id="user-passwords-after-the-restore">User passwords after the restore<a class="headerlink" href="#user-passwords-after-the-restore" title="Permanent link">¶</a></h3>
+<h3 id="user-passwords-after-the-restore">User passwords after the restore<a data-markdown-ignore class="headerlink" href="#user-passwords-after-the-restore" title="Permanent link">¶</a></h3>
 <p>After the restore, the Operator resets the side cluster’s system users to its own Secret so the passwords do not need to match the source cluster. This applies to the <code>root</code>, <code>operator</code>, <code>monitor</code>, <code>xtrabackup</code>, and <code>replication</code> users.</p>
 <p>Connect with the side cluster’s own credentials, not the source cluster’s.</p>
 <p>Application users you created yourself likely keep the passwords they had on the source cluster at backup time, since the Operator’s post-restore password reset only covers the system users listed above. If an application user’s password doesn’t work after the restore, try the source cluster’s password for that user.</p>
@@ -7005,7 +7005,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

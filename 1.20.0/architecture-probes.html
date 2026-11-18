@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6987,7 +6987,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="health-checks-and-probes">Health checks and probes<a class="headerlink" href="#health-checks-and-probes" title="Permanent link">¶</a></h1>
+<h1 id="health-checks-and-probes">Health checks and probes<a data-markdown-ignore class="headerlink" href="#health-checks-and-probes" title="Permanent link">¶</a></h1>
 <p>Kubernetes decides whether a container is healthy by running <em>probes</em>: small checks it runs on a schedule. It acts on the results without asking the Operator or <a href="glossary.html#galera">Galera</a>:</p>
 <ul>
 <li>The <strong>readiness probe</strong> decides whether a Pod is <em>ready</em>. Only a ready Pod receives traffic through a Service: Kubernetes adds it to the endpoints of the Services that select it and removes it when the probe fails. Ready Pods also count as available and let the next Pod of a <a href="glossary.html#statefulset">StatefulSet</a> start.</li>
@@ -6999,9 +6999,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </div>
 <p>For a database, this means Kubernetes keeps its own opinion about which nodes are healthy, and it restarts <code>mysqld</code> when that opinion says so. Many behaviors that look surprising, such as a node that restarts after a network partition, a node drain that never finishes, or a cluster stuck in <code>initializing</code>, come from the probes. This page explains what the probes check and who acts on their result.</p>
 <p>The examples use a cluster named <code>cluster1</code>.</p>
-<h2 id="what-the-probes-check">What the probes check<a class="headerlink" href="#what-the-probes-check" title="Permanent link">¶</a></h2>
+<h2 id="what-the-probes-check">What the probes check<a data-markdown-ignore class="headerlink" href="#what-the-probes-check" title="Permanent link">¶</a></h2>
 <p>The Operator sets the probes for the <code>pxc</code> and <code>haproxy</code> containers. The probe scripts are shell scripts that log in as the <code>monitor</code> <a href="users.html#system-users">system user</a> and run a query.</p>
-<h3 id="percona-xtradb-cluster-pods">Percona XtraDB Cluster Pods<a class="headerlink" href="#percona-xtradb-cluster-pods" title="Permanent link">¶</a></h3>
+<h3 id="percona-xtradb-cluster-pods">Percona XtraDB Cluster Pods<a data-markdown-ignore class="headerlink" href="#percona-xtradb-cluster-pods" title="Permanent link">¶</a></h3>
 <p><strong>Readiness</strong> (<code>readiness-check.sh</code>). The Pod is ready when the node:</p>
 <ul>
 <li>belongs to the <a href="glossary.html#primary-component">primary component</a> (<code>wsrep_cluster_status</code> is <code>Primary</code>), and</li>
@@ -7046,11 +7046,11 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tbody>
 </table>
 <p>The Operator doesn’t count a Pod that waits for crash recovery as ready in the cluster status, even though its readiness probe passes.</p>
-<h3 id="haproxy-pods">HAProxy Pods<a class="headerlink" href="#haproxy-pods" title="Permanent link">¶</a></h3>
+<h3 id="haproxy-pods">HAProxy Pods<a data-markdown-ignore class="headerlink" href="#haproxy-pods" title="Permanent link">¶</a></h3>
 <p>Both probes run <code>SELECT 1</code> through HAProxy itself, on its admin port 33062. HAProxy forwards the query to a database node that passes its own <a href="architecture-workflows.html#haproxy">health check</a>. So an HAProxy Pod is ready, and alive, only while HAProxy has at least one healthy database node behind it.</p>
-<h3 id="proxysql-pods">ProxySQL Pods<a class="headerlink" href="#proxysql-pods" title="Permanent link">¶</a></h3>
+<h3 id="proxysql-pods">ProxySQL Pods<a data-markdown-ignore class="headerlink" href="#proxysql-pods" title="Permanent link">¶</a></h3>
 <p>The ProxySQL containers have no readiness or liveness probes. A ProxySQL Pod is ready as soon as its containers are running.</p>
-<h2 id="default-timings">Default timings<a class="headerlink" href="#default-timings" title="Permanent link">¶</a></h2>
+<h2 id="default-timings">Default timings<a data-markdown-ignore class="headerlink" href="#default-timings" title="Permanent link">¶</a></h2>
 <table>
 <thead>
 <tr>
@@ -7103,7 +7103,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tbody>
 </table>
 <p>The probe scripts use <code>timeoutSeconds</code> as the timeout for their own query, minus one second for the <code>pxc</code> container. A <code>pxc</code> liveness check fails if <code>mysqld</code> doesn’t answer within 4 seconds.</p>
-<h2 id="who-acts-on-readiness">Who acts on readiness<a class="headerlink" href="#who-acts-on-readiness" title="Permanent link">¶</a></h2>
+<h2 id="who-acts-on-readiness">Who acts on readiness<a data-markdown-ignore class="headerlink" href="#who-acts-on-readiness" title="Permanent link">¶</a></h2>
 <p>A Pod’s readiness is read by several parties, each for its own purpose:</p>
 <pre class="mermaid"><code>flowchart LR
   %% Hexagon braces are escaped so the MkDocs macros plugin leaves them in place
@@ -7114,11 +7114,11 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   ready --&gt; sts["StatefulSet&lt;br/&gt;start the next Pod"]
   ready --&gt; pdb["PodDisruptionBudget&lt;br/&gt;allow an eviction"]
   ready --&gt; op["Operator&lt;br/&gt;cluster status, Smart Update"]</code></pre>
-<h3 id="proxy-backends">Proxy backends<a class="headerlink" href="#proxy-backends" title="Permanent link">¶</a></h3>
+<h3 id="proxy-backends">Proxy backends<a data-markdown-ignore class="headerlink" href="#proxy-backends" title="Permanent link">¶</a></h3>
 <p>The <code>cluster1-pxc</code> <a href="glossary.html#headless-service">headless Service</a> lists only ready database Pods. The proxies <a href="architecture-workflows.html#node-discovery">discover database nodes</a> from this Service. So a node that is not ready is removed from the proxy configuration, and a node that becomes ready is added, about half a minute after the change.</p>
 <p>The database nodes find each other through a different Service, <code>cluster1-pxc-unready</code>, which lists all Pods whether they are ready or not. A node that is not ready yet can still find its peers and join the cluster.</p>
 <p>The readiness probe is slow on purpose: it takes about 2.5 minutes to mark a node not ready. Short failures don’t change the proxy configuration. Fast failover of client traffic is the job of the proxy’s own health checks, which run every few seconds.</p>
-<h3 id="ordered-start">Ordered start<a class="headerlink" href="#ordered-start" title="Permanent link">¶</a></h3>
+<h3 id="ordered-start">Ordered start<a data-markdown-ignore class="headerlink" href="#ordered-start" title="Permanent link">¶</a></h3>
 <p>Pods of the database StatefulSet start in order: <code>cluster1-pxc-1</code> is created only after <code>cluster1-pxc-0</code> is running and ready, and so on. As a result:</p>
 <ul>
 <li>On cluster creation and scale-up, a node that can’t become ready blocks every node after it.</li>
@@ -7126,20 +7126,20 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li>With <code>updateStrategy: SmartUpdate</code>, the Operator restarts the next Pod only when the previous one is ready.</li>
 </ul>
 <p>This is why a node waiting for full cluster crash recovery reports itself as ready: otherwise the nodes after it would never start, and the Operator could not compare the <code>seqno</code> of all nodes.</p>
-<h3 id="node-drains">Node drains<a class="headerlink" href="#node-drains" title="Permanent link">¶</a></h3>
+<h3 id="node-drains">Node drains<a data-markdown-ignore class="headerlink" href="#node-drains" title="Permanent link">¶</a></h3>
 <p>The default <a href="glossary.html#pdb">PodDisruptionBudget</a> allows one database Pod to be unavailable (<code>pxc.podDisruptionBudget.maxUnavailable: 1</code>). A Pod that is not ready counts as unavailable. While one database Pod is not ready, for example during a long SST, Kubernetes refuses to evict another one: <code>kubectl drain</code> keeps retrying, and managed node pool upgrades wait. Some cloud providers evict the Pod anyway after their own timeout.</p>
 <p>The same applies to HAProxy and ProxySQL Pods with their PodDisruptionBudgets.</p>
-<h3 id="the-operator">The Operator<a class="headerlink" href="#the-operator" title="Permanent link">¶</a></h3>
+<h3 id="the-operator">The Operator<a data-markdown-ignore class="headerlink" href="#the-operator" title="Permanent link">¶</a></h3>
 <p>The Operator reads Pod readiness, too:</p>
 <ul>
 <li><strong>Cluster status.</strong> The cluster is <code>ready</code> only when every database and proxy Pod is ready. When one Pod becomes not ready, the cluster goes back to <code>initializing</code>, and everything that waits for a <code>ready</code> cluster waits as well: scheduled backups, creation of custom users, automatic upgrades. See <a href="architecture-reconciliation.html#what-ready-means">What <code>ready</code> means</a>.</li>
 <li><strong><a href="glossary.html#smart-update">Smart Update</a>.</strong> After it restarts a Pod, the Operator waits until the <code>pxc</code> container is ready, and then until the node is <code>Synced</code>, before it moves on. It waits for up to 2 hours, or for <code>pxc.livenessProbes.initialDelaySeconds</code> seconds if you changed that value from the default 300. See <a href="architecture-reconciliation.html#how-smart-update-works">How Smart Update works</a>.</li>
 <li><strong>Database connections.</strong> When the Operator needs to query the database directly, for example to read the server version or to set up <a href="replication.html">cross-site replication</a>, it connects only to ready Pods.</li>
 </ul>
-<h2 id="who-acts-on-liveness">Who acts on liveness<a class="headerlink" href="#who-acts-on-liveness" title="Permanent link">¶</a></h2>
+<h2 id="who-acts-on-liveness">Who acts on liveness<a data-markdown-ignore class="headerlink" href="#who-acts-on-liveness" title="Permanent link">¶</a></h2>
 <p>Only the kubelet. When the liveness probe fails, the kubelet stops the <code>pxc</code> container, with the usual grace period, and starts it again. After repeated restarts, the Pod goes into <code>CrashLoopBackOff</code>, and the kubelet waits longer before each next start, up to 5 minutes.</p>
 <p>A restarted node rejoins the cluster with <a href="glossary.html#ist">IST</a>, or with a full SST if the donor’s <a href="glossary.html#gcache">gcache</a> doesn’t cover the gap. A liveness restart can turn a short problem into a long state transfer.</p>
-<h2 id="what-this-means-for-users">What this means for users<a class="headerlink" href="#what-this-means-for-users" title="Permanent link">¶</a></h2>
+<h2 id="what-this-means-for-users">What this means for users<a data-markdown-ignore class="headerlink" href="#what-this-means-for-users" title="Permanent link">¶</a></h2>
 <p>The probes act on their own, and they don’t know what you are doing on the node. Keep them in mind in these situations:</p>
 <ul>
 <li><strong>Network partition or <a href="glossary.html#quorum">quorum</a> loss.</strong> A node outside the primary component fails its liveness probe and is restarted after about 30 seconds, unless its container started less than 5 minutes ago. Galera alone would let the node wait and rejoin when the network comes back; on Kubernetes, the node restarts instead. If the cluster lost quorum, all remaining nodes restart, find no primary component to join, and wait for <a href="architecture-workflows.html#full-cluster-crash-recovery">full cluster crash recovery</a>.</li>
@@ -7149,14 +7149,14 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><strong>A full outage behind HAProxy.</strong> When no database node is healthy, every HAProxy Pod becomes not ready, so the <code>cluster1-haproxy</code> Service has no endpoints and clients get connection errors instead of MySQL errors. After about 2 minutes, the HAProxy containers start restarting as well. These restarts are a consequence of the database outage, not its cause.</li>
 <li><strong>A Pod that stays not ready.</strong> It blocks node drains, ordered start of the Pods after it, the Smart Update, and everything that waits for a <code>ready</code> cluster.</li>
 </ul>
-<h2 id="tune-the-probes">Tune the probes<a class="headerlink" href="#tune-the-probes" title="Permanent link">¶</a></h2>
+<h2 id="tune-the-probes">Tune the probes<a data-markdown-ignore class="headerlink" href="#tune-the-probes" title="Permanent link">¶</a></h2>
 <p>Change the probe settings in the <a href="glossary.html#custom-resource">Custom Resource</a> with the <code>pxc.readinessProbes</code>, <code>pxc.livenessProbes</code>, <code>haproxy.readinessProbes</code> and <code>haproxy.livenessProbes</code> subsections. See <a href="operator.html#pxcreadinessprobesinitialdelayseconds">Custom Resource options</a>.</p>
 <ul>
 <li>Probe settings are part of the Pod template. Changing them restarts the Pods with your <a href="architecture-reconciliation.html#update-strategies">update strategy</a>.</li>
 <li>If heavy load makes the liveness probe time out, raise <code>pxc.livenessProbes.timeoutSeconds</code> or <code>failureThreshold</code> rather than turning the probe off. The scripts use the new timeout for their query, too.</li>
 <li>If <code>mysqld</code> needs more than 5 minutes to start and the start-up isn’t covered by the probe exceptions above, raise <code>pxc.livenessProbes.initialDelaySeconds</code>. Note that this value also limits how long the Smart Update waits for each Pod.</li>
 </ul>
-<h2 id="where-to-look-if-probes-fail">Where to look if probes fail<a class="headerlink" href="#where-to-look-if-probes-fail" title="Permanent link">¶</a></h2>
+<h2 id="where-to-look-if-probes-fail">Where to look if probes fail<a data-markdown-ignore class="headerlink" href="#where-to-look-if-probes-fail" title="Permanent link">¶</a></h2>
 <ul>
 <li><code>kubectl describe pod cluster1-pxc-0</code> shows the probe settings and, under <code>Events</code>, the <code>Readiness probe failed</code> and <code>Liveness probe failed</code> messages.</li>
 <li><code>kubectl get pod cluster1-pxc-0</code> shows the restart count. If the events contain <code>Container pxc failed liveness probe, will be restarted</code>, the kubelet restarted the container; it was not a <code>mysqld</code> crash.</li>
@@ -7165,9 +7165,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><code>kubectl get pdb</code> shows how many disruptions each PodDisruptionBudget allows right now.</li>
 <li>More symptoms and the layer that owns each: <a href="debug.html#where-to-look-first">Initial troubleshooting</a>.</li>
 </ul>
-<h2 id="next-steps">Next steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
+<h2 id="next-steps">Next steps<a data-markdown-ignore class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
 <p><a class="md-button" href="debug.html">Initial troubleshooting</a></p>
-<h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
+<h2 id="see-also">See also<a data-markdown-ignore class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="failover-in-cluster.html">In-cluster failover</a></li>
 <li><a href="recovery.html">Crash recovery</a></li>
@@ -7273,7 +7273,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

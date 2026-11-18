@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6987,21 +6987,21 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="users">Users<a class="headerlink" href="#users" title="Permanent link">¶</a></h1>
+<h1 id="users">Users<a data-markdown-ignore class="headerlink" href="#users" title="Permanent link">¶</a></h1>
 <p>MySQL user accounts within the Cluster can be divided into two different groups:</p>
 <ul>
 <li><em>application-level users</em>: the unprivileged user accounts for applications,</li>
 <li><em>system-level users</em>: the accounts needed to automate the cluster deployment and management tasks, such as Percona XtraDB Cluster Health checks or ProxySQL integration.</li>
 </ul>
 <p>These two groups serve different purposes. Read the following sections to learn more.</p>
-<h2 id="unprivileged-users">Unprivileged users<a class="headerlink" href="#unprivileged-users" title="Permanent link">¶</a></h2>
+<h2 id="unprivileged-users">Unprivileged users<a data-markdown-ignore class="headerlink" href="#unprivileged-users" title="Permanent link">¶</a></h2>
 <p>The Operator doesn’t create application-level (unprivileged) user accounts by default.</p>
 <p>You can create these unprivileged users in the following ways:</p>
 <ul>
 <li><a href="#create-users-in-the-custom-resource">Automatically via Custom Resource</a>. This ability is available with Operator versions 1.16.0 and newer</li>
 <li>Manually in MySQL</li>
 </ul>
-<h3 id="create-users-in-the-custom-resource">Create users in the Custom Resource<a class="headerlink" href="#create-users-in-the-custom-resource" title="Permanent link">¶</a></h3>
+<h3 id="create-users-in-the-custom-resource">Create users in the Custom Resource<a data-markdown-ignore class="headerlink" href="#create-users-in-the-custom-resource" title="Permanent link">¶</a></h3>
 <p>Starting from the Operator version 1.16.0, you can create users in Percona XtraDB Cluster via the <code>users</code> subsection in the Custom Resource. This is called declarative user management.</p>
 <p>You can change the <code>users</code> section in the <code>deploy/cr.yaml</code> configuration file either at the cluster creation time or adjust it over time.</p>
 <p>You can define users in the <code>users</code> section of your Custom Resource. For each user, you can specify:</p>
@@ -7032,7 +7032,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <span class="nn">...</span>
 </code></pre></div>
 <p>For detailed information about all available options, see the <a href="operator.html#operator-users-section">Custom Resource reference</a>.</p>
-<h4 id="generate-user-passwords-manually">Generate user passwords manually<a class="headerlink" href="#generate-user-passwords-manually" title="Permanent link">¶</a></h4>
+<h4 id="generate-user-passwords-manually">Generate user passwords manually<a data-markdown-ignore class="headerlink" href="#generate-user-passwords-manually" title="Permanent link">¶</a></h4>
 <p>You can create the Secret containing the user password manually. The Secret referenced in <code>users.passwordSecretRef.name</code> should follow this format:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
@@ -7043,7 +7043,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <span class="w">  </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-user-pwd-key</span>
 </code></pre></div>
 <p>The Operator tracks password changes in the Secret object and automatically updates the user password in the database when the Secret is modified.</p>
-<h4 id="customize-password-generation-by-the-operator">Customize password generation by the Operator<a class="headerlink" href="#customize-password-generation-by-the-operator" title="Permanent link">¶</a></h4>
+<h4 id="customize-password-generation-by-the-operator">Customize password generation by the Operator<a data-markdown-ignore class="headerlink" href="#customize-password-generation-by-the-operator" title="Permanent link">¶</a></h4>
 <p>By default, the Operator generates user passwords using alphanumeric characters plus a set of special symbols. The password length is randomly chosen in the range of 16 to 20 characters.</p>
 <p>To ensure compatibility with tools that may not support certain special symbols or require a different password length, you can customize password generation using the <code>passwordGenerationOptions</code> subsection in the Custom Resource:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">passwordGenerationOptions</span><span class="p">:</span>
@@ -7051,7 +7051,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <span class="w">  </span><span class="nt">maxLength</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
 <span class="w">  </span><span class="nt">minLength</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16</span>
 </code></pre></div>
-<h4 id="important-considerations">Important considerations<a class="headerlink" href="#important-considerations" title="Permanent link">¶</a></h4>
+<h4 id="important-considerations">Important considerations<a data-markdown-ignore class="headerlink" href="#important-considerations" title="Permanent link">¶</a></h4>
 <p>When creating users via Custom Resource, keep the following behavior in mind:</p>
 <ul>
 <li>
@@ -7071,9 +7071,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><strong>Duplicate users</strong>: You cannot define two entries for the same user (for example, with different grants for different databases) in a single Custom Resource. However, you can achieve this by making sequential updates to the Custom Resource.</li>
 <li><strong>Invalid grants</strong>: If you specify an invalid grant or set an administrative (global) grant while also specifying <code>dbs</code>, the Operator logs an error and creates the user with default grants (<code>GRANT USAGE</code>).</li>
 </ul>
-<h3 id="create-users-manually">Create users manually<a class="headerlink" href="#create-users-manually" title="Permanent link">¶</a></h3>
+<h3 id="create-users-manually">Create users manually<a data-markdown-ignore class="headerlink" href="#create-users-manually" title="Permanent link">¶</a></h3>
 <p>Instead of using the Custom Resource, you can create unprivileged users directly in MySQL using standard SQL commands. This approach gives you full control over user creation and is useful when you need to create users with specific configurations that may not be easily expressed in the Custom Resource format.</p>
-<h4 id="create-a-user">Create a user<a class="headerlink" href="#create-a-user" title="Permanent link">¶</a></h4>
+<h4 id="create-a-user">Create a user<a data-markdown-ignore class="headerlink" href="#create-a-user" title="Permanent link">¶</a></h4>
 <p>To create a user manually, use separate statements to create the account and grant privileges:</p>
 <ol>
 <li>
@@ -7096,14 +7096,14 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </code></pre></div>
 </li>
 </ol>
-<h4 id="verify-user-creation">Verify user creation<a class="headerlink" href="#verify-user-creation" title="Permanent link">¶</a></h4>
+<h4 id="verify-user-creation">Verify user creation<a data-markdown-ignore class="headerlink" href="#verify-user-creation" title="Permanent link">¶</a></h4>
 <p>After creating the user, verify that it was created successfully and can connect to the database. The following example connects to the cluster via HAProxy and executes a simple query:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span>percona-client<span class="w"> </span>--image<span class="o">=</span>percona/percona-xtradb-cluster:8.4.8-8.1<span class="w"> </span>--restart<span class="o">=</span>Never<span class="w"> </span>--<span class="w"> </span>bash<span class="w"> </span>-il
 percona-client:/$<span class="w"> </span>mysql<span class="w"> </span>-h<span class="w"> </span>cluster1-haproxy<span class="w"> </span>-uuser1<span class="w"> </span>-ppassword1
 mysql&gt;<span class="w"> </span>SELECT<span class="w"> </span>*<span class="w"> </span>FROM<span class="w"> </span>database1.table1<span class="w"> </span>LIMIT<span class="w"> </span><span class="m">1</span><span class="p">;</span>
 </code></pre></div>
 <p>If the connection succeeds and you can execute queries, the user has been created correctly with the appropriate permissions.</p>
-<h2 id="system-users">System Users<a class="headerlink" href="#system-users" title="Permanent link">¶</a></h2>
+<h2 id="system-users">System Users<a data-markdown-ignore class="headerlink" href="#system-users" title="Permanent link">¶</a></h2>
 <p>To automate the deployment and management of the cluster components,
 the Operator requires system-level Percona XtraDB Cluster users.</p>
 <p>Credentials for these users are stored as a <a href="https://kubernetes.io/docs/concepts/configuration/secret/">Kubernetes Secrets <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> object.
@@ -7175,7 +7175,7 @@ configuration file.</p>
 <p class="admonition-title">Note</p>
 <p>The administrative database user <code>operator</code> is always created in MySQL as <code>operator@'%'</code>. Using an <code>operator</code> user with a different host value (for example, <code>operator@'hostname'</code>) is not supported and such users should not exist in the database.</p>
 </div>
-<h3 id="yaml-object-format">YAML object format<a class="headerlink" href="#yaml-object-format" title="Permanent link">¶</a></h3>
+<h3 id="yaml-object-format">YAML object format<a data-markdown-ignore class="headerlink" href="#yaml-object-format" title="Permanent link">¶</a></h3>
 <p>The default name of the Secrets object for the system users is <code>cluster1-secrets</code>. You can create your own Secret and reference it in the Custom Resource for your cluster in the <code>spec.secretsName</code> key.</p>
 <p>When you create the Secrets object yourself, your YAML file should match the following simple format:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
@@ -7193,14 +7193,14 @@ configuration file.</p>
 <span class="w">  </span><span class="nt">pmmservertoken</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my_pmm_server_token</span>
 </code></pre></div>
 <p>The example above matches the default <code>deploy/secrets.yaml</code> file, which includes sample passwords. These are intended only for development or automated testing. <strong>Don’t use them in production</strong>.</p>
-<h3 id="update-the-secret">Update the Secret<a class="headerlink" href="#update-the-secret" title="Permanent link">¶</a></h3>
+<h3 id="update-the-secret">Update the Secret<a data-markdown-ignore class="headerlink" href="#update-the-secret" title="Permanent link">¶</a></h3>
 <p>When you create the Secrets object, you use the <code>stringData</code> type and specify all values for each key/value pair in plain text format. However, the resulting Secrets object contains passwords stored as base64-encoded strings in the <code>data</code> type.</p>
 <p>To update any field, you’ll need to encode the value into the base64 format.</p>
 <p>Here’s how to do it:</p>
 <ol>
 <li>
 <p>Run the following command in your local shell to encode the new value. Replace <code>new_password</code> with your value:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">in Linux</label><label for="__tabbed_1_2">in macOS</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_1_1">in Linux</label><label for="__tabbed_1_2">in macOS</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">"new_password"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>--wrap<span class="o">=</span><span class="m">0</span>
@@ -7215,7 +7215,7 @@ configuration file.</p>
 </li>
 <li>
 <p>Update the Secrets object. For example, the following command updates the Admin user’s password to <code>new_password</code> in the <code>cluster1-secrets</code> object:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">in Linux</label><label for="__tabbed_2_2">in macOS</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_2_1">in Linux</label><label for="__tabbed_2_2">in macOS</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>secret/cluster1-secrets<span class="w"> </span>-p<span class="w"> </span><span class="s1">'{"data":{"root": "'</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span>new_password<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>--wrap<span class="o">=</span><span class="m">0</span><span class="k">)</span><span class="s1">'"}}'</span>
@@ -7229,19 +7229,19 @@ configuration file.</p>
 </div>
 </li>
 </ol>
-<h3 id="internal-secret-and-its-usage">Internal Secret and its usage<a class="headerlink" href="#internal-secret-and-its-usage" title="Permanent link">¶</a></h3>
+<h3 id="internal-secret-and-its-usage">Internal Secret and its usage<a data-markdown-ignore class="headerlink" href="#internal-secret-and-its-usage" title="Permanent link">¶</a></h3>
 <p>The Operator creates and updates an additional Secrets object which is named based on the cluster name, like <code>internal-cluster1</code>. This Secrets object is used only by the Operator. Users must not change it.</p>
 <p>This object contains secrets with the same passwords as the one specified in <code>spec.secretsName</code> (e.g., <code>cluster1-secrets</code>). When you update the <code>cluster1-secrets</code> Secret, the Operator propagates these changes to the internal <code>internal-cluster1</code> Secrets object.</p>
-<h3 id="password-rotation-policies-and-timing">Password rotation policies and timing<a class="headerlink" href="#password-rotation-policies-and-timing" title="Permanent link">¶</a></h3>
+<h3 id="password-rotation-policies-and-timing">Password rotation policies and timing<a data-markdown-ignore class="headerlink" href="#password-rotation-policies-and-timing" title="Permanent link">¶</a></h3>
 <p>When there is a change in user secrets, the Operator creates the necessary transaction to change passwords. This rotation happens almost instantly (the delay can be up to a few seconds), and you don’t need to take any action beyond changing the password.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Please don’t change the <code>secretsName</code> option in the CR. Make changes inside the secrets object itself.</p>
 </div>
 <p>Starting from the Operator version 1.13.0, system users are created with the <code>PASSWORD EXPIRE NEVER</code> policy. This policy is automatically applied to system users on existing clusters when the Operator is upgraded to version 1.13.0.</p>
-<h3 id="marking-system-users-in-mysql">Marking system users in MySQL<a class="headerlink" href="#marking-system-users-in-mysql" title="Permanent link">¶</a></h3>
+<h3 id="marking-system-users-in-mysql">Marking system users in MySQL<a data-markdown-ignore class="headerlink" href="#marking-system-users-in-mysql" title="Permanent link">¶</a></h3>
 <p>Starting with MySQL 8.0.16, a new feature called Account Categories has been implemented, which allows you to mark system users as such. See <a href="https://dev.mysql.com/doc/refman/8.0/en/account-categories.html">the official documentation on this feature <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> for more details.</p>
-<h2 id="development-mode">Development mode<a class="headerlink" href="#development-mode" title="Permanent link">¶</a></h2>
+<h2 id="development-mode">Development mode<a data-markdown-ignore class="headerlink" href="#development-mode" title="Permanent link">¶</a></h2>
 <p>To make development and testing easier, the <code>deploy/secrets.yaml</code> secrets file contains default passwords for Percona XtraDB Cluster system users.</p>
 <p>These development-mode credentials from <code>deploy/secrets.yaml</code> are:</p>
 <table>
@@ -7382,7 +7382,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

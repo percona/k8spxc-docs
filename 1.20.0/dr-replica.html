@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6679,14 +6679,14 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="set-up-the-replica-site">Set up the replica site<a class="headerlink" href="#set-up-the-replica-site" title="Permanent link">¶</a></h1>
+<h1 id="set-up-the-replica-site">Set up the replica site<a data-markdown-ignore class="headerlink" href="#set-up-the-replica-site" title="Permanent link">¶</a></h1>
 <p>The replica site must be the exact copy of the primary site and must have the same system user credentials. The easiest way to achieve this is to <a href="dr-primary.html#create-a-backup-from-the-primary-site">make a backup on the primary site</a> and restore it on the replica. </p>
-<h2 id="before-you-start">Before you start<a class="headerlink" href="#before-you-start" title="Permanent link">¶</a></h2>
+<h2 id="before-you-start">Before you start<a data-markdown-ignore class="headerlink" href="#before-you-start" title="Permanent link">¶</a></h2>
 <p>Clone the repository with all manifests and source code. You’ll need it to edit configuration files for the database clusters, Secrets, backups and restores. Run the following command:</p>
 <div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>-b<span class="w"> </span>v1.20.0<span class="w"> </span>https://github.com/percona/percona-xtradb-cluster-operator
 </code></pre></div>
 <p>Make sure to clone the correct branch. The branch name is the same as the Operator release version. </p>
-<h2 id="procedure">Procedure<a class="headerlink" href="#procedure" title="Permanent link">¶</a></h2>
+<h2 id="procedure">Procedure<a data-markdown-ignore class="headerlink" href="#procedure" title="Permanent link">¶</a></h2>
 <p>Let’s create <code>cluster2</code> on the replica site.</p>
 <ol>
 <li>
@@ -6745,7 +6745,7 @@ cluster2   cluster2-haproxy.&lt;namespace&gt;   ready    3                3     
 </details>
 </li>
 </ol>
-<h2 id="restore-the-backup-on-the-replica-site">Restore the backup on the replica site<a class="headerlink" href="#restore-the-backup-on-the-replica-site" title="Permanent link">¶</a></h2>
+<h2 id="restore-the-backup-on-the-replica-site">Restore the backup on the replica site<a data-markdown-ignore class="headerlink" href="#restore-the-backup-on-the-replica-site" title="Permanent link">¶</a></h2>
 <ol>
 <li>
 <p>Create the Secret object with the credentials from the cloud storage where you made the backup to. The Operator uses the same Secret for backups and  restores. For example, if you named the Secret <code>deploy/backup/backup-s3-secret.yaml</code>, run the following command to create the Secrets object on the replica site. Replace the <code>&lt;namespace&gt;</code> placeholder with your namespace.</p>
@@ -6896,7 +6896,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

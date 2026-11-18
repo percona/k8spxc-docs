@@ -24,7 +24,7 @@ Security (TLS) cryptographic protocol for the following types of communication:"
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -139,7 +139,7 @@ Security (TLS) cryptographic protocol for the following types of communication:"
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6678,7 +6678,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="transport-layer-security-tls">Transport Layer Security (TLS)<a class="headerlink" href="#transport-layer-security-tls" title="Permanent link">¶</a></h1>
+<h1 id="transport-layer-security-tls">Transport Layer Security (TLS)<a data-markdown-ignore class="headerlink" href="#transport-layer-security-tls" title="Permanent link">¶</a></h1>
 <p>The Percona Operator for MySQL uses Transport Layer
 Security (TLS) cryptographic protocol for the following types of communication:</p>
 <table>
@@ -6702,7 +6702,7 @@ Security (TLS) cryptographic protocol for the following types of communication:<
 </tr>
 </tbody>
 </table>
-<h2 id="tls-certificates">TLS certificates<a class="headerlink" href="#tls-certificates" title="Permanent link">¶</a></h2>
+<h2 id="tls-certificates">TLS certificates<a data-markdown-ignore class="headerlink" href="#tls-certificates" title="Permanent link">¶</a></h2>
 <p>Choose one of three ways to provision TLS certificates, depending on how much control you need over certificate generation and renewal:</p>
 <table>
 <thead>
@@ -6732,7 +6732,7 @@ Security (TLS) cryptographic protocol for the following types of communication:<
 </table>
 <p><strong>For testing purposes</strong>, you can use pre-generated certificates available in the <code>deploy/ssl-secrets.yaml</code> file. But we strongly recommend
 <strong>to not use them on any production system</strong>!</p>
-<h2 id="connect-your-application-using-tls">Connect your application using TLS<a class="headerlink" href="#connect-your-application-using-tls" title="Permanent link">¶</a></h2>
+<h2 id="connect-your-application-using-tls">Connect your application using TLS<a data-markdown-ignore class="headerlink" href="#connect-your-application-using-tls" title="Permanent link">¶</a></h2>
 <p>To verify server identity when connecting with TLS, use <code>--ssl-mode=VERIFY_CA</code> or <code>--ssl-mode=VERIFY_IDENTITY</code> (or your driver’s equivalent) with the CA certificate that matches the proxy you connect through:</p>
 <ul>
 <li><strong>HAProxy</strong> (the default): use the CA from the <em>internal</em> certificate Secret. It is referenced in the <code>sslInternalSecretName</code> Custom Resource option (<code>cluster1-ssl-internal</code> by default).</li>
@@ -6742,7 +6742,7 @@ Security (TLS) cryptographic protocol for the following types of communication:<
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>cluster1-ssl-internal<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.data.ca\.crt}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span>&gt;<span class="w"> </span>ca.pem
 </code></pre></div>
 <p>Then connect with it, using the same host as <a href="connect.html">Connect to Percona XtraDB Cluster</a>:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">with HAProxy (default)</label><label for="__tabbed_1_2">with ProxySQL</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_1_1">with HAProxy (default)</label><label for="__tabbed_1_2">with ProxySQL</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>mysql<span class="w"> </span>-h<span class="w"> </span>cluster1-haproxy<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">'&lt;root_password&gt;'</span><span class="w"> </span>--ssl-mode<span class="o">=</span>VERIFY_IDENTITY<span class="w"> </span>--ssl-ca<span class="o">=</span>path/to/ca.pem
@@ -6755,7 +6755,7 @@ Security (TLS) cryptographic protocol for the following types of communication:<
 </div>
 </div>
 <p><code>--ssl-mode=VERIFY_IDENTITY</code> also checks the hostname you connect with against the certificate’s Subject Alternative Names (SANs). If the connection fails, confirm which certificate is actually being served. See <a href="tls-manual.html#verify-the-certificate-is-in-use">Verify the certificate is in use</a>.</p>
-<h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
+<h2 id="see-also">See also<a data-markdown-ignore class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
 <p>Related tasks:</p>
 <ul>
 <li><a href="tls-update.html">Update certificates</a></li>
@@ -6861,7 +6861,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

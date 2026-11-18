@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6819,7 +6819,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="percona-operator-for-mysql-based-on-percona-xtradb-cluster-1150"><em>Percona Operator for MySQL based on Percona XtraDB Cluster</em> 1.15.0<a class="headerlink" href="#percona-operator-for-mysql-based-on-percona-xtradb-cluster-1150" title="Permanent link">¶</a></h1>
+<h1 id="percona-operator-for-mysql-based-on-percona-xtradb-cluster-1150"><em>Percona Operator for MySQL based on Percona XtraDB Cluster</em> 1.15.0<a data-markdown-ignore class="headerlink" href="#percona-operator-for-mysql-based-on-percona-xtradb-cluster-1150" title="Permanent link">¶</a></h1>
 <ul>
 <li><strong>Date</strong></li>
 </ul>
@@ -6828,13 +6828,13 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><strong>Installation</strong></li>
 </ul>
 <p><a href="../System-Requirements.html#installation-guidelines">Installing Percona Operator for MySQL based on Percona XtraDB Cluster</a></p>
-<h2 id="release-highlights">Release Highlights<a class="headerlink" href="#release-highlights" title="Permanent link">¶</a></h2>
-<h3 id="general-availability-of-the-automated-volume-resizing">General availability of the automated volume resizing<a class="headerlink" href="#general-availability-of-the-automated-volume-resizing" title="Permanent link">¶</a></h3>
+<h2 id="release-highlights">Release Highlights<a data-markdown-ignore class="headerlink" href="#release-highlights" title="Permanent link">¶</a></h2>
+<h3 id="general-availability-of-the-automated-volume-resizing">General availability of the automated volume resizing<a data-markdown-ignore class="headerlink" href="#general-availability-of-the-automated-volume-resizing" title="Permanent link">¶</a></h3>
 <p>The possibility to resize Persistent Volumes <a href="../scaling.html#scale-storage">by just changing the value</a> of the <code>resources.requests.storage</code> option in the PerconaXtraDBCluster custom resource, introduced in the previous release as a technical preview, graduates to general availability.</p>
-<h3 id="allowing-haproxy-replica-service-to-cycle-through-the-reader-instances-only">Allowing <code>haproxy-replica</code> Service to cycle through the reader instances only<a class="headerlink" href="#allowing-haproxy-replica-service-to-cycle-through-the-reader-instances-only" title="Permanent link">¶</a></h3>
+<h3 id="allowing-haproxy-replica-service-to-cycle-through-the-reader-instances-only">Allowing <code>haproxy-replica</code> Service to cycle through the reader instances only<a data-markdown-ignore class="headerlink" href="#allowing-haproxy-replica-service-to-cycle-through-the-reader-instances-only" title="Permanent link">¶</a></h3>
 <p>By default <a href="../expose.html#__tabbed_1_1">haproxy-replica Service</a> directs connections to all Pods of the database cluster in a round-robin manner. The new <code>haproxy.exposeReplicas.onlyReaders</code> Custom Resource option allows to modify this behavior: setting it to <code>true</code> excludes current MySQL primary instance (writer) from the list, leaving only the reader instances. By default the option is set to false, which means that <code>haproxy-replicas</code> sends traffic to all Pods, including the active writer. The feature can be useful to simplify the application logic by splitting read and write MySQL traffic on the Kubernetes level.</p>
 <p>Also, it should be noted that changing <code>haproxy.exposeReplicas.onlyReaders</code> value will cause HAProxy Pods to restart.</p>
-<h3 id="fixing-the-overloaded-allowunsafeconfigurations-flag">Fixing the overloaded <code>allowUnsafeConfigurations</code> flag<a class="headerlink" href="#fixing-the-overloaded-allowunsafeconfigurations-flag" title="Permanent link">¶</a></h3>
+<h3 id="fixing-the-overloaded-allowunsafeconfigurations-flag">Fixing the overloaded <code>allowUnsafeConfigurations</code> flag<a data-markdown-ignore class="headerlink" href="#fixing-the-overloaded-allowunsafeconfigurations-flag" title="Permanent link">¶</a></h3>
 <p>In the previous Operator versions <code>allowUnsafeConfigurations</code> Custom Resource option was used to allow configuring a cluster with unsafe parameters, such as starting it with less than 3 Percona XtraDB Cluster instances. In fact, setting this option to <code>true</code> resulted in a wide range of reduced safety features without the user’s explicit intent: disabling TLS, allowing backups in unhealthy clusters, etc.</p>
 <p>With this release, a separate <code>unsafeFlags</code> Custom Resource section is introduced for the fine-grained control of the safety loosening features:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">unsafeFlags</span><span class="p">:</span>
@@ -6845,12 +6845,12 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </code></pre></div>
 <p>If the appropriate option is set to <code>false</code> and the Operator detects unsafe parameters, it sets cluster status to <code>error</code>, and prints an error message in the log.</p>
 <p>Also, TLS configuration is now <a href="../tls-disable.html">enabled or disabled</a> by setting <code>unsafeFlags.tls</code> and  <code>tls.enabled</code> Custom Resource options to <code>true</code> or <code>false</code>.</p>
-<h2 id="new-features">New Features<a class="headerlink" href="#new-features" title="Permanent link">¶</a></h2>
+<h2 id="new-features">New Features<a data-markdown-ignore class="headerlink" href="#new-features" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1330">K8SPXC-1330</a>: A new <code>haproxy.exposeReplicas.onlyReaders</code> Custom Resource option makes <code>haproxy-replicas</code> Service to <a href="../expose.html#__tabbed_1_1">forward requests</a> to reader instances of the MySQL cluster, avoiding the primary (writer) instance.</li>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1355">K8SPXC-1355</a>: Finalizers were renamed to contain fully qualified domain names (FQDNs), avoiding potential conflicts with other finalizer names in the same Kubernetes environment</li>
 </ul>
-<h2 id="improvements">Improvements<a class="headerlink" href="#improvements" title="Permanent link">¶</a></h2>
+<h2 id="improvements">Improvements<a data-markdown-ignore class="headerlink" href="#improvements" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1357">K8SPXC-1357</a>: HAProxy Pod no longer restarts when the <code>operator</code> user’s password changes, which is useful or the applications with persistent connection to  MySQL</li>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1358">K8SPXC-1358</a>: Removing <code>allowUnsafeConfigurations</code> Custom Resource option in favor of fine-grained safety control in the <code>unsafeFlags</code> subsection</li>
@@ -6858,7 +6858,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><a href="https://jira.percona.com/browse/K8SPXC-1385">K8SPXC-1385</a>: Dynamic Volume resize now checks resource quotas and the PVC storage limits</li>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1423">K8SPXC-1423</a>: The <code>percona.com/delete-pxc-pvc</code> finalizer is now able to delete also temporary secrets created by the Operator</li>
 </ul>
-<h2 id="bugs-fixed">Bugs Fixed<a class="headerlink" href="#bugs-fixed" title="Permanent link">¶</a></h2>
+<h2 id="bugs-fixed">Bugs Fixed<a data-markdown-ignore class="headerlink" href="#bugs-fixed" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1067">K8SPXC-1067</a>: Fix a bug where changing <code>gracePeriod</code>, <code>nodeSelector</code>, <code>priorityClassName</code>, <code>runtimeClassName</code>, and <code>schedulerName</code> fields in the <code>haproxy</code> Custom Resource subsection didn’t propagate changes to the haproxy StatefulSet</li>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1338">K8SPXC-1338</a>: Fix a bug where binary log collector Pod had unnecessary restart during the Percona XtraDB Cluster rolling restart</li>
@@ -6872,7 +6872,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><a href="https://jira.percona.com/browse/K8SPXC-1408">K8SPXC-1408</a>: Fix a bug where the Operator blocked all restores (including ones without PiTR) in case of a binlog gap detected, instead of only blocking PiTR restores</li>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1418">K8SPXC-1418</a>: Fix a bug where CA Certificate generated by cert-manager had expiration period of 1 year instead of the 3 years period used by the Operator for other generated certificates, including ones used for internal and external communications</li>
 </ul>
-<h2 id="deprecation-rename-and-removal">Deprecation, Rename and Removal<a class="headerlink" href="#deprecation-rename-and-removal" title="Permanent link">¶</a></h2>
+<h2 id="deprecation-rename-and-removal">Deprecation, Rename and Removal<a data-markdown-ignore class="headerlink" href="#deprecation-rename-and-removal" title="Permanent link">¶</a></h2>
 <ul>
 <li>
 <p>Starting from now, <code>allowUnsafeConfigurations</code> Custom Resource option is deprecated in favor of a number of options under the <code>unsafeFlags</code> subsection. Also, starting from now the Operator will not set safe defaults automatically. Upgrading existing clusters with <code>allowUnsafeConfiguration=false</code> and a configuration considered unsafe (i.e. <code>pxc.size&lt;3</code> or  <code>tls.enabled=false</code>) will print errors in the log and the cluster will have <code>error</code> status until the values are fixed.</p>
@@ -6890,7 +6890,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p>The <code>pxc-operator</code> Helm chart now has <code>createNamespace</code> option now is set to <code>false</code> by default, resulting in not creating any namespaces unless explicitly allowed to do so by the user</p>
 </li>
 </ul>
-<h2 id="supported-platforms">Supported Platforms<a class="headerlink" href="#supported-platforms" title="Permanent link">¶</a></h2>
+<h2 id="supported-platforms">Supported Platforms<a data-markdown-ignore class="headerlink" href="#supported-platforms" title="Permanent link">¶</a></h2>
 <p>The Operator was developed and tested with Percona XtraDB Cluster versions 8.0.36-28.1 and 5.7.44-31.65. Other options may also work but have not been tested. Other software components include:</p>
 <ul>
 <li>Percona XtraBackup versions 8.0.35-30.1 and 2.4.29-1</li>
@@ -7009,7 +7009,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="../js/print-site.js"></script>
       

@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6911,9 +6911,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="configuring-load-balancing-with-proxysql">Configuring load balancing with ProxySQL<a class="headerlink" href="#configuring-load-balancing-with-proxysql" title="Permanent link">¶</a></h1>
+<h1 id="configuring-load-balancing-with-proxysql">Configuring load balancing with ProxySQL<a data-markdown-ignore class="headerlink" href="#configuring-load-balancing-with-proxysql" title="Permanent link">¶</a></h1>
 <p>This page describes how to configure and customize ProxySQL for your Percona XtraDB Cluster, including the advanced scheduler feature. For information about choosing between HAProxy and ProxySQL, see <a href="load-balancing.html">Configure load balancing</a>.</p>
-<h2 id="cluster1-proxysql-service"><code>cluster1-proxysql</code> service<a class="headerlink" href="#cluster1-proxysql-service" title="Permanent link">¶</a></h2>
+<h2 id="cluster1-proxysql-service"><code>cluster1-proxysql</code> service<a data-markdown-ignore class="headerlink" href="#cluster1-proxysql-service" title="Permanent link">¶</a></h2>
 <p>The <code>cluster1-proxysql</code> service listens on the following ports:</p>
 <ul>
 <li><code>3306</code> is the default MySQL port. It is used by the mysql client, MySQL Connectors, and utilities such as <code>mysqldump</code> and <code>mysqlpump</code></li>
@@ -6921,7 +6921,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><code>6070</code> is the port to connect to the built-in Prometheus exporter to gather ProxySQL statistics and manage the ProxySQL observability stack</li>
 </ul>
 <p>The <code>cluster1-proxysql</code> service uses the first Percona XtraDB Cluster member (<code>cluster1-pxc-0</code> by default) as the writer. Use the <a href="operator.html#proxysqlexposeenabled">proxysql.expose.enabled</a> Custom Resource option to enable or disable this service.</p>
-<h3 id="headless-proxysql-service">Headless ProxySQL service<a class="headerlink" href="#headless-proxysql-service" title="Permanent link">¶</a></h3>
+<h3 id="headless-proxysql-service">Headless ProxySQL service<a data-markdown-ignore class="headerlink" href="#headless-proxysql-service" title="Permanent link">¶</a></h3>
 <p>You may want to configure the ProxySQL service as a <a href="https://kubernetes.io/docs/concepts/services-networking/service/#headless-services">headless Service <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>. For example, if you have applications that need direct DNS access to individual ProxySQL pods, such as when running in a multi-tenant setup or when handling advanced networking scenarios. </p>
 <p>To enable a headless ProxySQL service, add the <code>percona.com/headless-service: true</code> <a href="annotations.html">annotation</a> in the <code>proxysql.expose.annotations</code> key of the <code>deploy/cr.yaml</code> file. Note that this annotation takes effect only at service creation time, so you need to set it when first creating the cluster.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
@@ -6932,9 +6932,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <span class="w">        </span><span class="nt">percona.com/headless-service</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 </code></pre></div>
-<h3 id="upgrade-behavior">Upgrade behavior<a class="headerlink" href="#upgrade-behavior" title="Permanent link">¶</a></h3>
+<h3 id="upgrade-behavior">Upgrade behavior<a data-markdown-ignore class="headerlink" href="#upgrade-behavior" title="Permanent link">¶</a></h3>
 <p>During cluster upgrades with ProxySQL, the Operator upgrades reader members one by one, waiting for each to show as online in ProxySQL before proceeding. After all readers are upgraded, the writer member is upgraded last. When both ProxySQL and Percona XtraDB Cluster are upgraded, they are upgraded in parallel.</p>
-<h2 id="passing-custom-configuration-options-to-proxysql">Passing custom configuration options to ProxySQL<a class="headerlink" href="#passing-custom-configuration-options-to-proxysql" title="Permanent link">¶</a></h2>
+<h2 id="passing-custom-configuration-options-to-proxysql">Passing custom configuration options to ProxySQL<a data-markdown-ignore class="headerlink" href="#passing-custom-configuration-options-to-proxysql" title="Permanent link">¶</a></h2>
 <p>You can pass custom configuration to ProxySQL in these ways:</p>
 <ul>
 <li>by editing the <code>deploy/cr.yaml</code> file, </li>
@@ -6942,7 +6942,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li>by using a Secret object. </li>
 </ul>
 <p>Regardless of which method you use, you must supply the full ProxySQL configuration, even if you are only modifying a single option.</p>
-<h3 id="edit-the-deploycryaml-file">Edit the <code>deploy/cr.yaml</code> file<a class="headerlink" href="#edit-the-deploycryaml-file" title="Permanent link">¶</a></h3>
+<h3 id="edit-the-deploycryaml-file">Edit the <code>deploy/cr.yaml</code> file<a data-markdown-ignore class="headerlink" href="#edit-the-deploycryaml-file" title="Permanent link">¶</a></h3>
 <p>Add options from the <a href="https://proxysql.com/documentation/configuring-proxysql/">proxysql.cnf <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> configuration file by editing the <code>proxysql.configuration</code> key in <code>deploy/cr.yaml</code>. </p>
 <p>Here is an example:</p>
 <div class="highlight"><pre><span></span><code><span class="nn">...</span>
@@ -7005,7 +7005,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <span class="w">        </span><span class="no">default_authentication_plugin="caching_sha2_password"</span>
 <span class="w">    </span><span class="no">}</span>
 </code></pre></div>
-<h3 id="use-a-configmap">Use a ConfigMap<a class="headerlink" href="#use-a-configmap" title="Permanent link">¶</a></h3>
+<h3 id="use-a-configmap">Use a ConfigMap<a data-markdown-ignore class="headerlink" href="#use-a-configmap" title="Permanent link">¶</a></h3>
 <p>A configmap allows Kubernetes to pass or update configuration
 data inside a containerized application. When you apply a ConfigMap, the cluster restarts.</p>
 <p>See <a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#create-a-configmap">Configure a Pod to use a
@@ -7085,7 +7085,7 @@ mysql_variables=
 </code></pre></div>
 </li>
 </ol>
-<h3 id="use-a-secret-object">Use a Secret object<a class="headerlink" href="#use-a-secret-object" title="Permanent link">¶</a></h3>
+<h3 id="use-a-secret-object">Use a Secret object<a data-markdown-ignore class="headerlink" href="#use-a-secret-object" title="Permanent link">¶</a></h3>
 <p>Store configuration options in <a href="https://kubernetes.io/docs/concepts/configuration/secret/">Kubernetes Secrets <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> for additional protection of sensitive data.</p>
 <p>The Secret name must be composed of your cluster
 name and the <code>proxysql</code> suffix.</p>
@@ -7154,7 +7154,7 @@ mysql_variables=
 </li>
 <li>
 <p>Encode the configuration file with <a href="https://en.wikipedia.org/wiki/Base64">Base64 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">in Linux</label><label for="__tabbed_1_2">in macOS</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_1_1">in Linux</label><label for="__tabbed_1_2">in macOS</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>cat<span class="w"> </span>proxysql.cnf<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>--wrap<span class="o">=</span><span class="m">0</span>
@@ -7208,7 +7208,7 @@ mysql_variables=
 <p>Restart Percona XtraDB Cluster to apply the configuration changes.</p>
 </li>
 </ol>
-<h2 id="accessing-the-proxysql-admin-interface">Accessing the ProxySQL Admin Interface<a class="headerlink" href="#accessing-the-proxysql-admin-interface" title="Permanent link">¶</a></h2>
+<h2 id="accessing-the-proxysql-admin-interface">Accessing the ProxySQL Admin Interface<a data-markdown-ignore class="headerlink" href="#accessing-the-proxysql-admin-interface" title="Permanent link">¶</a></h2>
 <p>Use the <a href="https://www.percona.com/blog/2017/06/07/proxysql-admin-interface-not-typical-mysql-server/">ProxySQL admin interface <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> to configure ProxySQL settings by connecting via the MySQL protocol.</p>
 <ol>
 <li>
@@ -7243,7 +7243,7 @@ percona-xtradb-cluster-operator-dc67778fd-qtspz   1/1     Running
 </code></pre></div>
 </li>
 </ol>
-<h2 id="proxysql-scheduler-tech-preview">ProxySQL scheduler (tech preview)<a class="headerlink" href="#proxysql-scheduler-tech-preview" title="Permanent link">¶</a></h2>
+<h2 id="proxysql-scheduler-tech-preview">ProxySQL scheduler (tech preview)<a data-markdown-ignore class="headerlink" href="#proxysql-scheduler-tech-preview" title="Permanent link">¶</a></h2>
 <p>By default, the Operator uses the internal ProxySQL scheduler for load balancing. In some cases, this scheduler may not fully recognize the cluster topology, directing both read and write traffic to the primary Pod. This can reduce scalability and efficiency and may increase the risk of overload and downtime.</p>
 <p>To address this limitation, the Operator is integrated with the <a href="https://docs.percona.com/proxysql/psh-overview.html"><code>pxc_scheduler_handler</code> <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> tool starting with version 1.19.0. This external ProxySQL scheduler ensures the read/write splitting is distributed as follows:</p>
 <ul>
@@ -7259,7 +7259,7 @@ percona-xtradb-cluster-operator-dc67778fd-qtspz   1/1     Running
 <li>Efficient resource utilization</li>
 <li>Improved user experience with consistent, predictable response times</li>
 </ul>
-<h3 id="enable-the-scheduler">Enable the scheduler<a class="headerlink" href="#enable-the-scheduler" title="Permanent link">¶</a></h3>
+<h3 id="enable-the-scheduler">Enable the scheduler<a data-markdown-ignore class="headerlink" href="#enable-the-scheduler" title="Permanent link">¶</a></h3>
 <p>The scheduler is disabled by default to maintain backward compatibility. You can enable it by setting <code>proxysql.scheduler.enabled=true</code> in your Custom Resource.</p>
 <ol>
 <li>
@@ -7293,7 +7293,7 @@ percona-xtradb-cluster-operator-dc67778fd-qtspz   1/1     Running
 <span class="w">  </span><span class="k">done</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-n<span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>-c
 </code></pre></div>
 <p>You should see queries reported from multiple node names, indicating that read load is being balanced across different Percona XtraDB Cluster nodes (not just one node). </p>
-<h3 id="scheduler-behavior">Scheduler behavior<a class="headerlink" href="#scheduler-behavior" title="Permanent link">¶</a></h3>
+<h3 id="scheduler-behavior">Scheduler behavior<a data-markdown-ignore class="headerlink" href="#scheduler-behavior" title="Permanent link">¶</a></h3>
 <p>After you enable the scheduler, it works as follows:</p>
 <ul>
 <li>
@@ -7315,7 +7315,7 @@ percona-xtradb-cluster-operator-dc67778fd-qtspz   1/1     Running
 </div>
 <p>By default, the ProxySQL scheduler distributes read requests evenly across all your cluster nodes. You can exclude the primary from processing reads and reserve it only for accepting write requests by setting the <code>writerIsAlsoReader</code> option to <code>false</code>.</p>
 <p>You can additionally fine-tune the scheduler’s behavior for your workload and deployment scenario. See the <a href="operator.html#proxysqlschedulerenabled">Custom resource</a> reference for a complete list of available options.</p>
-<h3 id="disabling-the-scheduler">Disabling the scheduler<a class="headerlink" href="#disabling-the-scheduler" title="Permanent link">¶</a></h3>
+<h3 id="disabling-the-scheduler">Disabling the scheduler<a data-markdown-ignore class="headerlink" href="#disabling-the-scheduler" title="Permanent link">¶</a></h3>
 <p>If you need to disable the scheduler after it has been enabled, be aware of the following limitations:</p>
 <ul>
 <li>
@@ -7429,7 +7429,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

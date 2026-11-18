@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6853,22 +6853,22 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="configure-data-at-rest-encryption-without-tls">Configure data at rest encryption without TLS<a class="headerlink" href="#configure-data-at-rest-encryption-without-tls" title="Permanent link">¶</a></h1>
+<h1 id="configure-data-at-rest-encryption-without-tls">Configure data at rest encryption without TLS<a data-markdown-ignore class="headerlink" href="#configure-data-at-rest-encryption-without-tls" title="Permanent link">¶</a></h1>
 <p>This guide walks you through deploying and configuring HashiCorp Vault to work with Percona Operator for MySQL based on Percona XtraDB Cluster to enable <a href="encryption.html">data-at-rest encryption</a> using HTTP protocol.</p>
-<h2 id="assumptions">Assumptions<a class="headerlink" href="#assumptions" title="Permanent link">¶</a></h2>
+<h2 id="assumptions">Assumptions<a data-markdown-ignore class="headerlink" href="#assumptions" title="Permanent link">¶</a></h2>
 <ol>
 <li>This guide is provided as a best effort and builds upon procedures described in the official Vault documentation. Since Vault’s setup steps may change in future releases, this document may become outdated; we cannot guarantee ongoing accuracy or responsibility for such changes. For the most up-to-date and reliable information, please always refer to <a href="https://developer.hashicorp.com/vault/docs">the official Vault documentation</a>.</li>
 <li>For this setup we deploy the Vault server in High Availability (HA) mode on Kubernetes via Helm without TLS. The HA setup uses Raft storage backend and consists of 3 replicas for redundancy. Using Helm is not mandatory. Any supported Vault deployment (on-premises, in the cloud, or a managed Vault service) works as long as the Operator can reach it.</li>
 <li>This guide uses Vault Helm chart version 0.30.0. You may want to change it to the required version by setting the <code>VAULT_HELM_VERSION</code> variable.</li>
 </ol>
-<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h2>
+<h2 id="prerequisites">Prerequisites<a data-markdown-ignore class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h2>
 <p>Before you begin, ensure you have the following tools installed:</p>
 <ul>
 <li><code>kubectl</code> - Kubernetes command-line interface</li>
 <li><code>helm</code> - Helm package manager</li>
 <li><code>jq</code> - JSON processor</li>
 </ul>
-<h2 id="prepare-your-environment">Prepare your environment<a class="headerlink" href="#prepare-your-environment" title="Permanent link">¶</a></h2>
+<h2 id="prepare-your-environment">Prepare your environment<a data-markdown-ignore class="headerlink" href="#prepare-your-environment" title="Permanent link">¶</a></h2>
 <ol>
 <li>
 <p>Export the namespace and other variables as environment variables to simplify further configuration:</p>
@@ -6891,7 +6891,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </code></pre></div>
 </li>
 </ol>
-<h2 id="install-vault">Install Vault<a class="headerlink" href="#install-vault" title="Permanent link">¶</a></h2>
+<h2 id="install-vault">Install Vault<a data-markdown-ignore class="headerlink" href="#install-vault" title="Permanent link">¶</a></h2>
 <p>For this setup, we install Vault in Kubernetes using the <a href="https://helm.sh/">Helm 3 package manager <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> in High Availability (HA) mode with Raft storage backend.</p>
 <ol>
 <li>
@@ -6966,7 +6966,7 @@ vault-2
 </details>
 </li>
 </ol>
-<h2 id="initialize-and-unseal-vault">Initialize and unseal Vault<a class="headerlink" href="#initialize-and-unseal-vault" title="Permanent link">¶</a></h2>
+<h2 id="initialize-and-unseal-vault">Initialize and unseal Vault<a data-markdown-ignore class="headerlink" href="#initialize-and-unseal-vault" title="Permanent link">¶</a></h2>
 <ol>
 <li>
 <p>After Vault is installed, you need to initialize it. Run the following command to initialize the first pod:</p>
@@ -7054,7 +7054,7 @@ HA Enabled         true
 </details>
 </li>
 </ol>
-<h2 id="configure-vault">Configure Vault<a class="headerlink" href="#configure-vault" title="Permanent link">¶</a></h2>
+<h2 id="configure-vault">Configure Vault<a data-markdown-ignore class="headerlink" href="#configure-vault" title="Permanent link">¶</a></h2>
 <p>At this step you need to configure Vault and enable secrets within it. To do so you must first authenticate in Vault.</p>
 <p>When you started Vault, it generates and starts with a <a href="https://developer.hashicorp.com/vault/docs/concepts/tokens">root token <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> that provides full access to Vault. Use this token to authenticate.</p>
 <p>Run the following commands on a leader node. The remaining ones will synchronize from the leader.</p>
@@ -7100,7 +7100,7 @@ HA Enabled         true
 </code></pre></div>
 </li>
 </ol>
-<h2 id="create-a-non-root-token">Create a non-root token<a class="headerlink" href="#create-a-non-root-token" title="Permanent link">¶</a></h2>
+<h2 id="create-a-non-root-token">Create a non-root token<a data-markdown-ignore class="headerlink" href="#create-a-non-root-token" title="Permanent link">¶</a></h2>
 <p>Using the root token for authentication is not recommended, as it poses significant security risks. Instead, you should create a dedicated, non-root token for the Operator to use when accessing Vault. The permissions for this token are controlled by an access policy. Before you create a token you must first create the access policy.</p>
 <ol>
 <li>
@@ -7141,7 +7141,7 @@ HA Enabled         true
 </details>
 </li>
 </ol>
-<h2 id="create-a-secret-for-vault">Create a Secret for Vault<a class="headerlink" href="#create-a-secret-for-vault" title="Permanent link">¶</a></h2>
+<h2 id="create-a-secret-for-vault">Create a Secret for Vault<a data-markdown-ignore class="headerlink" href="#create-a-secret-for-vault" title="Permanent link">¶</a></h2>
 <p>To enable Vault for the Operator, create a Secret object for it. To do so, create a YAML configuration file and specify the following information:</p>
 <ul>
 <li>A token to access Vault</li>
@@ -7154,7 +7154,7 @@ HA Enabled         true
 <li>For Percona XtraDB Cluster 8.4 - as a JSON object</li>
 </ul>
 <p>You can modify the example configuration file:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Percona XtraDB Cluster 8.0</label><label for="__tabbed_1_2">Percona XtraDB Cluster 8.4</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_1_1">Percona XtraDB Cluster 8.0</label><label for="__tabbed_1_2">Percona XtraDB Cluster 8.4</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
@@ -7189,7 +7189,7 @@ HA Enabled         true
 <p>Now create a Secret object. Replace the <code>&lt;cluster-namespace&gt;</code> placeholder with the namespace where your database cluster is deployed:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deploy/vault-secret.yaml<span class="w"> </span>-n<span class="w"> </span>&lt;cluster-namespace&gt;
 </code></pre></div>
-<h2 id="reference-the-secret-in-your-custom-resource-manifest">Reference the Secret in your Custom Resource manifest<a class="headerlink" href="#reference-the-secret-in-your-custom-resource-manifest" title="Permanent link">¶</a></h2>
+<h2 id="reference-the-secret-in-your-custom-resource-manifest">Reference the Secret in your Custom Resource manifest<a data-markdown-ignore class="headerlink" href="#reference-the-secret-in-your-custom-resource-manifest" title="Permanent link">¶</a></h2>
 <p>Now, reference the Vault Secret in the Operator Custom Resource manifest. Note that the Secret name is the one you specified in the <code>metadata.name</code> field when you created a Secret.</p>
 <ol>
 <li>
@@ -7209,7 +7209,7 @@ HA Enabled         true
 </li>
 </ol>
 <p>This triggers cluster Pods to restart.</p>
-<h2 id="use-data-at-rest-encryption">Use data-at-rest encryption<a class="headerlink" href="#use-data-at-rest-encryption" title="Permanent link">¶</a></h2>
+<h2 id="use-data-at-rest-encryption">Use data-at-rest encryption<a data-markdown-ignore class="headerlink" href="#use-data-at-rest-encryption" title="Permanent link">¶</a></h2>
 <p>To use encryption, you can:</p>
 <ul>
 <li>turn it on for every table you create with the <code>ENCRYPTION='Y'</code> clause in your SQL statement. For example:</li>
@@ -7231,7 +7231,7 @@ HA Enabled         true
 <li><a href="https://docs.percona.com/percona-server/latest/encrypt-doublewrite-file-pages.html">Encrypt doublewrite file pages</a></li>
 <li><a href="https://docs.percona.com/percona-server/latest/encrypt-temporary-files.html">Encrypt temporary files</a></li>
 </ul>
-<h2 id="verify-encryption">Verify encryption<a class="headerlink" href="#verify-encryption" title="Permanent link">¶</a></h2>
+<h2 id="verify-encryption">Verify encryption<a data-markdown-ignore class="headerlink" href="#verify-encryption" title="Permanent link">¶</a></h2>
 <p>Refer to the <a href="https://docs.percona.com/percona-server/latest/verify-encryption.html">Percona Server for MySQL documentation <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> for guidelines how to verify encryption in your database.</p>
 <hr>
 <div class="md-source-file">
@@ -7333,7 +7333,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

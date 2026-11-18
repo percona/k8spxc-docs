@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6897,10 +6897,10 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="operator-responsibilities-by-area">Operator responsibilities by area<a class="headerlink" href="#operator-responsibilities-by-area" title="Permanent link">¶</a></h1>
+<h1 id="operator-responsibilities-by-area">Operator responsibilities by area<a data-markdown-ignore class="headerlink" href="#operator-responsibilities-by-area" title="Permanent link">¶</a></h1>
 <p>For each area, this page lists what the Operator does, what you still do, and which manual actions can damage a running cluster. For the layers, the events that trigger each one, and a table of all areas, see <a href="architecture-responsibilities.html">Who owns what</a>.</p>
 <p>The Custom Resource is the source of truth: change the cluster by editing it. See <a href="architecture-responsibilities.html#change-the-cluster-through-the-custom-resource">Change the cluster through the Custom Resource</a>.</p>
-<h2 id="cluster-lifecycle">Cluster lifecycle<a class="headerlink" href="#cluster-lifecycle" title="Permanent link">¶</a></h2>
+<h2 id="cluster-lifecycle">Cluster lifecycle<a data-markdown-ignore class="headerlink" href="#cluster-lifecycle" title="Permanent link">¶</a></h2>
 <p>Change cluster size, pause state, and deletion through the CR. Direct edits to the StatefulSet fight the next reconcile.</p>
 <p><strong>What the Operator does:</strong></p>
 <ul>
@@ -6951,7 +6951,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
-<h2 id="back-up-the-database">Back up the database<a class="headerlink" href="#back-up-the-database" title="Permanent link">¶</a></h2>
+<h2 id="back-up-the-database">Back up the database<a data-markdown-ignore class="headerlink" href="#back-up-the-database" title="Permanent link">¶</a></h2>
 <p>Create backups through a schedule on the cluster CR or through a <code>PerconaXtraDBClusterBackup</code> resource. See <a href="backups.html">About backups</a>.</p>
 <p><strong>What the Operator does:</strong></p>
 <ul>
@@ -7006,7 +7006,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
-<h2 id="restore-and-point-in-time-recovery">Restore and point-in-time recovery<a class="headerlink" href="#restore-and-point-in-time-recovery" title="Permanent link">¶</a></h2>
+<h2 id="restore-and-point-in-time-recovery">Restore and point-in-time recovery<a data-markdown-ignore class="headerlink" href="#restore-and-point-in-time-recovery" title="Permanent link">¶</a></h2>
 <p><strong>What the Operator does:</strong></p>
 <ul>
 <li>Runs the whole restore sequence: pauses the cluster, runs the restore, starts the cluster, verifies that it is Ready, and marks the restore succeeded.</li>
@@ -7058,7 +7058,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
-<h2 id="manage-certificates">Manage certificates<a class="headerlink" href="#manage-certificates" title="Permanent link">¶</a></h2>
+<h2 id="manage-certificates">Manage certificates<a data-markdown-ignore class="headerlink" href="#manage-certificates" title="Permanent link">¶</a></h2>
 <p>How certificates are renewed depends on who created them. See <a href="TLS.html">Transport Layer Security (TLS)</a>.</p>
 <p><strong>What the Operator does:</strong></p>
 <ul>
@@ -7114,7 +7114,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
-<h2 id="users-and-secrets">Users and Secrets<a class="headerlink" href="#users-and-secrets" title="Permanent link">¶</a></h2>
+<h2 id="users-and-secrets">Users and Secrets<a data-markdown-ignore class="headerlink" href="#users-and-secrets" title="Permanent link">¶</a></h2>
 <p><strong>What the Operator does:</strong></p>
 <ul>
 <li>Creates the system users <code>root</code>, <code>operator</code>, <code>monitor</code>, <code>xtrabackup</code>, and <code>replication</code> when it creates the cluster. It also manages <code>proxyadmin</code> and the PMM users. See <a href="users.html#system-users">System users</a>.</li>
@@ -7168,7 +7168,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
-<h2 id="storage">Storage<a class="headerlink" href="#storage" title="Permanent link">¶</a></h2>
+<h2 id="storage">Storage<a data-markdown-ignore class="headerlink" href="#storage" title="Permanent link">¶</a></h2>
 <p>Request a larger volume in the CR. The Operator grows the PVCs when volume expansion is enabled and the StorageClass supports it. See <a href="scaling-storage-resize.html">Resize storage</a>.</p>
 <p><strong>What the Operator does:</strong></p>
 <ul>
@@ -7209,7 +7209,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
-<h2 id="cross-site-replication">Cross-site replication<a class="headerlink" href="#cross-site-replication" title="Permanent link">¶</a></h2>
+<h2 id="cross-site-replication">Cross-site replication<a data-markdown-ignore class="headerlink" href="#cross-site-replication" title="Permanent link">¶</a></h2>
 <p>Describe the replication channels in the CR. See <a href="replication.html">Set up cross-site replication</a>.</p>
 <p><strong>What the Operator does:</strong></p>
 <ul>
@@ -7239,7 +7239,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
-<h2 id="database-upgrades">Database upgrades<a class="headerlink" href="#database-upgrades" title="Permanent link">¶</a></h2>
+<h2 id="database-upgrades">Database upgrades<a data-markdown-ignore class="headerlink" href="#database-upgrades" title="Permanent link">¶</a></h2>
 <p>Let the Operator move nodes one at a time. See <a href="update.html">About upgrades</a> and <a href="update-db.html">Upgrade Percona XtraDB Cluster</a>.</p>
 <p><strong>What the Operator does:</strong></p>
 <ul>
@@ -7288,7 +7288,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
-<h2 id="stay-inside-safe-operating-limits">Stay inside safe operating limits<a class="headerlink" href="#stay-inside-safe-operating-limits" title="Permanent link">¶</a></h2>
+<h2 id="stay-inside-safe-operating-limits">Stay inside safe operating limits<a data-markdown-ignore class="headerlink" href="#stay-inside-safe-operating-limits" title="Permanent link">¶</a></h2>
 <p>The Operator rejects a CR that breaks the Percona XtraDB Cluster size limits or runs without TLS. </p>
 <table>
 <thead>
@@ -7328,7 +7328,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </table>
 <p>Read more about node count in <a href="architecture.html">Design and architecture</a>.</p>
 <p>You can turn each check off individually under <code>spec.unsafeFlags</code>. See <a href="#override-a-safety-check">Override a safety check</a>. Do not turn a check off to clear an error message.</p>
-<h2 id="override-a-safety-check">Override a safety check<a class="headerlink" href="#override-a-safety-check" title="Permanent link">¶</a></h2>
+<h2 id="override-a-safety-check">Override a safety check<a data-markdown-ignore class="headerlink" href="#override-a-safety-check" title="Permanent link">¶</a></h2>
 <p><code>spec.unsafeFlags</code> turns off individual safety checks. Each check exists because turning it off can lose data or availability. Field details are in the <a href="operator.html#operator-unsafeflags-section">Unsafe flags section</a>.</p>
 <table>
 <thead>
@@ -7363,7 +7363,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </table>
 <p>The older <code>allowUnsafeConfigurations</code> option turns on all four flags at once.</p>
 <p>Use these flags for a development cluster, a local test, or a deliberate single-node setup for continuous integration. On a production cluster, an Operator rejection describes a real risk in the configuration you asked for.</p>
-<h2 id="check-before-you-intervene">Check before you intervene<a class="headerlink" href="#check-before-you-intervene" title="Permanent link">¶</a></h2>
+<h2 id="check-before-you-intervene">Check before you intervene<a data-markdown-ignore class="headerlink" href="#check-before-you-intervene" title="Permanent link">¶</a></h2>
 <p>When a manual change looks necessary, do the following:</p>
 <ol>
 <li>Check whether the CR already exposes what you want. Most requests for manual changes are covered by a field.</li>
@@ -7372,9 +7372,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li>Contact <a href="get-help.html">Percona Support</a> before you act on a production cluster.</li>
 </ol>
 <p>Manual intervention on a running database cluster is recoverable far less often than it looks from the outside.</p>
-<h2 id="next-steps">Next steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
+<h2 id="next-steps">Next steps<a data-markdown-ignore class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
 <p><a class="md-button" href="architecture-reconciliation.html">How the Operator reacts to changes</a></p>
-<h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
+<h2 id="see-also">See also<a data-markdown-ignore class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="architecture-responsibilities.html">Who owns what</a></li>
 <li><a href="debug.html#where-to-look-first">Initial troubleshooting</a></li>
@@ -7479,7 +7479,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

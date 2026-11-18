@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6721,7 +6721,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="about-scaling-and-storage">About scaling and storage<a class="headerlink" href="#about-scaling-and-storage" title="Permanent link">¶</a></h1>
+<h1 id="about-scaling-and-storage">About scaling and storage<a data-markdown-ignore class="headerlink" href="#about-scaling-and-storage" title="Permanent link">¶</a></h1>
 <p>A cluster rarely stays the size you first deployed it at. You can grow your cluster in different ways:  </p>
 <ul>
 <li>add database nodes, </li>
@@ -6730,7 +6730,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li>expand storage as your workload grows. </li>
 </ul>
 <p>This page describes each approach and which one to plan before you deploy.</p>
-<h2 id="ways-to-scale">Ways to scale<a class="headerlink" href="#ways-to-scale" title="Permanent link">¶</a></h2>
+<h2 id="ways-to-scale">Ways to scale<a data-markdown-ignore class="headerlink" href="#ways-to-scale" title="Permanent link">¶</a></h2>
 <table>
 <thead>
 <tr>
@@ -6766,7 +6766,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 Vertical scaling, horizontal scaling, and proxy sizing are covered in
 <a href="scaling.html">Horizontal and vertical scaling</a>. Storage is covered on this page and in
 <a href="scaling-storage-resize.html">Resize storage</a>.</p>
-<h2 id="storage">Storage<a class="headerlink" href="#storage" title="Permanent link">¶</a></h2>
+<h2 id="storage">Storage<a data-markdown-ignore class="headerlink" href="#storage" title="Permanent link">¶</a></h2>
 <p>Each Percona XtraDB Cluster node gets its own persistent volume, defined in
 <code>pxc.volumeSpec</code>. Kubernetes manages this storage through two objects: </p>
 <ul>
@@ -6779,7 +6779,7 @@ Kubernetes v1.24). You cannot shrink an existing PVC.</p>
 thresholds, resizing through Kubernetes’ Volume Expansion capability, and manual resizing
 for volume types or Operator versions that don’t support Volume Expansion. For the full
 step-by-step procedures, see <a href="scaling-storage-resize.html">Resize storage</a>.</p>
-<h2 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">¶</a></h2>
+<h2 id="limitations">Limitations<a data-markdown-ignore class="headerlink" href="#limitations" title="Permanent link">¶</a></h2>
 <ul>
 <li><strong>Volumes cannot shrink.</strong> Kubernetes can expand a PersistentVolumeClaim, but it cannot reduce
   it. When Volume Expansion is unavailable, use
@@ -6792,7 +6792,7 @@ step-by-step procedures, see <a href="scaling-storage-resize.html">Resize storag
   <a href="scaling.html#choose-a-safe-node-count">Choose a safe node count</a> before changing node
   counts.</li>
 </ul>
-<h2 id="verify-a-scaling-change">Verify a scaling change<a class="headerlink" href="#verify-a-scaling-change" title="Permanent link">¶</a></h2>
+<h2 id="verify-a-scaling-change">Verify a scaling change<a data-markdown-ignore class="headerlink" href="#verify-a-scaling-change" title="Permanent link">¶</a></h2>
 <p>View the cluster:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pxc<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
 </code></pre></div>
@@ -6822,7 +6822,7 @@ datadir-cluster1-pxc-2   Bound    pvc-e7bd8f23-6239-4870-8f6f-a7ca173706de   6G 
 <p>A PVC stuck at the old size with the cluster otherwise healthy means the storage class didn’t accept the expansion. In this case, check the PVC events. For example, if  PVC  <code>datadir-cluster1-pxc-0</code> is stuck, run this command to check PVC events:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>events<span class="w"> </span>pvc/datadir-cluster1-pxc-0<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
 </code></pre></div>
-<h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
+<h2 id="see-also">See also<a data-markdown-ignore class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="scaling.html">Horizontal and vertical scaling</a></li>
 <li><a href="scaling-storage-resize.html">Resize storage</a></li>
@@ -6928,7 +6928,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

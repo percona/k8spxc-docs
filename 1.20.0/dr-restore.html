@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6779,9 +6779,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="restore-the-previous-primary-site">Restore the previous primary site<a class="headerlink" href="#restore-the-previous-primary-site" title="Permanent link">¶</a></h1>
+<h1 id="restore-the-previous-primary-site">Restore the previous primary site<a data-markdown-ignore class="headerlink" href="#restore-the-previous-primary-site" title="Permanent link">¶</a></h1>
 <p>Let’s say the root of the outage is no longer present. You can now install a new database cluster on this site. Let’s use the previous name <code>cluster1</code> for it.</p>
-<h2 id="install-a-new-database-cluster-on-the-previous-primary-site">Install a new database cluster on the previous primary site<a class="headerlink" href="#install-a-new-database-cluster-on-the-previous-primary-site" title="Permanent link">¶</a></h2>
+<h2 id="install-a-new-database-cluster-on-the-previous-primary-site">Install a new database cluster on the previous primary site<a data-markdown-ignore class="headerlink" href="#install-a-new-database-cluster-on-the-previous-primary-site" title="Permanent link">¶</a></h2>
 <p>The new <code>cluster1</code> must be the exact copy of the current primary <code>cluster2</code>. We will use the same approach as we did when creating <code>cluster2</code>: make a backup from <code>cluster2</code> and restore it on <code>cluster1</code>.</p>
 <p>The steps are the following:</p>
 <ol>
@@ -6827,7 +6827,7 @@ cluster1   cluster1-haproxy.&lt;namespace&gt;   ready    3                3     
 </details>
 </li>
 </ol>
-<h2 id="make-a-backup-on-the-current-primary-site">Make a backup on the current primary site<a class="headerlink" href="#make-a-backup-on-the-current-primary-site" title="Permanent link">¶</a></h2>
+<h2 id="make-a-backup-on-the-current-primary-site">Make a backup on the current primary site<a data-markdown-ignore class="headerlink" href="#make-a-backup-on-the-current-primary-site" title="Permanent link">¶</a></h2>
 <ol>
 <li>
 <p>Make a backup on the current primary <code>cluster2</code>. See the <a href="dr-primary.html#create-a-backup-from-the-primary-site">Create a backup from the primary site</a> section for the steps.</p>
@@ -6839,7 +6839,7 @@ backup1   cluster2   s3-us-west   s3://mybucket/cluster2-2025-03-21-12:05:37-ful
 </details>
 </li>
 </ol>
-<h2 id="restore-the-backup-on-a-new-database-cluster">Restore the backup on a new database cluster<a class="headerlink" href="#restore-the-backup-on-a-new-database-cluster" title="Permanent link">¶</a></h2>
+<h2 id="restore-the-backup-on-a-new-database-cluster">Restore the backup on a new database cluster<a data-markdown-ignore class="headerlink" href="#restore-the-backup-on-a-new-database-cluster" title="Permanent link">¶</a></h2>
 <ol>
 <li>
 <p>Restore the backup from <code>cluster2</code> on <code>cluster1</code>. Change the <code>deploy/backup/restore.yaml</code> file as follows:</p>
@@ -6873,9 +6873,9 @@ backup1   cluster2   s3-us-west   s3://mybucket/cluster2-2025-03-21-12:05:37-ful
 <p>The cluster should report the Ready status.</p>
 </li>
 </ol>
-<h2 id="promote-the-new-database-cluster-as-the-primary">Promote the new database cluster as the primary<a class="headerlink" href="#promote-the-new-database-cluster-as-the-primary" title="Permanent link">¶</a></h2>
+<h2 id="promote-the-new-database-cluster-as-the-primary">Promote the new database cluster as the primary<a data-markdown-ignore class="headerlink" href="#promote-the-new-database-cluster-as-the-primary" title="Permanent link">¶</a></h2>
 <p>The newly deployed site with <code>cluster1</code> is now the working copy of the current primary <code>cluster2</code>. It’s time to configure it back as the primary site.</p>
-<h3 id="check-the-replica-before-you-promote-it">Check the replica before you promote it<a class="headerlink" href="#check-the-replica-before-you-promote-it" title="Permanent link">¶</a></h3>
+<h3 id="check-the-replica-before-you-promote-it">Check the replica before you promote it<a data-markdown-ignore class="headerlink" href="#check-the-replica-before-you-promote-it" title="Permanent link">¶</a></h3>
 <p>Before you promote <code>cluster1</code>, confirm it applied everything <code>cluster2</code> sent it, and that the cluster itself is healthy.</p>
 <ol>
 <li>
@@ -6901,9 +6901,9 @@ mysql&gt; SHOW VARIABLES LIKE 'read_only';
 <p><code>read_only = ON</code> is expected here, since <code>cluster1</code> is still running as the replica.</p>
 </li>
 </ol>
-<h3 id="promote-cluster1-to-primary">Promote cluster1 to primary<a class="headerlink" href="#promote-cluster1-to-primary" title="Permanent link">¶</a></h3>
+<h3 id="promote-cluster1-to-primary">Promote cluster1 to primary<a data-markdown-ignore class="headerlink" href="#promote-cluster1-to-primary" title="Permanent link">¶</a></h3>
 <p>To do this, configure the replication channels on both sites. Refer to the <a href="dr-replication.html">Configure replication between the sites</a> section for the steps.</p>
-<h3 id="check-that-the-promotion-is-successful">Check that the promotion is successful<a class="headerlink" href="#check-that-the-promotion-is-successful" title="Permanent link">¶</a></h3>
+<h3 id="check-that-the-promotion-is-successful">Check that the promotion is successful<a data-markdown-ignore class="headerlink" href="#check-that-the-promotion-is-successful" title="Permanent link">¶</a></h3>
 <p>Before using <code>cluster1</code> as the new primary, make sure its promotion was successful. </p>
 <ol>
 <li>
@@ -7027,7 +7027,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

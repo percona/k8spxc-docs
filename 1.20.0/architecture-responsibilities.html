@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6953,14 +6953,14 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="who-owns-what">Who owns what<a class="headerlink" href="#who-owns-what" title="Permanent link">¶</a></h1>
+<h1 id="who-owns-what">Who owns what<a data-markdown-ignore class="headerlink" href="#who-owns-what" title="Permanent link">¶</a></h1>
 <p>When something happens in the cluster, the question is which layer reacts: the Operator, Percona XtraDB Cluster (<a href="glossary.html#galera">Galera</a>), Kubernetes, or you. This page answers it at a glance. For the detail of what you do and what the Operator does in each area, and for what never to change by hand, see <a href="operator-boundaries.html">Responsibilities by area</a>. For an overview of the layers, see <a href="architecture.html#the-four-layers">Design and architecture</a>.</p>
 <p>Two rules explain most of the behavior:</p>
 <ul>
 <li><strong>You change the cluster only through the <a href="glossary.html#custom-resource">Custom Resource</a> and the user Secrets.</strong> The Operator turns them into Kubernetes objects, and reverts manual changes to the fields it manages.</li>
 <li><strong>Each layer keeps its own part alive.</strong> Kubernetes keeps Pods running, Galera keeps the data consistent, and the Operator keeps the objects and the day-2 tasks matching the Custom Resource.</li>
 </ul>
-<h2 id="who-reacts-when-something-happens">Who reacts when something happens<a class="headerlink" href="#who-reacts-when-something-happens" title="Permanent link">¶</a></h2>
+<h2 id="who-reacts-when-something-happens">Who reacts when something happens<a data-markdown-ignore class="headerlink" href="#who-reacts-when-something-happens" title="Permanent link">¶</a></h2>
 <table>
 <thead>
 <tr>
@@ -7027,7 +7027,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
-<h2 id="change-the-cluster-through-the-custom-resource">Change the cluster through the Custom Resource<a class="headerlink" href="#change-the-cluster-through-the-custom-resource" title="Permanent link">¶</a></h2>
+<h2 id="change-the-cluster-through-the-custom-resource">Change the cluster through the Custom Resource<a data-markdown-ignore class="headerlink" href="#change-the-cluster-through-the-custom-resource" title="Permanent link">¶</a></h2>
 <p>A <a href="https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/">Custom Resource <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> (CR) is the Kubernetes object that describes the cluster you want. It is a blueprint that the Operator uses to deploy and manage your cluster.</p>
 <p><strong>The Custom Resource is the source of truth. Change the cluster by editing the CR.</strong></p>
 <p>The Operator compares the CR against what is running about every five seconds and corrects any difference it finds. A change you make directly to a <a href="glossary.html#statefulset">StatefulSet</a>, a Service, a Pod, or a managed Secret is drift. The Operator overwrites it, usually within seconds. If a change survives, this means the Operator does not manage that field yet. This doesn’t mean the change was accepted.</p>
@@ -7035,7 +7035,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><strong>Edits to the fields the Operator manages do not persist.</strong> The Operator reverts them and doesn’t raise an event.</li>
 <li><strong>Edits outside the CR can still cause damage before they are reverted.</strong></li>
 </ul>
-<h2 id="review-responsibilities-at-a-glance">Review responsibilities at a glance<a class="headerlink" href="#review-responsibilities-at-a-glance" title="Permanent link">¶</a></h2>
+<h2 id="review-responsibilities-at-a-glance">Review responsibilities at a glance<a data-markdown-ignore class="headerlink" href="#review-responsibilities-at-a-glance" title="Permanent link">¶</a></h2>
 <p>The following table shows what the Operator handles and what stays with you. Select an area for the details and the list of manual actions to avoid.</p>
 <table>
 <thead>
@@ -7097,7 +7097,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
-<h2 id="the-operator">The Operator<a class="headerlink" href="#the-operator" title="Permanent link">¶</a></h2>
+<h2 id="the-operator">The Operator<a data-markdown-ignore class="headerlink" href="#the-operator" title="Permanent link">¶</a></h2>
 <p>The Operator reads the Custom Resource, compares it with what exists in Kubernetes about every five seconds, and creates, updates or deletes objects to close the gap. It also runs the day-2 tasks: ordered restarts (<a href="architecture-reconciliation.html#update-strategies">Smart Update</a>), password changes, certificates, storage resizing, backups, restores, point-in-time recovery, cross-site replication channels, and <a href="architecture-workflows.html#full-cluster-crash-recovery">recovery after a full cluster crash</a>.</p>
 <p><strong>The Operator does not:</strong></p>
 <ul>
@@ -7111,7 +7111,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li>Report most problems as Kubernetes events. It emits events only for full cluster crash recovery, CA certificate rotation, and volume resize. Everything else is in the Operator logs and the Custom Resource status.</li>
 </ul>
 <p>For each area in detail, see <a href="operator-boundaries.html">Responsibilities by area</a>. For the objects the Operator creates, see <a href="objects-created.html">Objects the Operator creates</a> and <a href="services.html">Services and ports</a>.</p>
-<h2 id="percona-xtradb-cluster-and-galera">Percona XtraDB Cluster and Galera<a class="headerlink" href="#percona-xtradb-cluster-and-galera" title="Permanent link">¶</a></h2>
+<h2 id="percona-xtradb-cluster-and-galera">Percona XtraDB Cluster and Galera<a data-markdown-ignore class="headerlink" href="#percona-xtradb-cluster-and-galera" title="Permanent link">¶</a></h2>
 <p><strong>Galera does:</strong></p>
 <ul>
 <li>Replicate every transaction to all nodes and certify it, resolving write conflicts.</li>
@@ -7139,7 +7139,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li>An SST that keeps failing stops after <code>pxc.sstRetryCount</code> attempts, and the Pod stays not ready until you intervene. See <a href="sst-retry-limit.html">Limit SST retries</a>.</li>
 <li>A bad option in <code>spec.pxc.configuration</code> shows up as <code>mysqld</code> failing to start, in the <code>pxc</code> container logs.</li>
 </ul>
-<h2 id="kubernetes">Kubernetes<a class="headerlink" href="#kubernetes" title="Permanent link">¶</a></h2>
+<h2 id="kubernetes">Kubernetes<a data-markdown-ignore class="headerlink" href="#kubernetes" title="Permanent link">¶</a></h2>
 <p><strong>Kubernetes does:</strong></p>
 <ul>
 <li><strong>Schedule Pods.</strong> The Operator only writes the affinity rules, node selectors, tolerations, priority class and topology spread constraints you specify. The default anti-affinity is <em>required</em> on <code>kubernetes.io/hostname</code>: three database Pods need three schedulable nodes. Otherwise a Pod stays <code>Pending</code>, and after about a minute the Custom Resource status shows the scheduler’s message.</li>
@@ -7154,7 +7154,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li>Know anything about Galera beyond the <a href="architecture-probes.html">probes</a>. A native StatefulSet rolling update waits for each Pod to become ready, but it doesn’t pause for a running backup, doesn’t wait for ProxySQL to bring the node back online, and doesn’t stop early when a Pod can’t start.</li>
 <li>Expand a volume whose StorageClass doesn’t allow it, or beyond your storage quota.</li>
 </ul>
-<h2 id="you-the-user">You, the user<a class="headerlink" href="#you-the-user" title="Permanent link">¶</a></h2>
+<h2 id="you-the-user">You, the user<a data-markdown-ignore class="headerlink" href="#you-the-user" title="Permanent link">¶</a></h2>
 <p>The Operator keeps the cluster matching the Custom Resource. Everything it cannot create or decide for you stays with you:</p>
 <ul>
 <li>Install and upgrade the CRDs and RBAC, which the Operator never applies. See <a href="update-operator.html">Upgrade CRD and the Operator</a>.</li>
@@ -7165,11 +7165,11 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li>Monitor cross-site replication, and repair it when it breaks. See <a href="operator-boundaries.html#cross-site-replication">Cross-site replication</a>.</li>
 <li>Decide when to pause, upgrade, and restore. See <a href="operator-boundaries.html#database-upgrades">Database upgrades</a> and <a href="operator-boundaries.html#restore-and-point-in-time-recovery">Restore and point-in-time recovery</a>.</li>
 </ul>
-<h2 id="unsafe-configurations">Unsafe configurations<a class="headerlink" href="#unsafe-configurations" title="Permanent link">¶</a></h2>
+<h2 id="unsafe-configurations">Unsafe configurations<a data-markdown-ignore class="headerlink" href="#unsafe-configurations" title="Permanent link">¶</a></h2>
 <p>The Operator refuses configurations that put availability or data at risk, such as fewer than three database nodes or running without TLS. See <a href="operator-boundaries.html#stay-inside-safe-operating-limits">Stay inside safe operating limits</a>. To use one anyway, you opt in with a flag in the <code>spec.unsafeFlags</code> subsection. See <a href="operator-boundaries.html#override-a-safety-check">Override a safety check</a>.</p>
-<h2 id="who-owns-this-failure">Who owns this failure?<a class="headerlink" href="#who-owns-this-failure" title="Permanent link">¶</a></h2>
+<h2 id="who-owns-this-failure">Who owns this failure?<a data-markdown-ignore class="headerlink" href="#who-owns-this-failure" title="Permanent link">¶</a></h2>
 <p>Find the symptom, check the place named in the second column, and follow the link for the fix.</p>
-<h3 id="cluster-and-pods">Cluster and Pods<a class="headerlink" href="#cluster-and-pods" title="Permanent link">¶</a></h3>
+<h3 id="cluster-and-pods">Cluster and Pods<a data-markdown-ignore class="headerlink" href="#cluster-and-pods" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
@@ -7224,7 +7224,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
-<h3 id="backups-and-restores">Backups and restores<a class="headerlink" href="#backups-and-restores" title="Permanent link">¶</a></h3>
+<h3 id="backups-and-restores">Backups and restores<a data-markdown-ignore class="headerlink" href="#backups-and-restores" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
@@ -7273,7 +7273,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
-<h3 id="storage-replication-and-tls">Storage, replication and TLS<a class="headerlink" href="#storage-replication-and-tls" title="Permanent link">¶</a></h3>
+<h3 id="storage-replication-and-tls">Storage, replication and TLS<a data-markdown-ignore class="headerlink" href="#storage-replication-and-tls" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
@@ -7304,7 +7304,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
-<h2 id="how-to-tell-which-layer-it-is">How to tell which layer it is<a class="headerlink" href="#how-to-tell-which-layer-it-is" title="Permanent link">¶</a></h2>
+<h2 id="how-to-tell-which-layer-it-is">How to tell which layer it is<a data-markdown-ignore class="headerlink" href="#how-to-tell-which-layer-it-is" title="Permanent link">¶</a></h2>
 <p>Check these sources in order. Each one narrows down the layer.</p>
 <ol>
 <li><strong>Custom Resource status and conditions.</strong> <code>kubectl get pxc cluster1 -o yaml</code> shows the cluster state, the reconcile error message if any, and scheduling problems. An <code>error</code> state with a spec message points to the user. See <a href="architecture-reconciliation.html#status">Status</a>.</li>
@@ -7312,9 +7312,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><strong>Operator logs.</strong> <code>kubectl logs deployment/percona-xtradb-cluster-operator</code> shows what the Operator is doing or waiting for: a stuck rolling restart, a skipped backup, broken replication. Most Operator problems appear only here.</li>
 <li><strong>Pod and container logs.</strong> <code>kubectl logs cluster1-pxc-0 -c pxc</code> shows Galera and MySQL problems: SST failures, quorum loss, <code>mysqld</code> start failures. For backup and restore problems, read the logs of the Job. See <a href="debug-logs.html">Check the logs</a>.</li>
 </ol>
-<h2 id="next-steps">Next steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
+<h2 id="next-steps">Next steps<a data-markdown-ignore class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
 <p><a class="md-button" href="operator-boundaries.html">Responsibilities by area</a></p>
-<h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
+<h2 id="see-also">See also<a data-markdown-ignore class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="objects-created.html">Objects the Operator creates</a></li>
 <li><a href="services.html">Services and ports</a></li>
@@ -7420,7 +7420,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

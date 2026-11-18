@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6719,9 +6719,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="4-make-a-backup">4. Make a backup<a class="headerlink" href="#4-make-a-backup" title="Permanent link">¶</a></h1>
+<h1 id="4-make-a-backup">4. Make a backup<a data-markdown-ignore class="headerlink" href="#4-make-a-backup" title="Permanent link">¶</a></h1>
 <p>In this tutorial, you will learn how to make a backup of your data manually. To learn more about backups, see the <a href="backups.html">Backup and restore</a> section.</p>
-<h2 id="considerations-and-prerequisites">Considerations and prerequisites<a class="headerlink" href="#considerations-and-prerequisites" title="Permanent link">¶</a></h2>
+<h2 id="considerations-and-prerequisites">Considerations and prerequisites<a data-markdown-ignore class="headerlink" href="#considerations-and-prerequisites" title="Permanent link">¶</a></h2>
 <p>In this tutorial, we use the <a href="https://aws.amazon.com/s3/">AWS S3 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> as the backup storage. You need the following S3-related information:</p>
 <ul>
 <li>the name of the S3 storage</li>
@@ -6740,11 +6740,11 @@ backups. So, clone the percona-xtradb-cluster-operator repository:</p>
 <p>It is important to specify the right branch with <code>-b</code>
 option while cloning the code on this step. Please be careful.</p>
 </div>
-<h2 class="power-number" id="configure-backup-storage">Configure backup storage<a class="headerlink" href="#configure-backup-storage" title="Permanent link">¶</a></h2>
+<h2 class="power-number" id="configure-backup-storage">Configure backup storage<a data-markdown-ignore class="headerlink" href="#configure-backup-storage" title="Permanent link">¶</a></h2>
 <ol>
 <li>
 <p>Encode S3 credentials, substituting <code>AWS_ACCESS_KEY_ID</code> and <code>AWS_SECRET_ACCESS_KEY</code> with your real values:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">on Linux</label><label for="__tabbed_1_2">on MacOS</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_1_1">on Linux</label><label for="__tabbed_1_2">on MacOS</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s1">'AWS_ACCESS_KEY_ID'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>--wrap<span class="o">=</span><span class="m">0</span>
@@ -6818,7 +6818,7 @@ option while cloning the code on this step. Please be careful.</p>
 </code></pre></div>
 </li>
 </ol>
-<h2 id="make-a-physical-backup">Make a physical backup<a class="headerlink" href="#make-a-physical-backup" title="Permanent link">¶</a></h2>
+<h2 id="make-a-physical-backup">Make a physical backup<a data-markdown-ignore class="headerlink" href="#make-a-physical-backup" title="Permanent link">¶</a></h2>
 <p class="power-number">Now when your have the <a href="#configure-backup-storage">configured storage</a> in your
 Custom Resource, you can make your first backup.</p>
 <ol>
@@ -6859,7 +6859,7 @@ backup1   cluster1      s3-us-west   s3://pxc-my-bucket/2023-10-10T16:36:46Z   R
 <p>When the status changes to <code>Succeeded</code>, backup is made.</p>
 </li>
 </ol>
-<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
+<h2 id="troubleshooting">Troubleshooting<a data-markdown-ignore class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
 <p>You may face issues with the backup. To identify the issue, you can do the following:</p>
 <ul>
 <li>View the information about the backup with the following command:</li>
@@ -6872,7 +6872,7 @@ backup1   cluster1      s3-us-west   s3://pxc-my-bucket/2023-10-10T16:36:46Z   R
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>pod/&lt;pod-name&gt;<span class="w"> </span>-c<span class="w"> </span>xtrabackup<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
 </code></pre></div>
 <p>Congratulations! You have made the first backup manually. Want to learn more about backups? See the <a href="backups.html">Backup and restore</a> section for how to <a href="backups-pitr.html">configure point-in-time recovery</a>, and how to <a href="backups-scheduled.html">automatically make backups according to the schedule</a>.</p>
-<h2 id="next-steps">Next steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
+<h2 id="next-steps">Next steps<a data-markdown-ignore class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
 <p><a class="md-button" href="monitoring-tutorial.html">Monitor the database <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg></span></a></p>
 <hr>
 <div class="md-source-file">
@@ -6974,7 +6974,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

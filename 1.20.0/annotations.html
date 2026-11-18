@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6775,7 +6775,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="labels-and-annotations">Labels and annotations<a class="headerlink" href="#labels-and-annotations" title="Permanent link">¶</a></h1>
+<h1 id="labels-and-annotations">Labels and annotations<a data-markdown-ignore class="headerlink" href="#labels-and-annotations" title="Permanent link">¶</a></h1>
 <p>Labels and annotations are rather similar but differ in purpose.</p>
 <p><strong>Labels</strong> are used by Kubernetes to identify and select objects. They enable filtering and grouping, allowing users to apply selectors for operations like deployments or scaling.</p>
 <p><strong>Annotations</strong> are assigning additional <em>non-identifying</em> information that doesn’t affect how Kubernetes processes resources. They store descriptive information like deployment history, monitoring configurations or external integrations.</p>
@@ -6800,7 +6800,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li>Pods</li>
 <li>ConfigMaps and Secrets</li>
 </ul>
-<h2 id="when-to-use-labels-and-annotations">When to use labels and annotations<a class="headerlink" href="#when-to-use-labels-and-annotations" title="Permanent link">¶</a></h2>
+<h2 id="when-to-use-labels-and-annotations">When to use labels and annotations<a data-markdown-ignore class="headerlink" href="#when-to-use-labels-and-annotations" title="Permanent link">¶</a></h2>
 <p>Use <strong>Labels</strong> when:</p>
 <ul>
 <li>The information is used for object selection</li>
@@ -6814,8 +6814,8 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li>The information is used for debugging</li>
 <li>The data is used for monitoring configuration</li>
 </ul>
-<h2 id="labels-and-annotations-used-by-percona-operator-for-mysql">Labels and annotations used by Percona Operator for MySQL<a class="headerlink" href="#labels-and-annotations-used-by-percona-operator-for-mysql" title="Permanent link">¶</a></h2>
-<h3 id="labels">Labels<a class="headerlink" href="#labels" title="Permanent link">¶</a></h3>
+<h2 id="labels-and-annotations-used-by-percona-operator-for-mysql">Labels and annotations used by Percona Operator for MySQL<a data-markdown-ignore class="headerlink" href="#labels-and-annotations-used-by-percona-operator-for-mysql" title="Permanent link">¶</a></h2>
+<h3 id="labels">Labels<a data-markdown-ignore class="headerlink" href="#labels" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
@@ -6912,7 +6912,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
-<h3 id="annotations">Annotations<a class="headerlink" href="#annotations" title="Permanent link">¶</a></h3>
+<h3 id="annotations">Annotations<a data-markdown-ignore class="headerlink" href="#annotations" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
@@ -6997,7 +6997,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
-<h2 id="setting-labels-and-annotations-in-the-custom-resource">Setting labels and annotations in the Custom Resource<a class="headerlink" href="#setting-labels-and-annotations-in-the-custom-resource" title="Permanent link">¶</a></h2>
+<h2 id="setting-labels-and-annotations-in-the-custom-resource">Setting labels and annotations in the Custom Resource<a data-markdown-ignore class="headerlink" href="#setting-labels-and-annotations-in-the-custom-resource" title="Permanent link">¶</a></h2>
 <p>You can define both Labels and Annotations as <code>key-value</code> pairs in the metadata section of a YAML manifest for a specific resource. For example, specifying labels and annotations in the <code>deploy/cr.yaml</code> Custom Resource looks as follows:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pxc.percona.com/v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PerconaXtraDBCluster</span>
@@ -7012,7 +7012,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p class="admonition-title">Note</p>
 <p>The <code>percona.com/issue-vault-token: "true"</code> annotation is a special case. If you set this annotation and use <a href="https://www.vaultproject.io/">HashiCorp Vault</a> (for example, for <a href="encryption.html">data at rest encryption</a>), the Operator will pause the cluster startup and repeatedly log <code>wait for token issuing</code> until you remove the annotation. This lets you automate Vault setup before the cluster starts.</p>
 </div>
-<h2 id="querying-labels-and-annotations">Querying labels and annotations<a class="headerlink" href="#querying-labels-and-annotations" title="Permanent link">¶</a></h2>
+<h2 id="querying-labels-and-annotations">Querying labels and annotations<a data-markdown-ignore class="headerlink" href="#querying-labels-and-annotations" title="Permanent link">¶</a></h2>
 <p>To check which <strong>labels</strong> are attached to a specific object, use the additional <code>--show-labels</code> option of the <code>kubectl get</code> command.</p>
 <p>For example, to see the Operator version associated with a Custom Resource Definition, use the following command:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>crd<span class="w"> </span>perconaxtradbclusters.pxc.percona.com<span class="w"> </span>--show-labels
@@ -7029,7 +7029,7 @@ perconaxtradbclusters.pxc.percona.com   2025-07-29T09:02:34Z   app.kubernetes.io
 <p>For example:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>cluster1-pxc-0<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.metadata.annotations}'</span>
 </code></pre></div>
-<h2 id="specifying-labels-and-annotations-ignored-by-the-operator"><a name="annotations-ignore"></a>Specifying labels and annotations ignored by the Operator<a class="headerlink" href="#specifying-labels-and-annotations-ignored-by-the-operator" title="Permanent link">¶</a></h2>
+<h2 id="specifying-labels-and-annotations-ignored-by-the-operator"><a name="annotations-ignore"></a>Specifying labels and annotations ignored by the Operator<a data-markdown-ignore class="headerlink" href="#specifying-labels-and-annotations-ignored-by-the-operator" title="Permanent link">¶</a></h2>
 <p>Sometimes various Kubernetes flavors can add their own annotations to the
 objects managed by the Operator.</p>
 <p>The Operator keeps track of all changes to its objects and can remove
@@ -7157,7 +7157,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

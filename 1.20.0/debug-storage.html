@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6797,14 +6797,14 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="check-storage-related-objects">Check Storage-related objects<a class="headerlink" href="#check-storage-related-objects" title="Permanent link">¶</a></h1>
+<h1 id="check-storage-related-objects">Check Storage-related objects<a data-markdown-ignore class="headerlink" href="#check-storage-related-objects" title="Permanent link">¶</a></h1>
 <p>Storage-related objects worth to check in case of problems are the following ones:</p>
 <ul>
 <li><a href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/">Persistent Volume Claims (PVC) and Persistent Volumes (PV) <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>, which are playing a key role in stateful applications.</li>
 <li><a href="https://kubernetes.io/docs/concepts/storage/storage-classes/">Storage Class <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>, which automates the creation of Persistent Volumes and the underlying storage.</li>
 </ul>
 <p>It is important to remember that PVC is namespace-scoped, but PV and Storage Class are cluster-scoped.</p>
-<h2 id="check-the-pvc">Check the PVC<a class="headerlink" href="#check-the-pvc" title="Permanent link">¶</a></h2>
+<h2 id="check-the-pvc">Check the PVC<a data-markdown-ignore class="headerlink" href="#check-the-pvc" title="Permanent link">¶</a></h2>
 <p>You can check all the PVC with the following command (use your namespace name instead of the <code>&lt;namespace&gt;</code> placeholder):</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pvc<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
 </code></pre></div>
@@ -6857,7 +6857,7 @@ datadir-pxc-pxc-2    Bound    pvc-207e8a3e-1c83-4eae-b3f2-cf126f89ba9e   24Gi   
 <span class="w">  </span><span class="nt">phase</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Bound</span>
 </code></pre></div>
 </details>
-<h2 id="check-the-pv">Check the PV<a class="headerlink" href="#check-the-pv" title="Permanent link">¶</a></h2>
+<h2 id="check-the-pv">Check the PV<a data-markdown-ignore class="headerlink" href="#check-the-pv" title="Permanent link">¶</a></h2>
 <p>It is important to remember that PV is a cluster-scoped Object. If you see any issues with attaching a Volume to a Pod, PV and PVC might be looked upon.</p>
 <p>Check all the PV present in the Kubernetes cluster as follows:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pv
@@ -6918,7 +6918,7 @@ pvc-f3e7097f-accd-4f5d-9c9d-6f29b54a368b   24Gi       RWO            Delete     
 <p>Fields to check if there are any issues in binding with PVC, are the <code>claimRef</code> and <code>nodeAffinity</code>.</p>
 <p>The <code>claimRef</code> one indicates to which PVC this volume is bound to. This means that if by any chance PVC is deleted (e.g. by the appropriate finalizer), this section needs to be modified so that it can bind to a new PVC.</p>
 <p>The <code>spec.nodeAffinity</code> field may influence the PV availability as well: for example, it can make Volume accessed in one availability zone only.</p>
-<h2 id="check-the-storageclass">Check the StorageClass<a class="headerlink" href="#check-the-storageclass" title="Permanent link">¶</a></h2>
+<h2 id="check-the-storageclass">Check the StorageClass<a data-markdown-ignore class="headerlink" href="#check-the-storageclass" title="Permanent link">¶</a></h2>
 <p>StorageClass is also a cluster-scoped object, and it indicates what type of underlying storage is used for the Volumes.</p>
 <p>You can set StorageClass in <code>pxc.volumeSpec.persistentVolumeClaim.storageClassName</code>, <code>proxysql.volumeSpec.persistentVolumeClaim.storageClassName</code>, and <code>backup.storages.STORAGE-NAME.persistentVolumeClaim.storageClassName</code> Custom Resource options.</p>
 <p>The following command checks all the storage class present in the Kubernetes cluster, and allows to see which storage class is the default one:</p>
@@ -6963,19 +6963,19 @@ standard-rwo         pd.csi.storage.gke.io   Delete          WaitForFirstConsume
 <li>Check the <a href="https://kubernetes.io/docs/concepts/storage/storage-classes/#volume-binding-mode">volumeBindingMode <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> especially if the storage cannot be accessed across availability zones. “WaitForFirstConsumer” volumeBindingMode ensures volume is provisioned only after a Pod requesting the Volume is created.</li>
 <li>If you are going to rely on the Operator <a href="scaling-storage-resize.html#storage-resizing-with-volume-expansion-capability">storage scaling functionality</a>, ensure the storage class supports PVC expansion (it should have  <code>allowVolumeExpansion: true</code> in the output of the above command).</li>
 </ul>
-<h2 id="troubleshoot-storage-resizing">Troubleshoot storage resizing<a class="headerlink" href="#troubleshoot-storage-resizing" title="Permanent link">¶</a></h2>
+<h2 id="troubleshoot-storage-resizing">Troubleshoot storage resizing<a data-markdown-ignore class="headerlink" href="#troubleshoot-storage-resizing" title="Permanent link">¶</a></h2>
 <p>Use this guidance if <a href="scaling-storage-resize.html">storage resizing</a> does not behave as expected.</p>
-<h3 id="storage-does-not-scale-when-you-expect-it">Storage does not scale when you expect it<a class="headerlink" href="#storage-does-not-scale-when-you-expect-it" title="Permanent link">¶</a></h3>
+<h3 id="storage-does-not-scale-when-you-expect-it">Storage does not scale when you expect it<a data-markdown-ignore class="headerlink" href="#storage-does-not-scale-when-you-expect-it" title="Permanent link">¶</a></h3>
 <ul>
 <li>Check namespace quotas; they can block PVC expansion even if the storage class has capacity.</li>
 <li>Check quotas or limits set by your cloud provider.</li>
 <li>Look for storage or CSI-level errors (missing storage, driver issues). Fix the issue and let the Operator reconcile.</li>
 </ul>
-<h3 id="max-size-is-not-respected">Max size is not respected<a class="headerlink" href="#max-size-is-not-respected" title="Permanent link">¶</a></h3>
+<h3 id="max-size-is-not-respected">Max size is not respected<a data-markdown-ignore class="headerlink" href="#max-size-is-not-respected" title="Permanent link">¶</a></h3>
 <p>The Operator grows storage by the full <code>growthStep</code> value. If the current size plus <code>growthStep</code> exceeds the <code>maxSize</code> value, the Operator caps the resize at <code>maxSize</code> instead. To avoid large jumps or unexpected caps, either set the <code>growthStep</code> value to the increment you want the storage to resize or raise the <code>maxSize</code> limit.</p>
-<h3 id="scaling-doesnt-happen-even-though-the-maximum-size-hasnt-been-reached">Scaling doesn’t happen even though the maximum size hasn’t been reached<a class="headerlink" href="#scaling-doesnt-happen-even-though-the-maximum-size-hasnt-been-reached" title="Permanent link">¶</a></h3>
+<h3 id="scaling-doesnt-happen-even-though-the-maximum-size-hasnt-been-reached">Scaling doesn’t happen even though the maximum size hasn’t been reached<a data-markdown-ignore class="headerlink" href="#scaling-doesnt-happen-even-though-the-maximum-size-hasnt-been-reached" title="Permanent link">¶</a></h3>
 <p>If storage is not scaling, check if any PVC has reached the max size. Thresholds and limits apply to all PVCs, so when one hits the limit, scaling stops for all. Adjust PVC sizes if needed.</p>
-<h3 id="pvc-resize-is-one-way">PVC resize is one-way<a class="headerlink" href="#pvc-resize-is-one-way" title="Permanent link">¶</a></h3>
+<h3 id="pvc-resize-is-one-way">PVC resize is one-way<a data-markdown-ignore class="headerlink" href="#pvc-resize-is-one-way" title="Permanent link">¶</a></h3>
 <p>PVC resizing in Kubernetes is one-way. You cannot shrink a PVC to roll back to the old size without recreating it. Recreating PVCs can cause data loss, so make sure you have a backup strategy in place. Learn more <a href="backups.html">about backups</a>.</p>
 <hr>
 <div class="md-source-file">
@@ -7077,7 +7077,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

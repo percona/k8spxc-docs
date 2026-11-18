@@ -1,0 +1,189 @@
+# Percona Operator for MySQL based on Percona XtraDB Cluster
+
+> Documentation
+
+Each page below is also available as markdown. For the documentation of all Percona products, see https://docs.percona.com/llms.txt.
+
+## Overview
+
+- [Welcome](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/index.md)
+- [Get help from Percona](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/get-help.md)
+
+## About
+
+- [Overview](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/architecture.md)
+- [Who owns what](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/architecture-responsibilities.md)
+- [Operator responsibilities by area](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/operator-boundaries.md)
+- [How the Operator reacts to changes](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/architecture-reconciliation.md)
+- [Key workflows](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/architecture-workflows.md)
+- [Health checks and probes](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/architecture-probes.md)
+- [Comparison with other solutions](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/compare.md)
+
+## Quickstart guides
+
+- [Overview](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/quickstart.md)
+- [Install with Helm](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/helm.md)
+- [Install with kubectl](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/kubectl.md)
+- [2. Connect to the database](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/connect.md)
+- [3. Insert data](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/data-insert.md)
+- [4. Make a backup](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/backup-tutorial.md)
+- [5. Monitor the database with PMM](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/monitoring-tutorial.md)
+- [What&rsquo;s next?](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/what-next.md)
+
+## Installation
+
+- [System requirements](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/System-Requirements.md)
+- [Install on Minikube](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/minikube.md)
+- [Install with OpenEverest](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/everest.md)
+- [Install on Google Kubernetes Engine (GKE)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/gke.md)
+- [Install on Amazon Elastic Kubernetes Service (AWS EKS)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/eks.md)
+- [Install on Microsoft Azure Kubernetes Service (AKS)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/aks.md)
+- [Install on OpenShift](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/openshift.md)
+- [Generic Kubernetes installation](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/kubernetes.md)
+- [Multi-cluster and multi-region deployment](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/replication.md)
+
+## Upgrade
+
+- [About upgrades](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/update.md)
+- [Upgrade CRD and the Operator](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/update-operator.md)
+- [Database upgrade overview](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/update-db.md)
+- [To a specific version](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/update-minor-set-version.md)
+- [Automatic minor upgrades](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/update-automatic.md)
+- [Manual upgrade](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/update_manually.md)
+- [Upgrade Percona XtraDB Cluster on OpenShift](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/update_openshift.md)
+
+## Configuration
+
+- [Application and system users](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/users.md)
+- [Exposing the cluster](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/expose.md)
+- [Changing MySQL Options](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/options.md)
+- [About plugins and components](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/mysql-plugins-components.md)
+- [Configure plugins and components](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/mysql-plugins-components-examples.md)
+- [Limit SST retries](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/sst-retry-limit.md)
+- [Control Pod scheduling](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/constraints.md)
+- [Labels and annotations](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/annotations.md)
+- [Local Storage support](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/storage.md)
+- [Overview](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/containers-conf.md)
+- [Configure Operator environment variables](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/env-vars-operator.md)
+- [Define environment variables for cluster components](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/env-vars-cluster.md)
+- [Overview](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/load-balancing.md)
+- [HAProxy](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/haproxy-conf.md)
+- [ProxySQL](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/proxysql-conf.md)
+- [Switching from one proxy to another](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/proxy-switching.md)
+- [Persistent logging](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/persistent-logging.md)
+- [Log rotation](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/log-rotation.md)
+- [Overview](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/failover-about.md)
+- [In-cluster failover](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/failover-in-cluster.md)
+- [Overview](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/dr.md)
+- [Set up the primary site](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/dr-primary.md)
+- [Set up the replica site](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/dr-replica.md)
+- [Configure replication between the sites](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/dr-replication.md)
+- [Promote the replica site to a new primary](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/dr-failover.md)
+- [Restore the previous primary site](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/dr-restore.md)
+- [About TLS / SSL security](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/TLS.md)
+- [Install and use the cert-manager](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/tls-cert-manager.md)
+- [Generate certificates manually](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/tls-manual.md)
+- [Update certificates](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/tls-update.md)
+- [Migrate from Operator-generated or custom certificates to cert-manager](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/tls-migrate-to-cert-manager.md)
+- [Run Percona XtraDB Cluster without TLS](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/tls-disable.md)
+- [About data at rest encryption](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/encryption.md)
+- [Configure data at rest encryption without TLS](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/encryption-setup.md)
+- [Configure data at rest encryption with TLS](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/encryption-setup-tls.md)
+- [Telemetry](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/telemetry.md)
+- [Configure concurrency for a cluster reconciliation](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/reconciliation-concurrency.md)
+
+## Management
+
+- [About backups](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/backups.md)
+- [Backup methods](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/backups-methods.md)
+- [Overview](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/backups-storage.md)
+- [Amazon S3 or S3-compatible storage](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/backups-storage-s3.md)
+- [Microsoft Azure Blob storage](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/backups-storage-azure.md)
+- [Persistent Volume](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/backups-storage-pvc.md)
+- [Scheduled backup](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/backups-scheduled.md)
+- [On-demand backup](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/backups-ondemand.md)
+- [Enable compression for backups](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/backups-compress.md)
+- [Overview](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/backups-restore.md)
+- [On the same cluster (in-place)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/backups-restore-in-place.md)
+- [To a side cluster (same Kubernetes cluster)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/backups-restore-side-cluster.md)
+- [To a new cluster (different Kubernetes cluster)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/backups-restore-to-new-cluster.md)
+- [After a disaster](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/backups-restore-disaster.md)
+- [Enable point-in-time recovery](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/backups-pitr.md)
+- [Restore with point-in-time recovery](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/backups-pitr-restore.md)
+- [Find a GTID for point-in-time recovery](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/backups-pitr-find-gtid.md)
+- [Use backups to move an external database to Kubernetes](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/backups-move-from-external-db.md)
+- [Move a backup out of the cluster](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/backups-copy.md)
+- [Delete the unneeded backup](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/backups-delete.md)
+- [About scaling and storage](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/scaling-about.md)
+- [Horizontal and vertical scaling](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/scaling.md)
+- [Resize storage](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/scaling-storage-resize.md)
+- [Monitor with Percona Monitoring and Management (PMM)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/monitoring.md)
+- [Add sidecar containers](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/sidecar.md)
+- [Add external PersistentVolumeClaims to the Operator](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/external-pvc.md)
+- [Restart or pause the cluster](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/pause.md)
+- [Crash recovery](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/recovery.md)
+- [Clone a cluster with the same data set](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/data-source.md)
+
+## Troubleshooting
+
+- [Initial troubleshooting](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/debug.md)
+- [Exec into the container](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/debug-shell.md)
+- [Check the events](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/debug-events.md)
+- [Check the logs](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/debug-logs.md)
+- [Check storage](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/debug-storage.md)
+- [Special debug images](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/debug-images.md)
+
+## HOWTOs
+
+- [Install the database with customized parameters](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/custom-install.md)
+- [Provide Percona Operator for MySQL single-namespace and multi-namespace deployment](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/cluster-wide.md)
+- [How to use private registry](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/custom-registry.md)
+- [Monitor Kubernetes](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/monitor-kubernetes.md)
+- [Delete the Operator](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/delete.md)
+
+## Reference
+
+- [Custom Resource options](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/operator.md)
+- [Backup Custom Resource options](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/backup-cr.md)
+- [Restore Custom Resource options](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/restore-cr.md)
+- [Services and ports](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/services.md)
+- [Objects the Operator creates](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/objects-created.md)
+- [Percona certified images](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/images.md)
+- [Versions compatibility](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/versions.md)
+- [Operator API](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/api.md)
+- [Frequently Asked Questions](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/faq.md)
+- [Glossary](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/glossary.md)
+- [How we use artificial intelligence](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ai-docs.md)
+- [Copyright and licensing information](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/copyright.md)
+- [Trademark policy](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/trademark-policy.md)
+- [Legal Notice](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/legal-notice.md)
+
+## Release Notes
+
+- [Release notes index](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ReleaseNotes/index.md)
+- [Percona Operator for MySQL based on Percona XtraDB Cluster 1.20.0 (2026-06-05)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.20.0.md)
+- [Percona Operator for MySQL based on Percona XtraDB Cluster 1.19.1 (2026-04-16)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.19.1.md)
+- [Percona Operator for MySQL based on Percona XtraDB Cluster 1.19.0 (2026-01-19)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.19.0.md)
+- [Percona Operator for MySQL based on Percona XtraDB Cluster 1.18.0 (2025-08-14)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.18.0.md)
+- [Percona Operator for MySQL based on Percona XtraDB Cluster 1.17.0 (2025-04-14)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.17.0.md)
+- [Percona Operator for MySQL based on Percona XtraDB Cluster 1.16.1 (2024-12-26)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.16.1.md)
+- [Percona Operator for MySQL based on Percona XtraDB Cluster 1.16.0 (2024-12-19)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.16.0.md)
+- [Percona Operator for MySQL based on Percona XtraDB Cluster 1.15.1 (2024-10-16)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.15.1.md)
+- [Percona Operator for MySQL based on Percona XtraDB Cluster 1.14.1 (2024-10-16)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.14.1.md)
+- [Percona Operator for MySQL based on Percona XtraDB Cluster 1.15.0 (2024-08-20)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.15.0.md)
+- [Percona Operator for MySQL based on Percona XtraDB Cluster 1.14.0 (2024-03-04)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.14.0.md)
+- [Percona Operator for MySQL based on Percona XtraDB Cluster 1.13.0 (2023-07-11)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.13.0.md)
+- [Percona Operator for MySQL based on Percona XtraDB Cluster 1.12.0 (2022-12-07)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.12.0.md)
+- [Percona Operator for MySQL based on Percona XtraDB Cluster 1.11.0 (2022-06-03)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.11.0.md)
+- [Percona Distribution for MySQL Operator 1.10.0 (2021-11-24)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.10.0.md)
+- [Percona Distribution for MySQL Operator 1.9.0 (2021-08-09)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.9.0.md)
+- [Percona Kubernetes Operator for Percona XtraDB Cluster 1.8.0 (2021-05-26)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.8.0.md)
+- [Percona Kubernetes Operator for Percona XtraDB Cluster 1.7.0 (2021-02-02)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.7.0.md)
+- [Percona Kubernetes Operator for Percona XtraDB Cluster 1.6.0 (2020-09-09)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.6.0.md)
+- [Percona Kubernetes Operator for Percona XtraDB Cluster 1.5.0 (2020-07-21)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.5.0.md)
+- [Percona Kubernetes Operator for Percona XtraDB Cluster 1.4.0 (2020-04-29)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.4.0.md)
+- [Percona Kubernetes Operator for Percona XtraDB Cluster 1.3.0 (2020-01-06)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.3.0.md)
+- [Percona Kubernetes Operator for Percona XtraDB Cluster 1.2.0 (2019-09-20)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.2.0.md)
+- [Percona Kubernetes Operator for Percona XtraDB Cluster 1.1.0 (2019-07-15)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.1.0.md)
+- [Percona Kubernetes Operator for Percona XtraDB Cluster 1.0.0 (2019-05-29)](https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/ReleaseNotes/Kubernetes-Operator-for-PXC-RN1.0.0.md)
+

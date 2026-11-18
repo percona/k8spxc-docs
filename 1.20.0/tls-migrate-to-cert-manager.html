@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6667,10 +6667,10 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="migrate-from-operator-generated-or-custom-certificates-to-cert-manager">Migrate from Operator-generated or custom certificates to cert-manager<a class="headerlink" href="#migrate-from-operator-generated-or-custom-certificates-to-cert-manager" title="Permanent link">¶</a></h1>
+<h1 id="migrate-from-operator-generated-or-custom-certificates-to-cert-manager">Migrate from Operator-generated or custom certificates to cert-manager<a data-markdown-ignore class="headerlink" href="#migrate-from-operator-generated-or-custom-certificates-to-cert-manager" title="Permanent link">¶</a></h1>
 <p>You can start using cert-manager for TLS certificate lifecycle management if you have previously deployed your cluster with auto-generated or custom certificates. The use of cert-manager provides automatic certificate renewal, configurable validity periods, and centralized certificate management across your Kubernetes cluster.</p>
 <p>Read more about cert-manager in <a href="tls-cert-manager.html#about-the-cert-manager">About cert-manager</a></p>
-<h2 id="migration-steps">Migration steps<a class="headerlink" href="#migration-steps" title="Permanent link">¶</a></h2>
+<h2 id="migration-steps">Migration steps<a data-markdown-ignore class="headerlink" href="#migration-steps" title="Permanent link">¶</a></h2>
 <ol>
 <li>
 <p>Export the cluster name and the namespace where the cluster is running as an environment variable:</p>
@@ -6705,7 +6705,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </li>
 <li>
 <p>Delete the TLS Secrets.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Operator-generated certificates</label><label for="__tabbed_1_2">Custom certificates</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_1_1">Operator-generated certificates</label><label for="__tabbed_1_2">Custom certificates</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <ol>
@@ -6760,7 +6760,7 @@ kubectl<span class="w"> </span>delete<span class="w"> </span>secret<span class="
 </li>
 </ol>
 <p>The Operator detects the missing Secrets, sees cert-manager installed, requests new certificates from cert-manager, creates the Secrets, and resumes the cluster.</p>
-<h3 id="verify-the-migration">Verify the migration<a class="headerlink" href="#verify-the-migration" title="Permanent link">¶</a></h3>
+<h3 id="verify-the-migration">Verify the migration<a data-markdown-ignore class="headerlink" href="#verify-the-migration" title="Permanent link">¶</a></h3>
 <p>After the cluster is running, verify that cert-manager resources were created:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>issuers<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span>
 kubectl<span class="w"> </span>get<span class="w"> </span>certificates<span class="w"> </span>-n<span class="w"> </span><span class="nv">$NAMESPACE</span>
@@ -6866,7 +6866,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

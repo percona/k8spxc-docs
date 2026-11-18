@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6709,16 +6709,16 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="upgrade-database-and-operator-on-openshift">Upgrade Database and Operator on OpenShift<a class="headerlink" href="#upgrade-database-and-operator-on-openshift" title="Permanent link">¶</a></h1>
+<h1 id="upgrade-database-and-operator-on-openshift">Upgrade Database and Operator on OpenShift<a data-markdown-ignore class="headerlink" href="#upgrade-database-and-operator-on-openshift" title="Permanent link">¶</a></h1>
 <p>Upgrading database and Operator on <a href="https://marketplace.redhat.com">Red Hat Marketplace <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> or to upgrade Red Hat certified Operators on <a href="https://www.redhat.com/en/technologies/cloud-computing/openshift">OpenShift <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> generally follows the <a href="update.html">standard upgrade scenario</a>, but includes a number of special steps specific for these platforms.</p>
-<h2 id="considerations-for-using-openshift-419">Considerations for using OpenShift 4.19<a class="headerlink" href="#considerations-for-using-openshift-419" title="Permanent link">¶</a></h2>
+<h2 id="considerations-for-using-openshift-419">Considerations for using OpenShift 4.19<a data-markdown-ignore class="headerlink" href="#considerations-for-using-openshift-419" title="Permanent link">¶</a></h2>
 <p>Starting with OpenShift 4.19, the way images with not fully qualified names are pulled has changed for repositories that share the same repository name on DockerHub and Red Hat Marketplace. By default the tags are pulled from Red Hat Marketplace. Specifying not fully qualified image names may result in the <code>ImagePullBackOff</code> error.</p>
 <ul>
 <li><strong>OLM installation:</strong> Images are provided with the fully qualified names and are pulled from the Red Hat Marketplace/Dockerhub registry.</li>
 <li><strong>Manual install/update with default manifests:</strong> Images must use the <code>docker.io</code> registry prefix to guarantee successful download from the Dockerhub <code>percona-xtradb-cluster</code> repository. See the <a href="#update-via-the-command-line-interface">Update via the command-line interface</a> section for the exact steps.</li>
 </ul>
-<h2 id="upgrading-the-operator-and-crd">Upgrading the Operator and CRD<a class="headerlink" href="#upgrading-the-operator-and-crd" title="Permanent link">¶</a></h2>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Operator 1.15.0 and newer</label><label for="__tabbed_1_2">Operator 1.14.0</label><label for="__tabbed_1_3">Operator 1.13.0 and older</label></div>
+<h2 id="upgrading-the-operator-and-crd">Upgrading the Operator and CRD<a data-markdown-ignore class="headerlink" href="#upgrading-the-operator-and-crd" title="Permanent link">¶</a></h2>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_1_1">Operator 1.15.0 and newer</label><label for="__tabbed_1_2">Operator 1.14.0</label><label for="__tabbed_1_3">Operator 1.13.0 and older</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>You can actually update the Operator via the <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.2/html/operators/understanding-the-operator-lifecycle-manager-olm#olm-overview_olm-understanding-olm">Operator Lifecycle Manager (OLM) <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> web interface.</p>
@@ -6802,7 +6802,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </div>
 </div>
 </div>
-<h3 id="update-via-the-command-line-interface">Update via the command-line interface<a class="headerlink" href="#update-via-the-command-line-interface" title="Permanent link">¶</a></h3>
+<h3 id="update-via-the-command-line-interface">Update via the command-line interface<a data-markdown-ignore class="headerlink" href="#update-via-the-command-line-interface" title="Permanent link">¶</a></h3>
 <p>The following steps apply if you plan to use OpenShift 4.19. See the <a href="#considerations-for-using-openshift-419">Considerations for using OpenShift 4.19</a>.</p>
 <ol>
 <li>
@@ -6850,7 +6850,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </ol>
 </li>
 </ol>
-<h2 id="upgrading-percona-xtradb-cluster">Upgrading Percona XtraDB Cluster<a class="headerlink" href="#upgrading-percona-xtradb-cluster" title="Permanent link">¶</a></h2>
+<h2 id="upgrading-percona-xtradb-cluster">Upgrading Percona XtraDB Cluster<a data-markdown-ignore class="headerlink" href="#upgrading-percona-xtradb-cluster" title="Permanent link">¶</a></h2>
 <ol>
 <li>
 <p>Make sure that <code>spec.updateStrategy</code> option in the <a href="operator.html">Custom Resource</a>
@@ -6912,7 +6912,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </li>
 <li>
 <p><a href="https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/">Apply a patch <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> to set the necessary <code>crVersion</code> value (equal to the Operator version) and update images in your cluster Custom Resource. Supposing that your cluster name is <code>cluster1</code>, the command should look as follows:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">Operator 1.14.0 or newer</label><label for="__tabbed_2_2">Operator 1.13.0 or older</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_2_1">Operator 1.14.0 or newer</label><label for="__tabbed_2_2">Operator 1.13.0 or older</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>pxc<span class="w"> </span>cluster1<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">'{</span>
@@ -6947,7 +6947,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>The above command upgrades various components of the cluster including PMM Client. If you didn’t follow the <a href="https://docs.percona.com/percona-monitoring-and-management/2/how-to/upgrade.html">official recommendation <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> to upgrade PMM Server before upgrading PMM Client, you can avoid PMM Client upgrade by removing it from the list of images as follows:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">Operator 1.14.0 or newer</label><label for="__tabbed_3_2">Operator 1.13.0 or older</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_3_1">Operator 1.14.0 or newer</label><label for="__tabbed_3_2">Operator 1.13.0 or older</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>pxc<span class="w"> </span>cluster1<span class="w"> </span>--type<span class="o">=</span>merge<span class="w"> </span>--patch<span class="w"> </span><span class="s1">'{</span>
@@ -7085,7 +7085,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

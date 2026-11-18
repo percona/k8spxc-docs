@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6733,7 +6733,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="update-certificates">Update certificates<a class="headerlink" href="#update-certificates" title="Permanent link">¶</a></h1>
+<h1 id="update-certificates">Update certificates<a data-markdown-ignore class="headerlink" href="#update-certificates" title="Permanent link">¶</a></h1>
 <p>How your TLS certificates are updated depends on how they were created:</p>
 <ul>
 <li>
@@ -6747,12 +6747,12 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </li>
 </ul>
 <p>This document describes how to update the internal certificates. Use the same steps to update external certificates. Read more about internal and external certificates in the <a href="TLS.html">About TLS</a> section.</p>
-<h2 id="before-you-start">Before you start<a class="headerlink" href="#before-you-start" title="Permanent link">¶</a></h2>
+<h2 id="before-you-start">Before you start<a data-markdown-ignore class="headerlink" href="#before-you-start" title="Permanent link">¶</a></h2>
 <p>Export the namespace where your cluster is deployed as an environment variable:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">NAMESPACE</span><span class="o">=</span>&lt;my-namespace&gt;
 </code></pre></div>
-<h2 id="check-your-certificates-for-expiration">Check your certificates for expiration<a class="headerlink" href="#check-your-certificates-for-expiration" title="Permanent link">¶</a></h2>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">With cert-manager</label><label for="__tabbed_1_2">Operator-generated or manual TLS certificates</label></div>
+<h2 id="check-your-certificates-for-expiration">Check your certificates for expiration<a data-markdown-ignore class="headerlink" href="#check-your-certificates-for-expiration" title="Permanent link">¶</a></h2>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_1_1">With cert-manager</label><label for="__tabbed_1_2">Operator-generated or manual TLS certificates</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>If you <a href="tls-cert-manager.html">use cert-manager</a> to generate certificates, do the following.</p>
@@ -6835,7 +6835,7 @@ Not After=Nov  7 10:54:00 2026 GMT
 </div>
 </div>
 </div>
-<h3 id="update-valid-certificates-without-downtime">Update valid certificates without downtime<a class="headerlink" href="#update-valid-certificates-without-downtime" title="Permanent link">¶</a></h3>
+<h3 id="update-valid-certificates-without-downtime">Update valid certificates without downtime<a data-markdown-ignore class="headerlink" href="#update-valid-certificates-without-downtime" title="Permanent link">¶</a></h3>
 <p>This section explains how to update your certificates that are still valid, without downtime. For already expired certificates, refer to <a href="#update-expired-certificates-with-downtime">Update expired certificates</a> section.</p>
 <p><strong>When to use this method:</strong></p>
 <ul>
@@ -6876,7 +6876,7 @@ kubectl -n $NAMESPACE create secret generic cluster1-ssl-internal-new \
 </ul>
 <p>On every step, the Operator performs the rolling restart of the database Pods to ensure the cluster availability and inter-node communication during the update. </p>
 </details>
-<h3 id="update-expired-certificates-with-downtime">Update expired certificates with downtime<a class="headerlink" href="#update-expired-certificates-with-downtime" title="Permanent link">¶</a></h3>
+<h3 id="update-expired-certificates-with-downtime">Update expired certificates with downtime<a data-markdown-ignore class="headerlink" href="#update-expired-certificates-with-downtime" title="Permanent link">¶</a></h3>
 <p>This section explains how to update the certificates that have already expired. To check certificate validity, see <a href="#check-your-certificates-for-expiration">Check your certificates for expiration</a>.</p>
 <p>If your certificates have been already expired, follow the <em>pause - update Secrets - unpause</em> procedure below:</p>
 <ol>
@@ -6904,7 +6904,7 @@ kubectl -n $NAMESPACE create secret generic cluster1-ssl-internal-new \
     sure it has reached its running state.</p>
 </li>
 </ol>
-<h3 id="keep-certificates-after-deleting-the-cluster">Keep certificates after deleting the cluster<a class="headerlink" href="#keep-certificates-after-deleting-the-cluster" title="Permanent link">¶</a></h3>
+<h3 id="keep-certificates-after-deleting-the-cluster">Keep certificates after deleting the cluster<a data-markdown-ignore class="headerlink" href="#keep-certificates-after-deleting-the-cluster" title="Permanent link">¶</a></h3>
 <p>In case of cluster deletion, objects, created for SSL (Secret, certificate, and
 issuer) are not deleted by default.</p>
 <p>If the user wants the cleanup of objects created for SSL, there is a <a href="operator.html#finalizers-delete-ssl">finalizers.delete-ssl</a>
@@ -7010,7 +7010,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

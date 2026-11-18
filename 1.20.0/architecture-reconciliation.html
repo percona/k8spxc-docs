@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6921,11 +6921,11 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="how-the-operator-reacts-to-changes">How the Operator reacts to changes<a class="headerlink" href="#how-the-operator-reacts-to-changes" title="Permanent link">¶</a></h1>
+<h1 id="how-the-operator-reacts-to-changes">How the Operator reacts to changes<a data-markdown-ignore class="headerlink" href="#how-the-operator-reacts-to-changes" title="Permanent link">¶</a></h1>
 <p>This page explains what the Operator does after you change the <a href="glossary.html#custom-resource">Custom Resource</a>: when it acts, in which order, which changes restart Pods, and what the cluster status tells you while the change is applied.</p>
-<h2 id="what-a-reconcile-is">What a reconcile is<a class="headerlink" href="#what-a-reconcile-is" title="Permanent link">¶</a></h2>
+<h2 id="what-a-reconcile-is">What a reconcile is<a data-markdown-ignore class="headerlink" href="#what-a-reconcile-is" title="Permanent link">¶</a></h2>
 <p>The <code>PerconaXtraDBCluster</code> Custom Resource describes the <em>desired state</em> of the cluster. A <em>reconcile</em> is one pass of the Operator over the cluster: it reads the Custom Resource, compares it with the <em>actual state</em> of the Kubernetes objects and the database, and changes whatever differs. Reconciles repeat continuously, so the cluster converges to the Custom Resource even if a single pass cannot finish the job.</p>
-<h2 id="what-triggers-a-reconcile">What triggers a reconcile<a class="headerlink" href="#what-triggers-a-reconcile" title="Permanent link">¶</a></h2>
+<h2 id="what-triggers-a-reconcile">What triggers a reconcile<a data-markdown-ignore class="headerlink" href="#what-triggers-a-reconcile" title="Permanent link">¶</a></h2>
 <ul>
 <li><strong>A change to the Custom Resource</strong>, or to the users Secret named in <code>spec.secretsName</code>.</li>
 <li><strong>A periodic re-check.</strong> After each successful pass, the Operator reconciles the cluster again about 5 seconds later. Because of this, manual edits to the objects the Operator manages, such as a <a href="glossary.html#statefulset">StatefulSet</a> or a Service, are reverted within seconds. Make changes in the Custom Resource instead.</li>
@@ -6941,7 +6941,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </div>
 <p>Only one Operator Pod is active at a time; if you run several replicas, they elect a leader. The Operator watches the namespaces listed in the <code>WATCH_NAMESPACE</code> environment variable, or all namespaces if it is empty. See <a href="cluster-wide.html">Single-namespace and multi-namespace deployment</a>.</p>
 <p>The <code>MAX_CONCURRENT_RECONCILES</code> environment variable of the Operator Deployment sets how many objects of each kind the Operator reconciles in parallel. It applies separately to clusters, backups and restores. The default is <code>1</code>: the Operator reconciles one cluster at a time, and other clusters wait in the queue. A pass can take long, because a <a href="#how-smart-update-works">Smart Update</a> waits inside the pass for each restarted Pod. If you run many clusters with one Operator, raise this value. See <a href="reconciliation-concurrency.html">Configure concurrency for a cluster reconciliation</a> and <a href="env-vars-operator.html#max_concurrent_reconciles"><code>MAX_CONCURRENT_RECONCILES</code></a>.</p>
-<h2 id="order-of-operations">Order of operations<a class="headerlink" href="#order-of-operations" title="Permanent link">¶</a></h2>
+<h2 id="order-of-operations">Order of operations<a data-markdown-ignore class="headerlink" href="#order-of-operations" title="Permanent link">¶</a></h2>
 <p>Each reconcile runs the same steps in the same order. Knowing the order helps you understand why one change waits for another: for example, a storage resize in progress delays the rest of the pass.</p>
 <pre class="mermaid"><code>flowchart TD
   A["Validate the Custom Resource&lt;br/&gt;and apply defaults"] --&gt; B{"Cluster being&lt;br/&gt;deleted?"}
@@ -6956,7 +6956,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   I --&gt; J["Cross-site replication channels"]
   J --&gt; K["Backup schedules, binlog collector,&lt;br/&gt;binlog gap check"]
   K --&gt; L["Update status, re-check in 5 s"]</code></pre>
-<h2 id="what-happens-when-i-change-a-field">What happens when I change a field<a class="headerlink" href="#what-happens-when-i-change-a-field" title="Permanent link">¶</a></h2>
+<h2 id="what-happens-when-i-change-a-field">What happens when I change a field<a data-markdown-ignore class="headerlink" href="#what-happens-when-i-change-a-field" title="Permanent link">¶</a></h2>
 <table>
 <thead>
 <tr>
@@ -7018,14 +7018,14 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
-<h2 id="update-strategies">Update strategies<a class="headerlink" href="#update-strategies" title="Permanent link">¶</a></h2>
+<h2 id="update-strategies">Update strategies<a data-markdown-ignore class="headerlink" href="#update-strategies" title="Permanent link">¶</a></h2>
 <p>When a change requires restarting Pods, the <code>updateStrategy</code> option in the Custom Resource decides how it happens. See also <a href="update.html#update-strategies">Update strategies</a>.</p>
 <ul>
 <li><strong><code>SmartUpdate</code></strong> (default). The Operator restarts database Pods itself, one at a time, and is aware of the client traffic: it asks the proxy which node currently receives writes and restarts that node last. With ProxySQL, it also waits until each restarted node is back in its hostgroup before it moves on. Proxy Pods use a regular Kubernetes rolling update.</li>
 <li><strong><code>RollingUpdate</code></strong>. Kubernetes restarts the Pods with a native StatefulSet rolling update, without <a href="glossary.html#galera">Galera</a> awareness. It waits for each Pod to become ready, but it doesn’t pause for a running backup, doesn’t wait for ProxySQL to bring the node online, doesn’t require a ready proxy, and doesn’t stop early when a Pod can’t start.</li>
 <li><strong><code>OnDelete</code></strong>. Nothing restarts until you delete a Pod; Kubernetes then recreates it with the new configuration. See <a href="update_manually.html">Manual upgrade</a>.</li>
 </ul>
-<h3 id="how-smart-update-works">How Smart Update works<a class="headerlink" href="#how-smart-update-works" title="Permanent link">¶</a></h3>
+<h3 id="how-smart-update-works">How Smart Update works<a data-markdown-ignore class="headerlink" href="#how-smart-update-works" title="Permanent link">¶</a></h3>
 <pre class="mermaid"><code>sequenceDiagram
   participant O as Operator
   participant P2 as cluster1-pxc-2
@@ -7047,10 +7047,10 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li>It restarts the writer last, so writes fail over only once during the rollout.</li>
 </ol>
 <p>Smart Update requires an enabled proxy (HAProxy or ProxySQL) that is ready. It stops waiting and reports a failure if a restarted Pod is in <code>ImagePullBackOff</code>, <code>ErrImagePull</code> or <code>CrashLoopBackOff</code>, or cannot be scheduled for more than 2 minutes. If a node does not become <code>Synced</code>, the Operator keeps waiting for up to 2 hours, or for <code>pxc.livenessProbes.initialDelaySeconds</code> seconds if you changed that value from the default. While it waits, the Operator logs show what it is waiting for.</p>
-<h3 id="automatic-upgrades">Automatic upgrades<a class="headerlink" href="#automatic-upgrades" title="Permanent link">¶</a></h3>
+<h3 id="automatic-upgrades">Automatic upgrades<a data-markdown-ignore class="headerlink" href="#automatic-upgrades" title="Permanent link">¶</a></h3>
 <p>With <code>upgradeOptions.apply</code> set to <code>Recommended</code>, <code>Latest</code> or a specific version, the Operator checks the Percona Version Service on the <code>upgradeOptions.schedule</code> (by default, daily at 04:00) and, if a new version is available, writes the new images into the Custom Resource. The Smart Update then rolls them out. The check runs only when the cluster is <code>ready</code>. The default value <code>Disabled</code> turns automatic upgrades off. See <a href="update-automatic.html">Automatic minor upgrades</a>.</p>
 <p>Upgrade the Operator itself and its CRDs before you raise <code>spec.crVersion</code>. See <a href="update-operator.html">Upgrade CRD and the Operator</a>.</p>
-<h2 id="status">Status<a class="headerlink" href="#status" title="Permanent link">¶</a></h2>
+<h2 id="status">Status<a data-markdown-ignore class="headerlink" href="#status" title="Permanent link">¶</a></h2>
 <p>The <code>status.state</code> field of the Custom Resource has one of these values:</p>
 <table>
 <thead>
@@ -7082,14 +7082,14 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
-<h3 id="what-ready-means">What <code>ready</code> means<a class="headerlink" href="#what-ready-means" title="Permanent link">¶</a></h3>
+<h3 id="what-ready-means">What <code>ready</code> means<a data-markdown-ignore class="headerlink" href="#what-ready-means" title="Permanent link">¶</a></h3>
 <p>The cluster is <code>ready</code> only when all of the following are true:</p>
 <ul>
 <li>Every database Pod and every Pod of the enabled proxy has all containers ready.</li>
 <li>Every one of these Pods runs the current revision of its StatefulSet, so no rollout is pending.</li>
 <li>The cluster endpoint, <code>status.host</code>, is known. For a <code>LoadBalancer</code> Service, this means the cloud provider has assigned an address.</li>
 </ul>
-<h3 id="why-a-cluster-stays-in-initializing">Why a cluster stays in <code>initializing</code><a class="headerlink" href="#why-a-cluster-stays-in-initializing" title="Permanent link">¶</a></h3>
+<h3 id="why-a-cluster-stays-in-initializing">Why a cluster stays in <code>initializing</code><a data-markdown-ignore class="headerlink" href="#why-a-cluster-stays-in-initializing" title="Permanent link">¶</a></h3>
 <p>If the cluster stays in <code>initializing</code> for a long time, one of the conditions above is not met. A <code>ready</code> cluster also goes back to <code>initializing</code> as soon as one of its Pods becomes unready, for example after a container restart. Compare <code>status.pxc.ready</code> with <code>status.pxc.size</code>, and the same fields under <code>status.haproxy</code> or <code>status.proxysql</code>, to see which component is affected. The usual causes:</p>
 <ul>
 <li><strong>A rollout is pending.</strong> Some Pods still run the previous revision, for example because a Smart Update is waiting for a backup to finish or for a node to become <code>Synced</code>. Check the Operator logs.</li>
@@ -7099,7 +7099,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><strong>A Pod cannot be scheduled.</strong> The status message shows the scheduler’s reason.</li>
 </ul>
 <p>The status does not show everything. If the state looks wrong but there is no message, read the Operator logs. See <a href="debug.html#which-layer-is-it">Which layer is it?</a>.</p>
-<h2 id="pause">Pause<a class="headerlink" href="#pause" title="Permanent link">¶</a></h2>
+<h2 id="pause">Pause<a data-markdown-ignore class="headerlink" href="#pause" title="Permanent link">¶</a></h2>
 <p>Setting <code>spec.pause: true</code> stops the cluster gracefully:</p>
 <ul>
 <li>All database and proxy Pods are scaled down to 0. PVCs and data are kept.</li>
@@ -7108,9 +7108,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li>The status changes to <code>paused</code> when all Pods have stopped.</li>
 </ul>
 <p>Set <code>spec.pause: false</code> to start the cluster again. The Operator also pauses the cluster itself during a restore and when you turn TLS on or off. See <a href="pause.html">Pause/resume Percona XtraDB Cluster</a>.</p>
-<h2 id="next-steps">Next steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
+<h2 id="next-steps">Next steps<a data-markdown-ignore class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
 <p><a class="md-button" href="architecture-workflows.html">Key workflows</a></p>
-<h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
+<h2 id="see-also">See also<a data-markdown-ignore class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="operator.html">Custom Resource options</a></li>
 <li><a href="pause.html">Pause/resume Percona XtraDB Cluster</a></li>
@@ -7216,7 +7216,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

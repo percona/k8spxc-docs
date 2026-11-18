@@ -24,7 +24,7 @@ You can set environment variables in the following ways:">
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -139,7 +139,7 @@ You can set environment variables in the following ways:">
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -7054,7 +7054,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="configure-operator-environment-variables">Configure Operator environment variables<a class="headerlink" href="#configure-operator-environment-variables" title="Permanent link">¶</a></h1>
+<h1 id="configure-operator-environment-variables">Configure Operator environment variables<a data-markdown-ignore class="headerlink" href="#configure-operator-environment-variables" title="Permanent link">¶</a></h1>
 <p>You can configure the Percona Operator for XtraDB Cluster behavior by setting environment variables in the Operator Deployment.
 You can set environment variables in the following ways:</p>
 <ul>
@@ -7062,8 +7062,8 @@ You can set environment variables in the following ways:</p>
 <li>For Helm installations you can set environment variables through Helm values.</li>
 <li>For installations on OpenShift, you can configure environment variables through the OLM subscription.</li>
 </ul>
-<h2 id="available-environment-variables">Available environment variables<a class="headerlink" href="#available-environment-variables" title="Permanent link">¶</a></h2>
-<h3 id="log_structured"><code>LOG_STRUCTURED</code><a class="headerlink" href="#log_structured" title="Permanent link">¶</a></h3>
+<h2 id="available-environment-variables">Available environment variables<a data-markdown-ignore class="headerlink" href="#available-environment-variables" title="Permanent link">¶</a></h2>
+<h3 id="log_structured"><code>LOG_STRUCTURED</code><a data-markdown-ignore class="headerlink" href="#log_structured" title="Permanent link">¶</a></h3>
 <p>Controls whether Operator logs are structured (JSON format) or plain text. Available since Operator version 1.12.0</p>
 <table>
 <thead>
@@ -7087,7 +7087,7 @@ You can set environment variables in the following ways:</p>
 <span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LOG_STRUCTURED</span>
 <span class="w">   </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 </code></pre></div>
-<h3 id="log_level"><code>LOG_LEVEL</code><a class="headerlink" href="#log_level" title="Permanent link">¶</a></h3>
+<h3 id="log_level"><code>LOG_LEVEL</code><a data-markdown-ignore class="headerlink" href="#log_level" title="Permanent link">¶</a></h3>
 <p>Sets the verbosity level of Operator logs. Available since Operator version 1.12.0</p>
 <table>
 <thead>
@@ -7117,7 +7117,7 @@ You can set environment variables in the following ways:</p>
 <span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LOG_LEVEL</span>
 <span class="w">   </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"DEBUG"</span>
 </code></pre></div>
-<h3 id="watch_namespace"><code>WATCH_NAMESPACE</code><a class="headerlink" href="#watch_namespace" title="Permanent link">¶</a></h3>
+<h3 id="watch_namespace"><code>WATCH_NAMESPACE</code><a data-markdown-ignore class="headerlink" href="#watch_namespace" title="Permanent link">¶</a></h3>
 <p>Specifies which namespaces the Operator should watch for Custom Resources.</p>
 <table>
 <thead>
@@ -7146,7 +7146,7 @@ You can set environment variables in the following ways:</p>
 <span class="w">   </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"pxc,pxc-dev,pxc-prod"</span>
 </code></pre></div>
 <p>See <a href="cluster-wide.html">Cluster-wide installation</a> for more details.</p>
-<h3 id="disable_telemetry"><code>DISABLE_TELEMETRY</code><a class="headerlink" href="#disable_telemetry" title="Permanent link">¶</a></h3>
+<h3 id="disable_telemetry"><code>DISABLE_TELEMETRY</code><a data-markdown-ignore class="headerlink" href="#disable_telemetry" title="Permanent link">¶</a></h3>
 <p>Disables the Operator’s telemetry data collection.</p>
 <table>
 <thead>
@@ -7171,7 +7171,7 @@ You can set environment variables in the following ways:</p>
 <span class="w">   </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 </code></pre></div>
 <p>See <a href="telemetry.html">Telemetry</a> for more information about what data is collected.</p>
-<h3 id="s3_workers_limit"><code>S3_WORKERS_LIMIT</code><a class="headerlink" href="#s3_workers_limit" title="Permanent link">¶</a></h3>
+<h3 id="s3_workers_limit"><code>S3_WORKERS_LIMIT</code><a data-markdown-ignore class="headerlink" href="#s3_workers_limit" title="Permanent link">¶</a></h3>
 <p>This variable limits the number of parallel workers used for backup deletion from the S3-compatible storage (AWS S3, MinIO, etc.). Available since Operator version 1.8.0.</p>
 <p><strong>When to use:</strong></p>
 <ul>
@@ -7207,7 +7207,7 @@ You can set environment variables in the following ways:</p>
 <span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">S3_WORKERS_LIMIT</span>
 <span class="w">   </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"20"</span>
 </code></pre></div>
-<h3 id="max_concurrent_reconciles"><code>MAX_CONCURRENT_RECONCILES</code><a class="headerlink" href="#max_concurrent_reconciles" title="Permanent link">¶</a></h3>
+<h3 id="max_concurrent_reconciles"><code>MAX_CONCURRENT_RECONCILES</code><a data-markdown-ignore class="headerlink" href="#max_concurrent_reconciles" title="Permanent link">¶</a></h3>
 <p>Controls the maximum number of concurrent reconciliation operations the Operator can perform.</p>
 <table>
 <thead>
@@ -7232,7 +7232,7 @@ You can set environment variables in the following ways:</p>
 <span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MAX_CONCURRENT_RECONCILES</span>
 <span class="w">   </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"3"</span>
 </code></pre></div>
-<h3 id="pxco_feature_gates"><code>PXCO_FEATURE_GATES</code><a class="headerlink" href="#pxco_feature_gates" title="Permanent link">¶</a></h3>
+<h3 id="pxco_feature_gates"><code>PXCO_FEATURE_GATES</code><a data-markdown-ignore class="headerlink" href="#pxco_feature_gates" title="Permanent link">¶</a></h3>
 <p>Enables you to turn on specific features for the Operator. </p>
 <table>
 <thead>
@@ -7277,7 +7277,7 @@ You can set environment variables in the following ways:</p>
 <li>The Operator injects an XtraBackup sidecar container into each PXC Pod.</li>
 <li>The sidecar exposes a gRPC interface on port 6450 that handles backup requests.</li>
 </ul>
-<h3 id="pxco_leader_election_enabled"><code>PXCO_LEADER_ELECTION_ENABLED</code><a class="headerlink" href="#pxco_leader_election_enabled" title="Permanent link">¶</a></h3>
+<h3 id="pxco_leader_election_enabled"><code>PXCO_LEADER_ELECTION_ENABLED</code><a data-markdown-ignore class="headerlink" href="#pxco_leader_election_enabled" title="Permanent link">¶</a></h3>
 <p>Controls whether the Operator uses leader election. Leader election ensures only one Operator instance manages resources when multiple replicas run. Set to <code>"false"</code> to disable leader election (single-replica deployments only).</p>
 <table>
 <thead>
@@ -7300,7 +7300,7 @@ You can set environment variables in the following ways:</p>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PXCO_LEADER_ELECTION_ENABLED</span>
 <span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
 </code></pre></div>
-<h3 id="pxco_leader_election_name"><code>PXCO_LEADER_ELECTION_NAME</code><a class="headerlink" href="#pxco_leader_election_name" title="Permanent link">¶</a></h3>
+<h3 id="pxco_leader_election_name"><code>PXCO_LEADER_ELECTION_NAME</code><a data-markdown-ignore class="headerlink" href="#pxco_leader_election_name" title="Permanent link">¶</a></h3>
 <p>Specifies the name of the Lease resource used for the leader lock. When left undefined, the default name <code>08db1feb.percona.com</code> is used.</p>
 <table>
 <thead>
@@ -7323,7 +7323,7 @@ You can set environment variables in the following ways:</p>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PXCO_LEADER_ELECTION_NAME</span>
 <span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"my-custom-lease"</span>
 </code></pre></div>
-<h3 id="pxco_leader_election_lease_duration"><code>PXCO_LEADER_ELECTION_LEASE_DURATION</code><a class="headerlink" href="#pxco_leader_election_lease_duration" title="Permanent link">¶</a></h3>
+<h3 id="pxco_leader_election_lease_duration"><code>PXCO_LEADER_ELECTION_LEASE_DURATION</code><a data-markdown-ignore class="headerlink" href="#pxco_leader_election_lease_duration" title="Permanent link">¶</a></h3>
 <p>Duration that non-leader candidates wait before forcing leader acquisition. This is measured against the time of last observed acknowledgment. Uses Go duration format (for example, <code>60s</code>). You can increase this value if the Operator experiences leader election failures in high-latency or resource-constrained environments.</p>
 <table>
 <thead>
@@ -7346,7 +7346,7 @@ You can set environment variables in the following ways:</p>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PXCO_LEADER_ELECTION_LEASE_DURATION</span>
 <span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"60s"</span>
 </code></pre></div>
-<h3 id="pxco_leader_election_renew_deadline"><code>PXCO_LEADER_ELECTION_RENEW_DEADLINE</code><a class="headerlink" href="#pxco_leader_election_renew_deadline" title="Permanent link">¶</a></h3>
+<h3 id="pxco_leader_election_renew_deadline"><code>PXCO_LEADER_ELECTION_RENEW_DEADLINE</code><a data-markdown-ignore class="headerlink" href="#pxco_leader_election_renew_deadline" title="Permanent link">¶</a></h3>
 <p>Duration that the acting leader retries refreshing the lease before giving up. Uses Go duration format (for example, <code>60s</code>).</p>
 <table>
 <thead>
@@ -7369,7 +7369,7 @@ You can set environment variables in the following ways:</p>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PXCO_LEADER_ELECTION_RENEW_DEADLINE</span>
 <span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"30s"</span>
 </code></pre></div>
-<h3 id="pxco_leader_election_retry_period"><code>PXCO_LEADER_ELECTION_RETRY_PERIOD</code><a class="headerlink" href="#pxco_leader_election_retry_period" title="Permanent link">¶</a></h3>
+<h3 id="pxco_leader_election_retry_period"><code>PXCO_LEADER_ELECTION_RETRY_PERIOD</code><a data-markdown-ignore class="headerlink" href="#pxco_leader_election_retry_period" title="Permanent link">¶</a></h3>
 <p>Duration between leader election retry attempts. Uses Go duration format (for example, <code>60s</code>).</p>
 <table>
 <thead>
@@ -7392,15 +7392,15 @@ You can set environment variables in the following ways:</p>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PXCO_LEADER_ELECTION_RETRY_PERIOD</span>
 <span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"10s"</span>
 </code></pre></div>
-<h3 id="automatic-environment-variables">Automatic environment variables<a class="headerlink" href="#automatic-environment-variables" title="Permanent link">¶</a></h3>
+<h3 id="automatic-environment-variables">Automatic environment variables<a data-markdown-ignore class="headerlink" href="#automatic-environment-variables" title="Permanent link">¶</a></h3>
 <p>The following environment variables are automatically set by Kubernetes and should not be manually configured:</p>
 <ul>
 <li><code>POD_NAME</code> - The name of the Operator Pod (set from <code>metadata.name</code>)</li>
 <li><code>OPERATOR_NAME</code> - The name of the Operator (set to <code>percona-xtradb-cluster-operator</code>)</li>
 <li><code>PXC_SST_RETRY_COUNT</code> - The number of SST attempts a rejoining node takes to receive data. This environment variable is set automatically and only if the <code>spec.pxc.sstRetryCount</code> option is defined in the Custom Resource. To learn more about setting up SST retry limit, see <a href="sst-retry-limit.html">Limit SST retries</a>.</li>
 </ul>
-<h3 id="update-environment-variables">Update environment variables<a class="headerlink" href="#update-environment-variables" title="Permanent link">¶</a></h3>
-<h4 id="using-kubectl-patch">Using kubectl patch<a class="headerlink" href="#using-kubectl-patch" title="Permanent link">¶</a></h4>
+<h3 id="update-environment-variables">Update environment variables<a data-markdown-ignore class="headerlink" href="#update-environment-variables" title="Permanent link">¶</a></h3>
+<h4 id="using-kubectl-patch">Using kubectl patch<a data-markdown-ignore class="headerlink" href="#using-kubectl-patch" title="Permanent link">¶</a></h4>
 <p>You can update environment variables in an existing Operator Deployment by applying a patch. To keep existing environment variables, you must specify the full list of them.</p>
 <p>Here’s how to do it:</p>
 <ol>
@@ -7420,14 +7420,14 @@ You can set environment variables in the following ways:</p>
 </code></pre></div>
 </li>
 </ol>
-<h4 id="using-kubectl-edit">Using kubectl edit<a class="headerlink" href="#using-kubectl-edit" title="Permanent link">¶</a></h4>
+<h4 id="using-kubectl-edit">Using kubectl edit<a data-markdown-ignore class="headerlink" href="#using-kubectl-edit" title="Permanent link">¶</a></h4>
 <p>You can also edit the Deployment directly:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>edit<span class="w"> </span>deployment<span class="w"> </span>percona-xtradb-cluster-operator
 </code></pre></div>
 <p>Then modify the <code>env</code> section in the container specification.</p>
-<h4 id="using-helm">Using Helm<a class="headerlink" href="#using-helm" title="Permanent link">¶</a></h4>
+<h4 id="using-helm">Using Helm<a data-markdown-ignore class="headerlink" href="#using-helm" title="Permanent link">¶</a></h4>
 <p>For Helm installations, you can set environment variables through Helm values. Refer to the Helm chart documentation for the specific syntax.</p>
-<h3 id="after-the-update">After the update<a class="headerlink" href="#after-the-update" title="Permanent link">¶</a></h3>
+<h3 id="after-the-update">After the update<a data-markdown-ignore class="headerlink" href="#after-the-update" title="Permanent link">¶</a></h3>
 <p>After modifying environment variables, the Operator Pod will be automatically restarted to apply the new configuration.</p>
 <hr>
 <div class="md-source-file">
@@ -7529,7 +7529,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

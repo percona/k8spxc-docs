@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6799,9 +6799,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="design-and-architecture">Design and architecture<a class="headerlink" href="#design-and-architecture" title="Permanent link">¶</a></h1>
+<h1 id="design-and-architecture">Design and architecture<a data-markdown-ignore class="headerlink" href="#design-and-architecture" title="Permanent link">¶</a></h1>
 <p>This section explains how Percona Operator for MySQL based on Percona XtraDB Cluster is built: what runs in your Kubernetes cluster, which component is responsible for what, and how the pieces interact. Read it to build a mental model of the system, and come back to it when something fails and you need to know where to look first. If something is failing now, start with <a href="debug.html">Initial troubleshooting</a>. The <a href="glossary.html">Glossary</a> explains the Kubernetes and Galera terms used in this section.</p>
-<h2 id="percona-xtradb-cluster-in-brief">Percona XtraDB Cluster in brief<a class="headerlink" href="#percona-xtradb-cluster-in-brief" title="Permanent link">¶</a></h2>
+<h2 id="percona-xtradb-cluster-in-brief">Percona XtraDB Cluster in brief<a data-markdown-ignore class="headerlink" href="#percona-xtradb-cluster-in-brief" title="Permanent link">¶</a></h2>
 <p><em>Percona XtraDB Cluster</em> combines <em>Percona Server for MySQL</em> with the XtraDB storage engine, <em>Percona XtraBackup</em>, and the <em><a href="glossary.html#galera">Galera</a> library</em>. Galera provides virtually synchronous multi-primary replication: every node holds the full data set. A transaction commits after its write set is delivered to all nodes and passes certification. The other nodes apply it a moment later, so a read on another node can briefly return older data, unless you set the <code>wsrep_sync_wait</code> variable.</p>
 <p>Use 3 to 5 nodes in production:</p>
 <ul>
@@ -6809,7 +6809,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><strong>An odd number.</strong> Galera decides which nodes may keep serving queries by <a href="glossary.html#quorum">quorum</a> voting. With an even number of nodes, a network partition can split the cluster into two equal halves. Neither half has a majority, so both stop serving queries to avoid data inconsistency.</li>
 </ul>
 <p>With 3 nodes, the cluster keeps working when any one node goes down.</p>
-<h2 id="how-clients-connect">How clients connect<a class="headerlink" href="#how-clients-connect" title="Permanent link">¶</a></h2>
+<h2 id="how-clients-connect">How clients connect<a data-markdown-ignore class="headerlink" href="#how-clients-connect" title="Permanent link">¶</a></h2>
 <p>Applications don’t connect to the database Pods directly. A proxy sits in front of the nodes and routes client connections.</p>
 <p>Clients connect to a Kubernetes Service that sends traffic to a proxy, and the proxy routes it to the database nodes. You choose one of two proxies:</p>
 <ul>
@@ -6817,7 +6817,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><strong>ProxySQL</strong> is SQL-aware. It understands MySQL traffic and can route queries by rules. Applications use the <code>cluster1-proxysql</code> Service for both reads and writes. See <a href="load-balancing.html#what-load-balancer-to-use">What load balancer to use?</a>.</li>
 </ul>
 <p>The Operator creates more Services for its own use, such as the <a href="glossary.html#headless-service">headless Services</a> that the cluster components use to find each other. See <a href="services.html">Services and ports</a> for every Service, its ports and when it exists.</p>
-<h2 id="the-four-layers">The four layers<a class="headerlink" href="#the-four-layers" title="Permanent link">¶</a></h2>
+<h2 id="the-four-layers">The four layers<a data-markdown-ignore class="headerlink" href="#the-four-layers" title="Permanent link">¶</a></h2>
 <p>A running cluster is the combined result of four layers. Most confusion during troubleshooting comes from expecting one layer to do something that belongs to another. The <a href="architecture-responsibilities.html">Who owns what</a> page covers each layer in detail.</p>
 <pre class="mermaid"><code>flowchart TB
   U["&lt;b&gt;User&lt;/b&gt;&lt;br/&gt;Custom Resource, Secrets,&lt;br/&gt;CRDs and RBAC, node and storage capacity"]
@@ -6834,7 +6834,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><strong>Kubernetes.</strong> Kubernetes turns the objects the Operator creates into running Pods. It schedules Pods to nodes, provisions and attaches volumes through the CSI driver, provides Services and DNS, and restarts failed containers.</li>
 <li><strong>Percona XtraDB Cluster / Galera.</strong> Inside the Pods, Galera replicates data between nodes, maintains quorum, and brings a joining node up to date with an <a href="glossary.html#ist">Incremental State Transfer (IST)</a> or a full <a href="glossary.html#sst">State Snapshot Transfer (SST)</a>. The Operator writes the Galera configuration but does not control these mechanisms at runtime.</li>
 </ul>
-<h2 id="cluster-topology">Cluster topology<a class="headerlink" href="#cluster-topology" title="Permanent link">¶</a></h2>
+<h2 id="cluster-topology">Cluster topology<a data-markdown-ignore class="headerlink" href="#cluster-topology" title="Permanent link">¶</a></h2>
 <p>The following diagram shows a cluster named <code>cluster1</code> with three Percona XtraDB Cluster nodes, HAProxy, and point-in-time recovery turned on.</p>
 <pre class="mermaid"><code>flowchart LR
   C[Clients] --&gt; S1["Service&lt;br/&gt;cluster1-haproxy"]
@@ -6877,19 +6877,19 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p>If you use ProxySQL instead of HAProxy, the picture is the same with <code>cluster1-proxysql</code> in place of <code>cluster1-haproxy</code>. There is no separate replicas Service, because ProxySQL splits reads and writes by its own rules. See <a href="services.html">Services and ports</a>.</p>
 <p>With <code>proxysql.scheduler.enabled</code>, ProxySQL uses the external <a href="https://docs.percona.com/proxysql/psh-overview.html"><code>pxc_scheduler_handler</code> <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> instead of its built-in Galera support. The scheduler checks the nodes, keeps exactly one writer, and spreads <code>SELECT</code> queries across all nodes, or across all nodes except the writer when <code>proxysql.scheduler.writerIsAlsoReader</code> is <code>false</code>. With the scheduler enabled, the ProxySQL instances no longer form a ProxySQL cluster, and the <code>proxysql-monit</code> container is not created. See <a href="proxysql-conf.html#proxysql-scheduler-tech-preview">ProxySQL scheduler</a>.</p>
 <p>The <a href="architecture-workflows.html">Key workflows</a> page describes proxy failover, backups, restores and crash recovery step by step.</p>
-<h3 id="scheduling-and-storage">Scheduling and storage<a class="headerlink" href="#scheduling-and-storage" title="Permanent link">¶</a></h3>
+<h3 id="scheduling-and-storage">Scheduling and storage<a data-markdown-ignore class="headerlink" href="#scheduling-and-storage" title="Permanent link">¶</a></h3>
 <p>To survive a node failure, the Operator places the database Pods on separate Kubernetes nodes with <a href="https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity">Pod anti-affinity <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>. By default, this rule is <em>required</em>: with three database Pods you need at least three schedulable nodes, or a Pod stays <code>Pending</code>. See <a href="constraints.html">Control Pod scheduling</a> to change it.</p>
 <p>If a Kubernetes node fails, Kubernetes can recreate the Pod on another node, but for a <a href="glossary.html#statefulset">StatefulSet</a> Pod it does so only after the failed Node object is removed or the stuck Pod is force-deleted. The Operator does neither. The Pod’s data lives in a PersistentVolume, so the storage must be able to follow the Pod: the Container Storage Interface (CSI) driver and StorageClass must support attaching the volume on a different node. A volume that can attach only in one zone keeps the Pod in that zone.</p>
-<h2 id="what-gets-created">What gets created<a class="headerlink" href="#what-gets-created" title="Permanent link">¶</a></h2>
+<h2 id="what-gets-created">What gets created<a data-markdown-ignore class="headerlink" href="#what-gets-created" title="Permanent link">¶</a></h2>
 <p>For a cluster named <code>cluster1</code>, the Operator creates StatefulSets for the database and the proxy, Services, Secrets, ConfigMaps, <a href="glossary.html#pdb">PodDisruptionBudgets</a> and PersistentVolumeClaims. Jobs and the binlog collector exist only while a backup, a restore or point-in-time recovery needs them. PVCs and Secrets are not owned by the Custom Resource, so deleting the cluster doesn’t delete them.</p>
 <p><a name="containers-in-each-pod"></a></p>
 <ul>
 <li><a href="services.html">Services and ports</a> lists every Service, its ports, and when it exists.</li>
 <li><a href="objects-created.html">Objects the Operator creates</a> lists all other objects, the <a href="glossary.html#finalizer">finalizers</a> that clean them up, and the containers in each Pod.</li>
 </ul>
-<h2 id="next-steps">Next steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
+<h2 id="next-steps">Next steps<a data-markdown-ignore class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
 <p><a class="md-button" href="architecture-responsibilities.html">Who owns what</a></p>
-<h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
+<h2 id="see-also">See also<a data-markdown-ignore class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="services.html">Services and ports</a></li>
 <li><a href="objects-created.html">Objects the Operator creates</a></li>
@@ -6996,7 +6996,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

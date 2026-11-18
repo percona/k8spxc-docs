@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6675,9 +6675,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="objects-the-operator-creates">Objects the Operator creates<a class="headerlink" href="#objects-the-operator-creates" title="Permanent link">¶</a></h1>
+<h1 id="objects-the-operator-creates">Objects the Operator creates<a data-markdown-ignore class="headerlink" href="#objects-the-operator-creates" title="Permanent link">¶</a></h1>
 <p>This page lists what the Operator creates in your Kubernetes cluster for a Percona XtraDB Cluster, and which containers run in each Pod. Use it to size quotas, plan RBAC and storage, and to find an object when you troubleshoot.</p>
-<h2 id="kubernetes-objects">Kubernetes objects<a class="headerlink" href="#kubernetes-objects" title="Permanent link">¶</a></h2>
+<h2 id="kubernetes-objects">Kubernetes objects<a data-markdown-ignore class="headerlink" href="#kubernetes-objects" title="Permanent link">¶</a></h2>
 <p>For a cluster named <code>cluster1</code>, the Operator creates and manages the following Kubernetes objects. Some exist only when the related feature is turned on.</p>
 <table>
 <thead>
@@ -6779,7 +6779,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p class="admonition-title">Objects that survive cluster deletion</p>
 <p>PVCs and Secrets are not owned by the Custom Resource, so deleting the CR does not delete them. This lets you recreate the cluster with its data and credentials. To delete them together with the cluster, set the <code>percona.com/delete-pxc-pvc</code> and <code>percona.com/delete-ssl</code> finalizers. ProxySQL volumes have their own finalizer, <code>percona.com/delete-proxysql-pvc</code>. See <a href="delete.html#delete-the-database-cluster">Delete the database cluster</a>.</p>
 </div>
-<h2 id="containers-in-each-pod">Containers in each Pod<a class="headerlink" href="#containers-in-each-pod" title="Permanent link">¶</a></h2>
+<h2 id="containers-in-each-pod">Containers in each Pod<a data-markdown-ignore class="headerlink" href="#containers-in-each-pod" title="Permanent link">¶</a></h2>
 <p><strong>Percona XtraDB Cluster Pod</strong> (<code>cluster1-pxc-N</code>):</p>
 <ul>
 <li><code>pxc-init</code> (init container) copies the Operator’s entrypoint, probe and helper scripts into the data volume.</li>
@@ -6799,7 +6799,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><code>proxysql-monit</code> watches the <code>cluster1-proxysql-unready</code> Service so that ProxySQL instances form a ProxySQL cluster. It is not created when the ProxySQL scheduler is enabled.</li>
 <li>Optional: <code>pmm-client</code>.</li>
 </ul>
-<h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
+<h2 id="see-also">See also<a data-markdown-ignore class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="services.html">Services and ports</a> for every Service, its ports and when it exists</li>
 <li><a href="architecture.html">Design and architecture</a> for how these objects work together</li>
@@ -6905,7 +6905,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

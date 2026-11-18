@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6677,9 +6677,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="backup-methods">Backup methods<a class="headerlink" href="#backup-methods" title="Permanent link">¶</a></h1>
+<h1 id="backup-methods">Backup methods<a data-markdown-ignore class="headerlink" href="#backup-methods" title="Permanent link">¶</a></h1>
 <p>The Operator supports two backup methods. See <a href="backups.html">Backup and restore</a> for how backups fit into the bigger picture — storage, scheduling, and restore paths.</p>
-<h2 id="sst-method-default">SST method (default)<a class="headerlink" href="#sst-method-default" title="Permanent link">¶</a></h2>
+<h2 id="sst-method-default">SST method (default)<a data-markdown-ignore class="headerlink" href="#sst-method-default" title="Permanent link">¶</a></h2>
 <p>The default backup method uses <a href="https://docs.percona.com/percona-xtradb-cluster/8.4/state-snapshot-transfer.html">State Snapshot Transfer (SST) <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>. The backup Pod does not run Percona XtraBackup directly. It starts the <a href="https://mariadb.com/docs/galera-cluster">Galera Arbitrator (<code>garbd</code>) <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>, which joins the cluster only to receive the snapshot. Percona XtraBackup runs in the SST script on the donor Pod.</p>
 <p>When you create a Backup object:</p>
 <ol>
@@ -6690,7 +6690,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </ol>
 <p>The backup is resource-consuming and can affect performance. The Operator chooses a secondary Pod as the donor when the cluster has more than one Pod. A one-Pod cluster uses that same Pod.</p>
 <p>After the backup is stored in the <a href="backups-storage.html">backup storage</a>, the Operator marks the backup Pod Completed, deletes it, and updates the Backup object status.</p>
-<h2 id="xtrabackup-sidecar-method-tech-preview">XtraBackup sidecar method (tech preview)<a class="headerlink" href="#xtrabackup-sidecar-method-tech-preview" title="Permanent link">¶</a></h2>
+<h2 id="xtrabackup-sidecar-method-tech-preview">XtraBackup sidecar method (tech preview)<a data-markdown-ignore class="headerlink" href="#xtrabackup-sidecar-method-tech-preview" title="Permanent link">¶</a></h2>
 <p>When you enable the <code>XtrabackupSidecar</code> feature gate, the Operator uses a different backup approach:</p>
 <ol>
 <li>An XtraBackup sidecar container runs in each Percona XtraDB Cluster Pod, providing a gRPC server interface for making backups. </li>
@@ -6716,7 +6716,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p class="admonition-title">Important</p>
 <p>Enabling the <code>PXCO_FEATURE_GATES=XtrabackupSidecar=true</code> affects all clusters managed by this Operator.</p>
 </div>
-<h2 id="next-step">Next step<a class="headerlink" href="#next-step" title="Permanent link">¶</a></h2>
+<h2 id="next-step">Next step<a data-markdown-ignore class="headerlink" href="#next-step" title="Permanent link">¶</a></h2>
 <p><a class="md-button" href="backups-storage.html">Configure a backup storage</a></p>
 <hr>
 <div class="md-source-file">
@@ -6818,7 +6818,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

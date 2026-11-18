@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6711,7 +6711,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="log-rotation">Log rotation<a class="headerlink" href="#log-rotation" title="Permanent link">¶</a></h1>
+<h1 id="log-rotation">Log rotation<a data-markdown-ignore class="headerlink" href="#log-rotation" title="Permanent link">¶</a></h1>
 <p><code>logrotate</code> controls log file growth in Percona XtraDB Cluster Pods. Without rotation, MySQL and related logs can grow until they consume the Persistent Volume and affect database stability.</p>
 <p>In Percona Operator for MySQL, <code>logrotate</code> runs inside the <code>logcollector</code> sidecar container in every PXC Pod. Starting from Operator <code>1.20.0</code>, logrotate scripts and default configuration are shipped with the Operator image and copied into the Pod by an init container.</p>
 <p>On each scheduled run, <code>logrotate</code> applies the configured rules to MySQL log files and executes the post-rotate script:</p>
@@ -6720,7 +6720,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li>It can compress old files if configured.</li>
 <li>It runs postrotate script (<code>/opt/percona/logcollector/logrotate/postrotate-mysql.sh</code> by default) to make MySQL continue writing to the active log files after rotation.</li>
 </ul>
-<h2 id="configure-log-rotation">Configure log rotation<a class="headerlink" href="#configure-log-rotation" title="Permanent link">¶</a></h2>
+<h2 id="configure-log-rotation">Configure log rotation<a data-markdown-ignore class="headerlink" href="#configure-log-rotation" title="Permanent link">¶</a></h2>
 <p>You can customize log rotation in PXC to match your workload, for example by changing retention and size thresholds for MySQL error/slow logs, enabling compression, or adding rules for extra files such as <code>GRA_*.log</code> and <code>audit.log</code>. This gives you predictable disk usage and keeps troubleshooting or compliance logs for the required period.</p>
 <p>You can configure log rotation in three ways:</p>
 <ol>
@@ -6729,7 +6729,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li>Extend the default configuration with additional <code>.conf</code> files from a ConfigMap.</li>
 </ol>
 <p>When you change logrotate configuration, the Operator detects config changes and performs a rolling restart of PXC Pods.</p>
-<h3 id="set-a-custom-log-rotation-schedule">Set a custom log rotation schedule<a class="headerlink" href="#set-a-custom-log-rotation-schedule" title="Permanent link">¶</a></h3>
+<h3 id="set-a-custom-log-rotation-schedule">Set a custom log rotation schedule<a data-markdown-ignore class="headerlink" href="#set-a-custom-log-rotation-schedule" title="Permanent link">¶</a></h3>
 <ol>
 <li>
 <p>Edit the <code>deploy/cr.yaml</code> Custom Resource manifest. Set the log rotation schedule in <a href="https://en.wikipedia.org/wiki/Cron">cron format</a> using the <code>spec.logcollector.logRotate.schedule</code> option.</p>
@@ -6746,7 +6746,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </code></pre></div>
 </li>
 </ol>
-<h3 id="override-the-default-logrotate-configuration">Override the default logrotate configuration<a class="headerlink" href="#override-the-default-logrotate-configuration" title="Permanent link">¶</a></h3>
+<h3 id="override-the-default-logrotate-configuration">Override the default logrotate configuration<a data-markdown-ignore class="headerlink" href="#override-the-default-logrotate-configuration" title="Permanent link">¶</a></h3>
 <p>Use the <code>spec.logcollector.logRotate.configuration</code> section in the Custom Resource to completely override the default logrotate settings. For example, you want to rotate logs when their size is between 5M (minimum) and 50M (maximum) and keep 5 rotated files. Also, compress rotated logs.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -6776,7 +6776,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p>Apply the Custom Resource:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>deploy/cr.yaml<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
 </code></pre></div>
-<h3 id="extend-the-default-logrotate-configuration-via-configmap">Extend the default logrotate configuration via ConfigMap<a class="headerlink" href="#extend-the-default-logrotate-configuration-via-configmap" title="Permanent link">¶</a></h3>
+<h3 id="extend-the-default-logrotate-configuration-via-configmap">Extend the default logrotate configuration via ConfigMap<a data-markdown-ignore class="headerlink" href="#extend-the-default-logrotate-configuration-via-configmap" title="Permanent link">¶</a></h3>
 <p>You can pass additional configuration options for the default logrotate configuration via a ConfigMap. Use the <code>spec.logcollector.logRotate.extraConfig.name</code> option to load additional <code>.conf</code> files from a ConfigMap.</p>
 <p>For example, the following ConfigMap adds separate rotation rules for Galera-related logs (<code>GRA_*.log</code>) and for audit logs (<code>audit.log</code>) with different rotation and compression settings.</p>
 <ol>
@@ -6929,7 +6929,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

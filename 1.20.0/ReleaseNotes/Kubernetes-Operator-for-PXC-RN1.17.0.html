@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6885,22 +6885,22 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="percona-operator-for-mysql-based-on-percona-xtradb-cluster-1170-2025-04-14">Percona Operator for MySQL based on Percona XtraDB Cluster 1.17.0 (2025-04-14)<a class="headerlink" href="#percona-operator-for-mysql-based-on-percona-xtradb-cluster-1170-2025-04-14" title="Permanent link">¶</a></h1>
+<h1 id="percona-operator-for-mysql-based-on-percona-xtradb-cluster-1170-2025-04-14">Percona Operator for MySQL based on Percona XtraDB Cluster 1.17.0 (2025-04-14)<a data-markdown-ignore class="headerlink" href="#percona-operator-for-mysql-based-on-percona-xtradb-cluster-1170-2025-04-14" title="Permanent link">¶</a></h1>
 <p><a class="md-button" href="../System-Requirements.html#installation-guidelines">Installation</a></p>
-<h2 id="release-highlights">Release Highlights<a class="headerlink" href="#release-highlights" title="Permanent link">¶</a></h2>
+<h2 id="release-highlights">Release Highlights<a data-markdown-ignore class="headerlink" href="#release-highlights" title="Permanent link">¶</a></h2>
 <p>This release of Percona Operator for MySQL based on Percona XtraDB Cluster includes the following new features and improvements:</p>
-<h3 id="improved-observability-for-haproxy-and-proxysql">Improved observability for HAProxy and ProxySQL<a class="headerlink" href="#improved-observability-for-haproxy-and-proxysql" title="Permanent link">¶</a></h3>
+<h3 id="improved-observability-for-haproxy-and-proxysql">Improved observability for HAProxy and ProxySQL<a data-markdown-ignore class="headerlink" href="#improved-observability-for-haproxy-and-proxysql" title="Permanent link">¶</a></h3>
 <p>Get insights into the HAProxy and ProxySQL performance by connecting to their statistics pages. Use the <code>cluster-name-haproxy:8084</code> and <code>cluster-name-proxysql:6070</code> endpoints to do so. Learn about other available ports in the <a href="../haproxy-conf.html">documentation</a>.</p>
-<h3 id="improved-cluster-load-management-during-backups">Improved cluster load management during backups<a class="headerlink" href="#improved-cluster-load-management-during-backups" title="Permanent link">¶</a></h3>
+<h3 id="improved-cluster-load-management-during-backups">Improved cluster load management during backups<a data-markdown-ignore class="headerlink" href="#improved-cluster-load-management-during-backups" title="Permanent link">¶</a></h3>
 <p>If parallel backups overload your cluster, you can turn off parallel execution to prevent this. Previously, this meant that you could only run one backup at a time - no new backups could start until the current one was finished. Now, the Operator queues backups and runs them one after another automatically. You can fine-tune the backup sequence by setting the start time for all backups or for a specific on-demand one using the <a href="../operator.html#backupstartingdeadlineseconds"><code>spec.backup.startingDeadlineSeconds</code></a> Custom Resource option. This provides greater control over backup operations.</p>
 <p>Another improvement is for the case when your database cluster becomes unhealthy, for example, when a Pod crashes or restarts. The Operator suspends running backups to reduce the cluster’s load. Once the cluster recovers and reports a Ready status, the Operator resumes the suspended backup. To further offload the cluster during an unhealthy state, you can configure how long a backup remains suspended by using the <a href="../operator.html#backupsuspendeddeadlineseconds"><code>spec.backup.suspendedDeadlineSeconds</code></a> Custom Resource option. If this time expires before the cluster recovers, the backup is marked as “failed.”</p>
-<h3 id="monitor-pmm-client-health-and-status">Monitor PMM Client health and status<a class="headerlink" href="#monitor-pmm-client-health-and-status" title="Permanent link">¶</a></h3>
+<h3 id="monitor-pmm-client-health-and-status">Monitor PMM Client health and status<a data-markdown-ignore class="headerlink" href="#monitor-pmm-client-health-and-status" title="Permanent link">¶</a></h3>
 <p>Percona Monitoring and Management (PMM) is a great tool to <a href="../monitoring.html">monitor the health of your database cluster</a>. Now you can also learn if PMM itself is healthy using probes - a Kubernetes diagnostics mechanism to check the health and status of containers. Use the <a href="../operator.html#pmmreadinessprobesinitialdelayseconds"><code>spec.pmm.readinessProbes.*</code></a> and <a href="../operator.html#pmmlivenessprobesinitialdelayseconds"><code>spec.pmm.livenessProbes.*</code></a> Custom Resource options to fine-tune Readiness and Liveness probes for PMM Client.</p>
-<h3 id="improved-observability-of-binary-log-backups">Improved observability of binary log backups<a class="headerlink" href="#improved-observability-of-binary-log-backups" title="Permanent link">¶</a></h3>
+<h3 id="improved-observability-of-binary-log-backups">Improved observability of binary log backups<a data-markdown-ignore class="headerlink" href="#improved-observability-of-binary-log-backups" title="Permanent link">¶</a></h3>
 <p>Get insights into the success and failure rates of binlog operations, timeliness of processing and uploads and potential gaps or inconsistencies in binlog data with the Prometheus metrics added for the Operator. Gather this data by connecting to the <code>&lt;pitr-pod-service&gt;:8080/metrics</code> endpoint. Learn more about the available metrics in the <a href="../backups-pitr.html#binary-logs-statistics">documentation</a>.</p>
-<h2 id="deprecation-rename-and-removal">Deprecation, Rename and Removal<a class="headerlink" href="#deprecation-rename-and-removal" title="Permanent link">¶</a></h2>
+<h2 id="deprecation-rename-and-removal">Deprecation, Rename and Removal<a data-markdown-ignore class="headerlink" href="#deprecation-rename-and-removal" title="Permanent link">¶</a></h2>
 <p>The <code>spec.haproxy.exposePrimary.enabled</code> field is deprecated. If enabled via the <code>spec.haproxy.enabled</code>, the HAProxy primary service is already exposed. </p>
-<h2 id="new-features">New Features<a class="headerlink" href="#new-features" title="Permanent link">¶</a></h2>
+<h2 id="new-features">New Features<a data-markdown-ignore class="headerlink" href="#new-features" title="Permanent link">¶</a></h2>
 <ul>
 <li>
 <p><a href="https://perconadev.atlassian.net/browse/K8SPXC-747">K8SPXC-747</a>, <a href="https://perconadev.atlassian.net/browse/K8SPXC-1473">K8SPXC-1473</a> - Add the ability to access the statistics pages for HAProxy and ProxySQL</p>
@@ -6912,7 +6912,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p><a href="https://perconadev.atlassian.net/browse/K8SPXC-1432">K8SPXC-1432</a> - Enable users to configure cluster-wide Operator deployments in OpenShift certified catalog using OLM. </p>
 </li>
 </ul>
-<h2 id="improvements">Improvements<a class="headerlink" href="#improvements" title="Permanent link">¶</a></h2>
+<h2 id="improvements">Improvements<a data-markdown-ignore class="headerlink" href="#improvements" title="Permanent link">¶</a></h2>
 <ul>
 <li>
 <p><a href="https://perconadev.atlassian.net/browse/K8SPXC-1367">K8SPXC-1367</a> - Now a user can configure Readiness and Liveness probes for PMM Client container to check its health and status</p>
@@ -6954,7 +6954,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p><a href="https://perconadev.atlassian.net/browse/K8SPXC-1620">K8SPXC-1620</a> - Fixed the issue with a failing backup by adding a retry logic to the cloud storage cleanup task to check for uploaded files and clean them up before uploading new files</p>
 </li>
 </ul>
-<h2 id="bugs-fixed">Bugs Fixed<a class="headerlink" href="#bugs-fixed" title="Permanent link">¶</a></h2>
+<h2 id="bugs-fixed">Bugs Fixed<a data-markdown-ignore class="headerlink" href="#bugs-fixed" title="Permanent link">¶</a></h2>
 <ul>
 <li>
 <p><a href="https://perconadev.atlassian.net/browse/K8SPXC-1152">K8SPXC-1152</a> Fixed the issue with the restore process being stuck when the Operator is restarted by setting annotations on the <code>perconaxtradbclusterrestores</code> object</p>
@@ -6985,7 +6985,7 @@ set to each binlog if the database cluster has a large number of binlogs by cach
 <p><a href="https://perconadev.atlassian.net/browse/K8SPXC-1616">K8SPXC-1616</a> - Fixed a bug where the ProxySQL fails to be configured if the password for a <code>proxysqladmin</code> user starts with a star (<code>*</code>) character by reporting an error and making the Operator regenerate a new password that doesn’t start with a star (Thank you Chris Fidao for reporting this issue and contribution)</p>
 </li>
 </ul>
-<h2 id="supported-software">Supported Software<a class="headerlink" href="#supported-software" title="Permanent link">¶</a></h2>
+<h2 id="supported-software">Supported Software<a data-markdown-ignore class="headerlink" href="#supported-software" title="Permanent link">¶</a></h2>
 <p>The Operator was developed and tested with the following software:</p>
 <ul>
 <li>Percona XtraDB Cluster versions 8.4.3-3.1 (Tech preview), 8.0.41-32.1, and 5.7.44-31.65  </li>
@@ -6996,7 +6996,7 @@ set to each binlog if the database cluster has a large number of binlogs by cach
 <li>PMM Client 2.44.0  </li>
 </ul>
 <p>Other options may also work but have not been tested.</p>
-<h2 id="supported-platforms">Supported Platforms<a class="headerlink" href="#supported-platforms" title="Permanent link">¶</a></h2>
+<h2 id="supported-platforms">Supported Platforms<a data-markdown-ignore class="headerlink" href="#supported-platforms" title="Permanent link">¶</a></h2>
 <p>Percona Operators are designed for compatibility with all <a href="https://www.cncf.io/training/certification/software-conformance/">CNCF-certified <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> Kubernetes distributions. Our release process includes targeted testing and validation on major cloud provider platforms and OpenShift, as detailed below for Operator version 1.16.0:</p>
 <ul>
 <li><a href="https://cloud.google.com/kubernetes-engine">Google Kubernetes Engine (GKE) <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> 1.29 - 1.32  </li>
@@ -7006,7 +7006,7 @@ set to each binlog if the database cluster has a large number of binlogs by cach
 <li><a href="https://minikube.sigs.k8s.io/docs/">Minikube <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> 1.35.0 based on Kubernetes 1.32.0  </li>
 </ul>
 <p>This list only includes the platforms that the Percona Operators are specifically tested on as part of the release process. Other Kubernetes flavors and versions depend on the backward compatibility offered by Kubernetes itself.</p>
-<h2 id="percona-certified-images">Percona certified images<a class="headerlink" href="#percona-certified-images" title="Permanent link">¶</a></h2>
+<h2 id="percona-certified-images">Percona certified images<a data-markdown-ignore class="headerlink" href="#percona-certified-images" title="Permanent link">¶</a></h2>
 <p>Find Percona’s certified Docker images that you can use with the
 Percona Operator for MySQL based on Percona XtraDB Cluster in the following table.</p>
 <p><strong>Images released with the Operator version 1.17.0:</strong> </p>
@@ -7200,7 +7200,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="../js/print-site.js"></script>
       

@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6631,7 +6631,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="configure-concurrency-for-a-cluster-reconciliation">Configure concurrency for a cluster reconciliation<a class="headerlink" href="#configure-concurrency-for-a-cluster-reconciliation" title="Permanent link">¶</a></h1>
+<h1 id="configure-concurrency-for-a-cluster-reconciliation">Configure concurrency for a cluster reconciliation<a data-markdown-ignore class="headerlink" href="#configure-concurrency-for-a-cluster-reconciliation" title="Permanent link">¶</a></h1>
 <p>Reconciliation is the process by which the Operator continuously compares the desired state with the actual state of the cluster. The desired state is defined in a Kubernetes custom resource, like <code>PerconaXtraDBCluster</code>.</p>
 <p>If the actual state does not match the desired state, the Operator takes actions to bring the system into alignment. This means creating, updating, or deleting Kubernetes resources (Pods, Services, ConfigMaps, etc.) or performing database-specific operations like scaling, backups, or failover.</p>
 <p>Reconciliation is triggered by a variety of events, including:</p>
@@ -6644,7 +6644,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p>The <code>MAX_CONCURRENT_RECONCILES</code> environment variable in the <code>percona-xtradb-cluster-operator</code> deployment controls the number of concurrent workers that can reconcile resources in Percona XtraDB Cluster clusters in parallel.</p>
 <p>Thus, to extend the previous example, if you set the number of reconciliation workers to <code>2</code>, the Operator will reconcile both clusters in parallel. This also helps you with benchmarking the Operator performance.</p>
 <p>The general recommendation is to set the number of concurrent workers equal to the number of Percona XtraDB Cluster clusters. When the number of workers is greater, the excessive workers will remain idle.</p>
-<h2 id="set-the-number-of-reconciliation-workers">Set the number of reconciliation workers<a class="headerlink" href="#set-the-number-of-reconciliation-workers" title="Permanent link">¶</a></h2>
+<h2 id="set-the-number-of-reconciliation-workers">Set the number of reconciliation workers<a data-markdown-ignore class="headerlink" href="#set-the-number-of-reconciliation-workers" title="Permanent link">¶</a></h2>
 <ol>
 <li>
 <p>Check the index of the <code>MAX_CONCURRENT_RECONCILES</code> environment variable using the following command:</p>
@@ -6798,7 +6798,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

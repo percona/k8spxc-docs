@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6655,9 +6655,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="deploy-percona-xtradb-cluster-without-tls">Deploy Percona XtraDB Cluster without TLS<a class="headerlink" href="#deploy-percona-xtradb-cluster-without-tls" title="Permanent link">¶</a></h1>
+<h1 id="deploy-percona-xtradb-cluster-without-tls">Deploy Percona XtraDB Cluster without TLS<a data-markdown-ignore class="headerlink" href="#deploy-percona-xtradb-cluster-without-tls" title="Permanent link">¶</a></h1>
 <p>You can deploy your Percona XtraDB Cluster without TLS, although we strongly recommend that you enable TLS for any production environment.</p>
-<h2 id="disable-tls-during-initial-deployment">Disable TLS during initial deployment<a class="headerlink" href="#disable-tls-during-initial-deployment" title="Permanent link">¶</a></h2>
+<h2 id="disable-tls-during-initial-deployment">Disable TLS during initial deployment<a data-markdown-ignore class="headerlink" href="#disable-tls-during-initial-deployment" title="Permanent link">¶</a></h2>
 <p>To disable TLS at deployment (for example, for demonstration or testing), edit your <code>deploy/cr.yaml</code> file. Set the <code>unsafeFlags.tls</code> key to <code>true</code> and the <code>tls.enabled</code> key to <code>false</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="nn">...</span>
 <span class="nt">spec</span><span class="p">:</span>
@@ -6668,7 +6668,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <span class="w">  </span><span class="nt">tls</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 </code></pre></div>
-<h2 id="enable-or-disable-tls-on-a-running-cluster">Enable or disable TLS on a running cluster<a class="headerlink" href="#enable-or-disable-tls-on-a-running-cluster" title="Permanent link">¶</a></h2>
+<h2 id="enable-or-disable-tls-on-a-running-cluster">Enable or disable TLS on a running cluster<a data-markdown-ignore class="headerlink" href="#enable-or-disable-tls-on-a-running-cluster" title="Permanent link">¶</a></h2>
 <p>You can enable or disable TLS at any time by changing the <code>tls.enabled</code> Custom Resource option to <code>true</code> to enable TLS, or to <code>false</code> to disable TLS. Be aware that changing this setting on a running cluster causes downtime and can introduce disruptions.</p>
 <ul>
 <li>
@@ -6782,7 +6782,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

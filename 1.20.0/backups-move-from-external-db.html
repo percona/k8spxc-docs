@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6767,16 +6767,16 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="how-to-use-backups-and-asynchronous-replication-to-move-an-external-database-to-kubernetes">How to use backups and asynchronous replication to move an external database to Kubernetes<a class="headerlink" href="#how-to-use-backups-and-asynchronous-replication-to-move-an-external-database-to-kubernetes" title="Permanent link">¶</a></h1>
+<h1 id="how-to-use-backups-and-asynchronous-replication-to-move-an-external-database-to-kubernetes">How to use backups and asynchronous replication to move an external database to Kubernetes<a data-markdown-ignore class="headerlink" href="#how-to-use-backups-and-asynchronous-replication-to-move-an-external-database-to-kubernetes" title="Permanent link">¶</a></h1>
 <p>The Operator enables you to restore a database from a backup made outside of Kubernetes environment to the target Kubernetes cluster using <a href="https://docs.percona.com/percona-xtrabackup/latest/index.html">Percona XtraBackup <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>. In such a way you can migrate your external database to Kubernetes. Using <a href="replication.html">asynchronous replication <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> between source and target environments enables you to reduce downtime and prevent data loss for your application.</p>
 <p>This document provides the steps how to migrate Percona Server for MySQL 8.0 deployed on premises to the Kubernetes cluster managed by the Operator using <a href="replication.html">asynchronous replication <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>. We recommend testing this migration in a non-production environment first, before applying it in production.</p>
-<h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">¶</a></h2>
+<h2 id="requirements">Requirements<a data-markdown-ignore class="headerlink" href="#requirements" title="Permanent link">¶</a></h2>
 <ol>
 <li>The MySQL version for source and target environments must be 8.0.22 and higher since asynchronous replication is available starting with MySQL version 8.0.22. </li>
 <li>You must be running <a href="https://docs.percona.com/percona-xtrabackup/latest/index.html">Percona XtraBackup <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> as the backup tool on source environment. For how to install Percona XtraBackup, see the <a href="https://docs.percona.com/percona-xtrabackup/latest/installation.html">installation instructions <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a></li>
 <li>The storage used to save the backup should be one of the <a href="backups-storage.html">supported cloud storages</a>: AWS S3 or compatible storage, or Azure Blob Storage.</li>
 </ol>
-<h2 id="configure-target-environment">Configure target environment<a class="headerlink" href="#configure-target-environment" title="Permanent link">¶</a></h2>
+<h2 id="configure-target-environment">Configure target environment<a data-markdown-ignore class="headerlink" href="#configure-target-environment" title="Permanent link">¶</a></h2>
 <ol>
 <li>Deploy Percona Operator for MySQL and use it to create Percona XtraDB Cluster
     following any of the <a href="System-Requirements.html#installation-guidelines">official installation guides</a>.</li>
@@ -6807,7 +6807,7 @@ example:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>You can use the following command to get a base64-encoded string from a plain text one:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">in Linux</label><label for="__tabbed_1_2">in macOS</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_1_1">in Linux</label><label for="__tabbed_1_2">in macOS</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s1">'plain-text-string'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>--wrap<span class="o">=</span><span class="m">0</span>
@@ -6840,7 +6840,7 @@ example:</p>
 passwords when preparing the source environment.</user_name></p>
 </li>
 </ol>
-<h2 id="prepare-the-source-environment">Prepare the source environment<a class="headerlink" href="#prepare-the-source-environment" title="Permanent link">¶</a></h2>
+<h2 id="prepare-the-source-environment">Prepare the source environment<a data-markdown-ignore class="headerlink" href="#prepare-the-source-environment" title="Permanent link">¶</a></h2>
 <ol>
 <li>
 <p>Use official installation instructions for either <a href="https://docs.percona.com/percona-server/latest/quickstart-overview.html#install-percona-server-for-mysql">Percona Server for MySQL <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> or <a href="https://docs.percona.com/percona-xtradb-cluster/LATEST/install-index.html">Percona XtraDB Cluster <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>
@@ -6885,7 +6885,7 @@ of the <code>monitor_password</code>, <code>operator_password</code>, <code>xtra
 </code></pre></div>
 </li>
 </ol>
-<h2 id="make-a-backup-in-the-source-environment">Make a backup in the source environment<a class="headerlink" href="#make-a-backup-in-the-source-environment" title="Permanent link">¶</a></h2>
+<h2 id="make-a-backup-in-the-source-environment">Make a backup in the source environment<a data-markdown-ignore class="headerlink" href="#make-a-backup-in-the-source-environment" title="Permanent link">¶</a></h2>
 <ol>
 <li>
 <p>Export the storage credentials as environment variables. Following the above
@@ -6902,7 +6902,7 @@ access key ID and secret access key values.</p>
 </code></pre></div>
 </li>
 </ol>
-<h2 id="restore-from-a-backup-in-the-target-environment">Restore from a backup in the target environment<a class="headerlink" href="#restore-from-a-backup-in-the-target-environment" title="Permanent link">¶</a></h2>
+<h2 id="restore-from-a-backup-in-the-target-environment">Restore from a backup in the target environment<a data-markdown-ignore class="headerlink" href="#restore-from-a-backup-in-the-target-environment" title="Permanent link">¶</a></h2>
 <p>If your source database didn’t have any data, skip this step and proceed with the <a href="#configure-asynchronous-replication-in-the-kubernetes-cluster">asynchronous replication configuration</a>. Otherwise, restore the database in the target environment.</p>
 <ol>
 <li>
@@ -6932,7 +6932,7 @@ values.</p>
 </ol>
 <p>You can find more information on restoring backup to a new Kubernetes-based
 environment and see more examples <a href="backups-restore-to-new-cluster.html">in a dedicated HowTo</a>.</p>
-<h2 id="configure-asynchronous-replication-in-the-kubernetes-cluster">Configure asynchronous replication in the Kubernetes cluster<a class="headerlink" href="#configure-asynchronous-replication-in-the-kubernetes-cluster" title="Permanent link">¶</a></h2>
+<h2 id="configure-asynchronous-replication-in-the-kubernetes-cluster">Configure asynchronous replication in the Kubernetes cluster<a data-markdown-ignore class="headerlink" href="#configure-asynchronous-replication-in-the-kubernetes-cluster" title="Permanent link">¶</a></h2>
 <p>This step will allow you to avoid data loss for your application, configuring
 the asynchronous replication between the source database and the target cluster.</p>
 <ol>
@@ -7035,7 +7035,7 @@ Master_SSL_Verify_Server_Cert: No
 </details>
 </li>
 </ol>
-<h2 id="promote-the-kubernetes-cluster-as-primary">Promote the Kubernetes cluster as primary<a class="headerlink" href="#promote-the-kubernetes-cluster-as-primary" title="Permanent link">¶</a></h2>
+<h2 id="promote-the-kubernetes-cluster-as-primary">Promote the Kubernetes cluster as primary<a data-markdown-ignore class="headerlink" href="#promote-the-kubernetes-cluster-as-primary" title="Permanent link">¶</a></h2>
 <p>After you reconfigured your application to work with the new Percona XtraDB
 Cluster in Kubernetes, you can promote this cluster as primary.</p>
 <ol>
@@ -7173,7 +7173,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

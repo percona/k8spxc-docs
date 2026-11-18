@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6741,9 +6741,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="install-percona-xtradb-cluster-on-google-kubernetes-engine-gke">Install Percona XtraDB Cluster on Google Kubernetes Engine (GKE)<a class="headerlink" href="#install-percona-xtradb-cluster-on-google-kubernetes-engine-gke" title="Permanent link">¶</a></h1>
+<h1 id="install-percona-xtradb-cluster-on-google-kubernetes-engine-gke">Install Percona XtraDB Cluster on Google Kubernetes Engine (GKE)<a data-markdown-ignore class="headerlink" href="#install-percona-xtradb-cluster-on-google-kubernetes-engine-gke" title="Permanent link">¶</a></h1>
 <p>This quickstart shows you how to configure the Percona Operator for MySQL based on Percona XtraDB Cluster with the Google Kubernetes Engine. The document assumes some experience with Google Kubernetes Engine (GKE). For more information on the GKE, see the <a href="https://cloud.google.com/kubernetes-engine/docs/quickstart">Kubernetes Engine Quickstart <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>.</p>
-<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h2>
+<h2 id="prerequisites">Prerequisites<a data-markdown-ignore class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h2>
 <p>All commands from this quickstart can be run either in the <strong>Google Cloud shell</strong> or in <strong>your local shell</strong>.</p>
 <p>To use <em>Google Cloud shell</em>, you need nothing but a modern web browser.</p>
 <p>If you would like to use <em>your local shell</em>, install the following:</p>
@@ -6758,7 +6758,7 @@ gcloud<span class="w"> </span>components<span class="w"> </span>install<span cla
 </code></pre></div>
 </li>
 </ol>
-<h2 id="configuring-default-settings-for-the-cluster">Configuring default settings for the cluster<a class="headerlink" href="#configuring-default-settings-for-the-cluster" title="Permanent link">¶</a></h2>
+<h2 id="configuring-default-settings-for-the-cluster">Configuring default settings for the cluster<a data-markdown-ignore class="headerlink" href="#configuring-default-settings-for-the-cluster" title="Permanent link">¶</a></h2>
 <p>You can configure the settings using the <code>gcloud</code> tool. You can run it either in the <a href="https://cloud.google.com/shell/docs/quickstart">Cloud Shell <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> or in your local shell (if you have installed Google Cloud SDK locally on the previous step). The following command will create a cluster named <code>my-cluster-1</code>:</p>
 <div class="highlight"><pre><span></span><code>gcloud<span class="w"> </span>container<span class="w"> </span>clusters<span class="w"> </span>create<span class="w"> </span>my-cluster-1<span class="w"> </span>--project<span class="w"> </span>&lt;project<span class="w"> </span>ID&gt;<span class="w"> </span>--zone<span class="w"> </span>us-central1-a<span class="w"> </span>--cluster-version<span class="w"> </span><span class="m">1</span>.35<span class="w"> </span>--machine-type<span class="w"> </span>n1-standard-4<span class="w"> </span>--num-nodes<span class="o">=</span><span class="m">3</span>
 </code></pre></div>
@@ -6772,7 +6772,7 @@ gcloud<span class="w"> </span>components<span class="w"> </span>install<span cla
 <p>In the Google Cloud Console, select your cluster and then click the <em>Connect</em> shown on the above image. You will see the connect statement configures command-line access. After you have edited the statement, you may run the command in your local shell:</p>
 <div class="highlight"><pre><span></span><code>gcloud<span class="w"> </span>container<span class="w"> </span>clusters<span class="w"> </span>get-credentials<span class="w"> </span>my-cluster-1<span class="w"> </span>--zone<span class="w"> </span>us-central1-a<span class="w"> </span>--project<span class="w"> </span>&lt;project<span class="w"> </span>name&gt;
 </code></pre></div>
-<h2 id="installing-the-operator">Installing the Operator<a class="headerlink" href="#installing-the-operator" title="Permanent link">¶</a></h2>
+<h2 id="installing-the-operator">Installing the Operator<a data-markdown-ignore class="headerlink" href="#installing-the-operator" title="Permanent link">¶</a></h2>
 <ol>
 <li>
 <p>First of all, use your <a href="https://cloud.google.com/iam">Cloud Identity and Access Management (Cloud IAM) <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> to control access to the cluster. The following command will give you the ability to create Roles and RoleBindings:</p>
@@ -6841,7 +6841,7 @@ cluster1   cluster1-haproxy.default   ready    3                3         5m51s
 </details>
 </li>
 </ol>
-<h2 id="verifying-the-cluster-operation">Verifying the cluster operation<a class="headerlink" href="#verifying-the-cluster-operation" title="Permanent link">¶</a></h2>
+<h2 id="verifying-the-cluster-operation">Verifying the cluster operation<a data-markdown-ignore class="headerlink" href="#verifying-the-cluster-operation" title="Permanent link">¶</a></h2>
 <p>It may take ten minutes to get the cluster started. When <code>kubectl get pxc</code>
 command finally shows you the cluster status as <code>ready</code>, you can try to connect
 to the cluster.</p>
@@ -6877,7 +6877,7 @@ The Secrets object you are interested in has the
     The command will look different depending on whether your cluster provides
     load balancing with <a href="haproxy-conf.html">HAProxy</a> (the default choice) or
     <a href="proxysql-conf.html">ProxySQL</a>:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">with HAProxy (default)</label><label for="__tabbed_1_2">with ProxySQL</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_1_1">with HAProxy (default)</label><label for="__tabbed_1_2">with ProxySQL</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>mysql<span class="w"> </span>-h<span class="w"> </span>cluster1-haproxy<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">'&lt;root_password&gt;'</span>
@@ -6892,7 +6892,7 @@ The Secrets object you are interested in has the
 <p>This command will connect you to the MySQL server.</p>
 </li>
 </ol>
-<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
+<h2 id="troubleshooting">Troubleshooting<a data-markdown-ignore class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
 <p>If <code>kubectl get pxc</code> command doesn’t show <code>ready</code> status too long, you can 
 check the creation process with the <code>kubectl get pods</code> command:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods
@@ -6922,7 +6922,7 @@ configuration. An example of a warning is as follows:</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/images/gke-quickstart-object-browser-error.png" data-desc-position="bottom"><img alt="image" src="assets/images/gke-quickstart-object-browser-error.png"></a></p>
 <p>Clicking the problematic Pod will bring you to the details page with the same warning:</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/images/gke-quickstart-object-browser-details.png" data-desc-position="bottom"><img alt="image" src="assets/images/gke-quickstart-object-browser-details.png"></a></p>
-<h2 id="removing-the-gke-cluster">Removing the GKE cluster<a class="headerlink" href="#removing-the-gke-cluster" title="Permanent link">¶</a></h2>
+<h2 id="removing-the-gke-cluster">Removing the GKE cluster<a data-markdown-ignore class="headerlink" href="#removing-the-gke-cluster" title="Permanent link">¶</a></h2>
 <p>There are several ways that you can delete the cluster.</p>
 <p>You can clean up the cluster with the <code>gcloud container clusters delete &lt;cluster name&gt; --zone &lt;zone location&gt;</code> command. The return statement requests your confirmation of the deletion. Type <code>y</code> to confirm.</p>
 <div class="highlight"><pre><span></span><code>gcloud<span class="w"> </span>container<span class="w"> </span>clusters<span class="w"> </span>delete<span class="w"> </span>my-cluster-1<span class="w"> </span>--zone<span class="w"> </span>us-central1-a<span class="w"> </span>--project<span class="w"> </span>&lt;project<span class="w"> </span>ID&gt;
@@ -7040,7 +7040,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

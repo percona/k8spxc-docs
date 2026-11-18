@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6719,7 +6719,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="percona-operator-for-mysql-based-on-percona-xtradb-cluster-1130"><em>Percona Operator for MySQL based on Percona XtraDB Cluster</em> 1.13.0<a class="headerlink" href="#percona-operator-for-mysql-based-on-percona-xtradb-cluster-1130" title="Permanent link">¶</a></h1>
+<h1 id="percona-operator-for-mysql-based-on-percona-xtradb-cluster-1130"><em>Percona Operator for MySQL based on Percona XtraDB Cluster</em> 1.13.0<a data-markdown-ignore class="headerlink" href="#percona-operator-for-mysql-based-on-percona-xtradb-cluster-1130" title="Permanent link">¶</a></h1>
 <ul>
 <li><strong>Date</strong></li>
 </ul>
@@ -6728,13 +6728,13 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><strong>Installation</strong></li>
 </ul>
 <p><a href="../System-Requirements.html#installation-guidelines">Installing Percona Operator for MySQL based on Percona XtraDB Cluster</a></p>
-<h2 id="release-highlights">Release Highlights<a class="headerlink" href="#release-highlights" title="Permanent link">¶</a></h2>
+<h2 id="release-highlights">Release Highlights<a data-markdown-ignore class="headerlink" href="#release-highlights" title="Permanent link">¶</a></h2>
 <ul>
 <li>It is now <a href="../operator.html#backupallowparallel">possible to control</a> whether backup jobs are executed  in parallel or sequentially, which can be useful to avoid the cluster overload; also, CPU and memory resource limits can now be configured for the backup restore job</li>
 <li>A substantial improvement of the <a href="../backups.html">backup documentation</a> was done in this release, making it much easier to read, and the <a href="../restore-cr.html">backup restore options</a> have been added to the Сustom Resource reference</li>
 <li>We are deeply committed to delivering software that truly sets the bar for quality and stability. With our latest release, we put an all-hands-on-deck approach towards fine-tuning the Operator with minor improvements, along with addressing key bugs reported by our vibrant community. We are extremely grateful to each and every person who submitted feedback and collaborated to help us get to the bottom of these pesky issues.</li>
 </ul>
-<h2 id="new-features-and-improvements">New Features and improvements<a class="headerlink" href="#new-features-and-improvements" title="Permanent link">¶</a></h2>
+<h2 id="new-features-and-improvements">New Features and improvements<a data-markdown-ignore class="headerlink" href="#new-features-and-improvements" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1088">K8SPXC-1088</a>: It is now possible to configure CPU and memory resources for the backup restore job in the PerconaXtraDBClusterRestore Custom Resource options</li>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1166">K8SPXC-1166</a>: Starting from now, Docker image tags for Percona XtraBackup include full XtraBackup version instead of the major number used before</li>
@@ -6746,7 +6746,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><a href="https://jira.percona.com/browse/K8SPXC-1224">K8SPXC-1224</a>: New <code>backup.allowParallel</code> Custom Resource option allows to disable running backup jobs in parallel, which can be useful to avoid connection issues caused by the cluster overload</li>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1183">K8SPXC-1183</a>: The Operator now uses the <a href="https://dev.mysql.com/doc/refman/8.0/en/caching-sha2-pluggable-authentication.html">caching_sha2_password <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> authentication plugin for MySQL 8.0 instead of the older <a href="https://dev.mysql.com/doc/refman/8.0/en/native-pluggable-authentication.html">mysql_native_password <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> one</li>
 </ul>
-<h2 id="bugs-fixed">Bugs Fixed<a class="headerlink" href="#bugs-fixed" title="Permanent link">¶</a></h2>
+<h2 id="bugs-fixed">Bugs Fixed<a data-markdown-ignore class="headerlink" href="#bugs-fixed" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1179">K8SPXC-1179</a> and <a href="https://jira.percona.com/browse/K8SPXC-1183">K8SPXC-1183</a>: Fix a bug due to which the Operator didn’t use TLS encryption for system users</li>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1188">K8SPXC-1188</a>: The database Helm chart has improved defaults, including the use of random passwords generated by the Operator, and disabling <code>delete-pxc-pvc</code> and <code>delete-proxysql-pvc</code> finalizers to avoid possible data loss during migration</li>
@@ -6771,11 +6771,11 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><a href="https://jira.percona.com/browse/K8SPXC-1126">K8SPXC-1126</a>: Fix a bug that <code>pxc-db</code> Helm chart had PVC-based backup storage enabled by default, which could be inconvenient for the users storing backups in cloud</li>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1265">K8SPXC-1265</a>: Fix a bug due to which get pxc-backup command could show backup as failed after the first unsuccessful attempt while backup job was continuing attempts</li>
 </ul>
-<h2 id="known-issues-and-limitations">Known issues and limitations<a class="headerlink" href="#known-issues-and-limitations" title="Permanent link">¶</a></h2>
+<h2 id="known-issues-and-limitations">Known issues and limitations<a data-markdown-ignore class="headerlink" href="#known-issues-and-limitations" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="https://jira.percona.com/browse/K8SPXC-1183">K8SPXC-1183</a>: Switching between HAProxy and ProxySQL load balancer can’t be done on existing clusters because ProxySQL does not yet support <a href="https://dev.mysql.com/doc/refman/8.0/en/caching-sha2-pluggable-authentication.html">caching_sha2_password <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> authentication plugin; this makes it necessary to choose load balancer at the cluster creation time</li>
 </ul>
-<h2 id="supported-platforms">Supported Platforms<a class="headerlink" href="#supported-platforms" title="Permanent link">¶</a></h2>
+<h2 id="supported-platforms">Supported Platforms<a data-markdown-ignore class="headerlink" href="#supported-platforms" title="Permanent link">¶</a></h2>
 <p>The Operator was developed and tested with Percona XtraDB Cluster versions 8.0.32-24.2 and 5.7.42-31.65. Other options may also work but have not been tested. Other software components include:</p>
 <ul>
 <li>Percona XtraBackup versions 2.4.28 and 8.0.32-26</li>
@@ -6894,7 +6894,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="../js/print-site.js"></script>
       

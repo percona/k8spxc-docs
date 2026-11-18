@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6753,10 +6753,10 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="services-and-ports">Services and ports<a class="headerlink" href="#services-and-ports" title="Permanent link">¶</a></h1>
+<h1 id="services-and-ports">Services and ports<a data-markdown-ignore class="headerlink" href="#services-and-ports" title="Permanent link">¶</a></h1>
 <p>The Operator creates Kubernetes Services so that applications reach the database through a proxy and the cluster components find each other. This page lists every Service, the ports it publishes, and when it exists.</p>
 <p>The examples use a cluster named <code>cluster1</code>. Replace it with the name from <code>metadata.name</code> of your Custom Resource.</p>
-<h2 id="which-service-to-connect-to">Which Service to connect to<a class="headerlink" href="#which-service-to-connect-to" title="Permanent link">¶</a></h2>
+<h2 id="which-service-to-connect-to">Which Service to connect to<a data-markdown-ignore class="headerlink" href="#which-service-to-connect-to" title="Permanent link">¶</a></h2>
 <p>Applications connect to a proxy Service. Don’t connect them to the database Pods or to the headless Services.</p>
 <table>
 <thead>
@@ -6785,7 +6785,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tbody>
 </table>
 <p>For the full set of connection details, see <a href="connect.html">Connect to Percona XtraDB Cluster</a>.</p>
-<h2 id="client-facing-services">Client-facing Services<a class="headerlink" href="#client-facing-services" title="Permanent link">¶</a></h2>
+<h2 id="client-facing-services">Client-facing Services<a data-markdown-ignore class="headerlink" href="#client-facing-services" title="Permanent link">¶</a></h2>
 <p>These Services are the entry points to the cluster. Their type is <code>ClusterIP</code> unless you change it in the Custom Resource.</p>
 <table>
 <thead>
@@ -6828,7 +6828,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p class="admonition-title">The admin port is published too</p>
 <p>The HAProxy and ProxySQL Services publish the admin port 33062 next to 3306. If you change the Service type to <code>LoadBalancer</code>, the admin port becomes reachable from wherever the load balancer is. Limit access with <code>loadBalancerSourceRanges</code> for the Service you expose.</p>
 </div>
-<h3 id="traffic-and-exposure-options">Traffic and exposure options<a class="headerlink" href="#traffic-and-exposure-options" title="Permanent link">¶</a></h3>
+<h3 id="traffic-and-exposure-options">Traffic and exposure options<a data-markdown-ignore class="headerlink" href="#traffic-and-exposure-options" title="Permanent link">¶</a></h3>
 <p>The proxy Services accept the same set of standard Kubernetes options:</p>
 <ul>
 <li><code>type</code>: <code>ClusterIP</code>, <code>NodePort</code> or <code>LoadBalancer</code></li>
@@ -6838,7 +6838,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </ul>
 <p>The <code>percona.com/headless-service: "true"</code> annotation turns a <code>ClusterIP</code> Service into a headless one. For the per-Pod Services, the type, annotations and source ranges come from <code>pxc.expose</code>. Starting with version 1.14.0, the annotations and labels from <code>pxc.expose</code> also apply to the two headless database Services below.</p>
 <p>See <a href="expose.html">Exposing the cluster</a> for examples.</p>
-<h2 id="internal-services">Internal Services<a class="headerlink" href="#internal-services" title="Permanent link">¶</a></h2>
+<h2 id="internal-services">Internal Services<a data-markdown-ignore class="headerlink" href="#internal-services" title="Permanent link">¶</a></h2>
 <p>These Services are for the Operator and the cluster’s own components. Applications don’t use them.</p>
 <table>
 <thead>
@@ -6886,7 +6886,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li>The Operator’s own webhook Service, <code>percona-xtradb-cluster-operator</code>, is shared by all clusters in the namespace and isn’t created per cluster.</li>
 <li>A restore from a PVC creates a temporary Service for the duration of the restore.</li>
 </ul>
-<h2 id="ports-in-the-pods">Ports in the Pods<a class="headerlink" href="#ports-in-the-pods" title="Permanent link">¶</a></h2>
+<h2 id="ports-in-the-pods">Ports in the Pods<a data-markdown-ignore class="headerlink" href="#ports-in-the-pods" title="Permanent link">¶</a></h2>
 <p>The following ports are used inside the Pods in addition to those the Services publish:</p>
 <table>
 <thead>
@@ -6934,7 +6934,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
-<h2 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
+<h2 id="see-also">See also<a data-markdown-ignore class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
 <ul>
 <li><a href="architecture.html#how-clients-connect">Design and architecture</a> for how a client request reaches the data</li>
 <li><a href="expose.html">Exposing the cluster</a> for how to publish the Services outside Kubernetes</li>
@@ -7041,7 +7041,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

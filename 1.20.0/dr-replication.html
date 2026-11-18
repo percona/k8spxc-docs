@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6679,9 +6679,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="configure-replication-between-the-sites">Configure replication between the sites<a class="headerlink" href="#configure-replication-between-the-sites" title="Permanent link">¶</a></h1>
+<h1 id="configure-replication-between-the-sites">Configure replication between the sites<a data-markdown-ignore class="headerlink" href="#configure-replication-between-the-sites" title="Permanent link">¶</a></h1>
 <p>The sites must have the same copy of data. To do so, configure the replication between them so that sites are always in sync. The replication is defined via a replication channel where you specify which site is the source of data and which site receives it.</p>
-<h2 id="prepare-the-primary-site">Prepare the primary site<a class="headerlink" href="#prepare-the-primary-site" title="Permanent link">¶</a></h2>
+<h2 id="prepare-the-primary-site">Prepare the primary site<a data-markdown-ignore class="headerlink" href="#prepare-the-primary-site" title="Permanent link">¶</a></h2>
 <p>Your replica site needs to connect to your primary site to replicate data from it. For this, each database Pod on the primary site must have an external IP addresses to be reached directly. This is done by exposing the database cluster Pods using the LoadBalancer service type. Read more about <a href="expose.html#service-per-pod">exposing a cluster</a>.</p>
 <ol>
 <li>
@@ -6731,7 +6731,7 @@ cluster1-pxc-2                    LoadBalancer   34.118.236.170   35.222.208.249
 <p>Store the public IP addresses of your Pods. You will need them during the replica site setup.</p>
 </li>
 </ol>
-<h2 id="prepare-the-replica-site">Prepare the replica site<a class="headerlink" href="#prepare-the-replica-site" title="Permanent link">¶</a></h2>
+<h2 id="prepare-the-replica-site">Prepare the replica site<a data-markdown-ignore class="headerlink" href="#prepare-the-replica-site" title="Permanent link">¶</a></h2>
 <p>Configure the replication channel on the replica site. Specify the following Custom Resource options in the <code>spec.pxc.replicationChannels</code> subsection in the <code>deploy/cr.yaml</code> file:</p>
 <ul>
 <li><code>spec.pxc.replicationChannels</code> - The replication channel configuration. The name of the channel must match the name on the primary site. </li>
@@ -6756,7 +6756,7 @@ cluster1-pxc-2                    LoadBalancer   34.118.236.170   35.222.208.249
 <span class="s1">  }</span>
 <span class="s1">}}'</span>
 </code></pre></div>
-<h2 id="verify-the-replication">Verify the replication<a class="headerlink" href="#verify-the-replication" title="Permanent link">¶</a></h2>
+<h2 id="verify-the-replication">Verify the replication<a data-markdown-ignore class="headerlink" href="#verify-the-replication" title="Permanent link">¶</a></h2>
 <p>To verify that the replication is working, do the following:</p>
 <ol>
 <li>
@@ -6903,7 +6903,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

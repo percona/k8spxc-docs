@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6631,7 +6631,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="2-connect-to-percona-xtradb-cluster">2. Connect to Percona XtraDB Cluster<a class="headerlink" href="#2-connect-to-percona-xtradb-cluster" title="Permanent link">¶</a></h1>
+<h1 id="2-connect-to-percona-xtradb-cluster">2. Connect to Percona XtraDB Cluster<a data-markdown-ignore class="headerlink" href="#2-connect-to-percona-xtradb-cluster" title="Permanent link">¶</a></h1>
 <p>In this tutorial, you will connect to the Percona XtraDB Cluster you deployed previously.</p>
 <p>To connect to Percona XtraDB Cluster you will need the password for the <code>root</code>
 user. Passwords are stored in the Secrets object. </p>
@@ -6644,7 +6644,7 @@ user. Passwords are stored in the Secrets object. </p>
 <p>The Secrets object we target is named as
 <code>&lt;cluster_name&gt;-secrets</code>. The <code>&lt;cluster_name&gt;</code> value is
 the <a href="operator.html#metadata-name">name of your Percona XtraDB Cluster</a>. The default variant for the Secrets object is:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">via kubectl</label><label for="__tabbed_1_2">via Helm</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_1_1">via kubectl</label><label for="__tabbed_1_2">via Helm</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p><code>cluster1-secrets</code></p>
@@ -6678,7 +6678,7 @@ Executing it may require some time to deploy the correspondent Pod.<p></p>
     by the shell, and you may get “Permission denied” messages,so put the
     password in single quotes (single quotes also avoid variable expansion in
     scripts):</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">with HAProxy (default)</label><label for="__tabbed_2_2">with ProxySQL</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_2_1">with HAProxy (default)</label><label for="__tabbed_2_2">with ProxySQL</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>mysql<span class="w"> </span>-h<span class="w"> </span>&lt;cluster_name&gt;-haproxy<span class="w"> </span>-uroot<span class="w"> </span>-p<span class="s1">'&lt;root_password&gt;'</span>
@@ -6701,7 +6701,7 @@ Executing it may require some time to deploy the correspondent Pod.<p></p>
 <p class="admonition-title">Don’t use <code>root</code> in your application</p>
 <p><code>root</code> is a system user that the Operator itself uses, so a password change affects everything that connects with it. Create a separate user for your application. See <a href="users.html#create-users-in-the-custom-resource">Create users in the Custom Resource</a>.</p>
 </div>
-<h2 id="next-steps">Next steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
+<h2 id="next-steps">Next steps<a data-markdown-ignore class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
 <p><a class="md-button" href="data-insert.html">Insert sample data <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg></span></a></p>
 <hr>
 <div class="md-source-file">
@@ -6803,7 +6803,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

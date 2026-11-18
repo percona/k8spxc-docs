@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6799,9 +6799,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="generate-certificates-manually">Generate certificates manually<a class="headerlink" href="#generate-certificates-manually" title="Permanent link">¶</a></h1>
+<h1 id="generate-certificates-manually">Generate certificates manually<a data-markdown-ignore class="headerlink" href="#generate-certificates-manually" title="Permanent link">¶</a></h1>
 <p>You can generate TLS certificates manually instead of using the Operator’s automatic certificate generation. This approach gives you full control over certificate properties and is useful for production environments with specific security requirements.</p>
-<h2 id="what-youll-create">What you’ll create<a class="headerlink" href="#what-youll-create" title="Permanent link">¶</a></h2>
+<h2 id="what-youll-create">What you’ll create<a data-markdown-ignore class="headerlink" href="#what-youll-create" title="Permanent link">¶</a></h2>
 <p>When you follow the steps from this guide, you’ll generate these certificate files:</p>
 <ul>
 <li><code>server.pem</code> - Server certificate for Percona XtraDB Cluster nodes</li>
@@ -6811,22 +6811,22 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><code>ca.pem</code> - Certificate Authority certificate</li>
 <li><code>ca-key.pem</code> - Certificate Authority private key</li>
 </ul>
-<h2 id="certificate-requirements">Certificate requirements<a class="headerlink" href="#certificate-requirements" title="Permanent link">¶</a></h2>
+<h2 id="certificate-requirements">Certificate requirements<a data-markdown-ignore class="headerlink" href="#certificate-requirements" title="Permanent link">¶</a></h2>
 <p>You need to create <strong>two sets</strong> of certificates:</p>
 <ol>
 <li><strong>External certificates</strong> - for client connections from outside the cluster.</li>
 <li><strong>Internal certificates</strong> - for internal communication between Percona XtraDB Cluster nodes. </li>
 </ol>
 <p>After creating the certificates, you’ll create two Kubernetes Secrets and reference them in your cluster configuration.</p>
-<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h2>
+<h2 id="prerequisites">Prerequisites<a data-markdown-ignore class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h2>
 <p>Before you start, make sure you have:</p>
 <ul>
 <li><code>cfssl</code> and <code>cfssljson</code> tools installed on your system</li>
 <li>Your cluster name and namespace ready</li>
 <li>Access to your Kubernetes cluster</li>
 </ul>
-<h2 id="procedure">Procedure<a class="headerlink" href="#procedure" title="Permanent link">¶</a></h2>
-<h3 id="generate-certificates">Generate certificates<a class="headerlink" href="#generate-certificates" title="Permanent link">¶</a></h3>
+<h2 id="procedure">Procedure<a data-markdown-ignore class="headerlink" href="#procedure" title="Permanent link">¶</a></h2>
+<h3 id="generate-certificates">Generate certificates<a data-markdown-ignore class="headerlink" href="#generate-certificates" title="Permanent link">¶</a></h3>
 <p>Replace <code>cluster1</code> and <code>my-namespace</code> with your actual cluster name and namespace in the commands below.</p>
 <ol>
 <li>
@@ -6906,7 +6906,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </code></pre></div>
 </li>
 </ol>
-<h3 id="configure-your-cluster">Configure your cluster<a class="headerlink" href="#configure-your-cluster" title="Permanent link">¶</a></h3>
+<h3 id="configure-your-cluster">Configure your cluster<a data-markdown-ignore class="headerlink" href="#configure-your-cluster" title="Permanent link">¶</a></h3>
 <p>After creating the Secrets, add them to your cluster configuration in the <code>deploy/cr.yaml</code> file:</p>
 <p>Add the secret for external use to the <code>spec.sslSecretName</code> option. Add the certificate for internal communications to the <code>spec.sslInternalSecretName</code> option.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
@@ -6914,7 +6914,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <span class="w">  </span><span class="nt">sslInternalSecretName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster1-ssl-internal</span>
 </code></pre></div>
 <p>Once your cluster is running with these certificates, see <a href="tls-update.html">Update certificates</a> for how to check their expiration and renew or rotate them, since manually generated certificates are not renewed automatically.</p>
-<h2 id="verify-the-certificate-is-in-use">Verify the certificate is in use<a class="headerlink" href="#verify-the-certificate-is-in-use" title="Permanent link">¶</a></h2>
+<h2 id="verify-the-certificate-is-in-use">Verify the certificate is in use<a data-markdown-ignore class="headerlink" href="#verify-the-certificate-is-in-use" title="Permanent link">¶</a></h2>
 <p>The Operator applies whatever Secret <code>sslSecretName</code> and <code>sslInternalSecretName</code> point to without validating it, and without logging or reporting whether the certificate is well-formed or correctly paired with its CA. A malformed certificate, or one that doesn’t match its CA or private key, can be accepted silently — the cluster can report <code>Ready</code> with nothing in the logs or Kubernetes Events to indicate a problem.</p>
 <p>Always confirm the certificate actually served matches what you provided. Check what the proxy presents during a live handshake. The cluster’s hostnames only resolve from inside the cluster’s network, so run the check from a temporary pod:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>-i<span class="w"> </span>--rm<span class="w"> </span>--tty<span class="w"> </span>tls-debug<span class="w"> </span>--image<span class="o">=</span>percona/percona-xtradb-cluster:8.4.8-8.1<span class="w"> </span>--restart<span class="o">=</span>Never<span class="w"> </span>--<span class="w"> </span>bash<span class="w"> </span>-il
@@ -6924,7 +6924,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <span class="w">  </span><span class="p">|</span><span class="w"> </span>openssl<span class="w"> </span>x509<span class="w"> </span>-noout<span class="w"> </span>-subject<span class="w"> </span>-serial<span class="w"> </span>-fingerprint<span class="w"> </span>-sha256
 </code></pre></div>
 <p>Compare the output against the certificate in your Secret. Which Secret to check depends on the proxy deployed in your cluster:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">HAProxy</label><label for="__tabbed_1_2">ProxySQL</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_1_1">HAProxy</label><label for="__tabbed_1_2">ProxySQL</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>With HAProxy, client connections are served the internal certificate, not the external one. HAProxy passes the TLS handshake through to the PXC node itself instead of terminating it, so the node’s own (internal) certificate is what the client sees. Compare against the Secret you set in <code>sslInternalSecretName</code>:</p>
@@ -6941,7 +6941,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </div>
 </div>
 <p>The subject, serial, and fingerprint must match. If they don’t, check your Secret for a mismatched CA, certificate, or key before assuming the configuration is broken elsewhere.</p>
-<h2 id="additional-resources">Additional resources<a class="headerlink" href="#additional-resources" title="Permanent link">¶</a></h2>
+<h2 id="additional-resources">Additional resources<a data-markdown-ignore class="headerlink" href="#additional-resources" title="Permanent link">¶</a></h2>
 <p>Check the sample certificates in <code>deploy/ssl-secrets.yaml</code> for reference</p>
 <hr>
 <div class="md-source-file">
@@ -7043,7 +7043,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

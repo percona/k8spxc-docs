@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6723,9 +6723,9 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="restore-from-a-backup">Restore from a backup<a class="headerlink" href="#restore-from-a-backup" title="Permanent link">¶</a></h1>
+<h1 id="restore-from-a-backup">Restore from a backup<a data-markdown-ignore class="headerlink" href="#restore-from-a-backup" title="Permanent link">¶</a></h1>
 <p>To restore your Percona XtraDB Cluster from a backup, you create a <code>PerconaXtraDBClusterRestore</code> object using a restore configuration file. The example of such file is <a href="https://github.com/percona/percona-xtradb-cluster-operator/blob/v1.20.0/deploy/backup/restore.yaml">deploy/backup/restore.yaml <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>. You can check available options in the <a href="restore-cr.html">restore options reference</a>.</p>
-<h2 id="restore-scenarios">Restore scenarios<a class="headerlink" href="#restore-scenarios" title="Permanent link">¶</a></h2>
+<h2 id="restore-scenarios">Restore scenarios<a data-markdown-ignore class="headerlink" href="#restore-scenarios" title="Permanent link">¶</a></h2>
 <table>
 <thead>
 <tr>
@@ -6758,7 +6758,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tbody>
 </table>
 <p>Any of these can also land on an exact time or transaction instead of the last full backup. Refer to the <a href="backups-pitr-restore.html">Restore with point-in-time recovery</a> for guidelines.</p>
-<h2 id="choose-backupname-or-backupsource">Choose <code>backupName</code> or <code>backupSource</code><a class="headerlink" href="#choose-backupname-or-backupsource" title="Permanent link">¶</a></h2>
+<h2 id="choose-backupname-or-backupsource">Choose <code>backupName</code> or <code>backupSource</code><a data-markdown-ignore class="headerlink" href="#choose-backupname-or-backupsource" title="Permanent link">¶</a></h2>
 <p>Every restore names its source in one of two ways. Use exactly one - setting both is not allowed.</p>
 <table>
 <thead>
@@ -6803,7 +6803,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tr>
 </tbody>
 </table>
-<h2 id="before-you-start">Before you start<a class="headerlink" href="#before-you-start" title="Permanent link">¶</a></h2>
+<h2 id="before-you-start">Before you start<a data-markdown-ignore class="headerlink" href="#before-you-start" title="Permanent link">¶</a></h2>
 <ol>
 <li>Make sure that the cluster is running.</li>
 <li>
@@ -6831,13 +6831,13 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </code></pre></div>
 </li>
 </ol>
-<h2 id="restore-limitations">Restore limitations<a class="headerlink" href="#restore-limitations" title="Permanent link">¶</a></h2>
+<h2 id="restore-limitations">Restore limitations<a data-markdown-ignore class="headerlink" href="#restore-limitations" title="Permanent link">¶</a></h2>
 <ul>
 <li><strong>Storage type.</strong> Restoring from an <code>emptyDir</code> or <code>hostPath</code> volume isn’t supported — back up from one if you need to, then restore the result onto a Persistent Volume instead. A Persistent Volume restore only works within the same Kubernetes cluster (<a href="backups-restore-in-place.html">in-place</a> or a <a href="backups-restore-side-cluster.html">side cluster</a>). A <a href="backups-restore-to-new-cluster.html">new cluster on a different Kubernetes environment</a>, a <a href="backups-restore-disaster.html">disaster restore</a>, and any <a href="backups-pitr-restore.html">point-in-time recovery</a> restore all require the full backup to be in cloud storage (S3 or Azure).</li>
 <li><strong>User passwords.</strong> A full-backup restore tolerates changed passwords since Operator 1.18.0 — see <a href="#restore-the-cluster-when-a-backup-has-different-passwords">Restore the cluster when backup has different passwords</a>. A point-in-time restore doesn’t: it still requires a Secret with the passwords that were in effect at backup time. This is a known limitation.</li>
 <li><strong>Automatic crash recovery after a restore.</strong> A restore starts a new Galera cluster with a new cluster UUID. The Operator doesn’t reset the <code>status.recovery</code> record of its previous automatic recovery, so the next full cluster crash can be refused. After a restore into a cluster that the Operator recovered before, <a href="backups-restore-in-place.html#remove-the-recovery-record-after-the-restore">remove the recovery record</a>.</li>
 </ul>
-<h2 id="restore-the-cluster-when-a-backup-has-different-passwords">Restore the cluster when a backup has different passwords<a class="headerlink" href="#restore-the-cluster-when-a-backup-has-different-passwords" title="Permanent link">¶</a></h2>
+<h2 id="restore-the-cluster-when-a-backup-has-different-passwords">Restore the cluster when a backup has different passwords<a data-markdown-ignore class="headerlink" href="#restore-the-cluster-when-a-backup-has-different-passwords" title="Permanent link">¶</a></h2>
 <p>User passwords on the target cluster may have changed and now differ from the ones in a backup.</p>
 <p>Starting with version 1.18.0, the Operator no longer requires matching secrets between the backup and the target cluster. After the restore, it changes user passwords using the local Secret as a source. It also creates missing system users and adds missing grants. So you can restore from a full backup as usual.</p>
 <div class="admonition important">
@@ -6874,7 +6874,7 @@ your own with the latest passwords as follows.</p>
 <li>
 <p>Make a base64-encoded string with needed SQL statements (substitute each
     <code>&lt;latestPass&gt;</code> with the password of the appropriate user):</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">in Linux</label><label for="__tabbed_1_2">in macOS</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_1_1">in Linux</label><label for="__tabbed_1_2">in macOS</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | base64 --wrap=0</span>
@@ -7023,7 +7023,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

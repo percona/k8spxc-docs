@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6697,8 +6697,8 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="crash-recovery">Crash Recovery<a class="headerlink" href="#crash-recovery" title="Permanent link">¶</a></h1>
-<h2 id="what-does-the-full-cluster-crash-mean">What does the full cluster crash mean?<a class="headerlink" href="#what-does-the-full-cluster-crash-mean" title="Permanent link">¶</a></h2>
+<h1 id="crash-recovery">Crash Recovery<a data-markdown-ignore class="headerlink" href="#crash-recovery" title="Permanent link">¶</a></h1>
+<h2 id="what-does-the-full-cluster-crash-mean">What does the full cluster crash mean?<a data-markdown-ignore class="headerlink" href="#what-does-the-full-cluster-crash-mean" title="Permanent link">¶</a></h2>
 <p>A full cluster crash is a situation when all database instances where
 shut down in random order. Being rebooted after such situation, Pod is
 continuously restarting, and generates the following errors in the log:</p>
@@ -6716,7 +6716,7 @@ after a full cluster crash.</p>
 recovery starting from the version <code>1.7</code>. For the previous Operator versions,
 crash recovery can be done
 manually.</p>
-<h2 id="automatic-crash-recovery">Automatic Crash Recovery<a class="headerlink" href="#automatic-crash-recovery" title="Permanent link">¶</a></h2>
+<h2 id="automatic-crash-recovery">Automatic Crash Recovery<a data-markdown-ignore class="headerlink" href="#automatic-crash-recovery" title="Permanent link">¶</a></h2>
 <p>Crash recovery can be done automatically. This behavior is controlled by the
 <code>pxc.autoRecovery</code> option in the <code>deploy/cr.yaml</code> configuration file.</p>
 <p>The default value for this option is <code>true</code>, which means that automatic
@@ -6740,7 +6740,7 @@ above example).</p>
 <p>Now execute the following commands to start this instance:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>cluster1-pxc-2<span class="w"> </span>-c<span class="w"> </span>pxc<span class="w"> </span>--<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'kill -s USR1 1'</span>
 </code></pre></div>
-<h2 id="when-the-operator-refuses-automatic-recovery">When the Operator refuses automatic recovery<a class="headerlink" href="#when-the-operator-refuses-automatic-recovery" title="Permanent link">¶</a></h2>
+<h2 id="when-the-operator-refuses-automatic-recovery">When the Operator refuses automatic recovery<a data-markdown-ignore class="headerlink" href="#when-the-operator-refuses-automatic-recovery" title="Permanent link">¶</a></h2>
 <p>Every time the Operator recovers the cluster automatically, it records the result in the <code>status.recovery</code> field of the Custom Resource:</p>
 <ul>
 <li><code>clusterUUID</code> - the Galera cluster UUID of the node it bootstrapped from,</li>
@@ -6782,7 +6782,7 @@ above example).</p>
 </li>
 </ol>
 <p>Without the record, the Operator treats the next recovery as the first one: it bootstraps from the node with the highest <code>seqno</code> and records the new values. Instead of removing the record, you can also update <code>clusterUUID</code> and <code>lastRecoverySeqNo</code> to the current values with the same <code>kubectl patch</code> command.</p>
-<h2 id="manual-crash-recovery">Manual Crash Recovery<a class="headerlink" href="#manual-crash-recovery" title="Permanent link">¶</a></h2>
+<h2 id="manual-crash-recovery">Manual Crash Recovery<a data-markdown-ignore class="headerlink" href="#manual-crash-recovery" title="Permanent link">¶</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This method includes a lot of operations, and therefore, it is
@@ -7041,7 +7041,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

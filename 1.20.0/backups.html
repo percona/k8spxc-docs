@@ -24,7 +24,7 @@ Backups help protect your system against data loss and corruption and ensure bus
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -139,7 +139,7 @@ Backups help protect your system against data loss and corruption and ensure bus
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6832,7 +6832,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="providing-backups">Providing backups<a class="headerlink" href="#providing-backups" title="Permanent link">¶</a></h1>
+<h1 id="providing-backups">Providing backups<a data-markdown-ignore class="headerlink" href="#providing-backups" title="Permanent link">¶</a></h1>
 <p>It’s important to back up your database to keep your data safe.
 Backups help protect your system against data loss and corruption and ensure business stability. They are also a quick way to recover the database if something happens with it.</p>
 <p>A backup starts after you create a Backup object. You can create a Backup object in two ways:</p>
@@ -6843,7 +6843,7 @@ Backups help protect your system against data loss and corruption and ensure bus
 <p>The Operator does physical backups using the <a href="https://docs.percona.com/percona-xtrabackup/latest/index.html">Percona XtraBackup <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> tool. By default, it uses the <a href="https://galeracluster.com/library/documentation/sst.html">SST <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> (State Snapshot Transfer) method, which creates a separate backup Pod to perform backups.</p>
 <p>Alternatively, you can enable the XtraBackup sidecar method. This method uses a sidecar container running in each PXC Pod that provides better performance and native encryption support. See <a href="backups-methods.html">Backup methods</a> for details.</p>
 <p>Use the following table to find what you need: a backup type, storage, or the right restore path.</p>
-<h2 id="choose-a-path">Choose a path<a class="headerlink" href="#choose-a-path" title="Permanent link">¶</a></h2>
+<h2 id="choose-a-path">Choose a path<a data-markdown-ignore class="headerlink" href="#choose-a-path" title="Permanent link">¶</a></h2>
 <table>
 <thead>
 <tr>
@@ -6900,7 +6900,7 @@ Backups help protect your system against data loss and corruption and ensure bus
 </tr>
 </tbody>
 </table>
-<h2 id="restore-options">Restore options<a class="headerlink" href="#restore-options" title="Permanent link">¶</a></h2>
+<h2 id="restore-options">Restore options<a data-markdown-ignore class="headerlink" href="#restore-options" title="Permanent link">¶</a></h2>
 <p>You can restore a backup:</p>
 <ul>
 <li><a href="backups-restore.html">to the same cluster it was made from</a> (in-place)</li>
@@ -6910,13 +6910,13 @@ Backups help protect your system against data loss and corruption and ensure bus
 </ul>
 <p>Any of these can also land on an exact time or transaction with point-in-time recovery. </p>
 <p><a class="md-button" href="backups-restore.html">Restore from a backup</a></p>
-<h2 id="migrate-data">Migrate data<a class="headerlink" href="#migrate-data" title="Permanent link">¶</a></h2>
+<h2 id="migrate-data">Migrate data<a data-markdown-ignore class="headerlink" href="#migrate-data" title="Permanent link">¶</a></h2>
 <p>Moving data across the Kubernetes boundary doesn’t go through the Operator’s Restore object the way the options above do:</p>
 <ul>
 <li><a href="backups-move-from-external-db.html">migrate an external, non-Kubernetes database into the cluster</a> — combines a manual backup, a restore, and asynchronous replication for a low-downtime cutover</li>
 <li><a href="backups-copy.html">migrate a backup out of the cluster to a local machine</a> — a manual restore outside Kubernetes, with no Operator involved</li>
 </ul>
-<h2 id="point-in-time-recovery">Point-in-time recovery<a class="headerlink" href="#point-in-time-recovery" title="Permanent link">¶</a></h2>
+<h2 id="point-in-time-recovery">Point-in-time recovery<a data-markdown-ignore class="headerlink" href="#point-in-time-recovery" title="Permanent link">¶</a></h2>
 <p>Point-in-time recovery (PITR) replays binary logs on top of a full backup, so you can land on an exact moment or transaction instead of just the moment the last full backup finished.</p>
 <p>For point-in-time recovery, the Operator needs two things:</p>
 <ul>
@@ -6924,7 +6924,7 @@ Backups help protect your system against data loss and corruption and ensure bus
 <li><strong>At least one successful full backup</strong> — the Operator always restores a full backup first, then replays binary logs forward from it. Binary logs by themselves can’t be restored, and the Operator can’t report how far forward you can recover until a full backup exists.</li>
 </ul>
 <p><a class="md-button" href="backups-pitr.html">Enable point-in-time recovery</a></p>
-<h2 id="backup-storage">Backup storage<a class="headerlink" href="#backup-storage" title="Permanent link">¶</a></h2>
+<h2 id="backup-storage">Backup storage<a data-markdown-ignore class="headerlink" href="#backup-storage" title="Permanent link">¶</a></h2>
 <p>You can store backups outside of Kubernetes cluster in one of the supported cloud storages:</p>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Amazon_S3#S3_API_and_competing_services">Amazon S3 or S3-compatible storage <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>,</li>
@@ -6933,30 +6933,30 @@ Backups help protect your system against data loss and corruption and ensure bus
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/images/backup-cloud.svg" data-desc-position="bottom"><img alt="image" src="assets/images/backup-cloud.svg"></a></p>
 <p>If you’re running a Kubernetes cluster on premises, you can  store backups inside it using a <a href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/">Persistent Volume <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>. For example, if you don’t use a remote backup storage or if storage costs are high for you.</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/images/backup-pv.svg" data-desc-position="bottom"><img alt="image" src="assets/images/backup-pv.svg"></a></p>
-<h2 id="multiple-backups">Multiple backups<a class="headerlink" href="#multiple-backups" title="Permanent link">¶</a></h2>
+<h2 id="multiple-backups">Multiple backups<a data-markdown-ignore class="headerlink" href="#multiple-backups" title="Permanent link">¶</a></h2>
 <p>You can run several backups. For example, schedule weekly backups on one storage and daily backups on another one. You can also run an on-demand backup to be on the safe side before you do some maintenance work.</p>
 <p>Several backups run in parallel by default if they happen at the same time. If they overload your cluster, you can turn off parallel backups with the <code>backup.allowParallel</code> configuration option in the <code>cr.yaml</code> file. Then, the Operator queues the backups and runs them sequentially.</p>
 <p>The Operator ensures the sequence by creating a lock for a running backup. It releases the lock after the backup either succeeds or fails and starts the next one from the queue. The lock is also released if you delete a running backup.</p>
 <p>You can fine-tune the queue by assigning a waiting time for a backup to start. Use the <code>spec.startingDeadlineSeconds</code> option in the <code>deploy/cr.yaml</code> file to set this time for all backups. You can also override it for a specific  on-demand backup by defining the <code>startingDeadlineSeconds</code> option within the backup configuration. This setting has a higher priority.</p>
 <p>If the backup doesn’t start within the defined time, the Operator automatically marks it as “failed”.</p>
-<h2 id="configure-automatic-cleanup-of-backup-jobs-and-pods">Configure automatic cleanup of backup Jobs and Pods<a class="headerlink" href="#configure-automatic-cleanup-of-backup-jobs-and-pods" title="Permanent link">¶</a></h2>
+<h2 id="configure-automatic-cleanup-of-backup-jobs-and-pods">Configure automatic cleanup of backup Jobs and Pods<a data-markdown-ignore class="headerlink" href="#configure-automatic-cleanup-of-backup-jobs-and-pods" title="Permanent link">¶</a></h2>
 <p>You can specify the time to live for a backup Job after the backup operation finishes. When the TTL expires, the Operator automatically deletes the Job and its associated Pod.</p>
 <p>Use the <code>backup.ttlSecondsAfterFinished</code> setting in the <code>deploy/cr.yaml</code> file to set this time for all backups, both on-demand and scheduled. This setting also applies for restores.</p>
 <p>If it takes longer to finish a backup than the defined <code>backup.ttlSecondsAfterFinished</code> value, the Operator applies the <code>internal.percona.com/keep-job</code> finalizer to allow the operation to finish. After the operation completes with the Succeeded or Failed status, the finalizer is removed and the Job is cleaned up.</p>
-<h2 id="backup-suspension-for-an-unhealthy-database-cluster">Backup suspension for an unhealthy database cluster<a class="headerlink" href="#backup-suspension-for-an-unhealthy-database-cluster" title="Permanent link">¶</a></h2>
+<h2 id="backup-suspension-for-an-unhealthy-database-cluster">Backup suspension for an unhealthy database cluster<a data-markdown-ignore class="headerlink" href="#backup-suspension-for-an-unhealthy-database-cluster" title="Permanent link">¶</a></h2>
 <p>Your database cluster can become unhealthy. For example, when one of the Pods crashes and restarts. The Operator monitors the database cluster state while a backup is running and suspends it for an unhealthy cluster to reduce the load on the cluster.</p>
 <p>To offload the database cluster even more, you can define how long a backup remains suspended. Use the <code>spec.backup.suspendedDeadlineSeconds</code> option in the <code>cr.yaml</code> file for all backups. Or set it in the <code>backup.yaml</code> configuration files for a specific backup. The setting in the <code>backup.yaml</code> file has a higher priority.</p>
 <p>After this duration expires, the Operator automatically marks this backup as “failed”.</p>
 <p>Otherwise, after the cluster is recovered and reports the Ready status, the Operator resumes the backup and tries to finish it.</p>
 <p>Note that if some files were already saved on the storage when a backup was suspended, the Operator deletes them and reruns the backup.</p>
 <p>If you want to run backups in an unhealthy cluster, set the <code>spec.unsafeFlags.backupIfUnhealthy</code> option in the <code>deploy/cr.yaml</code> file to <code>true</code>. Use this option with caution because it can affect the cluster performance.</p>
-<h2 id="limits-you-should-know">Limits you should know<a class="headerlink" href="#limits-you-should-know" title="Permanent link">¶</a></h2>
+<h2 id="limits-you-should-know">Limits you should know<a data-markdown-ignore class="headerlink" href="#limits-you-should-know" title="Permanent link">¶</a></h2>
 <ul>
 <li>Restoring from an <code>emptyDir</code> or <code>hostPath</code> volume isn’t supported, and a Persistent Volume restore only works within the same Kubernetes cluster — see <a href="backups-restore.html#restore-limitations">Restore limitations</a> for the full breakdown by destination.</li>
 <li>A point-in-time restore always requires a Secret with the same passwords used at backup time; a full-backup restore tolerates changed passwords since Operator 1.18.0 — see <a href="backups-restore.html#restore-limitations">Restore limitations</a>.</li>
 <li>The XtraBackup sidecar backup method doesn’t yet support Persistent Volume backups, IAM profiles, or built-in encryption — see <a href="backups-methods.html#xtrabackup-sidecar-method-tech-preview">Backup methods</a>.</li>
 </ul>
-<h2 id="next-step">Next step<a class="headerlink" href="#next-step" title="Permanent link">¶</a></h2>
+<h2 id="next-step">Next step<a data-markdown-ignore class="headerlink" href="#next-step" title="Permanent link">¶</a></h2>
 <p><a class="md-button" href="backups-methods.html">Backup methods</a></p>
 <hr>
 <div class="md-source-file">
@@ -7058,7 +7058,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

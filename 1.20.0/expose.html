@@ -26,7 +26,7 @@ configured by the Operator.">
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -141,7 +141,7 @@ configured by the Operator.">
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6656,7 +6656,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="exposing-cluster">Exposing cluster<a class="headerlink" href="#exposing-cluster" title="Permanent link">¶</a></h1>
+<h1 id="exposing-cluster">Exposing cluster<a data-markdown-ignore class="headerlink" href="#exposing-cluster" title="Permanent link">¶</a></h1>
 <p>Percona Operator for MySQL based on Percona XtraDB Cluster provides entry points for accessing the database by client
 applications in several scenarios. In either way the cluster is exposed with
 regular Kubernetes <a href="https://kubernetes.io/docs/concepts/services-networking/service/">Service objects <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>,
@@ -6664,7 +6664,7 @@ configured by the Operator.</p>
 <p>This document describes the usage of <a href="operator.html">Custom Resource manifest options</a>
 to expose the clusters deployed with the Operator.</p>
 <p>To see which Service your application should connect to, and every Service the Operator creates with its ports, see <a href="services.html">Services and ports</a>.</p>
-<h3 id="exposing-cluster-with-haproxy-or-proxysql">Exposing cluster with HAProxy or ProxySQL<a class="headerlink" href="#exposing-cluster-with-haproxy-or-proxysql" title="Permanent link">¶</a></h3>
+<h3 id="exposing-cluster-with-haproxy-or-proxysql">Exposing cluster with HAProxy or ProxySQL<a data-markdown-ignore class="headerlink" href="#exposing-cluster-with-haproxy-or-proxysql" title="Permanent link">¶</a></h3>
 <p>The Operator provides a choice of two cluster components to
 provide load balancing and proxy service: you can use either <a href="https://haproxy.org">HAProxy <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> or <a href="https://proxysql.com/">ProxySQL <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>.</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="assets/images/replication.svg" data-desc-position="bottom"><img alt="image" src="assets/images/replication.svg"></a></p>
@@ -6674,7 +6674,7 @@ default choice.</p>
 <li>See <a href="haproxy-conf.html">how you can enable and use HAProxy and what are the limitations</a>.</li>
 <li>See <a href="proxysql-conf.html">how you can enable and use ProxySQL and what are the limitations</a>.</li>
 </ul>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">HAProxy</label><label for="__tabbed_1_2">ProxySQL</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_1_1">HAProxy</label><label for="__tabbed_1_2">ProxySQL</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>The default HAProxy based setup will contain the <code>cluster1-haproxy</code> Service
@@ -6721,7 +6721,7 @@ Resource option.</p>
 </div>
 </div>
 </div>
-<h2 id="service-per-pod">Service per Pod<a class="headerlink" href="#service-per-pod" title="Permanent link">¶</a></h2>
+<h2 id="service-per-pod">Service per Pod<a data-markdown-ignore class="headerlink" href="#service-per-pod" title="Permanent link">¶</a></h2>
 <p>Still, sometimes it is required to expose all Percona XtraDB Cluster instances,
 where each of them gets its own IP address (e.g. in case of load balancing
 implemented on the application level).</p>
@@ -6853,7 +6853,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6823,7 +6823,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="restore-with-point-in-time-recovery">Restore with point-in-time recovery<a class="headerlink" href="#restore-with-point-in-time-recovery" title="Permanent link">¶</a></h1>
+<h1 id="restore-with-point-in-time-recovery">Restore with point-in-time recovery<a data-markdown-ignore class="headerlink" href="#restore-with-point-in-time-recovery" title="Permanent link">¶</a></h1>
 <p>Point-in-time recovery (PITR) replays binary logs (binlogs) on top of a full backup so you can bring your database to an exact moment or an exact transaction, instead of only the moment the backup finished.</p>
 <p>You can make a point-in-time restore:</p>
 <ul>
@@ -6834,7 +6834,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </ul>
 <p>Set <code>spec.pxcCluster</code> to whichever target you’re restoring into, then follow the steps on this page for the <code>pitr</code> section — everything you need for a PITR restore, for any of these destinations, is on this one page.</p>
 <p>Before you start, <a href="backups-pitr.html#enable-point-in-time-recovery">enable point-in-time recovery</a> on the source cluster so binlogs are already uploaded to storage.</p>
-<h2 id="choose-a-recovery-target">Choose a recovery target<a class="headerlink" href="#choose-a-recovery-target" title="Permanent link">¶</a></h2>
+<h2 id="choose-a-recovery-target">Choose a recovery target<a data-markdown-ignore class="headerlink" href="#choose-a-recovery-target" title="Permanent link">¶</a></h2>
 <p>Set <code>pitr.type</code> to one of four values, depending on where you want recovery to stop and what you already know about the incident:</p>
 <table>
 <thead>
@@ -6868,7 +6868,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </tbody>
 </table>
 <p>If you chose <code>transaction</code> or <code>skip</code>, see <a href="backups-pitr-find-gtid.html">Find a GTID for point-in-time recovery</a> to look up the GTID before you continue. If you chose <code>date</code> or <code>latest</code>, skip ahead to <a href="#before-you-restore">Before you restore</a>.</p>
-<h2 id="before-you-restore">Before you restore<a class="headerlink" href="#before-you-restore" title="Permanent link">¶</a></h2>
+<h2 id="before-you-restore">Before you restore<a data-markdown-ignore class="headerlink" href="#before-you-restore" title="Permanent link">¶</a></h2>
 <ol>
 <li>
 <p>Export the namespace as an environment variable. Replace the <code>&lt;namespace&gt;</code> placeholder with your value:</p>
@@ -6893,10 +6893,10 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p>The Operator still requires a Secret with the same user passwords used at backup time for a PITR restore — this is a known limitation, unlike a full-backup restore, which tolerates changed passwords since Operator 1.18.0. If passwords have since changed, follow <a href="backups-restore.html#restore-the-cluster-when-a-backup-has-different-passwords">Restore the cluster when a backup has different passwords</a> before you restore.</p>
 </li>
 </ol>
-<h2 id="run-the-restore">Run the restore<a class="headerlink" href="#run-the-restore" title="Permanent link">¶</a></h2>
+<h2 id="run-the-restore">Run the restore<a data-markdown-ignore class="headerlink" href="#run-the-restore" title="Permanent link">¶</a></h2>
 <p>Point-in-time recovery requires the full backup itself to be in cloud storage — see <a href="backups-pitr.html#considerations">Considerations</a>. A Persistent Volume backup can’t be the base for a PITR restore.</p>
 <p>Pick the section that matches how you’re addressing the full backup. See <a href="backups-restore.html#choose-backupname-or-backupsource">Choose backupName or backupSource</a> for what these mean and when each applies — the keys below only add the <code>pitr</code> section on top of that choice.</p>
-<h3 id="use-backupname">Use <code>backupName</code><a class="headerlink" href="#use-backupname" title="Permanent link">¶</a></h3>
+<h3 id="use-backupname">Use <code>backupName</code><a data-markdown-ignore class="headerlink" href="#use-backupname" title="Permanent link">¶</a></h3>
 <p>Use this when restoring in-place or to a side cluster in the same namespace as the source — a Backup object for the full backup already exists there.</p>
 <ol>
 <li>
@@ -6909,7 +6909,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </li>
 <li>
 <p>Pass this configuration to the Operator:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">via the YAML manifest</label><label for="__tabbed_1_2">via the command line</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_1_1">via the YAML manifest</label><label for="__tabbed_1_2">via the command line</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pxc.percona.com/v1</span>
@@ -6949,7 +6949,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </div>
 </li>
 </ol>
-<h3 id="use-backupsource-storage-already-defined-on-the-target">Use <code>backupSource</code>, storage already defined on the target<a class="headerlink" href="#use-backupsource-storage-already-defined-on-the-target" title="Permanent link">¶</a></h3>
+<h3 id="use-backupsource-storage-already-defined-on-the-target">Use <code>backupSource</code>, storage already defined on the target<a data-markdown-ignore class="headerlink" href="#use-backupsource-storage-already-defined-on-the-target" title="Permanent link">¶</a></h3>
 <p>Use this when restoring to a side cluster in a different namespace, or to a new cluster, and the backup storage is already configured in the target cluster’s <code>cr.yaml</code>.</p>
 <ol>
 <li>
@@ -6963,7 +6963,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </li>
 <li>
 <p>Pass this configuration to the Operator:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">S3-compatible storage</label><label for="__tabbed_2_2">Azure Blob storage</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_2_1">S3-compatible storage</label><label for="__tabbed_2_2">Azure Blob storage</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pxc.percona.com/v1</span>
@@ -7005,7 +7005,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </code></pre></div>
 </li>
 </ol>
-<h3 id="use-backupsource-full-inline-storage-details">Use <code>backupSource</code>, full inline storage details<a class="headerlink" href="#use-backupsource-full-inline-storage-details" title="Permanent link">¶</a></h3>
+<h3 id="use-backupsource-full-inline-storage-details">Use <code>backupSource</code>, full inline storage details<a data-markdown-ignore class="headerlink" href="#use-backupsource-full-inline-storage-details" title="Permanent link">¶</a></h3>
 <p>Use this when the target cluster has no storage configuration to reference — restoring after a disaster, or to a new cluster where you haven’t predefined the storage.</p>
 <ol>
 <li>
@@ -7018,7 +7018,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </li>
 <li>
 <p>Pass this configuration to the Operator:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">S3-compatible storage</label><label for="__tabbed_3_2">Azure Blob storage</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_3_1">S3-compatible storage</label><label for="__tabbed_3_2">Azure Blob storage</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pxc.percona.com/v1</span>
@@ -7073,7 +7073,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 </code></pre></div>
 </li>
 </ol>
-<h2 id="verify-the-restore">Verify the restore<a class="headerlink" href="#verify-the-restore" title="Permanent link">¶</a></h2>
+<h2 id="verify-the-restore">Verify the restore<a data-markdown-ignore class="headerlink" href="#verify-the-restore" title="Permanent link">¶</a></h2>
 <ol>
 <li>
 <p>Confirm the Restore object reports <code>Succeeded</code>:</p>
@@ -7092,7 +7092,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p>For a <code>date</code>-type restore, also spot-check a row you know should (or shouldn’t) be present based on your target time.</p>
 </li>
 </ol>
-<h2 id="post-restore-steps">Post-restore steps<a class="headerlink" href="#post-restore-steps" title="Permanent link">¶</a></h2>
+<h2 id="post-restore-steps">Post-restore steps<a data-markdown-ignore class="headerlink" href="#post-restore-steps" title="Permanent link">¶</a></h2>
 <ol>
 <li>
 <p>Configure the main storage within the target cluster’s <code>cr.yaml</code>, then <a href="backups-pitr.html#enable-point-in-time-recovery">re-enable point-in-time recovery</a> to start binlog collection again.</p>
@@ -7104,7 +7104,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <p>Make a new full backup once you’ve confirmed the restore is correct. The restored database is now the new baseline for future recoveries — don’t rely on replaying binlogs past this point from the old backup chain.</p>
 </li>
 </ol>
-<h2 id="binlog-gaps">Binlog gaps<a class="headerlink" href="#binlog-gaps" title="Permanent link">¶</a></h2>
+<h2 id="binlog-gaps">Binlog gaps<a data-markdown-ignore class="headerlink" href="#binlog-gaps" title="Permanent link">¶</a></h2>
 <p>The Operator monitors the binlog gaps detected by the binlog collector, if any. If a backup contains such gaps, the Operator marks the status of the latest successful backup with a condition that indicates the backup can’t guarantee consistent point-in-time recovery:</p>
 <p>To watch for gaps before they affect a restore, monitor the <code>pxc_binlog_collector_gap_detected_total</code> metric — see <a href="backups-pitr.html#binary-logs-statistics">Binary logs statistics</a>.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pxc.percona.com/v1</span>
@@ -7242,7 +7242,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

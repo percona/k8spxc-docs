@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6731,16 +6731,16 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="update-percona-operator-for-mysql-based-on-percona-xtradb-cluster">Update Percona Operator for MySQL based on Percona XtraDB Cluster<a class="headerlink" href="#update-percona-operator-for-mysql-based-on-percona-xtradb-cluster" title="Permanent link">¶</a></h1>
+<h1 id="update-percona-operator-for-mysql-based-on-percona-xtradb-cluster">Update Percona Operator for MySQL based on Percona XtraDB Cluster<a data-markdown-ignore class="headerlink" href="#update-percona-operator-for-mysql-based-on-percona-xtradb-cluster" title="Permanent link">¶</a></h1>
 <p>You can upgrade Percona Operator for MySQL based on Percona XtraDB Cluster to newer versions</p>
 <p>The upgrade process consists of these steps:</p>
 <ul>
 <li>Upgrade the Operator  </li>
 <li>Upgrade the database (Percona XtraDB Cluster).</li>
 </ul>
-<h2 id="update-scenarios">Update scenarios<a class="headerlink" href="#update-scenarios" title="Permanent link">¶</a></h2>
+<h2 id="update-scenarios">Update scenarios<a data-markdown-ignore class="headerlink" href="#update-scenarios" title="Permanent link">¶</a></h2>
 <p>You can either upgrade both the Operator and the database, or you can upgrade only the database. To decide which scenario to choose, read on.</p>
-<h3 id="full-upgrade-crd-operator-and-the-database">Full upgrade (CRD, Operator, and the database)<a class="headerlink" href="#full-upgrade-crd-operator-and-the-database" title="Permanent link">¶</a></h3>
+<h3 id="full-upgrade-crd-operator-and-the-database">Full upgrade (CRD, Operator, and the database)<a data-markdown-ignore class="headerlink" href="#full-upgrade-crd-operator-and-the-database" title="Permanent link">¶</a></h3>
 <p>When to use this scenario:</p>
 <ul>
 <li>The new Operator version has changes that are required for new features of the database to work</li>
@@ -6748,7 +6748,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li>Compatibility improvements between the Operator and the database require synchronized updates.</li>
 </ul>
 <p>When going on with this scenario, make sure to test it in a staging or testing environment first. Upgrading the Operator may cause performance degradation.</p>
-<h3 id="upgrade-only-the-database">Upgrade only the database<a class="headerlink" href="#upgrade-only-the-database" title="Permanent link">¶</a></h3>
+<h3 id="upgrade-only-the-database">Upgrade only the database<a data-markdown-ignore class="headerlink" href="#upgrade-only-the-database" title="Permanent link">¶</a></h3>
 <p>When to use this scenario:</p>
 <ul>
 <li>The new version of the database has new features or fixes that are not related to the Operator or other components of your infrastructure</li>
@@ -6759,7 +6759,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li>Check that the current Operator version supports the new database version.</li>
 <li>Some features may require an Operator upgrade later for full functionality.</li>
 </ul>
-<h2 id="update-strategies">Update strategies<a class="headerlink" href="#update-strategies" title="Permanent link">¶</a></h2>
+<h2 id="update-strategies">Update strategies<a data-markdown-ignore class="headerlink" href="#update-strategies" title="Permanent link">¶</a></h2>
 <p>You can chose how you want to update your database cluster when you run an upgrade:</p>
 <ul>
 <li>
@@ -6780,7 +6780,7 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 <li><code>OnDelete</code></li>
 </ul>
 <p>For a manual update of your database cluster using the <code>RollingUpdate</code> or <code>OnDelete</code> strategies, refer to <a href="update_manually.html">the low-level Kubernetes way of database upgrades</a> guide.</p>
-<h2 id="update-on-openshift">Update on OpenShift<a class="headerlink" href="#update-on-openshift" title="Permanent link">¶</a></h2>
+<h2 id="update-on-openshift">Update on OpenShift<a data-markdown-ignore class="headerlink" href="#update-on-openshift" title="Permanent link">¶</a></h2>
 <p>If you run the Operator on <a href="https://marketplace.redhat.com">Red Hat Marketplace <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> or you run Red Hat certified Operators on <a href="https://www.redhat.com/en/technologies/cloud-computing/openshift">OpenShift <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a>, you need to do additional steps during the upgrade. See <a href="update_openshift.html">this HOWTO</a> for details.</p>
 <hr>
 <div class="md-source-file">
@@ -6882,7 +6882,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       

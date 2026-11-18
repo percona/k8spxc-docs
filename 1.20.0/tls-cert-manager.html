@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="assets/operators_fav.svg">
-      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.8.1">
     
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -138,7 +138,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"><div class="agent-hint" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap">For AI agents: an index of this documentation is at <a href="https://docs.percona.com/percona-operator-for-xtradb-cluster/1.20.0/llms.txt" tabindex="-1">llms.txt</a>.</div>
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -6733,8 +6733,8 @@ box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   
 
 
-<h1 id="install-and-use-the-cert-manager">Install and use the cert-manager<a class="headerlink" href="#install-and-use-the-cert-manager" title="Permanent link">¶</a></h1>
-<h2 id="about-the-cert-manager">About the cert-manager<a class="headerlink" href="#about-the-cert-manager" title="Permanent link">¶</a></h2>
+<h1 id="install-and-use-the-cert-manager">Install and use the cert-manager<a data-markdown-ignore class="headerlink" href="#install-and-use-the-cert-manager" title="Permanent link">¶</a></h1>
+<h2 id="about-the-cert-manager">About the cert-manager<a data-markdown-ignore class="headerlink" href="#about-the-cert-manager" title="Permanent link">¶</a></h2>
 <p>A <a href="https://cert-manager.io/docs/">cert-manager <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.75 2h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 1.5 0v3.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5C2 2.784 2.784 2 3.75 2m6.854-1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1"></path></svg></span></a> is a Kubernetes certificate
 management controller which is widely used to automate the management and
 issuance of TLS certificates. It is community-driven, and open source.</p>
@@ -6748,7 +6748,7 @@ is created because Percona XtraDB Cluster requires all certificates issued
 by the same CA (Certificate authority).</p>
 <p>Self-signed issuer allows you to deploy and use the Percona
 Operator without creating a cluster issuer separately.</p>
-<h2 id="install-the-cert-manager">Install the <em>cert-manager</em><a class="headerlink" href="#install-the-cert-manager" title="Permanent link">¶</a></h2>
+<h2 id="install-the-cert-manager">Install the <em>cert-manager</em><a data-markdown-ignore class="headerlink" href="#install-the-cert-manager" title="Permanent link">¶</a></h2>
 <p>The cert-manager requires its own namespace. </p>
 <ol>
 <li>
@@ -6759,7 +6759,7 @@ Operator without creating a cluster issuer separately.</p>
 </li>
 <li>
 <p>Update the default rotation policy to not rotate the private key Secret associated with a Certificate object automatically upon the certificate reissue.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">For cert-manager v1.19.2 and above</label><label for="__tabbed_1_2">For cert-manager v1.18.0 - v1.19.1</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div data-markdown-ignore class="tabbed-labels"><label for="__tabbed_1_1">For cert-manager v1.19.2 and above</label><label for="__tabbed_1_2">For cert-manager v1.18.0 - v1.19.1</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>The default rotation policy is set to “Never” by default. No action is needed from your side. </p>
@@ -6789,11 +6789,11 @@ cert-manager-webhook-58f4cff74d-th4pp      1/1     Running   0          65s
 </li>
 </ol>
 <p>At this point, you can move on to <a href="kubectl.html">deploying the Operator and your database cluster</a>.</p>
-<h2 id="customize-certificate-duration-for-cert-manager">Customize certificate duration for cert-manager<a class="headerlink" href="#customize-certificate-duration-for-cert-manager" title="Permanent link">¶</a></h2>
+<h2 id="customize-certificate-duration-for-cert-manager">Customize certificate duration for cert-manager<a data-markdown-ignore class="headerlink" href="#customize-certificate-duration-for-cert-manager" title="Permanent link">¶</a></h2>
 <p>When you deploy the cluster using the default configuration, the Operator triggers the cert-manager to create certificates
 with default duration of 90 days. </p>
 <p>You can also customize the certificate duration. For example, to align certificate lifetimes with your organization’s security and compliance policies.</p>
-<h3 id="rules-and-limitations">Rules and limitations<a class="headerlink" href="#rules-and-limitations" title="Permanent link">¶</a></h3>
+<h3 id="rules-and-limitations">Rules and limitations<a data-markdown-ignore class="headerlink" href="#rules-and-limitations" title="Permanent link">¶</a></h3>
 <p>Check the following rules and limitations for setting up the certificate duration:</p>
 <ol>
 <li>You can set the duration <strong>only when you create a new cluster</strong>. Updating it in a running cluster is not supported.</li>
@@ -6809,7 +6809,7 @@ with default duration of 90 days. </p>
 <p>Minimum CA certificate duration is 730 hours (approximately 30 days). Do not set the duration to exactly 730 hours; the Operator will fail to generate the correct certificate object if you do.</p>
 </li>
 </ol>
-<h3 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">¶</a></h3>
+<h3 id="configuration">Configuration<a data-markdown-ignore class="headerlink" href="#configuration" title="Permanent link">¶</a></h3>
 <p>To set the custom duration, specify the following options in the Custom Resource:</p>
 <ul>
 <li><code>.spec.tls.certValidityDuration</code> – validity period for TLS certificates</li>
@@ -6925,7 +6925,7 @@ window.addEventListener('afterprint', (event) => {
     
     
 
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="js/print-site.js"></script>
       
